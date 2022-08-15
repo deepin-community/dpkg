@@ -1,0 +1,55 @@
+diff --git a/data/cputable b/data/cputable
+index b25b972..2d70991 100644
+--- a/data/cputable
++++ b/data/cputable
+@@ -53,4 +53,5 @@ sh4		sh4		sh4			32	little
+ sh4eb		sh4eb		sh4eb			32	big
+ sparc		sparc		sparc			32	big
+ sparc64		sparc64		sparc64			64	big
++sw64		sw_64		(sw_64|sw64).*		64	little
+ tilegx		tilegx		tilegx			64	little
+diff --git a/scripts/Dpkg/Vendor/Debian.pm b/scripts/Dpkg/Vendor/Debian.pm
+index c293a99..6ad3860 100644
+--- a/scripts/Dpkg/Vendor/Debian.pm
++++ b/scripts/Dpkg/Vendor/Debian.pm
+@@ -347,14 +347,14 @@ sub _add_build_flags {
+ 
+     # Mask features that are not available on certain architectures.
+     if ($os !~ /^(?:linux|kfreebsd|knetbsd|hurd)$/ or
+-	$cpu =~ /^(?:hppa|avr32)$/) {
++	$cpu =~ /^(?:hppa|avr32|sw64)$/) {
+ 	# Disabled on non-(linux/kfreebsd/knetbsd/hurd).
+-	# Disabled on hppa, avr32
++	# Disabled on hppa, avr32, sw64
+ 	#  (#574716).
+ 	$use_feature{hardening}{pie} = 0;
+     }
+-    if ($cpu =~ /^(?:ia64|alpha|hppa|nios2)$/ or $arch eq 'arm') {
+-	# Stack protector disabled on ia64, alpha, hppa, nios2.
++    if ($cpu =~ /^(?:ia64|alpha|hppa|nios2|sw64)$/ or $arch eq 'arm') {
++	# Stack protector disabled on ia64, alpha, hppa, nios2, sw64.
+ 	#   "warning: -fstack-protector not supported for this target"
+ 	# Stack protector disabled on arm (ok on armel).
+ 	#   compiler supports it incorrectly (leads to SEGV)
+diff --git a/scripts/t/Dpkg_Arch.t b/scripts/t/Dpkg_Arch.t
+index be83dc2..1fcab6b 100644
+--- a/scripts/t/Dpkg_Arch.t
++++ b/scripts/t/Dpkg_Arch.t
+@@ -16,7 +16,7 @@
+ use strict;
+ use warnings;
+ 
+-use Test::More tests => 18407;
++use Test::More tests => 18900;
+ 
+ use_ok('Dpkg::Arch', qw(debarch_to_debtuple debarch_to_multiarch
+                         debarch_eq debarch_is debarch_is_wildcard
+@@ -187,7 +187,7 @@ foreach my $arch (@valid_arches) {
+               "bijective triplet $triplet to tuple @tuple");
+ }
+ 
+-is(scalar @valid_arches, 554, 'expected amount of known architectures');
++is(scalar @valid_arches, 569, 'expected amount of known architectures');
+ 
+ {
+     local $ENV{CC} = 'false';

@@ -1,0 +1,5 @@
+dpkg (1.21.8.1-deepin) stable; urgency=medium
+
+  * ['Rebuild  against by  current gcc 11.2']
+
+ -- Deepin Packages Builder <packages@deepin.org>  Thu, 11 Aug 2022 21:45:12 +0800
