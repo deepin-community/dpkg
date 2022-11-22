@@ -1,11 +1,11 @@
 Source: dpkg
 Section: admin
 Priority: required
-Maintainer: Deepin Developer <deepin-dev@deepin.org>
-Uploaders: Deepin Packages Builder <packages@deepin.org>
+Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Uploaders: Guillem Jover <guillem@debian.org>
 Homepage: https://wiki.debian.org/Teams/Dpkg
-#Vcs-Browser
-#Vcs-Git
+Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
+Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git
 Standards-Version: 4.6.0
 Rules-Requires-Root: no
 Build-Depends:
