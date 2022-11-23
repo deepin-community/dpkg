@@ -1,8 +1,8 @@
-dpkg (1.21.8.1-1+dde) UNRELEASED; urgency=medium
+dpkg (1.21.8.2-1+dde) unstable; urgency=medium
 
-  * update
+  * add deepin vendor
 
- -- Dpkg Developers <debian-dpkg@lists.debian.org>  Wed, 27 Jul 2022 10:45:03 +0800
+ -- lichenggang <lichenggang@uniontech.com>  Wed, 23 Nov 2022 15:22:07 +0800
 
 dpkg (1.21.8.1-1+dde) unstable; urgency=medium
 
