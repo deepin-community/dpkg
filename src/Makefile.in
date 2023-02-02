@@ -153,7 +153,8 @@ am_dpkg_deb_OBJECTS = deb/build.$(OBJEXT) deb/extract.$(OBJEXT) \
 	deb/info.$(OBJEXT) deb/main.$(OBJEXT)
 dpkg_deb_OBJECTS = $(am_dpkg_deb_OBJECTS)
 dpkg_deb_DEPENDENCIES = $(am__DEPENDENCIES_2) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
 am_dpkg_divert_OBJECTS = divert/main.$(OBJEXT)
 dpkg_divert_OBJECTS = $(am_dpkg_divert_OBJECTS)
 dpkg_divert_LDADD = $(LDADD)
@@ -422,6 +423,7 @@ VERSION = @VERSION@
 XGETTEXT = @XGETTEXT@
 XGETTEXT_015 = @XGETTEXT_015@
 XGETTEXT_EXTRA_OPTIONS = @XGETTEXT_EXTRA_OPTIONS@
+ZSTD_LIBS = @ZSTD_LIBS@
 Z_LIBS = @Z_LIBS@
 Z_NG_LIBS = @Z_NG_LIBS@
 abs_builddir = @abs_builddir@
@@ -566,6 +568,7 @@ dpkg_deb_LDADD = \
 	$(LDADD) \
 	$(Z_LIBS) \
 	$(LZMA_LIBS) \
+	$(ZSTD_LIBS) \
 	$(BZ2_LIBS) \
 	# EOL
 
@@ -636,7 +639,8 @@ do_make_subst = $(AM_V_GEN) $(SED) \
 TESTSUITE_AT = $(srcdir)/at/testsuite.at $(srcdir)/at/local.at \
 	$(srcdir)/at/deb-format.at $(srcdir)/at/deb-fields.at \
 	$(srcdir)/at/deb-content.at $(srcdir)/at/deb-split.at \
-	$(srcdir)/at/realpath.at $(srcdir)/at/divert.at
+	$(srcdir)/at/realpath.at $(srcdir)/at/divert.at \
+	$(srcdir)/at/chdir.at
 TESTSUITE = $(srcdir)/at/testsuite
 AUTOTEST_DEPS = at/atconfig at/atlocal $(TESTSUITE)
 AUTOTEST = $(AUTOM4TE) --language=autotest

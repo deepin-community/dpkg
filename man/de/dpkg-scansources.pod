@@ -24,7 +24,7 @@ B<dpkg-scansources> [I<Option> …] I<Binär-Verz> [I<Override-Datei> [I<Pfad-Pr
 
 B<dpkg-scansources> durchsucht das übergebene I<Binär-Verz> nach I<.dsc>-Dateien. Diese werden verwendet, um einen Debian-Quell-Index zu erstellen, der auf der Standardausgabe ausgegeben wird.
 
-I<Override-Datei>, falls angegeben, kann zum Setzen von Prioritäten in dem erzeugten Index-Datensatz und zum Hinwegsetzen über das in den I<.dsc>-Dateien angegebene Betreuerfeld verwandt werden. Diese Datei kann komprimiert sein (seit Dpkg 1.15.5). Siehe B<deb-override>(5) für das Format dieser Datei.
+I<Override-Datei>, falls angegeben, kann zum Setzen von Prioritäten in dem erzeugten Index-Absatz und zum Hinwegsetzen über das in den I<.dsc>-Dateien angegebene Betreuerfeld verwandt werden. Diese Datei kann komprimiert sein (seit Dpkg 1.15.5). Siehe B<deb-override>(5) für das Format dieser Datei.
 
 B<Beachten Sie>: Da die Override-Datei nach Binär- und nicht Quellpaketen indiziert wird, gibt es ein hier kleines Problem. Die aktuelle Implementierung verwendet die höchste Priorität aller von einer I<.dsc>-Datei erzeugten Binärpakete für die Priorität des Quellpakets, und den Inhalt für das Hinwegsetzen über die Betreuer-Information aus dem Eintrag für das erste in der I<.dsc>-Datei aufgeführte Binärpaket. Dies könnte sich ändern.
 
@@ -38,7 +38,7 @@ B<Hinweis>: Falls Sie auf die erzeugte Sources-Datei mit B<apt>(8) zugreifen wol
 
 =item B<-n>, B<--no-sort>
 
-Sortiert die Index-Datensätze nicht. Normalerweise werden sie nach Quellpaketnamen sortiert.
+Sortiert die Index-Absätze nicht. Normalerweise werden sie nach Quellpaketnamen sortiert.
 
 =item B<-e>, B<--extra-override> I<Datei>
 
@@ -85,7 +85,7 @@ B<deb-override>(5), B<deb-extra-override>(5), B<dpkg-scanpackages>(1).
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

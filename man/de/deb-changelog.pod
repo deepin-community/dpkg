@@ -50,11 +50,21 @@ Falls dieser Upload Fehler aus der Fehlerdatenbank behebt, können diese automat
 
 =over 
 
-B<Closes: Bug#>I<nnnnn>
+B<Closes: #>I<nnnnn>
 
 =back
 
-in den Änderungsdetails auftaucht. Der genaue reguläre Perl-Ausdruck lautet B</closes:\s*(?:bug)?\#?\s?\d+(?:,\s*(?:bug)?\#?\s?\d+)*/i>). Diese Information wird über das Feld B<Closes> in der I<.changes>-Datei vermittelt.
+in den Details der Änderung, wobei B<#>I<nnnnn> die Fehlernummer ist. Der genaue reguläre Perl-Ausdruck lautet:
+
+=over 
+
+B</closes:\s*(?:bug)?\#?\s?\d+(?:,\s*(?:bug)?\#?\s?\d+)*/i>
+
+=back
+
+Das bedeutet, die Zeichenkette sollte aus dem Wort B<closes:>, gefolgt von einer durch Kommata getrennten Liste von Fehlernummern bestehen. Fehlernummern kann das Wort B<bug> und/oder das Zeichen B<#> vorangestellt werden, wie in C<Closes: 42, bug#43, #44, bug 45>. Bei den Wörtern B<closes:> und B<bug> ist die Groß-/Kleinschreibung egal. Die Liste an Fehlernummern darf über mehrere Zeilen hinweg gehen.
+
+Diese Information wird über das Feld B<Closes> in der Datei I<.changes> übermittelt. Hierbei werden, abhängig von der Archivverwaltungssoftware, alle aufgeführten Fehlernummern automatisch geschlossen werden können.
 
 Der im Changelog verwandte Name des Betreuers und die E-Mail-Adresse sollten die Details der Person sein, die diese Veröffentlichung des Pakets erstellt hat. Sie stimmen B<nicht> notwendigerweise mit denen des Hochladenden oder des normalen Paketbetreuers überein. Die Informationen werden von hier in das Feld B<Changed-By> in der I<.changes>-Datei kopiert und könnten dann später zum Versand der Bestätigung verwandt werden, wenn der Upload im Archiv der Distribution aufgenommen wurde.
 
@@ -145,7 +155,7 @@ B<deb822>(5), B<deb-version>(7), B<deb-changes>(5), B<dpkg-parsechangelog>(1).
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

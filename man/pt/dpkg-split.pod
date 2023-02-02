@@ -56,7 +56,7 @@ Por predefinição, o ficheiro resultante é chamado I<pacote>B<_>I<versão>B<_>
 
 =item B<-I>, B<--info> I<part>...
 
-Escreve informação, num formato humanamente legível, acerca dos ficheiro(s) parte especificados. Argumentos que não sejam partes de pacote binário, em vez disso, produzem uma mensagem a dizê-lo (mas mesmo assim na saída standard).
+Escreve informação, num formato humanamente legível, acerca dos ficheiro(s) parte especificados. Argumentos que não sejam partes de pacote binário, em vez disso, produzem uma mensagem a dizer-lo (mas mesmo assim na saída standard).
 
 =item B<-a>, B<--auto -o> I<complete-output> I<part>
 
@@ -100,7 +100,15 @@ Mostra a versão e termina.
 
 =item B<--depotdir> I<directory>
 
-Especifica um directório alternativo para a lista de espera das partes que espera a remontagem automática. A predefinição é B<%ADMINDIR%>.
+Especifica um directório alternativo para a lista de espera das partes que espera a remontagem automática. A predefinição é B<%ADMINDIR%/parts>.
+
+=item B<--admindir> I<directory>
+
+Define o directório de administração para I<directory> (desde dpkg 1.21.10). Isto é onde o ficheiro I<statoverride> é guardado. A predefinição é «I<%ADMINDIR%>» se B<DPKG_ADMINDIR> não estiver definido.
+
+=item B<--root> I<directory>
+
+Define o directório raiz para B<directory> (desde dpkg 1.21.10), o que define o directório de instalação para «I<directory>» e o directório administrativo para «I<directory>B<%ADMINDIR%>» se B<DPKG_ROOT> não estiver definido.
 
 =item B<-S>, B<--partsize> I<kibibytes>
 
@@ -147,6 +155,18 @@ Erro fatal ou irrecuperável devido a utilização inválida de linha de comando
 =head1 AMBIENTE
 
 =over 
+
+=item B<DPKG_ROOT>
+
+Se definido e a opção B<--root> não foi especificada, será usado como o directório raiz do sistema de ficheiros (desde dpkg 1.21.10).
+
+=item B<DPKG_ADMINDIR>
+
+Se definido e as opções B<--admindir> ou B<--root> forem especificadas, será usado como o directório de dados do B<dpkg> (desde dpkg 1.21.10).
+
+=item B<DPKG_DEBUG>
+
+Define a máscara de depuração (desde dpkg 1.21.10) a partir dum valor octal. As bandeiras presentemente aceites estão descritas na opção B<dpkg --debug>, mas nem todas estas bandeiras podem ter um efeito neste programa.
 
 =item B<DPKG_COLORS>
 

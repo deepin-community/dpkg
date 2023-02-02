@@ -100,7 +100,15 @@ Gibt die Version aus und beendet das Programm.
 
 =item B<--depotdir> I<Verzeichnis>
 
-Gibt ein alternatives Verzeichnis für die Warteschlange von Teilen, die auf automatisches Wiederzusammenführen warten, an. Standardmäßig ist dies B<%ADMINDIR%>.
+Gibt ein alternatives Verzeichnis für die Warteschlange von Teilen, die auf automatisches Wiederzusammenführen warten, an. Standardmäßig ist dies B<%ADMINDIR%/parts>.
+
+=item B<--admindir> I<Verzeichnis>
+
+Setzt das administrative Verzeichnis auf I<Verzeichnis> (seit Dpkg 1.21.10). Hier wird auch die Datei I<statoverride> gelagert. Standardmäßig „I<%ADMINDIR%>“, falls B<DPKG_ADMINDIR> nicht gesetzt wurde.
+
+=item B<--root> I<Verzeichnis>
+
+Setzt das Wurzelverzeichnis auf I<Verzeichnis> (seit Dpkg 1.21.10), wodurch das Installationsverzeichnis auf „I<Verzeichnis>“ und das administrative Verzeichnis auf „I<Verzeichnis>B<%ADMINDIR%>“ gesetzt wird, falls B<DPKG_ROOT> nicht gesetzt wurde.
 
 =item B<-S>, B<--partsize> I<Kibibyte>
 
@@ -148,6 +156,18 @@ Fataler oder nicht behebbarer Fehler aufgrund eines ungültigen Befehlszeilenauf
 
 =over 
 
+=item B<DPKG_ROOT>
+
+Falls gesetzt und die Option B<--root> nicht angegeben wurde, wird dies als Dateisystemwurzelverzeichnis verwandt (seit Dpkg 1.21.10).
+
+=item B<DPKG_ADMINDIR>
+
+Falls gesetzt und die Option B<--admindir> oder B<--root> nicht verwandt wurde, wird dies als Datenverzeichnis von B<dpkg> verwandt (seit Dpkg 1.21.10).
+
+=item B<DPKG_DEBUG>
+
+Setzt die Fehlersuchmaske (seit Dpkg 1.21.10) aus einem oktalen Wert. Die derzeit akzeptierten Schalter werden in der Option B<dpkg --debug> beschrieben, aber nicht alle dieser Schalter könnten Auswirkungen auf dieses Programm haben.
+
 =item B<DPKG_COLORS>
 
 Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte sind: B<auto> (Vorgabe), B<always> und B<never>.
@@ -183,7 +203,7 @@ B<deb>(5), B<deb-control>(5), B<dpkg-deb>(1), B<dpkg>(1).
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

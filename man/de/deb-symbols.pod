@@ -22,7 +22,7 @@ B<DEBIAN/symbols>
 
 =head1 BESCHREIBUNG
 
-Die Symboldateien werden in Debian-Binärpaketen ausgeliefert. Deren Format ist eine Teilmenge der Vorlagensymboldateien, die von B<dpkg-gensymbols>(1) in Debian-Quellpaketen verwandt wird.
+Die Symboldateien werden in Debian-Binärpaketen ausgeliefert. Deren Format ist eine Teilmenge der Vorlagensymboldateien, die von B<dpkg-gensymbols>(1) in Debian-Quellpaketen verwandt wird, siehe L<deb-src-symbols(5)>.
 
 Das Format eines Eintrags für eine erweiterte Abhängigkeitsinformation einer Laufzeitbibliothek („shared library“) lautet:
 
@@ -81,12 +81,12 @@ Ein veralteter Alias für B<Allow-Internal-Symbol-Groups> (seit Dpkg 1.20.1, unt
 
 =head1 SIEHE AUCH
 
-L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
+L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, L<deb-src-symbols(5)>, B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
 
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

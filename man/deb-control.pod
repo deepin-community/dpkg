@@ -81,7 +81,7 @@ software that was packaged.
 
 =item B<Description:> I<short-description> (recommended)
 
-=item B<> I<long-description>
+=item S< >I<long-description>
 
 The format for the package description is a short brief summary on the
 first line (after the B<Description> field). The following lines should be
@@ -121,7 +121,8 @@ The algorithm to compute the size is described in L<deb-substvars(5)>.
 =item B<Protected:> B<yes>|B<no>
 
 This field is usually only needed when the answer is B<yes>.
-It denotes a package that is required for proper booting of the system.
+It denotes a package that is required mostly for proper booting of the system
+or used for custom system-local meta-packages.
 L<dpkg(1)> or any other installation tool will not allow a B<Protected>
 package to be removed (at least not without using one of the force options).
 
@@ -130,7 +131,9 @@ Supported since dpkg 1.20.1.
 =item B<Essential:> B<yes>|B<no>
 
 This field is usually only needed when the answer is B<yes>.
-It denotes a package that is required for proper operation of the system.
+It denotes a package that is required for the packaging system, for
+proper operation of the system in general or during boot (although the latter
+should be converted to B<Protected> field instead).
 L<dpkg(1)> or any other installation tool will not allow an B<Essential>
 package to be removed (at least not without using one of the force options).
 
@@ -219,9 +222,8 @@ setting a different binary version via «B<dpkg-gencontrol -v>».
 =item B<Installer-Menu-Item:> I<value>
 
 These fields are used by the debian-installer and are usually not needed.
-See /usr/share/doc/debian-installer/devel/modules.txt from the
-B<debian-installer>
-package for more details about them.
+For more details about them, see
+L<https://salsa.debian.org/installer-team/debian-installer/-/raw/master/doc/devel/modules.txt>.
 
 =item B<Depends:> I<package-list>
 

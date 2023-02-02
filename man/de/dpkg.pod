@@ -485,13 +485,13 @@ I<Warnung: Derzeit führt> B<dpkg> I<keine Abhängigkeitsüberprüfung bei der I
 
 B<configure-any>: Konfiguriert auch jedes entpackte, aber unkonfigurierte Paket, von dem das aktuelle Paket abhängt.
 
-B<hold>: Erlaubt automatische Installationen, Upgrades und Entfernungen von Paketen, selbst wenn sie mit „halten“ markiert sind: B<Beachten Sie>: Dies verhindert die Aktionen nicht, wenn sie explizit angefordert werden.
+B<hold>: Erlaubt automatische Installationen, Upgrades und Entfernungen von Paketen, selbst wenn sie mit „halten“ markiert sind. B<Beachten Sie>: Wenn diese Aktionen explizit angefordert werden, wird der Paketauswahlzustand „halten“ immer ignoriert.
 
 B<remove-reinstreq>: Entfernt ein Paket, selbst falls es defekt ist und zur Neuinstallation markiert ist. Dies kann beispielsweise dazu führen, dass Teile des Pakets auf dem System bleiben und von B<dpkg> vergessen werden.
 
-B<remove-protected>: Entfernt, selbst falls das Paket als geschützt betrachtet wird (seit Dpkg 1.20.1). Geschützte Pakete enthalten hauptsächlich wichtige Teile der Systemstartinfrastruktur. Diese zu entfernen kann dazu führen, dass das gesamte System nicht mehr starten kann - verwenden Sie diese Option daher mit Vorsicht.
+B<remove-protected>: Entfernt, selbst falls das Paket als geschützt betrachtet wird (seit Dpkg 1.20.1). Geschützte Pakete enthalten hauptsächlich wichtige Teile der Systemstartinfrastruktur oder werden für angepasste systemlokale Metapakete verwandt. Diese zu entfernen kann dazu führen, dass das gesamte System nicht mehr starten oder benötigte Funktionalität zu Betrieb verlieren kann - verwenden Sie diese Option daher mit Vorsicht.
 
-B<remove-essential>: Entfernt, selbst falls das Paket als essenziell betrachtet wird. Essenzielle Pakete enthalten hauptsächlich sehr grundlegende Unix-Befehle. Diese zu entfernen kann dazu führen, dass das gesamte System nicht mehr arbeitet - verwenden Sie diese Option daher mit Vorsicht.
+B<remove-essential>: Entfernt, selbst falls das Paket als essenziell betrachtet wird. Essenzielle Pakete enthalten hauptsächlich sehr grundlegende Unix-Befehle. Diese werden für das Paketierungssystem, für den Betrieb des Systems im Allgemeinen oder während des Systemstarts benötigt (allerdings sollten Letztere stattdessen in geschützte Pakete umgewandelt werden). Diese zu entfernen kann dazu führen, dass das gesamte System nicht mehr arbeitet - verwenden Sie diese Option daher mit Vorsicht.
 
 B<depends>: Verwandelt alle Abhängigkeitsprobleme in Warnungen. Dies betrifft die Felder B<Pre-Depends> und B<Depends>.
 
@@ -579,7 +579,9 @@ Bearbeitet nur die Pakete, die zur Installation ausgewählt sind. Die eigentlich
 
 =item B<-E>, B<--skip-same-version>
 
-Installiert das Paket nicht, falls die gleiche Version des Pakets bereits installiert ist.
+Installiert das Paket nicht, falls die gleiche Version und Architektur des Pakets bereits installiert ist.
+
+Seit Dpkg 1.21.10 wird auch die Architektur berücksichtigt. Dadurch ist es möglich, Pakete über cross zu aktualisieren oder zusätzliche ko-installierbare Instanzen mit der gleichen Version aber einer anderen Architektur zu installieren.
 
 =item B<--pre-invoke=>I<Befehl>
 
@@ -689,7 +691,7 @@ Paketstatus geändert; I<Status> entsprechend der Statusdatei.
 Ein Fehler ist aufgetreten. Alle möglichen Zeilenumbrüche in I<ausführliche-Fehlermeldung> werden vor der Ausgabe in Leerzeichen gewandelt.
 
 =item B<status:> I<Datei> B<: conffile-prompt : „>I<echt-alt>B<“ „>I<echt-neu>B<“>
-I<benutzer-edit>B<> I<dist-edit>
+I<benutzer-edit> I<dist-edit>
 
 Dem Benutzer wird eine Conffile-Frage gestellt.
 
@@ -801,6 +803,10 @@ Das Programm, das B<dpkg> ausführen wird, wenn es einen Pager mit „B<$SHELL -
 =item B<DPKG_COLORS>
 
 Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte sind: B<auto> (Vorgabe), B<always> und B<never>.
+
+=item B<DPKG_DEBUG>
+
+Setzt die Fehlersuchmaske (seit Dpkg 1.21.10) aus einem oktalen Wert. Die aktuell akzeptierten Schalter werden in der Option B<--debug> beschrieben.
 
 =item B<DPKG_FORCE>
 
@@ -1016,7 +1022,7 @@ Lesen Sie I<%PKGDOCDIR%/THANKS> für die Liste der Leute, die zu B<dpkg> beigetr
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

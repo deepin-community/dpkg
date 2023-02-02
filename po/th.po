@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.17.23\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2022-05-25 08:39+0000\n"
+"POT-Creation-Date: 2023-01-24 22:39+0000\n"
 "PO-Revision-Date: 2015-06-26 16:13+0200\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@debian.org>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -310,6 +310,48 @@ msgstr "%s: lzma เกิดข้อผิดพลาดในการปิ
 #, c-format
 msgid "%s: lzma error: %s"
 msgstr "%s: ข้อผิดพลาดของ lzma: %s"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: lzma error: %s"
+msgid "%s: zstd error: %s"
+msgstr "%s: ข้อผิดพลาดของ lzma: %s"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "cannot close decompressor pipe"
+msgid "%s: cannot create zstd decompression context"
+msgstr "ไม่สามารถปิดไปป์ของเครื่องมือคลายบีบอัด"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "cannot close decompressor pipe"
+msgid "%s: cannot create zstd compression context"
+msgstr "ไม่สามารถปิดไปป์ของเครื่องมือคลายบีบอัด"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: lzma read error"
+msgid "%s: zstd read error"
+msgstr "%s: lzma เกิดข้อผิดพลาดในการอ่าน"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: lzma write error"
+msgid "%s: zstd write error"
+msgstr "%s: lzma เกิดข้อผิดพลาดในการเขียน"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: lzma close error"
+msgid "%s: zstd close error"
+msgstr "%s: lzma เกิดข้อผิดพลาดในการปิด"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "invalid compression level for -%c: %ld"
+msgid "invalid compression level %d"
+msgstr "ค่าระดับการบีบอัดผิดพลาดสำหรับ -%c: %ld"
 
 #: lib/dpkg/compress.c
 msgid "unknown compression strategy"
@@ -661,6 +703,11 @@ msgstr "เลขรุ่นของรูปแบบแพกเกจไม
 msgid "format version followed by junk"
 msgstr "เลขรุ่นของรูปแบบแพกเกจมีค่าขยะต่อท้าย"
 
+#: lib/dpkg/debug.c
+#, c-format
+msgid "cannot parse debug mask from environment variable %s"
+msgstr ""
+
 #: lib/dpkg/dir.c
 #, c-format
 msgid "unable to get file descriptor for directory '%s'"
@@ -698,8 +745,9 @@ msgid "unable to set buffering on %s database file"
 msgstr "ไม่สามารถกำหนดบัฟเฟอร์สำหรับแฟ้มฐานข้อมูล %s"
 
 #: lib/dpkg/dump.c
-#, c-format
-msgid "failed to write %s database record about '%.50s' to '%.250s'"
+#, fuzzy, c-format
+#| msgid "failed to write %s database record about '%.50s' to '%.250s'"
+msgid "failed to write %s database stanza about '%s' to '%s'"
 msgstr "ไม่สามารถเขียนระเบียนฐานข้อมูล %s เกี่ยวกับ '%.50s' ลงใน '%.250s'"
 
 #: lib/dpkg/ehandle.c utils/update-alternatives.c
@@ -2754,12 +2802,13 @@ msgid ""
 "      --nocheck                    Suppress control file check (build bad\n"
 "                                     packages).\n"
 "      --root-owner-group           Forces the owner and groups to root.\n"
+"      --threads-max=<threads>      Use at most <threads> with compressor.\n"
 "      --[no-]uniform-compression   Use the compression params on all "
 "members.\n"
 "  -z#                              Set the compression level when building.\n"
 "  -Z<type>                         Set the compression type used when "
 "building.\n"
-"                                     Allowed types: gzip, xz, none.\n"
+"                                     Allowed types: gzip, xz, zstd, none.\n"
 "  -S<strategy>                     Set the compression strategy when "
 "building.\n"
 "                                     Allowed values: none; extreme (xz);\n"
@@ -2837,11 +2886,6 @@ msgstr "รุ่นของรูปแบบ deb ไม่ถูกต้อ�
 #, c-format
 msgid "unknown deb format version: %s"
 msgstr "ไม่รู้จักรุ่นของรูปแบบ deb: '%s'"
-
-#: src/deb/main.c
-#, c-format
-msgid "invalid compression level for -%c: %ld"
-msgstr "ค่าระดับการบีบอัดผิดพลาดสำหรับ -%c: %ld"
 
 #: src/deb/main.c
 #, c-format
@@ -3153,15 +3197,26 @@ msgstr ""
 "\n"
 
 #: src/split/main.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Options:\n"
+#| "  --depotdir <directory>           Use <directory> instead of %s/%s.\n"
+#| "  -S|--partsize <size>             In KiB, for -s (default is 450).\n"
+#| "  -o|--output <file>               Filename, for -j (default is\n"
+#| "                                     <package>_<version>_<arch>.deb).\n"
+#| "  -Q|--npquiet                     Be quiet when -a is not a part.\n"
+#| "  --msdos                          Generate 8.3 filenames.\n"
+#| "\n"
 msgid ""
 "Options:\n"
-"  --depotdir <directory>           Use <directory> instead of %s/%s.\n"
-"  -S|--partsize <size>             In KiB, for -s (default is 450).\n"
-"  -o|--output <file>               Filename, for -j (default is\n"
+"      --depotdir <directory>       Use <directory> instead of %s/%s.\n"
+"      --admindir <directory>       Use <directory> instead of %s.\n"
+"      --root <directory>           Use <directory> instead of %s.\n"
+"  -S, --partsize <size>            In KiB, for -s (default is 450).\n"
+"  -o, --output <file>              Filename, for -j (default is\n"
 "                                     <package>_<version>_<arch>.deb).\n"
-"  -Q|--npquiet                     Be quiet when -a is not a part.\n"
-"  --msdos                          Generate 8.3 filenames.\n"
+"  -Q, --npquiet                    Be quiet when -a is not a part.\n"
+"      --msdos                      Generate 8.3 filenames.\n"
 "\n"
 msgstr ""
 "ตัวเลือก:\n"
@@ -3832,14 +3887,6 @@ msgid "must be called from a maintainer script (or with a --by-package option)"
 msgstr "ใช้เรียกจากสคริปต์ผู้ดูแลแพกเกจเท่านั้น (หรือโดยใช้ตัวเลือก --by-package)"
 
 #: src/trigger/main.c
-msgid "triggers data directory not yet created"
-msgstr "ยังไม่ได้สร้างไดเรกทอรีข้อมูลการสะกิด"
-
-#: src/trigger/main.c
-msgid "trigger records not yet in existence"
-msgstr "ยังไม่มีระเบียนการสะกิด"
-
-#: src/trigger/main.c
 msgid "takes one argument, the trigger name"
 msgstr "รับอาร์กิวเมนต์แค่ตัวเดียว คือชื่อของการสะกิด"
 
@@ -3852,6 +3899,14 @@ msgstr "ชื่อแพกเกจที่รอคอย '%.255s' ไม�
 #, c-format
 msgid "invalid trigger name '%.250s': %.250s"
 msgstr "ชื่อการสะกิด `%.255s' ไม่ถูกต้อง: %.250s"
+
+#: src/trigger/main.c
+msgid "triggers data directory not yet created"
+msgstr "ยังไม่ได้สร้างไดเรกทอรีข้อมูลการสะกิด"
+
+#: src/trigger/main.c
+msgid "trigger records not yet in existence"
+msgstr "ยังไม่มีระเบียนการสะกิด"
 
 #: src/query/main.c src/main/select.c
 #, c-format
@@ -5522,7 +5577,8 @@ msgid ""
 "exclusion.\n"
 "  -O|--selected-only         Skip packages not selected for install/"
 "upgrade.\n"
-"  -E|--skip-same-version     Skip packages whose same version is installed.\n"
+"  -E|--skip-same-version     Skip packages with same installed version/"
+"arch.\n"
 "  -G|--refuse-downgrade      Skip packages with earlier version than "
 "installed.\n"
 "  -B|--auto-deconfigure      Install even if it would break some other "

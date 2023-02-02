@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.17.0\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2022-05-25 08:39+0000\n"
+"POT-Creation-Date: 2023-01-24 22:39+0000\n"
 "PO-Revision-Date: 2015-04-07 09:49+0200\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Esperanto <debian-l10n-esperanto@lists.debian.org>\n"
@@ -311,6 +311,48 @@ msgstr "%s: ferm-eraro de lzma"
 #, c-format
 msgid "%s: lzma error: %s"
 msgstr "%s: eraro de lzma: %s"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: lzma error: %s"
+msgid "%s: zstd error: %s"
+msgstr "%s: eraro de lzma: %s"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "cannot close decompressor pipe"
+msgid "%s: cannot create zstd decompression context"
+msgstr "ne eblas fermi malkompaktilan dukton"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "cannot close decompressor pipe"
+msgid "%s: cannot create zstd compression context"
+msgstr "ne eblas fermi malkompaktilan dukton"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: lzma read error"
+msgid "%s: zstd read error"
+msgstr "%s: leg-eraro de lzma"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: lzma write error"
+msgid "%s: zstd write error"
+msgstr "%s: skrib-eraro de lzma"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: lzma close error"
+msgid "%s: zstd close error"
+msgstr "%s: ferm-eraro de lzma"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "invalid compression level for -%c: %ld"
+msgid "invalid compression level %d"
+msgstr "malvalida densig-nivelo por -%c: %ld"
 
 #: lib/dpkg/compress.c
 msgid "unknown compression strategy"
@@ -670,6 +712,11 @@ msgstr "formo-versio kun malplena minora komponanto"
 msgid "format version followed by junk"
 msgstr "formo-versio sekvata de rubaĵo"
 
+#: lib/dpkg/debug.c
+#, c-format
+msgid "cannot parse debug mask from environment variable %s"
+msgstr ""
+
 #: lib/dpkg/dir.c
 #, c-format
 msgid "unable to get file descriptor for directory '%s'"
@@ -707,8 +754,9 @@ msgid "unable to set buffering on %s database file"
 msgstr "ne eblas ŝalti bufradon por datumbaza dosiero %s"
 
 #: lib/dpkg/dump.c
-#, c-format
-msgid "failed to write %s database record about '%.50s' to '%.250s'"
+#, fuzzy, c-format
+#| msgid "failed to write %s database record about '%.50s' to '%.250s'"
+msgid "failed to write %s database stanza about '%s' to '%s'"
 msgstr "malsukcesis skribi datumbazan registron %s je '%.50s' al '%.250s'"
 
 #: lib/dpkg/ehandle.c utils/update-alternatives.c
@@ -2788,12 +2836,13 @@ msgid ""
 "      --nocheck                    Suppress control file check (build bad\n"
 "                                     packages).\n"
 "      --root-owner-group           Forces the owner and groups to root.\n"
+"      --threads-max=<threads>      Use at most <threads> with compressor.\n"
 "      --[no-]uniform-compression   Use the compression params on all "
 "members.\n"
 "  -z#                              Set the compression level when building.\n"
 "  -Z<type>                         Set the compression type used when "
 "building.\n"
-"                                     Allowed types: gzip, xz, none.\n"
+"                                     Allowed types: gzip, xz, zstd, none.\n"
 "  -S<strategy>                     Set the compression strategy when "
 "building.\n"
 "                                     Allowed values: none; extreme (xz);\n"
@@ -2876,11 +2925,6 @@ msgstr "malvalida deb-forma versio: %s"
 #, c-format
 msgid "unknown deb format version: %s"
 msgstr "nekonata deb-forma versio: %s"
-
-#: src/deb/main.c
-#, c-format
-msgid "invalid compression level for -%c: %ld"
-msgstr "malvalida densig-nivelo por -%c: %ld"
 
 #: src/deb/main.c
 #, c-format
@@ -3201,15 +3245,26 @@ msgstr ""
 "\n"
 
 #: src/split/main.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Options:\n"
+#| "  --depotdir <directory>           Use <directory> instead of %s/%s.\n"
+#| "  -S|--partsize <size>             In KiB, for -s (default is 450).\n"
+#| "  -o|--output <file>               Filename, for -j (default is\n"
+#| "                                     <package>_<version>_<arch>.deb).\n"
+#| "  -Q|--npquiet                     Be quiet when -a is not a part.\n"
+#| "  --msdos                          Generate 8.3 filenames.\n"
+#| "\n"
 msgid ""
 "Options:\n"
-"  --depotdir <directory>           Use <directory> instead of %s/%s.\n"
-"  -S|--partsize <size>             In KiB, for -s (default is 450).\n"
-"  -o|--output <file>               Filename, for -j (default is\n"
+"      --depotdir <directory>       Use <directory> instead of %s/%s.\n"
+"      --admindir <directory>       Use <directory> instead of %s.\n"
+"      --root <directory>           Use <directory> instead of %s.\n"
+"  -S, --partsize <size>            In KiB, for -s (default is 450).\n"
+"  -o, --output <file>              Filename, for -j (default is\n"
 "                                     <package>_<version>_<arch>.deb).\n"
-"  -Q|--npquiet                     Be quiet when -a is not a part.\n"
-"  --msdos                          Generate 8.3 filenames.\n"
+"  -Q, --npquiet                    Be quiet when -a is not a part.\n"
+"      --msdos                      Generate 8.3 filenames.\n"
 "\n"
 msgstr ""
 "Elektebloj:\n"
@@ -3891,14 +3946,6 @@ msgstr ""
 "devas esti lanĉata el skripto de pakzorganto (aŭ kun elekteblo --by-package)"
 
 #: src/trigger/main.c
-msgid "triggers data directory not yet created"
-msgstr "datumara dosierujo de ekigiloj ankoraŭ ne estas kreitaj"
-
-#: src/trigger/main.c
-msgid "trigger records not yet in existence"
-msgstr "ekigilaj registraĵoj ankoraŭ ne ekzistas"
-
-#: src/trigger/main.c
 msgid "takes one argument, the trigger name"
 msgstr "prenas unu argumenton, la ekigil-nomon"
 
@@ -3911,6 +3958,14 @@ msgstr "malvalida atendata pak-nomo '%.250s': %.250s"
 #, c-format
 msgid "invalid trigger name '%.250s': %.250s"
 msgstr "malvalida ekigila nomo '%.250s': %.250s"
+
+#: src/trigger/main.c
+msgid "triggers data directory not yet created"
+msgstr "datumara dosierujo de ekigiloj ankoraŭ ne estas kreitaj"
+
+#: src/trigger/main.c
+msgid "trigger records not yet in existence"
+msgstr "ekigilaj registraĵoj ankoraŭ ne ekzistas"
 
 #: src/query/main.c src/main/select.c
 #, c-format
@@ -5613,7 +5668,8 @@ msgid ""
 "exclusion.\n"
 "  -O|--selected-only         Skip packages not selected for install/"
 "upgrade.\n"
-"  -E|--skip-same-version     Skip packages whose same version is installed.\n"
+"  -E|--skip-same-version     Skip packages with same installed version/"
+"arch.\n"
 "  -G|--refuse-downgrade      Skip packages with earlier version than "
 "installed.\n"
 "  -B|--auto-deconfigure      Install even if it would break some other "

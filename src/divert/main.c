@@ -40,6 +40,7 @@
 #include <dpkg/i18n.h>
 #include <dpkg/dpkg.h>
 #include <dpkg/dpkg-db.h>
+#include <dpkg/debug.h>
 #include <dpkg/arch.h>
 #include <dpkg/file.h>
 #include <dpkg/glob.h>
@@ -51,9 +52,6 @@
 static const char printforhelp[] = N_(
 "Use --help for help about diverting files.");
 
-static const char *admindir;
-const char *instdir;
-
 static bool opt_pkgname_match_any = true;
 static const char *opt_pkgname = NULL;
 static const char *opt_divertto = NULL;
@@ -63,8 +61,8 @@ static int opt_test = 0;
 static int opt_rename = -1;
 
 
-static void
-printversion(const struct cmdinfo *cip, const char *value)
+static int
+printversion(const char *const *argv)
 {
 	printf(_("Debian %s version %s.\n"), dpkg_get_progname(),
 	       PACKAGE_RELEASE);
@@ -75,11 +73,11 @@ printversion(const struct cmdinfo *cip, const char *value)
 
 	m_output(stdout, _("<standard output>"));
 
-	exit(0);
+	return 0;
 }
 
-static void
-usage(const struct cmdinfo *cip, const char *value)
+static int
+usage(const char *const *argv)
 {
 	printf(_(
 "Usage: %s [<option>...] <command>\n"
@@ -118,7 +116,7 @@ usage(const struct cmdinfo *cip, const char *value)
 
 	m_output(stdout, _("<standard output>"));
 
-	exit(0);
+	return 0;
 }
 
 static void
@@ -147,7 +145,7 @@ file_init(struct file *f, const char *filename)
 {
 	struct varbuf usefilename = VARBUF_INIT;
 
-	varbuf_add_str(&usefilename, instdir);
+	varbuf_add_str(&usefilename, dpkg_fsys_get_dir());
 	varbuf_add_str(&usefilename, filename);
 	varbuf_end_str(&usefilename);
 
@@ -482,6 +480,9 @@ diversion_add(const char *const *argv)
 
 	diversion_check_filename(filename);
 
+	modstatdb_open(msdbrw_readonly);
+	ensure_diversions();
+
 	file_init(&file_from, filename);
 	file_stat(&file_from);
 
@@ -521,6 +522,8 @@ diversion_add(const char *const *argv)
 
 			file_destroy(&file_from);
 			file_destroy(&file_to);
+
+			modstatdb_shutdown();
 
 			return 0;
 		}
@@ -570,6 +573,8 @@ diversion_add(const char *const *argv)
 
 	file_destroy(&file_from);
 	file_destroy(&file_to);
+
+	modstatdb_shutdown();
 
 	return 0;
 }
@@ -622,6 +627,9 @@ diversion_remove(const char *const *argv)
 
 	diversion_check_filename(filename);
 
+	modstatdb_open(msdbrw_readonly);
+	ensure_diversions();
+
 	namenode = fsys_hash_find_node(filename, FHFF_NONE);
 
 	if (namenode == NULL || namenode->divert == NULL ||
@@ -629,6 +637,7 @@ diversion_remove(const char *const *argv)
 		if (opt_verbose > 0)
 			printf(_("No diversion '%s', none removed.\n"),
 			       diversion_current(filename));
+		modstatdb_shutdown();
 		return 0;
 	}
 
@@ -661,6 +670,7 @@ diversion_remove(const char *const *argv)
 		if (opt_verbose > 0)
 			printf(_("Ignoring request to remove shared diversion '%s'.\n"),
 			       diversion_describe(contest));
+		modstatdb_shutdown();
 		return 0;
 	}
 
@@ -685,6 +695,8 @@ diversion_remove(const char *const *argv)
 	file_destroy(&file_from);
 	file_destroy(&file_to);
 
+	modstatdb_shutdown();
+
 	return 0;
 }
 
@@ -695,6 +707,9 @@ diversion_list(const char *const *argv)
 	struct fsys_namenode *namenode;
 	struct glob_node *glob_list = NULL;
 	const char *pattern;
+
+	modstatdb_open(msdbrw_readonly);
+	ensure_diversions();
 
 	while ((pattern = *argv++))
 		glob_list_prepend(&glob_list, m_strdup(pattern));
@@ -729,6 +744,8 @@ diversion_list(const char *const *argv)
 
 	glob_list_free(glob_list);
 
+	modstatdb_shutdown();
+
 	return 0;
 }
 
@@ -743,6 +760,9 @@ diversion_truename(const char *const *argv)
 
 	diversion_check_filename(filename);
 
+	modstatdb_open(msdbrw_readonly);
+	ensure_diversions();
+
 	namenode = fsys_hash_find_node(filename, FHFF_NONE);
 
 	/* Print the given name if file is not diverted. */
@@ -750,6 +770,8 @@ diversion_truename(const char *const *argv)
 		printf("%s\n", namenode->divert->useinstead->name);
 	else
 		printf("%s\n", filename);
+
+	modstatdb_shutdown();
 
 	return 0;
 }
@@ -765,6 +787,9 @@ diversion_listpackage(const char *const *argv)
 
 	diversion_check_filename(filename);
 
+	modstatdb_open(msdbrw_readonly);
+	ensure_diversions();
+
 	namenode = fsys_hash_find_node(filename, FHFF_NONE);
 
 	/* Print nothing if file is not diverted. */
@@ -777,6 +802,8 @@ diversion_listpackage(const char *const *argv)
 		printf("LOCAL\n");
 	else
 		printf("%s\n", namenode->divert->pkgset->name);
+
+	modstatdb_shutdown();
 
 	return 0;
 }
@@ -804,19 +831,6 @@ set_divertto(const struct cmdinfo *cip, const char *value)
 		badusage(_("divert-to may not contain newlines"));
 }
 
-static void
-set_instdir(const struct cmdinfo *cip, const char *value)
-{
-	instdir = dpkg_fsys_set_dir(value);
-}
-
-static void
-set_root(const struct cmdinfo *cip, const char *value)
-{
-	instdir = dpkg_fsys_set_dir(value);
-	admindir = dpkg_fsys_get_path(ADMINDIR);
-}
-
 static const struct cmdinfo cmdinfo_add =
 	ACTION("add",         0, 0, diversion_add);
 
@@ -826,8 +840,10 @@ static const struct cmdinfo cmdinfos[] = {
 	ACTION("list",        0, 0, diversion_list),
 	ACTION("listpackage", 0, 0, diversion_listpackage),
 	ACTION("truename",    0, 0, diversion_truename),
+	ACTION("help",        '?', 0, usage),
+	ACTION("version",     0,   0, printversion),
 
-	{ "admindir",   0,   1,  NULL,         &admindir, NULL          },
+	{ "admindir",   0,   1,  NULL,         NULL,      set_admindir, 0 },
 	{ "instdir",    0,   1,  NULL,         NULL,      set_instdir,  0 },
 	{ "root",       0,   1,  NULL,         NULL,      set_root,     0 },
 	{ "divert",     0,   1,  NULL,         NULL,      set_divertto  },
@@ -837,8 +853,6 @@ static const struct cmdinfo cmdinfos[] = {
 	{ "rename",     0,   0,  &opt_rename,  NULL,      NULL, 1       },
 	{ "no-rename",  0,   0,  &opt_rename,  NULL,      NULL, 0       },
 	{ "test",       0,   0,  &opt_test,    NULL,      NULL, 1       },
-	{ "help",      '?',  0,  NULL,         NULL,      usage         },
-	{ "version",    0,   0,  NULL,         NULL,      printversion  },
 	{  NULL,        0                                               }
 };
 
@@ -852,8 +866,7 @@ main(int argc, const char * const *argv)
 	dpkg_program_init("dpkg-divert");
 	dpkg_options_parse(&argv, cmdinfos, printforhelp);
 
-	instdir = dpkg_fsys_set_dir(instdir);
-	admindir = dpkg_db_set_dir(admindir);
+	debug(dbg_general, "root=%s admindir=%s", dpkg_fsys_get_dir(), dpkg_db_get_dir());
 
 	env_pkgname = getenv("DPKG_MAINTSCRIPT_PACKAGE");
 	if (opt_pkgname_match_any && env_pkgname)
@@ -862,12 +875,7 @@ main(int argc, const char * const *argv)
 	if (!cipaction)
 		setaction(&cmdinfo_add, NULL);
 
-	modstatdb_open(msdbrw_readonly);
-	ensure_diversions();
-
 	ret = cipaction->action(argv);
-
-	modstatdb_shutdown();
 
 	dpkg_program_done();
 	dpkg_locales_done();

@@ -26,7 +26,13 @@ Os ficheiros em B<%PKGCONFDIR%/origins> podem fornecer informação acerca de v�
 
 Eles contêm um número de campos, ou comentários quando a linha começa com ‘B<#>’. Cada campo começa com uma etiqueta, tal como B<Vendor> ou B<Parent>, seguida de dois pontos e o corpo do campo. Os campos são delimitados apenas por etiquetas de campos. Por outras palavras, o texto de um campo pode ter várias linhas de comprimento. mas as ferramentas irão juntar as linhas quando processarem o corpo do campo.
 
-O ficheiro deve ser nomeado de acordo com o nome do fornecedor. A convenção usual é nomear o ficheiro vendor usando o nome do fornecedor todo em minúsculas, mas é permitida alguma variação. Nomeadamente, os espaços são mapeados para traços (‘B<->’), e o ficheiro pode ter o mesmo invólucro que o valor no campo B<Vendor>, ou pode ser capitalizado.
+O ficheiro deve ser nomeado de acordo com o nome do fornecedor. A convenção usual é nomear o ficheiro vendor usando o nome do fornecedor todo em minúsculas, mas é permitida alguma variação.
+
+Nomeadamente (desde dpkg 1.21.10), primeiro, os caracteres não-alfanuméricos (‘B<[^A-Za-z0-9]>’) são mapeados para traços (‘B<->’), depois o nome resultante irá ser testado em sequência ao pôr-lo em minúsculas, mantendo-o como está, minúsculas depois capitalizando-o (isto é maiúscula no primeiro caractere), e apenas capitalizando-o.
+
+Adicionalmente, para histórico e compatibilidade com versões anteriores, O nome irá ser testado mantendo-o como está sem o re-mapeamento dos caracteres não-alfanuméricos, depois o nome resultante será testado em sequência ao converte-lo para minúsculas, mantendo-o com está, minúsculas e depois capitalizando-o.  E finalmente o nome será testado ao re-mapear espaços para traços (‘B<->’), depois o nome resultante será testado em sequência ao converte-lo para minúsculas, mantendo-o com está, minúsculas e depois capitalizando-o, e apenas capitalizando-o.
+
+Mas estas buscas de módulo de compatibilidade com versões anteriores serão removidas durante o ciclo de lançamento 1.22.x do dpkg.
 
 =head1 CAMPOS
 

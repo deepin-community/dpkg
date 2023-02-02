@@ -18,25 +18,25 @@ deb-substvars - Substitutievariabelen in Debian broncode
 
 =head1 OVERZICHT
 
-B<debian/substvars>, B<debian/>I<binary-package>B<.substvars>, variables
+B<debian/substvars>, B<debian/>I<binair-pakket>B<.substvars>, variabelen
 
 =head1 BESCHRIJVING
 
 Vooraleer B<dpkg-source>, B<dpkg-gencontrol> en B<dpkg-genchanges> hun comtrole-informatie neerschrijven (naar het broncodecontrolebestand B<.dsc> in het geval van B<dpkg-source> en naar standaarduitvoer in het geval van B<dpkg-gencontrol> en B<dpkg-genchanges>), voeren ze een aantal variabelesubstituties uit op het uitvoerbestand.
 
-=head2 Variable Syntax
+=head2 Variabelesyntaxis
 
 Een variabelesubstitutie heeft als vorm B<${>I<variabelenaam>B<}>. Variabelenamen bestaan uit alfanumerieke tekens (a-zA-Z0-9), koppeltekens (-) en dubbele punten (:) en beginnen met een alfanumeriek teken. Ze zijn ook hoofdlettergevoelig, ook al kunnen ze verwijzen naar andere entiteiten die hoofdletterbehoudend zijn. Variabelesubstituties worden bij herhaling uitgevoerd tot er geen meer overblijven. Na een substitutie wordt de volledige tekst van het veld opnieuw doorzocht op nog meer uit te voeren substituties.
 
-=head2 File Syntax
+=head2 Bestandssyntaxis
 
-Substitution variables can be specified in a file.  These files consist of lines of the form I<name>B<=>I<value> or I<name>B<?=>I<value>.  The B<=> operator assigns a normal substitution variable, while the B<?=> operator (since dpkg 1.21.8) assigns an optional substitution variable which will emit no warnings even if unused.  Trailing whitespace on each line, blank lines, and lines starting with a B<#> symbol (comments) are ignored.
+Substitutievariabelen kunnen in een bestand worden opgegeven. Deze bestanden bestaan uit regels van de vorm I<naam>B<=>I<waarde> of I<naam>B<?=>I<waarde>. De operator B<=> wijst een normale substitutievariabele toe, terwijl de operator B<?=> (sinds dpkg 1.21.8) een optionele substitutievariabele toewijst die geen waarschuwingen geeft, zelfs als deze niet wordt gebruikt. Resterende witruimte op elke regel, lege regels en regels die beginnen met het symbool B<#> (commentaar) worden genegeerd.
 
-=head2 Substitution
+=head2 Substitutie
 
-Variables can be set using the B<-V> common option.  They can be also specified in the file B<debian/substvars> (or whatever other file is specified using the B<-T> common option).
+Variabelen kunnen ingesteld worden met behulp van de algemene optie B<-V>. Ze kunnen ook opgegeven worden in het bestand B<debian/substvars> (of om het even welk ander bestand dat opgegeven wordt met de algemene optie B<-T>).
 
-After all the substitutions have been done each occurrence of the string B<${}> (which is not an actual substitution variable) is replaced with a B<$> sign.  This can be used as an escape sequence such as B<${}{>I<VARIABLE>B<}> which will end up as B<${>I<VARIABLE>B<}> on the output.
+Nadat alle substituties uitgevoerd werden, wordt de tekenreeks B<${}> (wat geen daadwerkelijke substitutievariabele is) overal waar die voorkomt, vervangen door het teken B<$>. Dit kan gebruikt worden als een escape-sequentie zoals B<${}{>I<VARIABELE>B<}>, wat in de uitvoer de vorm zal aannemen van B<${>I<VARIABELE>B<}>.
 
 Indien er gerefereerd wordt naar een niet-gedefinieerde variabele, wordt een waarschuwing gegeven en wordt verondersteld dat de waarde ervan leeg is.
 
@@ -57,9 +57,9 @@ Dit zal dit resulteren in:
   .
   Bijkomende tekst.
 
-=head2 Built-in Variable
+=head2 Ingebouwde Variabele
 
-Additionally, the following standard variables are always available:
+Daarnaast zijn altijd de volgende standaardvariabelen beschikbaar::
 
 =over 
 

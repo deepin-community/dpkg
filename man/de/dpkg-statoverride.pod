@@ -32,7 +32,7 @@ B<dpkg-statoverride> ist ein Hilfswerkzeug, um die Liste der Status-Hinwegsetzun
 
 =item B<--add> I<Benutzer Gruppe Modus Pfad>
 
-Fügt eine Hinwegsetzung für I<Pfad> hinzu. I<Pfad> muss noch nicht existieren, wenn dieser Befehl verwendet wird; die Hinwegsetzung wird aufbewahrt und später verwendet. Benutzer und Gruppen können über ihren Namen (beispielsweise B<root> oder B<nobody>) spezifiziert werden, oder über ihre Nummer mit vorangestelltem ‚B<#>’ (beispielsweise B<#0> oder B<#65534>). Der I<Modus> muss oktal angegeben werden.
+Fügt eine Hinwegsetzung für I<Pfad> hinzu. I<Pfad> muss noch nicht existieren oder B<dpkg> bekannt sein, wenn dieser Befehl verwendet wird; die Hinwegsetzung wird aufbewahrt und später verwendet. Benutzer und Gruppen können über ihren Namen (beispielsweise B<root> oder B<nobody>) spezifiziert werden, oder über ihre Nummer mit vorangestelltem ‚B<#>’ (beispielsweise B<#0> oder B<#65534>). Der I<Modus> muss oktal angegeben werden.
 
 Falls B<--update> angegeben ist und I<Pfad> existiert, dann wird dieser sofort auf den neuen Eigentümer und Modus eingestellt.
 
@@ -136,6 +136,10 @@ Falls gesetzt und die Option B<--instdir> oder B<--root> nicht angegeben wurde, 
 
 Falls gesetzt und die Option B<--admindir> oder B<--root> nicht verwandt wurde, wird dies als Datenverzeichnis von B<dpkg> verwandt.
 
+=item B<DPKG_DEBUG>
+
+Setzt die Fehlersuchmaske (seit Dpkg 1.21.10) aus einem oktalen Wert. Die derzeit akzeptierten Schalter werden in der Option B<dpkg --debug> beschrieben, aber nicht alle dieser Schalter könnten Auswirkungen auf dieses Programm haben.
+
 =item B<DPKG_FORCE>
 
 Falls gesetzt und keine der Optionen B<--force->I<…> festgelegt wurde, wird sie als die zu verwendenden Erzwingungsoptionen verwandt (seit Dpkg 1.19.5).
@@ -165,7 +169,7 @@ B<dpkg>(1).
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

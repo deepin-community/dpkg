@@ -66,5 +66,5 @@ Wanneer een pakket voorziet in een stuurcommando B<interest-noawait>, zal elke a
 
 =head1 ZIE OOK
 
-B<dpkg-trigger>(1), B<dpkg>(1), B<%PKGDOCDIR%/triggers.txt.gz>.
+B<dpkg-trigger>(1), B<dpkg>(1), B<%PKGDOCDIR%/spec/triggers.txt>.
 

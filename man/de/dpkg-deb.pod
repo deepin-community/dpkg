@@ -132,7 +132,7 @@ Die Voreinstellung für dieses Feld ist „${Package}\t${Version}\n“.
 
 =item B<-z>I<Komprimierstufe>
 
-Gibt die Komprimierstufe an, die im Komprimier-Backendprogramm beim Bau eines Pakets verwendet werden soll. Standardmäßig ist dies 9 für Gzip, 6 für Xz. Die akzeptierten Werte innerhalb von 0-9 sind: 0 wird auf den Komprimierer „none“ für Gzip einstellen. Vor Dpkg 1.16.2 war die Stufe 0 äquivalent zu dem Komprimierer „none“ für alle Komprimierer.
+Gibt die Komprimierstufe an, die im Komprimier-Backendprogramm beim Bau eines Pakets verwendet werden soll. Standardmäßig ist dies 9 für Gzip, 6 für Xz, 3 für Zstd). Die akzeptierten Werte hängen vom Komprimierer ab. Für Gzip von 0-9, wobei 0 auf den Komprimierer „none“ abgebildet wird. Für Xz von 0-9. Für Zstd von 0-22, wobei die Stufen von 20-22 den Ultramodus aktivieren. Vor Dpkg 1.16.2 war die Stufe 0 äquivalent zu dem Komprimierer „none“ für alle Komprimierer.
 
 =item B<-S>I<Komprimierstrategie>
 
@@ -140,11 +140,15 @@ Gibt die zu verwendende Komprimierstrategie an, die für den Komprimierer-Backen
 
 =item B<-Z>I<Komprimierart>
 
-Gibt die Art der Komprimierung beim Bau eines Pakets an. Erlaubte Werte sind B<gzip>, B<xz> (seit Dpkg 1.15.6) und B<none> (voreingestellt ist B<xz>).
+Gibt die Art der Komprimierung beim Bau eines Pakets an. Erlaubte Werte sind B<gzip>, B<xz> (seit Dpkg 1.15.6), B<zstd> (seit Dpkg 1.21.18) und B<none> (voreingestellt ist B<xz>).
 
 =item B<--[no-]uniform-compression>
 
-Gibt an, dass die gleichen Komprimierungsparameter für alle Archivteile (d.h. B<control.tar> und B<data.tar>; seit Dpkg 1.17.6) verwandt werden sollen. Andernfalls wird nur der Teil B<data.tar> diese Parameter verwenden. Die einzigen unterstützten Kompressionstypen, die übergreifend benutzt werden dürfen, sind B<none>, B<gzip> und B<xz>. Die Option B<--no-uniform-compression> deaktiviert die übergreifende Komprimierung (seit Dpkg 1.19.0). Übergreifende Komprimierung ist die Vorgabe (seit Dpkg 1.19.0).
+Gibt an, dass die gleichen Komprimierungsparameter für alle Archivteile (d.h. B<control.tar> und B<data.tar>; seit Dpkg 1.17.6) verwandt werden sollen. Andernfalls wird nur der Teil B<data.tar> diese Parameter verwenden. Die einzigen unterstützten Kompressionstypen, die übergreifend benutzt werden dürfen, sind B<none>, B<gzip>, B<xz> und B<zstd>. Die Option B<--no-uniform-compression> deaktiviert die übergreifende Komprimierung (seit Dpkg 1.19.0). Übergreifende Komprimierung ist die Vorgabe (seit Dpkg 1.19.0).
+
+=item B<--threads-max=>I<Threads>
+
+Setzt die maximale Anzahl an Threads, die für Komprimierer erlaubt sind, die multi-threaded Aktionen erlauben (seit Dpkg 1.21.9).
 
 =item B<--root-owner-group>
 
@@ -190,6 +194,24 @@ Fataler oder nicht behebbarer Fehler aufgrund eines ungültigen Befehlszeilenauf
 
 =over 
 
+=item B<DPKG_DEB_THREADS_MAX>
+
+Setzt die maximale Anzahl an Threads, die für Komprimierer erlaubt sind, die multi-threaded Aktionen erlauben (seit Dpkg 1.21.9).
+
+Die Option B<--threads-max> erlaubt das Hinwegsetzen über diesen Wert.
+
+=item B<DPKG_DEB_COMPRESSOR_TYPE>
+
+Setzt den zu verwendenden Komprimiertyp (seit Dpkg 1.21.10).
+
+Die Option B<-Z> erlaubt das Hinwegsetzen über diesen Wert.
+
+=item B<DPKG_DEB_COMPRESSOR_LEVEL>
+
+Setzt die zu verwendende Komprimierstufe (seit Dpkg 1.21.10).
+
+Die Option B<-z> erlaubt das Hinwegsetzen über diesen Wert.
+
 =item B<DPKG_COLORS>
 
 Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte sind: B<auto> (Vorgabe), B<always> und B<never>.
@@ -216,12 +238,12 @@ B<.deb>-Dateien werden nicht authentifiziert; in der Tat gibt es noch nicht mal 
 
 =head1 SIEHE AUCH
 
-B<deb>(5), B<deb-control>(5), B<dpkg>(1), B<dselect>(1).
+F<%PKGDOCDIR%/spec/rootless-builds.txt>, B<deb>(5), B<deb-control>(5), B<dpkg>(1), B<dselect>(1).
 
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

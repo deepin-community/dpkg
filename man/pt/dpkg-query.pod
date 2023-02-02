@@ -94,7 +94,9 @@ O formato de saída desta opção não é configurável, mas varia automaticamen
 
 =item B<-W>, B<--show> [I<package-name-pattern>...]
 
-Tal como a opção B<--list> isto irá listar todos os pacotes que correspondem aos padrões fornecidos. No entanto, o resultado pode ser personalizado usando a opção B<--showformat>. O formato de saída predefinido mostra um pacote correspondente por linha, cada linha a ter o nome (estendido com o qualificador de arquitectura para pacotes B<Multi-Arch> B<same>) e a versão instalada do pacote, separada por um tab.
+Tal como a opção B<--list> isto irá listar todos os pacotes que correspondem aos padrões dados. No entanto o resultado pode ser personalizado usando a opção B<--showformat>.
+
+O formato de resultados predefinido dá uma linha por pacote correspondente, cada linha consistindo do nome do pacote e a sua versão instalada, separados por um tab. O nome de pacote será qualificado de arquitectura para pacotes com um campo B<Multi-Arch> com o valor B<same> ou com uma arquitectura alienígena, a qual é uma arquitectura que não é a nativa nem B<all>.
 
 =item B<-s>, B<--status> [I<package-name>...]
 
@@ -290,7 +292,7 @@ Os seguintes são campos virtuais,m gerados pelo B<dpkg-query> a partir de valor
 
 =item B<binary:Package>
 
-Contém o nome do pacote binário com um possível qualificador de arquitectura como “libc6:amd64” (desde dpkg 1.16.2). Um qualificador de arquitectura irá estar presente para tornar o nome do pacote não-ambiguo, por exemplo se o pacote tem um campo B<Multi-Arch> com um valor de B<same> ou o pacote é de uma arquitectura alienígena.
+Contém o nome do pacote binário com um possível qualificador de arquitectura como “libc6:amd64” (desde dpkg 1.16.2). Um qualificador de arquitectura irá estar presente para tornar o nome do pacote não-ambiguo, para pacotes com um campo B<Multi-Arch> com o valor de B<same> ou com uma arquitectura alienígena, a qual é uma arquitectura que não é a nativa nem B<all>.
 
 =item B<binary:Synopsis>
 
@@ -390,6 +392,10 @@ Se definido e a opção B<--root> não foi especificada, será usado como o dire
 =item B<DPKG_ADMINDIR>
 
 Se definido e a opção B<--admindir> não for especificada, será usado como o directório de dados do B<dpkg>.
+
+=item B<DPKG_DEBUG>
+
+Define a máscara de depuração (desde dpkg 1.21.10) a partir dum valor octal. As bandeiras presentemente aceites estão descritas na opção B<dpkg --debug>, mas nem todas estas bandeiras podem ter um efeito neste programa.
 
 =item B<DPKG_COLORS>
 

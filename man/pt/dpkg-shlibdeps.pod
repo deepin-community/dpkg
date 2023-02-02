@@ -118,7 +118,7 @@ Escreve as definições de variáveis de substituição na saída standard (ou I
 
 =item B<-t>I<type>
 
-Informação etiquetada de dependência de biblioteca partilhada preferida para o tipo de pacote dado. Se não existir informação etiquetada, cai para a informação não etiquetada. O tipo de pacote predefinido é B<deb>. A informação de dependência de biblioteca partilhada é etiquetada para um determinado tipo ao prefixá-la com o nome to tipo, dois pontos, e espaço em branco.
+Informação etiquetada de dependência de biblioteca partilhada preferida para o tipo de pacote dado. Se não existir informação etiquetada, cai para a informação não etiquetada. O tipo de pacote predefinido é B<deb>. A informação de dependência de biblioteca partilhada é etiquetada para um determinado tipo ao prefixa-la com o nome to tipo, dois pontos, e espaço em branco.
 
 =item B<-L>I<local-shlibs-file>
 

@@ -50,11 +50,21 @@ Indien deze upload bugs oplost die vermeld staan in het bugvolgsysteem van de di
 
 =over 
 
-B<Closes: Bug#>I<nnnnn>
+B<Closes: #>I<nnnnn>
 
 =back
 
-opgenomen wordt in de beschrijving van de wijzigingen (de exacte Perl reguliere expressie is B</closes:\s*(?:bug)?\#?\s?\d+(?:,\s*(?:bug)?\#?\s?\d+)*/i>). Deze informatie wordt overgedragen via het veld B<Closes> in het bestand I<.changes>.
+in de informatie over de wijziging, waarbij B<#>I<nnnnn> het bugnummer is. De exacte Perl reguliere expressie is:
+
+=over 
+
+B</closes:\s*(?:bug)?\#?\s?\d+(?:,\s*(?:bug)?\#?\s?\d+)*/i>
+
+=back
+
+Dat wil zeggen dat de tekenreks moet bestaan uit het woord B<closes:> gevolgd door een door komma's gescheiden lijst met bugnummers. Bugnummers kunnen worden voorafgegaan door het woord B<bug> en/of een B<#>-teken, zoals in C<Closes: 42, bug#43, #44, bug 45>. De woorden B<closes:> en B<bug> zijn niet hoofdlettergevoelig. De lijst met bugnummers kan meerdere regels beslaan.
+
+Deze informatie wordt overgebracht via het veld B<Closes> in het bestand I<.changes>, waarbij, afhankelijk van de software voor archiefonderhoud, alle vermelde bugnummers automatisch gesloten kunnen worden.
 
 De naam van de onderhouder en het e-mailadres die in het changelog-bestand vermeld worden moeten betrekking hebben op de persoon die deze release van het pakket voorbereidde. Deze gegevens betreffen B<niet> noodzakelijk de persoon die het pakket uploadt of de persoon die het pakket gewoonlijk onderhoudt. De hier vermelde informatie wordt gekopieerd naar het veld B<Changed-By> in het bestand I<.changes> en zal later, wanneer de upload in het distributiearchief ondergebracht wordt, gebruikt worden voor het zenden van een kennisgeving.
 

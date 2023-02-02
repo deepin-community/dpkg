@@ -134,7 +134,11 @@ Se definido e as opções B<--admindir> ou B<--root> não foram especificadas, s
 
 =item B<DPKG_MAINTSCRIPT_PACKAGE>
 
-Se definido e as opções B<--local> e B<--package> não foram especificadas, B<dpkg-divert> irá usá-lo como o nome do pacote.
+Se definido e as opções B<--local> e B<--package> não foram especificadas, B<dpkg-divert> irá usa-lo como o nome do pacote.
+
+=item B<DPKG_DEBUG>
+
+Define a máscara de depuração (desde dpkg 1.21.10) a partir dum valor octal. As bandeiras presentemente aceites estão descritas na opção B<dpkg --debug>, mas nem todas estas bandeiras podem ter um efeito neste programa.
 
 =item B<DPKG_COLORS>
 

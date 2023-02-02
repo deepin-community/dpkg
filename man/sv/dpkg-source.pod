@@ -124,7 +124,7 @@ Du kan ange ett reguljärt uttryck i perlformat för att matcha filer som du vil
 
 B<-i> ensamt aktiverar inställningen, med ett standardvärde (bibehåller modifieringar till standarduttrycket som gjorts med tidigare användning av B<--extend-diff-ignore>) som filtrerar ut styrfiler och kataloger från de flesta vanliga versionshanteringssystem, säkerhetskopior, växlingsfiler och Libtool-byggutdatakataloger. Endast ett reguljärt kan vara aktivt, om du anger flera B<-i>-flaggor är det den sista som gäller.
 
-Flaggan är mycket användbar för att utesluta extrafiler som kommer med i diffen, t.ex om du underhåller din källkod i ett versionshanteringssystem och vill använda en utcheckning för att bygga ett källkodspaket utan att ta med de ytterligare filer och det normalt innehåller (t.ex CVS/, .cvsignore, .svn/). Det förvalda reguljära uttrycket täcker redan in många av dessa, men om du ändrar det, kom ihåg att det som standard kan träffa alla delar av filnamnet. Så, om du träffa bara början av ett filnamn eller hela filnamn måste du själv lägga till de förankringar som är nödvändiga (t.ex ”(^|/)”, ”($|/)”).
+This is very helpful in cutting out extraneous files that get included in the diff, for example if you maintain your source in a revision control system and want to use a checkout to build a source package without including the additional files and directories that it will usually contain (e.g. CVS/, .cvsignore, .svn/). The default regex is already very exhaustive, but if you need to replace it, please note that by default it can match any part of a path, so if you want to match the begin of a filename or only full filenames, you will need to provide the necessary anchors (e.g. ‘(^|/)’, ‘($|/)’) yourself.
 
 =item B<--extend-diff-ignore>=I<reg.uttr>
 
@@ -169,6 +169,20 @@ Vägra packa upp källkodspaketet om det inte innehåller några starka kontroll
 =item B<--ignore-bad-version>
 
 Ändrar testet för felaktig källkodspaketversion till en icke-ödesdiger varning (sedan dpkg 1.17.7). Flaggan är endast nödvändig vid uppackning av väldigt gamla källkodspaket med trasiga versioner, bara för bakåtkompatibilitet.
+
+=back
+
+=head2 Generic general options
+
+=over 
+
+=item B<--threads-max=>I<trådar>
+
+Sets the maximum number of threads allowed for compressors that support multi-threaded operations (since dpkg 1.21.14).
+
+=item B<-q>
+
+Sets quiet mode to suppress warnings.
 
 =back
 

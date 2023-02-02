@@ -22,7 +22,7 @@ B<DEBIAN/symbols>
 
 =head1 DESCRIÇÃO
 
-Os ficheiros symbol são enviados em pacotes binários Debian, e o seu formato é um sub-conjunto dos ficheiros symbol modelo usados por B<dpkg-gensymbols>(1)  em pacotes fonte Debian.
+Os ficheiros symbol são enviados em pacotes binários Debian, e o seu formato é um sub-conjunto dos ficheiros symbol modelo usados por B<dpkg-gensymbols>(1)  em pacotes fonte Debian, veja L<deb-src-symbols(5)>.
 
 O formato para uma entrada de informação de dependência de biblioteca partilhada extensiva nestes ficheiros é:
 
@@ -81,7 +81,7 @@ Um alias descontinuado para B<Allow-Internal-Symbol-Groups> (desde dpkg 1.20.1, 
 
 =head1 VEJA TAMBÉM
 
-L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
+L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, L<deb-src-symbols(5)>, B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
 
 
 =head1 TRADUÇÃO

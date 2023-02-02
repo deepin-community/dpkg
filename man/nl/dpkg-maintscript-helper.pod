@@ -113,6 +113,8 @@ Huidige toepassing: het script B<preinst> controleert of het configuratiebestand
 
 Bij het opwaarderen van een pakket zal B<dpkg> niet automatisch een symbolische koppeling omzetten naar een map of vice versa. Degradaties worden niet ondersteund en het pad wordt onveranderd gelaten.
 
+Opmerking: de symbolische koppelingen en mappen die tijdens deze omzettingen worden gemaakt, moeten mee opgenomen worden in de nieuwe pakketten, anders kan B<dpkg> ze niet verwijderen bij het wissen van het pakket.
+
 =head2 Een symbolische koppeling omzetten naar een map
 
 Indien een symbolische koppeling veranderd wordt naar een echte map, moet u er voor zorgen dat de symbolische koppeling verwijderd wordt voor het uitpakken. Op het eerste gezicht kan dit een eenvoudige wijziging in het script B<preinst> lijken. Nochtans kan dit enige problemen opleveren in het geval de systeembeheerder de symbolische koppeling lokaal aanpaste of bij een degradatie van het pakket.

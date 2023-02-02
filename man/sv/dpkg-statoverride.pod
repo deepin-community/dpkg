@@ -32,7 +32,7 @@ B<dpkg-statoverride> är ett verktyg för att hantera listan över stat-översty
 
 =item B<--add> I<användare grupp läge sökväg>
 
-Lägg till en överstyrning för I<sökväg>. I<sökväg> behöver inte existera när kommandot körs; överstyrningen kommer lagras och användas senare. Användare och grupper kan anges med namn (till exempel B<root> eller B<nobody>), eller med deras nummer med ett ”B<#>” (till exempel B<#0> eller B<#65534>). I<läge> måste anges oktalt.
+Lägg till en överstyrning för I<sökväg>. I<sökväg> behöver inte existera eller vara känd av B<dpkg> när kommandot körs; överstyrningen kommer lagras och användas senare. Användare och grupper kan anges med namn (till exempel B<root> eller B<nobody>), eller med deras nummer med ett ”B<#>” (till exempel B<#0> eller B<#65534>). I<läge> måste anges oktalt.
 
 Om B<--update> anges och I<sökväg> existerar kommer den omedelbart att sättas till den nya användaren och läget.
 
@@ -90,7 +90,7 @@ B<statoverride-remove>: Ignorera en saknad stat-överstyrning när den tas bort 
 
 B<security-mac>(*): Använd platformsspecifik säkerhet baserad på obligatorisk åtkomststyrning (Mandatory Access Controls, MAC) när filer installeras i filsystemet (sedan dpkg 1.19.5). På Linuxsystem använder implementationen SELinux.
 
-B<not-root>: Try to (de)install things even when not root (since dpkg 1.21.8).
+B<not-root>: Försök (av)installera saker även utan att vara root (sedan dpkg 1.21.8).
 
 =item B<--force>
 
@@ -135,6 +135,10 @@ Om satt och flaggorna B<--instdir> och B<--root> inte har angivits används det 
 =item B<DPKG_ADMINDIR>
 
 Om satt, och flaggorna B<--admindir> eller B<--root> inte har angivits, används värdet som datakatalog för B<dpkg>.
+
+=item B<DPKG_DEBUG>
+
+Sets the debug mask (since dpkg 1.21.10) from an octal value.  The currently accepted flags are described in the B<dpkg --debug> option, but not all these flags might have an effect on this program.
 
 =item B<DPKG_FORCE>
 

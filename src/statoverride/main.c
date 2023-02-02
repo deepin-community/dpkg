@@ -40,6 +40,7 @@
 #include <dpkg/i18n.h>
 #include <dpkg/dpkg.h>
 #include <dpkg/dpkg-db.h>
+#include <dpkg/debug.h>
 #include <dpkg/string.h>
 #include <dpkg/path.h>
 #include <dpkg/dir.h>
@@ -54,8 +55,8 @@
 static const char printforhelp[] = N_(
 "Use --help for help about overriding file stat information.");
 
-static void DPKG_ATTR_NORET
-printversion(const struct cmdinfo *cip, const char *value)
+static int
+printversion(const char *const *argv)
 {
 	printf(_("Debian %s version %s.\n"), dpkg_get_progname(),
 	       PACKAGE_RELEASE);
@@ -66,11 +67,11 @@ printversion(const struct cmdinfo *cip, const char *value)
 
 	m_output(stdout, _("<standard output>"));
 
-	exit(0);
+	return 0;
 }
 
-static void DPKG_ATTR_NORET
-usage(const struct cmdinfo *cip, const char *value)
+static int
+usage(const char *const *argv)
 {
 	printf(_(
 "Usage: %s [<option> ...] <command>\n"
@@ -101,31 +102,15 @@ usage(const struct cmdinfo *cip, const char *value)
 
 	m_output(stdout, _("<standard output>"));
 
-	exit(0);
+	return 0;
 }
 
 #define FORCE_STATCMD_MASK \
 	FORCE_NON_ROOT | \
 	FORCE_SECURITY_MAC | FORCE_STATOVERRIDE_ADD | FORCE_STATOVERRIDE_DEL
 
-static const char *admindir;
-const char *instdir;
-
 static int opt_verbose = 1;
 static int opt_update = 0;
-
-static void
-set_instdir(const struct cmdinfo *cip, const char *value)
-{
-	instdir = dpkg_fsys_set_dir(value);
-}
-
-static void
-set_root(const struct cmdinfo *cip, const char *value)
-{
-	instdir = dpkg_fsys_set_dir(value);
-	admindir = dpkg_fsys_get_path(ADMINDIR);
-}
 
 static char *
 path_cleanup(const char *path)
@@ -272,6 +257,8 @@ statoverride_add(const char *const *argv)
 	if (strchr(path, '\n'))
 		badusage(_("path may not contain newlines"));
 
+	ensure_statoverrides(STATDB_PARSE_LAX);
+
 	filename = path_cleanup(path);
 
 	filestat = statdb_node_find(filename);
@@ -291,7 +278,7 @@ statoverride_add(const char *const *argv)
 		struct stat st;
 		struct varbuf realfilename = VARBUF_INIT;
 
-		varbuf_add_str(&realfilename, instdir);
+		varbuf_add_str(&realfilename, dpkg_fsys_get_dir());
 		varbuf_add_str(&realfilename, filename);
 		varbuf_end_str(&realfilename);
 
@@ -322,6 +309,8 @@ statoverride_remove(const char *const *argv)
 	if (!path || argv[1])
 		badusage(_("--%s needs a single argument"), "remove");
 
+	ensure_statoverrides(STATDB_PARSE_LAX);
+
 	filename = path_cleanup(path);
 
 	if (!statdb_node_remove(filename)) {
@@ -351,6 +340,8 @@ statoverride_list(const char *const *argv)
 	const char *thisarg;
 	struct glob_node *glob_list = NULL;
 	int ret = 1;
+
+	ensure_statoverrides(STATDB_PARSE_LAX);
 
 	while ((thisarg = *argv++)) {
 		char *pattern = path_cleanup(thisarg);
@@ -391,8 +382,10 @@ static const struct cmdinfo cmdinfos[] = {
 	ACTION("add",    0, act_install,   statoverride_add),
 	ACTION("remove", 0, act_remove,    statoverride_remove),
 	ACTION("list",   0, act_listfiles, statoverride_list),
+	ACTION("help",   '?', act_help,    usage),
+	ACTION("version", 0,  act_version, printversion),
 
-	{ "admindir",   0,   1,  NULL,         &admindir, NULL          },
+	{ "admindir",   0,   1,  NULL,         NULL,      set_admindir, 0 },
 	{ "instdir",    0,   1,  NULL,         NULL,      set_instdir,  0 },
 	{ "root",       0,   1,  NULL,         NULL,      set_root,     0 },
 	{ "quiet",      0,   0,  &opt_verbose, NULL,      NULL, 0       },
@@ -401,8 +394,6 @@ static const struct cmdinfo cmdinfos[] = {
 	{ "no-force",   0,   2,  NULL,         NULL,      set_force_option, 0 },
 	{ "refuse",     0,   2,  NULL,         NULL,      set_force_option, 0 },
 	{ "update",     0,   0,  &opt_update,  NULL,      NULL, 1       },
-	{ "help",       '?', 0,  NULL,         NULL,      usage         },
-	{ "version",    0,   0,  NULL,         NULL,      printversion  },
 	{  NULL,        0                                               }
 };
 
@@ -416,13 +407,10 @@ main(int argc, const char *const *argv)
 	set_force_default(FORCE_STATCMD_MASK);
 	dpkg_options_parse(&argv, cmdinfos, printforhelp);
 
-	instdir = dpkg_fsys_set_dir(instdir);
-	admindir = dpkg_db_set_dir(admindir);
+	debug(dbg_general, "root=%s admindir=%s", dpkg_fsys_get_dir(), dpkg_db_get_dir());
 
 	if (!cipaction)
 		badusage(_("need an action option"));
-
-	ensure_statoverrides(STATDB_PARSE_LAX);
 
 	ret = cipaction->action(argv);
 

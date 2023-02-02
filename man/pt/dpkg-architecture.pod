@@ -376,9 +376,9 @@ Verifica se a arquitectura actual ou da máquina especificada é um sistema Linu
 
 =head2 Utilização em debian/rules
 
-As variáveis de ambiente definidas pelo B<dpkg-architecture> são passadas para I<debian/rules> como variáveis do make (veja a documentação do make). No entanto, você não deve confiar nelas, porque prejudicam a invocação manual do script. Em vez disso, você deve sempre inicializá-las usando B<dpkg-architecture> com a opção B<-q>. Aqui estão alguns exemplos, que também mostram como você pode melhorar o suporte a compilação cruzada no seu pacote:
+As variáveis de ambiente definidas pelo B<dpkg-architecture> são passadas para I<debian/rules> como variáveis do make (veja a documentação do make). No entanto, você não deve confiar nelas, porque prejudicam a invocação manual do script. Em vez disso, você deve sempre inicializa-las usando B<dpkg-architecture> com a opção B<-q>. Aqui estão alguns exemplos, que também mostram como você pode melhorar o suporte a compilação cruzada no seu pacote:
 
-Obter o tipo de sistema GNU e reencaminhá-lo para ./configure:
+Obter o tipo de sistema GNU e reencaminha-lo para ./configure:
 
 =over 
 

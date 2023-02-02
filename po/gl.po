@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.17.0\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2022-05-25 08:39+0000\n"
+"POT-Creation-Date: 2023-01-24 22:39+0000\n"
 "PO-Revision-Date: 2015-04-07 09:49+0200\n"
 "Last-Translator: mvillarino <mvillarino@users.sourceforge.net>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
@@ -342,6 +342,43 @@ msgid "%s: lzma error: %s"
 msgstr ""
 "%s: erro ao limpar:\n"
 " %s\n"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+msgid "%s: zstd error: %s"
+msgstr ""
+"%s: erro ao limpar:\n"
+" %s\n"
+
+#: lib/dpkg/compress.c
+#, c-format
+msgid "%s: cannot create zstd decompression context"
+msgstr ""
+
+#: lib/dpkg/compress.c
+#, c-format
+msgid "%s: cannot create zstd compression context"
+msgstr ""
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+msgid "%s: zstd read error"
+msgstr "%s: erro interno de gzip: \"%s\""
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+msgid "%s: zstd write error"
+msgstr "%s: erro interno de gzip: \"%s\""
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+msgid "%s: zstd close error"
+msgstr "%s: erro interno de gzip: \"%s\""
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+msgid "invalid compression level %d"
+msgstr "número enteiro non válido para --%s: \"%.250s\""
 
 #: lib/dpkg/compress.c
 #, fuzzy
@@ -717,6 +754,11 @@ msgstr ""
 msgid "format version followed by junk"
 msgstr "número de versión"
 
+#: lib/dpkg/debug.c
+#, c-format
+msgid "cannot parse debug mask from environment variable %s"
+msgstr ""
+
 #: lib/dpkg/dir.c
 #, fuzzy, c-format
 #| msgid "unable to read filedescriptor flags for %.250s"
@@ -756,7 +798,7 @@ msgstr "non se pode establecer o buffer do ficheiro de estado"
 
 #: lib/dpkg/dump.c
 #, fuzzy, c-format
-msgid "failed to write %s database record about '%.50s' to '%.250s'"
+msgid "failed to write %s database stanza about '%s' to '%s'"
 msgstr "non se puido gravar o rexistro de \"%s\" sobre \"%.50s\" en \"%.250s\""
 
 #: lib/dpkg/ehandle.c utils/update-alternatives.c
@@ -2891,12 +2933,13 @@ msgid ""
 "      --nocheck                    Suppress control file check (build bad\n"
 "                                     packages).\n"
 "      --root-owner-group           Forces the owner and groups to root.\n"
+"      --threads-max=<threads>      Use at most <threads> with compressor.\n"
 "      --[no-]uniform-compression   Use the compression params on all "
 "members.\n"
 "  -z#                              Set the compression level when building.\n"
 "  -Z<type>                         Set the compression type used when "
 "building.\n"
-"                                     Allowed types: gzip, xz, none.\n"
+"                                     Allowed types: gzip, xz, zstd, none.\n"
 "  -S<strategy>                     Set the compression strategy when "
 "building.\n"
 "                                     Allowed values: none; extreme (xz);\n"
@@ -2977,11 +3020,6 @@ msgstr "o arquivo non ten un punto no número de versión"
 #, fuzzy, c-format
 msgid "unknown deb format version: %s"
 msgstr "opción \"%s\" descoñecida"
-
-#: src/deb/main.c
-#, fuzzy, c-format
-msgid "invalid compression level for -%c: %ld"
-msgstr "número enteiro non válido para --%s: \"%.250s\""
 
 #: src/deb/main.c
 #, fuzzy, c-format
@@ -3360,12 +3398,14 @@ msgstr ""
 #| "Exit status: 0 = OK;  1 = -a is not a part;  2 = trouble!\n"
 msgid ""
 "Options:\n"
-"  --depotdir <directory>           Use <directory> instead of %s/%s.\n"
-"  -S|--partsize <size>             In KiB, for -s (default is 450).\n"
-"  -o|--output <file>               Filename, for -j (default is\n"
+"      --depotdir <directory>       Use <directory> instead of %s/%s.\n"
+"      --admindir <directory>       Use <directory> instead of %s.\n"
+"      --root <directory>           Use <directory> instead of %s.\n"
+"  -S, --partsize <size>            In KiB, for -s (default is 450).\n"
+"  -o, --output <file>              Filename, for -j (default is\n"
 "                                     <package>_<version>_<arch>.deb).\n"
-"  -Q|--npquiet                     Be quiet when -a is not a part.\n"
-"  --msdos                          Generate 8.3 filenames.\n"
+"  -Q, --npquiet                    Be quiet when -a is not a part.\n"
+"      --msdos                      Generate 8.3 filenames.\n"
 "\n"
 msgstr ""
 "Opcións:\n"
@@ -4051,18 +4091,6 @@ msgstr ""
 
 #: src/trigger/main.c
 #, fuzzy
-#| msgid "%s: triggers data directory not yet created\n"
-msgid "triggers data directory not yet created"
-msgstr "%s: aínda non se creou o directorio de datos de disparadores\n"
-
-#: src/trigger/main.c
-#, fuzzy
-#| msgid "%s: trigger records not yet in existence\n"
-msgid "trigger records not yet in existence"
-msgstr "%s: aínda non existen os rexistros de disparadores\n"
-
-#: src/trigger/main.c
-#, fuzzy
 msgid "takes one argument, the trigger name"
 msgstr "dpkg-trigger toma só un argumento, o nome do disparador"
 
@@ -4076,6 +4104,18 @@ msgstr "dpkg-trigger: nome de paquete agardado \"%.250s\" non válido: %.250s"
 #, fuzzy, c-format
 msgid "invalid trigger name '%.250s': %.250s"
 msgstr "dpkg-trigger: nome de disparador \"%.255s\" non válido: %.250s"
+
+#: src/trigger/main.c
+#, fuzzy
+#| msgid "%s: triggers data directory not yet created\n"
+msgid "triggers data directory not yet created"
+msgstr "%s: aínda non se creou o directorio de datos de disparadores\n"
+
+#: src/trigger/main.c
+#, fuzzy
+#| msgid "%s: trigger records not yet in existence\n"
+msgid "trigger records not yet in existence"
+msgstr "%s: aínda non existen os rexistros de disparadores\n"
 
 #: src/query/main.c src/main/select.c
 #, fuzzy, c-format
@@ -5822,7 +5862,8 @@ msgid ""
 "exclusion.\n"
 "  -O|--selected-only         Skip packages not selected for install/"
 "upgrade.\n"
-"  -E|--skip-same-version     Skip packages whose same version is installed.\n"
+"  -E|--skip-same-version     Skip packages with same installed version/"
+"arch.\n"
 "  -G|--refuse-downgrade      Skip packages with earlier version than "
 "installed.\n"
 "  -B|--auto-deconfigure      Install even if it would break some other "

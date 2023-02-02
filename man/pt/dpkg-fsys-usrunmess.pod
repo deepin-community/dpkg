@@ -24,6 +24,8 @@ B<dpkg-fsys-usrunmess> [B<option>...]
 
 B<dpkg-fsys-usrunmess> é uma ferramenta para corrigir sistemas de ficheiros que foram instalados de novo com instaladores recentes de predefinições infelizes ou migrados para um /usr danificado via directórios de disposição de nomes alternativos, o qual B<não> é suportado pelo dpkg. Veja a FAQ do dpkg.
 
+B<Nota>: Em Debian o seu tech-ctte decretou que num lançamento após o bookworm a disposição não-usrmerged não irá ser suportada, e assim alguns dos seus maintainers podem não corrigir problemas ou intencionalmente remover o suporta não-usrmerged, assim você tem de decidir e escolher o seu veneno.
+
 Este programa irá executar as seguintes acções gerais:
 
 =over 

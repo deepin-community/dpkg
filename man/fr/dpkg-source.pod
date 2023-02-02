@@ -125,7 +125,7 @@ Il est possible de donner une expression rationnelle Perl pour filtrer les fichi
 
 L'option B<-i> active cette fonction avec une expression rationnelle par défaut (en préservant toutes les modifications faites avec l'expression rationnelle par défaut par une utilisation précédente de B<--extend-diff-ignore>) qui couvre les fichiers de contrôle des plus usuels systèmes de gestion de version, les fichiers de sauvegarde, les fichiers d'échange et les répertoires utilisés par Libtool. Il ne peut y avoir qu'une seule expression rationnelle S<active ;> avec de multiples options B<-i>, seule la dernière mentionnée sera prise en compte.
 
-C'est très utile pour supprimer des fichiers qui sont inclus dans le diff, par exemple, si vous maintenez un source avec un système de contrôle de version et que voulez construire un paquet source sans inclure des fichiers et répertoires additionnels qu'il contient généralement (par exemple CVS/, .cvsignore, .svn/). L'expression rationnelle par défaut est déjà très exhaustive, mais si avez besoin de la remplacer, veuillez noter que par défaut, il sait vérifier n'importe quelle partie d'un chemin, donc si vous voulez trouver le début d'un nom de fichier ou des noms de fichiers complets, vous devrez fournir les caractères spéciaux vous-même (par exemple S<« (^|/) »,> S<« ($|/) »).>
+This is very helpful in cutting out extraneous files that get included in the diff, for example if you maintain your source in a revision control system and want to use a checkout to build a source package without including the additional files and directories that it will usually contain (e.g. CVS/, .cvsignore, .svn/). The default regex is already very exhaustive, but if you need to replace it, please note that by default it can match any part of a path, so if you want to match the begin of a filename or only full filenames, you will need to provide the necessary anchors (e.g. ‘(^|/)’, ‘($|/)’) yourself.
 
 =item B<--extend-diff-ignore>=I<expression-rationnelle>
 
@@ -170,6 +170,20 @@ Refuse de décompresser le paquet source s'il ne contient pas de somme de contr�
 =item B<--ignore-bad-version>
 
 Transforme la vérification des mauvaises versions des paquets source en avertissement non fatal (since S<dpkg 1.17.7).> Cette option sera seulement nécessaire quand on extrait des anciens paquets source avec des versions cassées, pour préserver la compatibilité avec les versions précédentes.
+
+=back
+
+=head2 Generic general options
+
+=over 
+
+=item B<--threads-max=>I<threads>
+
+Sets the maximum number of threads allowed for compressors that support multi-threaded operations (since dpkg 1.21.14).
+
+=item B<-q>
+
+Sets quiet mode to suppress warnings.
 
 =back
 

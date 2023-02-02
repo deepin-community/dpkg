@@ -116,6 +116,8 @@ Détails de la mise en œuvre S<actuelle : dans> le script B<preinst>, il est v�
 
 Lors de la mise à niveau d'un paquet, B<dpkg> ne substitue pas automatiquement un lien symbolique à un répertoire ou le contraire. Les retours à une version inférieure ne sont pas pris en charge et le chemin sera laissé comme il est.
 
+Note: The symlinks and directories created during these switches need to be shipped in the new packages, or B<dpkg> will not be able to remove them on purge.
+
 =head2 Substituer un lien symbolique à un répertoire
 
 Si un lien symbolique est substitué à un répertoire réel, il est nécessaire de garantir qu'avant le dépaquetage le lien symbolique est retiré. À première vue, cela peut sembler être une simple modification dans le script B<preinst>, mais cela risque de résulter en problèmes si l'administrateur local a personnalisé le lien symbolique ou si l'on revient à une version antérieure du paquet.

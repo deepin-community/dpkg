@@ -48,7 +48,7 @@ Deverá estar no formato "Joe Bloggs E<lt>jbloggs@foo.comE<gt>", e é tipicament
 
 =item B<Description:> I<short-description> (recomendado)
 
-=item B<> I<long-description>
+=item S< >I<long-description>
 
 O formato da descrição do pacote é um sumário breve e curto an primeira linha (após o campo B<Description>). As linhas seguintes devem ser usadas para uma descrição longa e mais detalhada. Cada linha da descrição longa tem de ser precedida com um espaço, e as linhas em branco na descrição longa têm de conter um único ‘B<.>’ a seguir ao espaço que precede.
 
@@ -72,13 +72,13 @@ O tamanho total aproximado dos ficheiros instalados pelo pacote, em unidades KiB
 
 =item B<Protected:> B<yes>|B<no>
 
-Este campo normalmente não é necessário quando a resposta é B<yes>. Ele indica um pacote que é necessário para o arranque correcto do sistema. O L<dpkg(1)> ou qualquer outra ferramenta de instalação não irá permitir que um pacote B<Protected> seja removido (pelo menos não sem usar uma das opções de forçar).
+Este campo normalmente não é necessário quando a resposta é B<yes>. Ele indica um pacote que é necessário principalmente para o arranque correcto do sistema ou usado para meta-pacotes personalizados locais-do-sistema. O L<dpkg(1)> ou qualquer outra ferramenta de instalação não irá permitir que um pacote B<Protected> seja removido (pelo menos não sem usar uma das opções de forçar).
 
 Suportado desde dpkg 1.20.1.
 
 =item B<Essential:> B<yes>|B<no>
 
-Este campo normalmente não é necessário quando a resposta é B<sim>. Ele indica um pacote que é necessário para a operação correcta do sistema. O L<dpkg(1)> ou qualquer outra ferramenta de instalação não irá permitir que um pacote <Essential> seja removido (pelo menos não sem usar uma das opções de forçar).
+Este campo normalmente não é necessário quando a resposta é B<sim>. Ele indica um pacote que é necessário para o sistema de empacotamento, para a operação correcta do sistema no geral ou durante o arranque (apesar do último dever ser convertido para o campo B<Protected> em vez deste). O L<dpkg(1)> ou qualquer outra ferramenta de instalação não irá permitir que um pacote <Essential> seja removido (pelo menos não sem usar uma das opções de forçar).
 
 =item B<Build-Essential:> B<yes>|B<no>
 
@@ -138,7 +138,7 @@ O nome do pacote fonte de onde este pacote binário veio, se for diferente do no
 
 =item B<Installer-Menu-Item:> I<value>
 
-Estes campos são usados pelo instalador de debian e geralmente não são necessários Veja /usr/share/doc/debian-installer/devel/modules.txt do pacote B<debian-installer> para mais detalhes acerca deles.
+Estes campos são usados pelo instalador de debian e geralmente não são necessários. Para mais detalhes acerca deles, veja L<https://salsa.debian.org/installer-team/debian-installer/-/raw/master/doc/devel/modules.txt>.
 
 =item B<Depends:> I<package-list>
 

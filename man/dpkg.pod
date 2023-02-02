@@ -655,7 +655,7 @@ debugging values.
      10000   Trigger activation and processing
      20000   Lots of output regarding triggers
      40000   Silly amounts of output regarding triggers
-      1000   Lots of drivel about e.g. the dpkg/info dir
+      1000   Lots of drivel about for example the dpkg/info dir
       2000   Insane amounts of drivel
 
 =item B<--force->I<things>
@@ -691,7 +691,8 @@ package depends.
 B<hold>:
 Allow automatic installs, upgrades or removals of packages even when marked
 to be on “hold”.
-B<Note:> This does not prevent these actions when requested explicitly.
+B<Note:> When these actions are requested explicitly, the “hold” package
+selection state always gets ignored.
 
 B<remove-reinstreq>:
 Remove a package, even if it's broken and marked to require
@@ -700,14 +701,18 @@ remain on the system, which will then be forgotten by B<dpkg>.
 
 B<remove-protected>:
 Remove, even if the package is considered protected (since dpkg 1.20.1).
-Protected packages contain mostly important system boot infrastructure.
-Removing them might cause the whole system to be unable to boot, so use
-with caution.
+Protected packages contain mostly important system boot infrastructure or
+are used for custom system-local meta-packages.
+Removing them might cause the whole system to be unable to boot or lose
+required functionality to operate, so use with caution.
 
 B<remove-essential>:
-Remove, even if the package is considered essential. Essential
-packages contain mostly very basic Unix commands. Removing them might
-cause the whole system to stop working, so use with caution.
+Remove, even if the package is considered essential.
+Essential packages contain mostly very basic Unix commands, required for
+the packaging system, for the operation of the system in general or during
+boot (although the latter should be converted to protected packages instead).
+Removing them might cause the whole system to stop working,
+so use with caution.
 
 B<depends>:
 Turn all dependency problems into warnings.
@@ -875,8 +880,12 @@ be marked selected for deinstallation.
 
 =item B<-E>, B<--skip-same-version>
 
-Don't install the package if the same version of the package is already
-installed.
+Don't install the package if the same version and architecture
+of the package is already installed.
+
+Since dpkg 1.21.10, the architecture is also taken into account,
+which makes it possible to cross-grade packages or install additional
+co-installable instances with the same version, but different architecture.
 
 =item B<--pre-invoke=>I<command>
 
@@ -1043,7 +1052,7 @@ Package status changed; I<status> is as in the status file.
 An error occurred. Any possible newlines in I<extended-error-message>
 will be converted to spaces before output.
 
-=item B<status:> I<file> B<: conffile-prompt : '>I<real-old>B<' '>I<real-new>B<'> I<useredited>B<> I<distedited>
+=item B<status:> I<file> B<: conffile-prompt : '>I<real-old>B<' '>I<real-new>B<'> I<useredited> I<distedited>
 
 User is being asked a conffile question.
 
@@ -1192,6 +1201,11 @@ The B<DPKG_PAGER> overrides the B<PAGER> environment variable
 Sets the color mode (since dpkg 1.18.5).
 The currently accepted values are: B<auto> (default), B<always> and
 B<never>.
+
+=item B<DPKG_DEBUG>
+
+Sets the debug mask (since dpkg 1.21.10) from an octal value.
+The currently accepted flags are described in the B<--debug> option.
 
 =item B<DPKG_FORCE>
 

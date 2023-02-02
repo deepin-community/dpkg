@@ -248,7 +248,7 @@ Le répertoire administratif par défaut. Peut être remplacé avec l'option B<-
 
 =head1 FORMAT DE REQUÊTE
 
-Le format de B<--query> est un format à plat de type RFC822. Il est constitué de S<I<n> + 1> blocs où I<n> est le nombre d'alternatives disponibles dans le groupe de liens interrogé. Le premier bloc contient les champs S<suivants :>
+The B<--query> format is using an RFC822-like flat format. It's made of I<n> + 1 stanzas where I<n> is the number of alternatives available in the queried link group. The first stanza contains the following fields:
 
 =over 
 
@@ -278,13 +278,13 @@ Chemin de l'alternative actuellement choisie. Peut aussi prendre la valeur spéc
 
 =back
 
-Les autres blocs décrivent les alternatives disponibles dans le groupe de liens interrogé.
+The other stanzas describe the available alternatives in the queried link group:
 
 =over 
 
 =item B<Alternative:>  I<chemin-de-cette-alternative>
 
-Chemin vers l'alternative de ce bloc
+Path to this stanza's alternative.
 
 =item B<Priority:>  I<valeur-de-la-priorité>
 

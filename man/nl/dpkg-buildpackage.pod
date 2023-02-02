@@ -68,7 +68,7 @@ Het voert de uitbreiding (hook) B<check> uit en roept een pakketcontroleprogramm
 
 =item B<11.>
 
-Het voert de uitbreiding (hook) B<sign> uit en roept B<gpg> aan (voor zover het geen bouw van het type UNRELEASED is of tenzij B<--no-sign> werd opgegeven) voor het ondertekenen van het bestand B<.dsc> (als dat bestaat, tenzij B<-us> of B<--unsigned-source> opgegeven werden), van het bestand B<.buildinfo> (tenzij B<-ui>, B<--unsigned-buildinfo>, B<-uc> of B<--unsigned-changes> opgegeven werden) en van het bestand B<.changes> (tenzij B<-uc> of B<--unsigned-changes> opgegeven werden).
+Het voert de uitbreiding (hook) B<sign> uit en ondertekent met behulp van de OpenPGP-backend (voor zover het geen bouw van het type UNRELEASED is of tenzij B<--no-sign> werd opgegeven) voor het ondertekenen van het bestand B<.dsc> (als dat bestaat, tenzij B<-us> of B<--unsigned-source> opgegeven werden), van het bestand B<.buildinfo> (tenzij B<-ui>, B<--unsigned-buildinfo>, B<-uc> of B<--unsigned-changes> opgegeven werden) en van het bestand B<.changes> (tenzij B<-uc> of B<--unsigned-changes> opgegeven werden).
 
 =item B<12.>
 
@@ -84,7 +84,7 @@ Alle opties kunnen zowel opgegeven worden aan de commandoregel als in de systeem
 
 =item B<--build=>I<type>
 
-Geeft het bouw-I<type> op vanuit een lijst van door komma's gescheiden componenten (sinds dpkg 1.18.5). Wordt doorgegeven aan B<dpkg-genchanges>.
+Geeft het bouw-I<type> op vanuit een lijst van door komma's gescheiden componenten (sinds dpkg 1.18.5). Alle opgegeven componenten worden gecombineerd om het enige te gebruiken bouwtype uit te kiezen, wat inhoudt dat één enkele compilatie wordt uitgevoerd met één enkel F<.changes>-bestand. Wordt doorgegeven aan B<dpkg-genchanges>.
 
 De waarden die gebruikt mogen worden zijn:
 
@@ -164,11 +164,23 @@ Enkel zinvol in samenhang met B<--target> (sinds dpkg 1.15.0). Vereist dat het d
 
 =item B<-C>I<beschrijving-van-de-wijzigingen>
 
-=item B<-m>, B<--release-by=>I<adres-van-de-pakketonderhouder>
+=item B<-m>I<adres-van-de-onderhouder>
 
-=item B<-e>, B<--build-by=>I<adres-van-de-pakketonderhouder>
+=item B<-e>I<adres-van-de-onderhouder>
 
 Wordt ongewijzigd doorgegeven aan B<dpkg-genchanges>. Zie de man-pagina ervan.
+
+=item B<--build-by=>I<adres-van-de-pakketonderhouder>
+
+=item B<--source--by=>I<adres-van-de-pakketonderhouder> (sinds dpkg 1.21.10)
+
+Doorgeven als B<-m> aan B<dpkg-genchanges>. Zie de man-pagina ervan.
+
+=item B<--release-by=>I<adres-van-de-pakketonderhouder>
+
+=item B<--changed-by=>I<adres-van-de-pakketonderhouder> (sinds dpkg 1.21.10)
+
+Doorgeven als B<-e> aan B<dpkg-genchanges>. Zie de man-pagina ervan.
 
 =item B<-a>, B<--host-arch> I<architectuur>
 
@@ -192,13 +204,23 @@ Het/de profiel(en) welke we bouwen specificeren in een lijst met een komma als s
 
 =item B<-j>, B<--jobs>[=I<taken>|B<auto>]
 
-Aantal taken dat gelijktijdig mag uitgevoerd worden, waarbij het aantal taken overeenkomt met het aantal beschikbare processoren als B<auto> opgegeven werd (sinds dpkg 1.17.10), of onbeperkt is als I<taken> niet opgegeven werd. Dit is het equivalent van de gelijknamige optie voor B<make>(1) (sinds dpkg 1.14.7, lange optie sinds dpkg 1.18.8). Het voegt zichzelf toe aan de omgevingsvariabele B<MAKEFLAGS>, waardoor elke erop volgende aanroep van make de optie overerft en parallelle taakuitvoering dus opgelegd wordt bij het maken van pakketten (en mogelijks ook oplegt aan het bouwsysteem van de toeleveraar indien dat gebruik maakt van make), ongeacht het feit of er ondersteuning is voor het in parallel bouwen, hetgeen tot mislukkingen bij het bouwen kan leiden. Het voegt ook B<parallel=>I<taken> of B<parallel> toe aan de omgevingsvariabele B<DEB_BUILD_OPTIONS>, hetgeen debian/rules-bestanden in staat stelt van deze informatie gebruik te maken voor eigen doeleinden. De waarde B<-j> heeft voorrang op de optie B<parallel=>I<taken> of B<parallel> in de omgevingsvariabele B<DEB_BUILD_OPTIONS>. Merk op dat de waarde B<auto> zal vervangen worden door het effectieve aantal momenteel actieve processoren en ze dus als zodanig naar geen enkel onderliggend proces doorgegeven zal worden. Indien het aantal beschikbare processoren niet afgeleid kan worden, dan zal de code terugvallen op het gebruiken van seriële uitvoering (sinds dpkg 1.18.15), hoewel dit enkel zou mogen gebeuren op exotische en niet-ondersteunde systemen.
+Geeft het aantal taken aan dat gelijktijdig mag worden uitgevoerd (sinds dpkg 1.14.7, lange optie sinds dpkg 1.18.8). Waarbij het aantal taken overeenkomt met het aantal online-processors indien B<auto> werd opgegeven (sinds dpkg 1.17.10), of een onbeperkt aantal indien I<taken> niet werd opgegeven. Het standaardgedrag is B<auto> (sinds dpkg 1.18.11) in niet-opgelegde modus (sinds dpkg 1.21.10), en als zodanig is het altijd veiliger om dit te gebruiken voor elk pakket, inclusief voor pakketten die niet op een veilige manier parallel kunnen worden gebouwd. Als u het aantal taken instelt op B<1>, wordt de seriële uitvoering hersteld.
+
+Het voegt B<parallel=>I<taken> of B<parallel> toe aan de omgevingsvariabele B<DEB_BUILD_OPTIONS>, hetgeen debian/rules-bestanden in staat stelt van deze informatie gebruik te maken voor eigen doeleinden (opt-in modus genaamd). De waarde I<taken> heeft voorrang op de optie B<parallel=>I<taken> of B<parallel> in de omgevingsvariabele B<DEB_BUILD_OPTIONS>. Merk op dat de waarde B<auto> zal vervangen worden door het effectieve aantal momenteel actieve processoren en ze dus als zodanig naar geen enkel onderliggend proces doorgegeven zal worden. Indien het aantal beschikbare online-processoren niet afgeleid kan worden, dan zal de code terugvallen op het gebruiken van seriële uitvoering (sinds dpkg 1.18.15), hoewel dit enkel zou mogen gebeuren op exotische en niet-ondersteunde systemen.
 
 =item B<-J>, B<--jobs-try>[=I<taken>|B<auto>]
 
-Deze optie (sinds dpkg 1.18.2, de lange optie sinds dpkg 1.18.8) is het equivalent van de optie B<-j>, behalve dat ze de omgevingsvariabele B<MAKEFLAGS> niet instelt. Als zodanig is het veiliger om ze te gebruiken met elk pakket, ook met die waarvoor het niet zeker is dat in parallel bouwen mogelijk is.
+Deze optie (sinds dpkg 1.18.2, lange optie sinds dpkg 1.18.8) is gelijkwaardig aan de optie B<-j> hierboven.
 
-B<auto> is het standaardgedrag (sinds dpkg 1.18.11). Het aantal jobs instellen op 1 zal het seriële gedrag opnieuw instellen.
+Aangezien het gedrag van B<-j> in dpkg 1.21.10 veranderde naar de opt-in modus, kunt u in plaats daarvan deze optie gebruiken als u over de verschillende uitgaven van dpkg heen eenzelfde betekenis moet kunnen garanderen.
+
+=item B<--jobs-force>[=I<taken>|B<auto>]
+
+Deze optie (sinds dpkg 1.21.10) is gelijkwaardig aan de optie B<--jobs> behalve dat ze de opgelegde parallelle modus zal activeren door de optie B<-j> voor B<make> met het berekende aantal parallelle taken toe te voegen aan de omgevingsvariabele B<MAKEFLAGS>.
+
+Dit zou ertoe moeten leiden dat alle volgende aanroepen van make die optie overerven, waardoor de parallelle instelling voor het verpakken (en mogelijk voor het bovenstroomse bouwsysteem als dat L<make(1)> gebruikt) wordt opgelegd, ongeacht hun ondersteuning voor een parallelle bouw, wat bouwfouten zou kunnen veroorzaken.
+
+Opmerking: elke Makefile die niet parallel-aangepast is, moet als een fouten bevattende Makefile beschouwd worden. Deze zouden ofwel parallel-aangepast moeten gemaakt worden of als niet veilig gemarkeerd worden met het target L<make(1)> B<.NOTPARALLEL>.
 
 =item B<-D>, B<--check-builddeps>
 
@@ -300,13 +322,37 @@ De I<bestandsnaam> instellen voor het gegenereerde B<.buildinfo>-bestand (sinds 
 
 Optie I<optie> doorgeven aan B<dpkg-genbuildinfo> (sinds dpkg 1.18.11). Kan meermaals gebruikt worden.
 
+=item B<--sign-backend=>I<ondertekeningsbackend>
+
+Een OpenPGP-backendinterface opgeven welke gebruikt moet worden bij het aanroepen van het I<ondertekeningscommando> (sinds dpkg 1.21.10).
+
+De standaardinstelling is B<auto>, waarbij de beste beschikbare backend wordt gebruikt. De specifieke ondersteunde OpenPGP-backends in volgorde van voorkeur zijn:
+
+=over 2
+
+=item B<sop> (elke conforme Stateless OpenPGP-implementatie)
+
+=item B<sq> (van Sequoia-PGP)
+
+=item B<gpg> (van GnuPG)
+
+=back
+
 =item B<-p>, B<--sign-command=>I<ondertekeningscommando>
 
-Als B<dpkg-buildpackage> GPG moet uitvoeren om een controlebestand (B<.dsc>) van de broncode of een bestand B<.changes> te ondertekenen, zal het I<ondertekeningscommando> uitvoeren (en indien nodig daarbij het B<PATH> doorzoeken) in plaats van B<gpg> (de lange optie sinds dpkg 1.18.8). Aan I<ondertekeningscommando> zullen alle argumenten meegegeven worden die anders aan B<gpg> gegeven zouden zijn. I<ondertekeningscommando> mag geen spaties bevatten en geen andere shell-metatekens.
+Als B<dpkg-buildpackage> een OpenPGP backend-commando moet uitvoeren om een controlebestand (B<.dsc>) van de broncode of een bestand B<.changes> te ondertekenen, zal het I<ondertekeningscommando> uitvoeren (en indien nodig daarbij het B<PATH> doorzoeken) in plaats van het standaard of automatisch gedetecteerde backend-commando (de lange optie sinds dpkg 1.18.8). Aan I<ondertekeningscommando> zullen alle argumenten meegegeven worden die door B<--sign-backend> gedefinieerd zijn. I<ondertekeningscommando> mag geen spaties bevatten en geen andere shell-metatekens.
 
-=item B<-k>, B<--sign-key=>I<sleutel-id>
+=item B<-k>, B<--sign-keyid=>I<sleutel-id>
 
-De sleutel-ID specificeren welke gebruikt moet worden om pakketten te ondertekenen (de lange optie sinds dpkg 1.18.8).
+=item B<--sign-key=>I<sleutel-id>
+
+Een OpenPGP sleutel-ID (hetzij een vingerafdruk of een gebruikers-ID) opgeven voor de geheime sleutel die moet worden gebruikt bij het ondertekenen van pakketten (B<--sign-key> sinds dpkg 1.18.8, B<--sign-keyid> sinds dpkg 1.21.10).
+
+=item B<--sign-keyfile=>I<sleutel-bestand>
+
+Een OpenPGP I<sleutel-bestand> opgeven dat de geheime sleutel bevat die moet worden gebruikt bij het ondertekenen van pakketten (sinds dpkg 1.21.10).
+
+Opmerking: uit veiligheidsoverwegingen kan het I<sleutel-bestand> best met een wachtwoord vergrendeld worden gehouden.
 
 =item B<-us>, B<--unsigned-source>
 
@@ -396,7 +442,11 @@ Indien dit ingesteld werd, zal het gebruikt worden als het commando waarmee het 
 
 =item B<DEB_SIGN_KEYID>
 
-Indien dit ingesteld werd, zal het gebruikt worden om de bestanden B<.changes> en B<.dsc> te ondertekenen (sinds dpkg 1.17.2). De optie B<--sign-key> heeft hierop voorrang.
+Indien dit ingesteld werd, zal het gebruikt worden om de bestanden B<.changes>, B<.buildinfo> en B<.dsc> te ondertekenen (sinds dpkg 1.17.2). De optie B<--sign-key> heeft hierop voorrang.
+
+=item B<DEB_SIGN_KEYFILE>
+
+Indien dit ingesteld werd, zal het gebruikt worden om de bestanden B<.changes>, B<.buildinfo> en B<.dsc> te ondertekenen (sinds dpkg 1.21.10). De optie B<--sign-key> heeft hierop voorrang.
 
 =item B<DEB_BUILD_OPTIONS>
 
@@ -478,5 +528,5 @@ Het zou mogelijk moeten zijn om spaties en shell-metatekens en initiële argumen
 
 =head1 ZIE OOK
 
-B<dpkg-source>(1), B<dpkg-architecture>(1), B<dpkg-buildflags>(1), B<dpkg-genbuildinfo>(1), B<dpkg-genchanges>(1), B<fakeroot>(1), B<lintian>(1), B<gpg>(1).
+I<%PKGDOCDIR%/spec/rootless-builds.txt>, B<dpkg-source>(1), B<dpkg-architecture>(1), B<dpkg-buildflags>(1), B<dpkg-genbuildinfo>(1), B<dpkg-genchanges>(1), B<fakeroot>(1), B<lintian>(1), L<https://datatracker.ietf.org/doc/draft-dkg-openpgp-stateless-cli/>, B<sq>(1), B<gpg>(1).
 

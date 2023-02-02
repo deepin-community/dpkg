@@ -48,7 +48,7 @@ Sollte in dem Format „Joe Bloggs E<lt>jbloggs@foo.comE<gt>“ sein und ist typ
 
 =item B<Description:> I<Kurzbeschreibung> (empfohlen)
 
-=item B<> I<Langbeschreibung>
+=item S< >I<Langbeschreibung>
 
 Das Format der Paketbeschreibung ist eine kurze knappe Zusammenfassung auf der ersten Zeile (nach dem Feld B<Description>). Die folgenden Zeilen sollten als längere, detailliertere Beschreibung verwendet werden. Jede Zeile der Langbeschreibung muss mit einem Leerzeichen beginnen und Leerzeilen in der Langbeschreibung müssen einen einzelnen ‚B<.>’ hinter dem einleitenden Leerzeichen enthalten.
 
@@ -72,13 +72,13 @@ Die ungefähre Gesamtgröße der vom Paket installierten Dateien, in Einheiten v
 
 =item B<Protected:> B<yes>|B<no>
 
-Dieses Feld wird normalerweise nur benötigt, wenn die Antwort B<yes> lautet. Es bezeichnet ein Paket, das für den ordnungsgemäßen Systemstart benötigt wird. L<dpkg(1)> oder jedes andere Installationswerkzeug wird es nicht erlauben, ein B<Protected>-Paket zu entfernen (zumindest nicht ohne die Verwendung einer der „force“-Optionen).
+Dieses Feld wird normalerweise nur benötigt, wenn die Antwort B<yes> lautet. Es bezeichnet ein Paket, das hauptsächlich für den ordnungsgemäßen Systemstart oder für angepasste systemlokale Metapakete benötigt wird. L<dpkg(1)> oder jedes andere Installationswerkzeug wird es nicht erlauben, ein B<Protected>-Paket zu entfernen (zumindest nicht ohne die Verwendung einer der „force“-Optionen).
 
 Unterstützt seit Dpkg 1.20.1.
 
 =item B<Essential:> B<yes>|B<no>
 
-Dieses Feld wird normalerweise nur benötigt, wenn die Antwort B<yes> lautet. Es bezeichnet ein Paket, das für den ordnungsgemäßen Betrieb des Systems benötigt wird. L<dpkg(1)> oder jedes andere Installationswerkzeug wird es nicht erlauben, ein B<Essential>-Paket zu entfernen (zumindest nicht ohne die Verwendung einer der „force“-Optionen).
+Dieses Feld wird normalerweise nur benötigt, wenn die Antwort B<yes> lautet. Es bezeichnet ein Paket, das für das Paketierungssystem, für den ordnungsgemäßen Betrieb des Systems im Allgemeinen oder während des Systemstarts benötigt wird (Letzteres sollte allerdings stattdessen auf das Feld B<Protected> konvertiert werden). L<dpkg(1)> oder jedes andere Installationswerkzeug wird es nicht erlauben, ein B<Essential>-Paket zu entfernen (zumindest nicht ohne die Verwendung einer der „force“-Optionen).
 
 =item B<Build-Essential:> B<yes>|B<no>
 
@@ -138,7 +138,7 @@ Der Name des Quellpakets, aus dem dieses Binärpaket stammt, falls es sich vom N
 
 =item B<Installer-Menu-Item:>  I<Wert>
 
-Diese Felder werden im Debian-Installer verwandt und werden normalerweise nicht benötigt. Lesen Sie /usr/share/doc/debian-installer/devel/modules.txt aus dem Paket B<debian-installer> für weitere Informationen über sie.
+Diese Felder werden im Debian-Installer verwandt und werden normalerweise nicht benötigt. Für weitere Informationen über sie, siehe L<https://salsa.debian.org/installer-team/debian-installer/-/raw/master/doc/devel/modules.txt>.
 
 =item B<Depends:>  I<Paketliste>
 
@@ -258,7 +258,7 @@ L<deb822(5)>, B<deb-src-control>(5), B<deb>(5), B<deb-version>(7), B<debtags>(1)
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

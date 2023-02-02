@@ -108,6 +108,10 @@ Om satt och flaggan B<--root> inte har angivits används det som filsystemets ro
 
 Om satt, och flaggan B<--admindir> inte har angivits, används värdet som datakatalog för B<dpkg>.
 
+=item B<DPKG_DEBUG>
+
+Sets the debug mask (since dpkg 1.21.10) from an octal value.  The currently accepted flags are described in the B<dpkg --debug> option, but not all these flags might have an effect on this program.
+
 =item B<DPKG_COLORS>
 
 Väljer färgläge (sedan dpkg 1.18.5). För närvarande godtas följande värden: B<auto> (förval), B<always> och B<never>.
@@ -116,7 +120,7 @@ Väljer färgläge (sedan dpkg 1.18.5). För närvarande godtas följande värde
 
 =head1 SE ÄVEN
 
-B<dpkg>(1), B<deb-triggers>(5), B<%PKGDOCDIR%/triggers.txt.gz>.
+B<dpkg>(1), B<deb-triggers>(5), B<%PKGDOCDIR%/spec/triggers.txt>.
 
 
 =head1 ÖVERSÄTTNING

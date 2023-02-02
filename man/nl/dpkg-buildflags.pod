@@ -142,7 +142,7 @@ de vlag werd ingesteld/gewijzigd door een omgevingsspecifieke configuratie.
 
 =item B<--query>
 
-Alle informatie tonen welke nuttig kan zijn om het gedrag van het programma te verklaren: huidige leverancier, relevante omgevingsvariabelen, functiegebieden, toestand van alle functievlaggen en de compileervlaggen met hun oorsprong (sinds dpkg 1.19.0).
+Print any information that can be useful to explain the behaviour of the program: current vendor, relevant environment variables, feature areas, state of all feature flags, whether a feature is handled as a builtin default by the compiler (since dpkg dpkg 1.21.14), and the compiler flags with their origin (since dpkg 1.19.0).
 
 Bijvoorbeeld:
 
@@ -154,10 +154,18 @@ Bijvoorbeeld:
  Features:
   bug=no
   canary=no
+ Builtins:
+
+ Area: hardening
+ Features:
+  pie=no
+ Builtins:
+  pie=yes
 
  Area: reproducible
  Features:
   timeless=no
+ Builtins:
 
  Flag: CFLAGS
  Value: -O0 -Wall
@@ -169,12 +177,13 @@ Bijvoorbeeld:
 
 =item B<--query-features> I<gebied>
 
-De functies weergeven die voor een opgegeven gebied geactiveerd zijn (sinds dpkg 1.16.2). Momenteel worden door Debian en zijn derivaten enkel de gebieden B<future>, B<qa>, B<reproducible>, B<sanitize> en B<hardening> herkend. Zie het onderdeel B<FUNCTIEGEBIEDEN> voor meer details. Sluit af met 0 als het gebied gekend is, anders met 1.
+Print the features enabled for a given area (since dpkg 1.16.2).  If the feature is handled (even if only on some architectures) as a builtin default by the compiler, then a B<Builtin> field is printed (since dpkg 1.21.14). The only currently recognized areas on Debian and derivatives are B<future>, B<qa>, B<reproducible>, B<sanitize> and B<hardening>, see the B<FEATURE AREAS> section for more details.  Exits with 0 if the area is known otherwise exits with 1.
 
 De uitvoer is in RFC822-indeling met één sectie per functie. Bijvoorbeeld:
 
  Feature: pie
  Enabled: yes
+ Builtin: yes
 
  Feature: stackprotector
  Enabled: yes
@@ -285,7 +294,7 @@ Er kunnen verschillende compilatieopties (die hierna beschreven worden) gebruikt
 
 =over 
 
-=item lto
+=item B<lto>
 
 Deze instelling (sinds dpkg 1.21.0; standaard uitgeschakeld) zet Link Time Optimization aan door B<-flto=auto -ffat-lto-objects> toe te voegen aan B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS>, B<FCFLAGS> of B<LDFLAGS>.
 
@@ -357,7 +366,7 @@ Deze instelling (standaard uitgeschakeld) voegt B<-Wl,-z,now> toe aan B<LDFLAGS>
 
 Deze instelling (zonder standaardinstelling sinds dpkg 1.18.23, aangezien het nu standaard geactiveerd wordt door gcc op de Debian-architecturen amd64, arm64, armel, armhf, hurd-i386, i386, kfreebsd-amd64, kfreebsd-i386, mips, mipsel, mips64el, powerpc, ppc64, ppc64el, riscv64, s390x, sparc en sparc64) voegt zo nodig de vereiste opties toe om PIE te activeren of te deactiveren via gcc specs-bestanden, afhankelijk van het feit of gcc op die architectuur de vlaggen zelf injecteert of niet. Indien de instelling geactiveerd is en gcc de vlaggen injecteert, voegt ze niets toe. Indien de instelling geactiveerd is en gcc de vlaggen niet injecteert, voegt ze B<-fPIE> toe (via I<%PKGDATADIR%/pie-compiler.specs>) aan B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> en B<FCFLAGS>, en B<-fPIE -pie> (via I<%PKGDATADIR%/pie-link.specs>) aan B<LDFLAGS>. Indien de instelling gedeactiveerd is en gcc de vlaggen injecteert, voegt ze B<-fno-PIE> toe (via I<%PKGDATADIR%/no-pie-compile.specs>) aan B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> en B<FCFLAGS>, en B<-fno-PIE -no-pie> (via I<%PKGDATADIR%/no-pie-link.specs>) aan B<LDFLAGS>.
 
-Position Independent Executable (PIE - positie-onafhankelijke programma's) zijn nodig om voordeel te halen uit Address Space Layout Randomization (ASLR - de adresruimte rangschikken in toevallige volgorde), hetgeen door sommige kernelversies ondersteund wordt. Hoewel ASLR reeds voor datagebieden in de stack en de heap opgelegd kan worden (brk and mmap), moeten de codegebieden als positieonafhankelijk gecompileerd worden. Gedeelde bibliotheken doen dit reeds (B<-fPIC>), waardoor zij automatisch ASLR krijgen, maar binaire .text-gebieden moeten als PIE gebouwd worden om ASLR te krijgen. Als dit gebeurt, worden aanvallen van het type ROP (Return Oriented Programming - op terugkeerwaarde georiënteerd programmeren) veel moeilijker aangezien er geen statische locaties meer zijn die bij een aanval van geheugenvervuiling als springplank gebruikt kunnen worden.
+Position Independent Executable (PIE - positie-onafhankelijke programma) is nodig om voordeel te halen uit Address Space Layout Randomization (ASLR - de adresruimte rangschikken in toevallige volgorde), hetgeen door sommige kernelversies ondersteund wordt. Hoewel ASLR reeds voor datagebieden in de stack en de heap opgelegd kan worden (brk and mmap), moeten de codegebieden als positieonafhankelijk gecompileerd worden. Gedeelde bibliotheken doen dit reeds (B<-fPIC>), waardoor zij automatisch ASLR krijgen, maar binaire .text-gebieden moeten als PIE gebouwd worden om ASLR te krijgen. Als dit gebeurt, worden aanvallen van het type ROP (Return Oriented Programming - op terugkeerwaarde georiënteerd programmeren) veel moeilijker aangezien er geen statische locaties meer zijn die bij een aanval van geheugenvervuiling als springplank gebruikt kunnen worden.
 
 PIE is niet compatibel met B<-fPIC>, dus over het algemeen moet men voorzichtig zijn bij het bouwen van gedeelde objecten. Maar aangezien de PIE-vlaggen die meegegeven worden geïnjecteerd worden via specs-bestanden van gcc, zou het altijd veilig moeten zijn om ze onvoorwaardelijk in te stellen ongeacht het objecttype dat gecompileerd of gelinkt wordt.
 

@@ -133,7 +133,7 @@ O nome desmembrado em cima pode ser obtido ao executar o seguinte comando:
 
   $ echo '_ZThn8_N3NSB6ClassDD1Ev@Base' | c++filt
 
-Por favor note que enquanto o nome mutilado é único na biblioteca por definição, isto não é necessariamente verdade para nomes não-mutilados. Um par de símbolos reais distintos podem ter o mesmo nome mutilado. Por exemplo, esse é o caso com símbolos thunk não.virtuais em configurações de herança complexa ou com a maioria dos construtores e destrutores (pois o g++ tipicamente gera dois símbolos reais para eles). No entanto, como estas colisões acontecem no nível de ABI, não devem degradar a qualidade do ficheiro de símbolos.
+Por favor note que enquanto o nome mutilado é único na biblioteca por definição, isto não é necessariamente verdade para nomes não-mutilados. Um par de símbolos reais distintos podem ter o mesmo nome mutilado. Por exemplo, esse é o caso com símbolos thunk não.virtuais em configurações de herança complexa ou com a maioria dos construtores e destruidores (pois o g++ tipicamente gera dois símbolos reais para eles). No entanto, como estas colisões acontecem no nível de ABI, não devem degradar a qualidade do ficheiro de símbolos.
 
 =item B<symver>
 
@@ -157,7 +157,7 @@ Padrões de expressões regulares são denotadas pela etiqueta I<regex>. Eles co
   (regex)"^mystack_.*@Base$" 1.0
   (regex|optional)"private" 1.0
 
-Símbolos como "mystack_new@Base", "mystack_push@Base", "mystack_pop@Base" etc.  irão corresponder ao primeiro padrão, enquanto ex. "ng_mystack_new@Base" não o farão. O segundo padrão irá corresponder a todos os símbolos que tenham a string "private" nos seus nomes e as correspondências irão herdar a etiqueta I<optional> a partir do padrão.
+Símbolos como "mystack_new@Base", "mystack_push@Base", "mystack_pop@Base" etc, irão corresponder ao primeiro padrão, enquanto "ng_mystack_new@Base" não o fará. O segundo padrão irá corresponder a todos os símbolos que tenham a string "private" nos seus nomes e as correspondências irão herdar a etiqueta I<optional> a partir do padrão.
 
 =back
 
@@ -166,7 +166,7 @@ Os padrões básicos listados em cima podem ser combinados onde isso fizer senti
   (c++|regex)"^NSA::ClassA::Private::privmethod\d\(int\)@Base" 1.0
   (regex|c++)N3NSA6ClassA7Private11privmethod\dEi@Base 1.0
 
-irá corresponder aos símbolos "_ZN3NSA6ClassA7Private11privmethod1Ei@Base" e "_ZN3NSA6ClassA7Private11privmethod2Ei@Base". Quando coincide o primeiro padrão, o símbolo cru é primeiro desmutilado como símbolo C++, depois o nome desmutilado é coincidido com a expressão regular. Por outro lado, quando coincide o segundo padrão, a expressão regular é coincidida com o nome cru do símbolo, depois os símbolo é testado se é um C++ ao tentar desmutilá-lo. Uma falha de qualquer padrão básico irá resultar na falha de todo o padrão. Por isso, por exemplo, "__N3NSA6ClassA7Private11privmethod\dEi@Base" não irá corresponder a nenhum dos padrões porque não é um símbolo C++ válido.
+irá corresponder aos símbolos "_ZN3NSA6ClassA7Private11privmethod1Ei@Base" e "_ZN3NSA6ClassA7Private11privmethod2Ei@Base". Quando coincide o primeiro padrão, o símbolo cru é primeiro desmutilado como símbolo C++, depois o nome desmutilado é coincidido com a expressão regular. Por outro lado, quando coincide o segundo padrão, a expressão regular é coincidida com o nome cru do símbolo, depois os símbolo é testado se é um C++ ao tentar desmutila-lo. Uma falha de qualquer padrão básico irá resultar na falha de todo o padrão. Por isso, por exemplo, "__N3NSA6ClassA7Private11privmethod\dEi@Base" não irá corresponder a nenhum dos padrões porque não é um símbolo C++ válido.
 
 Em geral, todos os padrões são divididos em dois grupos: aliases (basic I<c++> e I<symver>) e padrões genéricos (I<regex>, todas as combinações de múltiplos padrões básicos). A correspondência de padrões básicos baseados-em-alias é rápida (O(1)) enquanto que padrões genéricos são O(N) (N - contagem de padrão genérico) para cada símbolo. Assim, é recomendado não sobre-utilizar padrões genéricos.
 

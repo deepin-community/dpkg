@@ -142,7 +142,7 @@ der Schalter wurde durch eine umgebungsspezifische Konfiguration gesetzt/veränd
 
 =item B<--query>
 
-Alle Informationen anzeigen, die zur Erklärung des Verhaltens des Programms hilfreich sein könnten: aktueller Lieferant, relevante Umgebungsvariablen, Funktionalitätsbereiche, Zustand der Funktionsschalter und die Compiler-Schalter mit ihrem Ursprung (seit Dpkg 1.19.0).
+Alle Informationen anzeigen, die zur Erklärung des Verhaltens des Programms hilfreich sein könnten: aktueller Lieferant, relevante Umgebungsvariablen, Funktionalitätsbereiche, Zustand der Funktionsschalter, ob eine Funktionalität als eingebaute Vorgabe durch den Compiler behandelt wird (seit Dpkg 1.21.14) und die Compiler-Schalter mit ihrem Ursprung (seit Dpkg 1.19.0).
 
 Zum Beispiel:
 
@@ -154,10 +154,18 @@ Zum Beispiel:
  Features:
   bug=no
   canary=no
+ Builtins:
+
+ Area: hardening
+ Features:
+  pie=no
+ Builtins:
+  pie=yes
 
  Area: reproducible
  Features:
   timeless=no
+ Builtins:
 
  Flag: CFLAGS
  Value: -O0 -Wall
@@ -169,12 +177,13 @@ Zum Beispiel:
 
 =item B<--query-features> I<Bereich>
 
-Gibt die Funktionalitäten, die für den übergebenen Bereich aktiviert sind, aus (seit Dpkg 1.16.2). Die einzigen unter Debian und abgeleiteten Distributionen derzeit erkannten Bereiche sind B<future>, B<qa>, B<reproducible>, B<sanitize> und B<hardening>. Lesen Sie den Abschnitt B<FUNKTIONALITÄTSBEREICHE> für weitere Details. Beendet sich mit 0, falls der Bereich bekannt ist, andernfalls mit 1.
+Gibt die Funktionalitäten, die für den übergebenen Bereich aktiviert sind, aus (seit Dpkg 1.16.2). Falls die Funktionalität als eingebaute Vorgabe durch den Compiler gehandhabt wird (selbst wenn nur für einige Architekturen), dann wird das Feld B<Builtin> ausgegeben (seit Dpkg 1.21.14). Die einzigen unter Debian und abgeleiteten Distributionen derzeit erkannten Bereiche sind B<future>, B<qa>, B<reproducible>, B<sanitize> und B<hardening>. Lesen Sie den Abschnitt B<FUNKTIONALITÄTSBEREICHE> für weitere Details. Beendet sich mit 0, falls der Bereich bekannt ist, andernfalls mit 1.
 
 Die Ausgabe ist im RFC822-Format, mit einem Abschnitt pro Funktionalität. Beispiel:
 
  Feature: pie
  Enabled: yes
+ Builtin: yes
 
  Feature: stackprotector
  Enabled: yes
@@ -285,7 +294,7 @@ Mehrere Optionen zur Kompilierung (Details weiter unten) können verwandt werden
 
 =over 
 
-=item lto
+=item B<lto>
 
 Diese Einstellung (seit Dpkg 1.21.0; standardmäßig deaktiviert) aktiviert Link Time Optimization (Optimierung zum Link-Zeitpunkt), indem B<-flto=auto -ffat-lto-objects> zu B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS>, B<FCFLAGS> und B<LDFLAGS> hinzugefügt wird.
 
@@ -357,7 +366,7 @@ Diese Einstellung (standardmäßig deaktiviert) fügt B<-Wl,-z,now> zu B<LDFLAGS
 
 Diese Einstellung (seit Dpkg 1.18.23 ohne globale Vorgabe, da sie jetzt standardmäßig durch GCC auf den Debian-Architekturen Amd64, Arm64, Armel, Armhf, Hurd-i386, I386, Kfreebsd-amd64, Kfreebsd-i386, Mips, Mipsel, Mips64el, Powerpc, PPC64, PPC64el, Riscv64, S390x, Sparc und Sparc64 aktiviert ist) fügt, falls benötigt, die benötigten Optionen, um PIE zu aktivieren oder zu deaktivieren, über GCC-Spezifikationsdateien hinzu, abhängig davon, ob GCC auf diesen Architekturen die Schalter selbst einspeist oder nicht. Wenn die Einstellung aktiviert ist und GCC den Schalter einspeist, fügt dies nichts hinzu. Wenn die Einstellung aktiviert ist und GCC den Schalter nicht einspeist, dann fügt es B<-fPIE> (mittels I<%PKGDATADIR%/pie-compiler.specs>) zu B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> und B<FCFLAGS> und B<-fPIE -pie> (mittels I<%PKGDATADIR%/pie-link.specs>) zu B<LDFLAGS> hinzu.  Wenn die Einstellung deaktiviert ist und GCC den Schalter einspeist, dann fügt es B<-fno-PIE> (mittels I<%PKGDATADIR%/no-pie-compile.specs>) zu B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> und B<FCFLAGS> und B<-fno-PIE -no-pie> (mittels I<%PKGDATADIR%/no-pie-link.specs>) zu B<LDFLAGS> hinzu.
 
-„Position Independent Executable“ (positionsunabhängige Programme) werden benötigt, um „Address Space Layout Randomization“ (Bereitstellung eines zufälligen Adressbereichlayouts) auszunutzen, der von einigen Kernelversionen bereitgestellt wird. Während ASLR bereits für Datenbereiche auf dem Stapel (Stack) und Heap erzwungen werden kann (brk und mmap), müssen die Codebereiche positionsunabhängig übersetzt werden. Laufzeitbibliotheken machen dies bereits (B<-fPIC>), so dass sie ASLR automatisch erhalten, aber Programm-.text-Regionen müssen mit PIE gebaut werden, um ASLR zu erhalten. Wenn dies passiert, sind ROP- (Return Oriented Programming) Angriffe sehr viel schwerer durchzuführen, da es keine statischen Orte mehr gibt, zu denen während eines Speicherverfälschungsangriffs hingesprungen werden könnte.
+„Position Independent Executable“ (positionsunabhängige Programme) (PIE) ist benötigt, um „Address Space Layout Randomization“ (Bereitstellung eines zufälligen Adressbereichlayouts) (ASLR) auszunutzen, der von einigen Kernelversionen bereitgestellt wird. Während ASLR bereits für Datenbereiche auf dem Stapel (Stack) und Heap erzwungen werden kann (brk und mmap), müssen die Codebereiche positionsunabhängig übersetzt werden. Laufzeitbibliotheken machen dies bereits (B<-fPIC>), so dass sie ASLR automatisch erhalten, aber Programm-.text-Regionen müssen als PIE gebaut werden, um ASLR zu erhalten. Wenn dies passiert, sind ROP- (Return Oriented Programming) Angriffe sehr viel schwerer durchzuführen, da es keine statischen Orte mehr gibt, zu denen während eines Speicherverfälschungsangriffs hingesprungen werden könnte.
 
 PIE ist nicht zu B<-fPIC> kompatibel, daher müssen Sie beim Bau von Laufzeitbibliotheksobjekten im Allgemeinen Vorsicht walten lassen. Da aber der ausgegebene PIE-Schalter mittels GCC-Spezifikationsdateien hinzugefügt wird, sollte es immer sicher sein, sie bedingungslos zu setzen, unabhängig von dem Objekttyp, der übersetzt oder gelinkt wird.
 
@@ -557,7 +566,7 @@ Und natürlich können Sie die Schalter manuell an Befehle weitergeben:
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

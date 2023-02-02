@@ -32,7 +32,7 @@ B<dpkg-statoverride> est un utilitaire pour gérer la liste des dérogations. Il
 
 =item B<--add> I<utilisateur groupe mode chemin>
 
-Ajoute une dérogation S<(« override »)> pour I<chemin>. I<chemin> n'a pas besoin d'exister quand cette commande est S<utilisée ;> la dérogation est stockée et utilisée par la suite. Les utilisateurs ou les groupes peuvent être indiqués par leur nom (par exemple B<root> ou B<nobody>) ou bien par leur numéro, en préfixant ce numéro par le caractère S<« B<#> »> (par exemple, B<#0> ou B<#65534>). Le I<mode> doit être indiqué en numérotation octale.
+Add an override for I<path>. I<path> does not need to exist nor be known to B<dpkg> when this command is used; the override will be stored and used later.  Users and groups can be specified by their name (for example B<root> or B<nobody>), or by their number by prepending the number with a ‘B<#>’ (for example B<#0> or B<#65534>).  The I<mode> needs to be specified in octal.
 
 Si B<--update> est utilisée et si I<chemin> existe, le fichier change immédiatement de propriétaire et de mode.
 
@@ -135,6 +135,10 @@ Si cette variable est positionnée et que les options B<--admindir> ou B<--root>
 =item B<DPKG_ADMINDIR>
 
 Si cette variable est positionnée et que les options B<--admindir> ou B<--root> ne sont pas précisées, ce répertoire sera utilisé comme répertoire de données pour B<dpkg>.
+
+=item B<DPKG_DEBUG>
+
+Sets the debug mask (since dpkg 1.21.10) from an octal value.  The currently accepted flags are described in the B<dpkg --debug> option, but not all these flags might have an effect on this program.
 
 =item B<DPKG_FORCE>
 

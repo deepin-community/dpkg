@@ -30,6 +30,7 @@ our @EXPORT_OK = qw(
     test_needs_author
     test_needs_module
     test_needs_command
+    test_needs_openpgp_backend
     test_needs_srcdir_switch
     test_neutralize_checksums
 );
@@ -38,6 +39,7 @@ our %EXPORT_TAGS = (
         test_needs_author
         test_needs_module
         test_needs_command
+        test_needs_openpgp_backend
         test_needs_srcdir_switch
     ) ],
     paths => [ qw(
@@ -55,7 +57,7 @@ use Exporter qw(import);
 use Cwd;
 use File::Find;
 use File::Basename;
-use File::Path qw(make_path);
+use File::Path qw(make_path rmtree);
 use IPC::Cmd qw(can_run);
 use Test::More;
 
@@ -94,6 +96,7 @@ sub test_get_temp_path
     my $path = shift // _test_get_caller_dir();
     $path = 't.tmp/' . fileparse($path);
 
+    rmtree($path);
     make_path($path);
     return $path;
 }
@@ -116,41 +119,38 @@ sub test_get_perl_dirs
     }
 }
 
-sub all_po_files
+sub _test_get_files
 {
-    my $filter = shift // qr/\.(?:po|pot)$/;
+    my ($filter, $dirs) = @_;
     my @files;
-    my $scan_po_files = sub {
+    my $scan_files = sub {
         push @files, $File::Find::name if m/$filter/;
     };
 
-    find($scan_po_files, test_get_po_dirs());
+    find($scan_files, @{$dirs});
 
     return @files;
+}
+
+sub all_po_files
+{
+    return _test_get_files(qr/\.(?:po|pot)$/, [ test_get_po_dirs() ]);
 }
 
 sub all_perl_files
 {
-    my $filter = shift // qr/\.(?:PL|pl|pm|t)$/;
-    my @files;
-    my $scan_perl_files = sub {
-        push @files, $File::Find::name if m/$filter/;
-    };
-
-    find($scan_perl_files, test_get_perl_dirs());
-
-    return @files;
+    return _test_get_files(qr/\.(?:PL|pl|pm|t)$/, [ test_get_perl_dirs() ]);
 }
 
 sub all_perl_modules
 {
-    return all_perl_files(qr/\.pm$/);
+    return _test_get_files(qr/\.pm$/, [ test_get_perl_dirs() ]);
 }
 
 sub test_needs_author
 {
-    if (not $ENV{DPKG_DEVEL_MODE} and not $ENV{AUTHOR_TESTING}) {
-        plan skip_all => 'developer test';
+    if (not $ENV{AUTHOR_TESTING}) {
+        plan skip_all => 'author test';
     }
 }
 
@@ -181,6 +181,22 @@ sub test_needs_command
     if (not can_run($command)) {
         plan skip_all => "requires command $command";
     }
+}
+
+sub test_needs_openpgp_backend
+{
+    my @backends = qw(
+        gpg
+        sq
+        sqop
+        pgpainless-cli
+    );
+    my @cmds = grep { can_run($_) } @backends;
+    if (@cmds == 0) {
+        plan skip_all => "requires >= 1 openpgp command: @backends";
+    }
+
+    return @cmds;
 }
 
 sub test_needs_srcdir_switch

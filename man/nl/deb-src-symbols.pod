@@ -157,7 +157,7 @@ Patronen in de vorm van reguliere expressies worden aangegeven met de tag I<rege
   (regex)"^mystack_.*@Base$" 1.0
   (regex|optional)"private" 1.0
 
-Symbolen zoals "mystack_new@Base", "mystack_push@Base", "mystack_pop@Base" enz. zullen door het eerste patroon gevonden worden, terwijl "ng_mystack_new@Base" bijvoorbeeld niet. Het tweede patroon zal een overeenkomst opleveren met alle symbolen die in hun naam de tekenreeks "private" hebben en de gevonden symbolen zullen de tag I<optional> overerven van het patroon.
+Symbolen zoals "mystack_new@Base", "mystack_push@Base", "mystack_pop@Base" enz. zullen door het eerste patroon gevonden worden, terwijl dat voor "ng_mystack_new@Base" niet het geval zou zijn. Het tweede patroon zal een overeenkomst opleveren met alle symbolen die in hun naam de tekenreeks "private" hebben en de gevonden symbolen zullen de tag I<optional> overerven van het patroon.
 
 =back
 

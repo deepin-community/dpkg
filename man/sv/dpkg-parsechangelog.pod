@@ -56,13 +56,13 @@ Visar version och avslutar.
 
 =head2 Parserflaggor
 
-Följande flaggor kan användas för att styra utdata från ändringsloggtolken, t.ex. omfånget av poster eller formatet på utdata.
+The following options can be used to influence the output of the changelog parser, for example the range of entries or the format of the output.
 
 =over 
 
 =item B<--format> I<utdataformat>
 
-Välj utdataformat. Stödda format är för närvarande B<dpkg> och B<rfc822>. B<dpkg> är det klassiska utdataformatet (från innan denna flagga var tillgänglig) och förvalet. Det består av ett stycke i Debians control-format (se B<deb-control>(5)). Om mer än en post önskas tas de flesta fält från den första posten (vanligtvis den nyaste posten), förutom om annat anges:
+Set the output format. Currently supported values are B<dpkg> and B<rfc822>.  B<dpkg> is the classic output format (from before this option existed) and the default. It consists of one stanza in Debian control format (see B<deb-control>(5)). If more than one entry is requested, then most fields are taken from the first entry (usually the most recent entry), except otherwise stated:
 
 =over 
 
@@ -100,7 +100,7 @@ Fälten B<Version>, B<Distribution>, B<Urgency>, B<Maintainer> och B<Changes> kr
 
 Ytterligare användardefinierade fält kan finnas.
 
-B<rfc822>-formatet använder samma fält, men ger ett separat stycke för varje ändringsloggspost så att all metadata för varje post behålls.
+The B<rfc822> format uses the same fields but outputs a separate stanza for each changelog entry so that all metadata for each entry is preserved.
 
 =item B<--reverse>
 

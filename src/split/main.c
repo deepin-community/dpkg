@@ -37,12 +37,14 @@
 #include <dpkg/i18n.h>
 #include <dpkg/dpkg.h>
 #include <dpkg/dpkg-db.h>
+#include <dpkg/debug.h>
+#include <dpkg/fsys.h>
 #include <dpkg/options.h>
 
 #include "dpkg-split.h"
 
-static void DPKG_ATTR_NORET
-printversion(const struct cmdinfo *cip, const char *value)
+static int
+printversion(const char *const *argv)
 {
   printf(_("Debian '%s' package split/join tool; version %s.\n"),
          SPLITTER, PACKAGE_RELEASE);
@@ -53,11 +55,11 @@ printversion(const struct cmdinfo *cip, const char *value)
 
   m_output(stdout, _("<standard output>"));
 
-  exit(0);
+  return 0;
 }
 
-static void DPKG_ATTR_NORET
-usage(const struct cmdinfo *cip, const char *value)
+static int
+usage(const char *const *argv)
 {
   printf(_(
 "Usage: %s [<option> ...] <command>\n"
@@ -80,13 +82,15 @@ usage(const struct cmdinfo *cip, const char *value)
 
   printf(_(
 "Options:\n"
-"  --depotdir <directory>           Use <directory> instead of %s/%s.\n"
-"  -S|--partsize <size>             In KiB, for -s (default is 450).\n"
-"  -o|--output <file>               Filename, for -j (default is\n"
+"      --depotdir <directory>       Use <directory> instead of %s/%s.\n"
+"      --admindir <directory>       Use <directory> instead of %s.\n"
+"      --root <directory>           Use <directory> instead of %s.\n"
+"  -S, --partsize <size>            In KiB, for -s (default is 450).\n"
+"  -o, --output <file>              Filename, for -j (default is\n"
 "                                     <package>_<version>_<arch>.deb).\n"
-"  -Q|--npquiet                     Be quiet when -a is not a part.\n"
-"  --msdos                          Generate 8.3 filenames.\n"
-"\n"), ADMINDIR, PARTSDIR);
+"  -Q, --npquiet                    Be quiet when -a is not a part.\n"
+"      --msdos                      Generate 8.3 filenames.\n"
+"\n"), ADMINDIR, PARTSDIR, ADMINDIR, "/");
 
   printf(_(
 "Exit status:\n"
@@ -97,13 +101,12 @@ usage(const struct cmdinfo *cip, const char *value)
 
   m_output(stdout, _("<standard output>"));
 
-  exit(0);
+  return 0;
 }
 
 static const char printforhelp[] = N_("Type dpkg-split --help for help.");
 
 off_t opt_maxpartsize = SPLITPARTDEFMAX;
-static const char *admindir;
 const char *opt_depotdir;
 const char *opt_outputfile = NULL;
 int opt_npquiet = 0;
@@ -144,9 +147,11 @@ static const struct cmdinfo cmdinfos[]= {
   ACTION("auto",    'a',  0,  do_auto),
   ACTION("listq",   'l',  0,  do_queue),
   ACTION("discard", 'd',  0,  do_discard),
+  ACTION("help",    '?',  0,  usage),
+  ACTION("version",  0,   0,  printversion),
 
-  { "help",         '?',  0,  NULL, NULL,             usage               },
-  { "version",       0,   0,  NULL, NULL,             printversion        },
+  { "admindir",      0,   1,  NULL, NULL,             set_admindir,   0   },
+  { "root",          0,   1,  NULL, NULL,             set_root,       0   },
   { "depotdir",      0,   1,  NULL, &opt_depotdir,    NULL                },
   { "partsize",     'S',  1,  NULL, NULL,             set_part_size       },
   { "output",       'o',  1,  NULL, &opt_outputfile,  NULL                },
@@ -162,7 +167,8 @@ int main(int argc, const char *const *argv) {
   dpkg_program_init(SPLITTER);
   dpkg_options_parse(&argv, cmdinfos, printforhelp);
 
-  admindir = dpkg_db_set_dir(admindir);
+  debug(dbg_general, "root=%s admindir=%s", dpkg_fsys_get_dir(), dpkg_db_get_dir());
+
   if (opt_depotdir == NULL)
     opt_depotdir = dpkg_db_get_path(PARTSDIR);
 

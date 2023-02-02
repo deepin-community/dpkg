@@ -37,10 +37,6 @@ check_merged_usr_via_aliased_dirs()
     # Ubuntu does not seem interested in it.
     return
     ;;
-  uos|deepin)
-    # Uos/Deepin is not insterested in it currently.
-    return
-    ;;
   esac
 
   for d in /bin /sbin /lib /lib32 /libo32 /libx32 /lib64; do

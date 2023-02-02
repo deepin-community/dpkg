@@ -40,6 +40,7 @@ enum compressor_type {
 	COMPRESSOR_TYPE_NONE,
 	COMPRESSOR_TYPE_GZIP,
 	COMPRESSOR_TYPE_XZ,
+	COMPRESSOR_TYPE_ZSTD,
 	COMPRESSOR_TYPE_BZIP2,
 	COMPRESSOR_TYPE_LZMA,
 };
@@ -58,6 +59,7 @@ struct compress_params {
 	enum compressor_type type;
 	enum compressor_strategy strategy;
 	int level;
+	int threads_max;
 };
 
 enum compressor_type compressor_find_by_name(const char *name);

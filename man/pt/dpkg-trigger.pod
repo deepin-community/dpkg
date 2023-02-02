@@ -108,6 +108,10 @@ Se definido e a opção B<--root> não foi especificada, será usado como o dire
 
 Se definido e a opção B<--admindir> não for especificada, será usado como o directório de dados do B<dpkg>.
 
+=item B<DPKG_DEBUG>
+
+Define a máscara de depuração (desde dpkg 1.21.10) a partir dum valor octal. As bandeiras presentemente aceites estão descritas na opção B<dpkg --debug>, mas nem todas estas bandeiras podem ter um efeito neste programa.
+
 =item B<DPKG_COLORS>
 
 Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B<auto> (predefinido), B<always> e B<never>.
@@ -116,7 +120,7 @@ Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B
 
 =head1 VEJA TAMBÉM
 
-B<dpkg>(1), B<deb-triggers>(5), B<%PKGDOCDIR%/triggers.txt.gz>.
+B<dpkg>(1), B<deb-triggers>(5), B<%PKGDOCDIR%/spec/triggers.txt>.
 
 
 =head1 TRADUÇÃO

@@ -50,9 +50,9 @@ override_dh_auto_configure:
 		--sbindir=/sbin \
 		--libexecdir=\$${exec_prefix}/lib \
 		--with-devlibdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH) \
-		--without-libmd \
 		--with-libz \
 		--with-liblzma \
+		--with-libzstd \
 		--with-libbz2 \
 		# EOL
 
@@ -76,7 +76,10 @@ override_dh_installdocs:
 	dh_installdocs -pdpkg-dev --doc-main-package=dpkg
 
 override_dh_installchangelogs:
-	dh_installchangelogs ChangeLog*
+	dh_installchangelogs --no-trim
 
 override_dh_bugfiles:
 	dh_bugfiles -A
+
+override_dh_compress:
+	dh_compress -Xspec/

@@ -454,20 +454,20 @@ När ett paket tas bort är det möjligt att ett annat paket beror på det bortt
 
 Aktiverar felsökning. I<oktalvärde>t skapas genom att utföra bitvis logisk ”eller” av de önskade värdena från listan nedan (observera att dessa värden kan ändras i framtida versioner). B<-Dh> eller B<--debug=help> visar dessa felsökningsvärden.
 
-       Tal   Beskrivning
-         1   Allmänt hjälpsam förloppsinformation
-         2   Anrop och status för utvecklarskript
-        10   Utdata för varje fil som hanteras
-       100   Massvis med utdata för varje fil som hanteras
-        20   Utdata för varje konfigurationsfil
-       200   Massvis med utdata för varje konfigurationsfil
-        40   Beroenden och konflikter
-       400   Massvis av beroende-/konfliktutdata
-     10000   Aktivering och hantering av utlösare
-     20000   Massvis av utdata om utlösare
-     40000   Dumma mängder utdata om utlösare
-      1000   Massvis av pladder om bl.a dpkg/info-katalogen
-      2000   Knäppa mängder pladder
+    Number   Description
+         1   Generally helpful progress information
+         2   Invocation and status of maintainer scripts
+        10   Output for each file processed
+       100   Lots of output for each file processed
+        20   Output for each configuration file
+       200   Lots of output for each configuration file
+        40   Dependencies and conflicts
+       400   Lots of dependencies/conflicts output
+     10000   Trigger activation and processing
+     20000   Lots of output regarding triggers
+     40000   Silly amounts of output regarding triggers
+      1000   Lots of drivel about for example the dpkg/info dir
+      2000   Insane amounts of drivel
 
 =item B<--force->I<saker>
 
@@ -485,13 +485,13 @@ I<Varning: För närvarande undersöker inte> B<dpkg> I<beroenden vid nedgraderi
 
 B<configure-any>: Konfigurera även alla uppackade men ej konfigurerade paket på vilka det aktuella paketet beror.
 
-B<hold>: Tillåt automatiska installationer, uppgraderingar eller borttagningar av paket även när de är märkts som ”håll”. B<Obervera:> Detta förhindrar inte dessa åtgärder när de anges explicit.
+B<hold>: Allow automatic installs, upgrades or removals of packages even when marked to be on “hold”.  B<Note:> When these actions are requested explicitly, the “hold” package selection state always gets ignored.
 
 B<remove-reinstreq>: Ta bort ett paket även om det är trasigt och markerat att vara i behov av ominstallation. Detta kan, till exempel, göra så att delar av paketet blir kvar på systemet, men glöms bort av B<dpkg>.
 
-B<remove-protected>: Ta bort paketet även om det anses som skyddat (protected, sedan dpkg 1.20.1). Skyddade paket är huvudsakligen viktig infrastruktur för systemstart. Om du tar bort dem kan det göra så att hela systemet inte klarar att starta, så använd med tillförsikt.
+B<remove-protected>: Ta bort paketet även om det anses som skyddat (protected, sedan dpkg 1.20.1). Skyddade paket är huvudsakligen viktig infrastruktur för systemstart eller används för skräddarsydda systemlokala metapaket. Om du tar bort dem kan det göra så att hela systemet inte klarar att starta eller förlora krävd funktionalitet, så använd med tillförsikt.
 
-B<remove-essential>: Ta bort paketet även om det anses som viktigt (essential). Viktiga paket är huvudsakligen de mest grundläggande Unixkommandona. Om du tar bort dem kan det göra så att hela systemet slutar fungera, så använd med tillförsikt.
+B<remove-essential>: Ta bort paketet även om det anses som viktigt (essential). Viktiga paket är huvudsakligen de mest grundläggande Unixkommandona, vilka krävs för pakethanteringssystemet, för att systemet generellt ska fungera korrekt eller under start (även om det sistnämnda bör skrivas om till skyddade (protected) paket). Om du tar bort dem kan det göra så att hela systemet slutar fungera, så använd med tillförsikt.
 
 B<depends>: Gör alla beroendeproblem till varningar. Detta påverkar fälten B<Pre-Depends> och B<Depends>.
 
@@ -579,7 +579,9 @@ Hantera endast paket som markerats för installation. Själva markeringen utför
 
 =item B<-E>, B<--skip-same-version>
 
-Installera inte paketet om samma version av paketet redan är installerat.
+Don't install the package if the same version and architecture of the package is already installed.
+
+Since dpkg 1.21.10, the architecture is also taken into account, which makes it possible to cross-grade packages or install additional co-installable instances with the same version, but different architecture.
 
 =item B<--pre-invoke=>I<kommando>
 
@@ -689,7 +691,7 @@ Paketstatus ändrad; I<status> är som i statusfilen.
 Ett fel uppstod. Eventuella nyradstecken i I<utökat-felmeddelanden> kommer ersättas med blanksteg innan de skrivs ut.
 
 =item B<status:> I<fil> B<: conffile-prompt : '>I<riktig-gammal>B<'
-'>I<riktig-ny>B<'> I<användarredigerad>B<> I<distredigerad>
+'>I<riktig-ny>B<'> I<användarredigerad> I<distredigerad>
 
 Användaren får en fråga om konfigurationsfiler.
 
@@ -801,6 +803,10 @@ Programmet B<dpkg> kommer att köra när en bläddrare körs, vilken kommer att 
 =item B<DPKG_COLORS>
 
 Väljer färgläge (sedan dpkg 1.18.5). För närvarande godtas följande värden: B<auto> (förval), B<always> och B<never>.
+
+=item B<DPKG_DEBUG>
+
+Sets the debug mask (since dpkg 1.21.10) from an octal value.  The currently accepted flags are described in the B<--debug> option.
 
 =item B<DPKG_FORCE>
 

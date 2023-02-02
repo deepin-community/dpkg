@@ -248,7 +248,7 @@ Das standardmäßige administrative Verzeichnis. Kann mittels der B<--admindir> 
 
 =head1 ABFRAGE-FORMAT
 
-Das Format von B<--query> ist ein RFC822-artiges, flaches Format. Es besteht aus I<n>+1 Blöcken, wobei I<n> die Anzahl der in einer abgefragten Linkgruppe verfügbaren Alternativen ist. Der erste Block enthält die folgenden Felder:
+Das Format von B<--query> ist ein RFC822-artiges, flaches Format. Es besteht aus I<n>+1 Absätzen, wobei I<n> die Anzahl der in einer abgefragten Linkgruppe verfügbaren Alternativen ist. Der erste Absatz enthält die folgenden Felder:
 
 =over 
 
@@ -278,13 +278,13 @@ Der Pfad der derzeit ausgewählten Alternative. Es akzeptiert auch den magischen
 
 =back
 
-Die anderen Blöcke beschreiben die verfügbaren Alternativen in der abgefragten Linkgruppe:
+Die anderen Absätze beschreiben die verfügbaren Alternativen in der abgefragten Linkgruppe:
 
 =over 
 
 =item B<Alternative:> I<Pfad-dieser-Alternativen>
 
-Pfad zu der Alternative dieses Blocks.
+Pfad zu der Alternative dieses Absatzes.
 
 =item B<Priority:> I<Prioritätswert>
 
@@ -364,7 +364,7 @@ B<ln>(1), FHS (der Dateisystem-Hierarchie-Standard, Filesystem Hierarchy Standar
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

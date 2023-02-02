@@ -24,7 +24,7 @@ B<debian/control>
 
 Cada pacote fonte Debian contem o ficheiro «B<debian/control>» mestre, e o seu formato L<deb822(5)> é um superconjunto do ficheiro B<control> enviado em pacotes binários Debian, veja B<deb-control>(5).
 
-Este ficheiro contem pelo menos 2 parágrafos, separados por uma linha vazia. O primeiro parágrafo lista toda a informação acerca do pacote fonte em geral, enquanto cada parágrafo seguinte descreve exactamente um pacote binário. Cada parágrafo consiste de pelo menos um campo. Um campo começa com um nome de ficheiro, tal como B<Package> ou B<Section> (insensível a maiúsculas/minúsculas), seguido de dois pontos, o corpo do campo (sensível a maiúsculas/minúsculas a menos que declarado o contrário) e uma mudança de linha. São também permitirmos campos multi-linha, mas cada linha suplementar, sem o nome do ficheiro, deve começar com pelo menos um espaço em branco. O conteúdo dos campos multi-linha é geralmente juntado numa única pelas ferramentas (excepto no caso do campo B<Description>, ver abaixo). Para inserir linhas vazias num campo de multi-linha, insira um ponto após o espaço. As linhas começadas com ‘B<#>’ são tratadas como comentários.
+Este ficheiro contem pelo menos 2 estrofes, separadas por uma linha vazia. A primeira estrofe lista toda a informação acerca do pacote fonte em geral, enquanto cada estrofe seguinte descreve exactamente um pacote binário. Cada estrofe consiste de pelo menos um campo. Um campo começa com um nome de ficheiro, tal como B<Package> ou B<Section> (insensível a maiúsculas/minúsculas), seguido de dois pontos, o corpo do campo (sensível a maiúsculas/minúsculas a menos que declarado o contrário) e uma mudança de linha. São também permitirmos campos multi-linha, mas cada linha suplementar, sem o nome do ficheiro, deve começar com pelo menos um espaço em branco. O conteúdo dos campos multi-linha é geralmente juntado numa única pelas ferramentas (excepto no caso do campo B<Description>, ver abaixo). Para inserir linhas vazias num campo de multi-linha, insira um ponto após o espaço. As linhas começadas com ‘B<#>’ são tratadas como comentários.
 
 =head1 CAMPOS DE FONTE
 
@@ -48,7 +48,7 @@ Isto documenta a versão mais recente dos standards de política da distribuiç�
 
 =item B<Description> I<short-description>
 
-=item B<> I<long-description>
+=item S< >I<long-description>
 
 O formato da descrição do pacote fonte é um sumário breve e curto na primeira linha (após o campo B<Description>). As linhas seguintes devem ser usadas para uma descrição longa e mais detalhada. Cada linha da descrição longa tem de ser precedida com um espaço, e as linhas em branco na descrição longa têm de conter um único ‘B<.>’  a seguir ao espaço que precede.
 
@@ -170,7 +170,7 @@ Note que as dependências de pacotes no conjunto B<build-essential> podem ser om
 
 =head1 CAMPOS DE BINÁRIOS
 
-Note que os campos B<Priority>, B<Section> e B<Homepage> podem também ficar num parágrafo binário para sobrepor o valor global do pacote fonte.
+Note que os campos B<Priority>, B<Section> e B<Homepage> podem também ficar numa estrofe binário para sobrepor o valor global do pacote fonte.
 
 =over 
 
@@ -188,13 +188,13 @@ A arquitectura especifica em que tipo de hardware este pacote corre. Para os pac
 
 =item B<Build-Profiles:> I<restriction-formula>
 
-Este campo especifica as condições para quais este pacote compila ou não compila. Para expressar essas condições, é usada a mesma sintaxe de fórmula de restrição que se usa no campo B<Build-Depends>.
+Este campo especifica as condições para quais este pacote compila ou não compila. Para expressar essas condições, é usada a mesma sintaxe de fórmula de restrição que se usa no campo B<Build-Depends> (incluindo os colchetes angulares).
 
-Se um parágrafo de pacote binário não conter este campo, então significa implicitamente que compila com todos os perfis de compilação (incluindo nenhum deles).
+Se uma estrofe de pacote binário não conter este campo, então significa implicitamente que compila com todos os perfis de compilação (incluindo nenhum deles).
 
-Por outras palavras,se um parágrafo de pacote binário estiver anotado com um campo B<Build-Profiles> não vazio, então este pacote binário é gerado se e apenas se a condição expressa pela expressão de forma normal conjuntiva ser avaliada como verdadeira.
+Por outras palavras, se uma estrofe de pacote binário estiver anotado com um campo B<Build-Profiles> não vazio, então este pacote binário é gerado se e apenas se a condição expressa pela expressão de forma normal conjuntiva ser avaliada como verdadeira.
 
-=item B<Protected:> B<Byes>|B<no>
+=item B<Protected:> B<yes>|B<no>
 
 =item B<Essential:> B<yes>|B<no>
 
@@ -238,7 +238,7 @@ Estes campos declaram relacionamentos entre pacotes. Eles são discutidos no man
 
 =item B<Installer-Menu-Item:> I<value>
 
-Estes campos são usados pelo instalador de debian em B<udeb>s e geralmente não são necessários Veja /usr/share/doc/debian-installer/devel/modules.txt do pacote B<debian-installer> para mais detalhes acerca deles.
+Estes campos são usados pelo instalador de debian em B<udeb>s e geralmente não são necessários. Para mais detalhes acerca deles, veja L<https://salsa.debian.org/installer-team/debian-installer/-/raw/master/doc/devel/modules.txt>.
 
 =back
 
@@ -303,7 +303,7 @@ Tenha em conta que estes campos definidos pelo utilizador irão usar o espaço d
 
 =head1 VEJA TAMBÉM
 
-L<deb822(5)>, B<deb-control>(5), B<deb-version>(7), B<dpkg-source>(1)
+I<%PKGDOCDIR%/spec/rootless-builds.txt>, L<deb822(5)>, B<deb-control>(5), B<deb-version>(7), B<dpkg-source>(1)
 
 
 =head1 TRADUÇÃO

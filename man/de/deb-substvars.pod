@@ -18,25 +18,25 @@ deb-substvars - Ersetzungsvariablen in Debian-Quellen
 
 =head1 ÜBERSICHT
 
-B<debian/substvars>, B<debian/>I<binary-package>B<.substvars>, variables
+B<debian/substvars>, B<debian/>I<binary-package>B<.substvars>, Variablen
 
 =head1 BESCHREIBUNG
 
 Bevor B<dpkg-source>, B<dpkg-gencontrol> und B<dpkg-genchanges> ihre Steuerinformationen (zu der Quell-B<control>-Datei B<.dsc> für B<dpkg-source> und in die Standardausgabe für B<dpkg-gencontrol> und B<dpkg-genchanges>) schreiben, führen sie einige Variablenersetzungen in der Ausgabedatei durch.
 
-=head2 Variable Syntax
+=head2 Variablen-Syntax
 
 Eine Variablenersetzung hat die Form B<${>I<Variablenname>B<}>. Variablennamen bestehen aus alphanumerischen Zeichen (a-zA-Z0-9, womit sie auch beginnen), Bindestrichen (-) und Doppelpunkten (:). Bei Variablennamen ist die Klein-/Großschreibung relevant, auch wenn sie sich auf Gebilde beziehen, die die Klein-/Großschreibung erhalten. Variablenersetzungen werden wiederholt durchgeführt, bis keine übrig geblieben sind; der komplette Text des Feldes nach der Ersetzung wird erneut auf weitere Ersetzungen geprüft.
 
-=head2 File Syntax
+=head2 Dateisyntax
 
-Substitution variables can be specified in a file.  These files consist of lines of the form I<name>B<=>I<value> or I<name>B<?=>I<value>.  The B<=> operator assigns a normal substitution variable, while the B<?=> operator (since dpkg 1.21.8) assigns an optional substitution variable which will emit no warnings even if unused.  Trailing whitespace on each line, blank lines, and lines starting with a B<#> symbol (comments) are ignored.
+Ersetzungsvariablen können in einer Datei festgelegt werden. Diese Dateien bestehen aus Zeilen der Form I<Name>B<=>I<Wert> oder I<Name>B<?=>I<Wert>. Der Operator B<=> weist eine normale Ersetzungsvariable zu, während der Operator B<?=> (seit Dpkg 1.21.8) eine optionale Ersetzungsvariable zuweist, die keine Warnungen ausgibt, selbst wenn sie nicht verwandt wird. Leerraumzeichen am Zeilenende, leere Zeilen und Zeilen, die mit dem B<#>-Symbol starten (Kommentare) werden ignoriert.
 
-=head2 Substitution
+=head2 Ersetzungen
 
-Variables can be set using the B<-V> common option.  They can be also specified in the file B<debian/substvars> (or whatever other file is specified using the B<-T> common option).
+Variablen können über die allgemeine Option B<-V> gesetzt werden. Sie können auch in der B<debian/substvars> (bzw. in der über die allgemeine Option B<-T> gesetzten Datei) angegeben werden.
 
-After all the substitutions have been done each occurrence of the string B<${}> (which is not an actual substitution variable) is replaced with a B<$> sign.  This can be used as an escape sequence such as B<${}{>I<VARIABLE>B<}> which will end up as B<${>I<VARIABLE>B<}> on the output.
+Nachdem alle Ersetzungen erfolgt sind, wird jedes Auftreten der Zeichenkette B<${}> (die keine tatsächliche Ersetzungsvariable ist) durch das B<$>-Zeichen ersetzt. Dies kann als Maskiersequenz wie in B<${}{>I<VARIABLE>B<}> verwandt werden, was dann zu B<${>I<VARIABLE>B<}> in der Ausgabe wird.
 
 Falls auf eine Variable Bezug genommen wird, diese aber nicht definiert ist, wird es eine Warnung erstellen und ein leerer Wert wird angenommen.
 
@@ -57,9 +57,9 @@ Dann wird dies zu Folgenden führen:
   .
   Weiterer Text.
 
-=head2 Built-in Variable
+=head2 Eingebaute Variable
 
-Additionally, the following standard variables are always available:
+Zusätzlich sind die folgenden Standardvariablen immer verfügbar:
 
 =over 
 
@@ -156,7 +156,7 @@ B<dpkg>(1), B<dpkg-vendor>(1), B<dpkg-genchanges>(1), B<dpkg-gencontrol>(1), B<d
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

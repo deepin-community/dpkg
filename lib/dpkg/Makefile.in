@@ -109,6 +109,7 @@ host_triplet = @host@
 @BUILD_SHARED_TRUE@	$(LIBINTL) \
 @BUILD_SHARED_TRUE@	$(Z_LIBS) \
 @BUILD_SHARED_TRUE@	$(LZMA_LIBS) \
+@BUILD_SHARED_TRUE@	$(ZSTD_LIBS) \
 @BUILD_SHARED_TRUE@	$(BZ2_LIBS) \
 @BUILD_SHARED_TRUE@	# EOL
 
@@ -145,8 +146,8 @@ am__EXEEXT_1 = t/t-test$(EXEEXT) t/t-test-skip$(EXEEXT) \
 	t/t-macros$(EXEEXT) t/t-headers-cpp$(EXEEXT) \
 	t/t-c-ctype$(EXEEXT) t/t-namevalue$(EXEEXT) \
 	t/t-ehandle$(EXEEXT) t/t-error$(EXEEXT) t/t-string$(EXEEXT) \
-	t/t-file$(EXEEXT) t/t-buffer$(EXEEXT) t/t-path$(EXEEXT) \
-	t/t-progname$(EXEEXT) t/t-subproc$(EXEEXT) \
+	t/t-file$(EXEEXT) t/t-buffer$(EXEEXT) t/t-meminfo$(EXEEXT) \
+	t/t-path$(EXEEXT) t/t-progname$(EXEEXT) t/t-subproc$(EXEEXT) \
 	t/t-command$(EXEEXT) t/t-pager$(EXEEXT) t/t-varbuf$(EXEEXT) \
 	t/t-ar$(EXEEXT) t/t-tar$(EXEEXT) t/t-deb-version$(EXEEXT) \
 	t/t-arch$(EXEEXT) t/t-version$(EXEEXT) t/t-pkginfo$(EXEEXT) \
@@ -188,7 +189,7 @@ LTLIBRARIES = $(devlib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 @BUILD_SHARED_TRUE@am__DEPENDENCIES_2 = $(am__DEPENDENCIES_1) \
 @BUILD_SHARED_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-@BUILD_SHARED_TRUE@	$(am__DEPENDENCIES_1)
+@BUILD_SHARED_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 libdpkg_la_DEPENDENCIES = ../compat/libcompat.la $(am__DEPENDENCIES_2)
 am_libdpkg_la_OBJECTS = ar.lo arch.lo atomic-file.lo buffer.lo \
 	c-ctype.lo cleanup.lo color.lo command.lo compress.lo dbdir.lo \
@@ -197,12 +198,13 @@ am_libdpkg_la_OBJECTS = ar.lo arch.lo atomic-file.lo buffer.lo \
 	db-fsys-files.lo db-fsys-override.lo deb-version.lo debug.lo \
 	depcon.lo dir.lo dump.lo ehandle.lo error.lo fdio.lo file.lo \
 	fields.lo fsys-dir.lo fsys-iter.lo fsys-hash.lo glob.lo \
-	i18n.lo log.lo mlib.lo namevalue.lo nfmalloc.lo options.lo \
-	options-parsers.lo pager.lo parse.lo parsehelp.lo path.lo \
-	path-remove.lo pkg.lo pkg-array.lo pkg-files.lo pkg-format.lo \
-	pkg-hash.lo pkg-list.lo pkg-namevalue.lo pkg-queue.lo \
-	pkg-show.lo pkg-spec.lo progname.lo program.lo progress.lo \
-	report.lo string.lo strhash.lo strwide.lo subproc.lo tarfn.lo \
+	i18n.lo log.lo meminfo.lo mlib.lo namevalue.lo nfmalloc.lo \
+	options.lo options-dirs.lo options-parsers.lo pager.lo \
+	parse.lo parsehelp.lo path.lo path-remove.lo pkg.lo \
+	pkg-array.lo pkg-files.lo pkg-format.lo pkg-hash.lo \
+	pkg-list.lo pkg-namevalue.lo pkg-queue.lo pkg-show.lo \
+	pkg-spec.lo progname.lo program.lo progress.lo report.lo \
+	string.lo strhash.lo strwide.lo subproc.lo tarfn.lo \
 	treewalk.lo trigname.lo trignote.lo triglib.lo trigdeferred.lo \
 	utils.lo varbuf.lo version.lo
 libdpkg_la_OBJECTS = $(am_libdpkg_la_OBJECTS)
@@ -302,6 +304,11 @@ t_t_macros_SOURCES = t/t-macros.c
 t_t_macros_OBJECTS = t/t-macros.$(OBJEXT)
 t_t_macros_LDADD = $(LDADD)
 t_t_macros_DEPENDENCIES = libdpkg.la $(am__DEPENDENCIES_1) \
+	../compat/libcompat.la
+t_t_meminfo_SOURCES = t/t-meminfo.c
+t_t_meminfo_OBJECTS = t/t-meminfo.$(OBJEXT)
+t_t_meminfo_LDADD = $(LDADD)
+t_t_meminfo_DEPENDENCIES = libdpkg.la $(am__DEPENDENCIES_1) \
 	../compat/libcompat.la
 t_t_mod_db_SOURCES = t/t-mod-db.c
 t_t_mod_db_OBJECTS = t/t-mod-db.$(OBJEXT)
@@ -429,34 +436,36 @@ am__depfiles_remade = ./$(DEPDIR)/ar.Plo ./$(DEPDIR)/arch.Plo \
 	./$(DEPDIR)/fields.Plo ./$(DEPDIR)/file.Plo \
 	./$(DEPDIR)/fsys-dir.Plo ./$(DEPDIR)/fsys-hash.Plo \
 	./$(DEPDIR)/fsys-iter.Plo ./$(DEPDIR)/glob.Plo \
-	./$(DEPDIR)/i18n.Plo ./$(DEPDIR)/log.Plo ./$(DEPDIR)/mlib.Plo \
+	./$(DEPDIR)/i18n.Plo ./$(DEPDIR)/log.Plo \
+	./$(DEPDIR)/meminfo.Plo ./$(DEPDIR)/mlib.Plo \
 	./$(DEPDIR)/namevalue.Plo ./$(DEPDIR)/nfmalloc.Plo \
-	./$(DEPDIR)/options-parsers.Plo ./$(DEPDIR)/options.Plo \
-	./$(DEPDIR)/pager.Plo ./$(DEPDIR)/parse.Plo \
-	./$(DEPDIR)/parsehelp.Plo ./$(DEPDIR)/path-remove.Plo \
-	./$(DEPDIR)/path.Plo ./$(DEPDIR)/pkg-array.Plo \
-	./$(DEPDIR)/pkg-files.Plo ./$(DEPDIR)/pkg-format.Plo \
-	./$(DEPDIR)/pkg-hash.Plo ./$(DEPDIR)/pkg-list.Plo \
-	./$(DEPDIR)/pkg-namevalue.Plo ./$(DEPDIR)/pkg-queue.Plo \
-	./$(DEPDIR)/pkg-show.Plo ./$(DEPDIR)/pkg-spec.Plo \
-	./$(DEPDIR)/pkg.Plo ./$(DEPDIR)/progname.Plo \
-	./$(DEPDIR)/program.Plo ./$(DEPDIR)/progress.Plo \
-	./$(DEPDIR)/report.Plo ./$(DEPDIR)/strhash.Plo \
-	./$(DEPDIR)/string.Plo ./$(DEPDIR)/strwide.Plo \
-	./$(DEPDIR)/subproc.Plo ./$(DEPDIR)/tarfn.Plo \
-	./$(DEPDIR)/treewalk.Plo ./$(DEPDIR)/trigdeferred.Plo \
-	./$(DEPDIR)/triglib.Plo ./$(DEPDIR)/trigname.Plo \
-	./$(DEPDIR)/trignote.Plo ./$(DEPDIR)/utils.Plo \
-	./$(DEPDIR)/varbuf.Plo ./$(DEPDIR)/version.Plo \
-	t/$(DEPDIR)/b-fsys-hash.Po t/$(DEPDIR)/b-pkg-hash.Po \
-	t/$(DEPDIR)/c-tarextract.Po t/$(DEPDIR)/c-treewalk.Po \
-	t/$(DEPDIR)/c-trigdeferred.Po t/$(DEPDIR)/t-ar.Po \
-	t/$(DEPDIR)/t-arch.Po t/$(DEPDIR)/t-buffer.Po \
-	t/$(DEPDIR)/t-c-ctype.Po t/$(DEPDIR)/t-command.Po \
-	t/$(DEPDIR)/t-deb-version.Po t/$(DEPDIR)/t-ehandle.Po \
-	t/$(DEPDIR)/t-error.Po t/$(DEPDIR)/t-file.Po \
-	t/$(DEPDIR)/t-fsys-dir.Po t/$(DEPDIR)/t-fsys-hash.Po \
-	t/$(DEPDIR)/t-headers-cpp.Po t/$(DEPDIR)/t-macros.Po \
+	./$(DEPDIR)/options-dirs.Plo ./$(DEPDIR)/options-parsers.Plo \
+	./$(DEPDIR)/options.Plo ./$(DEPDIR)/pager.Plo \
+	./$(DEPDIR)/parse.Plo ./$(DEPDIR)/parsehelp.Plo \
+	./$(DEPDIR)/path-remove.Plo ./$(DEPDIR)/path.Plo \
+	./$(DEPDIR)/pkg-array.Plo ./$(DEPDIR)/pkg-files.Plo \
+	./$(DEPDIR)/pkg-format.Plo ./$(DEPDIR)/pkg-hash.Plo \
+	./$(DEPDIR)/pkg-list.Plo ./$(DEPDIR)/pkg-namevalue.Plo \
+	./$(DEPDIR)/pkg-queue.Plo ./$(DEPDIR)/pkg-show.Plo \
+	./$(DEPDIR)/pkg-spec.Plo ./$(DEPDIR)/pkg.Plo \
+	./$(DEPDIR)/progname.Plo ./$(DEPDIR)/program.Plo \
+	./$(DEPDIR)/progress.Plo ./$(DEPDIR)/report.Plo \
+	./$(DEPDIR)/strhash.Plo ./$(DEPDIR)/string.Plo \
+	./$(DEPDIR)/strwide.Plo ./$(DEPDIR)/subproc.Plo \
+	./$(DEPDIR)/tarfn.Plo ./$(DEPDIR)/treewalk.Plo \
+	./$(DEPDIR)/trigdeferred.Plo ./$(DEPDIR)/triglib.Plo \
+	./$(DEPDIR)/trigname.Plo ./$(DEPDIR)/trignote.Plo \
+	./$(DEPDIR)/utils.Plo ./$(DEPDIR)/varbuf.Plo \
+	./$(DEPDIR)/version.Plo t/$(DEPDIR)/b-fsys-hash.Po \
+	t/$(DEPDIR)/b-pkg-hash.Po t/$(DEPDIR)/c-tarextract.Po \
+	t/$(DEPDIR)/c-treewalk.Po t/$(DEPDIR)/c-trigdeferred.Po \
+	t/$(DEPDIR)/t-ar.Po t/$(DEPDIR)/t-arch.Po \
+	t/$(DEPDIR)/t-buffer.Po t/$(DEPDIR)/t-c-ctype.Po \
+	t/$(DEPDIR)/t-command.Po t/$(DEPDIR)/t-deb-version.Po \
+	t/$(DEPDIR)/t-ehandle.Po t/$(DEPDIR)/t-error.Po \
+	t/$(DEPDIR)/t-file.Po t/$(DEPDIR)/t-fsys-dir.Po \
+	t/$(DEPDIR)/t-fsys-hash.Po t/$(DEPDIR)/t-headers-cpp.Po \
+	t/$(DEPDIR)/t-macros.Po t/$(DEPDIR)/t-meminfo.Po \
 	t/$(DEPDIR)/t-mod-db.Po t/$(DEPDIR)/t-namevalue.Po \
 	t/$(DEPDIR)/t-pager.Po t/$(DEPDIR)/t-path.Po \
 	t/$(DEPDIR)/t-pkg-format.Po t/$(DEPDIR)/t-pkg-hash.Po \
@@ -509,20 +518,20 @@ SOURCES = $(libdpkg_la_SOURCES) t/b-fsys-hash.c t/b-pkg-hash.c \
 	t/t-arch.c t/t-buffer.c t/t-c-ctype.c t/t-command.c \
 	t/t-deb-version.c t/t-ehandle.c t/t-error.c t/t-file.c \
 	t/t-fsys-dir.c t/t-fsys-hash.c $(t_t_headers_cpp_SOURCES) \
-	t/t-macros.c t/t-mod-db.c t/t-namevalue.c t/t-pager.c \
-	t/t-path.c t/t-pkg-format.c t/t-pkg-hash.c t/t-pkg-list.c \
-	t/t-pkg-queue.c t/t-pkg-show.c t/t-pkginfo.c t/t-progname.c \
-	t/t-string.c t/t-subproc.c t/t-tar.c t/t-test.c \
+	t/t-macros.c t/t-meminfo.c t/t-mod-db.c t/t-namevalue.c \
+	t/t-pager.c t/t-path.c t/t-pkg-format.c t/t-pkg-hash.c \
+	t/t-pkg-list.c t/t-pkg-queue.c t/t-pkg-show.c t/t-pkginfo.c \
+	t/t-progname.c t/t-string.c t/t-subproc.c t/t-tar.c t/t-test.c \
 	t/t-test-skip.c t/t-trigger.c t/t-varbuf.c t/t-version.c
 DIST_SOURCES = $(libdpkg_la_SOURCES) t/b-fsys-hash.c t/b-pkg-hash.c \
 	t/c-tarextract.c t/c-treewalk.c t/c-trigdeferred.c t/t-ar.c \
 	t/t-arch.c t/t-buffer.c t/t-c-ctype.c t/t-command.c \
 	t/t-deb-version.c t/t-ehandle.c t/t-error.c t/t-file.c \
 	t/t-fsys-dir.c t/t-fsys-hash.c $(t_t_headers_cpp_SOURCES) \
-	t/t-macros.c t/t-mod-db.c t/t-namevalue.c t/t-pager.c \
-	t/t-path.c t/t-pkg-format.c t/t-pkg-hash.c t/t-pkg-list.c \
-	t/t-pkg-queue.c t/t-pkg-show.c t/t-pkginfo.c t/t-progname.c \
-	t/t-string.c t/t-subproc.c t/t-tar.c t/t-test.c \
+	t/t-macros.c t/t-meminfo.c t/t-mod-db.c t/t-namevalue.c \
+	t/t-pager.c t/t-path.c t/t-pkg-format.c t/t-pkg-hash.c \
+	t/t-pkg-list.c t/t-pkg-queue.c t/t-pkg-show.c t/t-pkginfo.c \
+	t/t-progname.c t/t-string.c t/t-subproc.c t/t-tar.c t/t-test.c \
 	t/t-test-skip.c t/t-trigger.c t/t-varbuf.c t/t-version.c
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
@@ -677,6 +686,7 @@ VERSION = @VERSION@
 XGETTEXT = @XGETTEXT@
 XGETTEXT_015 = @XGETTEXT_015@
 XGETTEXT_EXTRA_OPTIONS = @XGETTEXT_EXTRA_OPTIONS@
+ZSTD_LIBS = @ZSTD_LIBS@
 Z_LIBS = @Z_LIBS@
 Z_NG_LIBS = @Z_NG_LIBS@
 abs_builddir = @abs_builddir@
@@ -759,6 +769,7 @@ LDADD = \
 
 EXTRA_DIST = \
 	$(test_scripts) \
+	$(test_data) \
 	libdpkg.map \
 	libdpkg.pc.in \
 	# EOL
@@ -808,10 +819,12 @@ libdpkg_la_SOURCES = \
 	glob.c \
 	i18n.c i18n.h \
 	log.c \
+	meminfo.c \
 	mlib.c \
 	namevalue.c \
 	nfmalloc.c \
 	options.c \
+	options-dirs.c \
 	options-parsers.c \
 	pager.c \
 	parse.c \
@@ -872,6 +885,7 @@ pkginclude_HEADERS = \
 	fsys.h \
 	glob.h \
 	macros.h \
+	meminfo.h \
 	namevalue.h \
 	options.h \
 	pager.h \
@@ -917,6 +931,7 @@ test_programs = \
 	t/t-string \
 	t/t-file \
 	t/t-buffer \
+	t/t-meminfo \
 	t/t-path \
 	t/t-progname \
 	t/t-subproc \
@@ -946,6 +961,13 @@ test_scripts = \
 	t/t-trigdeferred.t \
 	# EOL
 
+test_data = \
+	t/data/meminfo-no-data \
+	t/data/meminfo-no-info \
+	t/data/meminfo-no-unit \
+	t/data/meminfo-ok \
+	# EOL
+
 BENCHMARK_LDADD_FLAGS = \
 	-lrt \
 	$(LDADD) \
@@ -958,20 +980,6 @@ TEST_ENV_VARS = \
 	# EOL
 
 test_tmpdir = t.tmp
-TEST_RUNNER = '\
-	my $$harness = TAP::Harness->new({ \
-	    exec => sub { my (undef, $$test) = @_; \
-	        return [ $$test ] if $$test !~ "\.t\$$" and -x $$test; \
-	        return }, \
-	    lib => [ "$(top_srcdir)/scripts", "$(top_srcdir)/dselect/methods"  ], \
-	    color => 1, \
-	    verbosity => $(TEST_VERBOSE), \
-	    jobs => $(TEST_PARALLEL), \
-	    failures => 1, \
-	}); \
-	my $$aggregate = $$harness->runtests(@ARGV); \
-	die "FAIL: test suite has errors\n" if $$aggregate->has_errors;'
-
 all: all-am
 
 .SUFFIXES:
@@ -1155,6 +1163,11 @@ t/t-macros.$(OBJEXT): t/$(am__dirstamp) t/$(DEPDIR)/$(am__dirstamp)
 t/t-macros$(EXEEXT): $(t_t_macros_OBJECTS) $(t_t_macros_DEPENDENCIES) $(EXTRA_t_t_macros_DEPENDENCIES) t/$(am__dirstamp)
 	@rm -f t/t-macros$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(t_t_macros_OBJECTS) $(t_t_macros_LDADD) $(LIBS)
+t/t-meminfo.$(OBJEXT): t/$(am__dirstamp) t/$(DEPDIR)/$(am__dirstamp)
+
+t/t-meminfo$(EXEEXT): $(t_t_meminfo_OBJECTS) $(t_t_meminfo_DEPENDENCIES) $(EXTRA_t_t_meminfo_DEPENDENCIES) t/$(am__dirstamp)
+	@rm -f t/t-meminfo$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(t_t_meminfo_OBJECTS) $(t_t_meminfo_LDADD) $(LIBS)
 t/t-mod-db.$(OBJEXT): t/$(am__dirstamp) t/$(DEPDIR)/$(am__dirstamp)
 
 t/t-mod-db$(EXEEXT): $(t_t_mod_db_OBJECTS) $(t_t_mod_db_DEPENDENCIES) $(EXTRA_t_t_mod_db_DEPENDENCIES) t/$(am__dirstamp)
@@ -1293,9 +1306,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/glob.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/i18n.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/meminfo.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mlib.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/namevalue.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nfmalloc.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/options-dirs.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/options-parsers.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/options.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pager.Plo@am__quote@ # am--include-marker
@@ -1348,6 +1363,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@t/$(DEPDIR)/t-fsys-hash.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@t/$(DEPDIR)/t-headers-cpp.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@t/$(DEPDIR)/t-macros.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@t/$(DEPDIR)/t-meminfo.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@t/$(DEPDIR)/t-mod-db.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@t/$(DEPDIR)/t-namevalue.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@t/$(DEPDIR)/t-pager.Po@am__quote@ # am--include-marker
@@ -1636,9 +1652,11 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/glob.Plo
 	-rm -f ./$(DEPDIR)/i18n.Plo
 	-rm -f ./$(DEPDIR)/log.Plo
+	-rm -f ./$(DEPDIR)/meminfo.Plo
 	-rm -f ./$(DEPDIR)/mlib.Plo
 	-rm -f ./$(DEPDIR)/namevalue.Plo
 	-rm -f ./$(DEPDIR)/nfmalloc.Plo
+	-rm -f ./$(DEPDIR)/options-dirs.Plo
 	-rm -f ./$(DEPDIR)/options-parsers.Plo
 	-rm -f ./$(DEPDIR)/options.Plo
 	-rm -f ./$(DEPDIR)/pager.Plo
@@ -1691,6 +1709,7 @@ distclean: distclean-am
 	-rm -f t/$(DEPDIR)/t-fsys-hash.Po
 	-rm -f t/$(DEPDIR)/t-headers-cpp.Po
 	-rm -f t/$(DEPDIR)/t-macros.Po
+	-rm -f t/$(DEPDIR)/t-meminfo.Po
 	-rm -f t/$(DEPDIR)/t-mod-db.Po
 	-rm -f t/$(DEPDIR)/t-namevalue.Po
 	-rm -f t/$(DEPDIR)/t-pager.Po
@@ -1790,9 +1809,11 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/glob.Plo
 	-rm -f ./$(DEPDIR)/i18n.Plo
 	-rm -f ./$(DEPDIR)/log.Plo
+	-rm -f ./$(DEPDIR)/meminfo.Plo
 	-rm -f ./$(DEPDIR)/mlib.Plo
 	-rm -f ./$(DEPDIR)/namevalue.Plo
 	-rm -f ./$(DEPDIR)/nfmalloc.Plo
+	-rm -f ./$(DEPDIR)/options-dirs.Plo
 	-rm -f ./$(DEPDIR)/options-parsers.Plo
 	-rm -f ./$(DEPDIR)/options.Plo
 	-rm -f ./$(DEPDIR)/pager.Plo
@@ -1845,6 +1866,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f t/$(DEPDIR)/t-fsys-hash.Po
 	-rm -f t/$(DEPDIR)/t-headers-cpp.Po
 	-rm -f t/$(DEPDIR)/t-macros.Po
+	-rm -f t/$(DEPDIR)/t-meminfo.Po
 	-rm -f t/$(DEPDIR)/t-mod-db.Po
 	-rm -f t/$(DEPDIR)/t-namevalue.Po
 	-rm -f t/$(DEPDIR)/t-pager.Po
@@ -1914,20 +1936,21 @@ tap-clean:
 
 tap-check: $(test_data) $(test_programs) $(test_scripts)
 	[ -z "$(test_tmpdir)" ] || $(MKDIR_P) $(test_tmpdir)
-	PATH="$(abs_top_builddir)/src:$(abs_top_builddir)/scripts:$(abs_top_builddir)/utils:$(PATH)" \
-	  LC_ALL=C \
-	  DPKG_COLORS=never \
 	  $(TEST_ENV_VARS) \
+	  abs_top_srcdir=$(abs_top_srcdir) \
+	  abs_top_builddir=$(abs_top_builddir) \
 	  srcdir=$(srcdir) builddir=$(builddir) \
 	  CC=$(CC) \
-	  PERL=$(PERL) \
 	  SHELL=$(SHELL) \
+	  PERL=$(PERL) \
 	  PERL_DL_NONLAZY=1 \
-	  PERL5LIB=$(abs_top_srcdir)/scripts:$(abs_top_srcdir)/dselect/methods \
 	  PERL5OPT=$(TEST_COVERAGE) \
-	  $(PERL) -MTAP::Harness -e $(TEST_RUNNER) \
+	  $(PERL) $(top_srcdir)/build-aux/test-runner \
 	    $(addprefix $(builddir)/,$(test_programs)) \
 	    $(addprefix $(srcdir)/,$(test_scripts))
+
+authorcheck:
+	AUTHOR_TESTING=1 $(MAKE) check
 
 check-local: tap-check
 

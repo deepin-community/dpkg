@@ -108,6 +108,10 @@ Indien dit ingesteld is en de optie B<--root> niet opgegeven werd, zal dit gebru
 
 Indien dit ingesteld werd en de optie B<--admindir> niet gebruikt werd, zal dit gebruikt worden als de datamap voor B<dpkg>.
 
+=item B<DPKG_DEBUG>
+
+Stelt het foutopsporingsmasker in (sinds dpkg 1.21.10) vanaf een octale waarde. De momenteel geaccepteerde vlaggen worden beschreven in de optie B<dpkg --debug>, maar mogelijk hebben niet al deze vlaggen effect op dit programma.
+
 =item B<DPKG_COLORS>
 
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen worden zijn: B<auto> (standaard), B<always> en B<never>.
@@ -116,5 +120,5 @@ Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen
 
 =head1 ZIE OOK
 
-B<dpkg>(1), B<deb-triggers>(5), B<%PKGDOCDIR%/triggers.txt.gz>.
+B<dpkg>(1), B<deb-triggers>(5), B<%PKGDOCDIR%/spec/triggers.txt>.
 

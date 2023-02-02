@@ -190,9 +190,13 @@ Dit wijzigt de prioriteit van het proces voor het gestart wordt.
 
 Dit wijzigt het procesplannerbeleid en de procesplannerprioriteit van het proces voor het gestart wordt (sinds versie 1.15.0). Facultatief kan de prioriteit opgegeven worden door een B<:>, gevolgd door de waarde, toe te voegen. De standaardI<prioriteit> is 0. De momenteel ondersteunde waarden voor beleid zijn B<other>, B<fifo> en B<rr>.
 
+This option might do nothing on some systems, where POSIX process scheduling is not supported.
+
 =item B<-I>, B<--iosched> I<klasse>B<:>I<prioriteit>
 
 Dit wijzigt de IO-plannerklasse en IO-plannerprioriteit van het proces voor het gestart wordt (sinds versie 1.15.0). Facultatief kan de prioriteit opgegeven worden door een B<:>, gevolgd door de waarde, toe te voegen. De standaardI<prioriteit> is 4, tenzij I<klasse> B<idle> is. In dat geval zal I<prioriteit> steeds 7 zijn. De momenteel ondersteunde waarden voor I<klasse> zijn B<idle>, B<best-effort> en B<real-time>.
+
+This option might do nothing on some systems, where Linux IO scheduling is not supported.
 
 =item B<-k>, B<--umask> I<masker>
 
@@ -265,8 +269,8 @@ De achtergronddienst B<food> starten, tenzij er al één actief is (een proces m
 =over 
 
  start-stop-daemon --start --oknodo --user food --name food \
- 	--pidfile %RUNSTATEDIR%/food.pid --startas /usr/sbin/food \
- 	--chuid food -- --daemon
+   --pidfile %RUNSTATEDIR%/food.pid --startas /usr/sbin/food \
+   --chuid food -- --daemon
 
 =back
 
@@ -275,7 +279,7 @@ B<SIGTERM> naar B<food> sturen en tot 5 seconden wachten op zijn beëindiging:
 =over 
 
  start-stop-daemon --stop --oknodo --user food --name food \
- 	--pidfile %RUNSTATEDIR%/food.pid --retry 5
+   --pidfile %RUNSTATEDIR%/food.pid --retry 5
 
 =back
 
@@ -284,7 +288,7 @@ Demonstratie van een aangepast schema om B<food> te stoppen:
 =over 
 
  start-stop-daemon --stop --oknodo --user food --name food \
- 	--pidfile %RUNSTATEDIR%/food.pid --retry=TERM/30/KILL/5
+   --pidfile %RUNSTATEDIR%/food.pid --retry=TERM/30/KILL/5
 
 =back
 

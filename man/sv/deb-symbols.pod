@@ -22,7 +22,7 @@ B<DEBIAN/symbols>
 
 =head1 BESKRIVNING
 
-Symbolfiler medföljer Debianbinärpaket och dess format är en undermängd av symbolfilmallarna som används av B<dpkg-gensymbols>(1) i Debiankällkodspaket.
+The symbol files are shipped in Debian binary packages, and its format is a subset of the template symbol files used by B<dpkg-gensymbols>(1)  in Debian source packages, see L<deb-src-symbols(5)>.
 
 Formatet för posterna med utökad beroendeinformation för delade bibliotek i dessa filer är:
 
@@ -80,7 +80,7 @@ Ett alias för B<Allow-Internal-Symbol-Groups> som avråds från (sedan dpkg 1.2
 
 =head1 SE ÄVEN
 
-L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
+L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, L<deb-src-symbols(5)>, B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
 
 
 =head1 ÖVERSÄTTNING

@@ -49,8 +49,8 @@ overrides.
 
 =item B<--add> I<user group mode path>
 
-Add an override for I<path>. I<path> does not need to exist
-when this command is used; the override will be stored and used later.
+Add an override for I<path>. I<path> does not need to exist nor be known to
+B<dpkg> when this command is used; the override will be stored and used later.
 Users and groups can be specified by their name (for example B<root>
 or B<nobody>), or by their number by prepending the number with a
 ‘B<#>’ (for example B<#0> or B<#65534>).
@@ -190,6 +190,12 @@ specified, it will be used as the filesystem root directory
 
 If set and the B<--admindir> or B<--root> options have not been
 specified, it will be used as the B<dpkg> data directory.
+
+=item B<DPKG_DEBUG>
+
+Sets the debug mask (since dpkg 1.21.10) from an octal value.
+The currently accepted flags are described in the B<dpkg --debug> option,
+but not all these flags might have an effect on this program.
 
 =item B<DPKG_FORCE>
 

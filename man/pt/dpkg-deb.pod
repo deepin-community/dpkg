@@ -38,7 +38,7 @@ Para a maioria dos comandos que recebem uma entrada de argumento de arquivo, o a
 
 Cria um arquivo debian para a árvore de sistema de ficheiros armazenada em I<binary-directory>. I<binary-directory> tem de ter um sub-directório B<DEBIAN>, o qual contém os ficheiros de informação de controlo tais como o próprio ficheiro control. Este directório I<não> irá aparecer no arquivo de sistema de ficheiros do pacote binários, mas em vez disso os ficheiros nele serão postos na área de informação de controlo do pacote binário.
 
-A menos que você especifique B<--nocheck>, B<dpkg-deb> irá ler B<DEBIAN/control> e analisá-lo. Irá verificar o ficheiro por erros de sintaxe e outros problemas, e mostrar o nome do pacote binário a ser compilado. B<dpkg-deb> irá também verificar as permissões dos scripts do maintainer e outros ficheiros encontrados no directório de informação de controlo B<DEBIAN>.
+A menos que você especifique B<--nocheck>, B<dpkg-deb> irá ler B<DEBIAN/control> e analisa-lo. Irá verificar o ficheiro por erros de sintaxe e outros problemas, e mostrar o nome do pacote binário a ser compilado. B<dpkg-deb> irá também verificar as permissões dos scripts do maintainer e outros ficheiros encontrados no directório de informação de controlo B<DEBIAN>.
 
 Se não for especificado nenhum I<archive> então o B<dpkg-deb> irá escrever o pacote no ficheiro I<binary-directory>B<.deb>.
 
@@ -52,7 +52,7 @@ Fornece informação acerca de um arquivo de pacote binário.
 
 Se nenhum I<control-file-name> for especificado então irá escrever um sumário do conteúdo do pacote assim como e seu ficheiro de controlo.
 
-Se alguns I<control-file-name>s forem especificados então B<dpkg-deb> irá escrevê-los pela ordem que forma especificados; se qualquer dos componentes não estiver presente, irá escrever uma mensagem de erro no stderr acerca de cada um e terminar com estados 2.
+Se alguns I<control-file-name>s forem especificados então B<dpkg-deb> irá escreve-los pela ordem que forma especificados; se qualquer dos componentes não estiver presente, irá escrever uma mensagem de erro no stderr acerca de cada um e terminar com estados 2.
 
 =item B<-W>, B<--show> I<archive>
 
@@ -132,7 +132,7 @@ A predefinição para este campo é “${Package}\t${Version}\n”.
 
 =item B<-z>I<compress-level>
 
-Especifica que nível de compressão usar no backend compressor, quando compila um pacote (a predefinição é 9 para gzip, 6 para xz). Os valores aceites são 0-9 com: 0 a ser mapeado para nenhuma compressão para gzip. Antes do dpkg 1.16.2 o nível 0 era equivalente a nenhuma compressão para todos os compressores.
+Especifica que nível de compressão usar no backend compressor, quando compila um pacote (a predefinição é 9 para gzip, 6 para xz, 3 para zstd). Os valores aceites são específicos do compressor. Para gzip de 0-9 com 0 a ser mapeado para nenhuma compressão. Para xz de 0-9. Para zstd de 0-22, com os níveis de 20 a 22 a ativarem o seu modo ultra. Antes do dpkg 1.16.2 o nível 0 era equivalente a nenhuma compressão para todos os compressores.
 
 =item B<-S>I<compress-strategy>
 
@@ -140,11 +140,15 @@ Especifica qual a estratégia de compressão usar no backend compressor, quando 
 
 =item B<-Z>I<compress-type>
 
-Especifica qual tipo de compressão usar quando compila um pacote. Valores permitidos são B<gzip>, B<xz> (desde dpkg 1.15.6), e B<none> (a predefinição é B<xz>).
+Especifica qual tipo de compressão usar quando compila um pacote. Valores permitidos são B<gzip>, B<xz> (desde dpkg 1.15.6), B<zstd> (desde dpkg 1.21.18) e B<none> (a predefinição é B<xz>).
 
 =item B<--[no-]uniform-compression>
 
-Especifica que os mesmos parâmetros de compressão devem ser usados para todos os membros do arquivo (isto é, B<control.tar> e B<data.tar>; desde dpkg 1.17.6). Caso contrário apenas o membro B<data.tar> irá usar estes parâmetros. Os únicos tipos de compressão suportados e permitidos para uso uniformizado são B<none>, B<gzip> e B<xz>.  A opção B<--no-uniform-compression> desactiva a compressão uniforme (desde dpkg 1.19.0). Compressão uniforme é a predefinição (desde dpkg 1.19.0).
+Especifica que os mesmos parâmetros de compressão devem ser usados para todos os membros do arquivo (isto é, B<control.tar> e B<data.tar>; desde dpkg 1.17.6). Caso contrário apenas o membro B<data.tar> irá usar estes parâmetros. Os únicos tipos de compressão suportados e permitidos para uso uniformizado são B<none>, B<gzip>, B<xz> e B<zstd>.  A opção B<--no-uniform-compression> desactiva a compressão uniforme (desde dpkg 1.19.0). Compressão uniforme é a predefinição (desde dpkg 1.19.0).
+
+=item B<--threads-max=>I<threads>
+
+Define o número máximo de tópicos permitidos para compressores que suportam operações multi-tópico (desde dpkg 1.21.9).
 
 =item B<--root-owner-group>
 
@@ -190,13 +194,31 @@ Erro fatal ou irrecuperável devido a utilização de linha de comandos inválid
 
 =over 
 
+=item B<DPKG_DEB_THREADS_MAX>
+
+Define o número máximo de tópicos permitidos para compressores que suportam operações multi-tópico (desde dpkg 1.21.9).
+
+A opção B<--threads-max> sobrepõe este valor.
+
+=item B<DPKG_DEB_COMPRESSOR_TYPE>
+
+Define o tipo de compressão a usar (desde dpkg 1.21.10).
+
+A opção B<-Z> sobrepõe este valor.
+
+=item B<DPKG_DEB_COMPRESSOR_LEVEL>
+
+Define o nível de compressão a usar (desde dpkg 1.21.10).
+
+A opção B<-z> sobrepõe este valor.
+
 =item B<DPKG_COLORS>
 
 Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B<auto> (predefinido), B<always> e B<never>.
 
 =item B<TMPDIR>
 
-Se definido, B<dpkg-deb> irá usá-lo como o directório onde criar ficheiros e directórios temporários.
+Se definido, B<dpkg-deb> irá usa-lo como o directório onde criar ficheiros e directórios temporários.
 
 =item B<SOURCE_DATE_EPOCH>
 
@@ -216,7 +238,7 @@ Não há autenticação nos ficheiros B<.deb>; de facto, nem sequer há um sumá
 
 =head1 VEJA TAMBÉM
 
-B<deb>(5), B<deb-control>(5), B<dpkg>(1), B<dselect>(1).
+F<%PKGDOCDIR%/spec/rootless-builds.txt>, B<deb>(5), B<deb-control>(5), B<dpkg>(1), B<dselect>(1).
 
 
 =head1 TRADUÇÃO

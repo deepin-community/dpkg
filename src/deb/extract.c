@@ -53,15 +53,16 @@
 static void
 movecontrolfiles(const char *dir, const char *thing)
 {
-  char buf[200];
+  char *cmd;
   pid_t pid;
 
-  sprintf(buf, "mv %s/%s/* %s/ && rmdir %s/%s", dir, thing, dir, dir, thing);
+  cmd = str_fmt("mv %s/%s/* %s/ && rmdir %s/%s", dir, thing, dir, dir, thing);
   pid = subproc_fork();
   if (pid == 0) {
-    command_shell(buf, _("shell command to move files"));
+    command_shell(cmd, _("shell command to move files"));
   }
   subproc_reap(pid, _("shell command to move files"), 0);
+  free(cmd);
 }
 
 static void DPKG_ATTR_NORET
@@ -122,6 +123,7 @@ extracthalf(const char *debar, const char *dir,
   bool header_done;
   struct compress_params decompress_params = {
     .type = COMPRESSOR_TYPE_GZIP,
+    .threads_max = compress_params.threads_max,
   };
 
   ar = dpkg_ar_open(debar);
@@ -183,6 +185,7 @@ extracthalf(const char *debar, const char *dir,
           decompress_params.type = compressor_find_by_extension(extension);
           if (decompress_params.type != COMPRESSOR_TYPE_NONE &&
               decompress_params.type != COMPRESSOR_TYPE_GZIP &&
+              decompress_params.type != COMPRESSOR_TYPE_ZSTD &&
               decompress_params.type != COMPRESSOR_TYPE_XZ)
             ohshit(_("archive '%s' uses unknown compression for member '%.*s', "
                      "giving up"),

@@ -24,6 +24,8 @@ B<dpkg-fsys-usrunmess> [B<flagga>...]
 
 B<dpkg-fsys-usrunmess> är ett verktyg för att rätta till filsystem som har nyinstallerats med nyare installationsprogram med olyckliga förval eller migrerats till den trasiga sammanslagna /usr via aliaskataloglayout, som B<inte> stöds av dpkg. Se dpkg:s FAQ.
 
+B<Note>: In Debian its tech-ctte has decreed that on the release after bookworm the non-usrmerged layout is not going to be supported, and thus some of its maintainers might not fix issues or intentionally remove non-usrmerged support, so you will need decide and pick your poison.
+
 Programmet kommer utföra följande övergripande funktioner:
 
 =over 
