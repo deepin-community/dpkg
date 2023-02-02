@@ -24,7 +24,7 @@ B<dpkg-scansources> [I<option>...] I<binary-dir> [I<override-file> [I<path-prefi
 
 B<dpkg-scansources> sonda o I<directório-binário> fornecido por ficheiros I<.dsc>. Estes são usados para criar um índice de fonte Debian, o qual é enviado para o stdout.
 
-O I<override-file>, se fornecido, é usado para definir prioridades nos registos de índice resultantes e para sobrepor o campo do maintainer dado nos ficheiros I<.dsc>. O ficheiro pode estar comprimido (desde dpkg 1.15.5). Veja B<deb-override>(5) o formato deste ficheiro.
+O I<override-file>, se fornecido, é usado para definir prioridades nas estrofes de índice resultantes e para sobrepor o campo do maintainer dado nos ficheiros I<.dsc>. O ficheiro pode estar comprimido (desde dpkg 1.15.5). Veja B<deb-override>(5) o formato deste ficheiro.
 
 B<Nota:> Como o ficheiro de sobreposição é indexado por pacotes binário, não pacotes fonte, existe um pequeno problema aqui. A implementação actual usa a prioridade mais alta de todos os pacotes binários produzidos por um ficheiro I<.dsc> para a prioridade do pacote fonte, e para a entrada de sobreposição para o primeiro pacote binário listado no ficheiro I<.dsc> para modificar a informação do maintainer. Isto poderá ser alterado.
 
@@ -38,7 +38,7 @@ B<Nota:> Se você deseja aceder ao ficheiros Sources gerado com B<apt>(8) você 
 
 =item B<-n>, B<--no-sort>
 
-Não ordena os registos do índice. Normalmente eles estão ordenados pelo nome do pacote fonte.
+Não ordena as estrofes do índice. Normalmente elas estão ordenadas pelo nome do pacote fonte.
 
 =item B<-e>, B<--extra-override> I<file>
 

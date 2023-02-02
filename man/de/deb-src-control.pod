@@ -48,7 +48,7 @@ Dies dokumentiert die neuste Version der Standards der Distribution, an die sich
 
 =item B<Description> I<Kurzbeschreibung>
 
-=item B<> I<Langbeschreibung>
+=item S< >I<Langbeschreibung>
 
 Das Format der Quellpaketbeschreibung ist eine kurze knappe Zusammenfassung auf der ersten Zeile (nach dem Feld B<Description>). Die folgenden Zeilen sollten als längere, detailliertere Beschreibung verwendet werden. Jede Zeile der Langbeschreibung muss von einem Leerzeichen begonnen werden, und Leerzeilen in der Langbeschreibung müssen einen einzelnen ‚B<.>’ hinter dem einleitenden Leerzeichen enthalten.
 
@@ -188,13 +188,13 @@ Die Architektur gibt an, auf welcher Art von Hardware dieses Paket läuft. Bei P
 
 =item B<Build-Profiles:> I<Einschränkungsformel>
 
-Dieses Feld legt die Bedingungen fest, zu denen dieses Binärpaket (nicht) baut. Um diese Bedingung auszudrücken, wird die Einschränkungsformelsyntax aus dem Feld B<Build-Depends> verwandt.
+Dieses Feld legt die Bedingungen fest, zu denen dieses Binärpaket (nicht) baut. Um diese Bedingung auszudrücken, wird die Einschränkungsformelsyntax aus dem Feld B<Build-Depends> verwandt (einschließlich der spitzen Klammern).
 
 Falls der Absatz eines binären Pakets dieses Feld nicht enthält, dann bedeutet dies implizit, dass es mit allen Bauprofilen (darunter auch keinem) baut.
 
 Mit anderen Worten: Falls der Absatz eines Binärpaketes mit einem nicht leeren Feld B<Build-Profiles> kommentiert wird, dann wird dieses Binärpaket erstellt, falls und nur falls der Ausdruck in konjunktiver Normalform sich auf „wahr“ berechnet.
 
-=item B<Protected:> B<Byes>|B<no>
+=item B<Protected:> B<yes>|B<no>
 
 =item B<Essential:> B<yes>|B<no>
 
@@ -238,7 +238,7 @@ Diese Felder geben Beziehungen zwischen Paketen an. Sie werden in der Handbuchse
 
 =item B<Installer-Menu-Item:>  I<Wert>
 
-Diese Felder werden im Debian-Installer in B<udeb>s verwandt und werden normalerweise nicht benötigt. Lesen Sie /usr/share/doc/debian-installer/devel/modules.txt aus dem Paket B<debian-installer> für weitere Informationen über sie.
+Diese Felder werden im Debian-Installer in B<udeb>s verwandt und werden normalerweise nicht benötigt. Für weitere Informationen über sie, siehe L<https://salsa.debian.org/installer-team/debian-installer/-/raw/master/doc/devel/modules.txt>.
 
 =back
 
@@ -303,12 +303,12 @@ Beachten Sie, dass diese benutzerdefinierten Felder den globalen Namensraum nutz
 
 =head1 SIEHE AUCH
 
-L<deb822(5)>, B<deb-control>(5), B<deb-version>(7), B<dpkg-source>(1)
+I<%PKGDOCDIR%/spec/rootless-builds.txt>, L<deb822(5)>, B<deb-control>(5), B<deb-version>(7), B<dpkg-source>(1)
 
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

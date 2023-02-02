@@ -50,11 +50,21 @@ Se este envio resolver bugs guardados no sistema de acompanhamento de bugs da di
 
 =over 
 
-B<Closes: Bug#>I<nnnnn>
+B<Closes: #>I<nnnnn>
 
 =back
 
-nos detalhes de alterações (a expressão regular Perl exacta é B</closes:\s*(?:bug)?\#?\s?\d+(?:,\s*(?:bug)?\#?\s?\d+)*/i>).Esta informação é transmitida via campo B<Closes> no ficheiro I<.changes>.
+nos detalhes de alteração, onde B<#>I<nnnnn> é o número do bug. A expressão regular Perl exacta é:
+
+=over 
+
+B</closes:\s*(?:bug)?\#?\s?\d+(?:,\s*(?:bug)?\#?\s?\d+)*/i>
+
+=back
+
+Isto é, a string deve consistir da palavra B<closes:> seguida por uma lista separada por vírgulas de números de bug.  Os números de bug podem ser precedidos pela palavra B<bug> e/ou sinal B<#>, como em C<Closes: 42, bug#43, #44, bug 45>.  As palavras B<closes:> e B<bug> não são sensíveis a maiúsculas/minúsculas. A lista de números de bug pode ocupar várias linhas.
+
+Esta informação é transmitida via campo B<Closes> no ficheiro I<.changes>. Onde, dependendo do software de manutenção do arquivo, todos os números de bug listados podem ser fechados automaticamente.
 
 O nome de maintainer e endereço email usado no changelog deverão ser os detalhes da pessoa que preparou este lançamento do pacote. B<Não> são necessários os da pessoa que faz o envio ou do maintainer habitual do pacote. A informação daqui será copiada para o campo B<Changed-By> no ficheiro I<.changes>, e depois mais tarde pode ser usada para enviar uma confirmação quando o pacote enviado for instalado no arquivo da distribuição.
 

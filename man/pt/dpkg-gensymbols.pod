@@ -22,7 +22,7 @@ B<dpkg-gensymbols> [I<option>...]
 
 =head1 DESCRIÇÃO
 
-B<dpkg-gensymbols> sonda uma árvore de compilação temporária (debian/tmp por predefinição) à procura de bibliotecas e gera um ficheiro I<symbols> a descrevê-los. Este ficheiro, se não vazio, é depois instalado no sub-directório DEBIAN da árvore de compilação para que seja incluído na informação de controle do pacote.
+B<dpkg-gensymbols> sonda uma árvore de compilação temporária (debian/tmp por predefinição) à procura de bibliotecas e gera um ficheiro I<symbols> a descreve-los. Este ficheiro, se não vazio, é depois instalado no sub-directório DEBIAN da árvore de compilação para que seja incluído na informação de controle do pacote.
 
 Quando gera esses ficheiros, usa como entrada alguns ficheiros de símbolos disponibilizados pelo maintainer. Procura os seguintes ficheiros (e usa o primeiro que encontra):
 

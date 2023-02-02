@@ -31,7 +31,7 @@ use Dpkg::Gettext;
 use Dpkg::File;
 use Dpkg::Checksums;
 use Dpkg::ErrorHandling;
-use Dpkg::Build::Types;
+use Dpkg::BuildTypes;
 use Dpkg::BuildProfiles qw(get_build_profiles parse_build_profiles
                            evaluate_restriction_formula);
 use Dpkg::Arch qw(get_host_arch debarch_eq debarch_is debarch_list_parse);
@@ -129,7 +129,7 @@ sub usage {
 
 
 while (@ARGV) {
-    $_=shift(@ARGV);
+    $_ = shift @ARGV;
     if (m/^--build=(.*)$/) {
         set_build_type_from_options($1, $_);
     } elsif (m/^-b$/) {
@@ -145,9 +145,9 @@ while (@ARGV) {
     } elsif (m/^-g$/) {
 	set_build_type(BUILD_SOURCE | BUILD_ARCH_INDEP, $_);
     } elsif (m/^-s([iad])$/) {
-        $sourcestyle= $1;
+        $sourcestyle = $1;
     } elsif (m/^-q$/) {
-        $quiet= 1;
+        $quiet = 1;
     } elsif (m/^-c(.*)$/) {
 	$controlfile = $1;
     } elsif (m/^-l(.*)$/) {
@@ -218,10 +218,10 @@ $substvars->set_arch_substvars();
 $substvars->load('debian/substvars') if -e 'debian/substvars' and not $substvars_loaded;
 
 my $backport_version_regex = run_vendor_hook('backport-version-regex') // qr/^$/;
+my $is_backport = $changelog->{'Version'} =~ m/$backport_version_regex/;
 
 # Versions with backport markers have a lower version number by definition.
-if (defined($prev_changelog) and
-    $changelog->{'Version'} !~ /$backport_version_regex/ and
+if (! $is_backport && defined $prev_changelog &&
     version_compare_relation($changelog->{'Version'}, REL_LT,
                              $prev_changelog->{'Version'}))
 {
@@ -323,8 +323,10 @@ $dist->load($fileslistfile) if -e $fileslistfile;
 
 foreach my $file ($dist->get_files()) {
     my $f = $file->{filename};
+    my $p = $file->{package};
+    my $a = $file->{arch};
 
-    if (defined $file->{package} && $file->{package_type} eq 'buildinfo') {
+    if (defined $p && $file->{package_type} eq 'buildinfo') {
         # We always distribute the .buildinfo file.
         $checksums->add_from_file("$uploadfilesdir/$f", key => $f);
         next;
@@ -333,17 +335,17 @@ foreach my $file ($dist->get_files()) {
     # If this is a source-only upload, ignore any other artifacts.
     next if build_has_none(BUILD_BINARY);
 
-    if (defined $file->{arch}) {
-        my $arch_all = debarch_eq('all', $file->{arch});
+    if (defined $a) {
+        my $arch_all = debarch_eq('all', $a);
 
         next if build_has_none(BUILD_ARCH_INDEP) and $arch_all;
         next if build_has_none(BUILD_ARCH_DEP) and not $arch_all;
 
-        push @archvalues, $file->{arch} if not $archadded{$file->{arch}}++;
+        push @archvalues, $a if not $archadded{$a}++;
     }
-    if (defined $file->{package} && $file->{package_type} =~ m/^u?deb$/) {
-        $p2f{$file->{package}} //= [];
-        push @{$p2f{$file->{package}}}, $file->{filename};
+    if (defined $p && $file->{package_type} =~ m/^u?deb$/) {
+        $p2f{$p} //= [];
+        push @{$p2f{$p}}, $f;
     }
 
     $checksums->add_from_file("$uploadfilesdir/$f", key => $f);

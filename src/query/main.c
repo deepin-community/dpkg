@@ -44,6 +44,7 @@
 #include <dpkg/i18n.h>
 #include <dpkg/dpkg.h>
 #include <dpkg/dpkg-db.h>
+#include <dpkg/debug.h>
 #include <dpkg/pkg-array.h>
 #include <dpkg/pkg-spec.h>
 #include <dpkg/pkg-format.h>
@@ -57,9 +58,6 @@
 #include <dpkg/db-fsys.h>
 
 #include "actions.h"
-
-static const char *admindir;
-static const char *instdir;
 
 static const char *showformat = "${binary:Package}\t${Version}\n";
 
@@ -403,7 +401,7 @@ print_status(const char *const *argv)
   modstatdb_open(msdbrw_readonly);
 
   if (!*argv) {
-    writedb_records(stdout, _("<standard output>"), 0);
+    writedb_stanzas(stdout, _("<standard output>"), 0);
   } else {
     while ((thisarg = *argv++) != NULL) {
       pkg = dpkg_options_parse_pkgname(cipaction, thisarg);
@@ -418,7 +416,7 @@ print_status(const char *const *argv)
                pkg_name(pkg, pnaw_nonambig));
         failures++;
       } else {
-        writerecord(stdout, _("<standard output>"), pkg, &pkg->installed);
+        write_stanza(stdout, _("<standard output>"), pkg, &pkg->installed);
       }
 
       if (*argv != NULL)
@@ -448,7 +446,7 @@ print_avail(const char *const *argv)
   modstatdb_open(msdbrw_readonly | msdbrw_available_readonly);
 
   if (!*argv) {
-    writedb_records(stdout, _("<standard output>"), wdb_dump_available);
+    writedb_stanzas(stdout, _("<standard output>"), wdb_dump_available);
   } else {
     while ((thisarg = *argv++) != NULL) {
       pkg = dpkg_options_parse_pkgname(cipaction, thisarg);
@@ -458,7 +456,7 @@ print_avail(const char *const *argv)
                pkgbin_name(pkg, &pkg->available, pnaw_nonambig));
         failures++;
       } else {
-        writerecord(stdout, _("<standard output>"), pkg, &pkg->available);
+        write_stanza(stdout, _("<standard output>"), pkg, &pkg->available);
       }
 
       if (*argv != NULL)
@@ -766,20 +764,13 @@ control_show(const char *const *argv)
 }
 
 static void
-set_root(const struct cmdinfo *cip, const char *value)
-{
-  instdir = dpkg_fsys_set_dir(value);
-  admindir = dpkg_fsys_get_path(ADMINDIR);
-}
-
-static void
 set_no_pager(const struct cmdinfo *ci, const char *value)
 {
   pager_enable(false);
 }
 
-static void DPKG_ATTR_NORET
-printversion(const struct cmdinfo *ci, const char *value)
+static int
+printversion(const char *const *argv)
 {
   printf(_("Debian %s package management program query tool version %s.\n"),
          DPKGQUERY, PACKAGE_RELEASE);
@@ -789,11 +780,11 @@ printversion(const struct cmdinfo *ci, const char *value)
 
   m_output(stdout, _("<standard output>"));
 
-  exit(0);
+  return 0;
 }
 
-static void DPKG_ATTR_NORET
-usage(const struct cmdinfo *ci, const char *value)
+static int
+usage(const char *const *argv)
 {
   printf(_(
 "Usage: %s [<option>...] <command>\n"
@@ -839,7 +830,7 @@ usage(const struct cmdinfo *ci, const char *value)
 
   m_output(stdout, _("<standard output>"));
 
-  exit(0);
+  return 0;
 }
 
 static const char printforhelp[] = N_(
@@ -858,14 +849,14 @@ static const struct cmdinfo cmdinfos[]= {
   ACTION( "control-path",                   'c', act_controlpath,   control_path    ),
   ACTION( "control-list",                    0,  act_controllist,   control_list    ),
   ACTION( "control-show",                    0,  act_controlshow,   control_show    ),
+  ACTION( "help",                           '?', act_help,          usage           ),
+  ACTION( "version",                         0,  act_version,       printversion    ),
 
-  { "admindir",   0,   1, NULL, &admindir,   NULL          },
+  { "admindir",   0,   1, NULL, NULL,        set_admindir, 0 },
   { "root",       0,   1, NULL, NULL,        set_root, 0   },
   { "load-avail", 0,   0, &opt_loadavail, NULL, NULL, 1    },
   { "showformat", 'f', 1, NULL, &showformat, NULL          },
   { "no-pager",   0,   0, NULL, NULL,        set_no_pager  },
-  { "help",       '?', 0, NULL, NULL,        usage         },
-  { "version",    0,   0, NULL, NULL,        printversion  },
   {  NULL,        0,   0, NULL, NULL,        NULL          }
 };
 
@@ -877,8 +868,7 @@ int main(int argc, const char *const *argv) {
   dpkg_program_init("dpkg-query");
   dpkg_options_parse(&argv, cmdinfos, printforhelp);
 
-  instdir = dpkg_fsys_set_dir(instdir);
-  admindir = dpkg_db_set_dir(admindir);
+  debug(dbg_general, "root=%s admindir=%s", dpkg_fsys_get_dir(), dpkg_db_get_dir());
 
   if (!cipaction) badusage(_("need an action option"));
 

@@ -26,6 +26,7 @@ our $VERSION = '0.02';
 
 use Cwd qw(abs_path getcwd);
 use File::Basename;
+use File::Spec;
 use File::Temp qw(tempdir);
 
 use Dpkg::Gettext;
@@ -52,7 +53,7 @@ sub prerequisites {
              'git is not in the PATH'));
 }
 
-sub _sanity_check {
+sub _check_workdir {
     my $srcdir = shift;
 
     if (! -d "$srcdir/.git") {
@@ -127,7 +128,7 @@ sub do_build {
     my ($dirname, $updir) = fileparse($dir);
     my $basenamerev = $self->get_basename(1);
 
-    _sanity_check($dir);
+    _check_workdir($dir);
 
     my $old_cwd = getcwd();
     chdir $dir or syserr(g_("unable to chdir to '%s'"), $dir);
@@ -190,7 +191,7 @@ sub do_build {
 
     # Create the git bundle.
     my $bundlefile = "$basenamerev.git";
-    my @bundle_arg=$self->{options}{git_ref} ?
+    my @bundle_arg = $self->{options}{git_ref} ?
         (@{$self->{options}{git_ref}}) : '--all';
     info(g_('bundling: %s'), join(' ', @bundle_arg));
     system('git', 'bundle', 'create', "$old_cwd/$bundlefile",
@@ -217,7 +218,6 @@ sub do_extract {
     my ($self, $newdirectory) = @_;
     my $fields = $self->{fields};
 
-    my $dscdir = $self->{basedir};
     my $basenamerev = $self->get_basename(1);
 
     my @files = $self->get_files();
@@ -236,7 +236,7 @@ sub do_extract {
                 error(g_('format v3.0 (git) uses only one .gitshallow file'));
             }
         } else {
-            error(g_('format v3.0 (git) unknown file: %s', $file));
+            error(g_('format v3.0 (git) unknown file: %s'), $file);
         }
     }
     if (! defined $bundle) {
@@ -251,18 +251,21 @@ sub do_extract {
 
     # Extract git bundle.
     info(g_('cloning %s'), $bundle);
-    system('git', 'clone', '--quiet', '--origin=bundle', $dscdir . $bundle, $newdirectory);
+    my $bundle_path = File::Spec->catfile($self->{basedir}, $bundle);
+    system('git', 'clone', '--quiet', '--origin=bundle', $bundle_path, $newdirectory);
     subprocerr('git bundle') if $?;
 
     if (defined $shallow) {
         # Move shallow info file into place, so git does not
         # try to follow parents of shallow refs.
         info(g_('setting up shallow clone'));
-        system('cp', '-f',  $dscdir . $shallow, "$newdirectory/.git/shallow");
+        my $shallow_orig = File::Spec->catfile($self->{basedir}, $shallow);
+        my $shallow_dest = File::Spec->catfile($newdirectory, '.git', 'shallow');
+        system('cp', '-f',  $shallow_orig, $shallow_dest);
         subprocerr('cp') if $?;
     }
 
-    _sanity_check($newdirectory);
+    _check_workdir($newdirectory);
 
     if (defined $fields->{'Vcs-Git'}) {
         my $remote = 'origin';

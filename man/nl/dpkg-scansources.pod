@@ -24,7 +24,7 @@ B<dpkg-scansources> [I<optie>...] I<map-binair-pakket> [I<override-bestand> [I<p
 
 B<dpkg-scansources> zoekt in de opgegeven I<map-binair-pakket> naar I<.dsc>-bestanden. Die worden gebruikt om een Debian broncode-index te maken, die naar de standaarduitvoer gestuurd wordt.
 
-Als dit opgegeven werd, zal het I<override-bestand> gebruikt worden om de prioriteit in te stellen in de resulterende items in het indexbestand en om de inhoud van het maintainer-veld dat in het I<.dsc>-bestand opgegeven wordt, te vervangen. Het bestand mag gecomprimeerd zijn (sinds dpkg 1.15.5). Zie B<deb-override>(5) voor de indeling van dit bestand.
+The I<override-file>, if given, is used to set priorities in the resulting index stanzas and to override the maintainer field given in the I<.dsc> files.  The file can be compressed (since dpkg 1.15.5).  See B<deb-override>(5)  for the format of this file.
 
 B<Opmerking:> vermits het bestand override volgens binaire pakketten geïndexeerd wordt en niet volgens broncodepakketten, stelt zich hier een zeker probleem. De huidige implementatie gebruikt de hoogste prioriteit van alle binaire pakketten die door een I<.dsc>-bestand geproduceerd worden, voor de prioriteit van het broncodepakket en het override-item voor het binaire pakket dat het eerst vermeld wordt in het I<.dsc>-bestand om de informatie over de pakketonderhouder aan te passen. Dit kan veranderen.
 
@@ -38,7 +38,7 @@ B<Opmerking:> indien u het gegenereerde Sources-bestand wilt gebruiken met B<apt
 
 =item B<-n>, B<--no-sort>
 
-De index-items niet sorteren. Normaal gezien worden ze volgens de naam van het bronpakket geordend.
+Do not sort the index stanzas.  Normally they are sorted by source package name.
 
 =item B<-e>, B<--extra-override> I<bestand>
 

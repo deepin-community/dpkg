@@ -32,7 +32,7 @@ B<dpkg-statoverride> is een hulpmiddel voor het beheren van de lijst met statusm
 
 =item B<--add> I<gebruiker groep modus pad>
 
-Een statusmodificatie toevoegen voor I<pad>. Het is niet nodig dat I<pad> reeds bestaat op het ogenblik dat dit commando gebruikt wordt. De modificatie zal opgeslagen worden en later gebruikt worden. Gebruikers en groepen kunnen bij hun naam opgegeven worden (bijvoorbeeld B<root> of B<nobody>), of met hun nummer door voor dat nummer een ‘B<#>’ te plaatsen (bijvoorbeeld B<#0> of B<#65534>). De I<modus> moet als octaal getal opgegeven worden.
+Een statusmodificatie toevoegen voor I<pad>. I<pad> moet niet reeds bestaan of bekend zijn voor B<dpkg> op het ogenblik dat dit commando gebruikt wordt. De modificatie zal opgeslagen worden en later gebruikt worden. Gebruikers en groepen kunnen bij hun naam opgegeven worden (bijvoorbeeld B<root> of B<nobody>), of met hun nummer door voor dat nummer een ‘B<#>’ te plaatsen (bijvoorbeeld B<#0> of B<#65534>). De I<modus> moet als octaal getal opgegeven worden.
 
 Indien B<--update> opgegeven wordt en I<pad> bestaat, dan wordt dat onmiddellijk op de nieuwe eigenaar en modus ingesteld.
 
@@ -90,7 +90,7 @@ B<statoverride-remove>: Bij het verwijderen ervan een ontbrekende statusmodifica
 
 B<security-mac>(*): Bij het installeren van bestanden op het bestandssysteem gebruik maken van platformspecifieke beveiliging, gebaseerd op Mandatory Access Controls (MAC) (since dpkg 1.19.5). Op Linux-systemen gebruikt de implementatie SELinux.
 
-B<not-root>: Try to (de)install things even when not root (since dpkg 1.21.8).
+B<not-root>: Proberen om zaken te (de-)installeren, zelfs als niet-systeembeheerder (sinds dpkg 1.21.8).
 
 =item B<--force>
 
@@ -135,6 +135,10 @@ Indien dit ingesteld is en de opties B<--instdir> of B<--root> niet opgegeven we
 =item B<DPKG_ADMINDIR>
 
 Indien dit ingesteld is en de opties B<--admindir> of B<--root> niet opgegeven werden, zal dit gebruikt worden als de datamap voor B<dpkg>.
+
+=item B<DPKG_DEBUG>
+
+Stelt het foutopsporingsmasker in (sinds dpkg 1.21.10) vanaf een octale waarde. De momenteel geaccepteerde vlaggen worden beschreven in de optie B<dpkg --debug>, maar mogelijk hebben niet al deze vlaggen effect op dit programma.
 
 =item B<DPKG_FORCE>
 

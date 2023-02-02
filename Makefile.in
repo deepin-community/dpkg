@@ -121,7 +121,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(top_srcdir)/configure \
 	$(am__configure_deps) $(dist_aclocal_DATA) $(dist_doc_DATA) \
-	$(dist_pkgdata_DATA) $(am__DIST_COMMON)
+	$(dist_docspec_DATA) $(dist_pkgdata_DATA) $(am__DIST_COMMON)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
@@ -183,8 +183,9 @@ am__uninstall_files_from_dir = { \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
 am__installdirs = "$(DESTDIR)$(aclocaldir)" "$(DESTDIR)$(docdir)" \
-	"$(DESTDIR)$(pkgdatadir)"
-DATA = $(dist_aclocal_DATA) $(dist_doc_DATA) $(dist_pkgdata_DATA)
+	"$(DESTDIR)$(docspecdir)" "$(DESTDIR)$(pkgdatadir)"
+DATA = $(dist_aclocal_DATA) $(dist_doc_DATA) $(dist_docspec_DATA) \
+	$(dist_pkgdata_DATA)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 am__recursive_targets = \
@@ -395,6 +396,7 @@ VERSION = @VERSION@
 XGETTEXT = @XGETTEXT@
 XGETTEXT_015 = @XGETTEXT_015@
 XGETTEXT_EXTRA_OPTIONS = @XGETTEXT_EXTRA_OPTIONS@
+ZSTD_LIBS = @ZSTD_LIBS@
 Z_LIBS = @Z_LIBS@
 Z_NG_LIBS = @Z_NG_LIBS@
 abs_builddir = @abs_builddir@
@@ -497,10 +499,14 @@ dist_pkgdata_DATA = \
 dist_doc_DATA = \
 	doc/README.api \
 	doc/README.feature-removal-schedule \
-	doc/frontend.txt \
-	doc/protected-field.txt \
-	doc/rootless-builds.txt \
-	doc/triggers.txt \
+	# EOL
+
+docspecdir = $(docdir)/spec
+dist_docspec_DATA = \
+	doc/spec/frontend-api.txt \
+	doc/spec/protected-field.txt \
+	doc/spec/rootless-builds.txt \
+	doc/spec/triggers.txt \
 	# EOL
 
 EXTRA_DIST = \
@@ -513,6 +519,7 @@ EXTRA_DIST = \
 	build-aux/get-version \
 	build-aux/lcov-inject \
 	build-aux/run-script \
+	build-aux/test-runner \
 	doc/coding-style.txt \
 	debian/README.bug-usertags \
 	debian/bug-script \
@@ -546,6 +553,7 @@ EXTRA_DIST = \
 	debian/libdpkg-dev.install \
 	debian/libdpkg-perl.install \
 	debian/source/format \
+	debian/source/lintian-overrides \
 	debian/not-installed \
 	debian/rules \
 	debian/shlibs.default \
@@ -562,11 +570,18 @@ EXTRA_DIST = \
 	$(test_data) \
 	# EOL
 
-@COVERAGE_ENABLED_TRUE@LCOV_OPTS = -q --rc geninfo_checksum=1 --rc lcov_branch_coverage=1
+@COVERAGE_ENABLED_TRUE@LCOV_OPTS = --quiet --rc geninfo_checksum=1 --rc lcov_branch_coverage=1
 @COVERAGE_ENABLED_TRUE@LCOV_CAPTURE_OPTS = $(LCOV_OPTS) --no-recursion \
-@COVERAGE_ENABLED_TRUE@	-d $(top_builddir)/lib/dpkg \
-@COVERAGE_ENABLED_TRUE@	-d $(top_builddir)/src \
-@COVERAGE_ENABLED_TRUE@	-d $(top_builddir)/utils \
+@COVERAGE_ENABLED_TRUE@	--directory $(top_builddir)/lib/dpkg \
+@COVERAGE_ENABLED_TRUE@	--directory $(top_builddir)/src/common \
+@COVERAGE_ENABLED_TRUE@	--directory $(top_builddir)/src/deb \
+@COVERAGE_ENABLED_TRUE@	--directory $(top_builddir)/src/split \
+@COVERAGE_ENABLED_TRUE@	--directory $(top_builddir)/src/divert \
+@COVERAGE_ENABLED_TRUE@	--directory $(top_builddir)/src/query \
+@COVERAGE_ENABLED_TRUE@	--directory $(top_builddir)/src/trigger \
+@COVERAGE_ENABLED_TRUE@	--directory $(top_builddir)/src/statoverride \
+@COVERAGE_ENABLED_TRUE@	--directory $(top_builddir)/src/main \
+@COVERAGE_ENABLED_TRUE@	--directory $(top_builddir)/utils \
 @COVERAGE_ENABLED_TRUE@	# EOL
 
 @COVERAGE_ENABLED_TRUE@LCOV_INJECT = $(PERL) -i $(top_srcdir)/build-aux/lcov-inject
@@ -587,9 +602,9 @@ test_scripts = \
 	# EOL
 
 test_data = \
-	t/critic/perlcriticrc \
 	t/codespell/stopwords \
 	t/cppcheck/cppcheck.supp \
+	t/critic/perlcriticrc \
 	# EOL
 
 
@@ -598,20 +613,6 @@ test_data = \
 TEST_ENV_VARS = \
 	DPKG_DATADIR=$(abs_top_srcdir)/data \
 	# EOL
-
-TEST_RUNNER = '\
-	my $$harness = TAP::Harness->new({ \
-	    exec => sub { my (undef, $$test) = @_; \
-	        return [ $$test ] if $$test !~ "\.t\$$" and -x $$test; \
-	        return }, \
-	    lib => [ "$(top_srcdir)/scripts", "$(top_srcdir)/dselect/methods"  ], \
-	    color => 1, \
-	    verbosity => $(TEST_VERBOSE), \
-	    jobs => $(TEST_PARALLEL), \
-	    failures => 1, \
-	}); \
-	my $$aggregate = $$harness->runtests(@ARGV); \
-	die "FAIL: test suite has errors\n" if $$aggregate->has_errors;'
 
 CPAN_DIST_NAME = $(PACKAGE_CPAN_NAME)
 CPAN_DIST_VERSION = $(PACKAGE_VERSION)
@@ -731,6 +732,27 @@ uninstall-dist_docDATA:
 	@list='$(dist_doc_DATA)'; test -n "$(docdir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(docdir)'; $(am__uninstall_files_from_dir)
+install-dist_docspecDATA: $(dist_docspec_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(dist_docspec_DATA)'; test -n "$(docspecdir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(docspecdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(docspecdir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(docspecdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(docspecdir)" || exit $$?; \
+	done
+
+uninstall-dist_docspecDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(dist_docspec_DATA)'; test -n "$(docspecdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(docspecdir)'; $(am__uninstall_files_from_dir)
 install-dist_pkgdataDATA: $(dist_pkgdata_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(dist_pkgdata_DATA)'; test -n "$(pkgdatadir)" || list=; \
@@ -1063,7 +1085,7 @@ check: check-recursive
 all-am: Makefile $(DATA) config.h
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(aclocaldir)" "$(DESTDIR)$(docdir)" "$(DESTDIR)$(pkgdatadir)"; do \
+	for dir in "$(DESTDIR)$(aclocaldir)" "$(DESTDIR)$(docdir)" "$(DESTDIR)$(docspecdir)" "$(DESTDIR)$(pkgdatadir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-recursive
@@ -1119,7 +1141,7 @@ info: info-recursive
 info-am:
 
 install-data-am: install-dist_aclocalDATA install-dist_docDATA \
-	install-dist_pkgdataDATA
+	install-dist_docspecDATA install-dist_pkgdataDATA
 
 install-dvi: install-dvi-recursive
 
@@ -1166,7 +1188,7 @@ ps: ps-recursive
 ps-am:
 
 uninstall-am: uninstall-dist_aclocalDATA uninstall-dist_docDATA \
-	uninstall-dist_pkgdataDATA
+	uninstall-dist_docspecDATA uninstall-dist_pkgdataDATA
 
 .MAKE: $(am__recursive_targets) all check-am install-am install-strip
 
@@ -1180,15 +1202,16 @@ uninstall-am: uninstall-dist_aclocalDATA uninstall-dist_docDATA \
 	distuninstallcheck dvi dvi-am html html-am info info-am \
 	install install-am install-data install-data-am \
 	install-dist_aclocalDATA install-dist_docDATA \
-	install-dist_pkgdataDATA install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags tags-am uninstall uninstall-am uninstall-dist_aclocalDATA \
-	uninstall-dist_docDATA uninstall-dist_pkgdataDATA
+	install-dist_docspecDATA install-dist_pkgdataDATA install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	installdirs-am maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-generic mostlyclean-libtool pdf pdf-am \
+	ps ps-am tags tags-am uninstall uninstall-am \
+	uninstall-dist_aclocalDATA uninstall-dist_docDATA \
+	uninstall-dist_docspecDATA uninstall-dist_pkgdataDATA
 
 .PRECIOUS: Makefile
 
@@ -1211,21 +1234,26 @@ doc-clean:
 @COVERAGE_ENABLED_TRUE@	find -name '*.gcda' -o -name '*.gcov' | xargs rm -f
 
 @COVERAGE_ENABLED_TRUE@	: # Initialize data
-@COVERAGE_ENABLED_TRUE@	$(LCOV) $(LCOV_CAPTURE_OPTS) -c -o dpkg_base.lcov -i
+@COVERAGE_ENABLED_TRUE@	$(LCOV) $(LCOV_CAPTURE_OPTS) --capture --initial \
+@COVERAGE_ENABLED_TRUE@	  --output-file dpkg_base.lcov
 @COVERAGE_ENABLED_TRUE@	: # Run test cases
 @COVERAGE_ENABLED_TRUE@	$(MAKE) -C lib/dpkg check
 @COVERAGE_ENABLED_TRUE@	$(MAKE) -C src check
 @COVERAGE_ENABLED_TRUE@	$(MAKE) -C utils check
 @COVERAGE_ENABLED_TRUE@	: # Merge test coverage data
-@COVERAGE_ENABLED_TRUE@	$(LCOV) $(LCOV_CAPTURE_OPTS) -c -o dpkg_test.lcov
-@COVERAGE_ENABLED_TRUE@	$(LCOV) $(LCOV_OPTS) -a dpkg_base.lcov -a dpkg_test.lcov \
-@COVERAGE_ENABLED_TRUE@	  -o dpkg_merge.lcov
-@COVERAGE_ENABLED_TRUE@	$(LCOV) $(LCOV_OPTS) -r dpkg_merge.lcov '/usr/include/*' -o dpkg.lcov
+@COVERAGE_ENABLED_TRUE@	$(LCOV) $(LCOV_CAPTURE_OPTS) --capture \
+@COVERAGE_ENABLED_TRUE@	  --output-file dpkg_test.lcov
+@COVERAGE_ENABLED_TRUE@	$(LCOV) $(LCOV_OPTS) \
+@COVERAGE_ENABLED_TRUE@	  --add-tracefile dpkg_base.lcov \
+@COVERAGE_ENABLED_TRUE@	  --add-tracefile dpkg_test.lcov \
+@COVERAGE_ENABLED_TRUE@	  --output-file dpkg_merge.lcov
+@COVERAGE_ENABLED_TRUE@	$(LCOV) $(LCOV_OPTS) --remove dpkg_merge.lcov '/usr/include/*' \
+@COVERAGE_ENABLED_TRUE@	  --output-file dpkg.lcov
 @COVERAGE_ENABLED_TRUE@	: # Generate reports
-@COVERAGE_ENABLED_TRUE@	$(LCOV) $(LCOV_OPTS) -l dpkg.lcov
+@COVERAGE_ENABLED_TRUE@	$(LCOV) $(LCOV_OPTS) --list dpkg.lcov
 @COVERAGE_ENABLED_TRUE@	$(LCOV_GENHTML) $(LCOV_OPTS) \
 @COVERAGE_ENABLED_TRUE@	  --legend --title "dpkg $(VERSION) C code coverage" \
-@COVERAGE_ENABLED_TRUE@	  -o doc/coverage dpkg.lcov
+@COVERAGE_ENABLED_TRUE@	  --output-directory doc/coverage dpkg.lcov
 
 @COVERAGE_ENABLED_TRUE@	$(MAKE) -C scripts $@
 
@@ -1254,20 +1282,21 @@ tap-clean:
 
 tap-check: $(test_data) $(test_programs) $(test_scripts)
 	[ -z "$(test_tmpdir)" ] || $(MKDIR_P) $(test_tmpdir)
-	PATH="$(abs_top_builddir)/src:$(abs_top_builddir)/scripts:$(abs_top_builddir)/utils:$(PATH)" \
-	  LC_ALL=C \
-	  DPKG_COLORS=never \
 	  $(TEST_ENV_VARS) \
+	  abs_top_srcdir=$(abs_top_srcdir) \
+	  abs_top_builddir=$(abs_top_builddir) \
 	  srcdir=$(srcdir) builddir=$(builddir) \
 	  CC=$(CC) \
-	  PERL=$(PERL) \
 	  SHELL=$(SHELL) \
+	  PERL=$(PERL) \
 	  PERL_DL_NONLAZY=1 \
-	  PERL5LIB=$(abs_top_srcdir)/scripts:$(abs_top_srcdir)/dselect/methods \
 	  PERL5OPT=$(TEST_COVERAGE) \
-	  $(PERL) -MTAP::Harness -e $(TEST_RUNNER) \
+	  $(PERL) $(top_srcdir)/build-aux/test-runner \
 	    $(addprefix $(builddir)/,$(test_programs)) \
 	    $(addprefix $(srcdir)/,$(test_scripts))
+
+authorcheck:
+	AUTHOR_TESTING=1 $(MAKE) check
 
 check-local: tap-check
 

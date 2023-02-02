@@ -56,13 +56,13 @@ Affiche le numéro de version puis quitte.
 
 =head2 Options de filtrage
 
-Les options suivantes peuvent être utilisées pour influencer la sortie de l'analyseur du journal des modifications S<(« changelog »),> par exemple la gamme d'entrées ou le format de sortie.
+The following options can be used to influence the output of the changelog parser, for example the range of entries or the format of the output.
 
 =over 
 
 =item B<--format> I<format-de-sortie>
 
-Règle le format de sortie. Actuellement les valeurs gérées sont I<dpkg> et B<rfc822>. I<dpkg> est le format classique de sortie (avant que cette option n'existe) et l'option par défaut. Il se compose d'un paragraphe dans le format du fichier de contrôle Debian (voir B<deb-control>(5)). Si plus d'une entrée est demandée, alors la plupart des champs sont tirés de la première entrée (habituellement la plus récente), sauf si c'est indiqué autrement.
+Set the output format. Currently supported values are B<dpkg> and B<rfc822>.  B<dpkg> is the classic output format (from before this option existed) and the default. It consists of one stanza in Debian control format (see B<deb-control>(5)). If more than one entry is requested, then most fields are taken from the first entry (usually the most recent entry), except otherwise stated:
 
 =over 
 
@@ -100,7 +100,7 @@ Les champs B<Version>, B<Distribution>, B<Urgency>, B<Maintainer> et B<Changes> 
 
 Il est possible d'avoir d'autres champs qui sont définis par l'utilisateur.
 
-Le format B<rfc822> utilise les mêmes champs mais le résultat est un paragraphe distinct pour chaque entrée du changelog afin que toutes les métadonnées de chaque entrée soit préservées.
+The B<rfc822> format uses the same fields but outputs a separate stanza for each changelog entry so that all metadata for each entry is preserved.
 
 =item B<--reverse>
 

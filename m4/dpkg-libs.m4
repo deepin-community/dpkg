@@ -8,28 +8,21 @@
 # Check for the message digest library.
 AC_DEFUN([DPKG_LIB_MD], [
   AC_ARG_VAR([MD_LIBS], [linker flags for md library])
-  AC_ARG_WITH([libmd],
-    [AS_HELP_STRING([--with-libmd],
-      [use libmd library for message digest functions])],
-    [], [with_libmd=check])
   have_libmd="no"
-  AS_IF([test "x$with_libmd" != "xno"], [
-    AC_CHECK_HEADERS([md5.h], [
-      dpkg_save_libmd_LIBS=$LIBS
-      AC_SEARCH_LIBS([MD5Init], [md])
-      LIBS=$dpkg_save_libmd_LIBS
-      AS_IF([test "x$ac_cv_search_MD5Init" = "xnone required"], [
-        have_libmd="builtin"
-      ], [test "x$ac_cv_search_MD5Init" != "xno"], [
-        have_libmd="yes"
-        MD_LIBS="$ac_cv_search_MD5Init"
-      ])
-    ])
-    AS_IF([test "x$with_libmd" = "xyes" && test "x$have_libmd" = "xno"], [
-      AC_MSG_FAILURE([md5 digest functions not found])
+  AC_CHECK_HEADERS([md5.h], [
+    dpkg_save_libmd_LIBS=$LIBS
+    AC_SEARCH_LIBS([MD5Init], [md])
+    LIBS=$dpkg_save_libmd_LIBS
+    AS_IF([test "x$ac_cv_search_MD5Init" = "xnone required"], [
+      have_libmd="builtin"
+    ], [test "x$ac_cv_search_MD5Init" != "xno"], [
+      have_libmd="yes"
+      MD_LIBS="$ac_cv_search_MD5Init"
     ])
   ])
-  AM_CONDITIONAL([HAVE_LIBMD_MD5], [test "x$have_libmd" != "xno"])
+  AS_IF([test "x$have_libmd" = "xno"], [
+    AC_MSG_FAILURE([md5 digest functions not found])
+  ])
 ])# DPKG_LIB_MD
 
 # DPKG_WITH_COMPRESS_LIB(NAME, HEADER, FUNC)
@@ -76,11 +69,11 @@ AC_DEFUN([DPKG_LIB_Z], [
   DPKG_WITH_COMPRESS_LIB([z-ng], [zlib-ng.h], [zng_gzdopen])
 
   AC_DEFINE([USE_LIBZ_IMPL_NONE], [0],
-            [Define none as 0 for the zlib implementation enum])
+    [Define none as 0 for the zlib implementation enum])
   AC_DEFINE([USE_LIBZ_IMPL_ZLIB], [1],
-            [Define zlib as 1 for the zlib implementation enum])
+    [Define zlib as 1 for the zlib implementation enum])
   AC_DEFINE([USE_LIBZ_IMPL_ZLIB_NG], [2],
-            [Define zlib-ng as 2 for the zlib implementation enum])
+    [Define zlib-ng as 2 for the zlib implementation enum])
 
   # If we have been requested the stock zlib, override the auto-detection.
   AS_IF([test "x$with_libz" != "xyes" && test "x$have_libz_ng" = "xyes"], [
@@ -97,7 +90,7 @@ AC_DEFUN([DPKG_LIB_Z], [
     have_libz_impl="no"
   ])
   AC_DEFINE_UNQUOTED([USE_LIBZ_IMPL], [$use_libz_impl],
-                     [Define to the zlib implementation to use])
+    [Define to the zlib implementation to use])
 ])# DPKG_LIB_Z
 
 # DPKG_LIB_LZMA
@@ -107,9 +100,20 @@ AC_DEFUN([DPKG_LIB_LZMA], [
   DPKG_WITH_COMPRESS_LIB([lzma], [lzma.h], [lzma_alone_decoder])
   AC_CHECK_LIB([lzma], [lzma_stream_encoder_mt], [
     AC_DEFINE([HAVE_LZMA_MT_ENCODER], [1],
-              [xz multithreaded compression support])
+      [xz multi-threaded compression support])
+  ])
+  AC_CHECK_LIB([lzma], [lzma_stream_decoder_mt], [
+    AC_DEFINE([HAVE_LZMA_MT_DECODER], [1],
+      [xz multi-threaded decompression support])
   ])
 ])# DPKG_LIB_LZMA
+
+# DPKG_LIB_ZSTD
+# ------------
+# Check for zstd library.
+AC_DEFUN([DPKG_LIB_ZSTD], [
+  DPKG_WITH_COMPRESS_LIB([zstd], [zstd.h], [ZSTD_compressStream2])
+])# DPKG_LIB_ZSTD
 
 # DPKG_LIB_BZ2
 # ------------
@@ -176,10 +180,10 @@ AC_DEFUN([DPKG_LIB_CURSES], [
   AC_REQUIRE([DPKG_UNICODE])
   AC_ARG_VAR([CURSES_LIBS], [linker flags for curses library])dnl
   AC_CHECK_HEADERS([ncurses/ncurses.h ncurses.h curses.h ncurses/term.h term.h],
-                   [have_curses_header=yes])
+    [have_curses_header=yes])
   AS_IF([test "x$USE_UNICODE" = "xyes"], [
     AC_CHECK_HEADERS([ncursesw/ncurses.h ncursesw/term.h],
-                     [have_curses_header=yes])
+      [have_curses_header=yes])
     AC_CHECK_LIB([ncursesw], [initscr], [
       CURSES_LIBS="${CURSES_LIBS:+$CURSES_LIBS }-lncursesw"
     ], [

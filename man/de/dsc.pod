@@ -74,7 +74,7 @@ Listet die Namen und E-Mail-Adressen der Ko-Betreuer des Pakets auf, im gleichen
 
 =item B<Description> I<Kurzbeschreibung>
 
-=item B<> I<Langbeschreibung>
+=item S< >I<Langbeschreibung>
 
 Das Format der Quellpaketbeschreibung ist eine kurze knappe Zusammenfassung auf der ersten Zeile (nach dem Feld B<Description>). Die folgenden Zeilen sollten als längere, detailliertere Beschreibung verwendet werden. Jede Zeile der Langbeschreibung muss von einem Leerzeichen begonnen werden, und Leerzeilen in der Langbeschreibung müssen einen einzelnen ‚B<.>’ hinter dem einleitenden Leerzeichen enthalten.
 
@@ -195,7 +195,7 @@ L<deb822(5)>, B<deb-src-control>(5), B<deb-version>(7), B<dpkg-source>(1).
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

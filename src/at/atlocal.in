@@ -4,6 +4,7 @@ PATH="@abs_top_builddir@/src:$PATH"
 export PATH
 
 SED=@SED@
+PERL=@PERL@
 
 # Setup a sane environment
 
@@ -18,6 +19,8 @@ export TZ
 SOURCE_DATE_EPOCH=0
 export SOURCE_DATE_EPOCH
 
+prefix="@prefix@"
+eval "export DEFAULT_ADMINDIR='@admindir@'"
 export DPKG_DATADIR="@abs_top_srcdir@/src"
 
 # Cleanup variables that might affect the tests.

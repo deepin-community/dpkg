@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.20.7\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2022-05-25 08:39+0000\n"
+"POT-Creation-Date: 2023-01-24 22:39+0000\n"
 "PO-Revision-Date: 2021-04-24 19:50+0200\n"
 "Last-Translator: Łukasz Dulny <bartekchom@poczta.onet.pl>\n"
 "Language-Team: Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -319,6 +319,48 @@ msgstr "%s: błąd zamknięcia lzma"
 #, c-format
 msgid "%s: lzma error: %s"
 msgstr "%s: błąd lzma: %s"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: lzma error: %s"
+msgid "%s: zstd error: %s"
+msgstr "%s: błąd lzma: %s"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "cannot close decompressor pipe"
+msgid "%s: cannot create zstd decompression context"
+msgstr "nie można zamknąć potoku dekompresyjnego"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "cannot close decompressor pipe"
+msgid "%s: cannot create zstd compression context"
+msgstr "nie można zamknąć potoku dekompresyjnego"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: lzma read error"
+msgid "%s: zstd read error"
+msgstr "%s: błąd odczytu lzma"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: lzma write error"
+msgid "%s: zstd write error"
+msgstr "%s: błąd zapisu lzma"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: lzma close error"
+msgid "%s: zstd close error"
+msgstr "%s: błąd zamknięcia lzma"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "invalid compression level for -%c: %ld"
+msgid "invalid compression level %d"
+msgstr "błędny poziom kompresji dla -%c: %ld"
 
 #: lib/dpkg/compress.c
 msgid "unknown compression strategy"
@@ -669,6 +711,12 @@ msgstr "wersja formatu z pustą poboczną częścią składową"
 msgid "format version followed by junk"
 msgstr "wersja formatu poprzedzona przez nieprawidłowe wartości"
 
+#: lib/dpkg/debug.c
+#, fuzzy, c-format
+#| msgid "Useful environment variables:\n"
+msgid "cannot parse debug mask from environment variable %s"
+msgstr "Przydatne zmienne środowiskowe:\n"
+
 #: lib/dpkg/dir.c
 #, c-format
 msgid "unable to get file descriptor for directory '%s'"
@@ -706,8 +754,9 @@ msgid "unable to set buffering on %s database file"
 msgstr "nie można ustawić buforowania na pliku bazy danych %s"
 
 #: lib/dpkg/dump.c
-#, c-format
-msgid "failed to write %s database record about '%.50s' to '%.250s'"
+#, fuzzy, c-format
+#| msgid "failed to write %s database record about '%.50s' to '%.250s'"
+msgid "failed to write %s database stanza about '%s' to '%s'"
 msgstr ""
 "nie można zapisać rekordu bazy danych \"%s\" dotyczącego \"%.50s\" w "
 "\"%.250s\""
@@ -2659,7 +2708,32 @@ msgstr ""
 "\n"
 
 #: src/deb/main.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Options:\n"
+#| "  -v, --verbose                    Enable verbose output.\n"
+#| "  -D, --debug                      Enable debugging output.\n"
+#| "      --showformat=<format>        Use alternative format for --show.\n"
+#| "      --deb-format=<format>        Select archive format.\n"
+#| "                                     Allowed values: 0.939000, 2.0 "
+#| "(default).\n"
+#| "      --nocheck                    Suppress control file check (build "
+#| "bad\n"
+#| "                                     packages).\n"
+#| "      --root-owner-group           Forces the owner and groups to root.\n"
+#| "      --[no-]uniform-compression   Use the compression params on all "
+#| "members.\n"
+#| "  -z#                              Set the compression level when "
+#| "building.\n"
+#| "  -Z<type>                         Set the compression type used when "
+#| "building.\n"
+#| "                                     Allowed types: gzip, xz, none.\n"
+#| "  -S<strategy>                     Set the compression strategy when "
+#| "building.\n"
+#| "                                     Allowed values: none; extreme (xz);\n"
+#| "                                     filtered, huffman, rle, fixed "
+#| "(gzip).\n"
+#| "\n"
 msgid ""
 "Options:\n"
 "  -v, --verbose                    Enable verbose output.\n"
@@ -2671,12 +2745,13 @@ msgid ""
 "      --nocheck                    Suppress control file check (build bad\n"
 "                                     packages).\n"
 "      --root-owner-group           Forces the owner and groups to root.\n"
+"      --threads-max=<threads>      Use at most <threads> with compressor.\n"
 "      --[no-]uniform-compression   Use the compression params on all "
 "members.\n"
 "  -z#                              Set the compression level when building.\n"
 "  -Z<type>                         Set the compression type used when "
 "building.\n"
-"                                     Allowed types: gzip, xz, none.\n"
+"                                     Allowed types: gzip, xz, zstd, none.\n"
 "  -S<strategy>                     Set the compression strategy when "
 "building.\n"
 "                                     Allowed values: none; extreme (xz);\n"
@@ -2761,11 +2836,6 @@ msgstr "nieprawidłowa wersja formatu deb: %s"
 #, c-format
 msgid "unknown deb format version: %s"
 msgstr "nieznana wersja formatu deb: %s"
-
-#: src/deb/main.c
-#, c-format
-msgid "invalid compression level for -%c: %ld"
-msgstr "błędny poziom kompresji dla -%c: %ld"
 
 #: src/deb/main.c
 #, c-format
@@ -3091,15 +3161,26 @@ msgstr ""
 "\n"
 
 #: src/split/main.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Options:\n"
+#| "  --depotdir <directory>           Use <directory> instead of %s/%s.\n"
+#| "  -S|--partsize <size>             In KiB, for -s (default is 450).\n"
+#| "  -o|--output <file>               Filename, for -j (default is\n"
+#| "                                     <package>_<version>_<arch>.deb).\n"
+#| "  -Q|--npquiet                     Be quiet when -a is not a part.\n"
+#| "  --msdos                          Generate 8.3 filenames.\n"
+#| "\n"
 msgid ""
 "Options:\n"
-"  --depotdir <directory>           Use <directory> instead of %s/%s.\n"
-"  -S|--partsize <size>             In KiB, for -s (default is 450).\n"
-"  -o|--output <file>               Filename, for -j (default is\n"
+"      --depotdir <directory>       Use <directory> instead of %s/%s.\n"
+"      --admindir <directory>       Use <directory> instead of %s.\n"
+"      --root <directory>           Use <directory> instead of %s.\n"
+"  -S, --partsize <size>            In KiB, for -s (default is 450).\n"
+"  -o, --output <file>              Filename, for -j (default is\n"
 "                                     <package>_<version>_<arch>.deb).\n"
-"  -Q|--npquiet                     Be quiet when -a is not a part.\n"
-"  --msdos                          Generate 8.3 filenames.\n"
+"  -Q, --npquiet                    Be quiet when -a is not a part.\n"
+"      --msdos                      Generate 8.3 filenames.\n"
 "\n"
 msgstr ""
 "Opcje:\n"
@@ -3768,14 +3849,6 @@ msgstr ""
 "package)"
 
 #: src/trigger/main.c
-msgid "triggers data directory not yet created"
-msgstr "nie utworzono jeszcze katalogu zawierającego dane wyzwalaczy"
-
-#: src/trigger/main.c
-msgid "trigger records not yet in existence"
-msgstr "informacje o wyzwalaczach jeszcze nie istnieją"
-
-#: src/trigger/main.c
 msgid "takes one argument, the trigger name"
 msgstr "wymaga podania jednego argumentu - nazwy wyzwalacza"
 
@@ -3788,6 +3861,14 @@ msgstr "nieprawidłowa nazwa pakietu do oczekiwania \"%.250s\": %.250s"
 #, c-format
 msgid "invalid trigger name '%.250s': %.250s"
 msgstr "niewłaściwa nazwa wyzwalacza \"%.250s\": %.250s"
+
+#: src/trigger/main.c
+msgid "triggers data directory not yet created"
+msgstr "nie utworzono jeszcze katalogu zawierającego dane wyzwalaczy"
+
+#: src/trigger/main.c
+msgid "trigger records not yet in existence"
+msgstr "informacje o wyzwalaczach jeszcze nie istnieją"
 
 #: src/query/main.c src/main/select.c
 #, c-format
@@ -5437,7 +5518,51 @@ msgstr ""
 "\n"
 
 #: src/main/main.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Options:\n"
+#| "  --admindir=<directory>     Use <directory> instead of %s.\n"
+#| "  --root=<directory>         Install on a different root directory.\n"
+#| "  --instdir=<directory>      Change installation dir without changing "
+#| "admin dir.\n"
+#| "  --pre-invoke=<command>     Set a pre-invoke hook.\n"
+#| "  --post-invoke=<command>    Set a post-invoke hook.\n"
+#| "  --path-exclude=<pattern>   Do not install paths which match a shell "
+#| "pattern.\n"
+#| "  --path-include=<pattern>   Re-include a pattern after a previous "
+#| "exclusion.\n"
+#| "  -O|--selected-only         Skip packages not selected for install/"
+#| "upgrade.\n"
+#| "  -E|--skip-same-version     Skip packages whose same version is "
+#| "installed.\n"
+#| "  -G|--refuse-downgrade      Skip packages with earlier version than "
+#| "installed.\n"
+#| "  -B|--auto-deconfigure      Install even if it would break some other "
+#| "package.\n"
+#| "  --[no-]triggers            Skip or force consequential trigger "
+#| "processing.\n"
+#| "  --verify-format=<format>   Verify output format (supported: 'rpm').\n"
+#| "  --no-pager                 Disables the use of any pager.\n"
+#| "  --no-debsig                Do not try to verify package signatures.\n"
+#| "  --no-act|--dry-run|--simulate\n"
+#| "                             Just say what we would do - don't do it.\n"
+#| "  -D|--debug=<octal>         Enable debugging (see -Dhelp or --"
+#| "debug=help).\n"
+#| "  --status-fd <n>            Send status change updates to file "
+#| "descriptor <n>.\n"
+#| "  --status-logger=<command>  Send status change updates to <command>'s "
+#| "stdin.\n"
+#| "  --log=<filename>           Log status changes and actions to "
+#| "<filename>.\n"
+#| "  --ignore-depends=<package>[,...]\n"
+#| "                             Ignore dependencies involving <package>.\n"
+#| "  --force-<thing>[,...]      Override problems (see --force-help).\n"
+#| "  --no-force-<thing>[,...]   Stop when problems encountered.\n"
+#| "  --refuse-<thing>[,...]     Ditto.\n"
+#| "  --abort-after <n>          Abort after encountering <n> errors.\n"
+#| "  --robot                    Use machine-readable output on some "
+#| "commands.\n"
+#| "\n"
 msgid ""
 "Options:\n"
 "  --admindir=<directory>     Use <directory> instead of %s.\n"
@@ -5452,7 +5577,8 @@ msgid ""
 "exclusion.\n"
 "  -O|--selected-only         Skip packages not selected for install/"
 "upgrade.\n"
-"  -E|--skip-same-version     Skip packages whose same version is installed.\n"
+"  -E|--skip-same-version     Skip packages with same installed version/"
+"arch.\n"
 "  -G|--refuse-downgrade      Skip packages with earlier version than "
 "installed.\n"
 "  -B|--auto-deconfigure      Install even if it would break some other "

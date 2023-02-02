@@ -24,7 +24,7 @@ B<dpkg-scansources> [I<option>...] I<rep-de-binaires> [I<fichier-override> [I<pr
 
 B<dpkg-scansources> recherche des fichiers I<.dsc> dans le répertoire I<rep-de-binaires> indiqué. Ces fichiers sont utilisés pour créer un index de sources Debian, qui est envoyé sur la sortie standard.
 
-The I<override-file>, if given, is used to set priorities in the resulting index records and to override the maintainer field given in the I<.dsc> files.  The file can be compressed (since dpkg 1.15.5).  See B<deb-override>(5)  for the format of this file.
+The I<override-file>, if given, is used to set priorities in the resulting index stanzas and to override the maintainer field given in the I<.dsc> files.  The file can be compressed (since dpkg 1.15.5).  See B<deb-override>(5)  for the format of this file.
 
 B<Note:> Since the override file is indexed by binary, not source packages, there's a bit of a problem here. The current implementation uses the highest priority of all the binary packages produced by a I<.dsc> file for the priority of the source package, and the override entry for the first binary package listed in the I<.dsc> file to modify maintainer information. This might change.
 
@@ -38,7 +38,7 @@ B<Note:> If you want to access the generated Sources file with B<apt>(8) you wil
 
 =item B<-n>, B<--no-sort>
 
-Ne trie pas les entrées de l'index. Elles sont d'habitude triées en fonction du nom du paquet source.
+Do not sort the index stanzas.  Normally they are sorted by source package name.
 
 =item B<-e>, B<--extra-override> I<fichier>
 

@@ -62,12 +62,13 @@ CLEANFILES = \
 perllibdir = $(PERL_LIBDIR)
 nobase_dist_perllib_DATA = \
 	Dpkg/Arch.pm \
+	Dpkg/BuildEnv.pm \
 	Dpkg/BuildFlags.pm \
+	Dpkg/BuildInfo.pm \
 	Dpkg/BuildOptions.pm \
 	Dpkg/BuildProfiles.pm \
-	Dpkg/Build/Env.pm \
+	Dpkg/BuildTypes.pm \
 	Dpkg/Build/Info.pm \
-	Dpkg/Build/Types.pm \
 	Dpkg/Changelog.pm \
 	Dpkg/Changelog/Debian.pm \
 	Dpkg/Changelog/Entry.pm \
@@ -106,6 +107,12 @@ nobase_dist_perllib_DATA = \
 	Dpkg/IPC.pm \
 	Dpkg/Lock.pm \
 	Dpkg/OpenPGP.pm \
+	Dpkg/OpenPGP/Backend.pm \
+	Dpkg/OpenPGP/Backend/GnuPG.pm \
+	Dpkg/OpenPGP/Backend/SOP.pm \
+	Dpkg/OpenPGP/Backend/Sequoia.pm \
+	Dpkg/OpenPGP/ErrorCodes.pm \
+	Dpkg/OpenPGP/KeyHandle.pm \
 	Dpkg/Package.pm \
 	Dpkg/Path.pm \
 	Dpkg/Shlibs.pm \
@@ -132,6 +139,7 @@ nobase_dist_perllib_DATA = \
 	Dpkg/Vendor.pm \
 	Dpkg/Vendor/Debian.pm \
 	Dpkg/Vendor/Default.pm \
+	Dpkg/Vendor/Devuan.pm \
 	Dpkg/Vendor/Ubuntu.pm \
 	Dpkg/Version.pm \
 	Dpkg.pm \
@@ -208,13 +216,13 @@ test_scripts = \
 	t/Dpkg_Package.t \
 	t/Dpkg_Shlibs_Cppfilt.t \
 	t/Dpkg_Shlibs.t \
+	t/Dpkg_BuildEnv.t \
 	t/Dpkg_BuildFlags.t \
 	t/Dpkg_BuildFlags_Ubuntu.t \
+	t/Dpkg_BuildInfo.t \
 	t/Dpkg_BuildOptions.t \
 	t/Dpkg_BuildProfiles.t \
-	t/Dpkg_Build_Env.t \
-	t/Dpkg_Build_Info.t \
-	t/Dpkg_Build_Types.t \
+	t/Dpkg_BuildTypes.t \
 	t/Dpkg_Checksums.t \
 	t/Dpkg_ErrorHandling.t \
 	t/Dpkg_Exit.t \
@@ -227,6 +235,7 @@ test_scripts = \
 	t/Dpkg_Path.t \
 	t/Dpkg_Vars.t \
 	t/Dpkg_Interface_Storable.t \
+	t/Dpkg_OpenPGP_KeyHandle.t \
 	t/Dpkg_OpenPGP.t \
 	t/Dpkg_Vendor.t \
 	t/Dpkg_Changelog.t \
@@ -252,51 +261,6 @@ test_scripts = \
 	# EOL
 
 test_data = \
-	t/Dpkg_OpenPGP/package_1.0.orig.tar \
-	t/Dpkg_OpenPGP/package_1.0.orig.tar.asc \
-	t/Dpkg_OpenPGP/package_1.0.orig.tar.sig \
-	t/Dpkg_Shlibs/symbols.internal \
-	t/Dpkg_Shlibs/symbols.internal-allow \
-	t/Dpkg_Shlibs/symbols.internal-allow-groups \
-	t/Dpkg_Shlibs/symbols.internal-filter \
-	t/Dpkg_Shlibs/symbols.fake-1 \
-	t/Dpkg_Shlibs/symbols.fake-2 \
-	t/Dpkg_Shlibs/symbols.fake-3 \
-	t/Dpkg_Shlibs/symbols.include-1 \
-	t/Dpkg_Shlibs/symbols.include-2 \
-	t/Dpkg_Shlibs/symbols.include-3 \
-	t/Dpkg_Shlibs/basictags.symbols \
-	t/Dpkg_Shlibs/basictags.c \
-	t/Dpkg_Shlibs/patterns.symbols \
-	t/Dpkg_Shlibs/patterns.cpp \
-	t/Dpkg_Shlibs/patterns.map \
-	t/Dpkg_Shlibs/ld.so.conf \
-	t/Dpkg_Shlibs/ld.so.conf_2 \
-	t/Dpkg_Shlibs/ld.so.conf.d/normal.conf \
-	t/Dpkg_Shlibs/ld.so.conf.d/inf_recurse.conf \
-	t/Dpkg_Shlibs/ld.so.conf.d/recursive.conf \
-	t/Dpkg_Shlibs/objdump.space \
-	t/Dpkg_Shlibs/objdump.spacesyms \
-	t/Dpkg_Shlibs/objdump.basictags-amd64 \
-	t/Dpkg_Shlibs/objdump.basictags-i386 \
-	t/Dpkg_Shlibs/objdump.basictags-mips \
-	t/Dpkg_Shlibs/objdump.internal \
-	t/Dpkg_Shlibs/objdump.patterns \
-	t/Dpkg_Shlibs/objdump.glib-ia64 \
-	t/Dpkg_Shlibs/objdump.libc6-2.3 \
-	t/Dpkg_Shlibs/objdump.libc6-2.6 \
-	t/Dpkg_Shlibs/objdump.dbd-pg \
-	t/Dpkg_Shlibs/objdump.ls \
-	t/Dpkg_Shlibs/spacesyms.map \
-	t/Dpkg_Shlibs/spacesyms-c-gen.pl \
-	t/Dpkg_Shlibs/spacesyms-o-map.pl \
-	t/Dpkg_Source_Patch/c-style.patch \
-	t/Dpkg_Source_Patch/ghost-hunk.patch \
-	t/Dpkg_Source_Patch/indent-header.patch \
-	t/Dpkg_Source_Patch/index-+++.patch \
-	t/Dpkg_Source_Patch/index-alone.patch \
-	t/Dpkg_Source_Patch/index-inert.patch \
-	t/Dpkg_Source_Patch/partial.patch \
 	t/Dpkg_Changelog/countme \
 	t/Dpkg_Changelog/date-format \
 	t/Dpkg_Changelog/fields \
@@ -305,28 +269,84 @@ test_data = \
 	t/Dpkg_Changelog/shadow \
 	t/Dpkg_Changelog/stop-modeline \
 	t/Dpkg_Changelog/unreleased \
-	t/Dpkg_Checksums/empty \
 	t/Dpkg_Checksums/data-1 \
 	t/Dpkg_Checksums/data-2 \
+	t/Dpkg_Checksums/empty \
 	t/Dpkg_Conf/config-mixed \
-	t/Dpkg_Control/control-1 \
-	t/Dpkg_Control/bogus-unsigned.dsc \
 	t/Dpkg_Control/bogus-armor-double.dsc \
 	t/Dpkg_Control/bogus-armor-formfeed.dsc \
-	t/Dpkg_Control/bogus-armor-no-sig.dsc \
-	t/Dpkg_Control/bogus-armor-trail.dsc \
 	t/Dpkg_Control/bogus-armor-inline.dsc \
 	t/Dpkg_Control/bogus-armor-nested.dsc \
+	t/Dpkg_Control/bogus-armor-no-sig.dsc \
 	t/Dpkg_Control/bogus-armor-spaces.dsc \
+	t/Dpkg_Control/bogus-armor-trail.dsc \
+	t/Dpkg_Control/bogus-unsigned.dsc \
+	t/Dpkg_Control/control-1 \
 	t/Dpkg_Control_Tests/tests-missing-fields \
 	t/Dpkg_Control_Tests/tests-plain-text \
 	t/Dpkg_Control_Tests/tests-valid \
-	t/Dpkg_Source_Quilt/parse/debian/patches/series \
-	t/Dpkg_Substvars/substvars1 \
-	t/Dpkg_Substvars/substvars2 \
 	t/Dpkg_Dist_Files/files-byhand \
 	t/Dpkg_Dist_Files/files-fragment-a \
 	t/Dpkg_Dist_Files/files-fragment-b \
+	t/Dpkg_File/append-me \
+	t/Dpkg_File/dump-partial \
+	t/Dpkg_File/slurp-me \
+	t/Dpkg_OpenPGP/dpkg-test-pub.asc \
+	t/Dpkg_OpenPGP/dpkg-test-sec.asc \
+	t/Dpkg_OpenPGP/sign-file \
+	t/Dpkg_OpenPGP/sign-file-inline.asc \
+	t/Dpkg_OpenPGP/sign-file-inline.sig \
+	t/Dpkg_OpenPGP/sign-file.asc \
+	t/Dpkg_OpenPGP/sign-file.sig \
+	t/Dpkg_Shlibs/basictags.c \
+	t/Dpkg_Shlibs/basictags.symbols \
+	t/Dpkg_Shlibs/ld.so.conf \
+	t/Dpkg_Shlibs/ld.so.conf.d/inf_recurse.conf \
+	t/Dpkg_Shlibs/ld.so.conf.d/normal.conf \
+	t/Dpkg_Shlibs/ld.so.conf.d/recursive.conf \
+	t/Dpkg_Shlibs/ld.so.conf_2 \
+	t/Dpkg_Shlibs/objdump.basictags-amd64 \
+	t/Dpkg_Shlibs/objdump.basictags-i386 \
+	t/Dpkg_Shlibs/objdump.basictags-mips \
+	t/Dpkg_Shlibs/objdump.dbd-pg \
+	t/Dpkg_Shlibs/objdump.glib-ia64 \
+	t/Dpkg_Shlibs/objdump.internal \
+	t/Dpkg_Shlibs/objdump.libc6-2.3 \
+	t/Dpkg_Shlibs/objdump.libc6-2.6 \
+	t/Dpkg_Shlibs/objdump.ls \
+	t/Dpkg_Shlibs/objdump.patterns \
+	t/Dpkg_Shlibs/objdump.space \
+	t/Dpkg_Shlibs/objdump.spacesyms \
+	t/Dpkg_Shlibs/patterns.cpp \
+	t/Dpkg_Shlibs/patterns.map \
+	t/Dpkg_Shlibs/patterns.symbols \
+	t/Dpkg_Shlibs/spacesyms-c-gen.pl \
+	t/Dpkg_Shlibs/spacesyms-o-map.pl \
+	t/Dpkg_Shlibs/spacesyms.map \
+	t/Dpkg_Shlibs/symbols.fake-1 \
+	t/Dpkg_Shlibs/symbols.fake-2 \
+	t/Dpkg_Shlibs/symbols.fake-3 \
+	t/Dpkg_Shlibs/symbols.include-1 \
+	t/Dpkg_Shlibs/symbols.include-2 \
+	t/Dpkg_Shlibs/symbols.include-3 \
+	t/Dpkg_Shlibs/symbols.internal \
+	t/Dpkg_Shlibs/symbols.internal-allow \
+	t/Dpkg_Shlibs/symbols.internal-allow-groups \
+	t/Dpkg_Shlibs/symbols.internal-filter \
+	t/Dpkg_Source_Patch/c-style.patch \
+	t/Dpkg_Source_Patch/ghost-hunk.patch \
+	t/Dpkg_Source_Patch/indent-header.patch \
+	t/Dpkg_Source_Patch/index-+++.patch \
+	t/Dpkg_Source_Patch/index-alone.patch \
+	t/Dpkg_Source_Patch/index-inert.patch \
+	t/Dpkg_Source_Patch/partial.patch \
+	t/Dpkg_Source_Quilt/parse/debian/patches/series \
+	t/Dpkg_Source_Package/package_1.0.orig.tar \
+	t/Dpkg_Source_Package/package_1.0.orig.tar.asc \
+	t/Dpkg_Source_Package/package_1.0.orig.tar.sig \
+	t/Dpkg_Substvars/substvars1 \
+	t/Dpkg_Substvars/substvars2 \
+	t/dpkg_buildpackage/dpkgdb/status \
 	t/dpkg_buildpackage/test-source_0.dsc \
 	t/dpkg_buildpackage/test-source_0_all.changes \
 	t/dpkg_buildpackage/test-source_0_any.changes \
@@ -337,7 +357,6 @@ test_data = \
 	t/dpkg_source/testsuite_1.dsc \
 	t/dpkg_source/testsuite_2.dsc \
 	t/dpkg_source/testsuite_3.dsc \
-	t/merge_changelogs/ch-old \
 	t/merge_changelogs/ch-a \
 	t/merge_changelogs/ch-b \
 	t/merge_changelogs/ch-badver-a \
@@ -348,16 +367,17 @@ test_data = \
 	t/merge_changelogs/ch-merged-basic \
 	t/merge_changelogs/ch-merged-pr \
 	t/merge_changelogs/ch-merged-pr-basic \
+	t/merge_changelogs/ch-old \
 	t/merge_changelogs/ch-unreleased-a \
 	t/merge_changelogs/ch-unreleased-b \
 	t/merge_changelogs/ch-unreleased-merged \
 	t/merge_changelogs/ch-unreleased-merged-basic \
 	t/merge_changelogs/ch-unreleased-old \
-	t/mk/debian/changelog \
 	t/mk/architecture.mk \
 	t/mk/buildflags.mk \
 	t/mk/buildopts.mk \
 	t/mk/buildtools.mk \
+	t/mk/debian/changelog \
 	t/mk/pkg-info.mk \
 	t/mk/vendor-v0.mk \
 	t/mk/vendor-v1.mk \
@@ -365,6 +385,7 @@ test_data = \
 	t/mock-bin/dpkg \
 	t/mock-bin/gcc \
 	t/origins/debian \
+	t/origins/devuan \
 	t/origins/default \
 	t/origins/gnewsense \
 	t/origins/ubuntu \

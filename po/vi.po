@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.18.2\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2022-05-25 08:39+0000\n"
+"POT-Creation-Date: 2023-01-24 22:39+0000\n"
 "PO-Revision-Date: 2016-01-14 08:22+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <debian-l10n-vietnamese@lists.debian.org>\n"
@@ -316,6 +316,48 @@ msgstr "%s: lỗi đóng lzma"
 #, c-format
 msgid "%s: lzma error: %s"
 msgstr "%s: lỗi lzma: %s"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: lzma error: %s"
+msgid "%s: zstd error: %s"
+msgstr "%s: lỗi lzma: %s"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "cannot close decompressor pipe"
+msgid "%s: cannot create zstd decompression context"
+msgstr "không thể đóng ống dẫn giải nén"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "cannot close decompressor pipe"
+msgid "%s: cannot create zstd compression context"
+msgstr "không thể đóng ống dẫn giải nén"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: lzma read error"
+msgid "%s: zstd read error"
+msgstr "%s: lỗi đọc lzma"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: lzma write error"
+msgid "%s: zstd write error"
+msgstr "%s: lỗi ghi lzma"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "%s: lzma close error"
+msgid "%s: zstd close error"
+msgstr "%s: lỗi đóng lzma"
+
+#: lib/dpkg/compress.c
+#, fuzzy, c-format
+#| msgid "invalid compression level for -%c: %ld"
+msgid "invalid compression level %d"
+msgstr "mức nén không hợp lệ cho -%c: %ld"
 
 #: lib/dpkg/compress.c
 msgid "unknown compression strategy"
@@ -674,6 +716,11 @@ msgstr "định dạng của phiên bản có thành phần số nhỏ (minor) t
 msgid "format version followed by junk"
 msgstr "phiên bản định dạng theo sau bởi rác"
 
+#: lib/dpkg/debug.c
+#, c-format
+msgid "cannot parse debug mask from environment variable %s"
+msgstr ""
+
 #: lib/dpkg/dir.c
 #, c-format
 msgid "unable to get file descriptor for directory '%s'"
@@ -711,8 +758,9 @@ msgid "unable to set buffering on %s database file"
 msgstr "không thể đặt việc chuyển hoán đệm trên tập tin cơ sở dữ liệu %s"
 
 #: lib/dpkg/dump.c
-#, c-format
-msgid "failed to write %s database record about '%.50s' to '%.250s'"
+#, fuzzy, c-format
+#| msgid "failed to write %s database record about '%.50s' to '%.250s'"
+msgid "failed to write %s database stanza about '%s' to '%s'"
 msgstr "gặp lỗi khi ghi vào “%.250s” mục ghi cơ sở dữ liệu %s về “%.50s”"
 
 #: lib/dpkg/ehandle.c utils/update-alternatives.c
@@ -2794,12 +2842,13 @@ msgid ""
 "      --nocheck                    Suppress control file check (build bad\n"
 "                                     packages).\n"
 "      --root-owner-group           Forces the owner and groups to root.\n"
+"      --threads-max=<threads>      Use at most <threads> with compressor.\n"
 "      --[no-]uniform-compression   Use the compression params on all "
 "members.\n"
 "  -z#                              Set the compression level when building.\n"
 "  -Z<type>                         Set the compression type used when "
 "building.\n"
-"                                     Allowed types: gzip, xz, none.\n"
+"                                     Allowed types: gzip, xz, zstd, none.\n"
 "  -S<strategy>                     Set the compression strategy when "
 "building.\n"
 "                                     Allowed values: none; extreme (xz);\n"
@@ -2884,11 +2933,6 @@ msgstr "phiên bản định dạng deb không hợp lệ: %s"
 #, c-format
 msgid "unknown deb format version: %s"
 msgstr "không hiểu phiên bản định dạng deb: “%s”"
-
-#: src/deb/main.c
-#, c-format
-msgid "invalid compression level for -%c: %ld"
-msgstr "mức nén không hợp lệ cho -%c: %ld"
 
 #: src/deb/main.c
 #, c-format
@@ -3208,15 +3252,26 @@ msgstr ""
 " \n"
 
 #: src/split/main.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Options:\n"
+#| "  --depotdir <directory>           Use <directory> instead of %s/%s.\n"
+#| "  -S|--partsize <size>             In KiB, for -s (default is 450).\n"
+#| "  -o|--output <file>               Filename, for -j (default is\n"
+#| "                                     <package>_<version>_<arch>.deb).\n"
+#| "  -Q|--npquiet                     Be quiet when -a is not a part.\n"
+#| "  --msdos                          Generate 8.3 filenames.\n"
+#| "\n"
 msgid ""
 "Options:\n"
-"  --depotdir <directory>           Use <directory> instead of %s/%s.\n"
-"  -S|--partsize <size>             In KiB, for -s (default is 450).\n"
-"  -o|--output <file>               Filename, for -j (default is\n"
+"      --depotdir <directory>       Use <directory> instead of %s/%s.\n"
+"      --admindir <directory>       Use <directory> instead of %s.\n"
+"      --root <directory>           Use <directory> instead of %s.\n"
+"  -S, --partsize <size>            In KiB, for -s (default is 450).\n"
+"  -o, --output <file>              Filename, for -j (default is\n"
 "                                     <package>_<version>_<arch>.deb).\n"
-"  -Q|--npquiet                     Be quiet when -a is not a part.\n"
-"  --msdos                          Generate 8.3 filenames.\n"
+"  -Q, --npquiet                    Be quiet when -a is not a part.\n"
+"      --msdos                      Generate 8.3 filenames.\n"
 "\n"
 msgstr ""
 "Tùy chọn:\n"
@@ -3901,14 +3956,6 @@ msgid "must be called from a maintainer script (or with a --by-package option)"
 msgstr "phải được gọi từ văn lệnh bảo trì (hoặc với một tùy chọn --by-package)"
 
 #: src/trigger/main.c
-msgid "triggers data directory not yet created"
-msgstr "chưa tạo thư mục dữ liệu cho các bẫy"
-
-#: src/trigger/main.c
-msgid "trigger records not yet in existence"
-msgstr "bản ghi của bẫy chưa tồn tại"
-
-#: src/trigger/main.c
 msgid "takes one argument, the trigger name"
 msgstr "chấp nhận một đối số, tên bẫy"
 
@@ -3921,6 +3968,14 @@ msgstr "tên gói đã đợi không hợp lệ “%.250s”: %.250s"
 #, c-format
 msgid "invalid trigger name '%.250s': %.250s"
 msgstr "tên bẫy không hợp lệ “%.250s”: %.250s"
+
+#: src/trigger/main.c
+msgid "triggers data directory not yet created"
+msgstr "chưa tạo thư mục dữ liệu cho các bẫy"
+
+#: src/trigger/main.c
+msgid "trigger records not yet in existence"
+msgstr "bản ghi của bẫy chưa tồn tại"
 
 #: src/query/main.c src/main/select.c
 #, c-format
@@ -5672,7 +5727,8 @@ msgid ""
 "exclusion.\n"
 "  -O|--selected-only         Skip packages not selected for install/"
 "upgrade.\n"
-"  -E|--skip-same-version     Skip packages whose same version is installed.\n"
+"  -E|--skip-same-version     Skip packages with same installed version/"
+"arch.\n"
 "  -G|--refuse-downgrade      Skip packages with earlier version than "
 "installed.\n"
 "  -B|--auto-deconfigure      Install even if it would break some other "

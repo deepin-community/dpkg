@@ -22,7 +22,7 @@ B<DEBIAN/symbols>
 
 =head1 BESCHRIJVING
 
-De symboolbestanden worden meegeleverd met Debian binaire pakketten en de indeling ervan maakt gebruik van deelaspecten van de sjabloonsymboolbestanden die door B<dpkg-gensymbols>(1) in Debian broncodepakketten gebruikt worden.
+De symboolbestanden worden meegeleverd met Debian binaire pakketten en de indeling ervan maakt gebruik van deelaspecten van de sjabloonsymboolbestanden die door B<dpkg-gensymbols>(1) in Debian broncodepakketten gebruikt worden. Zie L<deb-src-symbols(5)>.
 
 In deze bestanden is de indeling van een item met informatie over een afhankelijkheid van de uitgebreide gedeelde bibliotheek als volgt:
 
@@ -81,5 +81,5 @@ Een verouderde alias voor B<Allow-Internal-Symbol-Groups> (sins dpkg 1.20.1, ond
 
 =head1 ZIE OOK
 
-L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
+L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, L<deb-src-symbols(5)>, B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
 

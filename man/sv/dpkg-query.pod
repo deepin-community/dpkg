@@ -94,7 +94,9 @@ Utdataformatet för den här flaggan kan inte justeras, men varieras automatiskt
 
 =item B<-W>, B<--show> [I<paketnamnsmönster> ...]
 
-Precis som flaggan B<--list> kommer paket som matchar de givna mönstren att visas. Utdatat kan dock skräddarsys med flaggan B<--showformat>. Standardutdataformatet är en rad per paket som träffas, där varje rad innehåller namn (utökat med arkitektursbeskrivning för B<Multi-Arch> B<same>-paket) och installerad version av paketet, avdelat med ett tabulatortecken.
+Just like the B<--list> option this will list all packages matching the given patterns. However the output can be customized using the B<--showformat> option.
+
+The default output format gives one line per matching package, each line consisting of the package name and its installed version, separated by a tab.  The package name will be architecture qualified for packages with a B<Multi-Arch> field with the value B<same> or with a foreign architecture, which is an architecture that is neither the native one nor B<all>.
 
 =item B<-s>, B<--status> [I<paketnamn>...]
 
@@ -289,7 +291,7 @@ Följande är virtuella fält, genererade av B<dpkg-query> från värden från a
 
 =item B<binary:Package>
 
-Innehåller binärpaketnamnet med en möjlig arkitekturkvalificerare, såsom ”libc6:amd64” (sedan dpkg 1.16.2). En arkitekturkvalificerare kommer förekomma för att göra paketnamnet otvetydigt, till exempel om paketet har ett B<Multi-Arch>-fält med värdet B<same>, eller om paket kommer från en oegen arkitektur.
+It contains the binary package name with a possible architecture qualifier like “libc6:amd64” (since dpkg 1.16.2).  An architecture qualifier will be present to make the package name unambiguous, for packages with a B<Multi-Arch> field with the value B<same> or with a foreign architecture, which is an architecture that is neither the native one nor B<all>.
 
 =item B<binary:Synopsis>
 
@@ -389,6 +391,10 @@ Om satt och flaggan B<--root> inte har angivits används det som filsystemets ro
 =item B<DPKG_ADMINDIR>
 
 Om satt, och flaggan B<--admindir> inte har angivits, används värdet som datakatalog för B<dpkg>.
+
+=item B<DPKG_DEBUG>
+
+Sets the debug mask (since dpkg 1.21.10) from an octal value.  The currently accepted flags are described in the B<dpkg --debug> option, but not all these flags might have an effect on this program.
 
 =item B<DPKG_COLORS>
 

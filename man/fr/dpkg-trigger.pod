@@ -108,6 +108,10 @@ If set and the B<--root> option has not been specified, it will be used as the f
 
 Si cette variable est positionnée et que l'option B<--admindir> n'est pas précisée, ce répertoire sera utilisé comme répertoire de données pour B<dpkg>.
 
+=item B<DPKG_DEBUG>
+
+Sets the debug mask (since dpkg 1.21.10) from an octal value.  The currently accepted flags are described in the B<dpkg --debug> option, but not all these flags might have an effect on this program.
+
 =item B<DPKG_COLORS>
 
 Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
@@ -116,7 +120,7 @@ Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement ac
 
 =head1 VOIR AUSSI
 
-B<dpkg>(1), B<deb-triggers>(5), B<%PKGDOCDIR%/triggers.txt.gz>.
+B<dpkg>(1), B<deb-triggers>(5), B<%PKGDOCDIR%/spec/triggers.txt>.
 
 
 =head1 TRADUCTION

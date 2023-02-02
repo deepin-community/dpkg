@@ -172,6 +172,20 @@ Wandelt die Prüfung auf eine defekte Quellpaketversion in eine nicht-fatale War
 
 =back
 
+=head2 Generische allgemeine Optionen
+
+=over 
+
+=item B<--threads-max=>I<Threads>
+
+Setzt die maximale Anzahl an Threads, die für Komprimierer erlaubt sind, die multi-threaded Aktionen erlauben (seit Dpkg 1.21.14).
+
+=item B<-q>
+
+Setzt den stillen Modus, um Warnungen zu unterdürcken.
+
+=back
+
 =head1 QUELLPAKET-FORMATE
 
 Falls Sie nicht wissen, welches Quellformat Sie verwenden sollen, verwenden Sie wahrscheinlich am besten entweder „3.0 (quilt)“ oder „3.0 (native)“. Lesen Sie L<https://wiki.debian.org/Projects/DebSrc3.0> für Informationen über den Einsatz dieser Formate innerhalb von Debian.
@@ -560,7 +574,7 @@ B<deb-src-control>(5), B<deb-changelog>(5), B<deb-substvars>(5), B<dsc>(5).
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

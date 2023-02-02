@@ -126,6 +126,12 @@ Op het systeem staan programma's onder I</usr/local/bin> of I</usr/local/sbin>.
 
 Het systeem bevat statische of gedeelde bibliotheken onder I</usr/local/lib>.
 
+=item B<can-execute-cross-built-programs>
+
+Het systeem kan voor andere platformen gebouwde programma's uitvoeren, hetzij rechtstreeks, hetzij via een emulatielaag.
+
+Sinds dpkg 1.21.10.
+
 =back
 
 =item B<Installed-Build-Depends:> (verplicht)

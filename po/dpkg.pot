@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: dpkg 1.21.8\n"
+"Project-Id-Version: dpkg 1.21.19\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2022-05-25 08:39+0000\n"
+"POT-Creation-Date: 2023-01-24 22:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -307,6 +307,41 @@ msgstr ""
 #: lib/dpkg/compress.c
 #, c-format
 msgid "%s: lzma error: %s"
+msgstr ""
+
+#: lib/dpkg/compress.c
+#, c-format
+msgid "%s: zstd error: %s"
+msgstr ""
+
+#: lib/dpkg/compress.c
+#, c-format
+msgid "%s: cannot create zstd decompression context"
+msgstr ""
+
+#: lib/dpkg/compress.c
+#, c-format
+msgid "%s: cannot create zstd compression context"
+msgstr ""
+
+#: lib/dpkg/compress.c
+#, c-format
+msgid "%s: zstd read error"
+msgstr ""
+
+#: lib/dpkg/compress.c
+#, c-format
+msgid "%s: zstd write error"
+msgstr ""
+
+#: lib/dpkg/compress.c
+#, c-format
+msgid "%s: zstd close error"
+msgstr ""
+
+#: lib/dpkg/compress.c
+#, c-format
+msgid "invalid compression level %d"
 msgstr ""
 
 #: lib/dpkg/compress.c
@@ -638,6 +673,11 @@ msgstr ""
 msgid "format version followed by junk"
 msgstr ""
 
+#: lib/dpkg/debug.c
+#, c-format
+msgid "cannot parse debug mask from environment variable %s"
+msgstr ""
+
 #: lib/dpkg/dir.c
 #, c-format
 msgid "unable to get file descriptor for directory '%s'"
@@ -676,7 +716,7 @@ msgstr ""
 
 #: lib/dpkg/dump.c
 #, c-format
-msgid "failed to write %s database record about '%.50s' to '%.250s'"
+msgid "failed to write %s database stanza about '%s' to '%s'"
 msgstr ""
 
 #: lib/dpkg/ehandle.c utils/update-alternatives.c
@@ -2482,12 +2522,13 @@ msgid ""
 "      --nocheck                    Suppress control file check (build bad\n"
 "                                     packages).\n"
 "      --root-owner-group           Forces the owner and groups to root.\n"
+"      --threads-max=<threads>      Use at most <threads> with compressor.\n"
 "      --[no-]uniform-compression   Use the compression params on all "
 "members.\n"
 "  -z#                              Set the compression level when building.\n"
 "  -Z<type>                         Set the compression type used when "
 "building.\n"
-"                                     Allowed types: gzip, xz, none.\n"
+"                                     Allowed types: gzip, xz, zstd, none.\n"
 "  -S<strategy>                     Set the compression strategy when "
 "building.\n"
 "                                     Allowed values: none; extreme (xz);\n"
@@ -2532,11 +2573,6 @@ msgstr ""
 #: src/deb/main.c
 #, c-format
 msgid "unknown deb format version: %s"
-msgstr ""
-
-#: src/deb/main.c
-#, c-format
-msgid "invalid compression level for -%c: %ld"
 msgstr ""
 
 #: src/deb/main.c
@@ -2828,12 +2864,14 @@ msgstr ""
 #, c-format
 msgid ""
 "Options:\n"
-"  --depotdir <directory>           Use <directory> instead of %s/%s.\n"
-"  -S|--partsize <size>             In KiB, for -s (default is 450).\n"
-"  -o|--output <file>               Filename, for -j (default is\n"
+"      --depotdir <directory>       Use <directory> instead of %s/%s.\n"
+"      --admindir <directory>       Use <directory> instead of %s.\n"
+"      --root <directory>           Use <directory> instead of %s.\n"
+"  -S, --partsize <size>            In KiB, for -s (default is 450).\n"
+"  -o, --output <file>              Filename, for -j (default is\n"
 "                                     <package>_<version>_<arch>.deb).\n"
-"  -Q|--npquiet                     Be quiet when -a is not a part.\n"
-"  --msdos                          Generate 8.3 filenames.\n"
+"  -Q, --npquiet                    Be quiet when -a is not a part.\n"
+"      --msdos                      Generate 8.3 filenames.\n"
 "\n"
 msgstr ""
 
@@ -3388,14 +3426,6 @@ msgid "must be called from a maintainer script (or with a --by-package option)"
 msgstr ""
 
 #: src/trigger/main.c
-msgid "triggers data directory not yet created"
-msgstr ""
-
-#: src/trigger/main.c
-msgid "trigger records not yet in existence"
-msgstr ""
-
-#: src/trigger/main.c
 msgid "takes one argument, the trigger name"
 msgstr ""
 
@@ -3407,6 +3437,14 @@ msgstr ""
 #: src/trigger/main.c
 #, c-format
 msgid "invalid trigger name '%.250s': %.250s"
+msgstr ""
+
+#: src/trigger/main.c
+msgid "triggers data directory not yet created"
+msgstr ""
+
+#: src/trigger/main.c
+msgid "trigger records not yet in existence"
 msgstr ""
 
 #: src/query/main.c src/main/select.c
@@ -4765,7 +4803,8 @@ msgid ""
 "exclusion.\n"
 "  -O|--selected-only         Skip packages not selected for install/"
 "upgrade.\n"
-"  -E|--skip-same-version     Skip packages whose same version is installed.\n"
+"  -E|--skip-same-version     Skip packages with same installed version/"
+"arch.\n"
 "  -G|--refuse-downgrade      Skip packages with earlier version than "
 "installed.\n"
 "  -B|--auto-deconfigure      Install even if it would break some other "

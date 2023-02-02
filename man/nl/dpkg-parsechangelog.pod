@@ -62,7 +62,7 @@ De volgende opties kunnen gebruikt worden om de uitvoer van de changelog-ontlede
 
 =item B<--format> I<uitvoerindeling>
 
-Stel de indeling van de uitvoer in. Momenteel ondersteunde waarden zijn B<dpkg> en B<rfc822>. B<dpkg> is de klassieke indeling van de uitvoer (van voor het bestaan van deze optie) en ook de standaard. Het bestaat uit één paragraaf volgens het indelingssysteem van Debian control (zie B<deb-control>(5)). Indien meer dan één item opgevraagd wordt, dan worden de meeste velden genomen uit het eerste item (gewoonlijk het meest recente item), tenzij anders vermeld:
+Set the output format. Currently supported values are B<dpkg> and B<rfc822>.  B<dpkg> is the classic output format (from before this option existed) and the default. It consists of one stanza in Debian control format (see B<deb-control>(5)). If more than one entry is requested, then most fields are taken from the first entry (usually the most recent entry), except otherwise stated:
 
 =over 
 
@@ -100,7 +100,7 @@ De velden B<Version>, B<Distribution>, B<Urgency>, B<Maintainer> en B<Changes> z
 
 Er kunnen nog bijkomende door de gebruiker aangemaakte velden gebruikt worden.
 
-De indeling volgens B<rfc822> maakt gebruik van dezelfde velden, maar gebruikt in de uitvoer een aparte paragraaf voor elk changelog-item, zodat alle metadata van elk item behouden blijven.
+The B<rfc822> format uses the same fields but outputs a separate stanza for each changelog entry so that all metadata for each entry is preserved.
 
 =item B<--reverse>
 

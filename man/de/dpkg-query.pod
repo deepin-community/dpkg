@@ -94,7 +94,9 @@ Das Ausgabeformat dieser Option kann nicht konfiguriert werden, variiert aber au
 
 =item B<-W>, B<--show> [I<Paketname-Muster> …]
 
-Genau wie die Option B<--list> wird dies alle Pakete, die auf die angegebenen Muster passen, aufführen. Allerdings kann die Ausgabe mit der Option B<--showformat> angepasst werden. Im Standardausgabeformat wird eine Zeile pro passendem Paket ausgegeben, wobei in jeder Zeile Name (erweitert mit der Architekturspezifikation für B<Multi-Arch>-B<same>-Pakete) und installierte Version des Pakets getrennt durch einen Tabulator enthalten sind.
+Wie die Option B<--list> wird dies alle Pakete auflisten, die auf das angegebene Muster passen. Allerdings kann die Ausgabe mit der Option B<--showformat> angepasst werden.
+
+Das Vorgabeausgabeformat führt zu einer Zeile pro passendem Paket. Jede Zeile besteht aus dem Paketnamen und seiner installierten Version, getrennt durch einen Tabulator. Der Paketname wird durch den Architekturnamen qualifiziert, wenn das Feld B<Multi-Arch> mit dem Wert B<same> oder einer fremden Architektur, was eine Architektur ist, die weder die native noch B<all> ist, belegt ist.
 
 =item B<-s>, B<--status> [I<Paketname> …]
 
@@ -290,7 +292,7 @@ Die folgenden Felder sind virtuell, sie werden von B<dpkg-query> aus Werten aus 
 
 =item B<binary:Package>
 
-Es enthält den Binärpaketnamen mit einer möglichen Architekturspezifikation wie „libc6:amd64“ (seit Dpkg 1.16.2). Eine Architekturspezifikation dient dazu, einen eindeutigen Paketnamen zu erzeugen, falls beispielsweise das Paket ein Feld B<Multi-Arch> mit dem Wert B<same> hat oder das Paket für eine fremde Architektur ist.
+Es enthält den Binärpaketnamen mit einer möglichen Architekturspezifikation wie „libc6:amd64“ (seit Dpkg 1.16.2). Eine Architekturspezifikation dient dazu, einen eindeutigen Paketnamen zu erzeugen, für Pakete mit einem Feld B<Multi-Arch> mit dem Wert B<same> oder mit einer fremden Architektur, die eine Architektur ist, die weder nativ noch B<all> ist.
 
 =item B<binary:Synopsis>
 
@@ -391,6 +393,10 @@ Falls gesetzt und die Option B<--root> nicht angegeben wurde, wird dies als Date
 
 Falls gesetzt und die Option B<--admindir> nicht verwandt wurde, wird dies als Datenverzeichnis von B<dpkg> verwandt.
 
+=item B<DPKG_DEBUG>
+
+Setzt die Fehlersuchmaske (seit Dpkg 1.21.10) aus einem oktalen Wert. Die derzeit akzeptierten Schalter werden in der Option B<dpkg --debug> beschrieben, aber nicht alle dieser Schalter könnten Auswirkungen auf dieses Programm haben.
+
 =item B<DPKG_COLORS>
 
 Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte sind: B<auto> (Vorgabe), B<always> und B<never>.
@@ -414,7 +420,7 @@ B<dpkg>(1).
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

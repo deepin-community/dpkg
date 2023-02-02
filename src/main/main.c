@@ -55,8 +55,8 @@
 #include "main.h"
 #include "filters.h"
 
-static void DPKG_ATTR_NORET
-printversion(const struct cmdinfo *ci, const char *value)
+static int
+printversion(const char *const *argv)
 {
   if (f_robot) {
     printf("%s", PACKAGE_VERSION);
@@ -70,7 +70,7 @@ printversion(const struct cmdinfo *ci, const char *value)
 
   m_output(stdout, _("<standard output>"));
 
-  exit(0);
+  return 0;
 }
 
 /*
@@ -78,8 +78,8 @@ printversion(const struct cmdinfo *ci, const char *value)
  * dpkg --command-fd
  */
 
-static void DPKG_ATTR_NORET
-usage(const struct cmdinfo *ci, const char *value)
+static int
+usage(const char *const *argv)
 {
   printf(_(
 "Usage: %s [<option>...] <command>\n"
@@ -147,7 +147,7 @@ usage(const struct cmdinfo *ci, const char *value)
 "  --path-exclude=<pattern>   Do not install paths which match a shell pattern.\n"
 "  --path-include=<pattern>   Re-include a pattern after a previous exclusion.\n"
 "  -O|--selected-only         Skip packages not selected for install/upgrade.\n"
-"  -E|--skip-same-version     Skip packages whose same version is installed.\n"
+"  -E|--skip-same-version     Skip packages with same installed version/arch.\n"
 "  -G|--refuse-downgrade      Skip packages with earlier version than installed.\n"
 "  -B|--auto-deconfigure      Install even if it would break some other package.\n"
 "  --[no-]triggers            Skip or force consequential trigger processing.\n"
@@ -181,7 +181,7 @@ usage(const struct cmdinfo *ci, const char *value)
 
   m_output(stdout, _("<standard output>"));
 
-  exit(0);
+  return 0;
 }
 
 static const char printforhelp[] = N_(
@@ -199,8 +199,6 @@ int f_autodeconf=0, f_nodebsig=0;
 int f_triggers = 0;
 
 int errabort = 50;
-static const char *admindir;
-const char *instdir= "";
 struct pkg_list *ignoredependss = NULL;
 
 #define DBG_DEF(n, d) \
@@ -230,7 +228,6 @@ static const struct debuginfo {
 static void
 set_debug(const struct cmdinfo *cpi, const char *value)
 {
-  char *endp;
   long mask;
   const struct debuginfo *dip;
 
@@ -250,12 +247,9 @@ set_debug(const struct cmdinfo *cpi, const char *value)
     exit(0);
   }
 
-  errno = 0;
-  mask = strtol(value, &endp, 8);
-  if (value == endp || *endp || mask < 0 || errno == ERANGE)
+  mask = debug_parse_mask(value);
+  if (mask < 0)
     badusage(_("--%s requires a positive octal argument"), cpi->olong);
-
-  debug_set_mask(mask);
 }
 
 static void
@@ -278,19 +272,6 @@ set_verify_format(const struct cmdinfo *cip, const char *value)
 {
   if (!verify_set_output(value))
     badusage(_("unknown verify output format '%s'"), value);
-}
-
-static void
-set_instdir(const struct cmdinfo *cip, const char *value)
-{
-  instdir = dpkg_fsys_set_dir(value);
-}
-
-static void
-set_root(const struct cmdinfo *cip, const char *value)
-{
-  instdir = dpkg_fsys_set_dir(value);
-  admindir = dpkg_fsys_get_path(ADMINDIR);
 }
 
 static void
@@ -571,6 +552,8 @@ static const struct cmdinfo cmdinfos[]= {
 /*
   ACTION( "command-fd",                   'c', act_commandfd,   commandfd     ),
 */
+  ACTION( "help",                           '?', act_help,                 usage),
+  ACTION( "version",                         0,  act_version,              printversion),
 
   { "pre-invoke",        0,   1, NULL,          NULL,      set_invoke_hook, 0, &pre_invoke_hooks },
   { "post-invoke",       0,   1, NULL,          NULL,      set_invoke_hook, 0, &post_invoke_hooks },
@@ -599,15 +582,13 @@ static const struct cmdinfo cmdinfos[]= {
   { "robot",             0,   0, &f_robot,      NULL,      NULL,    1 },
   { "root",              0,   1, NULL,          NULL,      set_root,      0 },
   { "abort-after",       0,   1, &errabort,     NULL,      set_integer,   0 },
-  { "admindir",          0,   1, NULL,          &admindir, NULL,          0 },
+  { "admindir",          0,   1, NULL,          NULL,      set_admindir,  0 },
   { "instdir",           0,   1, NULL,          NULL,      set_instdir,   0 },
   { "ignore-depends",    0,   1, NULL,          NULL,      set_ignore_depends, 0 },
   { "force",             0,   2, NULL,          NULL,      set_force_option,   1 },
   { "refuse",            0,   2, NULL,          NULL,      set_force_option,   0 },
   { "no-force",          0,   2, NULL,          NULL,      set_force_option,   0 },
   { "debug",             'D', 1, NULL,          NULL,      set_debug,     0 },
-  { "help",              '?', 0, NULL,          NULL,      usage,         0 },
-  { "version",           0,   0, NULL,          NULL,      printversion,  0 },
   ACTIONBACKEND( "build",		'b', BACKEND),
   ACTIONBACKEND( "contents",		'c', BACKEND),
   ACTIONBACKEND( "control",		'e', BACKEND),
@@ -755,20 +736,20 @@ int main(int argc, const char *const *argv) {
   dpkg_options_load(DPKG, cmdinfos);
   dpkg_options_parse(&argv, cmdinfos, printforhelp);
 
+  debug(dbg_general, "root=%s admindir=%s", dpkg_fsys_get_dir(), dpkg_db_get_dir());
+
   /* When running as root, make sure our primary group is also root, so
    * that files created by maintainer scripts have correct ownership. */
-  if (!in_force(FORCE_NON_ROOT) && getuid() == 0)
+  if (!in_force(FORCE_NON_ROOT) && getuid() == 0 && getgid() != 0)
     if (setgid(0) < 0)
       ohshite(_("cannot set primary group ID to root"));
 
   if (!cipaction) badusage(_("need an action option"));
 
-  admindir = dpkg_db_set_dir(admindir);
-
   /* Always set environment, to avoid possible security risks. */
-  if (setenv("DPKG_ADMINDIR", admindir, 1) < 0)
+  if (setenv("DPKG_ADMINDIR", dpkg_db_get_dir(), 1) < 0)
     ohshite(_("unable to setenv for subprocesses"));
-  if (setenv("DPKG_ROOT", instdir, 1) < 0)
+  if (setenv("DPKG_ROOT", dpkg_fsys_get_dir(), 1) < 0)
     ohshite(_("unable to setenv for subprocesses"));
   force_string = get_force_string();
   if (setenv("DPKG_FORCE", force_string, 1) < 0)

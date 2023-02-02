@@ -156,7 +156,7 @@ Muster mit regulären Ausdrücken werden durch die Kennzeichnung I<regex> verzei
   (regex)"^mystack_.*@Base$" 1.0
   (regex|optional)"private" 1.0
 
-Symbole wie „mystack_new@Base“, „mystack_push@Base“, „mystack_pop@Base“ usw. passen auf das erste Muster, während dies z.B. für „ng_mystack_new@Base“ nicht der Fall ist. Das zweite Muster wird auf alle Symbole, die die Zeichenkette „private“ in ihren Namen enthalten, passen und die abgeglichenen Symbole erben die Kennzeichnung I<optional> vom Muster.
+Symbole wie „mystack_new@Base“, „mystack_push@Base“, „mystack_pop@Base“ usw. passen auf das erste Muster, während dies für „ng_mystack_new@Base“ nicht der Fall ist. Das zweite Muster wird auf alle Symbole, die die Zeichenkette „private“ in ihren Namen enthalten, passen und die abgeglichenen Symbole erben die Kennzeichnung I<optional> vom Muster.
 
 =back
 
@@ -212,7 +212,7 @@ B<deb-symbols>(5), B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

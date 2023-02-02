@@ -68,7 +68,7 @@ Kör kroken B<check> och anropar en paketkontrollerare för B<.changes>-filen (o
 
 =item B<11.>
 
-Kör kroken B<sign> och anropar B<gpg> (såvida det inte är ett UNRELEASED-bygge eller om B<--no-sign> angavs) för att signera B<.dsc>-filen (om sådan finns, såvida inte B<-us> eller B<--unsigned-source> anges), B<.buildinfo>-filen (såvida inte B<-ui>, B<--unsigned-buildinfo>, B<-uc> eller B<--unsigned-changes> anges) och B<.changes>-filen (såvida inte B<-uc> eller B<--unsigned-changes> anges).
+It runs the B<sign> hook and signs using the OpenPGP backend (as long as it is not an UNRELEASED build, or B<--no-sign> is specified) to sign the B<.dsc> file (if any, unless B<-us> or B<--unsigned-source> is specified), the B<.buildinfo> file (unless B<-ui>, B<--unsigned-buildinfo>, B<-uc> or B<--unsigned-changes> is specified) and the B<.changes> file (unless B<-uc> or B<--unsigned-changes> is specified).
 
 =item B<12.>
 
@@ -84,7 +84,7 @@ Alla långa flaggor kan ges både på kommandoraden och i B<dpkg-buildpackage>:s
 
 =item B<--build=>I<typ>
 
-Anger bygg-I<type> från en kommaavdelad lista med komponenter (sedan dpkg 1.18.5). Sänds vidare till B<dpkg-genchanges>.
+Specifies the build I<type> from a comma-separated list of components (since dpkg 1.18.5).  All the specified components get combined to select the single build type to use, which implies a single build run with a single F<.changes> file generated.  Passed to B<dpkg-genchanges>.
 
 Tillåtna värden är:
 
@@ -164,11 +164,23 @@ Ger endast mening tillsammans med B<--target> (sedan dpkg 1.15.0). Kräver att m
 
 =item B<-C>I<ändringsbeskrivning>
 
-=item B<-m>, B<--release-by=>I<paketansvarige-adress>
+=item B<-m>I<paketansvarige-adress>
 
-=item B<-e>, B<--build-by=>I<paketansvarige-adress>
+=item B<-e>I<paketansvarige-adress>
 
 Sänds vidare utan ändringar till B<dpkg-genchanges>. Se dess manualsida.
+
+=item B<--build-by=>I<maintainer-address>
+
+=item B<--source-by=>I<maintainer-address> (since dpkg 1.21.10)
+
+Pass as B<-m> to B<dpkg-genchanges>. See its manual page.
+
+=item B<--release-by=>I<maintainer-address>
+
+=item B<--changed-by=>I<maintainer-address> (since dpkg 1.21.10)
+
+Pass as B<-e> to B<dpkg-genchanges>. See its manual page.
 
 =item B<-a>, B<--host-arch> I<arkitektur>
 
@@ -192,13 +204,23 @@ Ange profil(er) vi bygger, som en kommaavdelad lista (sedan dpkg 1.17.2, lång f
 
 =item B<-j>, B<--jobs>[=I<jobb>|B<auto>]
 
-Antalet jobb som tillåts att köras samtidigt, antal jobb motsvarande antalet tillgängliga processorer om B<auto> anges (sedan dpkg 1.17.10), eller ett obegränsat antal om I<jobb> inte anges, motsvarar B<make>(1)-flaggan med samma namn (sedan dpkg 1.14.7, lång flagga sedan dpkg 1.18.8). Lägger till sig själv i miljövariabeln B<MAKEFLAGS>, vilket får alla påföljande make-anrop att ärva flaggan, vilket därmed tvingar parallelliseringsinställningen för paketeringen (och möjligen också uppströms-byggsystemet ocm det använder make) oberoende av huruvida det stöder parallella byggen, något som möjligen kan leda till fel i bygget. Lägger även till flaggan B<parallel=>I<jobb> eller B<parallel> till miljövariabeln B<DEB_BUILD_OPTIONS>, vilket gör det möjligt för debian/rules-filer att använda informationen för egna ändamål. Värdet för B<-j> kommer att överstyra värdet B<parallel=>I<jobb> eller B<parallel> i miljövariabeln B<DEB_BUILD_OPTIONS>. Observera att B<auto>-värdet kommer ersättas av det faktiska antalet för närvarande aktiva processorer, och därför inte kommer sändas med till barnprocesser. Om antalet tillgängliga processorer inte kan tas fram kommer koden att falla tillbaka till seriell exekvering (sedan dpkg 1.18.15), även om detta bara borde ske på exotiska och icke stödda system.
+Specifies the number of jobs allowed to be run simultaneously (since dpkg 1.14.7, long option since dpkg 1.18.8).  The number of jobs matching the number of online processors if B<auto> is specified (since dpkg 1.17.10), or unlimited number if I<jobs> is not specified.  The default behavior is B<auto> (since dpkg 1.18.11) in non-forced mode (since dpkg 1.21.10), and as such it is always safer to use with any package including those that are not parallel-build safe.  Setting the number of jobs to B<1> will restore serial execution.
+
+Will add B<parallel=>I<jobs> or B<parallel> to the B<DEB_BUILD_OPTIONS> environment variable which allows debian/rules files to opt-in to use this information for their own purposes.  The I<jobs> value will override the B<parallel=>I<jobs> or B<parallel> option in the B<DEB_BUILD_OPTIONS> environment variable.  Note that the B<auto> value will get replaced by the actual number of currently active processors, and as such will not get propagated to any child process. If the number of online processors cannot be inferred then the code will fallback to using serial execution (since dpkg 1.18.15), although this should only happen on exotic and unsupported systems.
 
 =item B<-J>, B<--jobs-try>[=I<jobb>|B<auto>]
 
-Den här flaggan (sedan dpkg 1.18.2, lång flagga sedan dpkg 1.18.8) motsvarar flaggan B<-j> förutom att den inte sätter miljövariabeln B<MAKEFILES>, och som sådan är den säkrare att använda för alla paket inklusive de som inte säkert kan parallellbyggas.
+This option (since dpkg 1.18.2, long option since dpkg 1.18.8) is equivalent to the B<-j> above.
 
-B<auto> är standardbeteende (sedan dpkg 1.18.11). Om du sätter antalet jobb till 1 återställs seriellt beteende.
+Since the behavior for B<-j> changed in dpkg 1.21.10 to the opt-in mode, you can use this option instead if you need to guarantee semantics across dpkg release series.
+
+=item B<--jobs-force>[=I<jobs>|B<auto>]
+
+This option (since dpkg 1.21.10) is equivalent to the B<--jobs> option except that it will enable forced parallel mode, by adding the B<make> B<-j> option with the computed number of parallel jobs to the B<MAKEFLAGS> environment variable.
+
+This should cause all subsequent make invocations to inherit the option, thus forcing the parallel setting on the packaging (and possibly the upstream build system if that uses L<make(1)>) regardless of their support for parallel builds, which might cause build failures.
+
+Note: Any Makefile that is not parallel-safe should be considered to be buggy.  These should either be made parallel-safe, or marked as not being safe with the L<make(1)> B<.NOTPARALLEL> target.
 
 =item B<-D>, B<--check-builddeps>
 
@@ -300,13 +322,37 @@ Ange I<filnamn> att använda för den skapade B<.buildinfo>-filen (sedam dpkg 1.
 
 Sänder flaggan I<val> till B<dpkg-genbuildinfo> (sedan dpkg 1.18.11). Kan användas flera gånger.
 
+=item B<--sign-backend=>I<sign-backend>
+
+Specify an OpenPGP backend interface to use when invoking the I<sign-command> (since dpkg 1.21.10).
+
+The default is B<auto>, where the best current backend available will be used.  The specific OpenPGP backends supported in order of preference are:
+
+=over 2
+
+=item B<sop> (any conforming Stateless OpenPGP implementation)
+
+=item B<sq> (from Sequoia-PGP)
+
+=item B<gpg> (from GnuPG)
+
+=back
+
 =item B<-p>, B<--sign-command=>I<signeringskommando>
 
-När B<dpkg-buildpackage> måste exekvera GPG för att signera ett källkodsstyrfil (B<.dsc>) eller en B<.changes>-fil kör det I<signeringskommando> (det letar i B<PATH> om så behövs) istället för B<gpg> (lång flagga sedan dpkg 1.18.8). I<signeringskommando> får alla de argument B<gpg> skulle ha fått. I<signeringskommando> får inte innehålla blanksteg eller andra skalmetatecken.
+When B<dpkg-buildpackage> needs to execute an OpenPGP backend command to sign a source control (B<.dsc>) file or a B<.changes> file it will run I<sign-command> (searching the B<PATH> if necessary) instead of the default or auto-detected backend command (long option since dpkg 1.18.8). I<sign-command> will get all the arguments defined by the B<--sign-backend>.  I<sign-command> should not contain spaces or any other shell metacharacters.
 
-=item B<-k>, B<--sign-key=>I<nyckel-id>
+=item B<-k>, B<--sign-keyid=>I<key-id>
 
-Ange nyckel-id att använda vid signering av paket (lång flagga sedand dpkg 1.18.8).
+=item B<--sign-key=>I<key-id>
+
+Specify an OpenPGP key-ID (either a fingerprint or a user-ID) for the secret key to use when signing packages (B<--sign-key> since dpkg 1.18.8, B<--sign-keyid> since dpkg 1.21.10).
+
+=item B<--sign-keyfile=>I<key-file>
+
+Specify an OpenPGP I<key-file> containing the secret key to use when signing packages (since dpkg 1.21.10).
+
+Note: For security reasons the I<key-file> is best kept locked with a password.
 
 =item B<-us>, B<--unsigned-source>
 
@@ -396,7 +442,11 @@ Om satt, används som kommandot för att kontrollera B<.changes>-filen (sedan dp
 
 =item B<DEB_SIGN_KEYID>
 
-Används för att signera filerna B<.changes> och B<.dsc> om satt (sedan dpkg 1.17.2). Överstyrs av flaggan B<--sign-key>.
+If set, it will be used to sign the B<.changes>, B<.buildinfo> and B<.dsc> files (since dpkg 1.17.2).  Overridden by the B<--sign-key> option.
+
+=item B<DEB_SIGN_KEYFILE>
+
+If set, it will be used to sign the B<.changes>, B<.buildinfo> and B<.dsc> files (since dpkg 1.21.10).  Overridden by the B<--sign-keyfile> option.
 
 =item B<DEB_BUILD_OPTIONS>
 
@@ -478,7 +528,7 @@ Det borde vara möjligt att ange blanksteg och skalmetatecken och inledande argu
 
 =head1 SE ÄVEN
 
-B<dpkg-source>(1), B<dpkg-architecture>(1), B<dpkg-buildflags>(1), B<dpkg-genbuildinfo>(1), B<dpkg-genchanges>(1), B<fakeroot>(1), B<lintian>(1), B<gpg>(1).
+I<%PKGDOCDIR%/spec/rootless-builds.txt>, B<dpkg-source>(1), B<dpkg-architecture>(1), B<dpkg-buildflags>(1), B<dpkg-genbuildinfo>(1), B<dpkg-genchanges>(1), B<fakeroot>(1), B<lintian>(1), L<https://datatracker.ietf.org/doc/draft-dkg-openpgp-stateless-cli/>, B<sq>(1), B<gpg>(1).
 
 
 =head1 ÖVERSÄTTNING

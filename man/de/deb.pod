@@ -36,9 +36,9 @@ Das erste Element heißt B<debian-binary> und enthält eine Reihe von Zeilen, di
 
 Falls sich die Vorkommazahl geändert hat, wurde eine inkompatible Änderung durchgeführt und das Programm sollte sich beenden. Falls dies nicht der Fall ist, dann sollte das Programm sicher fortfahren können, es sei denn, ein unerwartetes Element ist im Archiv (abgesehen vom Ende) gefunden worden, wie nachfolgend beschrieben.
 
-Das zweite erforderliche Element heißt B<control.tar>. Es ist ein Tar-Archiv (entweder nicht komprimiert (wird seit Dpkg 1.17.6 unterstützt) oder mit Gzip (mit der Endung B<.gz>) bzw. Xz (mit der Endung B<.xz>, seit Dpkg 1.17.6 unterstützt) komprimiert), das die Steuerinformationen als eine Reihe von normalen Dateien enthält, von denen die Datei B<control> zwingend erforderlich ist und die Kern-Steuerinformationen enthält. Die Dateien B<md5sums>, B<conffiles>, B<triggers>, B<shlibs> und B<symbols> enthalten bestimmte optionale Steuerinformationen und die Dateien B<preinst>, B<postinst>, B<prerm> und B<postrm> sind optionale Betreuerskripte. Der Steuer-Tarball kann optional einen Eintrag für ‚B<.>’, das aktuelle Verzeichnis, enthalten.
+Das zweite erforderliche Element heißt B<control.tar>. Es ist ein Tar-Archiv (entweder nicht komprimiert (wird seit Dpkg 1.17.6 unterstützt) oder mit Gzip (mit der Endung B<.gz>) bzw. Xz (mit der Endung B<.xz>, seit Dpkg 1.17.6 unterstützt) komprimiert) oder Zstd (mit der Endung B<.zst>, seit Dpkg 1.21.18 unterstützt), das die Steuerinformationen als eine Reihe von normalen Dateien enthält, von denen die Datei B<control> zwingend erforderlich ist und die Kern-Steuerinformationen enthält. Die Dateien B<md5sums>, B<conffiles>, B<triggers>, B<shlibs> und B<symbols> enthalten bestimmte optionale Steuerinformationen und die Dateien B<preinst>, B<postinst>, B<prerm> und B<postrm> sind optionale Betreuerskripte. Der Steuer-Tarball kann optional einen Eintrag für ‚B<.>’, das aktuelle Verzeichnis, enthalten.
 
-Das dritte, letzte zwingend benötigte Element heißt B<data.tar>. Es enthält das Dateisystem als Tar-Archiv, entweder unkomprimiert (seit Dpkg 1.10.24 unterstützt) oder mit gzip (Dateiendung B<.gz>), xz (Dateiendung B<.xz> seit Dpkg 1.15.6 unterstützt),bzip2 (Dateiendung B<.bz2>, seit Dpkg 1.10.24 unterstützt) oder lzma (Dateiendung B<.lzma>, seit Dpkg 1.13.25 unterstützt) komprimiert.
+Das dritte, letzte zwingend benötigte Element heißt B<data.tar>. Es enthält das Dateisystem als Tar-Archiv, entweder unkomprimiert (seit Dpkg 1.10.24 unterstützt) oder mit gzip (Dateiendung B<.gz>), xz (Dateiendung B<.xz>, seit Dpkg 1.15.6 unterstützt), zstd (Dateiendung B<.zst>, seit Dpkg 1.21.18 unterstützt), bzip2 (Dateiendung B<.bz2>, seit Dpkg 1.10.24 unterstützt) oder lzma (Dateiendung B<.lzma>, seit Dpkg 1.13.25 unterstützt) komprimiert.
 
 Diese Elemente müssen in genau dieser Reihenfolge erscheinen. Aktuelle Implementierungen sollten zusätzliche Elemente nach B<data.tar> ignorieren. Weitere Elemente könnten in der Zukunft definiert werden und werden (falls möglich) nach diesen drei platziert. Alle zusätzlichen Elemente, die nach B<debian-binary> und vor B<control.tar> oder B<data.tar> eingefügt werden könnten und die problemlos von älteren Programmen ignoriert werden sollten, werden Namen haben, die mit einem Unterstrich ‚B<_>’ anfangen.
 
@@ -63,7 +63,7 @@ B<deb-old>(5), B<dpkg-deb>(1), B<deb-control>(5), B<deb-conffiles>(5), B<deb-md5
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

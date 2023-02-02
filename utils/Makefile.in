@@ -374,6 +374,7 @@ VERSION = @VERSION@
 XGETTEXT = @XGETTEXT@
 XGETTEXT_015 = @XGETTEXT_015@
 XGETTEXT_EXTRA_OPTIONS = @XGETTEXT_EXTRA_OPTIONS@
+ZSTD_LIBS = @ZSTD_LIBS@
 Z_LIBS = @Z_LIBS@
 Z_NG_LIBS = @Z_NG_LIBS@
 abs_builddir = @abs_builddir@
@@ -501,20 +502,6 @@ test_tmpdir = t.tmp
 test_scripts = \
 	t/update_alternatives.t \
 	# EOL
-
-TEST_RUNNER = '\
-	my $$harness = TAP::Harness->new({ \
-	    exec => sub { my (undef, $$test) = @_; \
-	        return [ $$test ] if $$test !~ "\.t\$$" and -x $$test; \
-	        return }, \
-	    lib => [ "$(top_srcdir)/scripts", "$(top_srcdir)/dselect/methods"  ], \
-	    color => 1, \
-	    verbosity => $(TEST_VERBOSE), \
-	    jobs => $(TEST_PARALLEL), \
-	    failures => 1, \
-	}); \
-	my $$aggregate = $$harness->runtests(@ARGV); \
-	die "FAIL: test suite has errors\n" if $$aggregate->has_errors;'
 
 all: all-am
 
@@ -979,20 +966,21 @@ tap-clean:
 
 tap-check: $(test_data) $(test_programs) $(test_scripts)
 	[ -z "$(test_tmpdir)" ] || $(MKDIR_P) $(test_tmpdir)
-	PATH="$(abs_top_builddir)/src:$(abs_top_builddir)/scripts:$(abs_top_builddir)/utils:$(PATH)" \
-	  LC_ALL=C \
-	  DPKG_COLORS=never \
 	  $(TEST_ENV_VARS) \
+	  abs_top_srcdir=$(abs_top_srcdir) \
+	  abs_top_builddir=$(abs_top_builddir) \
 	  srcdir=$(srcdir) builddir=$(builddir) \
 	  CC=$(CC) \
-	  PERL=$(PERL) \
 	  SHELL=$(SHELL) \
+	  PERL=$(PERL) \
 	  PERL_DL_NONLAZY=1 \
-	  PERL5LIB=$(abs_top_srcdir)/scripts:$(abs_top_srcdir)/dselect/methods \
 	  PERL5OPT=$(TEST_COVERAGE) \
-	  $(PERL) -MTAP::Harness -e $(TEST_RUNNER) \
+	  $(PERL) $(top_srcdir)/build-aux/test-runner \
 	    $(addprefix $(builddir)/,$(test_programs)) \
 	    $(addprefix $(srcdir)/,$(test_scripts))
+
+authorcheck:
+	AUTHOR_TESTING=1 $(MAKE) check
 
 check-local: tap-check
 

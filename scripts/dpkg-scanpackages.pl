@@ -44,15 +44,16 @@ my %packages;
 my %overridden;
 my @checksums;
 
-my %options = (help            => sub { usage(); exit 0; },
-	       version         => sub { version(); exit 0; },
-	       type            => undef,
-	       arch            => undef,
-	       hash            => undef,
-	       multiversion    => 0,
-	       'extra-override'=> undef,
-               medium          => undef,
-	      );
+my %options = (
+    help            => sub { usage(); exit 0; },
+    version         => sub { version(); exit 0; },
+    type            => undef,
+    arch            => undef,
+    hash            => undef,
+    multiversion    => 0,
+    'extra-override' => undef,
+    medium          => undef,
+);
 
 my @options_spec = (
     'help|?',
@@ -264,7 +265,7 @@ foreach my $fn (@archives) {
 load_override($override) if defined $override;
 load_override_extra($options{'extra-override'}) if defined $options{'extra-override'};
 
-my @missingover=();
+my @missingover = ();
 
 my $records_written = 0;
 for my $p (sort keys %packages) {

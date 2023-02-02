@@ -142,7 +142,7 @@ le drapeau est placé ou modifié par une configuration spécifique dans l'envir
 
 =item B<--query>
 
-Affiche toute information utile pour expliquer le comportement du S<programme :> distributeur actuel, variables d'environnement, domaines des fonctionnalités, état de tous les drapeaux de fonctionnalités. Affiche également les drapeaux de compilation résultants ainsi que leur origine (depuis S<dpkg 1.19.0).>
+Print any information that can be useful to explain the behaviour of the program: current vendor, relevant environment variables, feature areas, state of all feature flags, whether a feature is handled as a builtin default by the compiler (since dpkg dpkg 1.21.14), and the compiler flags with their origin (since dpkg 1.19.0).
 
 Par S<exemple :>
 
@@ -154,10 +154,18 @@ Par S<exemple :>
  Features:
   bug=no
   canary=no
+ Builtins:
+
+ Area: hardening
+ Features:
+  pie=no
+ Builtins:
+  pie=yes
 
  Area: reproducible
  Features:
   timeless=no
+ Builtins:
 
  Flag: CFLAGS
  Value: -O0 -Wall
@@ -169,12 +177,13 @@ Par S<exemple :>
 
 =item B<--query-features> I<domaine>
 
-Affiche les fonctionnalités activées pour un domaine donné (depuis S<dpkg 1.16.2).> Les seuls domaines reconnus actuellement sur Debian et ses dérivés sont B<future>, B<qa>, B<reproducible>, B<sanitize> et B<hardening>, voir la section B<ZONES D'OPTION> pour plus de détails. Retourne un code de sortie B<0> si le domaine est connu et B<1> s'il est inconnu.
+Print the features enabled for a given area (since dpkg 1.16.2).  If the feature is handled (even if only on some architectures) as a builtin default by the compiler, then a B<Builtin> field is printed (since dpkg 1.21.14). The only currently recognized areas on Debian and derivatives are B<future>, B<qa>, B<reproducible>, B<sanitize> and B<hardening>, see the B<FEATURE AREAS> section for more details.  Exits with 0 if the area is known otherwise exits with 1.
 
 L'affichage est dans le format RFC822, avec une section par fonctionnalité. Par S<exemple :>
 
  Feature: pie
  Enabled: yes
+ Builtin: yes
 
  Feature: stackprotector
  Enabled: yes
@@ -285,7 +294,7 @@ Several compile-time options (detailed below) can be used to help optimize a res
 
 =over 
 
-=item lto
+=item B<lto>
 
 This setting (since dpkg 1.21.0; disabled by default) enables Link Time Optimization by adding B<-flto=auto -ffat-lto-objects> to B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS>, B<FCFLAGS> and B<LDFLAGS>.
 
@@ -357,7 +366,7 @@ Ce réglage, désactivé par défaut, ajoute B<-Wl,-z,now> à B<LDFLAGS>. Lors d
 
 Ce réglage (sans option globale par défaut depuis S<dpkg 1.18.23,> parce qu'il est maintenant activé par défaut par gcc dans les architectures Debian amd64, arm64, armel, armhf, hurd-i386, i386, kfreebsd-amd64, kfreebsd-i386, mips, mipsel, mips64el, powerpc, ppc64, ppc64el, riscv64, s390x, sparc et sparc64) ajoute les options requises pour activer ou désactiver PIE (exécutable indépendant de l'emplacement) au moyen des fichiers de spécifications de gcc, si nécessaire, selon que gcc injecte sur cette architecture les drapeaux par lui-même ou non. Si le réglage est activé et que gcc injecte les drapeaux, il n'ajoute rien. Si le réglage est activé et que gcc n'injecte pas les drapeaux, il ajoute B<-fPIE> (au moyen de I<%PKGDATADIR%/pie-compiler.specs>) à B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> et B<FCFLAGS>, et B<-fPIE -pie> (au moyen de I<%PKGDATADIR%/pie-link.specs>) à B<LDFLAGS>. Si le réglage est désactivé et que gcc injecte les drapeaux, il ajoute B<-fno-PIE> (au moyen de I<%PKGDATADIR%/no-pie-compile.specs>) à B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> et B<FCFLAGS>, et B<-fno-PIE -no-pie> (au moyen de I<%PKGDATADIR%/no-pie-link.specs>) à B<LDFLAGS>.
 
-Les exécutables à position indépendante S<(« Position> Independent S<Executable »)> permettent d'utiliser la randomisation de l'organisation de l'espace d'adressage S<(ASLR : « Address> Space Layout S<Randomization »),> qui est gérée par certaines versions du noyau. Bien que ASLR puisse déjà être mise en œuvre pour les zones de données dans la pile et le tampon (brk et mmap), les zones de codes doivent être compilées comme indépendantes de la position. Les bibliothèques partagées font déjà cela (B<-fPIC>) ce qui permet automatiquement d'utiliser ASLR. Par contre les régions .text binaires doivent être construites en mode PIE pour mettre en œuvre ASLR. Une fois cela réalisé, les attaques ROP S<(« Return> Oriented S<Programming »)> deviennent plus difficiles car il n'existe pas d'emplacement statique d'où rebondir pendant une attaque par corruption de la mémoire.
+Position Independent Executable (PIE) is needed to take advantage of Address Space Layout Randomization (ASLR), supported by some kernel versions.  While ASLR can already be enforced for data areas in the stack and heap (brk and mmap), the code areas must be compiled as position-independent.  Shared libraries already do this (B<-fPIC>), so they gain ASLR automatically, but binary .text regions need to be built as PIE to gain ASLR.  When this happens, ROP (Return Oriented Programming) attacks are much harder since there are no static locations to bounce off of during a memory corruption attack.
 
 PIE n'est pas compatible avec B<fPIC>, aussi, en général, des précautions doivent être prises lors de la construction d'objets partagés. Mais comme les drapeaux PIE émis sont injectés par des fichiers de spécifications de gcc, il devrait toujours être sûr de les définir sans condition indépendamment du type d'objet en train d'être compilé ou lié.
 

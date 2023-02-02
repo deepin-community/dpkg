@@ -67,7 +67,7 @@ Todos os parâmetros dos scripts do maintainer têm de ser encaminhados ao progr
 
 =head1 TAREFAS RELACIONADAS COM FICHEIROS DE CONFIGURAÇÃO
 
-Ao actualizar um pacote, o B<dpkg> não irá automaticamente remover um conffile (um ficheiro de configuração para o qual B<dpkg> deve preservar as alterações do utilizador) se este não estiver presente na versão mais recente. Existem duas razões principais para isto: a primeira é que o conffile poderia ser abandonado por acidente e a próxima versão poderia restaurá-lo., e os utilizadores não querem que as suas alterações sejam deitadas fora. A segunda é para permitir aos pacotes transitarem ficheiros de um conffile mantido pelo dpkg para um ficheiro mantido pelos scripts do maintainer do pacote, geralmente com uma ferramenta como debconf ou ucf.
+Ao actualizar um pacote, o B<dpkg> não irá automaticamente remover um conffile (um ficheiro de configuração para o qual B<dpkg> deve preservar as alterações do utilizador) se este não estiver presente na versão mais recente. Existem duas razões principais para isto: a primeira é que o conffile poderia ser abandonado por acidente e a próxima versão poderia restaura-lo., e os utilizadores não querem que as suas alterações sejam deitadas fora. A segunda é para permitir aos pacotes transitarem ficheiros de um conffile mantido pelo dpkg para um ficheiro mantido pelos scripts do maintainer do pacote, geralmente com uma ferramenta como debconf ou ucf.
 
 Isto significa que se um pacote se destina a renomear ou remover um conffile, deve explicitamente fazê-lo e B<dpkg-maintscript-helper> pode ser usado para implementar o apagar e mover elegante de conffiles dentro dos scripts do maintainer.
 
@@ -113,6 +113,8 @@ Implementação actual: o B<preinst> verifica se o conffile foi modificado. Se s
 
 Ao actualiza um pacote, o B<dpkg> não irá mudar automaticamente de um link simbólico para um directório ou vice-versa. Downgrades (descidas de versão) não são suportados e o caminho irá ser deixado como está.
 
+Nota: Os links simbólicos e directórios criados durante esses switches precisam de ser enviados nos novos pacotes, ou o B<dpkg> não será capaz de os remover durante a purga.
+
 =head2 Alternar um link simbólico para directório
 
 Se um link simbólico for mudado para um directório real, você precisa de certificar que o link simbólico é removido antes de desempacotar. Isto pode parecer uma mudança simples para o script B<preinst> no inicio, no entanto isso irá resultar em alguns problemas no caso de personalização local administrativa do link simbólico ou quando se retrocede na versão do pacote (downgrade).
@@ -153,7 +155,7 @@ Implementação actual: o B<preinst> verifica se o directório existe, não cont
 
 Quando usar um ajudante de empacotamento, por favor verifique se ele tem integração com B<dpkg-maintscript-helper> nativa, o que pode tornar a sua vida mais fácil. Veja por exemplo B<dh_installdeb>(1).
 
-Dado que B<dpkg-maintscript-helper> é usado no B<preinst>, usá-lo incondicionalmente requer uma pré-dependência para assegurar que a versão requerida do B<dpkg> já foi desempacotada antes. A versão requerida depende do comando usado, para B<rm_conffile> e B<mv_conffile> é 1.15.7.2, para B<symlink_to_dir> e B<dir_to_symlink> é 1.17.14:
+Dado que B<dpkg-maintscript-helper> é usado no B<preinst>, usa-lo incondicionalmente requer uma pré-dependência para assegurar que a versão requerida do B<dpkg> já foi desempacotada antes. A versão requerida depende do comando usado, para B<rm_conffile> e B<mv_conffile> é 1.15.7.2, para B<symlink_to_dir> e B<dir_to_symlink> é 1.17.14:
 
 =over 
 

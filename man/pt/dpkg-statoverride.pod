@@ -32,7 +32,7 @@ B<dpkg-statoverride> é um utilitário para gerir sobreposições de estatístic
 
 =item B<--add> I<user group mode path>
 
-Adiciona uma sobreposição para I<path>. I<path> não precisa existir quando este comando é usado; a sobreposição será guardada e usada mais tarde. Os utilizadores e grupos podem ser especificados pelo seu nome (por exemplo, B<root> ou B<nobody>), ou pelo seu número ao anexar o número com um ‘B<#>’ (por exemplo B<#0> ou B<#65534>).  O I<mode> precisa de ser especificado em octal.
+Adiciona uma sobreposição para I<path>. I<path> não precisa existir nem ser conhecida pelo B<dpkg> quando este comando é usado; a sobreposição será guardada e usada mais tarde. Os utilizadores e grupos podem ser especificados pelo seu nome (por exemplo, B<root> ou B<nobody>), ou pelo seu número ao anexar o número com um ‘B<#>’ (por exemplo B<#0> ou B<#65534>). O I<mode> precisa de ser especificado em octal.
 
 Se for especificado B<--update> e I<caminho> existir, é imediatamente definido para o proprietário e modo novos.
 
@@ -80,7 +80,7 @@ Define o directório raiz para B<directory>, o que define o directório de insta
 
 Força ou recusa (B<no-force> e B<refuse> significam o mesmo) a fazer algumas coisas (desde dpkg 1.19.5).  I<things> é uma lista separada por vírgulas de coisas especificadas em baixo. B<--force-help> mostra uma mensagem a descreve-las. A coisas marcadas com (*) já são forçadas por predefinição.
 
-I<Aviso: Estas opções são maioritariamente destinadas a serem usadas apenas por experts. Usá-las sem total conhecimento dos seus efeitos pode danificar todo o seu sistema.>
+I<Aviso: Estas opções são maioritariamente destinadas a serem usadas apenas por experts. Usa-las sem total conhecimento dos seus efeitos pode danificar todo o seu sistema.>
 
 B<all>: Liga (ou desliga) todas as opções de forçar.
 
@@ -90,7 +90,7 @@ B<statoverride-remove>: Ignora uma sobreposição de estatística em falta quand
 
 B<security-mac>(*): Usa segurança baseada em Mandatory Access Controls (MAC) específica da plataforma quando instala ficheiros no sistema de ficheiros (desde dpkg 1.19.5). Em sistemas Linux a implementação usa SELinux.
 
-B<not-root>: Try to (de)install things even when not root (since dpkg 1.21.8).
+B<not-root>: Tenta (des)instalar coisas mesmo não sendo root (desde dpkg 1.21.8).
 
 =item B<--force>
 
@@ -135,6 +135,10 @@ Se definido e as opções B<--instdir> ou B<--root> não foram especificadas, se
 =item B<DPKG_ADMINDIR>
 
 Se definido e as opções B<--admindir> ou B<--root> não foram especificadas, será usado como o directório de dados do B<dpkg>.
+
+=item B<DPKG_DEBUG>
+
+Define a máscara de depuração (desde dpkg 1.21.10) a partir dum valor octal. As bandeiras presentemente aceites estão descritas na opção B<dpkg --debug>, mas nem todas estas bandeiras podem ter um efeito neste programa.
 
 =item B<DPKG_FORCE>
 

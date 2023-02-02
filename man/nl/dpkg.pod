@@ -485,13 +485,13 @@ I<Waarschuwing: Momenteel voert> B<dpkg> I<geen enkele vereistencontrole uit bij
 
 B<configure-any>: Ook elk uitgepakt maar niet-geconfigureerd pakket waarvan het huidige pakket afhankelijk is, configureren.
 
-B<hold>: Automatische installaties, opwaarderingen en verwijderingen van pakketten toestaan, zelfs al zijn ze als te behouden (on "hold") gemarkeerd. B<Merk op:> Dit voorkomt deze acties niet wanneer er expliciet om gevraagd wordt.
+B<hold>: Automatische installaties, opwaarderingen en verwijderingen van pakketten toestaan, zelfs al zijn ze als te behouden (on "hold") gemarkeerd. B<Merk op:> Wanneer expliciet om deze acties gevraagd wordt, zal de selectiestatus "hold" van het pakket altijd genegeerd worden.
 
 B<remove-reinstreq>: Een pakket verwijderen, zelfs als het defect is en er aangegeven staat dat een herinstallatie nodig is. Dit kan bijvoorbeeld tot gevolg hebben dat delen van het pakket op het systeem achterblijven, maar B<dpkg> zal er dan niet meer van op de hoogte zijn.
 
-B<remove-protected>: Het pakket verwijderen, zelfs al wordt het als beschermd beschouwd (sinds dpkg 1.20.1). Beschermde pakketten bevatten meestal belangrijke infrastructuur voor de systeemopstart. Ze verwijderen kan tot gevolg hebben dat het hele systeem niet langer kan opstarten. Gebruik dit dus met voorzichtigheid.
+B<remove-protected>: Het pakket verwijderen, zelfs al wordt het als beschermd beschouwd (sinds dpkg 1.20.1). Beschermde pakketten bevatten meestal belangrijke infrastructuur voor de systeemopstart of worden gebruikt voor aangepaste systeem-lokale metapakketten. Ze verwijderen kan tot gevolg hebben dat het hele systeem niet langer kan opstarten of functionaliteit verliest die vereist is om te functioneren. Gebruik dit dus met de nodige voorzichtigheid.
 
-B<remove-essential>: Het pakket verwijderen, zelfs al wordt het als essentieel beschouwd. Essentiële pakketten bevatten meestal hele basale Unix commando's. Ze verwijderen kan tot gevolg hebben dat het hele systeem stopt met werken. Gebruik dit dus met voorzichtigheid.
+B<remove-essential>: Het pakket verwijderen, zelfs al wordt het als essentieel beschouwd. Essentiële pakketten bevatten meestal zeer elementaire Unix-commando's, die nodig zijn voor het verpakkingssysteem, voor de werking van het systeem in het algemeen of tijdens het opstarten (hoewel deze laatste in plaats daarvan zouden moeten worden geconverteerd naar beschermde pakketten). Ze verwijderen kan tot gevolg hebben dat het hele systeem stopt met werken. Gebruik dit dus met de nodige voorzichtigheid.
 
 B<depends>: Alle vereistenproblemen omzetten in waarschuwingen. Dit heeft invloed op de velden B<Pre-Depends> en B<Depends>.
 
@@ -579,7 +579,9 @@ Enkel de pakketten verwerken welke geselecteerd werden om geïnstalleerd te word
 
 =item B<-E>, B<--skip-same-version>
 
-Het pakket niet installeren als dezelfde versie van dat pakket reeds geïnstalleerd is.
+Het pakket niet installeren als dezelfde versie en architectuur van dat pakket reeds geïnstalleerd is.
+
+Sinds dpkg 1.21.10 wordt ook rekening gehouden met de architectuur, wat het mogelijk maakt om pakketten te cross-graden of bijkomende co-installeerbare exemplaren van pakketten met dezelfde versie, maar verschillende architectuur te installeren.
 
 =item B<--pre-invoke=>I<commando>
 
@@ -689,7 +691,7 @@ De status van het pakket wijzigde. I<status> is zoals in het statusbestand.
 Er trad een fout op. Eventuele regeleindes in het I<omstandig-foutbericht> zullen voor de uitvoer omgezet worden naar spaties.
 
 =item B<status:> I<bestand> B<: conffile-prompt : '>I<echt-oud>B<'
-'>I<echt-nieuw>B<'> I<door-gebruiker-bewerkt>B<> I<door-distributie-bewerkt>
+'>I<echt-nieuw>B<'> I<door-gebruiker-bewerkt> I<door-distributie-bewerkt>
 
 Er wordt een vraag in verband met een configuratiebestand gesteld aan de gebruiker.
 
@@ -801,6 +803,10 @@ Het programma dat B<dpkg> zal uitvoeren als het gebruik maakt van een paginering
 =item B<DPKG_COLORS>
 
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen worden zijn: B<auto> (standaard), B<always> en B<never>.
+
+=item B<DPKG_DEBUG>
+
+Stelt het foutopsporingsmasker in (sinds dpkg 1.21.10) vanaf een octale waarde. De momenteel geaccepteerde vlaggen worden beschreven in de optie B<--debug>.
 
 =item B<DPKG_FORCE>
 

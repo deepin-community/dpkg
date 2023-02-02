@@ -72,7 +72,7 @@ Verifica se um processo criou o ficheiro I<pidfile>.
 
 B<Nota:> Usar esta opção de correspondência sozinha pode causar que se actue em processos intencionalmente, se o processo antigo terminou sem ser capaz de remover o seu I<pidfile>.
 
-B<Aviso:> Usar esta opção de correspondência com um pidfile gravável mundialmente ou usá-la sozinha com um daemon que escreve o pidfile como um utilizador sem privilégios (não-root) irá ser recusada com um erro (desde versão 1.19.3) pois isto é um risco de segurança, porque ou o utilizador consegue escrever nele, ou se o daemon ficar comprometido, não se pode confiar no conteúdo do pidfile, e depois um programa privilegiado (tal como um script de init corrido como root) acabaria a actuar em qualquer processo do sistema. Usar I</dev/null> está isento destas verificações.
+B<Aviso:> Usar esta opção de correspondência com um pidfile gravável mundialmente ou usa-la sozinha com um daemon que escreve o pidfile como um utilizador sem privilégios (não-root) irá ser recusada com um erro (desde versão 1.19.3) pois isto é um risco de segurança, porque ou o utilizador consegue escrever nele, ou se o daemon ficar comprometido, não se pode confiar no conteúdo do pidfile, e depois um programa privilegiado (tal como um script de init corrido como root) acabaria a actuar em qualquer processo do sistema. Usar I</dev/null> está isento destas verificações.
 
 =item B<-x>, B<--exec> I<executable>
 
@@ -146,7 +146,7 @@ Muda directório para I<caminho> antes de iniciar o processo. Isto é feito depo
 
 =item B<-b>, B<--background>
 
-Tipicamente usado com programas que não se desanexam deles próprios. Esta opção irá forçar o B<start-stop-daemon> a bifurcar antes de iniciar o processo, e a forçá-lo para os bastidores.
+Tipicamente usado com programas que não se desanexam deles próprios. Esta opção irá forçar o B<start-stop-daemon> a bifurcar antes de iniciar o processo, e a força-lo para os bastidores.
 
 B<Warning: start-stop-daemon> não pode verificar o estado de saída se o processo falhar ao executar por B<qualquer> razão. Este é o último recurso, e destina-se apenas a programas que ou não fazem sentido a bifurcarem por si só, ou onde não é praticável adicionar-lhes o código para fazerem isto eles próprios.
 
@@ -190,9 +190,13 @@ Isto altera a prioridade do processo antes de o iniciar.
 
 Isto altera a política de agendamento de processos e a prioridade dos processos antes de os iniciar (desde versão 1.15.0). A prioridade pode ser opcionalmente especificada ao anexar um B<:> seguido de um valor. A predefinição de I<priority> é 0. Os valores de política actualmente suportados são B<other>, B<fifo> e B<rr>.
 
+Esta opção pode não fazer anda em alguns sistemas, onde o agendamento de processos POSIX não é suportado.
+
 =item B<-I>, B<--iosched> I<class>B<:>I<priority>
 
 Isto altera a classe de agendamento IO e a prioridade dos processos antes de os iniciar (desde versão 1.15.0). A prioridade pode ser opcionalmente especificada ao anexar um B<:> seguido de um valor. A predefinição de I<priority> é 4, a menos que I<class> seja B<idle>, então I<priority> será sempre 7. Os valores actualmente suportados para I<class> são B<idle>, B<best-effort> e B<real-time>.
+
+Esta opção pode não fazer anda em alguns sistemas, onde o agendamento de processos Linux IO não é suportado.
 
 =item B<-k>, B<--umask> I<mask>
 
@@ -265,8 +269,8 @@ Inicia o daemon B<food>, a menos que um já esteja a correr (um processo chamado
 =over 
 
  start-stop-daemon --start --oknodo --user food --name food \
- 	--pidfile %RUNSTATEDIR%/food.pid --startas /usr/sbin/food \
- 	--chuid food -- --daemon
+   --pidfile %RUNSTATEDIR%/food.pid --startas /usr/sbin/food \
+   --chuid food -- --daemon
 
 =back
 
@@ -275,7 +279,7 @@ Envia B<SIGTERM> para B<food> e espera até 5 segundos para que pare:
 =over 
 
  start-stop-daemon --stop --oknodo --user food --name food \
- 	--pidfile %RUNSTATEDIR%/food.pid --retry 5
+   --pidfile %RUNSTATEDIR%/food.pid --retry 5
 
 =back
 
@@ -284,7 +288,7 @@ Demonstração dum agendamento personalizado para parar o B<food>:
 =over 
 
  start-stop-daemon --stop --oknodo --user food --name food \
- 	--pidfile %RUNSTATEDIR%/food.pid --retry=TERM/30/KILL/5
+   --pidfile %RUNSTATEDIR%/food.pid --retry=TERM/30/KILL/5
 
 =back
 

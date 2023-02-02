@@ -172,6 +172,20 @@ Als bij een controle het versienummer van het broncodepakket foutief blijkt te z
 
 =back
 
+=head2 Generic general options
+
+=over 
+
+=item B<--threads-max=>I<threads>
+
+Sets the maximum number of threads allowed for compressors that support multi-threaded operations (since dpkg 1.21.14).
+
+=item B<-q>
+
+Sets quiet mode to suppress warnings.
+
+=back
+
 =head1 INDELINGEN VAN BRONCODEPAKKETTEN
 
 Indien u niet weet welke indeling te kiezen voor de broncode, zou u wellicht ofwel “3.0 (quilt)” of “3.0 (native)” moeten kiezen. Zie L<https://wiki.debian.org/Projects/DebSrc3.0> voor informatie over het in gebruik nemen van deze indelingen binnen Debian.

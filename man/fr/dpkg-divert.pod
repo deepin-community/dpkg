@@ -136,6 +136,10 @@ Si cette variable est positionnée et que les options B<--admindir> ou B<--root>
 
 Si cette variable est positionnée et que les options B<--local> et B<--package> ne le sont pas, B<dpkg-divert> en utilisera la valeur comme nom de paquet.
 
+=item B<DPKG_DEBUG>
+
+Sets the debug mask (since dpkg 1.21.10) from an octal value.  The currently accepted flags are described in the B<dpkg --debug> option, but not all these flags might have an effect on this program.
+
 =item B<DPKG_COLORS>
 
 Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
@@ -160,7 +164,7 @@ Pour l'ajout, le défaut est B<--local> et B<--divert> I<original>B<.distrib>. P
 
 On ne peut pas détourner des répertoires avec B<dpkg-divert>.
 
-Il faut faire attention quand une bibliothèque partagée est détournée. B<ldconfig>(8) crée un lien symbolique à partir du champ DT_SONAME embarqué dans la bibliothèque. B<ldconfig> ne connaît pas les détournements (seul B<dpkg> le fait), et si une bibliothèque détournée possède le même SONAME que la bibliothèque non détournée, le lien symbolique peut pointer en fin de compte sur la bibliothèque détournée.
+Care should be taken when diverting shared libraries, B<ldconfig>(8) creates a symbolic link based on the DT_SONAME field embedded in the library.  Because B<ldconfig> does not honor diverts (only B<dpkg> does), the symlink may end up pointing at the diverted library, if a diverted library has the same SONAME as the undiverted one.
 
 =head1 EXEMPLES
 

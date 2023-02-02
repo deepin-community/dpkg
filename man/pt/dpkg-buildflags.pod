@@ -64,7 +64,7 @@ Estende a flag chamada I<flag> ao acrescentar as opções dadas em I<valor>. É 
 
 =item B<PREPEND> I<flag> I<value>
 
-Estende a flag chamada I<flag> ao precedê-la com as opções dadas em I<valor>. É acrescentado um espaço ao valor precedido se o valor da flag actual não estiver vazio.
+Estende a flag chamada I<flag> ao precede-la com as opções dadas em I<valor>. É acrescentado um espaço ao valor precedido se o valor da flag actual não estiver vazio.
 
 =back
 
@@ -142,7 +142,7 @@ a flag é definida/modifica por uma configuração específica do ambiente;
 
 =item B<--query>
 
-Escreve qualquer informação que possa ser útil para explicar o comportamento do programa: fornecedor actual, variáveis de ambiente relevantes, áreas de funcionalidades, estada das bandeiras de funcionalidades, e as bandeiras de compilação com as suas origens (desde dpkg 1.19.0).
+Escreve qualquer informação que possa ser útil para explicar o comportamento do programa: fornecedor actual, variáveis de ambiente relevantes, áreas de funcionalidades, estado de todas as bandeiras de funcionalidades, se uma funcionalidade é lidada como uma predefinição de compilação pelo compilador (desde dpkg 1.21.14), a as bandeiras de compilação com as suas origens (desde dpkg 1.19.0).
 
 Por exemplo:
 
@@ -154,10 +154,18 @@ Por exemplo:
  Features:
   bug=no
   canary=no
+ Builtins:
+
+ Area: hardening
+ Features:
+  pie=no
+ Builtins:
+  pie=yes
 
  Area: reproducible
  Features:
   timeless=no
+ Builtins:
 
  Flag: CFLAGS
  Value: -O0 -Wall
@@ -169,12 +177,13 @@ Por exemplo:
 
 =item B<--query-features> I<area>
 
-Escreve as funcionalidades activadas para uma dada área (desde dpkg 1.16.2). As únicas áreas actualmente reconhecidas em Debian e derivados são B<future>, B<qa>, B<reproducible>, B<sanitize> e B<hardening>, veja a secção B<ÁREAS DE CARACTERÍSTICAS> para mais detalhes. Termina com 0 se a área é conhecida caso contrário termina com 1.
+Escreve as funcionalidades activadas para uma dada área (desde dpkg 1.16.2). Se a funcionalidade é lidada (mesmo que apenas em algumas arquitecturas) como predefinição de compilação pelo compilador, então é escrito um campo B<Builtin> (desde dpkg 1.21.14). As únicas áreas actualmente reconhecidas em Debian e derivados são B<future>, B<qa>, B<reproducible>, B<sanitize> e B<hardening>, veja a secção B<ÁREAS DE CARACTERÍSTICAS> para mais detalhes. Termina com 0 se a área é conhecida caso contrário termina com 1.
 
 O resultado está em formato RFC822, com uma secção por característica. Por exemplo:
 
  Feature: pie
  Enabled: yes
+ Builtin: yes
 
  Feature: stackprotector
  Enabled: yes
@@ -285,7 +294,7 @@ Várias opções de tempo de compilação (detalhado em baixo) podem ser usadas 
 
 =over 
 
-=item lto
+=item B<lto>
 
 Esta definição (desde dpkg 1.21.0; desactivada por predefinição) activa Link Time Optimization ao adicionar B<-flto=auto -ffat-lto-objects> a B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS>, B<FCFLAGS> e B<LDFLAGS>.
 
@@ -357,7 +366,7 @@ Esta definição (desactivada por predefinição) adiciona B<-Wl,-z,now> a B<LDF
 
 Esta definição (sem uma predefinição global desde dpkg 1.18.23, pois é agora activa por predefinição pelo gcc nas arquitecturas Debian amd64, arm64, armel, armhf, hurd-i386, i386, kfreebsd-amd64, kfreebsd-i386, mips, mipsel, mips64el, powerpc, ppc64, ppc64el, riscv64, s390x, sparc e sparc64) adiciona as opções requeridas para activar ou desactivar PIE via ficheiros de especificações do gcc, Se necessário, dependendo de se o gcc injeta nessa arquitectura as bandeiras por ele próprio ou não. Quando a definição está activa e o gcc injeta as bandeiras, não adiciona nada. Quando a definição está activa e o gcc não injeta as bandeiras, adiciona B<-fPIE> (via I<%PKGDATADIR%/pie-compiler.specs>) to B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> e B<FCFLAGS>, e B<-fPIE -pie> (via I<%PKGDATADIR%/pie-link.specs>) a B<LDFLAGS>. Quando a definição está desactivada e o gcc injeta as bandeiras, adiciona B<-fno-PIE> (via I<%PKGDATADIR%/no-pie-compile.specs>) a B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> e B<FCFLAGS>, e B<-fno-PIE -no-pie> (via I<%PKGDATADIR%/no-pie-link.specs>) a B<LDFLAGS>.
 
-Position Independent Executable é necessário para tirar vantagem de Address Space Layout Randomization, suportado por algumas versões de kernel. Enquanto ASLR já pode ser aplicada para áreas de dados na stack e heap (brk e mmap), as áreas de código têm de ser compiladas como independente-de-posição. As bibliotecas partilhadas já fazem isto (B<-fPIC>), assim elas ganham ASLR automaticamente, mas as regiões de texto binários precisam de ser compiladas com PIE para ganhar ASLR. Quando isto acontece, os ataques ROP (Return Oriented Programming) são mais difíceis pois não são localizações estáticas para ressaltar durante um ataque de corrupção de memória.
+Position Independent Executable (PIE) é necessário para tirar vantagem de Address Space Layout Randomization (ASLR), suportado por algumas versões de kernel. Enquanto ASLR já pode ser aplicada para áreas de dados na stack e heap (brk e mmap), as áreas de código têm de ser compiladas como independente-de-posição. As bibliotecas partilhadas já fazem isto (B<-fPIC>), assim elas ganham ASLR automaticamente, mas as regiões de texto binários precisam de ser compiladas como PIE para ganhar ASLR. Quando isto acontece, os ataques ROP (Return Oriented Programming) são mais difíceis pois não são localizações estáticas para ressaltar durante um ataque de corrupção de memória.
 
 PIE não é compatível com B<-fPIC>, assim em geral é preciso cuidado ao compilar objectos partilhados. Mas porque as bandeiras PIE emitidas são injetadas via ficheiros specs de gcc, deverá ser sempre seguro defini-las incondicionalmente independentemente do tipo de objecto a ser compilado ou ligado em link.
 

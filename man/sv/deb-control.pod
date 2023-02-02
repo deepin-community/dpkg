@@ -48,7 +48,7 @@ Ska vara på formatet ”Joe Bloggs E<lt>jbloggs@foo.comE<gt>” och är normalt
 
 =item B<Description:> I<kort-beskrivning> (rekommenderas)
 
-=item B<> I<lång-beskrivning>
+=item S< >I<lång-beskrivning>
 
 Formatet för paketbeskrivningen är en kortfattad sammanfattning på den första raden (efter B<Description>-fältet). Följande rader bör användas för en längre, mer detaljerad beskrivning. Varje rad i den lägre beskrivningen måste inledas med ett blanksteg, och blanka rader i den långa beskrivningen måste innehålla en ensam punkt (”B<.>”) efter det inledande blanksteget.
 
@@ -72,13 +72,13 @@ Ungefärlig total storlek för paketets installerade filer, i KiB-enheter. Algor
 
 =item B<Protected:> B<yes>|B<no>
 
-Fältet krävs normalt sett endast om svaret är B<yes> (ja), och betecknar att paketet krävs för en korrekt installation av systemet. L<dpkg(1)> eller andra installationsverktyg tillåter inte att ett paket märkt B<Protected> tas bort (åtminstone inte utan att använda en av de tvingande flaggorna).
+Fältet krävs normalt sett endast om svaret är B<yes> (ja), och betecknar att paketet huvudsakligen krävs för en korrekt start av systemet eller som används som skräddarsydda systemlokala metapaket. L<dpkg(1)> eller andra installationsverktyg tillåter inte att ett paket märkt B<Protected> tas bort (åtminstone inte utan att använda en av de tvingande flaggorna).
 
 Stöds sedan dpkg 1.20.1.
 
 =item B<Essential:> B<yes>|B<no>
 
-Fältet krävs normalt sett endast om svaret är B<yes> (ja), och betecknar att paketet krävs för en korrekt installation av systemet. L<dpkg(1)> eller andra installationsverktyg tillåter inte att ett paket märkt B<Essential> tas bort (åtminstone inte utan att använda en av de tvingande flaggorna).
+Fältet krävs normalt sett endast om svaret är B<yes> (ja), och betecknar att paketet krävs av pakethanteringssystemet, för att systemet generellt ska fungera korrekt eller under start (även om det sistnämnda bör skrivas om till att istället använda ett B<Protected>-fält). L<dpkg(1)> eller andra installationsverktyg tillåter inte att ett paket märkt B<Essential> tas bort (åtminstone inte utan att använda en av de tvingande flaggorna).
 
 =item B<Build-Essential:> B<yes>|B<no>
 
@@ -138,7 +138,7 @@ Namnet på källkodspaketet det här binärpaketet kommer från, om det skiljer 
 
 =item B<Installer-Menu-Item:> I<värde>
 
-Dessa fält används av debian-installer och behövs normalt inte. Se /usr/share/doc/debian-installer/devel/modules.txt från paketet B<debian-installer> för mer information om dem.
+These fields are used by the debian-installer and are usually not needed. For more details about them, see L<https://salsa.debian.org/installer-team/debian-installer/-/raw/master/doc/devel/modules.txt>.
 
 =item B<Depends:> I<paketlista>
 

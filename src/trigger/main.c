@@ -36,6 +36,7 @@
 #include <dpkg/i18n.h>
 #include <dpkg/dpkg.h>
 #include <dpkg/dpkg-db.h>
+#include <dpkg/debug.h>
 #include <dpkg/options.h>
 #include <dpkg/trigdeferred.h>
 #include <dpkg/triglib.h>
@@ -44,8 +45,8 @@
 static const char printforhelp[] = N_(
 "Type dpkg-trigger --help for help about this utility.");
 
-static void DPKG_ATTR_NORET
-printversion(const struct cmdinfo *ci, const char *value)
+static int
+printversion(const char *const *argv)
 {
 	printf(_("Debian %s package trigger utility version %s.\n"),
 	       dpkg_get_progname(), PACKAGE_RELEASE);
@@ -56,11 +57,11 @@ printversion(const struct cmdinfo *ci, const char *value)
 
 	m_output(stdout, _("<standard output>"));
 
-	exit(0);
+	return 0;
 }
 
-static void DPKG_ATTR_NORET
-usage(const struct cmdinfo *ci, const char *value)
+static int
+usage(const char *const *argv)
 {
 	printf(_(
 "Usage: %s [<option>...] <trigger-name>\n"
@@ -90,23 +91,14 @@ usage(const struct cmdinfo *ci, const char *value)
 
 	m_output(stdout, _("<standard output>"));
 
-	exit(0);
+	return 0;
 }
 
-static const char *admindir;
-static const char *instdir;
-static int f_noact, f_check;
+static int f_noact;
 static int f_await = 1;
 
 static const char *bypackage, *activate;
 static bool done_trig, ctrig;
-
-static void
-set_root(const struct cmdinfo *cip, const char *value)
-{
-	instdir = dpkg_fsys_set_dir(value);
-	admindir = dpkg_fsys_get_path(ADMINDIR);
-}
 
 static void
 yespackage(const char *awname)
@@ -141,7 +133,7 @@ parse_awaiter_package(void)
 
 	/* Normalize the bypackage name if there was no error. */
 	if (pkg)
-		bypackage = pkg_name(pkg, pnaw_nonambig);
+		bypackage = pkg_name(pkg, pnaw_same);
 
 	return err.str;
 }
@@ -178,59 +170,11 @@ static const struct trigdefmeths tdm_add = {
 };
 
 static int
-do_check(void)
-{
-	enum trigdef_update_status uf;
-
-	uf = trigdef_update_start(TDUF_NO_LOCK_OK);
-	switch (uf) {
-	case TDUS_ERROR_NO_DIR:
-		notice(_("triggers data directory not yet created"));
-		return 1;
-	case TDUS_ERROR_NO_DEFERRED:
-		notice(_("trigger records not yet in existence"));
-		return 1;
-	case TDUS_OK:
-	case TDUS_ERROR_EMPTY_DEFERRED:
-		return 0;
-	default:
-		internerr("unknown trigdef_update_start return value '%d'", uf);
-	}
-}
-
-static const struct cmdinfo cmdinfos[] = {
-	{ "admindir",        0,   1, NULL,     &admindir },
-	{ "root",            0,   1, NULL,     NULL,       set_root, 0 },
-	{ "by-package",      'f', 1, NULL,     &bypackage },
-	{ "await",           0,   0, &f_await, NULL,       NULL, 1 },
-	{ "no-await",        0,   0, &f_await, NULL,       NULL, 0 },
-	{ "no-act",          0,   0, &f_noact, NULL,       NULL, 1 },
-	{ "check-supported", 0,   0, &f_check, NULL,       NULL, 1 },
-	{ "help",            '?', 0, NULL,     NULL,       usage   },
-	{ "version",         0,   0, NULL,     NULL,       printversion  },
-	{  NULL  }
-};
-
-int
-main(int argc, const char *const *argv)
+do_trigger(const char *const *argv)
 {
 	const char *badname;
 	enum trigdef_update_flags tduf;
 	enum trigdef_update_status tdus;
-
-	dpkg_locales_init(PACKAGE);
-	dpkg_program_init("dpkg-trigger");
-	dpkg_options_parse(&argv, cmdinfos, printforhelp);
-
-	instdir = dpkg_fsys_set_dir(instdir);
-	admindir = dpkg_db_set_dir(admindir);
-
-	if (f_check) {
-		if (*argv)
-			badusage(_("--%s takes no arguments"),
-			         "check-supported");
-		return do_check();
-	}
 
 	if (!*argv || argv[1])
 		badusage(_("takes one argument, the trigger name"));
@@ -259,8 +203,68 @@ main(int argc, const char *const *argv)
 		trigdef_process_done();
 	}
 
+	return 0;
+}
+
+static int
+do_check(const char *const *argv)
+{
+	enum trigdef_update_status uf;
+
+	if (*argv)
+		badusage(_("--%s takes no arguments"), "check-supported");
+
+	uf = trigdef_update_start(TDUF_NO_LOCK_OK);
+	switch (uf) {
+	case TDUS_ERROR_NO_DIR:
+		notice(_("triggers data directory not yet created"));
+		return 1;
+	case TDUS_ERROR_NO_DEFERRED:
+		notice(_("trigger records not yet in existence"));
+		return 1;
+	case TDUS_OK:
+	case TDUS_ERROR_EMPTY_DEFERRED:
+		return 0;
+	default:
+		internerr("unknown trigdef_update_start return value '%d'", uf);
+	}
+}
+
+static const struct cmdinfo cmdinfo_trigger =
+	ACTION("trigger",          0,  0, do_trigger);
+
+static const struct cmdinfo cmdinfos[] = {
+	ACTION("check-supported",  0,  0, do_check),
+	ACTION("help",            '?', 0, usage),
+	ACTION("version",          0,  0, printversion),
+
+	{ "admindir",        0,   1, NULL,     NULL,       set_admindir, 0 },
+	{ "root",            0,   1, NULL,     NULL,       set_root, 0 },
+	{ "by-package",      'f', 1, NULL,     &bypackage },
+	{ "await",           0,   0, &f_await, NULL,       NULL, 1 },
+	{ "no-await",        0,   0, &f_await, NULL,       NULL, 0 },
+	{ "no-act",          0,   0, &f_noact, NULL,       NULL, 1 },
+	{  NULL  }
+};
+
+int
+main(int argc, const char *const *argv)
+{
+	int ret;
+
+	dpkg_locales_init(PACKAGE);
+	dpkg_program_init("dpkg-trigger");
+	dpkg_options_parse(&argv, cmdinfos, printforhelp);
+
+	debug(dbg_general, "root=%s admindir=%s", dpkg_fsys_get_dir(), dpkg_db_get_dir());
+
+	if (!cipaction)
+		setaction(&cmdinfo_trigger, NULL);
+
+	ret = cipaction->action(argv);
+
 	dpkg_program_done();
 	dpkg_locales_done();
 
-	return 0;
+	return ret;
 }

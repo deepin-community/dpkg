@@ -156,7 +156,7 @@ Quando o B<dselect> é iniciado pode executar os seguintes comandos, seja direct
 
 Escolha e configure um método de acesso para aceder aos repositórios de pacotes.
 
-Por predefinição, B<dselect> fornece vários métodos tais como I<multi_cd>, I<mounted> ou I<ftp>, mas outros pacotes podem disponibilizar outros métodos, ex. o método de acesso I<apt> disponibilizado pelo pacote B<apt>(8).
+Por predefinição, B<dselect> fornece vários métodos tais como I<multi_cd>, I<mounted> ou I<ftp>, mas outros pacotes podem disponibilizar outros métodos, por exemplo o método de acesso I<apt> disponibilizado pelo pacote B<apt>(8).
 
 O uso do método de acesso do I<apt> é fortemente recomendado.
 
@@ -174,7 +174,7 @@ Ver ou gerir selecções de pacotes e dependências.
 
 Esta é a função principal do B<dselect>. no ecrã de selecção, o utilizador pode rever uma lista de todos os pacotes disponíveis e instalados. Quando corre com privilégios de administrador, é também possível alterar o estado da selecção de pacotes interactivamente. B<dselect> acompanha as implicações destas alterações com outros pacotes que dependem ou criam conflitos.
 
-Quando é detetado um conflito ou falha de dependências, é mostrado ao utilizador um sub-ecrã de resolução de dependências. Neste ecrã, é mostrada uma lista de pacotes em conflito ou dependentes, e para cada pacote listado, é mostrada a razão de este estar na lista. O utilizador pode aplicar as sugestões propostas pelo B<dselect>, sobrepô-las, ou retroceder todas as alterações, incluindo aquelas que criaram as dependências ou conflitos não resolvidos.
+Quando é detetado um conflito ou falha de dependências, é mostrado ao utilizador um sub-ecrã de resolução de dependências. Neste ecrã, é mostrada uma lista de pacotes em conflito ou dependentes, e para cada pacote listado, é mostrada a razão de este estar na lista. O utilizador pode aplicar as sugestões propostas pelo B<dselect>, sobrepor-las, ou retroceder todas as alterações, incluindo aquelas que criaram as dependências ou conflitos não resolvidos.
 
 O uso do ecrã de gestão de selecção de pacotes interactiva está explicado com mais detalhes em baixo.
 
@@ -450,7 +450,7 @@ Se definido e a opção B<--admindir> ou B<--root> for especificada, será usado
 
 =item B<HOME>
 
-Se definido, o B<dselect> irá usá-lo como o directório de onde ler o ficheiro de configuração específico do utilizador.
+Se definido, o B<dselect> irá usa-lo como o directório de onde ler o ficheiro de configuração específico do utilizador.
 
 =back
 

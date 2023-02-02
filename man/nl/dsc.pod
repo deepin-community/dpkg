@@ -74,7 +74,7 @@ Somt al de namen en de e-mailadressen op van de personen die het pakket mee onde
 
 =item B<Description:> I<korte-beschrijving>
 
-=item B<> I<uitgebreide-beschrijving>
+=item S< >I<uitgebreide-beschrijving>
 
 De indeling van een pakketbeschrijving bestaat uit een beknopte korte samenvatting op de eerste regel (na de veldmarkering B<Description>). De daaropvolgende regels moeten gebruikt worden voor een langere, meer gedetailleerde beschrijving. Elke regel van de uitgebreide beschrijving moet voorafgegaan worden door een spatie, en lege regels in de uitgebreide beschrijving moeten één enkele ‘B<.>’ bevatten die volgt op de eraan voorafgaande spatie.
 

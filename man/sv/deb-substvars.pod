@@ -18,25 +18,25 @@ deb-substvars - Debians källkods-substitueringsvariabler
 
 =head1 SYNOPS
 
-B<debian/substvars>, B<debian/>I<binary-package>B<.substvars>, variables
+B<debian/substvars>, B<debian/>I<binärpaket>B<.substvars>, variabler
 
 =head1 BESKRIVNING
 
 Innan B<dpkg-source>, B<dpkg-gencontrol> och B<dpkg-genchanges> skriver sin styrinformation (till control-filen i källkodspaketet B<.dsc> för B<dpkg-source> och till standard ut för B<dpkg-gencontrol> och B<dpkg-genchanges>) kommer de utföra viss variabelsubstituering på utdatafilen.
 
-=head2 Variable Syntax
+=head2 Variabelsyntax
 
 En variabelsubstitution har formen B<${>I<variabelnamn>B<}>. Variabelnamn består av alfanumeriska tecken (a-zA-Z0-9), bindestreck (-) och kolon (:) och börjar med ett alfanumeriskt tecken, och är skiftlägeskänsliga. Variabelsubstitueringar utförs upprepade gånger tills det inte kvarstår några - det resulterande innehållet i fältet läses av på nytt efter substitueringen för att se om det behövs fler substitueringar.
 
-=head2 File Syntax
+=head2 Filsyntax
 
-Substitution variables can be specified in a file.  These files consist of lines of the form I<name>B<=>I<value> or I<name>B<?=>I<value>.  The B<=> operator assigns a normal substitution variable, while the B<?=> operator (since dpkg 1.21.8) assigns an optional substitution variable which will emit no warnings even if unused.  Trailing whitespace on each line, blank lines, and lines starting with a B<#> symbol (comments) are ignored.
+Substitueringsvariabler kan anges i en fil. En sådan fil består av rader på formen I<namn>B<=>I<värde> eller I<namn>B<?=><värde>. Operatorn B<=> tilldelar en normal substitueringsvariabel, medan operatorn B<?=> (sedan dpkg 1.21.8) tilldelar en valfri variabel som inte skriver ut någon varning även om den inte används. Avslutande blanksteg på en rad, blanka rader och rader som börjar med en B<#>-symbol (kommentarer) ignoreras.
 
-=head2 Substitution
+=head2 Substituering
 
-Variables can be set using the B<-V> common option.  They can be also specified in the file B<debian/substvars> (or whatever other file is specified using the B<-T> common option).
+Variabler kan sättas genom att använda den gemensamma kommandoradsflaggan B<-V>. De kan även anges i filen B<debian/substvars> (eller vilken som helst annan fil som anges med gemensamma flaggan B<-T>).
 
-After all the substitutions have been done each occurrence of the string B<${}> (which is not an actual substitution variable) is replaced with a B<$> sign.  This can be used as an escape sequence such as B<${}{>I<VARIABLE>B<}> which will end up as B<${>I<VARIABLE>B<}> on the output.
+När alla substitueringar har utförts ersätts varje förekomst av strängen B<${}> (som inte är en faktisk substitueringsvariabel) med ett B<$>-tecken. Detta kan användas som en ersättningssekvens såsom B<${}{>I<VARIABEL>B<}> vilket kommer bli till B<${>I<VARIABLE>B<}> i utdata.
 
 Om en variabel refereras till men inte definieras kommer en varning att genereras och ett tomt värde används.
 
@@ -57,9 +57,9 @@ Så blir resultatet:
   .
   Mer text.
 
-=head2 Built-in Variable
+=head2 Inbyggda variabler
 
-Additionally, the following standard variables are always available:
+I tillägg är alltid följande standardvariabler tillgängliga:
 
 =over 
 
@@ -111,11 +111,11 @@ Ytterligare diskutrymme som används när paketet installeras. Om värdet är sa
 
 =item B<S:>I<fältnamn>
 
-Värdet på källkods-strofens fält I<fältnamn> (som måste anges med rätt form av stora och små bokstäver; sedan dpkg 1.18.11). Om du sätter dessa variabler händer ingenting förutom där de explicit expanderats. Variablerna är bara tillgängliga när styrfiler för binärpaketen skapas.
+The value of the source stanza field I<fieldname> (which must be given in the canonical capitalization; since dpkg 1.18.11).  Setting these variables has no effect other than on places where they are expanded explicitly. These variables are only available when generating binary control files.
 
 =item B<F:>I<fältnamn>
 
-Värdet på utdatafältet I<fältnamn> (som måste anges med rätt form av stora och små bokstäver). Om du sätter dessa variabler händer ingenting förutom där de explicit expanderats.
+The value of the output field I<fieldname> (which must be given in the canonical capitalization). Setting these variables has no effect other than on places where they are expanded explicitly.
 
 =item B<Format>
 

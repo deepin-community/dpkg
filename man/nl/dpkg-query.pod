@@ -94,7 +94,9 @@ De indeling van de uitvoer van deze optie kan niet geconfigureerd worden, maar v
 
 =item B<-W>, B<--show> [I<pakketnaampatroon>...]
 
-Net zoals de optie B<--list> zal dit alle pakketten vermelden die met het opgegeven patroon overeenkomen. De uitvoer kan evenwel aangepast worden met behulp van de optie B<--showformat>. De standaardindeling van de uitvoer gebruikt één regel per pakket dat gevonden werd, waarbij elke regel de naam (uitgebreid met de architectuurkwalificatie voor pakketten van het type B<Multi-Arch> B<same>) en de geïnstalleerde versie van het pakket bevat, onderling gescheiden door een tab.
+Net als de optie B<--list> geeft deze optie een lijst van alle pakketten die overeenkomen met de opgegeven patronen. De uitvoer kan echter worden aangepast met de optie B<--showformat>.
+
+Het standaardformaat van de uitvoer is één regel per overeenstemmend pakket, waarbij elke regel bestaat uit de pakketnaam en zijn geïnstalleerde versie, gescheiden door een tab. De naam van het pakket zal een architectuurkwalificatie bevatten bij pakketten met een veld B<Multi-Arch> met de waarde B<same> of bij een vreemde architectuur, wat een architectuur is die niet de eigen architectuur is of niet B<all>.
 
 =item B<-s>, B<--status> [I<pakketnaam>...]
 
@@ -290,7 +292,7 @@ De volgende velden zijn virtueel en worden door B<dpkg-query> gegenereerd uit wa
 
 =item B<binary:Package>
 
-Het bevat de naam van het binaire pakket met eventueel een architectuurkwalificatie zoals “libc6:amd64” (sinds dpkg 1.16.2). Er zal een architectuurkwalificatie gebruikt worden om ervoor te zorgen dat de pakketnaam niet ambigu kan zijn, bijvoorbeeld als het pakket een veld B<Multi-Arch> met als waarde B<same> heeft of als het pakket bedoeld is voor een vreemde architectuur.
+Het bevat de naam van het binaire pakket met eventueel een architectuurkwalificatie zoals “libc6:amd64” (sinds dpkg 1.16.2). Er zal een architectuurkwalificatie gebruikt worden om ervoor te zorgen dat de pakketnaam niet ambigu kan zijn bij pakketten met een veld B<Multi-Arch> met de waarde B<same> of bij een vreemde architectuur, wat een architectuur is die niet de eigen architectuur is of niet B<all>.
 
 =item B<binary:Synopsis>
 
@@ -390,6 +392,10 @@ Indien dit ingesteld is en de optie B<--root> niet opgegeven werd, zal dit gebru
 =item B<DPKG_ADMINDIR>
 
 Indien dit ingesteld werd en de optie B<--admindir> niet gebruikt werd, zal dit gebruikt worden als de datamap voor B<dpkg>.
+
+=item B<DPKG_DEBUG>
+
+Stelt het foutopsporingsmasker in (sinds dpkg 1.21.10) vanaf een octale waarde. De momenteel geaccepteerde vlaggen worden beschreven in de optie B<dpkg --debug>, maar mogelijk hebben niet al deze vlaggen effect op dit programma.
 
 =item B<DPKG_COLORS>
 

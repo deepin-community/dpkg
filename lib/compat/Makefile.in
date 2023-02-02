@@ -89,21 +89,20 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 @HAVE_SYS_ERRLIST_TRUE@am__append_1 = strerror.c
-@HAVE_LIBMD_MD5_FALSE@am__append_2 = md5.c md5.h
-@HAVE_GETOPT_FALSE@am__append_3 = getopt.c getopt.h
-@HAVE_GETOPT_LONG_FALSE@@HAVE_GETOPT_TRUE@am__append_4 = getopt.c getopt.h
-@HAVE_GETOPT_LONG_FALSE@am__append_5 = getopt1.c
-@HAVE_OBSTACK_FREE_FALSE@am__append_6 = obstack.c obstack.h
-@HAVE_STRNLEN_FALSE@am__append_7 = strnlen.c
-@HAVE_STRCHRNUL_FALSE@am__append_8 = strchrnul.c
-@HAVE_STRNDUP_FALSE@am__append_9 = strndup.c
-@HAVE_STRERROR_FALSE@am__append_10 = strerror.c
-@HAVE_STRSIGNAL_FALSE@am__append_11 = strsignal.c
-@HAVE_C99_SNPRINTF_FALSE@am__append_12 = snprintf.c vsnprintf.c
-@HAVE_ASPRINTF_FALSE@am__append_13 = asprintf.c vasprintf.c
-@HAVE_ALPHASORT_FALSE@am__append_14 = alphasort.c
-@HAVE_SCANDIR_FALSE@am__append_15 = scandir.c
-@HAVE_UNSETENV_FALSE@am__append_16 = unsetenv.c
+@HAVE_GETOPT_FALSE@am__append_2 = getopt.c getopt.h
+@HAVE_GETOPT_LONG_FALSE@@HAVE_GETOPT_TRUE@am__append_3 = getopt.c getopt.h
+@HAVE_GETOPT_LONG_FALSE@am__append_4 = getopt1.c
+@HAVE_OBSTACK_FREE_FALSE@am__append_5 = obstack.c obstack.h
+@HAVE_STRNLEN_FALSE@am__append_6 = strnlen.c
+@HAVE_STRCHRNUL_FALSE@am__append_7 = strchrnul.c
+@HAVE_STRNDUP_FALSE@am__append_8 = strndup.c
+@HAVE_STRERROR_FALSE@am__append_9 = strerror.c
+@HAVE_STRSIGNAL_FALSE@am__append_10 = strsignal.c
+@HAVE_C99_SNPRINTF_FALSE@am__append_11 = snprintf.c vsnprintf.c
+@HAVE_ASPRINTF_FALSE@am__append_12 = asprintf.c vasprintf.c
+@HAVE_ALPHASORT_FALSE@am__append_13 = alphasort.c
+@HAVE_SCANDIR_FALSE@am__append_14 = scandir.c
+@HAVE_UNSETENV_FALSE@am__append_15 = unsetenv.c
 subdir = lib/compat
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/dpkg-arch.m4 \
@@ -131,18 +130,17 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libcompat_test_la_LIBADD =
-am__libcompat_test_la_SOURCES_DIST = compat.h md5.c md5.h strchrnul.c \
-	strnlen.c strndup.c strsignal.c snprintf.c vsnprintf.c \
-	asprintf.c vasprintf.c alphasort.c scandir.c unsetenv.c \
-	strerror.c
+am__libcompat_test_la_SOURCES_DIST = compat.h strchrnul.c strnlen.c \
+	strndup.c strsignal.c snprintf.c vsnprintf.c asprintf.c \
+	vasprintf.c alphasort.c scandir.c unsetenv.c strerror.c
 @HAVE_SYS_ERRLIST_TRUE@am__objects_1 = libcompat_test_la-strerror.lo
-am_libcompat_test_la_OBJECTS = libcompat_test_la-md5.lo \
-	libcompat_test_la-strchrnul.lo libcompat_test_la-strnlen.lo \
-	libcompat_test_la-strndup.lo libcompat_test_la-strsignal.lo \
-	libcompat_test_la-snprintf.lo libcompat_test_la-vsnprintf.lo \
-	libcompat_test_la-asprintf.lo libcompat_test_la-vasprintf.lo \
-	libcompat_test_la-alphasort.lo libcompat_test_la-scandir.lo \
-	libcompat_test_la-unsetenv.lo $(am__objects_1)
+am_libcompat_test_la_OBJECTS = libcompat_test_la-strchrnul.lo \
+	libcompat_test_la-strnlen.lo libcompat_test_la-strndup.lo \
+	libcompat_test_la-strsignal.lo libcompat_test_la-snprintf.lo \
+	libcompat_test_la-vsnprintf.lo libcompat_test_la-asprintf.lo \
+	libcompat_test_la-vasprintf.lo libcompat_test_la-alphasort.lo \
+	libcompat_test_la-scandir.lo libcompat_test_la-unsetenv.lo \
+	$(am__objects_1)
 libcompat_test_la_OBJECTS = $(am_libcompat_test_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -150,31 +148,29 @@ am__v_lt_0 = --silent
 am__v_lt_1 = 
 libcompat_la_LIBADD =
 am__libcompat_la_SOURCES_DIST = empty.c compat.h compat-zlib.h \
-	gettext.h md5.c md5.h getopt.c getopt.h getopt1.c obstack.c \
-	obstack.h strnlen.c strchrnul.c strndup.c strerror.c \
-	strsignal.c snprintf.c vsnprintf.c asprintf.c vasprintf.c \
-	alphasort.c scandir.c unsetenv.c
-@HAVE_LIBMD_MD5_FALSE@am__objects_2 = md5.lo
-@HAVE_GETOPT_FALSE@am__objects_3 = getopt.lo
-@HAVE_GETOPT_LONG_FALSE@@HAVE_GETOPT_TRUE@am__objects_4 = getopt.lo
-@HAVE_GETOPT_LONG_FALSE@am__objects_5 = getopt1.lo
-@HAVE_OBSTACK_FREE_FALSE@am__objects_6 = obstack.lo
-@HAVE_STRNLEN_FALSE@am__objects_7 = strnlen.lo
-@HAVE_STRCHRNUL_FALSE@am__objects_8 = strchrnul.lo
-@HAVE_STRNDUP_FALSE@am__objects_9 = strndup.lo
-@HAVE_STRERROR_FALSE@am__objects_10 = strerror.lo
-@HAVE_STRSIGNAL_FALSE@am__objects_11 = strsignal.lo
-@HAVE_C99_SNPRINTF_FALSE@am__objects_12 = snprintf.lo vsnprintf.lo
-@HAVE_ASPRINTF_FALSE@am__objects_13 = asprintf.lo vasprintf.lo
-@HAVE_ALPHASORT_FALSE@am__objects_14 = alphasort.lo
-@HAVE_SCANDIR_FALSE@am__objects_15 = scandir.lo
-@HAVE_UNSETENV_FALSE@am__objects_16 = unsetenv.lo
+	gettext.h getopt.c getopt.h getopt1.c obstack.c obstack.h \
+	strnlen.c strchrnul.c strndup.c strerror.c strsignal.c \
+	snprintf.c vsnprintf.c asprintf.c vasprintf.c alphasort.c \
+	scandir.c unsetenv.c
+@HAVE_GETOPT_FALSE@am__objects_2 = getopt.lo
+@HAVE_GETOPT_LONG_FALSE@@HAVE_GETOPT_TRUE@am__objects_3 = getopt.lo
+@HAVE_GETOPT_LONG_FALSE@am__objects_4 = getopt1.lo
+@HAVE_OBSTACK_FREE_FALSE@am__objects_5 = obstack.lo
+@HAVE_STRNLEN_FALSE@am__objects_6 = strnlen.lo
+@HAVE_STRCHRNUL_FALSE@am__objects_7 = strchrnul.lo
+@HAVE_STRNDUP_FALSE@am__objects_8 = strndup.lo
+@HAVE_STRERROR_FALSE@am__objects_9 = strerror.lo
+@HAVE_STRSIGNAL_FALSE@am__objects_10 = strsignal.lo
+@HAVE_C99_SNPRINTF_FALSE@am__objects_11 = snprintf.lo vsnprintf.lo
+@HAVE_ASPRINTF_FALSE@am__objects_12 = asprintf.lo vasprintf.lo
+@HAVE_ALPHASORT_FALSE@am__objects_13 = alphasort.lo
+@HAVE_SCANDIR_FALSE@am__objects_14 = scandir.lo
+@HAVE_UNSETENV_FALSE@am__objects_15 = unsetenv.lo
 am_libcompat_la_OBJECTS = empty.lo $(am__objects_2) $(am__objects_3) \
 	$(am__objects_4) $(am__objects_5) $(am__objects_6) \
 	$(am__objects_7) $(am__objects_8) $(am__objects_9) \
 	$(am__objects_10) $(am__objects_11) $(am__objects_12) \
-	$(am__objects_13) $(am__objects_14) $(am__objects_15) \
-	$(am__objects_16)
+	$(am__objects_13) $(am__objects_14) $(am__objects_15)
 libcompat_la_OBJECTS = $(am_libcompat_la_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -196,7 +192,6 @@ am__depfiles_remade = ./$(DEPDIR)/alphasort.Plo \
 	./$(DEPDIR)/getopt.Plo ./$(DEPDIR)/getopt1.Plo \
 	./$(DEPDIR)/libcompat_test_la-alphasort.Plo \
 	./$(DEPDIR)/libcompat_test_la-asprintf.Plo \
-	./$(DEPDIR)/libcompat_test_la-md5.Plo \
 	./$(DEPDIR)/libcompat_test_la-scandir.Plo \
 	./$(DEPDIR)/libcompat_test_la-snprintf.Plo \
 	./$(DEPDIR)/libcompat_test_la-strchrnul.Plo \
@@ -207,12 +202,12 @@ am__depfiles_remade = ./$(DEPDIR)/alphasort.Plo \
 	./$(DEPDIR)/libcompat_test_la-unsetenv.Plo \
 	./$(DEPDIR)/libcompat_test_la-vasprintf.Plo \
 	./$(DEPDIR)/libcompat_test_la-vsnprintf.Plo \
-	./$(DEPDIR)/md5.Plo ./$(DEPDIR)/obstack.Plo \
-	./$(DEPDIR)/scandir.Plo ./$(DEPDIR)/snprintf.Plo \
-	./$(DEPDIR)/strchrnul.Plo ./$(DEPDIR)/strerror.Plo \
-	./$(DEPDIR)/strndup.Plo ./$(DEPDIR)/strnlen.Plo \
-	./$(DEPDIR)/strsignal.Plo ./$(DEPDIR)/unsetenv.Plo \
-	./$(DEPDIR)/vasprintf.Plo ./$(DEPDIR)/vsnprintf.Plo
+	./$(DEPDIR)/obstack.Plo ./$(DEPDIR)/scandir.Plo \
+	./$(DEPDIR)/snprintf.Plo ./$(DEPDIR)/strchrnul.Plo \
+	./$(DEPDIR)/strerror.Plo ./$(DEPDIR)/strndup.Plo \
+	./$(DEPDIR)/strnlen.Plo ./$(DEPDIR)/strsignal.Plo \
+	./$(DEPDIR)/unsetenv.Plo ./$(DEPDIR)/vasprintf.Plo \
+	./$(DEPDIR)/vsnprintf.Plo
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -386,6 +381,7 @@ VERSION = @VERSION@
 XGETTEXT = @XGETTEXT@
 XGETTEXT_015 = @XGETTEXT_015@
 XGETTEXT_EXTRA_OPTIONS = @XGETTEXT_EXTRA_OPTIONS@
+ZSTD_LIBS = @ZSTD_LIBS@
 Z_LIBS = @Z_LIBS@
 Z_NG_LIBS = @Z_NG_LIBS@
 abs_builddir = @abs_builddir@
@@ -463,15 +459,15 @@ libcompat_test_la_CPPFLAGS = \
 	-DTEST_LIBCOMPAT=1 \
 	# EOL
 
-libcompat_test_la_SOURCES = compat.h md5.c md5.h strchrnul.c strnlen.c \
-	strndup.c strsignal.c snprintf.c vsnprintf.c asprintf.c \
-	vasprintf.c alphasort.c scandir.c unsetenv.c $(am__append_1)
+libcompat_test_la_SOURCES = compat.h strchrnul.c strnlen.c strndup.c \
+	strsignal.c snprintf.c vsnprintf.c asprintf.c vasprintf.c \
+	alphasort.c scandir.c unsetenv.c $(am__append_1)
 libcompat_la_SOURCES = empty.c compat.h compat-zlib.h gettext.h \
 	$(am__append_2) $(am__append_3) $(am__append_4) \
 	$(am__append_5) $(am__append_6) $(am__append_7) \
 	$(am__append_8) $(am__append_9) $(am__append_10) \
 	$(am__append_11) $(am__append_12) $(am__append_13) \
-	$(am__append_14) $(am__append_15) $(am__append_16)
+	$(am__append_14) $(am__append_15)
 all: all-am
 
 .SUFFIXES:
@@ -536,7 +532,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/getopt1.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcompat_test_la-alphasort.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcompat_test_la-asprintf.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcompat_test_la-md5.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcompat_test_la-scandir.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcompat_test_la-snprintf.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcompat_test_la-strchrnul.Plo@am__quote@ # am--include-marker
@@ -547,7 +542,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcompat_test_la-unsetenv.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcompat_test_la-vasprintf.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcompat_test_la-vsnprintf.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/md5.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/obstack.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/scandir.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/snprintf.Plo@am__quote@ # am--include-marker
@@ -589,13 +583,6 @@ am--depfiles: $(am__depfiles_remade)
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
-
-libcompat_test_la-md5.lo: md5.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcompat_test_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libcompat_test_la-md5.lo -MD -MP -MF $(DEPDIR)/libcompat_test_la-md5.Tpo -c -o libcompat_test_la-md5.lo `test -f 'md5.c' || echo '$(srcdir)/'`md5.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libcompat_test_la-md5.Tpo $(DEPDIR)/libcompat_test_la-md5.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='md5.c' object='libcompat_test_la-md5.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcompat_test_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libcompat_test_la-md5.lo `test -f 'md5.c' || echo '$(srcdir)/'`md5.c
 
 libcompat_test_la-strchrnul.lo: strchrnul.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcompat_test_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libcompat_test_la-strchrnul.lo -MD -MP -MF $(DEPDIR)/libcompat_test_la-strchrnul.Tpo -c -o libcompat_test_la-strchrnul.lo `test -f 'strchrnul.c' || echo '$(srcdir)/'`strchrnul.c
@@ -818,7 +805,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/getopt1.Plo
 	-rm -f ./$(DEPDIR)/libcompat_test_la-alphasort.Plo
 	-rm -f ./$(DEPDIR)/libcompat_test_la-asprintf.Plo
-	-rm -f ./$(DEPDIR)/libcompat_test_la-md5.Plo
 	-rm -f ./$(DEPDIR)/libcompat_test_la-scandir.Plo
 	-rm -f ./$(DEPDIR)/libcompat_test_la-snprintf.Plo
 	-rm -f ./$(DEPDIR)/libcompat_test_la-strchrnul.Plo
@@ -829,7 +815,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/libcompat_test_la-unsetenv.Plo
 	-rm -f ./$(DEPDIR)/libcompat_test_la-vasprintf.Plo
 	-rm -f ./$(DEPDIR)/libcompat_test_la-vsnprintf.Plo
-	-rm -f ./$(DEPDIR)/md5.Plo
 	-rm -f ./$(DEPDIR)/obstack.Plo
 	-rm -f ./$(DEPDIR)/scandir.Plo
 	-rm -f ./$(DEPDIR)/snprintf.Plo
@@ -893,7 +878,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/getopt1.Plo
 	-rm -f ./$(DEPDIR)/libcompat_test_la-alphasort.Plo
 	-rm -f ./$(DEPDIR)/libcompat_test_la-asprintf.Plo
-	-rm -f ./$(DEPDIR)/libcompat_test_la-md5.Plo
 	-rm -f ./$(DEPDIR)/libcompat_test_la-scandir.Plo
 	-rm -f ./$(DEPDIR)/libcompat_test_la-snprintf.Plo
 	-rm -f ./$(DEPDIR)/libcompat_test_la-strchrnul.Plo
@@ -904,7 +888,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/libcompat_test_la-unsetenv.Plo
 	-rm -f ./$(DEPDIR)/libcompat_test_la-vasprintf.Plo
 	-rm -f ./$(DEPDIR)/libcompat_test_la-vsnprintf.Plo
-	-rm -f ./$(DEPDIR)/md5.Plo
 	-rm -f ./$(DEPDIR)/obstack.Plo
 	-rm -f ./$(DEPDIR)/scandir.Plo
 	-rm -f ./$(DEPDIR)/snprintf.Plo

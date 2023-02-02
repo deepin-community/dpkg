@@ -126,6 +126,12 @@ O sistema tem programas sob I</usr/local/bin> ou I</usr/local/sbin>.
 
 O sistema tem bibliotecas, sejam estáticas ou partilhadas sob I</usr/local/lib>.
 
+=item B<can-execute-cross-built-programs>
+
+O sistema pode executar programas de compilação cruzada, seja diretamente ou via algum tipo de emulação.
+
+Desde dpkg 1.21.10.
+
 =back
 
 =item B<Installed-Build-Depends:> (necessário)

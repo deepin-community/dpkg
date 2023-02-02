@@ -24,7 +24,7 @@ B<dpkg-scansources> [I<flagga>...] I<binärkatalog> [I<överstyrningsfil> [I<sö
 
 B<dpkg-scansources> söker genom den givna I<binärkatalogen> efter I<.dsc>-filer. De används för att skapa ett Debiankällkodsindex, vilket skrivs på standard ut.
 
-I<Överstyrningsfil>en, om den anges, används för att ställa in prioriteter i de skapade indexposterna, samt för att ersätta fält de paketansvariga ger i I<.dsc>-filerna. Filen kan vara komprimerad (sedan dpkg 1.15.5). Se B<deb-override>(5) för en beskrivning av formatet för denna fil.
+The I<override-file>, if given, is used to set priorities in the resulting index stanzas and to override the maintainer field given in the I<.dsc> files.  The file can be compressed (since dpkg 1.15.5).  See B<deb-override>(5)  for the format of this file.
 
 B<Observera:> Eftersom överstyrningsfilen indexerar per binärpaket, inte källkodspaket, uppstår det ett problem här. Nuvarande implementation använder den högsta prioriteten av samtliga binärpaket som skapas av en I<.dsc>-fil som prioritet för källkodspaketet, och överstyrningsposten för det första binärpaket som listas i I<.dsc>-filen för att ersätta information från paketansvariga. Detta kan komma att ändras.
 
@@ -38,7 +38,7 @@ B<Observera:> Om du vill läsa den skapade Sources-filen med B<apt>(8) måste du
 
 =item B<-n>, B<--no-sort>
 
-Sortera inte indexposterna. De sorteras normalt efter namn på källkodspaketet.
+Do not sort the index stanzas.  Normally they are sorted by source package name.
 
 =item B<-e>, B<--extra-override> I<fil>
 

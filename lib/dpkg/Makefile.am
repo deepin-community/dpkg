@@ -20,6 +20,7 @@ LDADD = \
 
 EXTRA_DIST = \
 	$(test_scripts) \
+	$(test_data) \
 	libdpkg.map \
 	libdpkg.pc.in \
 	# EOL
@@ -44,6 +45,7 @@ libdpkg_la_LIBADD += \
 	$(LIBINTL) \
 	$(Z_LIBS) \
 	$(LZMA_LIBS) \
+	$(ZSTD_LIBS) \
 	$(BZ2_LIBS) \
 	# EOL
 endif
@@ -86,10 +88,12 @@ libdpkg_la_SOURCES = \
 	glob.c \
 	i18n.c i18n.h \
 	log.c \
+	meminfo.c \
 	mlib.c \
 	namevalue.c \
 	nfmalloc.c \
 	options.c \
+	options-dirs.c \
 	options-parsers.c \
 	pager.c \
 	parse.c \
@@ -150,6 +154,7 @@ pkginclude_HEADERS = \
 	fsys.h \
 	glob.h \
 	macros.h \
+	meminfo.h \
 	namevalue.h \
 	options.h \
 	pager.h \
@@ -194,6 +199,7 @@ test_programs = \
 	t/t-string \
 	t/t-file \
 	t/t-buffer \
+	t/t-meminfo \
 	t/t-path \
 	t/t-progname \
 	t/t-subproc \
@@ -221,6 +227,13 @@ test_scripts = \
 	t/t-tarextract.t \
 	t/t-treewalk.t \
 	t/t-trigdeferred.t \
+	# EOL
+
+test_data = \
+	t/data/meminfo-no-data \
+	t/data/meminfo-no-info \
+	t/data/meminfo-no-unit \
+	t/data/meminfo-ok \
 	# EOL
 
 BENCHMARK_LDADD_FLAGS = \

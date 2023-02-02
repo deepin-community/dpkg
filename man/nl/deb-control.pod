@@ -48,7 +48,7 @@ Moet opgemaakt worden volgens de indeling “Joe Bloggs E<lt>jbloggs@foo.comE<gt
 
 =item B<Description:> I<korte-beschrijving> (aanbevolen)
 
-=item B<> I<uitgebreide-beschrijving>
+=item S< >I<uitgebreide-beschrijving>
 
 De indeling van een pakketbeschrijving bestaat uit een beknopte korte samenvatting op de eerste regel (na de veldmarkering B<Description>) en een langere meer gedetailleerde beschrijving op de volgende regels. Elke regel van de uitgebreide beschrijving moet voorafgegaan worden door een spatie, en lege regels in de uitgebreide beschrijving moeten één enkele ‘B<.>’ bevatten die volgt op de eraan voorafgaande spatie.
 
@@ -72,13 +72,13 @@ Bij benadering de totale grootte van de door het pakket geïnstalleerde bestande
 
 =item B<Protected:> B<yes>|B<no>
 
-Meestal is dit veld enkel nodig als het antwoord B<yes> is. Het duidt een pakket aan dat vereist is voor het correct opstarten van het systeem. L<dpkg(1)> of om het even welk ander installatiegereedschap zal niet toestaan dat een pakket van het type B<Protected> verwijderd wordt (tenminste niet zonder dat één van de forceeropties gebruikt wordt).
+Meestal is dit veld enkel nodig als het antwoord B<yes> is. Het geeft een pakket aan dat doorgaans vereist is voor het correct opstarten van het systeem of gebruikt wordt voor aangepaste systeem-lokale metapakketten. L<dpkg(1)> of om het even welk ander installatiegereedschap zal niet toestaan dat een pakket van het type B<Protected> verwijderd wordt (tenminste niet zonder dat één van de forceeropties gebruikt wordt).
 
 Ondersteund sinds dpkg 1.20.1.
 
 =item B<Essential:> B<yes>|B<no>
 
-Meestal is dit veld enkel nodig als het antwoord B<yes> is. Het duidt een pakket aan dat vereist is opdat het systeem behoorlijk zou functioneren. L<dpkg(1)> of om het even welk ander installatiegereedschap zal niet toestaan dat een pakket van het type B<Essential> verwijderd wordt (tenminste niet zonder dat één van de forceeropties gebruikt wordt).
+Meestal is dit veld enkel nodig als het antwoord B<yes> is. Het geeft een pakket aan dat vereist is voor het verpakkingssysteem, voor de goede werking van het systeem in het algemeen of tijdens het opstarten (hoewel dit laatste in plaats daarvan zou moeten worden omgezet naar het veld B<Protected>). L<dpkg(1)> of om het even welk ander installatiegereedschap zal niet toestaan dat een pakket van het type B<Essential> verwijderd wordt (tenminste niet zonder dat één van de forceeropties gebruikt wordt).
 
 =item B<Build-Essential:> B<yes>|B<no>
 
@@ -138,7 +138,7 @@ De naam van het broncodepakket waaruit dit binaire pakket afkomstig is, indien d
 
 =item B<Installer-Menu-Item:> I<waarde>
 
-Deze velden worden door het installatieprogramma van Debian gebruikt en zijn meestal niet nodig. Zie voor meer details over deze velden /usr/share/doc/debian-installer/devel/modules.txt uit het pakket B<debian-installer>.
+Deze velden worden door het installatieprogramma van Debian gebruikt en zijn meestal niet nodig. Zie voor meer details over deze velden L<https://salsa.debian.org/installer-team/debian-installer/-/raw/master/doc/devel/modules.txt>.
 
 =item B<Depends:> I<pakketlijst>
 

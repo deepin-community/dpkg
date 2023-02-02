@@ -100,6 +100,7 @@ dpkg_deb_LDADD = \
 	$(LDADD) \
 	$(Z_LIBS) \
 	$(LZMA_LIBS) \
+	$(ZSTD_LIBS) \
 	$(BZ2_LIBS) \
 	# EOL
 
@@ -160,6 +161,7 @@ TESTSUITE_AT += $(srcdir)/at/deb-content.at
 TESTSUITE_AT += $(srcdir)/at/deb-split.at
 TESTSUITE_AT += $(srcdir)/at/realpath.at
 TESTSUITE_AT += $(srcdir)/at/divert.at
+TESTSUITE_AT += $(srcdir)/at/chdir.at
 EXTRA_DIST += $(TESTSUITE_AT)
 
 TESTSUITE = $(srcdir)/at/testsuite

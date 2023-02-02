@@ -74,7 +74,7 @@ Räknar upp namn och e-postadresser till med-underhållare av paketet, i samma f
 
 =item B<Description:> I<kort-beskrivning>)
 
-=item B<> I<lång-beskrivning>
+=item S< >I<lång-beskrivning>
 
 Formatet för källkodspaketbeskrivningen är en kortfattad sammanfattning på den första raden (efter fältet B<Description>). Följande rader bör användas för en längre, mer detaljerad beskrivning. Varje rad i den lägre beskrivningen måste inledas med ett blanksteg, och blanka rader i den långa beskrivningen måste innehålla en ensam ”B<.>” efter det inledande blanksteget.
 

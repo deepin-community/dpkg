@@ -83,7 +83,7 @@ static void checkforremoval(struct pkginfo *pkgtoremove,
       ok = DEP_CHECK_DEFER;
     if (ok == DEP_CHECK_DEFER)
       /* Don't burble about reasons for deferral. */
-      varbuf_rollback(raemsgs, &raemsgs_state);
+      varbuf_rollback(&raemsgs_state);
     if (ok < *rokp) *rokp= ok;
   }
 }
@@ -289,7 +289,7 @@ removal_bulk_remove_files(struct pkginfo *pkg)
       usenode = namenodetouse(namenode, pkg, &pkg->installed);
 
       varbuf_reset(&fnvb);
-      varbuf_add_str(&fnvb, instdir);
+      varbuf_add_str(&fnvb, dpkg_fsys_get_dir());
       varbuf_add_str(&fnvb, usenode->name);
       varbuf_end_str(&fnvb);
       varbuf_snapshot(&fnvb, &fnvb_state);
@@ -334,19 +334,19 @@ removal_bulk_remove_files(struct pkginfo *pkg)
 
       trig_path_activate(usenode, pkg);
 
-      varbuf_rollback(&fnvb, &fnvb_state);
+      varbuf_rollback(&fnvb_state);
       varbuf_add_str(&fnvb, DPKGTEMPEXT);
       varbuf_end_str(&fnvb);
       debug(dbg_eachfiledetail, "removal_bulk cleaning temp '%s'", fnvb.buf);
       path_remove_tree(fnvb.buf);
 
-      varbuf_rollback(&fnvb, &fnvb_state);
+      varbuf_rollback(&fnvb_state);
       varbuf_add_str(&fnvb, DPKGNEWEXT);
       varbuf_end_str(&fnvb);
       debug(dbg_eachfiledetail, "removal_bulk cleaning new '%s'", fnvb.buf);
       path_remove_tree(fnvb.buf);
 
-      varbuf_rollback(&fnvb, &fnvb_state);
+      varbuf_rollback(&fnvb_state);
       varbuf_end_str(&fnvb);
 
       debug(dbg_eachfiledetail, "removal_bulk removing '%s'", fnvb.buf);
@@ -419,7 +419,7 @@ static void removal_bulk_remove_leftover_dirs(struct pkginfo *pkg) {
     usenode = namenodetouse(namenode, pkg, &pkg->installed);
 
     varbuf_reset(&fnvb);
-    varbuf_add_str(&fnvb, instdir);
+    varbuf_add_str(&fnvb, dpkg_fsys_get_dir());
     varbuf_add_str(&fnvb, usenode->name);
     varbuf_end_str(&fnvb);
 
@@ -472,7 +472,6 @@ static void removal_bulk_remove_leftover_dirs(struct pkginfo *pkg) {
     }
 
     push_leftover(&leftover,namenode);
-    continue;
   }
   write_filelist_except(pkg, &pkg->installed, leftover, 0);
 
@@ -561,8 +560,7 @@ static void removal_bulk_remove_configfiles(struct pkginfo *pkg) {
       p= strrchr(fnvb.buf,'/'); if (!p) continue;
       *p = '\0';
       varbuf_reset(&removevb);
-      varbuf_add_str(&removevb, fnvb.buf);
-      varbuf_add_char(&removevb, '/');
+      varbuf_add_dir(&removevb, fnvb.buf);
       varbuf_end_str(&removevb);
       varbuf_snapshot(&removevb, &removevb_state);
 
@@ -604,7 +602,7 @@ static void removal_bulk_remove_configfiles(struct pkginfo *pkg) {
         debug(dbg_stupidlyverbose, "removal_bulk conffile dsd entry not it");
         continue;
       yes_remove:
-        varbuf_rollback(&removevb, &removevb_state);
+        varbuf_rollback(&removevb_state);
         varbuf_add_str(&removevb, de->d_name);
         varbuf_end_str(&removevb);
         debug(dbg_conffdetail, "removal_bulk conffile dsd entry removing '%s'",
@@ -653,9 +651,7 @@ void removal_bulk(struct pkginfo *pkg) {
     pkg_set_want(pkg, PKG_WANT_PURGE);
     dpkg_version_blank(&pkg->configversion);
   } else if (pkg->want == PKG_WANT_PURGE) {
-
     removal_bulk_remove_configfiles(pkg);
-
   }
 
   /* I.e., either of the two branches above. */

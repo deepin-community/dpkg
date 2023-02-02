@@ -115,6 +115,8 @@ Aktuelle Implementierung: das B<preinst> überprüft, ob die Conffile verändert
 
 Beim Upgrade eines Pakets wird B<dpkg> einen Symlink nicht automatisch in ein Verzeichnis und umgekehrt umwandeln. Installationen älterer Versionen („downgrades“) werden nicht unterstützt und der Pfad verbleibt wie er ist.
 
+Hinweis: Die während dieser Schalter erstellten Symlinks und Verzeichnisse müssen in dem neuen Paket ausgeliefert werden oder B<dpkg> wird nicht in der Lage sein, sie beim endgültigen Löschen zu entfernen.
+
 =head2 Einen Symlink in ein Verzeichnis umwandeln
 
 Falls ein Symlink in ein echtes Verzeichnis umgewandelt wird, müssen Sie vor dem Entpacken sicherstellen, dass der Symlink entfernt wird. Anfänglich erscheint dies als einfache Änderung am Skript B<preinst>, allerdings wird dies zu einigen Problemen führen, falls der Administrator lokale Anpassungen des Symlinks durchgeführt hat oder falls ein Downgrade des Pakets auf eine alte Version durchgeführt wird.
@@ -201,7 +203,7 @@ B<dh_installdeb>(1).
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

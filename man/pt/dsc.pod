@@ -74,7 +74,7 @@ Lista todos os nomes e endereços de email de co-maintainers do pacote, no mesmo
 
 =item B<Description> I<short-description>
 
-=item B<> I<long-description>
+=item S< >I<long-description>
 
 O formato da descrição do pacote fonte é um sumário breve e curto na primeira linha (após o campo B<Description>). As linhas seguintes devem ser usadas para uma descrição longa e mais detalhada. Cada linha da descrição longa tem de ser precedida com um espaço, e as linhas em branco na descrição longa têm de conter um único ‘B<.>’  a seguir ao espaço que precede.
 

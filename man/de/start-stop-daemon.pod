@@ -190,9 +190,13 @@ Dies ändert die Priorität des Prozesses, bevor er gestartet wird.
 
 Dies ändert die Prozesssteuerstrategie („process scheduler policy“) und die Priorität des Prozesses, bevor dieser gestartet wird (seit Version 1.15.0). Die Priorität kann optional festgelegt werden, indem ein B<:> gefolgt von einem Wert angegeben wird. Die Standard-I<Priorität> beträgt 0. Die derzeit unterstützten Werte für die Strategie lauten B<other>, B<fifo> und B<rr>.
 
+Diese Option könnte auf einigen Systemen, auf denen POSIX-Prozessauftragsplanung (Scheduling) nicht unterstützt wird, nichts durchführen.
+
 =item B<-I>, B<--iosched> I<Klasse>B<:>I<Priorität>
 
 Dies ändert die EA-Steuerklasse („IO scheduler class“) und die Priorität des Prozesses, bevor dieser gestartet wird (seit Version 1.15.0). Die Priorität kann optional festgelegt werden, indem ein B<:> gefolgt von einem Wert angegeben wird. Die Standard-I<Priorität> beträgt 4, außer I<Klasse> lautet B<idle>, dann beträgt sie immer 7. Die derzeit unterstützten Werte für die I<Klasse> lauten B<idle>, B<best-effort> und B<real-time>.
+
+Diese Option könnte auf einigen Systemen, auf denen Linux-EA-Auftragsplanung (Scheduling) nicht unterstützt wird, nichts durchführen.
 
 =item B<-k>, B<--umask> I<Maske>
 
@@ -265,8 +269,8 @@ Den Daemon B<food> starten, falls noch keiner läuft (ein Prozess mit Namen food
 =over 
 
  start-stop-daemon --start --oknodo --user food --name food \
- 	--pidfile %RUNSTATEDIR%/food.pid --startas /usr/sbin/food \
- 	--chuid food -- --daemon
+   --pidfile %RUNSTATEDIR%/food.pid --startas /usr/sbin/food \
+   --chuid food -- --daemon
 
 =back
 
@@ -275,7 +279,7 @@ B<SIGTERM> an B<food> schicken und bis zu fünf Sekunden auf sein Beenden warten
 =over 
 
  start-stop-daemon --stop --oknodo --user food --name food \
- 	--pidfile %RUNSTATEDIR%/food.pid --retry 5
+   --pidfile %RUNSTATEDIR%/food.pid --retry 5
 
 =back
 
@@ -284,14 +288,14 @@ Vorführung eines angepassten Plans zum Beenden von B<food>:
 =over 
 
  start-stop-daemon --stop --oknodo --user food --name food \
- 	--pidfile %RUNSTATEDIR%/food.pid --retry=TERM/30/KILL/5
+   --pidfile %RUNSTATEDIR%/food.pid --retry=TERM/30/KILL/5
 
 =back
 
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

@@ -126,6 +126,12 @@ Das System hat Programme unter I</usr/local/bin> oder I</usr/local/sbin>.
 
 Das System hat Bibliotheken, entweder statische oder Laufzeit-, unter I</usr/local/lib>.
 
+=item B<can-execute-cross-built-programs>
+
+Das System kann Cross-gebaute Programme ausführen, entweder direkt oder mittels einer Emulationsschicht.
+
+Unterstützt seit Dpkg 1.21.10.
+
 =back
 
 =item B<Installed-Build-Depends:> (verpflichtend)
@@ -155,7 +161,7 @@ L<deb822(5)>, B<deb-changes>(5), B<deb-version>(7), B<dpkg-genbuildinfo>(1).
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2022 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die
