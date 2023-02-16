@@ -76,7 +76,7 @@ Cela signifie que si un paquet a besoin de renommer ou supprimer un fichier de c
 
 =head2 Supprimer un fichier de configuration
 
-Note: This can be replaced in most cases by the C<remove-on-upgrade> flag in F<DEBIAN/conffiles> (since dpkg 1.20.6), see L<deb-conffiles(5)>.
+S<Note :> cela peut être remplacé dans la majorité des cas par le drapeau C<remove-on-upgrade> dans F<DEBIAN/conffiles> (depuis S<dpkg 1.20.6),> voir L<deb-conffiles(5)>.
 
 Si un fichier de configuration est complètement supprimé, il doit être effacé du disque sauf si l'administrateur local l'a modifié. Les éventuelles modifications locales doivent être conservées. Si la mise à jour du paquet est interrompue, le fichier de configuration rendu obsolète ne doit pas avoir disparu.
 
@@ -86,13 +86,13 @@ L'ensemble de ces pré-requis est mis en œuvre en utilisant les commandes shell
 
 Z<>
  dpkg-maintscript-helper rm_conffile \
-    I<conffile> I<prior-version> I<package> -- "$@"
+    I<fichier-de-configuration> I<version-précédente> I<paquet> -- "$@"
 
 =back
 
 I<fichier-de-configuration> est le nom du fichier de configuration à supprimer.
 
-Détails de la mise en œuvre S<actuelle : dans> le script B<preinst>, il est vérifié si le fichier de configuration a été modifié. Celui-ci est alors renommé, soit en I<fichier-de-configuration>B<.dpkg-remove> s'il n'a pas été modifié, soit en I<fichier-de-configuration>B<.dpkg-backup> s'il l'a été. Dans le script B<postinst>, ce dernier fichier est ensuite renommé en I<fichier-de-configuration>B<.dpkg-bak> et conservé pour référence puisqu'il contient des modifications locales, mais le premier est supprimé. Si la mise à jour du paquet est interrompue, le script B<postrm> remet en place le fichier de configuration d'origine. À la purge du paquet, le script B<postrm> supprimera également le fichier B<.dpkg-bak> qui avait été conservé jusque là.
+Détails de la mise en œuvre S<actuelle :> dans le script B<preinst>, il est vérifié si le fichier de configuration a été modifié. Celui-ci est alors renommé, soit en I<fichier-de-configuration>B<.dpkg-remove> s'il n'a pas été modifié, soit en I<fichier-de-configuration>B<.dpkg-backup> s'il l'a été. Dans le script B<postinst>, ce dernier fichier est ensuite renommé en I<fichier-de-configuration>B<.dpkg-bak> et conservé pour référence puisqu'il contient des modifications locales, mais le premier est supprimé. Si la mise à jour du paquet est interrompue, le script B<postrm> remet en place le fichier de configuration d'origine. À la purge du paquet, le script B<postrm> supprimera également le fichier B<.dpkg-bak> qui avait été conservé jusque là.
 
 =head2 Renommer un fichier de configuration
 
@@ -104,19 +104,20 @@ Un renommage élégant peut être mis en œuvre avec les extraits shell qui suiv
 
 Z<>
  dpkg-maintscript-helper mv_conffile \
-    I<old-conffile> I<new-conffile> I<prior-version> I<package> -- "$@"
+    I<ancien-fichier-configuration> I<nouveau-fichier-configuration>
+    I<version-précédente> I<paquet> -- "$@"
 
 =back
 
 I<ancien-fichier-configuration> et I<nouveau-fichier-configuration> sont l'ancien et le nouveau nom du fichier de configuration à renommer.
 
-Détails de la mise en œuvre S<actuelle : dans> le script B<preinst>, il est vérifié si le fichier de configuration a été modifié. Celui-ci est alors soit laissé en place s'il a été modifié, soit renommé en I<ancien-fichier-configuration>B<.dpkg-remove> s'il ne l'a pas été. Lors de la configuration, le script B<postinst> supprime I<ancien-fichier-configuration>B<.dpkg-remove> et renomme I<ancien-fichier-configuration> et I<nouveau-fichier-configuration> si I<ancien-fichier-configuration> existe toujours. Si la mise à jour ou l'installation sont interrompues, le script B<postrm> renomme I<ancien-fichier-configuration>B<.dpkg-remove> en I<ancien-fichier-configuration> si c'est indispensable.
+Détails de la mise en œuvre S<actuelle :> dans le script B<preinst>, il est vérifié si le fichier de configuration a été modifié. Celui-ci est alors soit laissé en place s'il a été modifié, soit renommé en I<ancien-fichier-configuration>B<.dpkg-remove> s'il ne l'a pas été. Lors de la configuration, le script B<postinst> supprime I<ancien-fichier-configuration>B<.dpkg-remove> et renomme I<ancien-fichier-configuration> et I<nouveau-fichier-configuration> si I<ancien-fichier-configuration> existe toujours. Si la mise à jour ou l'installation sont interrompues, le script B<postrm> renomme I<ancien-fichier-configuration>B<.dpkg-remove> en I<ancien-fichier-configuration> si c'est indispensable.
 
 =head1 SUBSTITUTIONS DE LIENS SYMBOLIQUES ET DE RÉPERTOIRES
 
 Lors de la mise à niveau d'un paquet, B<dpkg> ne substitue pas automatiquement un lien symbolique à un répertoire ou le contraire. Les retours à une version inférieure ne sont pas pris en charge et le chemin sera laissé comme il est.
 
-Note: The symlinks and directories created during these switches need to be shipped in the new packages, or B<dpkg> will not be able to remove them on purge.
+S<Note :> Les liens symboliques et les répertoires créés pendant cette substitution doivent être fournis dans les nouveau paquets, sinon B<dpkg> sera incapable de les supprimer lors de la purge.
 
 =head2 Substituer un lien symbolique à un répertoire
 
@@ -128,7 +129,7 @@ Un renommage élégant peut être mis en œuvre avec les extraits shell qui suiv
 
 Z<>
  dpkg-maintscript-helper symlink_to_dir \
-    I<pathname> I<old-target> I<prior-version> I<package> -- "$@"
+    I<nom-de-chemin> I<ancienne-cible> I<version-précédente> I<paquet> -- "$@"
 
 =back
 
@@ -146,7 +147,7 @@ Une substitution élégante peut être mise en œuvre avec les extraits shell qu
 
 Z<>
  dpkg-maintscript-helper dir_to_symlink \
-    I<pathname> I<new-target> I<prior-version> I<package> -- "$@"
+    I<nom-de-chemin> I<nouvelle-cible> I<version-précédente> I<paquet> -- "$@"
 
 =back
 
@@ -158,7 +159,7 @@ Détails de la mise en œuvre S<actuelle :> dans le script B<preinst>, il est v�
 
 Lors de l'utilisation d'un assistant d'empaquetage, veuillez vérifier s'il ne dispose pas d'une intégration native de B<dpkg-maintscript-helper> ce qui vous facilitera la tâche. Voir par exemple B<dh_installdeb>(1).
 
-Comme B<dpkg-maintscript-helper> est utilisé dans le script B<preinst>, l'utiliser sans conditions impose une pré-dépendance afin de garantir que la version minimale nécessaire de B<dpkg> ait bien été préalablement configurée. La version minimale dépend de la commande S<utilisée :> ainsi pour B<rm_conffile> et B<mv_conffile>, cette version S<est 1.15.7.2,> pour B<symlink_to_dir> et B<dir_to_symlink>, S<c'est 1.17.14 :>
+Comme B<dpkg-maintscript-helper> est utilisé dans le script B<preinst>, l'utiliser sans conditions impose une pré-dépendance afin de garantir que la version minimale nécessaire de B<dpkg> ait bien été préalablement configurée. La version minimale dépend de la commande S<utilisée :> ainsi pour B<rm_conffile> et B<mv_conffile>, cette version est 1.15.7.2, pour B<symlink_to_dir> et B<dir_to_symlink>, c'est S<1.17.14 :>
 
 =over 
 
@@ -171,8 +172,8 @@ Cependant, dans de nombreux cas, l'opération réalisée par le programme n'est 
 =over 
 
 Z<>
- if dpkg-maintscript-helper supports I<command>; then
-    dpkg-maintscript-helper I<command> ...
+ if dpkg-maintscript-helper supports I<commande>; then
+    dpkg-maintscript-helper I<commande> ...
  fi
 
 =back
@@ -185,11 +186,11 @@ La commande B<supports> retournera B<0> en cas de réussite, B<1> autrement. Ell
 
 =item B<DPKG_ROOT>
 
-If set, it will be used as the filesystem root directory.
+Si cette variable est positionnée, ce répertoire sera utilisé comme répertoire racine du système de fichiers.
 
 =item B<DPKG_ADMINDIR>
 
-If set, it will be used as the B<dpkg> data directory.
+Si cette variable est positionnée, ce répertoire sera utilisé comme répertoire de données pour B<dpkg>.
 
 =item B<DPKG_COLORS>
 

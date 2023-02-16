@@ -34,17 +34,17 @@ Cette valeur est destinée à permettre de gérer des erreurs dans les anciens n
 
 =item I<version_amont>
 
-La partie principale du numéro de version. Cela correspond normalement au numéro de version du paquet d'origine S<(« upstream »)> qui a servi à créer le fichier I<.deb>, si cela peut s'appliquer. Le format d'origine spécifié par l'auteur est généralement S<conservé ;> cependant, il arrive qu'il soit nécessaire d'adapter ce numéro pour qu'il se conforme au format du système de gestion de paquet et du procédé de comparaison des numéros de version.
+La partie principale du numéro de version. Cela correspond normalement au numéro de version du paquet d'origine S<(« upstream »)> qui a servi à créer le fichier I<.deb>, si cela peut s'appliquer. Le format d'origine spécifié par l'auteur est généralement conservé ; cependant, il arrive qu'il soit nécessaire d'adapter ce numéro pour qu'il se conforme au format du système de gestion de paquet et du procédé de comparaison des numéros de version.
 
 Le principe de comparaison du système de gestion de paquets en ce qui concerne la I<version_amont> est décrit ci-dessous. La partie I<version_amont> du numéro de version est obligatoire.
 
-La I<version_amont> ne doit contenir que des caractères alphanumériques S<(« A-Za-z0-9 »)> et les caractères B<.> B<+> B<-> B<:> B<~> (point, plus, tiret, deux-points, tilde) et devrait commencer par un chiffre. S'il n'y a pas de partie I<révision_Debian> alors le tiret n'est pas S<autorisé ;> s'il n'y a pas d'I<epoch>, alors c'est le caractère deux-points qui n'est pas autorisé.
+La I<version_amont> ne doit contenir que des caractères alphanumériques S<(« A-Za-z0-9 »)> et les caractères B<.> B<+> B<-> B<:> B<~> (point, plus, tiret, deux-points, tilde) et devrait commencer par un chiffre. S'il n'y a pas de partie I<révision_Debian> alors le tiret n'est pas autorisé ; s'il n'y a pas d'I<epoch>, alors c'est le caractère deux-points qui n'est pas autorisé.
 
 =item I<révision_Debian>
 
 Cette partie du numéro de version indique la version du paquet Debian à partir du numéro de la version amont. Elle ne doit contenir que des symboles alphanumériques et les caractères B<+> B<.> B<~> (plus, point, tilde). Elle est analysée de la même façon que la I<version_amont>.
 
-Cette partie est S<facultative ;> si elle n'est pas présente, la I<version_amont> ne doit pas contenir de tiret. Ce format est prévu pour le cas où un logiciel a été directement conçu comme paquet Debian, il n'y a donc qu'une seule S<« debianisation »> et donc par la suite pas besoin d'indication de révision.
+Cette partie est facultative ; si elle n'est pas présente, la I<version_amont> ne doit pas contenir de tiret. Ce format est prévu pour le cas où un logiciel a été directement conçu comme paquet Debian, il n'y a donc qu'une seule S<« debianisation »> et donc par la suite pas besoin d'indication de révision.
 
 Il est convenu de repartir à S<« 1 »> pour la I<révision_Debian> à chaque fois que la I<version_amont> est incrémentée.
 
@@ -68,7 +68,7 @@ Notez que le rôle de epoch est de permettre de se sortir des problèmes de num�
 
 =head1 NOTES
 
-Le caractère tilde S<(« ~ »)> et sa propriété spéciale pour les comparaisons ont été introduites dans la S<version 1.10> de dpkg. Ce n'est qu'à partir des versions supérieures (1.10.x) que certaines parties des scripts de construction de dpkg ont commencé à gérer ce système.
+Le caractère tilde S<(« ~ »)> et sa propriété spéciale pour les comparaisons ont été introduites dans la version 1.10 de dpkg. Ce n'est qu'à partir des versions supérieures (1.10.x) que certaines parties des scripts de construction de dpkg ont commencé à gérer ce système.
 
 =head1 VOIR AUSSI
 

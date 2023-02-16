@@ -100,15 +100,15 @@ Visar version och avslutar.
 
 =item B<--depotdir> I<katalog>
 
-Specifies an alternative directory for the queue of parts awaiting automatic reassembly. The default is B<%ADMINDIR%/parts>.
+Anger en alternativ katalog för kön av delar som väntar på automatisk sammanslagning. Förvalet är B<%ADMINDIR%/parts>.
 
 =item B<--admindir> I<katalog>
 
-Set the administrative directory to I<directory> (since dpkg 1.21.10).  This is where the I<statoverride> file is stored.  Defaults to «I<%ADMINDIR%>» if B<DPKG_ADMINDIR> has not been set.
+Ställ den administrativa katalogen till I<katalog> (sedan dpkg 1.21.10). Det är här I<statoverride>-filen lagras. Förval är ”I<%ADMINDIR%>” om B<DPKG_ADMINDIR> inte har satts.
 
 =item B<--root> I<katalog>
 
-Set the root directory to B<directory> (since dpkg 1.21.10), which sets the installation directory to «I<directory>» and the administrative directory to «I<directory>B<%ADMINDIR%>» if B<DPKG_ROOT> has not been set.
+Sätt rotkatalogen till B<katalog> (sedan dpkg 1.21.10), vilket sätter installationskatalogen till ”I<katalog>” och den administrativa katalogen till ”I<katalog>B<%ADMINDIR%>” om B<DPKG_ROOT> inte har satts.
 
 =item B<-S>, B<--partsize> I<kibibyte>
 
@@ -158,15 +158,15 @@ Uppkommer endast med B<--auto> och anger att I<del>filen inte var en del av ett 
 
 =item B<DPKG_ROOT>
 
-If set and B<--root> option has not been specified, it will be used as the filesystem root directory (since dpkg 1.21.10).
+Om satt och flaggan B<--root> inte har angivits används det som filsystemets rotkatalog (sedan dpkg 1.21.10).
 
 =item B<DPKG_ADMINDIR>
 
-If set and the B<--admindir> or B<--root> options have not been specified, it will be used as the B<dpkg> data directory (since dpkg 1.21.10).
+Om satt, och flaggorna B<--admindir> och B<-root> inte har angivits, används värdet som administrativ katalog för B<dpkg> (sedan dpkg 1.21.10).
 
 =item B<DPKG_DEBUG>
 
-Sets the debug mask (since dpkg 1.21.10) from an octal value.  The currently accepted flags are described in the B<dpkg --debug> option, but not all these flags might have an effect on this program.
+Anger felsökningsmasken (sedan dpkg 1.21.10) från ett oktalt värde. De flaggor som för närvarande godtas beskrivs i flaggan B<dpkg --debug>, men alla dess flaggor påverkar inte nödvändigtvis detta program.
 
 =item B<DPKG_COLORS>
 

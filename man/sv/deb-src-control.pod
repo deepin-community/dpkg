@@ -24,7 +24,7 @@ B<debian/control>
 
 Varje Debiankällkodspaket innehåller huvudstyrfilen ”B<debian/control>”, och dess L<deb822(5)>-format är en övermängd av B<control>-filen som medföljer Debianbinärpaket, se B<deb-control>(5).
 
-This file contains at least 2 stanzas, separated by a blank line.  The first stanza lists all information about the source package in general, while each following stanza describes exactly one binary package.  Each stanza consists of at least one field.  A field starts with a fieldname, such as B<Package> or B<Section> (case insensitive), followed by a colon, the body of the field (case sensitive unless stated otherwise) and a newline.  Multi-line fields are also allowed, but each supplementary line, without a fieldname, should start with at least one space. The content of the multi-line fields is generally joined to a single line by the tools (except in the case of the B<Description> field, see below). To insert empty lines into a multi-line field, insert a dot after the space.  Lines starting with a ‘B<#>’ are treated as comments.
+Filen innehåller åtminstone två stycken, avdelade med en tomrad. Det första stycket innehåller all generell information om källkodspaketet, medan de följande styckena beskriver exakt ett binärpaket. Varje stycke består av åtminstone ett fält. Ett fält inleds med ett fältnamn, till exempel B<Package> eller B<Section> (skiftlägesokänsligt), följt av ett kolon, fältinnehållet (skiftlägekänsligt om inte annat anges) och ett nyradstecken. Flerradiga fält är också tillåtna, men varje ytterligare rad som inte innehåller ett fältnamn, bör starta med minst ett blanksteg. Innehållet i flerradsfält slås normalt samman till en enda rad av verktygen (förutom i fallet fältet B<Description>, se nedan). För att sätta in tomma rader i ett flerradsfält, skriver du en punkt efter blanksteget. Rader som börjar med ett ”B<#>” tolkas som kommentarer.
 
 =head1 KÄLLKODSFÄLT
 
@@ -170,7 +170,7 @@ Observera att beroenden på paket i B<build-essential>-uppsättningen kan utelä
 
 =head1 BINÄRFÄLT
 
-Note that the B<Priority>, B<Section> and B<Homepage> fields can also be in a binary stanza to override the global value from the source package.
+Observera att fälten B<Priority>, B<Section> och B<Homepage> även kan användas i de stycken som beskriver binärpaket för att överstyra de globala värdena för källkodspaketet.
 
 =over 
 
@@ -188,11 +188,11 @@ Arkitekturen anger på vilken typ av maskinvara paketet körs. För paket som k�
 
 =item B<Build-Profiles:> I<begränsningsformel>
 
-This field specifies the conditions for which this binary package does or does not build.  To express that condition, the same restriction formula syntax from the B<Build-Depends> field is used (including the angle brackets).
+Det här fältet anger villkor för när binärpaketet ska eller inte ska byggas. För att uttrycka villkoret används samma syntax för begränsningsformeln som för fältet B<Build-Depends> (inklusive vinkelparenteserna).
 
-If a binary package stanza does not contain this field, then it implicitly means that it builds with all build profiles (including none at all).
+Om ett stycke för ett binärpaket inte innehåller det här fältet betyder det implicit att det bygger i alla byggprofiler (inklusive ingen alls).
 
-In other words, if a binary package stanza is annotated with a non-empty B<Build-Profiles> field, then this binary package is generated if and only if the condition expressed by the conjunctive normal form expression evaluates to true.
+Med andra ord, om ett stycke för ett binärpaket är försett med ett icke-tomt B<Build-Profiles>-fält kommer det binärpaketet byggas om, och endast om, villkoret, uttryckt i konjunktiv normalform, utvärderas till sant.
 
 =item B<Protected:> B<yes>|B<no>
 
@@ -238,7 +238,7 @@ Det här fältet anger beroenden mellan paket. De diskuteras i manualsidan B<deb
 
 =item B<Installer-Menu-Item:> I<värde>
 
-These fields are used by the debian-installer in B<udeb>s and are usually not needed.  For more details about them, see L<https://salsa.debian.org/installer-team/debian-installer/-/raw/master/doc/devel/modules.txt>.
+Dessa fält används av debian-installer i B<udeb>-formatet och behövs normalt inte. För mer information om dem, se L<https://salsa.debian.org/installer-team/debian-installer/-/raw/master/doc/devel/modules.txt>.
 
 =back
 

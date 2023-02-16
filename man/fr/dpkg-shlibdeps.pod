@@ -18,7 +18,7 @@ dpkg-shlibdeps - Générateur de variables de substitution de dépendances pour 
 
 =head1 SYNOPSIS
 
-B<dpkg-shlibdeps> [I<option>...] [B<-e>] I<executable> [I<option>...]
+B<dpkg-shlibdeps> [I<option>...] [B<-e>] I<exécutable> [I<option>...] 
 
 =head1 DESCRIPTION
 
@@ -98,7 +98,7 @@ Cette option inclut les bonnes dépendances envers les bibliothèques partagées
 
 Ajoute I<répertoire> au début de la liste des répertoires où chercher des bibliothèques partagées privées (depuis S<dpkg 1.17.0).> Cette option peut être utilisée plusieurs fois.
 
-B<Note:> Use this option instead of setting B<LD_LIBRARY_PATH>, as that environment variable is used to control the run-time linker and abusing it to set the shared library paths at build-time can be problematic when cross-compiling for example.
+S<B<Note :>> Utilisez cette option plutôt que le réglage de B<LD_LIBRARY_PATH>, parce que cette variable d'environnement est utilisée pour contrôler l'éditeur de liens d'exécution et se servir d'elle pour définir les chemins des bibliothèques partagées au moment de la construction peut être problématique, par exemple, lors d'une compilation croisée.
 
 =item B<-d>I<champ-dépendance>
 
@@ -126,7 +126,7 @@ Lire les informations de remplacement concernant les dépendances envers les bib
 
 =item B<-T>I<fichier-substvars>
 
-Écrire les variables de substitution dans S<I<fichier-substvars> ;> le fichier par défaut est B<debian/substvars>.
+Écrire les variables de substitution dans I<fichier-substvars> ; le fichier par défaut est B<debian/substvars>.
 
 =item B<-v>
 
@@ -150,19 +150,19 @@ Pas d'échec si l'information de dépendance ne peut pas être trouvée pour une
 
 =item B<--warnings=>I<valeur>
 
-I<valeur> est un champ de S<« bit »> définissant l'ensemble des avertissements qui peuvent être émis par B<dpkg-shlibdeps> (depuis S<dpkg 1.14.17).> Le bit B<0> S<(valeur = 1)> active l'avertissement S<« symbole> I<sym> utilisé par le I<binaire> trouvé dans aucune des S<bibliothèques ».> Le bit B<1> S<(valeur = 2)> active l'avertissement S<« le> paquet pourrait éviter une dépendance S<inutile ».> Le bit B<2> S<(valeur = 4)> active l'avertissement S<« Le> I<binaire> ne devrait pas être lié à S<I<bibliothèque> ».> La I<valeur> par défaut est S<B<3> :> les deux premières mises en garde sont actives par défaut, la dernière ne l'est pas. Positionnez la I<valeur> S<à 7> si vous souhaitez que tous les avertissements soient actifs.
+I<valeur> est un champ de S<« bit »> définissant l'ensemble des avertissements qui peuvent être émis par B<dpkg-shlibdeps> (depuis S<dpkg 1.14.17).> Le bit B<0> (valeur = 1) active l'avertissement S<« symbole> I<sym> utilisé par le I<binaire> trouvé dans aucune des S<bibliothèques ».> Le bit B<1> (valeur = 2) active l'avertissement S<« le> paquet pourrait éviter une dépendance S<inutile ».> Le bit B<2> (valeur = 4) active l'avertissement S<« Le> I<binaire> ne devrait pas être lié à S<I<bibliothèque> ».> La I<valeur> par défaut est S<B<3> :> les deux premières mises en garde sont actives par défaut, la dernière ne l'est pas. Positionnez la I<valeur> à 7 si vous souhaitez que tous les avertissements soient actifs.
 
 =item B<--admindir>=I<répertoire>
 
-Changer l'endroit où se trouve la base de données de B<dpkg> (depuis S<dpkg 1.14.0).> Par défaut, c'est I<%ADMINDIR%>.
+Changer l'endroit où se trouve la base de données de B<dpkg> (depuis dpkg 1.14.0). Par défaut, c'est I<%ADMINDIR%>.
 
 =item B<-?>, B<--help>
 
-Affiche un message d'aide puis quitte.
+Afficher un message d'aide puis quitter.
 
 =item B<--version>
 
-Affiche le numéro de version puis quitte.
+Afficher le numéro de version puis quitter.
 
 =back
 
@@ -176,7 +176,7 @@ Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement ac
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS S<– Native> Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
 
 =back
 
@@ -193,7 +193,7 @@ bibliothèques.>
 
 Le symbole indiqué n'a pas été trouvé dans les bibliothèques liées au binaire. Le I<binaire> est probablement plutôt une bibliothèque et il doit être lié avec une bibliothèque supplémentaire durant le processus de construction (l'option B<-l>I<bibliothèque> de l'éditeur de liens).
 
-=item I<binary> B<contient une référence non résolue au symbole> S<I<sym> B<:> il
+=item I<binary> B<contient une référence non résolue au symbole> I<sym> B<: il
 s'agit probablement d'un greffon (plugin)>
 
 Le symbole indiqué n'a pas été trouvé dans les bibliothèques liées avec le fichier binaire. Le I<binaire> est très probablement un greffon (plugin) et le symbole est probablement fourni par le programme qui charge ce greffon. En théorie, un greffon n'a pas de S<« SONAME »> mais ce binaire en possède un et n'a pas pu être identifié en tant que tel. Cependant, le fait que le binaire soit stocké dans un répertoire non public est une indication forte qu'il ne s'agit pas d'une bibliothèque partagée normale. Si le binaire est vraiment un greffon, vous pouvez ignorer cet avertissement. Il existe cependant une possibilité qu'il s'agisse d'un vrai binaire et que les programmes avec lequel il est lié utilisent un RPATH afin que le chargeur dynamique le trouve. Dans ce cas, la bibliothèque est incorrecte et doit être corrigée.
@@ -223,7 +223,7 @@ B<dpkg-shlibdeps> échouera s'il ne peut pas trouver de bibliothèque publique u
 =over 
 
 =item B<impossible de trouver la bibliothèque> I<library-soname> B<demandée par
-le> I<binaire> B<(son RPATH est S<«> I<rpath>B< »)>>
+le> I<binaire> B<(son RPATH est «> S<I<rpath>B< »)>>
 
 Le I<binaire> utilise une bibliothèque appelée I<library-soname> mais B<dpkg-shlibdeps> n'a pas été en mesure de trouver cette bibliothèque. B<dpkg-shlibdeps> crée une liste de répertoires à vérifier de la manière S<suivante :> les répertoires énumérés dans le RPATH du binaire, les répertoires ajoutés par l'option B<-l>, les répertoires listés dans la variable d'environnement B<LD_LIBRARY_PATH>, les répertoires croisés multi-architerctures (par exemple, /lib/arm64-linux-gnu, /usr/lib/arm64-linux-gnu), les répertoires publics standard (/lib, /usr/lib), les répertoires listés dans /etc/ld.so.conf et les répertoires obsolètes multilib (/lib32, /usr/lib32, /lib64, /usr/lib64). Ensuite, il vérifie les répertoires qui sont dans l'arbre de construction du paquet binaire en cours d'analyse, dans l'arbre de construction du paquet indiqué avec l'option de ligne de commande B<-S>, dans les autres arbres de paquets qui contiennent un fichier DEBIAN/shlibs ou DEBIAN/symbols et enfin dans le répertoire racine. Si la bibliothèque n'est pas trouvée dans l'un de ces répertoires, alors ce message d'erreur est obtenu.
 

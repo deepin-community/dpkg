@@ -28,7 +28,7 @@ B<dpkg> sert à installer ou à supprimer des paquets sur le système.
 
 Il est possible d'exécuter B<dpkg-deb> en appelant B<dpkg> avec les options de B<dpkg-deb>. B<dpkg> comprend que B<dpkg-deb> est appelé et le lance.
 
-Pour la plupart des commandes recevant un argument d'entrée d'archive, l'archive peut être lue à partir de l'entrée standard si le nom d'archive est donné sous la forme d'un caractère moins S<(« B<-> »)> S<unique ;> sinon, l'absence de prise en charge sera documentée dans leurs descriptions de commande respectives.
+Pour la plupart des commandes recevant un argument d'entrée d'archive, l'archive peut être lue à partir de l'entrée standard si le nom d'archive est donné sous la forme d'un caractère moins S<(« B<-> »)> unique ; sinon, l'absence de prise en charge sera documentée dans leurs descriptions de commande respectives.
 
 =head1 COMMANDES
 
@@ -36,9 +36,9 @@ Pour la plupart des commandes recevant un argument d'entrée d'archive, l'archiv
 
 =item B<-b>, B<--build> I<répertoire-binaire> [I<archive>|I<répertoire>]
 
-Crée une archive Debian avec l'arborescence contenue dans I<répertoire-binaire>. I<répertoire-binaire> doit posséder un sous-répertoire B<DEBIAN> qui contient les fichiers de contrôle tels que le fichier S<« control »> lui-même. Ce répertoire I<n'apparaît pas> dans l'archive de l'arborescence du paquet S<binaire ;> mais les fichiers qu'il contient sont mis dans la zone de contrôle du paquet binaire.
+Crée une archive Debian avec l'arborescence contenue dans I<répertoire-binaire>. I<répertoire-binaire> doit posséder un sous-répertoire B<DEBIAN> qui contient les fichiers de contrôle tels que le fichier S<« control »> lui-même. Ce répertoire I<n'apparaît pas> dans l'archive de l'arborescence du paquet binaire ; mais les fichiers qu'il contient sont mis dans la zone de contrôle du paquet binaire.
 
-À moins de préciser B<--nocheck>, B<dpkg-deb> lit B<DEBIAN/control> et l'analyse. Il cherche dans le fichier les erreurs de syntaxe et d'autres problèmes S<existants ;> puis il affiche le nom du paquet binaire qu'il construit. B<dpkg-deb> vérifie aussi les permissions des scripts du responsable et des autres fichiers qu'il trouve dans le répertoire de contrôle B<DEBIAN>.
+À moins de préciser B<--nocheck>, B<dpkg-deb> lit B<DEBIAN/control> et l'analyse. Il cherche dans le fichier les erreurs de syntaxe et d'autres problèmes existants ; puis il affiche le nom du paquet binaire qu'il construit. B<dpkg-deb> vérifie aussi les permissions des scripts du responsable et des autres fichiers qu'il trouve dans le répertoire de contrôle B<DEBIAN>.
 
 Quand aucune I<archive> n'est donnée, B<dpkg-deb> écrit le paquet dansI<répertoire-binaire>B<.deb>.
 
@@ -52,7 +52,7 @@ Donne des renseignements sur une archive de paquet binaire.
 
 Quand aucun argument I<fichier-control> n'est précisé, un résumé du contenu du paquet ainsi que son fichier S<« control »> sont affichés.
 
-Quand un argument I<fichier-control> est précisé, B<dpkg-deb> affiche les éléments dans l'ordre S<d'apparition ;> quand l'un des éléments n'est pas présent, il affiche un message d'erreur sur S<« stderr »> et quitte avec un code égal à B<2>.
+Quand un argument I<fichier-control> est précisé, B<dpkg-deb> affiche les éléments dans l'ordre d'apparition ; quand l'un des éléments n'est pas présent, il affiche un message d'erreur sur S<« stderr »> et quitte avec un code égal à B<2>.
 
 =item B<-W>, B<--show> I<archive>
 
@@ -72,19 +72,19 @@ L'absence des champs demandés ne provoque pas de message d'erreur.
 
 Liste la partie arborescence des fichiers d'une archive de paquet. Elle est actuellement produite dans le format généré par un listing verbeux de B<tar>.
 
-=item B<-x>, B<--extract> I<archive> I<directory>
+=item B<-x>, B<--extract> I<archive> I<répertoire>
 
 Extrait l'arborescence des fichiers d'un paquet archive dans le répertoire spécifié.
 
-Il faut remarquer que l'extraction d'un paquet dans le répertoire root I<ne produit pas> une installation S<correcte !> Utilisez B<dpkg> pour l'installation des paquets.
+Il faut remarquer que l'extraction d'un paquet dans le répertoire root I<ne produit pas> une installation correcte ! Utilisez B<dpkg> pour l'installation des paquets.
 
 I<répertoire> est créé si nécessaire (mais pas ses répertoires parents) et ses permissions sont modifiées pour correspondre au contenu du paquet.
 
-=item B<-X>, B<--vextract> I<archive> I<directory>
+=item B<-X>, B<--vextract> I<archive> I<répertoire>
 
 Comme B<--extract> (B<-x>) avec B<--verbose> (B<-v>), ce qui affiche la liste des fichiers au fur et à mesure qu'ils sont extraits.
 
-=item B<-R>, B<--raw-extract> I<archive> I<directory>
+=item B<-R>, B<--raw-extract> I<archive> I<répertoire>
 
 Extrait l'arborescence des fichiers d'un paquet archive dans le répertoire spécifié et les fichiers d'information de contrôle dans un sous-répertoire nommé B<DEBIAN> de ce répertoire (depuis S<dpkg 1.16.1).>
 
@@ -94,7 +94,7 @@ L'archive d'entrée n'est pas actuellement traitée de façon séquentielle, aus
 
 =item B<--ctrl-tarfile> I<archive>
 
-Extrait les données de contrôle d'un paquet binaire et les envoie sur la sortie standard dans le format propre à la commande B<tar> (depuis S<dpkg 1.17.14).> En combinant cette option avec la commande B<tar>(1), on peut ainsi extraire un fichier de contrôle précis d'une archive de paquet. L'archive d'entrée sera toujours traitée séquentiellement.
+Extrait les données de contrôle d'un paquet binaire et les envoie sur la sortie standard dans le format propre à la commande B<tar> (depuis dpkg 1.17.14). En combinant cette option avec la commande B<tar>(1), on peut ainsi extraire un fichier de contrôle précis d'une archive de paquet. L'archive d'entrée sera toujours traitée séquentiellement.
 
 =item B<--fsys-tarfile> I<archive>
 
@@ -110,11 +110,11 @@ Le répertoire cible est créé si nécessaire (mais pas ses répertoires parent
 
 =item B<-?>, B<--help>
 
-Affiche un message d'aide puis quitte.
+Afficher un message d'aide puis quitter.
 
 =item B<--version>
 
-Affiche le numéro de version puis quitte.
+Afficher le numéro de version puis quitter.
 
 =back
 
@@ -126,13 +126,13 @@ Affiche le numéro de version puis quitte.
 
 Cette option sert à spécifier le format de sortie de l'option B<--show>. Ce format sera utilisé pour chaque paquet listé.
 
-Cet argument est une chaîne qui peut référencer tout champ avec la forme S<« ${I<field-name>} » ;> une liste des champs valables peut être facilement produite avec l'option B<-I> sur le même paquet. Une explication complète des options de formatage (avec les séquences d'échappement et les espaces entre les champs) se trouve dans la page B<dpkg-query>(1), option B<--showformat>.
+Cet argument est une chaîne qui peut référencer tout champ avec la forme S<« ${I<field-name>} »> ; une liste des champs valables peut être facilement produite avec l'option B<-I> sur le même paquet. Une explication complète des options de formatage (avec les séquences d'échappement et les espaces entre les champs) se trouve dans la page B<dpkg-query>(1), option B<--showformat>.
 
 Par défaut, la valeur de ce champ est S<« ${Package}\t${Version}\n ».>
 
 =item B<-z>I<niveau_compression>
 
-Specify which compression level to use on the compressor backend, when building a package (default is 9 for gzip, 6 for xz, 3 for zstd).  The accepted values are compressor specific.  For gzip, from 0-9 with 0 being mapped to compressor none.  For xz from 0-9.  For zstd from 0-22, with levels from 20 to 22 enabling its ultra mode.  Before dpkg 1.16.2 level 0 was equivalent to compressor none for all compressors.
+Indique le niveau de compression à fournir au logiciel de compression appelé en sous-main lors de la compression du paquet. La valeur par défaut est 9 pour gzip, 6 pour xz, 3 pour zstd. Les valeurs possibles sont spécifiques aux S<compresseurs :> pour gzip entre 0 et 9, 0 correspond à aucune compression, pour xz entre 0 et 9, pour zstd de 0 à 22, les niveaux 20 à 22 activant son mode ultra. Avant la version 1.16.2, la valeur 0 correspondait à S<« aucune> S<compression »> pour tous les logiciels de compression.
 
 =item B<-S>I<stratégie-compression>
 
@@ -140,19 +140,19 @@ Indique la stratégie de compression à fournir au logiciel de compression appel
 
 =item B<-Z>I<type_compression>
 
-Specify which compression type to use when building a package.  Allowed values are B<gzip>, B<xz> (since dpkg 1.15.6), B<zstd> (since dpkg 1.21.18) and B<none> (default is B<xz>).
+Indique le type de compression à utiliser lors de la construction d'un paquet. Les valeurs autorisées sont B<gzip>, B<xz> (depuis S<dpkg 1.15.6),> B<zstd> (depuis S<dpkg 1.21.18)> et B<none> (B<xz> est la valeur par défaut).
 
 =item B<--[no-]uniform-compression>
 
-Specify that the same compression parameters should be used for all archive members (i.e. B<control.tar> and B<data.tar>; since dpkg 1.17.6).  Otherwise only the B<data.tar> member will use those parameters. The only supported compression types allowed to be uniformly used are B<none>, B<gzip>, B<xz> and B<zstd>.  The B<--no-uniform-compression> option disables uniform compression (since dpkg 1.19.0).  Uniform compression is the default (since dpkg 1.19.0).
+Indique que les mêmes paramètres de compression doivent être utilisés pour tous les membres de l'archive (c'est-à-dire B<control.tar> et B<data.tar> ; depuis S<dpkg 1.17.6).> Sinon, seul le membre B<data.tar> utilisera ces paramètres. Les seuls types de compression pris en charge permis pour une utilisation uniforme sont B<none>, B<gzip>, B<xz> et B<zstd>. L'option B<--no-uniform-compression> désactive la compression uniforme (depuis S<dpkg 1.19.0).> La compression uniforme est l'option par défaut (depuis S<dpkg 1.19.0).>
 
 =item B<--threads-max=>I<threads>
 
-Sets the maximum number of threads allowed for compressors that support multi-threaded operations (since dpkg 1.21.9).
+Fixe le nombre maximal de processus permis pour les compresseurs qui gèrent les opérations multi-threadées (depuis S<dpkg 1.21.9).>
 
 =item B<--root-owner-group>
 
-Fixe le propriétaire et le groupe de chaque entrée dans les données de l'arborescence du système de fichiers à root avec S<l'identité 0> (depuis S<dpkg 1.19.0).>
+Fixe le propriétaire et le groupe de chaque entrée dans les données de l'arborescence du système de fichiers à root avec l'identité 0 (depuis dpkg 1.19.0).
 
 S<B<Note> :> cette option peut être utile pour les constructions sans root (voir I<rootless-builds.txt>) mais ne devrait B<pas> être utilisée si les entrées ont un propriétaire ou un groupe qui n'est pas root. Leur prise en charge sera ajoutée plus tard sous la forme d'un méta-manifeste.
 
@@ -160,7 +160,7 @@ S<B<Note> :> cette option peut être utile pour les constructions sans root (voi
 
 Indique la version du format d'archive utilisé lors de la construction (depuis S<dpkg 1.17.0).> Les valeurs autorisées sont B<2.0> pour le nouveau format et B<0.939000> pour l'ancien (la valeur par défaut est B<2.0>).
 
-L'ancien format d'archive, moins facilement compris par les outils non-Debian, est maintenant dépassé. On l'utilise seulement quand on construit des paquets qui doivent être analysés par des versions de dpkg plus anciennes que la S<version 0.93.76> (septembre 1995), qui fut produite uniquement pour le format S<« i386> S<a.out ».>
+L'ancien format d'archive, moins facilement compris par les outils non-Debian, est maintenant dépassé. On l'utilise seulement quand on construit des paquets qui doivent être analysés par des versions de dpkg plus anciennes que la version 0.93.76 (septembre 1995), qui fut produite uniquement pour le format S<« i386> S<a.out ».>
 
 =item B<--nocheck>
 
@@ -186,7 +186,7 @@ L'action demandée s'est correctement déroulée.
 
 =item B<2>
 
-Erreur fatale ou irrécupérable due à l'utilisation d'une ligne de commande non valable, ou interactions avec le système, telles que des accès à la base de données, des allocations de S<mémoire, etc.>
+Erreur fatale ou irrécupérable due à l'utilisation d'une ligne de commande non valable, ou interactions avec le système, telles que des accès à la base de données, des allocations de mémoire, etc.
 
 =back
 
@@ -196,21 +196,21 @@ Erreur fatale ou irrécupérable due à l'utilisation d'une ligne de commande no
 
 =item B<DPKG_DEB_THREADS_MAX>
 
-Sets the maximum number of threads allowed for compressors that support multi-threaded operations (since dpkg 1.21.9).
+Fixe le nombre maximal de processus permis pour les compresseurs qui gèrent les opérations multi-threadées (depuis S<dpkg 1.21.9).>
 
-The B<--threads-max> option overrides this value.
+L'option B<--threads-max> outrepasse cette valeur.
 
 =item B<DPKG_DEB_COMPRESSOR_TYPE>
 
-Sets the compressor type to use (since dpkg 1.21.10).
+Définit le type de compresseur à utiliser (depuis S<dpkg 1.21.10).>
 
-The B<-Z> option overrides this value.
+L'option B<-Z> outrepasse cette valeur.
 
 =item B<DPKG_DEB_COMPRESSOR_LEVEL>
 
-Sets the compressor level to use (since dpkg 1.21.10).
+Définit le niveau de compression à utiliser (depuis S<dpkg 1.21.10).>
 
-The B<-z> option overrides this value.
+L'option B<-z> outrepasse cette valeur.
 
 =item B<DPKG_COLORS>
 
@@ -228,7 +228,7 @@ Si cette option est utilisée, elle sera utilisée comme horodatage (en seconde 
 
 =head1 NOTES
 
-N'essayez pas d'installer un logiciel avec S<B<dpkg-deb> !> Vous devez utiliser B<dpkg> pour être sûr que tous ses fichiers sont correctement mis en place, que les scripts du paquet sont exécutés et que son contenu et son état sont enregistrés.
+N'essayez pas d'installer un logiciel avec B<dpkg-deb> ! Vous devez utiliser B<dpkg> pour être sûr que tous ses fichiers sont correctement mis en place, que les scripts du paquet sont exécutés et que son contenu et son état sont enregistrés.
 
 =head1 BOGUES
 

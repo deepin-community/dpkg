@@ -52,7 +52,7 @@ Exécution du point d'entrée B<buildinfo> et appel de B<dpkg-genbuildinfo> pour
 
 =item B<7.>
 
-Exécution du point d'entrée B<changes> et appel de B<dpkg-genchanges> pour créer un fichier B<.changes>. Le nom du fichier B<.changes> dépendra du type de construction et sera aussi spécifique que nécessaire mais pas S<plus ;> pour une construction qui inclut B<any>, le nom sera I<nom-de-source>B<_>I<version-binaire>B<_>I<architecture>B<.changes>, ou pour une construction qui inclut B<all>, le nom sera I<nom-de-source>B<_>I<version-binaire>B<_>B<all.changes>, ou pour une construction qui inclut B<source>, le nom sera I<nom-de-source>B<_>I<version-source>B<_>B<sources.changes>. De nombreuses options de B<dpkg-buildpackage> sont passées à B<dpkg-genchanges>.
+Exécution du point d'entrée B<changes> et appel de B<dpkg-genchanges> pour créer un fichier B<.changes>. Le nom du fichier B<.changes> dépendra du type de construction et sera aussi spécifique que nécessaire mais pas plus ; pour une construction qui inclut B<any>, le nom sera I<nom-de-source>B<_>I<version-binaire>B<_>I<architecture>B<.changes>, ou pour une construction qui inclut B<all>, le nom sera I<nom-de-source>B<_>I<version-binaire>B<_>B<all.changes>, ou pour une construction qui inclut B<source>, le nom sera I<nom-de-source>B<_>I<version-source>B<_>B<sources.changes>. De nombreuses options de B<dpkg-buildpackage> sont passées à B<dpkg-genchanges>.
 
 =item B<8.>
 
@@ -68,7 +68,7 @@ Exécution du point d'entrée B<check> et appel d'un contrôleur de paquet pour 
 
 =item B<11.>
 
-It runs the B<sign> hook and signs using the OpenPGP backend (as long as it is not an UNRELEASED build, or B<--no-sign> is specified) to sign the B<.dsc> file (if any, unless B<-us> or B<--unsigned-source> is specified), the B<.buildinfo> file (unless B<-ui>, B<--unsigned-buildinfo>, B<-uc> or B<--unsigned-changes> is specified) and the B<.changes> file (unless B<-uc> or B<--unsigned-changes> is specified).
+Exécution du point d'entrée B<sign> et signature avec le dorsal OpenPGP (à condition que ce ne soit pas une construction pour UNRELEASED, ou si B<--no-sign> est spécifié), pour signature des fichiers B<.dsc> (sauf si B<-us> ou si B<--unsigned-source> sont spécifiés), B<.buildinfo> (sauf si B<-ui>, B<--unsigned-buildinfo>, B<-uc> ou B<--unsigned-changes> sont spécifiés) et B<.changes> (sauf si B<-uc> ou B<--unsigned-changes> sont spécifiés).
 
 =item B<12.>
 
@@ -84,7 +84,7 @@ Toutes les options longues peuvent être spécifiées  à la fois sur la ligne d
 
 =item B<--build=>I<type>
 
-Specifies the build I<type> from a comma-separated list of components (since dpkg 1.18.5).  All the specified components get combined to select the single build type to use, which implies a single build run with a single F<.changes> file generated.  Passed to B<dpkg-genchanges>.
+Indique le I<type> de construction à partir d'une liste de composants séparés par des virgules (depuis S<dpkg 1.18.5).> Tous les composants indiqués sont combinés pour choisir l'unique type de construction à utiliser, ce qui implique qu'une seule construction est exécuté avec la génération d'un seul fichier F<.changes>. Passé à B<dpkg-genchanges>.
 
 Les valeurs autorisées S<sont :>
 
@@ -92,9 +92,9 @@ Les valeurs autorisées S<sont :>
 
 =item B<source>
 
-Builds the source package.
+Construit le paquet source.
 
-B<Note:> When using this value standalone and if what you want is simply to (re-)build the source package from a clean source tree, using B<dpkg-source> directly is always a better option as it does not require any build dependencies to be installed which are otherwise needed to be able to call the B<clean> target.
+S<B<Note :>> quand cette valeur est utilisée toute seule et si ce que vous voulez est seulement (re)construire le paquet source à partir d'une arborescence des sources propre, l'utilisation directe de B<dpkg-source> est toujours une meilleure option dans la mesure où cela ne demande pas l'installation de dépendances de construction qui sont sinon nécessaires pour pouvoir appeler la cible B<clean>.
 
 =item B<any>
 
@@ -146,7 +146,7 @@ Construction complète. C'est un alias de B<source,any,all>, et il est identique
 
 =item B<--target> I<cible>[,...]
 
-=item B<-T>, B<--rules-target=>I<cible>
+=item B<-T>, B<--rules-target=>I<cible>[,...]
 
 Appelle B<debian/rules> I<cible> une fois par cible spécifiée, après avoir mis en place l'environnement de construction (sauf pour appeler B<dpkg-source --before-build>), puis interrompt le processus de construction (depuis S<dpkg 1.15.0,> option longue depuis S<dpkg 1.18.8,> pris en charge de multiples cibles depuis S<dpkg 1.18.16).> Si B<--as-root> est également utilisé, la commande sera exécutée avec les privilèges du superutilisateur (voir B<--root-command>). Noter que les cibles connues dont l'exécution par root est imposée n'ont pas besoin de cette option (c'est-à-dire les cibles B<clean>, B<binary>, B<binary-arch> et B<binary-indep>).
 
@@ -170,21 +170,21 @@ N'est utile qu'avec B<--target> (depuis S<dpkg 1.15.0).> Impose d'exécuter la c
 
 Passé tel quel à B<dpkg-genchanges>. Voir sa page de manuel.
 
-=item B<--build-by=>I<maintainer-address>
+=item B<--build-by=>I<adresse-du-responsable>
 
-=item B<--source-by=>I<maintainer-address> (since dpkg 1.21.10)
+=item B<--source-by=>I<adresse-du-responsable> (depuis S<dpkg 1.21.10)>
 
-Pass as B<-m> to B<dpkg-genchanges>. See its manual page.
+Passé comme B<-m> à B<dpkg-genchanges>. Voir sa page de manuel.
 
-=item B<--release-by=>I<maintainer-address>
+=item B<--release-by=>I<adresse-du-responsable>
 
-=item B<--changed-by=>I<maintainer-address> (since dpkg 1.21.10)
+=item B<--changed-by=>I<adresse-du-responsable> (depuis S<dpkg 1.21.10)>
 
-Pass as B<-e> to B<dpkg-genchanges>. See its manual page.
+Passé comme B<-e> à B<dpkg-genchanges>. Voir sa page de manuel.
 
 =item B<-a>, B<--host-arch> I<architecture>
 
-Précise l'architecture Debian pour laquelle on construit (option longue depuis S<dpkg 1.17.17).> L'architecture de la machine sur laquelle on construit est automatiquement S<déterminée ;> c'est aussi l'architecture par défaut de la machine hôte.
+Précise l'architecture Debian pour laquelle on construit (option longue depuis S<dpkg 1.17.17).> L'architecture de la machine sur laquelle on construit est automatiquement déterminée ; c'est aussi l'architecture par défaut de la machine hôte.
 
 =item B<-t>, B<--host-type> I<type-de-système-gnu>
 
@@ -202,29 +202,29 @@ Précise le type de système GNU pour lequel les binaires compilés vont constru
 
 Précise le ou les profils que l'on construit, sous forme d'une liste séparée par des virgules (depuis S<dpkg 1.17.2,> option longue depuis S<dpkg 1.18.8).> Le comportement par défaut est de construire pour un profil non spécifique. Cela les définit également (sous la forme d'une liste séparée par des espaces) en tant que variable d'environnement B<DEB_BUILD_PROFILES>, ce qui permet, par exemple, au fichiers B<debian/rules> d'utiliser cette information pour des constructions conditionnelles.
 
-=item B<-j>, B<--jobs>[I<jobs>|B<auto>]
+=item B<-j>, B<--jobs>[I<tâches>|B<auto>]
 
-Specifies the number of jobs allowed to be run simultaneously (since dpkg 1.14.7, long option since dpkg 1.18.8).  The number of jobs matching the number of online processors if B<auto> is specified (since dpkg 1.17.10), or unlimited number if I<jobs> is not specified.  The default behavior is B<auto> (since dpkg 1.18.11) in non-forced mode (since dpkg 1.21.10), and as such it is always safer to use with any package including those that are not parallel-build safe.  Setting the number of jobs to B<1> will restore serial execution.
+Spécifier le nombre de processus simultanés qui peuvent être exécutés (option longue depuis S<dpkg 1.18.8).> Le nombre de tâches correspondant au nombre de processeurs en ligne si B<auto> est indiquée (depuis S<dpkg 1.17.10),> ou un nombre illimité si I<jobs> n'est pas indiqué. Le comportement par défaut est B<auto> S<(depuis dpkg> 1.18.11) en mode non forcé (depuis S<dpkg 1.21.10)> et, à ce titre, il est plus sûr de l'utiliser avec tous les paquets y compris ceux qui ne sont pas sécurisés pour une construction parallèle. Fixer le nombre de tâches à B<1> rétablira une exécution sérielle.
 
-Will add B<parallel=>I<jobs> or B<parallel> to the B<DEB_BUILD_OPTIONS> environment variable which allows debian/rules files to opt-in to use this information for their own purposes.  The I<jobs> value will override the B<parallel=>I<jobs> or B<parallel> option in the B<DEB_BUILD_OPTIONS> environment variable.  Note that the B<auto> value will get replaced by the actual number of currently active processors, and as such will not get propagated to any child process. If the number of online processors cannot be inferred then the code will fallback to using serial execution (since dpkg 1.18.15), although this should only happen on exotic and unsupported systems.
+L'option ajoutera B<parallel=>I<tâches> ou B<parallel> à la variable d'environnement B<DEB_BUILD_OPTIONS> ce qui permet aux fichiers debian/rules de choisir d'utiliser cette information pour leurs propres besoins. La valeur I<jobs> remplacera les options B<parallel=>I<tâches> ou B<parallel> dans la variable d'environnement B<DEB_BUILD_OPTIONS>. Notez que la valeur B<auto> sera remplacée par le nombre réel de processeurs actuellement actifs, et par conséquent ne sera pas transmise à aucun processus enfant. Si le nombre de processeurs en ligne ne peut pas être déduit, alors le code utilisera par défaut une exécution sérielle (depuis S<dpkg 1.18.15),> même si cela ne devrait arriver que sur des systèmes exotiques et non pris en charge.
 
 =item B<-J>, B<--jobs-try>[=I<tâches>|B<auto>]
 
-This option (since dpkg 1.18.2, long option since dpkg 1.18.8) is equivalent to the B<-j> above.
+Cette option (depuis S<dpkg 1.18.2,> option longue depuis S<dpkg 1.18.8)> est équivalente à l'option B<-j> ci-dessus.
 
-Since the behavior for B<-j> changed in dpkg 1.21.10 to the opt-in mode, you can use this option instead if you need to guarantee semantics across dpkg release series.
+Dans la mesure où le comportement de B<-j> a changé dans S<dpkg 1.21.10> pour le mode S<« opt-in »,> vous pouvez utiliser cette option à la place si vous devez garantir des sémantiques dans toutes les versions de dpkg.
 
-=item B<--jobs-force>[=I<jobs>|B<auto>]
+=item B<--jobs-force>[=I<tâches>|B<auto>]
 
-This option (since dpkg 1.21.10) is equivalent to the B<--jobs> option except that it will enable forced parallel mode, by adding the B<make> B<-j> option with the computed number of parallel jobs to the B<MAKEFLAGS> environment variable.
+Cette option (depuis S<dpkg 1.21.10)> est équivalente à l'option B<--jobs> sauf qu'elle active le mode parallèle forcé en ajoutant l'option B<make> B<-j> avec le nombre calculé de tâches parallèles à la variable d'environnement B<MAKEFLAGS>.
 
-This should cause all subsequent make invocations to inherit the option, thus forcing the parallel setting on the packaging (and possibly the upstream build system if that uses L<make(1)>) regardless of their support for parallel builds, which might cause build failures.
+Cela devrait faire que les invocations ultérieures de make héritent de cette option, forçant donc une configuration parallèle de l'empaquetage (et potentiellement le système de construction amont s'il utilise L<make(1)>), sans tenir compte de la prise en compte des constructions parallèles, ce qui pourrait provoquer des échecs de constructions.
 
-Note: Any Makefile that is not parallel-safe should be considered to be buggy.  These should either be made parallel-safe, or marked as not being safe with the L<make(1)> B<.NOTPARALLEL> target.
+S<Note :> tout Makefile qui n'est pas sécurisé pour une utilisation parallèle devrait être considéré comme bogué. Ils devraient être soit rendus sécurisés pour une utilisation parallèle ou marqué comme non sûrs avec L<make(1)> B<.NOTPARALLEL> cible.
 
 =item B<-D>, B<--check-builddeps>
 
-Vérification des dépendances de constructions et des S<conflits ;> se termine en cas de problèmes (option longue depuis S<dpkg 1.18.8).> C'est le comportement par défaut.
+Vérification des dépendances de constructions et des conflits ; se termine en cas de problèmes (option longue depuis S<dpkg 1.18.8).> C'est le comportement par défaut.
 
 =item B<-d>, B<--no-check-builddeps>
 
@@ -244,7 +244,7 @@ Pas de nettoyage de l'arborescence des sources avant la construction (option lon
 
 =item B<--pre-clean>
 
-Nettoyage de l'arborescence des sources avant la construction (depuis S<dpkg 1.18.8).> C'est le comportement par défaut.
+Nettoyage de l'arborescence des sources avant la construction (depuis dpkg 1.18.8). C'est le comportement par défaut.
 
 =item B<-tc>, B<--post-clean>
 
@@ -256,7 +256,7 @@ Pas de nettoyage de l'arborescence des sources après la construction du paquet 
 
 =item B<--sanitize-env>
 
-Sanitize the build environment (since dpkg 1.20.0).  This will reset or remove environment variables, umask, and any other process attributes that might otherwise adversely affect the build of packages.  Because the official entry point to build packages is B<debian/rules>, packages cannot rely on these settings being in place, and thus should work even when they are not.  What to sanitize is vendor specific.
+Nettoyage de l'environnement de construction (depuis S<dpkg 1.20.0).> Cela remet à zéro ou supprime les variables d'environnement, umask et tous les autres attributs de processus qui pourrait autrement affecter défavorablement la construction des paquets. Parce que le point d'entrée officiel pour la construction des paquets est B<debian/rules>, les paquets ne peuvent pas dépendre du fait que ces réglages sont présents et donc devraient fonctionner même quand ils ne le sont pas. Ce qu'il faut nettoyer est propre au fabricant.
 
 =item B<-r>, B<--root-command=>I<commande-pour-obtenir-privilèges-de-root>
 
@@ -264,7 +264,7 @@ Quand B<dpkg-buildpackage> doit exécuter une partie du processus de constructio
 
 =item B<-R>, B<--rules-file=>I<fichier-rules>
 
-Construire un paquet Debian implique généralement l'invocation de B<debian/rules> comme une commande avec de nombreux paramètres standard (depuis S<dpkg 1.14.17,> option longue depuis S<dpkg 1.18.8).> Avec cette option, il est possible d'utiliser un autre programme à utiliser pour la construction de paquet (ainsi que ses paramètres séparés par des espaces). Une autre utilisation possible est d'exécuter le fichier rules standard avec un autre programme make (par exemple en utilisant B</usr/local/bin/make -f debian/rules> comme I<fichier-rules>).
+Construire un paquet Debian implique généralement l'invocation de B<debian/rules> comme une commande avec de nombreux paramètres standard (depuis dpkg 1.14.17, option longue depuis S<dpkg 1.18.8).> Avec cette option, il est possible d'utiliser un autre programme à utiliser pour la construction de paquet (ainsi que ses paramètres séparés par des espaces). Une autre utilisation possible est d'exécuter le fichier rules standard avec un autre programme make (par exemple en utilisant B</usr/local/bin/make -f debian/rules> comme I<fichier-rules>).
 
 =item B<--check-command=>I<commande-contrôleur>
 
@@ -278,7 +278,7 @@ Passer l'option I<opt> à I<commande-contrôleur> indiquée par B<DEB_CHECK_COMM
 
 Définir le code spécifié de l'interpréteur de commandes I<commande-de-point-d'entrée> comme point d'entrée I<nom-de-point-d'entré> qui sera exécuté aux moments spécifiés par les étapes d'exécution (depuis S<dpkg 1.17.6).> Les points d'entrée seront toujours exécutés même si l'action suivante n'est pas effectuée (sauf pour le point d'entrée B<binary>). Tous les points d'entrée seront exécutés dans le répertoire source dépaqueté.
 
-B<Note:> Hooks can affect the build process, and cause build failures if their commands fail, so watch out for unintended consequences.
+S<B<Note> :> les points d'entrée sont susceptibles d'affecter le processus de construction et provoquer des échecs de construction si leurs commandes échouent, donc attention aux conséquences inattendues.
 
 Les I<nom-de-point-d'entrée> actuellement pris en charge S<sont :>
 
@@ -294,7 +294,7 @@ Un caractère % seul.
 
 =item B<%a>
 
-Une valeur booléenne S<(0 ou 1)> qui indique si l'action suivante est effectuée.
+Une valeur booléenne (0 ou 1) qui indique si l'action suivante est effectuée.
 
 =item B<%p>
 
@@ -314,45 +314,45 @@ La version amont.
 
 =back
 
-=item B<--buildinfo-file=>I<filename>
+=item B<--buildinfo-file=>I<fichier>
 
-Set the I<filename> for the generated B<.buildinfo> file (since dpkg 1.21.0).
+Définir le I<fichier> pour le fichier B<.buildinfo> généré (depuis S<dpkg 1.21.0).>
 
 =item B<--buildinfo-option=>I<opt>
 
 Passer l'option I<opt> à B<dpkg-genbuildinfo> (depuis S<dpkg 1.18.11).> Peut être utilisé plusieurs fois.
 
-=item B<--sign-backend=>I<sign-backend>
+=item B<--sign-backend=>I<dorsal-de-signature>
 
-Specify an OpenPGP backend interface to use when invoking the I<sign-command> (since dpkg 1.21.10).
+Préciser une interface de dorsal OpenPGP à utiliser lors de l'invocation de la commande I<sign-command> (depuis S<dpkg 1.21.10).>
 
-The default is B<auto>, where the best current backend available will be used.  The specific OpenPGP backends supported in order of preference are:
+C'est B<auto> par défaut, où le meilleur dorsal présent disponible sera utilisé. Les dorsaux spécifiques à OpenPGP pris en charge sont par ordre de S<préférence :>
 
 =over 2
 
-=item B<sop> (any conforming Stateless OpenPGP implementation)
+=item B<sop> (toute implémentation conforme à Stateless OpenPGP)
 
-=item B<sq> (from Sequoia-PGP)
+=item B<sq> (de Sequoia-PGP)
 
-=item B<gpg> (from GnuPG)
+=item B<gpg> (de GnuPG)
 
 =back
 
 =item B<-p>, B<--sign-command=>I<commande-de-signature>
 
-When B<dpkg-buildpackage> needs to execute an OpenPGP backend command to sign a source control (B<.dsc>) file or a B<.changes> file it will run I<sign-command> (searching the B<PATH> if necessary) instead of the default or auto-detected backend command (long option since dpkg 1.18.8). I<sign-command> will get all the arguments defined by the B<--sign-backend>.  I<sign-command> should not contain spaces or any other shell metacharacters.
+Quand B<dpkg-buildpackage> doit exécuter une commande de dorsal OpenPGP pour signer un fichier source de contrôle (B<.dsc>) ou un fichier B<.changes>, il exécute I<commande-de-signature> (recherchée dans B<PATH> si nécessaire) au lieu de la commande de dorsal par défaut ou détectée automatiquement (option longue depuis S<dpkg 1.18.1).> I<Commande-de-signature> reçoit tous les paramètres définis par le B<--sign-backend>. I<commande-de-signature> ne devra pas contenir d'espace ni aucun métacaractère de l'interpréteur de commandes.
 
-=item B<-k>, B<--sign-keyid=>I<key-id>
+=item B<-k>, B<--sign-keyid=>I<identifiant-clé>
 
-=item B<--sign-key=>I<key-id>
+=item B<--sign-key=>I<identifiant-clé>
 
-Specify an OpenPGP key-ID (either a fingerprint or a user-ID) for the secret key to use when signing packages (B<--sign-key> since dpkg 1.18.8, B<--sign-keyid> since dpkg 1.21.10).
+Préciser un identifiant de clé OpenPGP (soit une empreinte soit un identifiant d'utilisateur) pour la clé secrète à utiliser lors de la signature des paquets (B<--sign-key> depuis S<dpkg 1.18.8,> B<--sign-keyid> depuis S<dpkg 1.21.10).>
 
-=item B<--sign-keyfile=>I<key-file>
+=item B<--sign-key=>I<fichier-de-clé>
 
-Specify an OpenPGP I<key-file> containing the secret key to use when signing packages (since dpkg 1.21.10).
+Préciser un I<fichier-de-clé> OpenPGP contenant la clé secrète à utiliser pour la signature des paquets (depuis S<dpkg 1.21.10).>
 
-Note: For security reasons the I<key-file> is best kept locked with a password.
+S<Note :> pour des raisons de sécurité, il est préférable que le I<fichier-de-clé> soit verrouillé par un mot de passe.
 
 =item B<-us>, B<--unsigned-source>
 
@@ -406,9 +406,9 @@ Chaîne passée telle quelle à B<dpkg-source>. Voir la page de manuel correspon
 
 Passer l'option I<opt> à B<dpkg-source> (depuis S<dpkg 1.15.6).> Peut être utilisé plusieurs fois.
 
-=item B<--changes-file=>I<filename>
+=item B<--changes-file=>I<fichier>
 
-Set the I<filename> for the generated B<.changes> file (since dpkg 1.21.0).
+Définir le I<fichier> pour le fichier B<.changes> généré (depuis S<dpkg 1.21.0).>
 
 =item B<--changes-option=>I<opt>
 
@@ -418,15 +418,15 @@ Passer l'option I<opt> à B<dpkg-genchanges> (depuis S<dpkg 1.15.6).> Peut être
 
 =item B<--admindir> I<rép>
 
-Changer l'endroit où se trouve la base de données de B<dpkg> (depuis S<dpkg 1.14.0).> Par défaut, c'est I<%ADMINDIR%>.
+Changer l'endroit où se trouve la base de données de B<dpkg> (depuis dpkg 1.14.0). Par défaut, c'est I<%ADMINDIR%>.
 
 =item B<-?>, B<--help>
 
-Affiche un message d'aide puis quitte.
+Afficher un message d'aide puis quitter.
 
 =item B<--version>
 
-Affiche le numéro de version puis quitte.
+Afficher le numéro de version puis quitter.
 
 =back
 
@@ -442,11 +442,11 @@ Si cette option est utilisée, elle le sera comme commande pour contrôler le fi
 
 =item B<DEB_SIGN_KEYID>
 
-If set, it will be used to sign the B<.changes>, B<.buildinfo> and B<.dsc> files (since dpkg 1.17.2).  Overridden by the B<--sign-key> option.
+Si cette option est utilisée, elle le sera pour la signature des fichiers B<.changes>, B<.buildinfo> et B<.dsc> (depuis S<dpkg 1.17.2).> Remplacée par l'option B<--sign-key>.
 
 =item B<DEB_SIGN_KEYFILE>
 
-If set, it will be used to sign the B<.changes>, B<.buildinfo> and B<.dsc> files (since dpkg 1.21.10).  Overridden by the B<--sign-keyfile> option.
+Si cette option est utilisée, elle le sera pour la signature des fichiers B<.changes>, B<.buildinfo> et B<.dsc> (depuis S<dpkg 1.21.10).> Remplacée par l'option B<--sign-keyfile>.
 
 =item B<DEB_BUILD_OPTIONS>
 
@@ -464,7 +464,7 @@ Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement ac
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS S<– Native> Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
 
 =back
 
@@ -516,7 +516,7 @@ Fichier de configuration propre à l'utilisateur
 
 =head2 Les drapeaux de compilation ne sont plus exportés.
 
-Entre les S<versions 1.14.17> S<et 1.16.1,> B<dpkg-buildpackage> exportait les drapeaux de compilation (B<CFLAGS>, B<CXXFLAGS>, B<FFLAGS>, B<CPPFLAGS> et B<LDFLAGS>) avec les valeurs que renvoyait B<dpkg-buildflags>. Cela n'est plus le cas.
+Entre les versions 1.14.17 et 1.16.1, B<dpkg-buildpackage> exportait les drapeaux de compilation (B<CFLAGS>, B<CXXFLAGS>, B<FFLAGS>, B<CPPFLAGS> et B<LDFLAGS>) avec les valeurs que renvoyait B<dpkg-buildflags>. Cela n'est plus le cas.
 
 =head2 Cibles construites par défaut
 

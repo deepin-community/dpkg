@@ -22,9 +22,9 @@ B<debian/control>
 
 =head1 DESCRIPTION
 
-Each Debian source package contains the master «B<debian/control>» file, and its L<deb822(5)> format is a superset of the B<control> file shipped in Debian binary packages, see B<deb-control>(5).
+Chaque paquet source Debian contient le fichier S<« B<debian/control> »> principal au format L<deb822(5)> dont le fichier B<control> fourni dans les paquets binaires Debian est un sous-ensemble, voir B<deb-control>(5).
 
-This file contains at least 2 stanzas, separated by a blank line.  The first stanza lists all information about the source package in general, while each following stanza describes exactly one binary package.  Each stanza consists of at least one field.  A field starts with a fieldname, such as B<Package> or B<Section> (case insensitive), followed by a colon, the body of the field (case sensitive unless stated otherwise) and a newline.  Multi-line fields are also allowed, but each supplementary line, without a fieldname, should start with at least one space. The content of the multi-line fields is generally joined to a single line by the tools (except in the case of the B<Description> field, see below). To insert empty lines into a multi-line field, insert a dot after the space.  Lines starting with a ‘B<#>’ are treated as comments.
+Ce fichier contient au moins deux paragraphes, séparés par une ligne vide. Le premier paragraphe donne toutes les informations à propos du paquet source en général et chaque paragraphe qui suit décrit exactement un paquet binaire. Chaque paragraphe contient au moins un champ. Un champ commence par le nom du champ, par exemple B<Package> ou B<Section> (la casse n'est pas significative), suivi d'un caractère S<« deux-points »,> du contenu du champ (la casse est significative à moins que cela ne soit spécifié autrement) et d'un retour à la ligne. Les champs à lignes multiples sont aussi possibles, mais chaque ligne supplémentaire, qui ne comporte pas de nom de champ, doit commencer par au moins une espace. Le contenu des champs à lignes multiples est en général réassemblé en une ligne unique par les outils (sauf pour le champ B<Description>, voir ci-dessous). Pour inclure des lignes vides dans un champ à lignes multiples, il est nécessaire de mettre un point après l'espace initiale. Les lignes commençant par S<B<« # »>> sont traitées comme des commentaires.
 
 =head1 LES CHAMPS SOURCE
 
@@ -36,7 +36,7 @@ La valeur de ce champ est le nom du paquet source et doit correspondre au nom du
 
 =item B<Maintainer:> I<nom-complet-et-adresse-électronique> (recommandé)
 
-Le format de ce champ sera S<« Jean> Dupont S<E<lt>jdupont@foo.comE<gt> » ;> il indique le responsable actuel du paquet, par opposition à l'auteur du logiciel ou au responsable originel.
+Le format de ce champ sera S<« Jean> Dupont S<E<lt>jdupont@foo.comE<gt> »> ; il indique le responsable actuel du paquet, par opposition à l'auteur du logiciel ou au responsable originel.
 
 =item B<Uploaders:> I<nom-complet-et-adresse-électronique>
 
@@ -50,7 +50,7 @@ Ce champ indique la version la plus récente des normes de la charte de la distr
 
 =item S< >I<description-longue>
 
-Le format de la description du paquet est un résumé bref sur la première ligne (après le champ B<Description>). Les lignes suivantes peuvent servir à une description plus longue et plus détaillée. Chaque ligne de cette description longue doit être précédée d'une S<espace ;> quand c'est une ligne blanche, elle doit contenir un seul S<« B<.> »> après cette espace.
+Le format de la description du paquet est un résumé bref sur la première ligne (après le champ B<Description>). Les lignes suivantes peuvent servir à une description plus longue et plus détaillée. Chaque ligne de cette description longue doit être précédée d'une espace ; quand c'est une ligne blanche, elle doit contenir un seul S<« B<.> »> après cette espace.
 
 =item B<Homepage:> I<URL>
 
@@ -72,7 +72,7 @@ Les cibles binaires n'exigeront aucun (fake)root.
 
 =item B<binary-targets>
 
-Les cibles binaires doivent toujours être exécutées avec les droits (fake)root. C'est la valeur par défaut quand le champ est S<omis ;> l'ajout du champ avec un B<binary-targets> explicite, alors qu'il n'est pas strictement nécessaire, marque qu'il a été analysé pour cette exigence.
+Les cibles binaires doivent toujours être exécutées avec les droits (fake)root. C'est la valeur par défaut quand le champ est omis ; l'ajout du champ avec un B<binary-targets> explicite, alors qu'il n'est pas strictement nécessaire, marque qu'il a été analysé pour cette exigence.
 
 =item I<mots-clés-implémentation>
 
@@ -120,11 +120,11 @@ Indique le nom de la distribution dont le paquet provient. Ce champ n'est souven
 
 =item B<Section:> I<section>
 
-Champ général qui indique la catégorie d'un S<paquet ;> cette catégorie est fondée sur le programme que ce paquet installe. B<utils>, B<net>, B<mail>, B<text>, S<B<x11>, etc.,> représentent quelques catégories habituelles.
+Champ général qui indique la catégorie d'un paquet ; cette catégorie est fondée sur le programme que ce paquet installe. B<utils>, B<net>, B<mail>, B<text>, B<x11>, etc., représentent quelques catégories habituelles.
 
 =item B<Priority:> I<priorité>
 
-Définit l'importance du paquet à l'intérieur du système général. B<required>, B<standard>, B<optional>, S<B<extra>, etc.,> représentent des priorités habituelles.
+Définit l'importance du paquet à l'intérieur du système général. B<required>, B<standard>, B<optional>, B<extra>, etc., représentent des priorités habituelles.
 
 Les champs B<Section> et B<Priority> possèdent un ensemble défini de valeurs acceptées, tiré de la Charte particulière de la distribution.
 
@@ -134,7 +134,7 @@ Liste de paquets à installer et configurer pour pouvoir construire à partir du
 
 =item B<Build-Depends-Arch:>I<liste-de-paquets>
 
-Liste analogue à B<Build-Depends>, mais restreinte aux paquets nécessaires pour construire les paquets dépendants de l'architecture. Les paquets indiqués dans B<Build-Depends> sont alors également installés. Ce champ est géré depuis la S<version 1.16.4> de S<dpkg ; pour> pouvoir construire des paquets avec des versions plus anciennes de dpkg, il est préférable d'utiliser B<Build-Depends>.
+Liste analogue à B<Build-Depends>, mais restreinte aux paquets nécessaires pour construire les paquets dépendants de l'architecture. Les paquets indiqués dans B<Build-Depends> sont alors également installés. Ce champ est géré depuis la version 1.16.4 de dpkg ; pour pouvoir construire des paquets avec des versions plus anciennes de dpkg, il est préférable d'utiliser B<Build-Depends>.
 
 =item B<Build-Depends-Indep:> I<liste-de-paquets>
 
@@ -146,7 +146,7 @@ Liste de paquets qui ne doivent pas être installés lors de la construction du 
 
 =item B<Build-Conflicts-Arch:> I<liste-de-paquets>
 
-Identique à B<Build-Conflicts>, mais n'est prise en compte que pour les paquets dépendants de l'architecture. Ce champ est géré depuis la S<version 1.16.4> de S<dpkg ;> pour pouvoir construire des paquets avec des versions plus anciennes de dpkg, il est préférable d'utiliser B<Build-Conflicts>.
+Identique à B<Build-Conflicts>, mais n'est prise en compte que pour les paquets dépendants de l'architecture. Ce champ est géré depuis la version 1.16.4 de dpkg ; pour pouvoir construire des paquets avec des versions plus anciennes de dpkg, il est préférable d'utiliser B<Build-Conflicts>.
 
 =item B<Build-Conflicts-Indep:> I<liste-de-paquets>
 
@@ -154,7 +154,7 @@ liste analogue à B<Build-Conflicts> mais restreinte à la construction des paqu
 
 =back
 
-La syntaxe des champs B<Build-Depends>, B<Build-Depends-Arch> et B<Build-Depends-Indep> est une liste de groupes contenant des paquets alternatifs. Chaque groupe est une liste de paquets séparés par des barres verticales (le symbole du tube) S<« B<|> ».> Les groupes sont séparés par des virgules S<« B<,> »,> et la liste peut finir par une virgule qui peut être éliminée lors de la création des champs pour B<deb-control>(5) (depuis S<dpkg 1.10.14).> Une virgule représente un S<« ET »> logique et une barre verticale représente un S<« OU »> S<logique ;> le tube représente un lien plus fort. Chaque nom de paquet est suivi de façon optionnelle par un type d'architecture entre crochets après deux-points S<« B<:> »,> éventuellement suivi par un numéro de version entre parenthèses S<« B<(> »> et S<« B<)> »,> une spécification d'architecture entre crochets S<« B<[> »> et S<« B<]> »,> et une formule de restriction constituée d'une ou plusieurs listes de noms de profil entre chevrons S<« B<E<lt>> »> et S<« B<E<gt>> ».>
+La syntaxe des champs B<Build-Depends>, B<Build-Depends-Arch> et B<Build-Depends-Indep> est une liste de groupes contenant des paquets alternatifs. Chaque groupe est une liste de paquets séparés par des barres verticales (le symbole du tube) S<« B<|> ».> Les groupes sont séparés par des virgules S<« B<,> »,> et la liste peut finir par une virgule qui peut être éliminée lors de la création des champs pour B<deb-control>(5) (depuis S<dpkg 1.10.14).> Une virgule représente un S<« ET »> logique et une barre verticale représente un S<« OU »> logique ; le tube représente un lien plus fort. Chaque nom de paquet est suivi de façon optionnelle par un type d'architecture entre crochets après deux-points S<« B<:> »,> éventuellement suivi par un numéro de version entre parenthèses S<« B<(> »> et S<« B<)> »,> une spécification d'architecture entre crochets S<« B<[> »> et S<« B<]> »,> et une formule de restriction constituée d'une ou plusieurs listes de noms de profil entre chevrons S<« B<E<lt>> »> et S<« B<E<gt>> ».>
 
 La syntaxe des champs B<Build-Conflicts>, B<Build-Conflicts-Arch> et B<Build-Conflicts-Indep> est une liste de paquets séparés par des virgules qui représentent le S<« ET »> logique et peut finir par une virgule qui peut être éliminée lors de la création des champs pour B<deb-control>(5) (depuis S<dpkg 1.10.14).> L'indication de paquets alternatifs avec une barre verticale (le symbole du tube) S<« | »> n'est pas prise en charge. Chaque nom de paquet peut être suivi de façon optionnelle par un numéro de version entre parenthèses, un type d'architecture entre crochets et une formule de restriction constituée d'une ou plusieurs listes de noms de profil entre chevrons.
 
@@ -170,7 +170,7 @@ Veuillez noter que les dépendances des paquets du jeu B<build-essential> peuven
 
 =head1 CHAMPS BINAIRES
 
-Note that the B<Priority>, B<Section> and B<Homepage> fields can also be in a binary stanza to override the global value from the source package.
+Veuillez noter que les champs B<Priority>, B<Section> et B<Homepage> peuvent être placés dans le paragraphe d'un paquet binaire et leur valeur remplace alors celle du paquet source.
 
 =over 
 
@@ -188,11 +188,11 @@ Ce champ indique l'architecture matérielle sur laquelle le paquet peut être ut
 
 =item B<Build-Profiles:> I<formule-de-restriction>
 
-This field specifies the conditions for which this binary package does or does not build.  To express that condition, the same restriction formula syntax from the B<Build-Depends> field is used (including the angle brackets).
+Ce champ précise les conditions pour lesquelles ce paquet binaire est ou n'est pas construit. Cette condition est exprimée en utilisant la même syntaxe de formule de restriction qui provient du champ B<Build-Depends> (y compris les chevrons).
 
-If a binary package stanza does not contain this field, then it implicitly means that it builds with all build profiles (including none at all).
+Si un paragraphe de paquet binaire ne contient pas ce champ, cela signifie de façon implicite que ce paquet se construit avec tous les profils de construction (y compris aucun profil).
 
-In other words, if a binary package stanza is annotated with a non-empty B<Build-Profiles> field, then this binary package is generated if and only if the condition expressed by the conjunctive normal form expression evaluates to true.
+En d'autres termes, si un paragraphe de paquet binaire est annoté d'un champ B<Build-Profiles> non vide, alors, ce paquet binaire est créé si et seulement si la condition exprimée par l'expression en forme normale conjonctive est évaluée à vrai.
 
 =item B<Protected:> B<yes>|B<no>
 
@@ -228,7 +228,7 @@ Ces champs sont décrits dans la page de manuel de B<deb-control>(5), car ils so
 
 =item B<Built-Using:> I<liste-de-paquets>
 
-=item B<Static-Built-Using:> I<package-list>
+=item B<Static-Built-Using:> I<liste-de-paquets>
 
 Ces champs déclarent les relations entre les paquets. Ils sont discutés dans la page de manuel de B<deb-control>(5). Quand ces champs se trouvent dans I<debian/control>, ils peuvent aussi se terminer par une virgule (depuis S<dpkg 1.10.14) ;> ils comprennent des spécifications d'architecture et des formules de restriction qui seront réduites lors de la génération des champs pour B<deb-control>(5).
 
@@ -238,7 +238,7 @@ Ces champs déclarent les relations entre les paquets. Ils sont discutés dans l
 
 =item B<Installer-Menu-Item:> I<valeur>
 
-These fields are used by the debian-installer in B<udeb>s and are usually not needed.  For more details about them, see L<https://salsa.debian.org/installer-team/debian-installer/-/raw/master/doc/devel/modules.txt>.
+Ces champs sont utilisés par l'installateur dans les B<udeb> et ne sont en général pas nécessaires. Pour plus de détails à leur sujet, consultez L<https://salsa.debian.org/installer-team/debian-installer/-/raw/master/doc/devel/modules.txt>.
 
 =back
 
@@ -268,12 +268,12 @@ Il faut prendre en compte le fait que ces champs définis par l'utilisateur se s
 
 =head1 EXEMPLE
 
- # Comment
+ # Commentaire
  Source: dpkg
  Section: admin
  Priority: required
  Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
- # this field is copied to the binary and source packages
+ # ce champ est copié dans les paquets source et binaires
  XBS-Upstream-Release-Status: stable
  Homepage: https://wiki.debian.org/Teams/Dpkg
  Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
@@ -282,24 +282,24 @@ Il faut prendre en compte le fait que ces champs définis par l'utilisateur se s
  Build-Depends: pkg-config, debhelper (>= 4.1.81),
   libselinux1-dev (>= 1.28-4) [!linux-any]
 
- Package: dpkg-dev
- Section: utils
- Priority: optional
- Architecture: all
- # this is a custom field in the binary package
- XB-Mentoring-Contact: Raphael Hertzog <hertzog@debian.org>
- Depends: dpkg (>= 1.14.6), perl5, perl-modules, cpio (>= 2.4.2-2),
-  bzip2, lzma, patch (>= 2.2-1), make, binutils, libtimedate-perl
- Recommends: gcc | c-compiler, build-essential
- Suggests: gnupg, debian-keyring
- Conflicts: dpkg-cross (<< 2.0.0), devscripts (<< 2.10.26)
- Replaces: manpages-pl (<= 20051117-1)
- Description: Debian package development tools
-  This package provides the development tools (including dpkg-source)
-  required to unpack, build and upload Debian source packages.
-  .
-  Most Debian source packages will require additional tools to build;
-  for example, most packages need make and the C compiler gcc.
+Package: dpkg-dev
+Section: utils
+Priority: optional
+Architecture: all
+# champ personnalisé dans le paquet binaire
+XB-Mentoring-Contact: Raphael Hertzog <hertzog@debian.org>
+Depends: dpkg (>= 1.14.6), perl5, perl-modules, cpio (>= 2.4.2-2), 
+ bzip2, lzma, patch (>= 2.2-1), make, binutils, libtimedate-perl
+Recommends: gcc | c-compiler, build-essential
+Suggests: gnupg, debian-keyring
+Conflicts: dpkg-cross (<< 2.0.0), devscripts (<< 2.10.26)
+Replaces: manpages-pl (<= 20051117-1)
+Description: Debian package development tools
+ This package provides the development tools (including dpkg-source)
+ required to unpack, build and upload Debian source packages.
+ .
+ Most Debian source packages will require additional tools to build;
+ for example, most packages need make and the C compiler gcc.
 
 =head1 VOIR AUSSI
 

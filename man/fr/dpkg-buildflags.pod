@@ -30,15 +30,15 @@ Les drapeaux par défaut sont définis par le distributeur mais peuvent être é
 
 =item 1.
 
-pour tout le système avec S<B<%PKGCONFDIR%/buildflags.conf> ;>
+pour tout le système avec B<%PKGCONFDIR%/buildflags.conf> ;
 
 =item 2.
 
-pour l'utilisateur courant avec B<$XDG_CONFIG_HOME/dpkg/buildflags.conf> où la valeur par défaut de B<$XDG_CONFIG_HOME> est S<B<$HOME/.config> ;>
+pour l'utilisateur courant avec B<$XDG_CONFIG_HOME/dpkg/buildflags.conf> où la valeur par défaut de B<$XDG_CONFIG_HOME> est B<$HOME/.config> ;
 
 =item 3.
 
-temporairement par l'utilisateur avec des variables d'environnement (voir B<VARIABLES S<D'ENVIRONNEMENT>) ;>
+temporairement par l'utilisateur avec des variables d'environnement (voir B<VARIABLES D'ENVIRONNEMENT>) ;
 
 =item 4.
 
@@ -50,19 +50,19 @@ Les fichiers de configuration peuvent contenir quatre types de S<directives :>
 
 =over 
 
-=item B<SET> I<flag> I<value>
+=item B<SET> I<drapeau> I<valeur>
 
 Remplace le drapeau I<drapeau> par la valeur I<valeur>.
 
-=item B<STRIP> I<flag> I<value>
+=item B<STRIP> I<drapeau> I<valeur>
 
 Retire du drapeau I<drapeau> tous les drapeaux de construction listés dans I<valeur>.
 
-=item B<APPEND> I<flag> I<value>
+=item B<APPEND> I<drapeau> I<valeur>
 
 Étend le drapeau I<drapeau> avec les options indiquées dans I<valeur>. Une espace est ajoutée au début de ce qui est ajouté si la valeur actuelle du drapeau n'est pas vide.
 
-=item B<PREPEND> I<flag> I<value>
+=item B<PREPEND> I<drapeau> I<valeur>
 
 Préfixe le drapeau I<drapeau> avec les options indiquées dans I<valeur>. Une espace est ajoutée au début de ce qui est ajouté si la valeur actuelle du drapeau n'est pas vide.
 
@@ -124,15 +124,15 @@ Affiche l'origine de la valeur renvoyée par B<--get>. Retourne un code de sorti
 
 =item B<vendor>
 
-le drapeau défini à l'origine par le distributeur est S<renvoyé ;>
+le drapeau défini à l'origine par le distributeur est renvoyé ;
 
 =item B<system>
 
-le drapeau est placé ou modifié par un réglage S<système ;>
+le drapeau est placé ou modifié par un réglage système ;
 
 =item B<user>
 
-le drapeau est placé ou modifié par une configuration spécifique à S<l'utilisateur ;>
+le drapeau est placé ou modifié par une configuration spécifique à l'utilisateur ;
 
 =item B<env>
 
@@ -142,7 +142,7 @@ le drapeau est placé ou modifié par une configuration spécifique dans l'envir
 
 =item B<--query>
 
-Print any information that can be useful to explain the behaviour of the program: current vendor, relevant environment variables, feature areas, state of all feature flags, whether a feature is handled as a builtin default by the compiler (since dpkg dpkg 1.21.14), and the compiler flags with their origin (since dpkg 1.19.0).
+Afficher toute information utile pour expliquer le comportement du S<programme :> distributeur actuel, variables d'environnement, domaines des fonctionnalités, état de tous les drapeaux de fonctionnalités et si une fonctionnalité est gérée par l'ordinateur comme une fonction interne par défaut (depuis S<dpkg 1.21.14).> Afficher également les drapeaux de compilation résultants ainsi que leur origine (depuis S<dpkg 1.19.0).>
 
 Par S<exemple :>
 
@@ -177,7 +177,7 @@ Par S<exemple :>
 
 =item B<--query-features> I<domaine>
 
-Print the features enabled for a given area (since dpkg 1.16.2).  If the feature is handled (even if only on some architectures) as a builtin default by the compiler, then a B<Builtin> field is printed (since dpkg 1.21.14). The only currently recognized areas on Debian and derivatives are B<future>, B<qa>, B<reproducible>, B<sanitize> and B<hardening>, see the B<FEATURE AREAS> section for more details.  Exits with 0 if the area is known otherwise exits with 1.
+Affiche les fonctionnalités activées pour un domaine donné (depuis S<dpkg 1.16.2).> Si la fonctionnalité est gérée par le compilateur (même seulement sur quelques architectures) comme une fonction par défaut, alors un champ B<Builtin> est affiché (depuis S<dpkg 1.21.14).> Les seuls domaines reconnus actuellement sur Debian et ses dérivés sont B<future>, B<qa>, B<reproducible>, B<sanitize> et B<hardening>, voir la section B<ZONES D'OPTION> pour plus de détails. Renvoie un code de sortie B<0> si le domaine est connu et B<1> s'il est inconnu.
 
 L'affichage est dans le format RFC822, avec une section par fonctionnalité. Par S<exemple :>
 
@@ -190,11 +190,11 @@ L'affichage est dans le format RFC822, avec une section par fonctionnalité. Par
 
 =item B<--help>
 
-Affiche un message d'aide puis quitte.
+Afficher un message d'aide puis quitter.
 
 =item B<--version>
 
-Affiche le numéro de version puis quitte.
+Afficher le numéro de version puis quitter.
 
 =back
 
@@ -204,7 +204,7 @@ Affiche le numéro de version puis quitte.
 
 =item B<ASFLAGS>
 
-Options for the assembler. Default value: empty. Since dpkg 1.21.0.
+Options de l'assembleur. Valeur par S<défaut :> aucune. Depuis S<dpkg 1.21.0.>
 
 =item B<CFLAGS>
 
@@ -212,19 +212,19 @@ Options du S<compilateur C.> La valeur par défaut définie par le distributeur 
 
 =item B<CPPFLAGS>
 
-Options du S<préprocesseur C.> Valeur par S<défaut : aucune.>
+Options du préprocesseur C. Valeur par S<défaut :> aucune.
 
 =item B<CXXFLAGS>
 
-Options du S<compilateur C++.> Analogue à B<CFLAGS>.
+Options du compilateur C++. Analogue à B<CFLAGS>.
 
 =item B<OBJCFLAGS>
 
-Options du compilateur S<Objective C.> Analogue à B<CFLAGS>.
+Options du compilateur Objective C. Analogue à B<CFLAGS>.
 
 =item B<OBJCXXFLAGS>
 
-Options du compilateur S<Objective C++.> Analogue à B<CXXFLAGS>.
+Options du compilateur Objective C++. Analogue à B<CXXFLAGS>.
 
 =item B<GCJFLAGS>
 
@@ -232,19 +232,19 @@ Options du compilateur Java GNU (gcj). Un sous-ensemble de B<CFLAGS>.
 
 =item B<DFLAGS>
 
-Options for the D compiler (ldc or gdc). Since dpkg 1.20.6.
+Options du S<compilateur D> (ldc ou gdc). Depuis S<dpkg 1.20.6.>
 
 =item B<FFLAGS>
 
-Options du compilateur S<Fortran 77.> Un sous-ensemble de B<CFLAGS>.
+Options du compilateur Fortran 77. Un sous-ensemble de B<CFLAGS>.
 
 =item B<FCFLAGS>
 
-Options du compilateur S<Fortran 9x.> Analogue à B<FFLAGS>.
+Options du compilateur Fortran 9x. Analogue à B<FFLAGS>.
 
 =item B<LDFLAGS>
 
-Options passées au compilateur lors du processus de liaison des exécutables ou des objets partagés (si le linker est appelé directement, alors B<-Wl> et B<,> doivent être retirés de ces options). Valeur par S<défaut : aucune.>
+Options passées au compilateur lors du processus de liaison des exécutables ou des objets partagés (si le linker est appelé directement, alors B<-Wl> et B<,> doivent être retirés de ces options). Valeur par S<défaut :> aucune.
 
 =back
 
@@ -268,7 +268,7 @@ Plusieurs options de compilation (détaillées ci-dessous) peuvent être utilis�
 
 =item B<lfs>
 
-Ce paramètre (désactivé par défaut) active la prise en charge des gros fichiers (LFS) sur les architectures S<32 bits> où l'ABI n'inclut pas LFS par défaut, en ajoutant B<-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64> à B<CPPFLAGS>.
+Ce paramètre (désactivé par défaut) active la prise en charge des gros fichiers (LFS) sur les architectures 32 bits où l'ABI n'inclut pas LFS par défaut, en ajoutant B<-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64> à B<CPPFLAGS>.
 
 =back
 
@@ -290,19 +290,19 @@ Ce paramètre (désactivé par défaut) ajoute des options détectrices S<« can
 
 =head2 optimize
 
-Several compile-time options (detailed below) can be used to help optimize a resulting binary (since dpkg 1.21.0).  B<Note>: enabling B<all> these options can result in unreproducible binary artifacts.
+Plusieurs options de compilation (détaillées ci-dessous) peuvent être utilisées pour aider à optimiser un binaire produit (depuis S<dpkg 1.21.0).> S<B<Note> :> activer B<toutes> ces options peuvent aboutir à des objets binaires non-reproductibles.
 
 =over 
 
 =item B<lto>
 
-This setting (since dpkg 1.21.0; disabled by default) enables Link Time Optimization by adding B<-flto=auto -ffat-lto-objects> to B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS>, B<FCFLAGS> and B<LDFLAGS>.
+Ce réglage (depuis S<dpkg 1.21.0 ;> désactivé par défaut) active S<« Link> Time S<Optimization »> en ajoutant B<-flto=auto -ffat-lto-objects> à B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS>, B<FCFLAGS> et B<LDFLAGS>.
 
 =back
 
 =head2 sanitize
 
-Plusieurs options de compilation (détaillées ci-dessous) peuvent être utilisées pour aider à nettoyer le binaire compilé face aux corruptions de la mémoire, aux fuites de mémoire, à l'utilisation de mémoire après libération et à des bogues au comportement indéfini. S<B<Note> :> ces options ne devraient pas être utilisées pour des constructions en production car elles peuvent réduire la fiabilité du code, réduire la sécurité ou même les fonctionnalités.
+Plusieurs options de compilation (détaillées ci-dessous) peuvent être utilisées pour aider à nettoyer le binaire compilé face aux corruptions de la mémoire, aux fuites de mémoire, à l'utilisation de mémoire après libération et à des bogues au comportement indéfini. S<B<Note> :> ces options ne devraient pas être utilisées pour des constructions en production, car elles peuvent réduire la fiabilité du code, réduire la sécurité ou même les fonctionnalités.
 
 =over 
 
@@ -324,7 +324,7 @@ Ce paramètre (désactivé par défaut) ajoute B<-fsanitize=undefined> à B<CFLA
 
 =back
 
-=head2 compilation renforcée
+=head2 hardening
 
 Plusieurs options de compilation (détaillées ci-dessous) peuvent être utilisées pour accroître la résistance du binaire compilé face aux attaques par corruption de la mémoire ou fournir des messages d'avertissement supplémentaires lors de la compilation. Sauf mention contraire (voir ci-dessous), ces options sont activées par défaut pour les architectures qui les gèrent.
 
@@ -338,7 +338,7 @@ Ce réglage, activé par défaut, ajoute B<-Wformat -Werror=format-security> à 
 
 Ce réglage, activé par défaut, ajoute B<-D_FORTIFY_SOURCE=2> à B<CPPFLAGS>. Lors de la création du code, le compilateur connaît un nombre important d'informations relatives aux tailles de tampons (quand c'est possible) et tente alors de remplacer des appels de fonctions avec une taille illimitée de tampons, peu sûrs, par des appels avec des tampons de taille limitée. Cette fonctionnalité est particulièrement utile pour du code ancien et mal écrit. De plus, les chaînes de formatage dans la mémoire accessible en écriture qui contiennent S<« %n »> sont bloquées. Si une application dépend de telles chaînes de formatage, un contournement devra être mis en place.
 
-Veuillez noter que pour que cette option fasse effet, le source devra aussi être compilée avec B<-O1> ou plus. Si la variable d'environnement B<DEB_BUILD_OPTIONS> contient I<noopt>, la prise en charge de B<fortify> sera désactivée du fait des nouveaux avertissements émis par la glibc S<version 2.16> et ultérieure.
+Veuillez noter que pour que cette option fasse effet, le source devra aussi être compilée avec B<-O1> ou plus. Si la variable d'environnement B<DEB_BUILD_OPTIONS> contient I<noopt>, la prise en charge de B<fortify> sera désactivée du fait des nouveaux avertissements émis par la glibc version 2.16 et ultérieure.
 
 =item B<stackprotector>
 
@@ -352,7 +352,7 @@ Ce réglage, activé par défaut, ajoute B<-fstack-protector-strong> à B<CFLAGS
 
 Désactiver B<stackprotector> désactive également ce paramètre.
 
-Cette fonctionnalité a les même exigences que B<stackprotector>, en plus de nécessiter S<gcc 4.9> ou plus récent.
+Cette fonctionnalité a les même exigences que B<stackprotector>, en plus de nécessiter gcc 4.9 ou plus récent.
 
 =item B<relro>
 
@@ -366,7 +366,7 @@ Ce réglage, désactivé par défaut, ajoute B<-Wl,-z,now> à B<LDFLAGS>. Lors d
 
 Ce réglage (sans option globale par défaut depuis S<dpkg 1.18.23,> parce qu'il est maintenant activé par défaut par gcc dans les architectures Debian amd64, arm64, armel, armhf, hurd-i386, i386, kfreebsd-amd64, kfreebsd-i386, mips, mipsel, mips64el, powerpc, ppc64, ppc64el, riscv64, s390x, sparc et sparc64) ajoute les options requises pour activer ou désactiver PIE (exécutable indépendant de l'emplacement) au moyen des fichiers de spécifications de gcc, si nécessaire, selon que gcc injecte sur cette architecture les drapeaux par lui-même ou non. Si le réglage est activé et que gcc injecte les drapeaux, il n'ajoute rien. Si le réglage est activé et que gcc n'injecte pas les drapeaux, il ajoute B<-fPIE> (au moyen de I<%PKGDATADIR%/pie-compiler.specs>) à B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> et B<FCFLAGS>, et B<-fPIE -pie> (au moyen de I<%PKGDATADIR%/pie-link.specs>) à B<LDFLAGS>. Si le réglage est désactivé et que gcc injecte les drapeaux, il ajoute B<-fno-PIE> (au moyen de I<%PKGDATADIR%/no-pie-compile.specs>) à B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> et B<FCFLAGS>, et B<-fno-PIE -no-pie> (au moyen de I<%PKGDATADIR%/no-pie-link.specs>) à B<LDFLAGS>.
 
-Position Independent Executable (PIE) is needed to take advantage of Address Space Layout Randomization (ASLR), supported by some kernel versions.  While ASLR can already be enforced for data areas in the stack and heap (brk and mmap), the code areas must be compiled as position-independent.  Shared libraries already do this (B<-fPIC>), so they gain ASLR automatically, but binary .text regions need to be built as PIE to gain ASLR.  When this happens, ROP (Return Oriented Programming) attacks are much harder since there are no static locations to bounce off of during a memory corruption attack.
+Les exécutables à position indépendante S<(« Position> Independent S<Executable »)> permettent d'utiliser la randomisation de l'organisation de l'espace d'adressage S<(ASLR :> S<« Address> Space Layout S<Randomization »),> qui est gérée par certaines versions du noyau. Bien que ASLR puisse déjà être mise en œuvre pour les zones de données dans la pile et le tampon (brk et mmap), les zones de codes doivent être compilées comme indépendantes de la position. Les bibliothèques partagées font déjà cela (B<-fPIC>) ce qui permet automatiquement d'utiliser ASLR. Par contre les régions .text binaires doivent être construites en mode PIE pour mettre en œuvre ASLR. Une fois cela réalisé, les attaques ROP S<(« Return> Oriented S<Programming »)> deviennent plus difficiles, car il n'existe pas d'emplacement statique d'où rebondir pendant une attaque par corruption de la mémoire.
 
 PIE n'est pas compatible avec B<fPIC>, aussi, en général, des précautions doivent être prises lors de la construction d'objets partagés. Mais comme les drapeaux PIE émis sont injectés par des fichiers de spécifications de gcc, il devrait toujours être sûr de les définir sans condition indépendamment du type d'objet en train d'être compilé ou lié.
 
@@ -374,7 +374,7 @@ Les bibliothèques statiques peuvent être utilisées par des programmes ou d'au
 
 =over 
 
-=item B<none>
+=item none
 
 Ne peut être lié ni à un programme PIE, ni à une bibliothèque partagée.
 
@@ -390,11 +390,11 @@ Peut être lié à tout programme et toute bibliothèque partagée.
 
 S'il est nécessaire de régler ces drapeaux manuellement, en contournant l'injonction des spécifications de gcc, il y a plusieurs choses à prendre en compte. Le passage sans condition et de façon explicite de B<-fPIE>, B<-fpie> ou B<-pie> à un système de construction en utilisant libtool est sûr dans la mesure où ces drapeaux seront retirés lors de la construction de bibliothèques partagées. Sinon, sur les projets qui construisent à la fois des programmes et des bibliothèques partagées, il faudrait s'assurer que, lors de la construction des bibliothèques partagées, B<-fPIC> soit toujours passé en dernier aux drapeaux de compilation tels que B<CFLAGS> (de sorte qu'il remplace tout B<-PIE> antérieur), et que B<-shared> soit passé en dernier aux drapeaux de création de lien tels que B<LDFLAGS> (de sorte qu'il remplace tout B<-pie> antérieur). S<B<Note> :> Cela ne devrait pas être nécessaire avec les mécanismes de spécification de gcc par défaut.
 
-De plus, comme la protection PIE est mise en œuvre à l'aide d'un registre global, certaines architectures privées de registre (mais plus i386 depuis les optimisations mises en œuvre dans S<gcc E<gt>= 5)> peuvent souffrir de pertes de performances allant jusqu'à S<15 %> sur des charges d'applications utilisant largement les segments de S<texte ;> le plus souvent, cette perte de performances n’excédera S<pas 1 %.> Pour des architectures offrant plus de registres globaux (par exemple amd64), cette pénalisation n'existe pratiquement pas.
+De plus, comme la protection PIE est mise en œuvre à l'aide d'un registre global, certaines architectures privées de registre (mais plus i386 depuis les optimisations mises en œuvre dans gcc E<gt>= 5) peuvent souffrir de pertes de performances allant jusqu'à 15 % sur des charges d'applications utilisant largement les segments de texte ; le plus souvent, cette perte de performances n’excédera pas 1 %. Pour des architectures offrant plus de registres globaux (par exemple amd64), cette pénalisation n'existe pratiquement pas.
 
 =back
 
-=head2 reproductible
+=head2 reproducible
 
 Les options de compilation (détaillées ci-dessous) peuvent aider à améliorer la reproductibilité de la construction ou fournir des messages d'avertissement supplémentaires lors de la compilation. Sauf mention contraire (voir ci-dessous), ces options sont activées par défaut pour les architectures qui les gèrent.
 
@@ -406,7 +406,7 @@ Ce paramètre, activé par défaut, ajoute B<-Wdate-time> à B<CPPFLAGS>. Cela p
 
 =item B<fixfilepath>
 
-This setting (enabled by default) adds B<-ffile-prefix-map=>I<BUILDPATH>B<=.> to B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> and B<FCFLAGS> where B<BUILDPATH> is set to the top-level directory of the package being built. This has the effect of removing the build path from any generated file.
+Ce paramètre (activé par défaut) ajoute B<-ffile-prefix-map=>I<BUILDPATH>B<=.> à B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> et B<FCFLAGS> où B<BUILDPATH> est fixé sur le répertoire de plus haut niveau du paquet en construction. Cela a pour effet de retirer le chemin de construction de tout fichier généré.
 
 Si à la fois B<fixdebugpath> et B<fixfilepath> sont définis, cette option a la priorité parce c'est un sur-ensemble du premier.
 
@@ -466,7 +466,7 @@ Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement ac
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS S<– Native> Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
 
 =back
 
@@ -480,7 +480,7 @@ Si cette variable est définie, elle sera utilisée pour décider l'activation d
 
 Fichier de configuration pour l'ensemble du système.
 
-=item B<$XDG_CONFIG_HOME/dpkg/buildflags.conf> or
+=item B<$XDG_CONFIG_HOME/dpkg/buildflags.conf> ou
 
 =item B<$HOME/.config/dpkg/buildflags.conf>
 
@@ -529,7 +529,7 @@ ou définir les paramètres de position à passer à la S<commande :>
 
 =head2 Utilisation dans debian/rules
 
-Il faut appeler B<dpkg-buildflags> ou inclure B<buildflags.mk> à partir du fichier B<debian/rules> pour obtenir les drapeaux de compilation nécessaires à passer au système de construction. Veuillez noter que les anciennes versions de B<dpkg-buildpackage> (antérieures à S<dpkg 1.16.1)> exportaient ces drapeaux automatiquement. Néanmoins, il est déconseillé de dépendre de ce comportement parce qu'il casse l'appel manuel de B<debian/rules>.
+Il faut appeler B<dpkg-buildflags> ou inclure B<buildflags.mk> à partir du fichier B<debian/rules> pour obtenir les drapeaux de compilation nécessaires à passer au système de construction. Veuillez noter que les anciennes versions de B<dpkg-buildpackage> (antérieures à dpkg 1.16.1) exportaient ces drapeaux automatiquement. Néanmoins, il est déconseillé de dépendre de ce comportement parce qu'il casse l'appel manuel de B<debian/rules>.
 
 Pour les paquets avec des systèmes de construction du style autoconf, il est possible de passer les options appropriées à configure ou B<make>(1) directement, comme vu ci-dessus.
 

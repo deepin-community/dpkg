@@ -22,7 +22,7 @@ B<dpkg-gencontrol> [I<option>...]
 
 =head1 DESCRIPTION
 
-B<dpkg-gencontrol> lit les informations contenues dans une arborescence Debian dépaquetée et crée le fichier S<« control »> d'un paquet binaire (par défaut, c'est le fichier S<debian/tmp/DEBIAN/control) ;> durant cette action il y a simplification des champs de relations.
+B<dpkg-gencontrol> lit les informations contenues dans une arborescence Debian dépaquetée et crée le fichier S<« control »> d'un paquet binaire (par défaut, c'est le fichier debian/tmp/DEBIAN/control) ; durant cette action il y a simplification des champs de relations.
 
 B<Pre-Depends>, B<Depends>, B<Recommends> et B<Suggests> sont simplifiés dans cet ordre pour supprimer les dépendances qui sont connues pour être vérifiées par la plus forte dépendance déjà traitée. Sont aussi supprimées toutes les auto-dépendances (dans les faits, cela supprime les dépendances qui sont déjà validées par la version du paquet déjà installé). Logiquement, il conserve les correspondances entre plusieurs dépendances dans le même paquet. L'ordre des dépendances est conservé du mieux S<possible :> si une dépendance doit être supprimée à cause d'une autre dépendance qui apparaît plus loin dans le champ, la dépendance remplaçante prendra la place de celle éliminée.
 
@@ -44,7 +44,7 @@ Fixe la valeur d'une variable de substitution. Consultez B<deb-substvars>(5) pou
 
 =item B<-T>I<fichier-substvars>
 
-Lecture des variables de substitution depuis S<I<fichier-substvars> ;> la valeur par défaut est B<debian/substvars>. Cette option peut être utilisée plusieurs fois pour lire les variables de substitution depuis plusieurs fichiers (depuis S<dpkg 1.15.6).>
+Lecture des variables de substitution depuis I<fichier-substvars> ; la valeur par défaut est B<debian/substvars>. Cette option peut être utilisée plusieurs fois pour lire les variables de substitution depuis plusieurs fichiers (depuis S<dpkg 1.15.6).>
 
 =item B<-D>I<champ>B<=>I<valeur>
 
@@ -72,7 +72,7 @@ Indique le format du fichier des changements. Voir B<dpkg-parsechangelog>(1) pou
 
 =item B<-p>I<paquet>
 
-Cette option produit les informations concernant le paquet binaire I<paquet>.Si le fichier de contrôle des sources liste un seul paquet binaire, on peut omettre cette S<option ;> sinon il est indispensable d'indiquer le paquet pour lequel on veut produire les informations.
+Cette option produit les informations concernant le paquet binaire I<paquet>.Si le fichier de contrôle des sources liste un seul paquet binaire, on peut omettre cette option ; sinon il est indispensable d'indiquer le paquet pour lequel on veut produire les informations.
 
 =item B<-n>I<nom-de-fichier>
 
@@ -84,7 +84,7 @@ Ces options, conservées pour compatibilité avec les anciennes versions des scr
 
 =item B<-P>I<répertoire-construction-paquet>
 
-Scan I<package-build-dir> instead of B<debian/tmp>.  This value is used to find the default value of the B<Installed-Size> substitution variable and control file field, and for the default location of the output file.
+Analyse I<répertoire-construction-paquet> au lieu de B<debian/tmp>. Cette valeur sert à trouver la valeur par défaut de la variable de substitution B<Installed-Size> et celle du champ correspondant dans le fichier de contrôle (on utilise la commande B<du>) ; elle donne aussi l'emplacement par défaut pour le fichier de sortie.
 
 =item B<-O>[I<nom-de-fichier>]
 
@@ -92,11 +92,11 @@ Affiche le fichier S<« control »> sur la sortie standard (ou I<nom-de-fichier>
 
 =item B<-?>, B<--help>
 
-Affiche un message d'aide puis quitte.
+Afficher un message d'aide puis quitter.
 
 =item B<--version>
 
-Affiche le numéro de version puis quitte.
+Afficher le numéro de version puis quitter.
 
 =back
 
@@ -110,7 +110,7 @@ Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement ac
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS S<– Native> Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
 
 =back
 
@@ -120,7 +120,7 @@ Si cette variable est définie, elle sera utilisée pour décider l'activation d
 
 =item B<debian/control>
 
-Le principal fichier d'information sur les S<sources ;> il donne des renseignements qui ne dépendent pas d'une version concernant le paquet source et les paquets binaires qui peuvent être créés.
+Le principal fichier d'information sur les sources ; il donne des renseignements qui ne dépendent pas d'une version concernant le paquet source et les paquets binaires qui peuvent être créés.
 
 =item B<debian/files>
 

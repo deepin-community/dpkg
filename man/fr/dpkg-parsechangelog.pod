@@ -34,7 +34,7 @@ Indique le fichier des changements où trouver des renseignements. Un S<« - »>
 
 =item B<-F> I<format-du-fichier-des-changements>
 
-Indique le format du fichier changelog. Par défaut, c'est une ligne spéciale, près de la fin du fichier, qui S<l'indique ;> sinon, on utilise le format classique B<debian>. Voir aussi B<FORMATS DES FICHIERS DE CHANGEMENTS>.
+Indique le format du fichier changelog. Par défaut, c'est une ligne spéciale, près de la fin du fichier, qui l'indique ; sinon, on utilise le format classique B<debian>. Voir aussi B<FORMATS DES FICHIERS DE CHANGEMENTS>.
 
 =item B<-L> I<rep_lib>
 
@@ -46,23 +46,23 @@ Indique le nom du champ à afficher (depuis S<dpkg 1.17.0).> Le nom du champ n'e
 
 =item B<-?>, B<--help>
 
-Affiche un message d'aide puis quitte.
+Afficher un message d'aide puis quitter.
 
 =item B<--version>
 
-Affiche le numéro de version puis quitte.
+Afficher le numéro de version puis quitter.
 
 =back
 
 =head2 Options de filtrage
 
-The following options can be used to influence the output of the changelog parser, for example the range of entries or the format of the output.
+Les options suivantes peuvent être utilisées pour influencer la sortie de l'analyseur du journal des modifications S<(« changelog »),> par exemple la gamme d'entrées ou le format de sortie.
 
 =over 
 
 =item B<--format> I<format-de-sortie>
 
-Set the output format. Currently supported values are B<dpkg> and B<rfc822>.  B<dpkg> is the classic output format (from before this option existed) and the default. It consists of one stanza in Debian control format (see B<deb-control>(5)). If more than one entry is requested, then most fields are taken from the first entry (usually the most recent entry), except otherwise stated:
+Règle le format de sortie. Actuellement les valeurs gérées sont I<dpkg> et B<rfc822>. I<dpkg> est le format classique de sortie (avant que cette option n'existe) et l'option par défaut. Il se compose d'un paragraphe dans le format du fichier de contrôle Debian (voir B<deb-control>(5)). Si plus d'une entrée est demandée, alors la plupart des champs sont tirés de la première entrée (habituellement la plus récente), sauf si c'est indiqué autrement.
 
 =over 
 
@@ -84,7 +84,7 @@ La date de l'entrée sous forme d'une chaîne, telle qu'elle apparaît dans le c
 
 =item B<Timestamp:> I<horodatage>
 
-La date de l'entrée comme horodatage en secondes depuis S<« l'epoch »> (depuis S<dpkg 1.18.8).>
+La date de l'entrée comme horodatage en secondes depuis S<« l'epoch »> (depuis dpkg 1.18.8).
 
 =item B<Closes:> I<numéro-bogue>
 
@@ -100,17 +100,17 @@ Les champs B<Version>, B<Distribution>, B<Urgency>, B<Maintainer> et B<Changes> 
 
 Il est possible d'avoir d'autres champs qui sont définis par l'utilisateur.
 
-The B<rfc822> format uses the same fields but outputs a separate stanza for each changelog entry so that all metadata for each entry is preserved.
+Le format B<rfc822> utilise les mêmes champs mais le résultat est un paragraphe distinct pour chaque entrée du changelog afin que toutes les métadonnées de chaque entrée soit préservées.
 
 =item B<--reverse>
 
-Include all changes in reverse order (since dpkg 1.19.1).
+Inclut toutes les modifications en ordre inverse (depuis S<dpkg 1.19.1).>
 
-B<Note:> For the B<dpkg> format the first entry will be the most ancient entry.
+S<B<Note> :> pour le format de B<dpkg>, la première entrée sera l'entrée la plus ancienne.
 
 =item B<--all>
 
-Include all changes.  B<Note:> Other options have no effect when this is in use.
+Inclut toutes les modifications. S<B<Note> :> d'autres options deviennent sans effet lorsque celle-ci est utilisée.
 
 =item B<-s>, B<--since> I<version>
 
@@ -134,11 +134,11 @@ Inclut tous les changements apportés jusqu'à la I<version> comprise.
 
 =item B<-n> I<nombre>
 
-Inclut ce I<nombre> d'entrées depuis le début (ou la fin si le I<nombre> est inférieur S<à 0).>
+Inclut ce I<nombre> d'entrées depuis le début (ou la fin si le I<nombre> est inférieur à 0).
 
 =item B<-o>, B<--offset> I<nombre>
 
-Modifie le point de départ pour B<--count>, à compter du début (ou la fin si le I<nombre> est inférieur S<à 0).>
+Modifie le point de départ pour B<--count>, à compter du début (ou la fin si le I<nombre> est inférieur à 0).
 
 =back
 
@@ -146,17 +146,17 @@ Modifie le point de départ pour B<--count>, à compter du début (ou la fin si 
 
 Il est possible d'utiliser un format différent de celui utilisé habituellement, en fournissant un analyseur pour le format alternatif.
 
-Afin que B<dpkg-parsechangelog> utilise le nouvel analyseur, il doit exister une ligne, parmi les S<40 dernières> du fichier, qui corresponde à l'expression régulière Perl “B<\schangelog-format:\s+([0-9a-z]+)\W> (la partie entre parenthèses doit être le nom du format). S<Exemple :>
+Afin que B<dpkg-parsechangelog> utilise le nouvel analyseur, il doit exister une ligne, parmi les 40 dernières du fichier, qui corresponde à l'expression régulière Perl “B<\schangelog-format:\s+([0-9a-z]+)\W> (la partie entre parenthèses doit être le nom du format). S<Exemple :>
 
 =over 
 
-@@@ changelog-format: I<otherformat> @@@
+@@@ changelog-format: I<autreformat> @@@
 
 =back
 
 Les noms de formats de journaux de modifications sont des chaînes non vides de caractères alphanumériques en minuscules S<(« a-z0-9 »).>
 
-Si une telle ligne existe, B<dpkg-parsechangelog> recherchera l'analyseur sous le nom du module Perl S<B<Dpkg::Changelog::>I<autreformat> ;> s'il n'est pas présent, c'est une condition d'erreur. Le nom de l'analyseur dans le module Perl sera automatiquement mis en capitale. Le format de journaux de modifications par défaut est B<debian> et un analyseur pour ce format est fourni par défaut.
+Si une telle ligne existe, B<dpkg-parsechangelog> recherchera l'analyseur sous le nom du module Perl B<Dpkg::Changelog::>I<autreformat> ; s'il n'est pas présent, c'est une condition d'erreur. Le nom de l'analyseur dans le module Perl sera automatiquement mis en capitale. Le format de journaux de modifications par défaut est B<debian> et un analyseur pour ce format est fourni par défaut.
 
 L'analyseur doit être dérivé de la classe Dpkg::Changelog et implémenter l'interface documentée requise.
 
@@ -170,7 +170,7 @@ Un analyseur de journal de modifications ne doit pas du tout interagir avec l'ut
 
 =head1 NOTES
 
-Toutes les B<options d'analyse> sauf B<-v> sont gérées par B<dpkg> seulement depuis la S<version 1.14.16.>
+Toutes les B<options d'analyse> sauf B<-v> sont gérées par B<dpkg> seulement depuis la version 1.14.16.
 
 Analyse des options courtes avec des valeurs non-groupées, disponible seulement à partir de dpkg 1.18.0.
 
@@ -184,7 +184,7 @@ Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement ac
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS S<– Native> Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
 
 =back
 
@@ -194,7 +194,7 @@ Si cette variable est définie, elle sera utilisée pour décider l'activation d
 
 =item B<debian/changelog>
 
-Le journal des S<modifications ;> on s'en sert pour connaître les informations qui dépendent d'une version du paquet source, par exemple l'urgence ou la distribution d'une installation sur le serveur, les modifications faites depuis telle édition et le numéro de la version source lui-même.
+Le journal des modifications ; on s'en sert pour connaître les informations qui dépendent d'une version du paquet source, par exemple l'urgence ou la distribution d'une installation sur le serveur, les modifications faites depuis telle édition et le numéro de la version source lui-même.
 
 =back
 

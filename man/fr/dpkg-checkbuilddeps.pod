@@ -32,11 +32,11 @@ Par défaut, le fichier I<debian/control> est lu, mais un autre nom de fichier p
 
 =item B<--admindir>=I<répertoire>
 
-Changer l'endroit où se trouve la base de données de B<dpkg> (depuis S<dpkg 1.14.0).> Par défaut, c'est I<%ADMINDIR%>.
+Changer l'endroit où se trouve la base de données de B<dpkg> (depuis dpkg 1.14.0). Par défaut, c'est I<%ADMINDIR%>.
 
 =item B<-A>
 
-Ignore les lignes B<Build-Depends-Arch> et B<Build-Conflicts-Arch> (depuis S<dpkg 1.16.4).> À utiliser lorsque seuls des paquets indépendants d'une architecture seront construits ou à combiner avec B<-B> si seul un paquet source est construit.
+Ignore les lignes B<Build-Depends-Arch> et B<Build-Conflicts-Arch> (depuis dpkg 1.16.4). À utiliser lorsque seuls des paquets indépendants d'une architecture seront construits ou à combiner avec B<-B> si seul un paquet source est construit.
 
 =item B<-B>
 
@@ -44,7 +44,7 @@ Ignore les lignes B<Build-Depends-Indep> et B<Build-Conflicts-Indep>. À utilise
 
 =item B<-I>
 
-Ignore les dépendances et les conflits de construction internes (depuis S<dpkg 1.18.2).> Ce sont les dépendances implicites qui sont habituellement demandées sur une distribution particulière, c'est l'ensemble de paquets appelé Build-Essentiel.
+Ignore les dépendances et les conflits de construction internes (depuis dpkg 1.18.2). Ce sont les dépendances implicites qui sont habituellement demandées sur une distribution particulière, c'est l'ensemble de paquets appelé Build-Essentiel.
 
 =item B<-d> I<chaine-des-dépendances-pour-la-construction>
 
@@ -54,7 +54,7 @@ Utilise les dépendances et conflits de construction donnés au lieu de ceux ind
 
 =item B<-a> I<arch>
 
-Vérifie les dépendances et conflits de construction en supposant que le paquet décrit dans le fichier de contrôle doit être construit pour l'architecture hôte indiquée au lieu de celle du système (depuis S<dpkg 1.16.2).>
+Vérifie les dépendances et conflits de construction en supposant que le paquet décrit dans le fichier de contrôle doit être construit pour l'architecture hôte indiquée au lieu de celle du système (depuis dpkg 1.16.2).
 
 =item B<-P> I<profil>[B<,>...]
 
@@ -62,11 +62,11 @@ Vérifie les dépendances et conflits de construction en supposant que le paquet
 
 =item B<-?>, B<--help>
 
-Affiche un message d'aide puis quitte.
+Afficher un message d'aide puis quitter.
 
 =item B<--version>
 
-Affiche le numéro de version puis quitte.
+Afficher le numéro de version puis quitter.
 
 =back
 
@@ -84,7 +84,7 @@ Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement ac
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS S<– Native> Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
 
 =back
 

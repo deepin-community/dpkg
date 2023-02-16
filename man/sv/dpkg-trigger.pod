@@ -110,7 +110,7 @@ Om satt, och flaggan B<--admindir> inte har angivits, används värdet som datak
 
 =item B<DPKG_DEBUG>
 
-Sets the debug mask (since dpkg 1.21.10) from an octal value.  The currently accepted flags are described in the B<dpkg --debug> option, but not all these flags might have an effect on this program.
+Anger felsökningsmasken (sedan dpkg 1.21.10) från ett oktalt värde. De flaggor som för närvarande godtas beskrivs i flaggan B<dpkg --debug>, men alla dess flaggor påverkar inte nödvändigtvis detta program.
 
 =item B<DPKG_COLORS>
 

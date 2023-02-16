@@ -94,9 +94,9 @@ Utdataformatet för den här flaggan kan inte justeras, men varieras automatiskt
 
 =item B<-W>, B<--show> [I<paketnamnsmönster> ...]
 
-Just like the B<--list> option this will list all packages matching the given patterns. However the output can be customized using the B<--showformat> option.
+Precis som flaggan B<--list> kommer paket som matchar de givna mönstren att visas. Utdatat kan dock skräddarsys med flaggan B<--showformat>.
 
-The default output format gives one line per matching package, each line consisting of the package name and its installed version, separated by a tab.  The package name will be architecture qualified for packages with a B<Multi-Arch> field with the value B<same> or with a foreign architecture, which is an architecture that is neither the native one nor B<all>.
+Standardutdataformatet är en rad per paket som träffas, där varje rad innehåller paketnamnet och installerad version av paketet, avdelat med ett tabulatortecken. Paketnamnen kommer vra utökat med arkitektursbeskrivning för paket med ett B<Multi-Arch>-fält med värdet B<same>, eller med en oegen arkitektur, det vill säga en arkitektur som varken är den egna eller B<all>.
 
 =item B<-s>, B<--status> [I<paketnamn>...]
 
@@ -133,7 +133,7 @@ B<Varning>: kommandot är föråldrat eftersom det ger direkt tillgång till den
 
 =item B<-S>, B<--search> I<filnamnssökmönster> ...
 
-Sök efter paket som äger filer som motsvarar det angivna mönstret. Alla skalets vanliga jokertecken kan användas i mönstret, där asterisk (B<*>) och frågetecken (B<?>) kommer motsvara ett snedstreck, och omvänt snedstreck (B<\>) kommer användsa som ett ersättningstecken.
+Sök efter paket som äger filer som motsvarar det angivna mönstret. Alla skalets vanliga jokertecken kan användas i mönstret, där asterisk (B<*>) och frågetecken (B<?>) kommer motsvara ett snedstreck, och omvänt snedstreck (B<\>) kommer använda som ett ersättningstecken.
 
 Om det första tecknet i I<filnamnssökmönster> inte är ett av ”B<*[?/>” kommer det att tolkas som en delsträng och implicit omgärdas av ”B<*>” (som i B<*>I<filnamnssökmönster>B<*>). Om strängen som följer innehåller något av ”B<*[?\>” så kommer det hanteras som ett jokermönster, annars kommer alla avslutande ”B</>” eller ”b</.>” tas bort och en bokstavskorrekt sökvägsuppslagning kommer utföras.
 
@@ -291,7 +291,7 @@ Följande är virtuella fält, genererade av B<dpkg-query> från värden från a
 
 =item B<binary:Package>
 
-It contains the binary package name with a possible architecture qualifier like “libc6:amd64” (since dpkg 1.16.2).  An architecture qualifier will be present to make the package name unambiguous, for packages with a B<Multi-Arch> field with the value B<same> or with a foreign architecture, which is an architecture that is neither the native one nor B<all>.
+Innehåller binärpaketnamnet med en möjlig arkitekturkvalificerare, såsom ”libc6:amd64” (sedan dpkg 1.16.2). En arkitekturkvalificerare kommer förekomma för att göra paketnamnet otvetydigt, för paket med ett B<Multi-Arch>-fält med värdet B<same> eller om paket kommer från en oegen arkitektur, det vill säga en arkitektur som varken är den egna eller B<all>.
 
 =item B<binary:Synopsis>
 
@@ -394,7 +394,7 @@ Om satt, och flaggan B<--admindir> inte har angivits, används värdet som datak
 
 =item B<DPKG_DEBUG>
 
-Sets the debug mask (since dpkg 1.21.10) from an octal value.  The currently accepted flags are described in the B<dpkg --debug> option, but not all these flags might have an effect on this program.
+Anger felsökningsmasken (sedan dpkg 1.21.10) från ett oktalt värde. De flaggor som för närvarande godtas beskrivs i flaggan B<dpkg --debug>, men alla dess flaggor påverkar inte nödvändigtvis detta program.
 
 =item B<DPKG_COLORS>
 

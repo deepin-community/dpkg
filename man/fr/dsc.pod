@@ -22,11 +22,11 @@ I<nom-du-fichier>B<.dsc>
 
 =head1 DESCRIPTION
 
-Each Debian source package is composed of a .dsc control file, which contains a number of fields, in L<deb822(5)> format.
+Chaque paquet Debian possède un fichier de contrôle .dsc qui contient un certain nombre de champs au format L<deb822(5)> format.
 
-Each field begins with a tag, such as B<Source> or B<Binary> (case insensitive), followed by a colon, and the body of the field (case sensitive unless stated otherwise).  Fields are delimited only by field tags.  In other words, field text may be multiple lines in length, but the installation tools will generally join lines when processing the body of the field (except in case of the multiline fields B<Package-List>, B<Files>, B<Checksums-Sha1> and B<Checksums-Sha256>, see below).
+Chaque champ commence par une étiquette, telle que B<Source> ou B<Binary> (la casse n'importe pas), suivie d'un S<« : »,> et du contenu du champ (sensible à la casse à moins que cela ne soit spécifié autrement). Les champs sont séparés seulement par des étiquettes de champ. En d'autres termes, le contenu d'un champ peut s'étendre sur plusieurs lignes, mais les outils d'installation joindront en général les lignes pendant le traitement du contenu du champ (sauf pour les champs à lignes multiples B<Package-List>, B<Files>, B<Checksums-Sha1> et B<Checksums-Sha256>, voir ci-dessous).
 
-Les données de contrôle pourraient être incluses dans une signature OpenPGP S<« ASCII> S<Armored »,> comme spécifié dans RFC4880.
+Les données de contrôle pourraient être incluses dans une signature OpenPGP S<« ASCII> S<Armored »,> comme spécifié dans la RFC4880.
 
 =head1 LES CHAMPS
 
@@ -34,7 +34,7 @@ Les données de contrôle pourraient être incluses dans une signature OpenPGP S
 
 =item B<Format:> I<version-format> (requis)
 
-La valeur de ce champ déclare la version du format du paquet source. La valeur du champ est utilisée par les programmes qui agissent sur un paquet source pour interpréter la liste des fichiers du paquet source et déterminer comment le dépaqueter. La syntaxe de la valeur du champ est un numéro de révision majeure S<(« 0-9 »),> un point S<(« . »),> un numéro de révision mineure, puis un sous-type facultatif après une espace S<(«   »)> qui, lorsqu'il est présent, est un mot en caractères alphanumériques S<(« a-z0-9 »),> en minuscules entre parenthèses S<(« () ».> Le sous-type est facultatif dans la syntaxe, mais peut être obligatoire pour certaines révisions particulières du format source.
+La valeur de ce champ déclare la version du format du paquet source. La valeur du champ est utilisée par les programmes qui agissent sur un paquet source pour interpréter la liste des fichiers du paquet source et déterminer comment le dépaqueter. La syntaxe de la valeur du champ est un numéro de révision majeure S<(« 0-9 »),> un point S<(« . »),> un numéro de révision mineure, puis un sous-type facultatif après une espace («   ») qui, lorsqu'il est présent, est un mot en caractères alphanumériques S<(« a-z0-9 »),> en minuscules entre parenthèses S<(« () ».> Le sous-type est facultatif dans la syntaxe, mais peut être obligatoire pour certaines révisions particulières du format source.
 
 Les formats source actuellement pris en charge par B<dpkg> sont B<1.0>, B<2.0>, B<3.0 (native)>, B<3.0 (quilt)>, B<3.0 (git)>, B<3.0 (bzr)> et B<3.0 (custom)>. Voir B<dpkg-source>(1) pour leur description.
 
@@ -50,7 +50,7 @@ Ce champ a maintenant été remplacé par le champ B<Package-List> qui donne suf
 
 =item B<Architecture:> I<liste-architectures> (recommandé)
 
-Une liste d'architectures et de jokers d'architecture séparés par des espaces qui précisent le type de matériel pour lequel ce paquet peut être compilé. Les noms et les jokers d'architecture courants sont B<amd64>, B<armel>, B<i386>, B<linux-any>, S<B<any-amd64>, etc.>
+Une liste d'architectures et de jokers d'architecture séparés par des espaces qui précisent le type de matériel pour lequel ce paquet peut être compilé. Les noms et les jokers d'architecture courants sont B<amd64>, B<armel>, B<i386>, B<linux-any>, B<any-amd64>, etc.
 
 Notez que la valeur B<all> est destinée aux paquets indépendants de l'architecture et B<any> à ceux qui sont dépendants d'une architecture. La liste peut comprendre (ou consister uniquement de) la valeur spéciale B<all>. Quand la liste comprend le joker d'architecture B<any>, la seule autre valeur permise dans la liste est B<all>.
 
@@ -66,7 +66,7 @@ Nom de la distribution dont ce paquet provient.
 
 =item B<Maintainer:> I<nom-complet-et-adresse-électronique> (recommandé)
 
-Le format de ce champ sera S<« Jean> Dupont S<E<lt>jdupont@foo.comE<gt> » ;> et c'est bien sûr le créateur du paquet, par opposition à l'auteur du programme mis en paquet.
+Le format de ce champ sera S<« Jean> Dupont S<E<lt>jdupont@foo.comE<gt> »> ; et c'est bien sûr le créateur du paquet, par opposition à l'auteur du programme mis en paquet.
 
 =item B<Uploaders:> I<liste-de-noms-complets-et-adresses-électroniques>
 
@@ -76,7 +76,7 @@ Affiche les noms et les adresses électroniques des co-responsables du paquet, a
 
 =item S< >I<description-longue>
 
-Le format de la description du paquet est un résumé bref sur la première ligne (après le champ B<Description>). Les lignes suivantes peuvent servir à une description plus longue et plus détaillée. Chaque ligne de cette description longue doit être précédée d'une S<espace ;> quand c'est une ligne blanche, elle doit contenir un seul S<« B<.> »> après cette espace.
+Le format de la description du paquet est un résumé bref sur la première ligne (après le champ B<Description>). Les lignes suivantes peuvent servir à une description plus longue et plus détaillée. Chaque ligne de cette description longue doit être précédée d'une espace ; quand c'est une ligne blanche, elle doit contenir un seul S<« B<.> »> après cette espace.
 
 =item B<Homepage:> I<URL>
 
@@ -134,13 +134,13 @@ Ces champs indiquent les relations entre le paquet source et les paquets utilis�
 
 =item B<Package-List:>
 
-=item S< >I<package> I<package-type> I<section> I<priority> I<key-value-list>
+=item S< >I<paquet> I<type-de-paquet> I<section> I<priorité> I<liste-clés-valeurs>
 
 Ce champ à lignes multiples contient une liste des paquets binaires générés par le paquet source.
 
 Le I<paquet> est le nom du paquet binaire.
 
-Le I<type-de-paquet> est le type du paquet binaire, habituellement S<B<deb> ;> une autre valeur commune est B<udeb>.
+Le I<type-de-paquet> est le type du paquet binaire, habituellement B<deb> ; une autre valeur commune est B<udeb>.
 
 La I<section> et la I<priorité> correspondent aux champs du même nom du paquet binaire.
 
@@ -158,9 +158,9 @@ La formule normalisée de restrictions de profil de construction à partir du ch
 
 =item B<protected>
 
-If the binary package is protected, this key will contain the value of the B<Protected> field, that is a B<yes> value.
+Si le paquet binaire est protégé, cette clé contiendra la valeur du champ B<Protected>, qui est la valeur B<yes>.
 
-Supported since dpkg 1.20.1.
+Pris en charge depuis S<dpkg 1.20.1.>
 
 =item B<essential>
 
@@ -174,7 +174,7 @@ Si le paquet binaire est essentiel, cette clé contiendra la valeur du champ B<E
 
 =item B<Checksums-Sha256:> (requis)
 
-=item S< >I<checksum> I<size> I<filename>
+=item S< >I<somme-de-contrôle> I<taille> I<nom-du-fichier>
 
 Ces champs à lignes multiples contiennent une liste de fichiers avec une somme de contrôle et une taille pour chacun. Ces champs ont la même syntaxe et diffèrent seulement par l'algorithme de somme de contrôle S<employé :> MD5 pour B<Files>, SHA-1 pour B<Checksums-Sha1> et SHA-256 pour B<Checksums-Sha256>.
 

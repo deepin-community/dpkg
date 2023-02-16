@@ -40,11 +40,11 @@ Vérifie si B<dpkg> sait gérer les actions différées (généralement appelée
 
 =item B<-?>, B<--help>
 
-Affiche un message d'aide puis quitte.
+Afficher un message d'aide puis quitter.
 
 =item B<--version>
 
-Affiche le numéro de version puis quitte.
+Afficher le numéro de version puis quitter.
 
 =back
 
@@ -54,11 +54,11 @@ Affiche le numéro de version puis quitte.
 
 =item B<--admindir>=I<répertoire>
 
-Change the location of the B<dpkg> database.  Defaults to I<%ADMINDIR%> if B<DPKG_ADMINDIR> has not been set.
+Change l'endroit où se trouve la base de données de B<dpkg>. Par défaut, c'est I<%ADMINDIR%> si B<DPKG_ADMINDIR> n'a pas été défini.
 
-=item B<--root=>I<directory>
+=item B<--root=>I<répertoire>
 
-Set the root directory to I<directory>, which sets the administrative directory to «I<directory>%ADMINDIR%» (since dpkg 1.21.0).
+Définit le répertoire root à B<directory>, ce qui définit le répertoire d'administration à S<« I<répertoire>B<%ADMINDIR%> »> (depuis S<dpkg 1.21.0).>
 
 =item B<--by-package=>I<paquet>
 
@@ -66,7 +66,7 @@ Indique le paquet qui sera marqué en attente de l'exécution de l'action diffé
 
 =item B<--no-await>
 
-This option arranges that the calling package I<T> (if any) need not await the processing of this trigger; the interested package(s) I<I>, will not be added to I<T>'s trigger processing awaited list and I<T>'s status is unchanged.  I<T> may be considered installed even though I<I> may not yet have processed the trigger.
+Cette option fait en sorte que le paquet appelant I<T> (s'il existe) n'a pas besoin d'attendre l'exécution de cette action différée ; I<I>, le(s) paquet(s) associé(s) à l'action différée, ne sera pas ajouté à liste des paquets dont le traitement des actions différées est attendu par I<T> et l'état de I<T> reste inchangé. I<T> peut être considéré installé même si les actions différées de I<I> n'ont pas encore été exécutées.
 
 =item B<--await>
 
@@ -92,7 +92,7 @@ Une commande de vérification ou de déclaration renvoie S<« false ».>
 
 =item B<2>
 
-Erreur fatale ou irrécupérable due à l'utilisation d'une ligne de commande non valable, ou interactions avec le système, telles que des accès à la base de données, des allocations de S<mémoire, etc.>
+Erreur fatale ou irrécupérable due à l'utilisation d'une ligne de commande non valable, ou interactions avec le système, telles que des accès à la base de données, des allocations de mémoire, etc.
 
 =back
 
@@ -102,7 +102,7 @@ Erreur fatale ou irrécupérable due à l'utilisation d'une ligne de commande no
 
 =item B<DPKG_ROOT>
 
-If set and the B<--root> option has not been specified, it will be used as the filesystem root directory (since dpkg 1.21.0).
+Si cette variable est positionnée et que l'options B<--root> n'est pas précisées, ce répertoire sera utilisé comme répertoire racine du système de fichiers (depuis S<dpkg 1.21.0).>
 
 =item B<DPKG_ADMINDIR>
 
@@ -110,7 +110,7 @@ Si cette variable est positionnée et que l'option B<--admindir> n'est pas préc
 
 =item B<DPKG_DEBUG>
 
-Sets the debug mask (since dpkg 1.21.10) from an octal value.  The currently accepted flags are described in the B<dpkg --debug> option, but not all these flags might have an effect on this program.
+Définit le masque de débogage (depuis S<dpkg 1.21.10)> à partir d'une valeur octale. Actuellement, les drapeaux acceptés sont décrits dans l'option B<dpkg --debug>, mais ces drapeaux n'auront pas tous un effet sur ce programme.
 
 =item B<DPKG_COLORS>
 
