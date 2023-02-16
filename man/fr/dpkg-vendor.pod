@@ -42,11 +42,11 @@ Affiche sur la sortie standard la valeur du champ spécifique I<champ> de l'édi
 
 =item B<--help>
 
-Affiche un message d'aide puis quitte.
+Afficher un message d'aide puis quitter.
 
 =item B<--version>
 
-Affiche le numéro de version puis quitte.
+Afficher le numéro de version puis quitter.
 
 =back
 
@@ -74,7 +74,7 @@ Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement ac
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS S<– Native> Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
 
 =back
 

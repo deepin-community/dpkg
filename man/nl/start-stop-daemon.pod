@@ -190,13 +190,13 @@ Dit wijzigt de prioriteit van het proces voor het gestart wordt.
 
 Dit wijzigt het procesplannerbeleid en de procesplannerprioriteit van het proces voor het gestart wordt (sinds versie 1.15.0). Facultatief kan de prioriteit opgegeven worden door een B<:>, gevolgd door de waarde, toe te voegen. De standaardI<prioriteit> is 0. De momenteel ondersteunde waarden voor beleid zijn B<other>, B<fifo> en B<rr>.
 
-This option might do nothing on some systems, where POSIX process scheduling is not supported.
+Deze optie doet mogelijk niets op sommige systemen waar POSIX-procesplanning niet wordt ondersteund.
 
 =item B<-I>, B<--iosched> I<klasse>B<:>I<prioriteit>
 
 Dit wijzigt de IO-plannerklasse en IO-plannerprioriteit van het proces voor het gestart wordt (sinds versie 1.15.0). Facultatief kan de prioriteit opgegeven worden door een B<:>, gevolgd door de waarde, toe te voegen. De standaardI<prioriteit> is 4, tenzij I<klasse> B<idle> is. In dat geval zal I<prioriteit> steeds 7 zijn. De momenteel ondersteunde waarden voor I<klasse> zijn B<idle>, B<best-effort> en B<real-time>.
 
-This option might do nothing on some systems, where Linux IO scheduling is not supported.
+Deze optie doet mogelijk niets op sommige systemen waar Linux IO-planning niet wordt ondersteund.
 
 =item B<-k>, B<--umask> I<masker>
 

@@ -28,7 +28,7 @@ On peut s'en servir S<« à> la S<main »> avec les options B<--split>, B<--join
 
 Il possède aussi un mode automatique, appelé avec l'option B<--auto>, dans lequel il conserve séparément dans une file les parties connues ou recompose le fichier d'un paquet quand il connaît toutes ses parties. Les options B<--listq> et B<--discard> permettent la gestion de cette file.
 
-Toutes les opérations de décomposition, recomposition ou de mise en file produisent des messages sur la sortie S<standard ;> ils peuvent être tranquillement ignorés.
+Toutes les opérations de décomposition, recomposition ou de mise en file produisent des messages sur la sortie standard ; ils peuvent être tranquillement ignorés.
 
 =head1 COMMANDES
 
@@ -46,9 +46,9 @@ Quand on ne donne pas de I<préfixe>, le nom du fichier I<archive-complète> est
 
 Rassemble les parties d'un fichier, recomposant ainsi le fichier d'origine tel qu'il était avant la décomposition.
 
-Ces parties, données comme arguments, doivent appartenir toutes au même fichier binaire d'origine. Chaque partie ne doit apparaître qu'une seule fois dans la liste des S<arguments ;> mais il est inutile de les ordonner.
+Ces parties, données comme arguments, doivent appartenir toutes au même fichier binaire d'origine. Chaque partie ne doit apparaître qu'une seule fois dans la liste des arguments ; mais il est inutile de les ordonner.
 
-Les parties doivent bien sûr avoir été créées selon le même modèle (taille maximum des parties), qui est déclaré au moment de la S<décomposition ;> ce qui signifie en fait qu'elles doivent avoir été créées par le même appel à B<dpkg-split --split>.
+Les parties doivent bien sûr avoir été créées selon le même modèle (taille maximum des parties), qui est déclaré au moment de la décomposition ; ce qui signifie en fait qu'elles doivent avoir été créées par le même appel à B<dpkg-split --split>.
 
 Les parties des noms ne sont pas significatives pour le processus de recomposition.
 
@@ -58,7 +58,7 @@ Par défaut, le fichier produit s'appelle I<paquet>B<_>I<version>B<_>I<arch>B<.d
 
 Affiche les renseignements concernant telle partie dans un format lisible par tous. Les arguments ne représentant pas la partie d'un fichier binaire le disent aussi sur la sortie standard.
 
-=item B<-a>, B<--auto -o> I<complete-output> I<part>
+=item B<-a>, B<--auto -o> I<fichier-complet> I<partie>
 
 Met en file automatiquement les parties en vue de la recomposition d'un paquet.
 
@@ -68,7 +68,7 @@ Quand toutes les parties d'un fichier (auquel appartient la partie I<partie>) so
 
 Quand ce n'est pas le cas, la partie I<partie> est mise dans la file et le fichier I<fichier-complet> n'est pas créé.
 
-Quand la I<partie> n'appartient pas à un paquet binaire décomposé, B<dpkg-split> se termine avec un code de sortie égal à S<B<1> ;> s'il y a une autre erreur, c'est un code de sortie égal à B<2>.
+Quand la I<partie> n'appartient pas à un paquet binaire décomposé, B<dpkg-split> se termine avec un code de sortie égal à B<1> ; s'il y a une autre erreur, c'est un code de sortie égal à B<2>.
 
 L'option B<--output> ou B<-o> doit être fournie avec l'action B<--auto>. Si cela n'était pas obligatoire, le programme appelant ne saurait pas quel fichier attendre.
 
@@ -82,15 +82,15 @@ Pour chaque fichier possédant des parties dans la file, cette action donne le n
 
 Cette action laisse de côté certaines parties dans la file, celles qui sont en attente des autres parties composant le paquet.
 
-Quand aucun I<paquet> n'est donné, la file est S<vidée ;> si un paquet est donné, seules les parties de ce paquet sont détruites.
+Quand aucun I<paquet> n'est donné, la file est vidée ; si un paquet est donné, seules les parties de ce paquet sont détruites.
 
 =item B<-?>, B<--help>
 
-Affiche un message d'aide puis quitte.
+Afficher un message d'aide puis quitter.
 
 =item B<--version>
 
-Affiche le numéro de version puis quitte.
+Afficher le numéro de version puis quitter.
 
 =back
 
@@ -100,19 +100,19 @@ Affiche le numéro de version puis quitte.
 
 =item B<--depotdir> I<répertoire>
 
-Specifies an alternative directory for the queue of parts awaiting automatic reassembly. The default is B<%ADMINDIR%/parts>.
+Indique un répertoire différent pour la file comprenant les parties en attente d'une recomposition automatique. Par défaut, c'est le répertoire B<%ADMINDIR%/parts>.
 
 =item B<--admindir> I<répertoire>
 
-Set the administrative directory to I<directory> (since dpkg 1.21.10).  This is where the I<statoverride> file is stored.  Defaults to «I<%ADMINDIR%>» if B<DPKG_ADMINDIR> has not been set.
+Fixe le répertoire d'administration à I<répertoire> (depuis S<dpkg 1.21.10),> où se trouve aussi le fichier I<statoverride>. La valeur par défaut est I<%ADMINDIR%> si B<DPKG_ADMINDIR> n'a pas été défini.
 
 =item B<--root> I<répertoire>
 
-Set the root directory to B<directory> (since dpkg 1.21.10), which sets the installation directory to «I<directory>» and the administrative directory to «I<directory>B<%ADMINDIR%>» if B<DPKG_ROOT> has not been set.
+Définit le répertoire root à B<directory> (depuis S<dpkg 1.21.10),> ce qui définit le répertoire d'installation à S<« I<répertoire> »> et le répertoire d'administration à S<« I<répertoire>B<%ADMINDIR%> »> si B<DPKG_ROOT> n'a pas été défini.
 
 =item B<-S>, B<--partsize> I<kibioctets>
 
-Indique, en kibioctet (1024 octets), la taille maximum d'une partie lors d'une décomposition. Par défaut, la taille maximum est de S<450 Kio.>
+Indique, en kibioctet (1024 octets), la taille maximum d'une partie lors d'une décomposition. Par défaut, la taille maximum est de 450 Kio.
 
 =item B<-o>, B<--output> I<fichier-complet>
 
@@ -122,11 +122,11 @@ Cela annule le fichier par défaut lors d'une recomposition S<« à> la S<main �
 
 =item B<-Q>, B<--npquiet>
 
-Pour une recomposition ou une mise en file automatiques, B<dpkg-split> affiche habituellement un message si on lui donne une I<partie> qui n'est pas une partie d'un paquet binaire. Cette option supprime ce S<message ;> cela permet à des programmes comme B<dpkg> de ne pas afficher de faux messages quand il est confronté à des paquets décomposés et des paquets non décomposés.
+Pour une recomposition ou une mise en file automatiques, B<dpkg-split> affiche habituellement un message si on lui donne une I<partie> qui n'est pas une partie d'un paquet binaire. Cette option supprime ce message ; cela permet à des programmes comme B<dpkg> de ne pas afficher de faux messages quand il est confronté à des paquets décomposés et des paquets non décomposés.
 
 =item B<--msdos>
 
-Forces the output filenames generated by B<--split> to be MSDOS-compatible.
+Oblige le nom des fichiers produits par B<--split> à se conformer à MS-DOS.
 
 Cela supprime le préfixe, soit celui par défaut dérivé du nom du fichier d'entrée, soit celui donné comme S<argument :> les caractères alphanumériques sont en minuscules, les signes plus sont remplacés par des B<x> et tous les autres caractères sont abandonnés.
 
@@ -148,7 +148,7 @@ Ne peut apparaître qu'avec l'action B<--auto> et signale que le fichier I<parti
 
 =item B<2>
 
-Erreur fatale ou irrécupérable due à une utilisation non valable de la ligne de commande, à un fichier qui ressemble à fichier appartenant à un paquet mais qui est corrompu, ou à des interactions avec le système, telles que des accès à la base de données, des allocations S<mémoires, etc.>
+Erreur fatale ou irrécupérable due à une utilisation non valable de la ligne de commande, à un fichier qui ressemble à fichier appartenant à un paquet mais qui est corrompu, ou à des interactions avec le système, telles que des accès à la base de données, des allocations mémoires, etc.
 
 =back
 
@@ -158,15 +158,15 @@ Erreur fatale ou irrécupérable due à une utilisation non valable de la ligne 
 
 =item B<DPKG_ROOT>
 
-If set and B<--root> option has not been specified, it will be used as the filesystem root directory (since dpkg 1.21.10).
+Si cette variable est positionnée et que l'option B<--root> n'est précisée, ce répertoire sera utilisé comme répertoire racine du système de fichiers (depuis S<dpkg 1.21.10).>
 
 =item B<DPKG_ADMINDIR>
 
-If set and the B<--admindir> or B<--root> options have not been specified, it will be used as the B<dpkg> data directory (since dpkg 1.21.10).
+Si cette variable est positionnée et que les options B<--admindir> ou B<--root> ne sont pas précisées, ce répertoire sera utilisé comme répertoire de données pour B<dpkg> (depuis S<dpkg 1.21.10).>
 
 =item B<DPKG_DEBUG>
 
-Sets the debug mask (since dpkg 1.21.10) from an octal value.  The currently accepted flags are described in the B<dpkg --debug> option, but not all these flags might have an effect on this program.
+Définit le masque de débogage (depuis S<dpkg 1.21.10)> à partir d'une valeur octale. Actuellement, les drapeaux acceptés sont décrits dans l'option B<dpkg --debug>, mais ces drapeaux n'auront pas tous un effet sur ce programme.
 
 =item B<DPKG_COLORS>
 
@@ -186,7 +186,7 @@ Si cette option est utilisée, elle sera utilisée comme horodatage (en seconde 
 
 Le répertoire par défaut de la file contenant les fichiers qui attendent une recomposition automatique.
 
-Les noms de fichiers utilisés dans ce répertoire sont dans un format particulier à B<dpkg-split> et ne sont sans doute pas utiles pour d'autres S<programmes ;> en tous cas on ne peut pas compter sur ce format de nom de fichier.
+Les noms de fichiers utilisés dans ce répertoire sont dans un format particulier à B<dpkg-split> et ne sont sans doute pas utiles pour d'autres programmes ; en tous cas on ne peut pas compter sur ce format de nom de fichier.
 
 =back
 

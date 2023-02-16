@@ -22,9 +22,9 @@ B<dpkg-genbuildinfo> [I<option>...]
 
 =head1 DESCRIPTION
 
-B<dpkg-genbuildinfo> lit les informations à la fois dans une arborescence debian dépaquetée et déjà construite et sur les fichiers qui ont été S<créés ;> puis il crée un fichier de contrôle décrivant l'environnement et les objets de construction (c'est le fichier B<.buildinfo>).
+B<dpkg-genbuildinfo> lit les informations à la fois dans une arborescence debian dépaquetée et déjà construite et sur les fichiers qui ont été créés ; puis il crée un fichier de contrôle décrivant l'environnement et les objets de construction (c'est le fichier B<.buildinfo>).
 
-Cette commande a été introduite dans S<dpkg 1.18.11.>
+Cette commande a été introduite dans dpkg 1.18.11.
 
 =head1 OPTIONS
 
@@ -92,7 +92,7 @@ Il faut préciser cette option (depuis S<dpkg 1.19.0)> pour toujours remplir un 
 
 =item B<--always-include-path>
 
-By default, the B<Build-Path> field will only be written if the current directory starts with an allowed pattern.
+Par défaut, le champ B<Build-Path> ne sera rempli que si le répertoire courant débute par un motif autorisé.
 
 Dans Debian et ses dérivés, le motif correspond à B</build/> au début du nom de chemin.
 
@@ -108,11 +108,11 @@ B<dpkg-genbuildinfo> devrait afficher des messages d'information sur la sortie d
 
 =item B<-?>, B<--help>
 
-Affiche un message d'aide puis quitte.
+Afficher un message d'aide puis quitter.
 
 =item B<--version>
 
-Affiche le numéro de version puis quitte.
+Afficher le numéro de version puis quitter.
 
 =back
 
@@ -130,7 +130,7 @@ Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement ac
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS S<– Native> Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
 
 =back
 

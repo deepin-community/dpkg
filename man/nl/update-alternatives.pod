@@ -249,7 +249,7 @@ De standaardmap voor beheersdoeleinden. Kan gewijzigd worden met de optie B<--ad
 
 =head1 INDELING GEGEVENSOPVRAGING
 
-The B<--query> format is using an RFC822-like flat format. It's made of I<n> + 1 stanzas where I<n> is the number of alternatives available in the queried link group. The first stanza contains the following fields:
+De indeling die gebruikt wordt bij B<--query> is een RFC822-achtige vlakke indeling. Ze bestaat uit I<n> + 1 onderdelen, waarbij I<n> het aantal beschikbare alternatieven is uit de opgevraagde koppelingengroep. Het eerste onderdeel bevat de volgende velden:
 
 =over 
 
@@ -279,13 +279,13 @@ Het pad naar het momenteel geselecteerde alternatief. Het kan ook de magische wa
 
 =back
 
-The other stanzas describe the available alternatives in the queried link group:
+De andere onderdelen geven de beschikbare alternatieven weer in de opgevraagde koppelingengroep:
 
 =over 
 
 =item B<Alternative:> I<pad-van-dit-alternatief>
 
-Path to this stanza's alternative.
+Het pad naar het alternatief uit dit onderdeel.
 
 =item B<Priority:> I<waarde-van-prioriteit>
 

@@ -132,7 +132,7 @@ Förvalet för fältet är ”${Package}\t${Version}\n”.
 
 =item B<-z>I<komprimeringsnivå>
 
-Specify which compression level to use on the compressor backend, when building a package (default is 9 for gzip, 6 for xz, 3 for zstd).  The accepted values are compressor specific.  For gzip, from 0-9 with 0 being mapped to compressor none.  For xz from 0-9.  For zstd from 0-22, with levels from 20 to 22 enabling its ultra mode.  Before dpkg 1.16.2 level 0 was equivalent to compressor none for all compressors.
+Ange vilken komprimeringsnivå som ska användas i komprimeringsfunktionen när ett paket byggs (standard är 9 för gzip, 6 för xz, 3 för zstd). Giltiga värden är specifika för packaren. För gzip, 0-9 där 0 mappas mot komprimeraren ingen. För xz 0-9. För zstd 0-22, där nivåerna 20 till 22 aktiverar dess ultraläge. Före dpkg 1.16.2 var nivå 0 komprimeraren ingen för alla komprimerare.
 
 =item B<-S>I<komprimeringsstrategi>
 
@@ -140,11 +140,11 @@ Anger vilken komprimeringsstrategi som ska användas i komprimeringsfunktionen n
 
 =item B<-Z>I<komprimeringstyp>
 
-Specify which compression type to use when building a package.  Allowed values are B<gzip>, B<xz> (since dpkg 1.15.6), B<zstd> (since dpkg 1.21.18) and B<none> (default is B<xz>).
+Ange vilken komprimeringstyp som ska användas när ett paket byggs. Tillåtna värden är B<gzip>, B<xz> (Sedan dpkg 1.15.6), B<zstd> (sedan dpkg 1.21.18) och B<none> (förval är B<xz>).
 
 =item B<--[no-]uniform-compression>
 
-Specify that the same compression parameters should be used for all archive members (i.e. B<control.tar> and B<data.tar>; since dpkg 1.17.6).  Otherwise only the B<data.tar> member will use those parameters. The only supported compression types allowed to be uniformly used are B<none>, B<gzip>, B<xz> and B<zstd>.  The B<--no-uniform-compression> option disables uniform compression (since dpkg 1.19.0).  Uniform compression is the default (since dpkg 1.19.0).
+Ange att samma komprimeringsparametrar ska användas för alla arkivmedlemmar (dvs. B<control.tar> och B<data.tar>; sedan dpkg 1.17.6). I annat fall kommer endast medlemmen B<data.tar> att använda parametrarna. De enda komprimeringstyper som kan användas enhetligt är B<none>, B<gzip>, B<xz> och B<zstd>. Flaggan B<--no-uniform-compression> inaktiverar enhetlig komprimering (sedan dpkg 1.19.0). Enhetlig komprimering är förval (sedan dpkg 1.19.0).
 
 =item B<--threads-max=>I<trådar>
 
@@ -202,15 +202,15 @@ Flaggan B<--threads-max> överstyr denna variabel.
 
 =item B<DPKG_DEB_COMPRESSOR_TYPE>
 
-Sets the compressor type to use (since dpkg 1.21.10).
+Ange packartyp att använda (sedan dpkg 1.21.10).
 
-The B<-Z> option overrides this value.
+Flaggan B<-Z> överstyr denna variabel.
 
 =item B<DPKG_DEB_COMPRESSOR_LEVEL>
 
-Sets the compressor level to use (since dpkg 1.21.10).
+Anger pakarnivå att använda (sedan dpkg 1.21.10).
 
-The B<-z> option overrides this value.
+Flaggan B<-z> överstyr denna variabel.
 
 =item B<DPKG_COLORS>
 

@@ -249,7 +249,7 @@ Den förvalda administrativa katalogen. Kan överstyras med flaggan B<--admindir
 
 =head1 FRÅGEFORMAT
 
-The B<--query> format is using an RFC822-like flat format. It's made of I<n> + 1 stanzas where I<n> is the number of alternatives available in the queried link group. The first stanza contains the following fields:
+Formatet för B<--query> använder ett RFC822-liknande platt format. Det består av I<n> + 1 stycken där I<n> är antalet tillgängliga alternativ i den efterfrågade länkgruppen. Det första stycket innehåller följande fält:
 
 =over 
 
@@ -279,13 +279,13 @@ Sökvägen till det för närvarande valda alternativet. Kan även ta det magisk
 
 =back
 
-The other stanzas describe the available alternatives in the queried link group:
+Övriga stycken beskriver tillgängliga alternativ i den efterfrågade länkgruppen:
 
 =over 
 
 =item B<Alternative:> I<sökväg-till-alternativet>
 
-Path to this stanza's alternative.
+Sökväg till alternativet som beskrivs i stycket.
 
 =item B<Priority:> I<prioritetsvärde>
 

@@ -111,11 +111,11 @@ Ytterligare diskutrymme som används när paketet installeras. Om värdet är sa
 
 =item B<S:>I<fältnamn>
 
-The value of the source stanza field I<fieldname> (which must be given in the canonical capitalization; since dpkg 1.18.11).  Setting these variables has no effect other than on places where they are expanded explicitly. These variables are only available when generating binary control files.
+Värdet på källkods-strofens fält I<fältnamn> (som måste anges med rätt form av stora och små bokstäver; sedan dpkg 1.18.11). Om du sätter dessa variabler händer ingenting förutom där de explicit expanderats. Variablerna är bara tillgängliga när styrfiler för binärpaketen skapas.
 
 =item B<F:>I<fältnamn>
 
-The value of the output field I<fieldname> (which must be given in the canonical capitalization). Setting these variables has no effect other than on places where they are expanded explicitly.
+Värdet på utdatafältet I<fältnamn> (som måste anges med rätt form av stora och små bokstäver). Om du sätter dessa variabler händer ingenting förutom där de explicit expanderats.
 
 =item B<Format>
 

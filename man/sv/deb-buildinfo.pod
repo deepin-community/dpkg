@@ -128,9 +128,9 @@ Systemet har bibliotek, antingen statiska eller delade, under I</usr/local/lib>.
 
 =item B<can-execute-cross-built-programs>
 
-The system can execute cross built programs, either directly or via some emulation layer.
+Systemet kan köra korskompilerade program, antingen direkt eller via ett emuleringslager.
 
-Since dpkg 1.21.10.
+Stöds sedan dpkg 1.21.10.
 
 =back
 

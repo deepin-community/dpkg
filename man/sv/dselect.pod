@@ -154,7 +154,7 @@ När B<dselect> startas kan det utföra följande kommandon, antingen direkt om 
 
 Väljer och konfigurerar en åtkomstmetod för att komma åt paketsamlingen.
 
-By default, B<dselect> provides several methods such as I<multi_cd>, I<mounted> or I<ftp>, but other packages may provide additional methods, for example the I<apt> access method provided by the B<apt>(8) package.
+Som standard ger B<dselect> flera olika metoder, såsom I<multi_cd>, I<mounted> och I<ftp>, men andra paket kan tillhandahålla ytterligare metoder, till exempel ges åtkomstmetoden I<apt> av paketet B<apt>(8).
 
 Åtkomstmetoden I<apt> rekommenderas starkt.
 

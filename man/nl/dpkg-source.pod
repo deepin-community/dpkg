@@ -172,17 +172,17 @@ Als bij een controle het versienummer van het broncodepakket foutief blijkt te z
 
 =back
 
-=head2 Generic general options
+=head2 Generieke algemene opties
 
 =over 
 
 =item B<--threads-max=>I<threads>
 
-Sets the maximum number of threads allowed for compressors that support multi-threaded operations (since dpkg 1.21.14).
+Stelt het maximum aantal threads in dat is toegestaan voor compressors die multi-threaded operaties ondersteunen (sinds dpkg 1.21.14).
 
 =item B<-q>
 
-Sets quiet mode to suppress warnings.
+Stelt de stille modus in om waarschuwingen te onderdrukken.
 
 =back
 

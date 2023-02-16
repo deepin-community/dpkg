@@ -190,13 +190,13 @@ Omdirigera B<standard ut> och B<standard fel> till I<sökväg> när serverproces
 
 Ändrar processschemaläggarens policy och prioritet för processen innan den startas (sedan version 1.15.0). Prioriteten är valfri och anges genom att lägga till ett B<:> följt av värdet. Standardvärdet för I<prioritet> är 0. För närvarande stöds värdena B<other>, B<fifo> och B<rr> för I<policy>.
 
-This option might do nothing on some systems, where POSIX process scheduling is not supported.
+Det är möjligt att flaggan inte gör något på system där POSIX-processschemaläggning inte stöds.
 
 =item B<-I>, B<--iosched> I<klass>B<:>I<prioritet>
 
 Ändrar I/O-schemaläggarens klass och -prioritet för processen innan den startas (sedan version 1.15.0). Prioriteten är valfri och anges genom att lägga till ett B<:> följt av värdet. Standardvärdet för I<prioritet> är 4, såvida inte I<klass> är B<idle>, då är I<prioritet> alltid 7. För närvarande stöds värdena B<idle>, B<best-effort> och B<real-time> för I<klass>.
 
-This option might do nothing on some systems, where Linux IO scheduling is not supported.
+Det är möjligt att flaggan inte gör något på system där Linux-I/O-schemaläggning inte stöds.
 
 =item B<-k>, B<--umask> I<maskvärde>
 

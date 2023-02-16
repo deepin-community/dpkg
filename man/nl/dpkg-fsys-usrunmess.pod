@@ -24,7 +24,7 @@ B<dpkg-fsys-usrunmess> [I<optie>...]
 
 B<dpkg-fsys-usrunmess> is een hulpmiddel om bestandssystemen te repareren die opnieuw werden geïnstalleerd met recente installatieprogramma's met ongelukkige standaardinstellingen of die overgeschakeld waren naar de defecte inrichting van een via aliassen samengevoegde map /usr, wat B<niet> wordt ondersteund door dpkg. Zie de dpkg-FAQ.
 
-B<Note>: In Debian its tech-ctte has decreed that on the release after bookworm the non-usrmerged layout is not going to be supported, and thus some of its maintainers might not fix issues or intentionally remove non-usrmerged support, so you will need decide and pick your poison.
+B<Opmerking>: Binnen Debian heeft zijn technisch comité beslist dat in de release volgend op bookworm de indeling met een niet-samengevoegde /usr niet langer zal worden ondersteund, en dus zullen sommige van zijn pakketbeheerders misschien geen problemen meer oplossen of doelbewust ondersteuning voor een niet-samengevoegde /usr verwijderen. U zult dus zelf een beslissing moeten nemen en uw keuze maken.
 
 Het programma voert de volgende algemene acties uit:
 

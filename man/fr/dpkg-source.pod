@@ -32,9 +32,9 @@ Aucune de ces commandes ne permet la combinaison de plusieurs options en une seu
 
 =item B<-x> , B<--extract> I<nom-de-fichier>.dsc [I<répertoire-de-sortie>]
 
-Cette option sert à extraire un paquet source (B<--extract> depuis S<dpkg 1.17.14).> Un seul argument sans option doit être S<donné :> le nom du fichier de contrôle des sources Debian (B<.dsc>). Un deuxième argument sans option peut également être donné pour indiquer le répertoire où extraire le paquet S<source :> ce répertoire ne doit pas déjà exister. Quand aucun répertoire n'est indiqué, le paquet source est extrait dans un répertoire I<source>-I<version> du répertoire courant.
+Cette option sert à extraire un paquet source (B<--extract> depuis dpkg 1.17.14). Un seul argument sans option doit être S<donné :> le nom du fichier de contrôle des sources Debian (B<.dsc>). Un deuxième argument sans option peut également être donné pour indiquer le répertoire où extraire le paquet S<source :> ce répertoire ne doit pas déjà exister. Quand aucun répertoire n'est indiqué, le paquet source est extrait dans un répertoire I<source>-I<version> du répertoire courant.
 
-B<dpkg-source> lit, dans le fichier de contrôle, les noms des fichiers qui composent le paquet S<source ;> il suppose qu'ils sont dans le même répertoire que le fichier B<.dsc>.
+B<dpkg-source> lit, dans le fichier de contrôle, les noms des fichiers qui composent le paquet source ; il suppose qu'ils sont dans le même répertoire que le fichier B<.dsc>.
 
 Les fichiers extraits du paquet auront leurs propriétaires et permissions définis à ceux attendus s'ils avaient été simplement créés. Les répertoires et les fichiers exécutables auront une permission égale à 0777 et les simples fichiers à 0666, les deux étant modifiées par le masque (umask) de celui qui fait l'extraction. Si le répertoire parent est S<« setgid »,> les répertoires extraits le seront aussi et tous les fichiers et répertoires hériteront de sa propriété de groupe.
 
@@ -48,15 +48,15 @@ B<dpkg-source> va construire le paquet source dans le premier format trouvé dan
 
 =item B<--print-format> I<répertoire>
 
-Affiche le format source qui serait utilisé pour construire le paquet source si B<dpkg-source --build> I<répertoire> était utilisé (dans les mêmes conditions et avec les mêmes S<options ;> depuis S<dpkg 1.15.5).>
+Affiche le format source qui serait utilisé pour construire le paquet source si B<dpkg-source --build> I<répertoire> était utilisé (dans les mêmes conditions et avec les mêmes options ; depuis S<dpkg 1.15.5).>
 
 =item B<--before-build> I<répertoire>
 
-Exécute le point d'entrée correspondant du format de paquet source (depuis S<dpkg 1.15.8).> Ce point d'entrée doit être utilisé avant toute construction du paquet (B<dpkg-buildpackage> l'utilise très tôt, avant même B<debian/rules clean>). Cette commande est idempotente et peut être lancée plusieurs fois. Tous les formats source ne mettent pas en œuvre ce branchement et ceux qui le font préparent l'arborescence source pour la construction, par exemple en garantissant que les correctifs Debian sont appliqués.
+Exécute le point d'entrée correspondant du format de paquet source (depuis dpkg 1.15.8). Ce point d'entrée doit être utilisé avant toute construction du paquet (B<dpkg-buildpackage> l'utilise très tôt, avant même B<debian/rules clean>). Cette commande est idempotente et peut être lancée plusieurs fois. Tous les formats source ne mettent pas en œuvre ce branchement et ceux qui le font préparent l'arborescence source pour la construction, par exemple en garantissant que les correctifs Debian sont appliqués.
 
 =item B<--after-build> I<répertoire>
 
-Exécute le point d'entrée correspondant du format de paquet source (depuis S<dpkg 1.15.8).> Ce point d'entrée doit être utilisé après toute construction du paquet (B<dpkg-buildpackage> l'utilise en dernier). Cette commande est idempotente et peut être lancée plusieurs fois. Tous les formats source ne mettent pas en œuvre ce branchement et ceux qui le font s'en servent pour défaire ce qui a été fait par B<--before-build>.
+Exécute le point d'entrée correspondant du format de paquet source (depuis dpkg 1.15.8). Ce point d'entrée doit être utilisé après toute construction du paquet (B<dpkg-buildpackage> l'utilise en dernier). Cette commande est idempotente et peut être lancée plusieurs fois. Tous les formats source ne mettent pas en œuvre ce branchement et ceux qui le font s'en servent pour défaire ce qui a été fait par B<--before-build>.
 
 =item B<--commit> [I<répertoire>] ...
 
@@ -68,7 +68,7 @@ Affiche un message d'aide puis quitte. Les options de construction et d'extracti
 
 =item B<--version>
 
-Affiche le numéro de version puis quitte.
+Afficher le numéro de version puis quitter.
 
 =back
 
@@ -92,7 +92,7 @@ Indique le format du fichier des changements. Voir B<dpkg-parsechangelog>(1) pou
 
 =item B<--format=>I<valeur>
 
-Utilise le format indiqué pour la construction du paquet source (depuis S<dpkg 1.14.17).> Ce choix remplace le format indiqué dans B<debian/source/format>.
+Utilise le format indiqué pour la construction du paquet source (depuis dpkg 1.14.17). Ce choix remplace le format indiqué dans B<debian/source/format>.
 
 =item B<-V>I<nom>B<=>I<valeur>
 
@@ -100,7 +100,7 @@ Fixe la valeur d'une variable de substitution. Consultez B<deb-substvars>(5) pou
 
 =item B<-T>I<fichier-substvars>
 
-Lit les variables de substitution dans S<I<fichier-substvars> ;> par défaut aucun fichier n'est lu. Cette option peut être utilisée plusieurs fois pour lire des variables de substitution depuis plusieurs fichiers (depuis S<dpkg 1.15.6).>
+Lit les variables de substitution dans I<fichier-substvars> ; par défaut aucun fichier n'est lu. Cette option peut être utilisée plusieurs fois pour lire des variables de substitution depuis plusieurs fichiers (depuis dpkg 1.15.6).
 
 =item B<-D>I<champ>B<=>I<valeur>
 
@@ -112,20 +112,20 @@ Supprime en sortie un champ dans le fichier de contrôle.
 
 =item B<-Z>I<compression>, B<--compression>=I<compression>
 
-Spécifie le niveau de compression à utiliser pour les fichiers archive et diff créés (B<--compression> depuis S<dpkg 1.15.5).> Notez que cette option ne causera pas la recompression des archives existantes, cela ne concerne que les nouveaux fichiers. Les valeurs acceptées sont les S<suivantes :> I<gzip>, I<bzip2>, I<lzma> et I<xz>. L'option par défaut est I<xz> pour les S<formats 2.0> et plus récents, et I<gzip> pour le S<format 1.0.> I<xz> n'est géré que depuis S<dpkg 1.15.5.>
+Spécifie le niveau de compression à utiliser pour les fichiers archive et diff créés (B<--compression> depuis S<dpkg 1.15.5).> Notez que cette option ne causera pas la recompression des archives existantes, cela ne concerne que les nouveaux fichiers. Les valeurs acceptées sont les S<suivantes :> I<gzip>, I<bzip2>, I<lzma> et I<xz>. L'option par défaut est I<xz> pour les formats 2.0 et plus récents, et I<gzip> pour le format 1.0. I<xz> n'est géré que depuis S<dpkg 1.15.5.>
 
 =item B<-z>I<niveau>, B<--compression-level>=I<niveau>
 
-Niveau de compression à utiliser (B<--compression-level> depuis S<dpkg 1.15.5).> Comme avec B<-Z> cela ne concerne que les fichiers nouvellement créés. Les valeurs prises possibles sont les S<suivantes :> I<1> à I<9>, I<best> et I<fast>. La valeur par défaut est I<9> pour gzip et bzip2, I<6> pour xz et lzma.
+Niveau de compression à utiliser (B<--compression-level> depuis dpkg 1.15.5). Comme avec B<-Z> cela ne concerne que les fichiers nouvellement créés. Les valeurs prises possibles sont les S<suivantes :> I<1> à I<9>, I<best> et I<fast>. La valeur par défaut est I<9> pour gzip et bzip2, I<6> pour xz et lzma.
 
 =item B<-i>[I<expression-rationnelle>],
 B<--diff-ignore>[=I<expression-rationnelle>]
 
-Il est possible de donner une expression rationnelle Perl pour filtrer les fichiers qui doivent être éliminés de la liste des fichiers pour le S<« diff »> (B<--diff-ignore> depuis S<dpkg 1.15.6).> Cette liste est créée avec une commande S<« find ».> Si le fichier source en construction est un fichier source de S<version 3> utilisant un système de suivi de versions, cette option est utile pour ignorer les modifications non envoyées. Utiliser B<-i>I<.*> les ignorera toutes.
+Il est possible de donner une expression rationnelle Perl pour filtrer les fichiers qui doivent être éliminés de la liste des fichiers pour le S<« diff »> (B<--diff-ignore> depuis S<dpkg 1.15.6).> Cette liste est créée avec une commande S<« find ».> Si le fichier source en construction est un fichier source de version 3 utilisant un système de suivi de versions, cette option est utile pour ignorer les modifications non envoyées. Utiliser B<-i>I<.*> les ignorera toutes.
 
-L'option B<-i> active cette fonction avec une expression rationnelle par défaut (en préservant toutes les modifications faites avec l'expression rationnelle par défaut par une utilisation précédente de B<--extend-diff-ignore>) qui couvre les fichiers de contrôle des plus usuels systèmes de gestion de version, les fichiers de sauvegarde, les fichiers d'échange et les répertoires utilisés par Libtool. Il ne peut y avoir qu'une seule expression rationnelle S<active ;> avec de multiples options B<-i>, seule la dernière mentionnée sera prise en compte.
+L'option B<-i> active cette fonction avec une expression rationnelle par défaut (en préservant toutes les modifications faites avec l'expression rationnelle par défaut par une utilisation précédente de B<--extend-diff-ignore>) qui couvre les fichiers de contrôle des plus usuels systèmes de gestion de version, les fichiers de sauvegarde, les fichiers d'échange et les répertoires utilisés par Libtool. Il ne peut y avoir qu'une seule expression rationnelle active ; avec de multiples options B<-i>, seule la dernière mentionnée sera prise en compte.
 
-This is very helpful in cutting out extraneous files that get included in the diff, for example if you maintain your source in a revision control system and want to use a checkout to build a source package without including the additional files and directories that it will usually contain (e.g. CVS/, .cvsignore, .svn/). The default regex is already very exhaustive, but if you need to replace it, please note that by default it can match any part of a path, so if you want to match the begin of a filename or only full filenames, you will need to provide the necessary anchors (e.g. ‘(^|/)’, ‘($|/)’) yourself.
+C'est très utile pour supprimer des fichiers qui sont inclus dans le diff, par exemple, si vous maintenez un source avec un système de contrôle de version et que voulez construire un paquet source sans inclure des fichiers et répertoires additionnels qu'il contient généralement (par exemple CVS/, .cvsignore, .svn/). L'expression rationnelle par défaut est déjà très exhaustive, mais si avez besoin de la remplacer, veuillez noter que par défaut, il sait vérifier n'importe quelle partie d'un chemin, donc si vous voulez trouver le début d'un nom de fichier ou des noms de fichiers complets, vous devrez fournir les caractères spéciaux vous-même (par exemple S<« (^|/) »,> S<« ($|/) »).>
 
 =item B<--extend-diff-ignore>=I<expression-rationnelle>
 
@@ -133,13 +133,13 @@ L'expression rationnelle Perl indiquée complétera la valeur par défaut utilis
 
 =item B<-I>[I<motif-fichier>], B<--tar-ignore>[=I<motif-fichier>]
 
-Avec cette option, le fichier est passé à l'option B<--exclude> de B<tar>(1) quand on veut créer un fichier .orig.tar ou .tar (B<--tar-ignore> depuis S<dpkg 1.15.6).> Par exemple, B<-I>CVS fera que tar sautera les répertoires du CVS quand il doit créer un fichier .tar.gz. On peut répéter cette option pour exclure à partir de plusieurs motifs.
+Avec cette option, le fichier est passé à l'option B<--exclude> de B<tar>(1) quand on veut créer un fichier .orig.tar ou .tar (B<--tar-ignore> depuis dpkg 1.15.6). Par exemple, B<-I>CVS fera que tar sautera les répertoires du CVS quand il doit créer un fichier .tar.gz. On peut répéter cette option pour exclure à partir de plusieurs motifs.
 
 B<-I> ajoute par défaut des options B<--exclude> qui élimineront les fichiers et les répertoires de contrôles des systèmes les plus connus de contrôle de version, les fichiers d'échange et de sauvegarde et les répertoires utilisés par Libtool.
 
 =back
 
-B<Note:> While they have similar purposes, B<-i> and B<-I> have very different syntax and semantics. B<-i> can only be specified once and takes a perl compatible regular expression which is matched against the full relative path of each file. B<-I> can specified multiple times and takes a filename pattern with shell wildcards.  The pattern is applied to the full relative path but also to each part of the path individually. The exact semantic of tar's B<--exclude> option is somewhat complicated, see L<https://www.gnu.org/software/tar/manual/tar.html#wildcards> for a full documentation.
+S<B<Note> :> même si elles ont des rôles similaires, B<-i> et B<-I> ont une syntaxe et une sémantique très différentes. B<-i> ne peut être spécifié qu'une fois et reçoit une expression rationnelle compatible avec le langage Perl qui est appliquée sur chaque chemin relatif complet de chaque fichier. B<-I> peut être spécifié plusieurs fois et prend un motif de nom de fichier avec les méta-caractères du shell. Le motif est appliqué au chemin relatif complet mais aussi à chaque partie du chemin individuellement. La sémantique exacte de l'option B<--exclude> de tar est un peu compliquée, voir L<https://www.gnu.org/software/tar/manuel/tar.html#wildcards> pour une documentation plus complète.
 
 L'expression rationnelle et le motif par défaut pour les deux options peuvent être trouvés dans la sortie de la commande B<--help>.
 
@@ -157,11 +157,11 @@ Ne vérifie pas les signatures et les sommes de contrôle avant de dépaqueter(d
 
 =item B<--no-overwrite-dir>
 
-Ne pas remplacer le répertoire d'extraction s'il existe déjà (depuis S<dpkg 1.18.8)>
+Ne pas remplacer le répertoire d'extraction s'il existe déjà (depuis dpkg 1.18.8)
 
 =item B<--require-valid-signature>
 
-Refuse to unpack the source package if it doesn't contain an OpenPGP signature that can be verified (since dpkg 1.15.0) either with the user's I<trustedkeys.gpg> keyring, one of the vendor-specific keyrings, or one of the official Debian keyrings (I</usr/share/keyrings/debian-keyring.gpg>, I</usr/share/keyrings/debian-nonupload.gpg> and I</usr/share/keyrings/debian-maintainers.gpg>).
+Refuse de décompresser le paquet source s'il ne contient pas de signature OpenPGP pouvant être vérifiée (depuis S<dpkg 1.15.0)> soit avec le fichier de clés I<trustedkeys.gpg> de l'utilisateur, un des fichiers de clés propre à un distributeur ou un des fichiers de clés officiels de Debian (I</usr/share/keyrings/debian-keyring.gpg>, I</usr/share/keyrings/debian-nonupload.gpg> et I</usr/share/keyrings/debian-maintainers.gpg>).
 
 =item B<--require-strong-checksums>
 
@@ -169,27 +169,27 @@ Refuse de décompresser le paquet source s'il ne contient pas de somme de contr�
 
 =item B<--ignore-bad-version>
 
-Transforme la vérification des mauvaises versions des paquets source en avertissement non fatal (since S<dpkg 1.17.7).> Cette option sera seulement nécessaire quand on extrait des anciens paquets source avec des versions cassées, pour préserver la compatibilité avec les versions précédentes.
+Transforme la vérification des mauvaises versions des paquets source en avertissement non fatal (since dpkg 1.17.7). Cette option sera seulement nécessaire quand on extrait des anciens paquets source avec des versions cassées, pour préserver la compatibilité avec les versions précédentes.
 
 =back
 
-=head2 Generic general options
+=head2 Options générales génériques
 
 =over 
 
 =item B<--threads-max=>I<threads>
 
-Sets the maximum number of threads allowed for compressors that support multi-threaded operations (since dpkg 1.21.14).
+Fixe le nombre maximal de processus permis pour les compresseurs qui gèrent les opérations multi-threadées (depuis S<dpkg 1.21.14).>
 
 =item B<-q>
 
-Sets quiet mode to suppress warnings.
+Définit le mode silencieux pour supprimer les avertissements.
 
 =back
 
 =head1 FORMATS DE PAQUET SOURCE
 
-If you don't know what source format to use, you should probably pick either “3.0 (quilt)” or “3.0 (native)”.  See L<https://wiki.debian.org/Projects/DebSrc3.0> for information on the deployment of those formats within Debian.
+Si vous ne savez pas quel format source utiliser, il est conseillé de choisir soit S<« 3.0> S<(quilt) »> soit S<« 3.0> S<(native) ».> Voir L<https://wiki.debian.org/Projects/DebSrc3.0> pour plus d'informations sur la mise en œuvre de ces formats dans Debian.
 
 =head2 S<Format :> 1.0
 
@@ -197,7 +197,7 @@ Un paquet source dans ce format se compose soit d'un B<.orig.tar.gz> associé à
 
 B<Extraction>
 
-Extracting a native package is a simple extraction of the single tarball in the target directory. Extracting a non-native package is done by first unpacking the B<.orig.tar.gz> and then applying the patch contained in the B<.diff.gz> file. The timestamp of all patched files is reset to the extraction time of the source package (this avoids timestamp skews leading to problems when autogenerated files are patched). The diff can create new files (the whole debian directory is created that way) but cannot remove files (empty files will be left over) and cannot create or change symlinks.
+Extraire un paquet natif revient à une simple extraction de l'archive tar dans le répertoire cible. L'extraction d'un paquet non natif consiste au dépaquetage du B<.orig.tar.gz> puis l'application des correctifs contenus dans le B<.diff.gz>. La date de tous les fichiers correctifs est réglée à celle du moment de l'extraction depuis le paquet source (cela évite les horodatages faux menant à des problèmes lorsque des fichiers générés automatiquement sont modifiés). Le diff peut créer de nouveaux fichiers (tout le répertoire debian est créé de cette façon) mais ne peut pas supprimer de fichiers (les fichiers vides seront laissés là) et ne peut ni créer ni modifier des liens symboliques.
 
 B<Construction>
 
@@ -213,7 +213,7 @@ Les options B<-sa>, B<-sp>, B<-sk>, B<-su> et B<-sr> ne remplacent pas les fichi
 
 =item B<-sk>
 
-Spécifie que le source d'origine est attendu sous forme S<tar ;> par défaut, I<paquet>B<_>I<version-amont>B<.orig.tar>I<extension>. Il le laisse en place en tant que fichier tar ou le copie dans le répertoire en cours s'il n'y est pas déjà. Le fichier sera dépaqueté dans I<répertoire>B<.orig> pour la génération du fichier diff.
+Spécifie que le source d'origine est attendu sous forme tar ; par défaut, I<paquet>B<_>I<version-amont>B<.orig.tar>I<extension>. Il le laisse en place en tant que fichier tar ou le copie dans le répertoire en cours s'il n'y est pas déjà. Le fichier sera dépaqueté dans I<répertoire>B<.orig> pour la génération du fichier diff.
 
 =item B<-sp>
 
@@ -221,7 +221,7 @@ Comme B<-sk> mais supprimera le répertoire à nouveau par la suite.
 
 =item B<-su>
 
-Quand on spécifie que le source d'origine est un S<répertoire ;> la valeur par défaut est le répertoire I<paquet>B<->I<version-amont>B<.orig> et B<dpkg-source> crée une nouvelle archive du source d'origine.
+Quand on spécifie que le source d'origine est un répertoire ; la valeur par défaut est le répertoire I<paquet>B<->I<version-amont>B<.orig> et B<dpkg-source> crée une nouvelle archive du source d'origine.
 
 =item B<-sr>
 
@@ -237,11 +237,11 @@ Indique de ne pas chercher de source d'origine et de ne pas créer de S<« diff 
 
 =item B<-sa> or B<-sA>
 
-Indique comme source d'origine soit un fichier tar, soit un répertoire S<— le> deuxième argument, s'il existe, doit être l'un d'eux ou bien une chaîne vide (cela revient à utiliser l'option B<-sn)>. Quand un fichier tar existe, il est dépaqueté pour créer le fichier S<« diff » ;> ensuite il est supprimé (cela revient à utiliser l'option S<B<-sp)> ;> quand un répertoire est trouvé, il est empaqueté et B<dpkg-source> crée le source d'origine et supprime ensuite ce répertoire (cela revient à utiliser l'option S<B<-sr)> ;> quand ni l'un ni l'autre n'est trouvé, B<dpkg-source> suppose que le paquet ne possède pas de fichier S<« diff »> de debianisation, mais seulement une simple archive source (cela revient à utiliser l'option B<-sn>). Quand les deux sont trouvés, B<dpkg-source> ignore le répertoire et le remplace si l'option B<-sA> a été spécifiée (cela revient à utiliser l'option B<-sP)> ou il provoque une erreur si l'option B<-sa> a été spécifiée. L'option par défaut est B<-sa>.
+Indique comme source d'origine soit un fichier tar, soit un répertoire — le deuxième argument, s'il existe, doit être l'un d'eux ou bien une chaîne vide (cela revient à utiliser l'option B<-sn)>. Quand un fichier tar existe, il est dépaqueté pour créer le fichier S<« diff »> ; ensuite il est supprimé (cela revient à utiliser l'option B<-sp)> ; quand un répertoire est trouvé, il est empaqueté et B<dpkg-source> crée le source d'origine et supprime ensuite ce répertoire (cela revient à utiliser l'option B<-sr)> ; quand ni l'un ni l'autre n'est trouvé, B<dpkg-source> suppose que le paquet ne possède pas de fichier S<« diff »> de debianisation, mais seulement une simple archive source (cela revient à utiliser l'option B<-sn>). Quand les deux sont trouvés, B<dpkg-source> ignore le répertoire et le remplace si l'option B<-sA> a été spécifiée (cela revient à utiliser l'option B<-sP)> ou il provoque une erreur si l'option B<-sa> a été spécifiée. L'option par défaut est B<-sa>.
 
 =item B<--abort-on-upstream-changes>
 
-Ce processus échoue si le fichier de différences contient des modifications apportées à des fichiers en dehors du sous-répertoire debian (depuis S<dpkg 1.15.8).> Cette option n'est pas autorisée dans B<debian/source/options> mais peut être utilisée dans B<debian/source/local-options>.
+Ce processus échoue si le fichier de différences contient des modifications apportées à des fichiers en dehors du sous-répertoire debian (depuis dpkg 1.15.8). Cette option n'est pas autorisée dans B<debian/source/options> mais peut être utilisée dans B<debian/source/local-options>.
 
 =back
 
@@ -277,7 +277,7 @@ Passe l'étape d'application du fichier de différences Debian aux sources amont
 
 =head2 S<Format :> 2.0
 
-Extraction prise en charge depuis S<dpkg 1.13.9,> construction depuis S<dpkg 1.14.8.> Aussi connu sous le nom de S<« wig&pen ».> Ce format n'est pas recommandé pour une utilisation massive, le format S<« 3.0> S<(quilt) »> le remplace. Wig&pen a été la première spécification d'une nouvelle génération de format de paquet source.
+Extraction prise en charge depuis S<dpkg 1.13.9,> construction depuis dpkg 1.14.8. Aussi connu sous le nom de S<« wig&pen ».> Ce format n'est pas recommandé pour une utilisation massive, le format S<« 3.0> S<(quilt) »> le remplace. Wig&pen a été la première spécification d'une nouvelle génération de format de paquet source.
 
 Le comportement de ce format est le même que pour le format S<« 3.0> S<(quilt) »> sauf qu'il n'utilise pas de liste explicite de correctifs. Tous les fichiers dans B<debian/patches/> correspondant à l'expression rationnelle Perl B<[\w-]+> doivent être des correctifs S<valables :> ils sont appliqués au moment de l'extraction.
 
@@ -285,19 +285,19 @@ Lors de la construction d'un nouveau paquet source, toute modification apportée
 
 =head2 S<Format :> 3.0 (native)
 
-Pris en charge depuis S<dpkg 1.14.17.> Ce format est une extension du format de paquet natif tel que défini dans le S<format 1.0.> Il gère toutes les méthodes de compression et ignore par défaut tout fichier et répertoire spécifique à VCS ainsi que de nombreux fichiers temporaires (voir la valeur par défaut associée à l'option B<-I> dans la sortie de B<--help>).
+Pris en charge depuis S<dpkg 1.14.17.> Ce format est une extension du format de paquet natif tel que défini dans le format 1.0. Il gère toutes les méthodes de compression et ignore par défaut tout fichier et répertoire spécifique à VCS ainsi que de nombreux fichiers temporaires (voir la valeur par défaut associée à l'option B<-I> dans la sortie de B<--help>).
 
 =head2 S<Format :> 3.0 (quilt)
 
-Pris en charge S<depuis 1.14.17.> Un paquet source dans ce format contient au moins une archive tar d'origine (B<.orig.tar.>I<ext> où I<ext> peut être B<gz>, B<bz2> B<lzma> et B<xz>) et une archive tar debian (B<.debian.tar.>I<ext>). Il peut également contenir d'autres archives tar d'origine (B<.orig->I<composant>B<.tar.>I<ext>). I<composant> ne peut être constitué que de caractères alphanumériques S<(« a-zA-Z0-9 »)> et de tirets S<(« - »).> Chaque archive tar originale peut être accompagnée de façon facultative d'une signature amont séparée (B<.orig.tar.>I<ext>B<.asc> et B<.orig->I<composant>B<.tar.>I<ext>B<.asc>), extraction prise en charge depuis S<dpkg 1.17.20,> construction depuis S<dpkg 1.18.5.>
+Pris en charge depuis 1.14.17. Un paquet source dans ce format contient au moins une archive tar d'origine (B<.orig.tar.>I<ext> où I<ext> peut être B<gz>, B<bz2> B<lzma> et B<xz>) et une archive tar debian (B<.debian.tar.>I<ext>). Il peut également contenir d'autres archives tar d'origine (B<.orig->I<composant>B<.tar.>I<ext>). I<composant> ne peut être constitué que de caractères alphanumériques S<(« a-zA-Z0-9 »)> et de tirets S<(« - »).> Chaque archive tar originale peut être accompagnée de façon facultative d'une signature amont séparée (B<.orig.tar.>I<ext>B<.asc> et B<.orig->I<composant>B<.tar.>I<ext>B<.asc>), extraction prise en charge depuis dpkg 1.17.20, construction depuis S<dpkg 1.18.5.>
 
 B<Extraction>
 
 L'archive principale tar d'origine est extraite tout d'abord, puis toutes les autres archives tar d'origine sont extraites dans des sous-répertoires dont le nom est formé à partir de la partie I<composant> de leur nom. L'archive tar Debian est extraite du répertoire source, après la suppression de tout répertoire B<debian> existant. Notez que l'archive tar Debian doit contenir un sous-répertoire B<debian>, mais elle peut également contenir des fichiers binaires en dehors de ce répertoire (voir l'option B<--include-binaries>).
 
-All patches listed in B<debian/patches/>I<vendor>B<.series> or B<debian/patches/series> are then applied, where I<vendor> will be the lowercase name of the current vendor, or B<debian> if there is no vendor defined.  If the former file is used and the latter one doesn't exist (or is a symlink), then the latter is replaced with a symlink to the former.  This is meant to simplify usage of B<quilt> to manage the set of patches. Vendor-specific series files are intended to make it possible to serialize multiple development branches based on the vendor, in a declarative way, in preference to open-coding this handling in B<debian/rules>.  This is particularly useful when the source would need to be patched conditionally because the affected files do not have built-in conditional occlusion support.  Note however that while B<dpkg-source> parses correctly series files with explicit options used for patch application (stored on each line after the patch filename and one or more spaces), it does ignore those options and always expects patches that can be applied with the B<-p1> option of B<patch>. It will thus emit a warning when it encounters such options, and the build is likely to fail.
+Toutes les modifications figurant dans B<debian/patches/>I<distributeur>B<.series> ou B<debian/patches/series> sont alors appliquées, où I<distributeur> sera le nom en minuscules du distributeur actuel, ou Debian s'il n'y a pas de distributeur défini. Si l'ancien fichier est utilisé et qu'il n'y en a pas de plus récent (ou si c'est un lien symbolique), alors celui-ci est remplacé par un lien symbolique vers l'ancien. Cette disposition vise à simplifier l'utilisation de B<quilt> pour gérer l'ensemble des correctifs. Les fichiers de séries propres au distributeur sont destinés à permettre de sérialiser plusieurs branches de développement en se basant sur le distributeur, d'une manière déclarative, de préférence au codage ouvert de cette gestion dans B<debian/rules>. Cela est particulièrement utile quand le source à besoin de correctifs de manière conditionnelle, car les fichiers affectés n’ont pas de gestion interne d’inclusion conditionnelle. Notez toutefois que si B<dpkg-source> analyse correctement les fichiers de séries avec les options utilisées pour l'application du correctif (stockées sur chaque ligne après le nom du correctif et une ou plusieurs espaces), il ignore ces options et s'attendra toujours à ce que les correctifs puissent être appliqués avec l'option B<-p1> de B<patch>. Il va donc émettre un avertissement lorsqu'il rencontrera ces options, et la construction est susceptible d'échouer.
 
-Notez que B<lintian>(1) émettra des avertissements sans condition lors de l'utilisation de séries de distributeur du fait d'une règle controversée particulière de Debian qui ne devrait pas affecter une utilisation S<externe ;> pour les faire taire, le profil lintian de dpkg peut être utilisé en passant l'option «B<--profile dpkg>» à B<lintian>(1).
+Notez que B<lintian>(1) émettra des avertissements sans condition lors de l'utilisation de séries de distributeur du fait d'une règle controversée particulière de Debian qui ne devrait pas affecter une utilisation externe ; pour les faire taire, le profil lintian de dpkg peut être utilisé en passant l'option «B<--profile dpkg>» à B<lintian>(1).
 
 La date de tous les fichiers correctifs est celle du moment où se déroule l'extraction du paquet source (cela évite les horodatages faux menant à des problèmes lorsque des fichiers générés automatiquement sont modifiés).
 
@@ -311,13 +311,13 @@ B<Construction>
 
 Les originaux de toutes les archives tar trouvées dans le répertoire courant sont extraits dans un répertoire temporaire en suivant la même logique que pour le dépaquetage, le répertoire debian est copié dans le répertoire temporaire, et tous les correctifs excepté le correctif automatique B<debian-changes->I<version> ou B<debian-changes>, selon B<--single-debian-patch>) sont appliquées. Le répertoire temporaire est comparé à celui du paquet source. Si le fichier de différences n'est pas vide, la construction échoue à moins que B<--single-debian-patch> ou B<--auto-commit>  aient été utilisés, et dans ce cas le diff est stocké dans le correctif automatique. Si le correctif automatique est créé ou supprimé, il est ajouté ou supprimé dans le fichier S<« series »> et les métadonnées de B<quilt>.
 
-Any change on a binary file is not representable in a diff and will thus lead to a failure unless the maintainer deliberately decided to include that modified binary file in the debian tarball (by listing it in B<debian/source/include-binaries>). The build will also fail if it finds binary files in the debian sub-directory unless they have been allowed through B<debian/source/include-binaries>.
+Tout changement dans un fichier binaire ne peut être indiqué dans le diff et va déboucher sur un échec à moins que le responsable ne décide délibérément d'inclure cette modification binaire dans l'archive tar Debian (en le listant dans B<debian/source/include-binaries>). La construction pourra également échouer si des fichiers binaires sont trouvés dans le sous-répertoire debian à moins qu'ils aient été autorisés au moyen de B<debian/source/include-binaries>.
 
 Le répertoire debian mis à jour et la liste des binaires modifiés sont ensuite utilisés pour recréer l'archive tar debian.
 
 Le diff généré automatiquement n'inclut pas les changements spécifiques sur les fichiers VCS ainsi sur que de nombreux fichiers temporaires (pour la valeur par défaut associée à l'option B<-i>, voir la sortie de B<--help>). En particulier, le répertoire B<.pc> utilisé par B<quilt> est ignoré lors de la génération automatique du correctif.
 
-B<Note:> B<dpkg-source> B<--before-build> (and B<--build>) will ensure that all patches listed in the series file are applied so that a package build always has all patches applied. It does this by finding unapplied patches (they are listed in the B<series> file but not in B<.pc/applied-patches>), and if the first patch in that set can be applied without errors, it will apply them all. The option B<--no-preparation> can be used to disable this behavior.
+S<B<Note> :> B<dpkg-source> B<--before-build> (et B<--build>) prendront soin d'appliquer les correctifs indiqués dans le fichier series afin qu'un paquet soit toujours construit avec toutes les corrections appliquées. Pour effectuer cette détection, il recherche la liste des correctifs non appliqués (ils sont mentionnés dans le fichier B<series> mais pas dans B<.pc/applied-patches>) et si le premier de cette liste peut être appliqué sans erreur, il les applique tous. L'option B<--no-preparation> peut être utilisée pour désactiver ce comportement.
 
 B<Enregistrement des modifications>
 
@@ -339,7 +339,7 @@ B<Options de construction>
 
 =item B<--allow-version-of-quilt-db=>I<version>
 
-Autorise B<dpkg-source> à construire le fichier si la version des métadonnées de B<quilt> est celle indiquée, même si B<dpkg-source> n'en n'a pas connaissance (depuis S<dpkg 1.15.5.4).> En fait, cela indique que la version indiquée des métadonnées de B<quilt> est compatible avec la S<version 2> que B<dpkg-source> gère. La version des métadonnées de B<quilt> est conservée dans B<.pc/.version>.
+Autorise B<dpkg-source> à construire le fichier si la version des métadonnées de B<quilt> est celle indiquée, même si B<dpkg-source> n'en n'a pas connaissance (depuis S<dpkg 1.15.5.4).> En fait, cela indique que la version indiquée des métadonnées de B<quilt> est compatible avec la version 2 que B<dpkg-source> gère. La version des métadonnées de B<quilt> est conservée dans B<.pc/.version>.
 
 =item B<--include-removal>
 
@@ -363,7 +363,7 @@ Utilise B<debian/patches/debian-changes> au lieu de B<debian/patches/debian-chan
 
 =item B<--create-empty-orig>
 
-Crée automatiquement l'archive principale tar d'origine vide si elle est manquante et qu'il existe des archives tar d'origine additionnelles (depuis S<dpkg 1.15.6).> Cette option peut être utilisée lorsque le paquet source est une collection de différents sources amont et qu'il n'existe pas de logiciel S<« principal ».>
+Crée automatiquement l'archive principale tar d'origine vide si elle est manquante et qu'il existe des archives tar d'origine additionnelles (depuis dpkg 1.15.6). Cette option peut être utilisée lorsque le paquet source est une collection de différents sources amont et qu'il n'existe pas de logiciel S<« principal ».>
 
 =item B<--no-unapply-patches, --unapply-patches>
 
@@ -371,7 +371,7 @@ Par défaut, B<dpkg-source> retire automatiquement les correctifs dans le point 
 
 =item B<--abort-on-upstream-changes>
 
-Ce processus échouera si un correctif automatique a été créé (depuis S<dpkg 1.15.8).> Cette option peut servir à vérifier que toutes les modifications ont été enregistrées correctement dans des correctifs B<quilt> distincts avant la construction du paquet source. Elle n'est pas autorisée dans B<debian/source/options> mais peut prendre place dans B<debian/source/local-options>.
+Ce processus échouera si un correctif automatique a été créé (depuis dpkg 1.15.8). Cette option peut servir à vérifier que toutes les modifications ont été enregistrées correctement dans des correctifs B<quilt> distincts avant la construction du paquet source. Elle n'est pas autorisée dans B<debian/source/options> mais peut prendre place dans B<debian/source/local-options>.
 
 =item B<--auto-commit>
 
@@ -385,11 +385,11 @@ B<Options d'extraction>
 
 =item B<--skip-debianization>
 
-Passe l'étape d'extraction de l'archive tar debian des sources amont (depuis S<dpkg 1.15.1).>
+Passe l'étape d'extraction de l'archive tar debian des sources amont (depuis dpkg 1.15.1).
 
 =item B<--skip-patches>
 
-Ne pas appliquer des correctifs à la fin de l'extraction (depuis S<dpkg 1.14.18).>
+Ne pas appliquer des correctifs à la fin de l'extraction (depuis dpkg 1.14.18).
 
 =back
 
@@ -419,7 +419,7 @@ B<Extraction>
 
 Cet ensemble est cloné sous forme d'un dépôt git dans le répertoire cible. S'il existe un fichier I<.gitshallow>, il est installé en tant que I<.git/shallow> dans le dépôt git cloné.
 
-Note that by default the new repository will have the same branch checked out that was checked out in the original source.  (Typically “main”, but it could be anything.)  Any other branches will be available under I<remotes/origin/>.
+Veuillez noter que, par défaut, le nouveau dépôt aura la même branche récupérée que celle qui était récupérée dans les sources d'origine (souvent S<« main »> mais cela peut être tout à fait autre chose). Toutes les autres branches seront disponibles sous I<remotes/origin>.
 
 B<Construction>
 
@@ -433,7 +433,7 @@ B<Options de construction>
 
 =item B<--git-ref=>I<réf>
 
-Allows specifying a git ref to include in the git bundle. Use disables the default behavior of including all branches and tags. May be specified multiple times. The I<ref> can be the name of a branch or tag to include. It may also be any parameter that can be passed to B<git-rev-list>(1). For example, to include only the main branch, use B<--git-ref=>main. To include all tags and branches, except for the private branch, use B<--git-ref=>--all B<--git-ref=>^private
+Permet d'indiquer une référence git à inclure dans l'ensemble git. L'utilisation de cette option désactive le comportement par défaut qui est d'inclure toutes les branches et étiquettes. Cette option peut être utilisée plusieurs fois. Le paramètre I<réf> peut être le nom d'une branche ou une étiquette à inclure. Il peut également être tout paramètre que l'on peut passer à B<git-rev-list>(1). Par exemple, pour n'inclure que la branche S<« main »,> on peut utiliser B<--git-ref=>main. Pour inclure toutes les étiquettes et toutes les branches, sauf la branche privée, on peut utiliser -B<git-ref=>--all B<-- git-ref=>^private.
 
 =item B<--git-depth=>I<nombre>
 
@@ -465,7 +465,7 @@ Cela est dû au fait que le format S<« 1.0 »> n'est plus le format recommandé
 
 =head2 le fichier de différences modifie les fichiers amont suivants
 
-Lors de l'utilisation du format source S<« 1.0 »,> il est déconseillé de modifier directement les fichiers amont car les modifications restent alors cachées et souvent non documentées dans le fichier diff.gz. Au contraire, il est conseillé de conserver les modifications sous forme de correctifs dans le répertoire debian et de les appliquer au moment de la construction. Pour éviter ces opérations plus complexes, vous pouvez également choisir le format S<« 3.0> S<(quilt) »> qui permet ces opérations de manière native.
+Lors de l'utilisation du format source S<« 1.0 »,> il est déconseillé de modifier directement les fichiers amont, car les modifications restent alors cachées et souvent non documentées dans le fichier diff.gz. Au contraire, il est conseillé de conserver les modifications sous forme de correctifs dans le répertoire debian et de les appliquer au moment de la construction. Pour éviter ces opérations plus complexes, vous pouvez également choisir le format S<« 3.0> S<(quilt) »> qui permet ces opérations de manière native.
 
 =head2 impossible d'identifier les changements de I<fichier>
 
@@ -496,7 +496,7 @@ Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement ac
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS S<– Native> Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
 
 =item B<SOURCE_DATE_EPOCH>
 
@@ -530,7 +530,7 @@ Ce fichier contient sur une seule ligne le format à utiliser pour construire le
 
 =head2 debian/source/include-binaries
 
-This file contains a list of pathnames of binary files (one per line) relative to the source root directory that should be included in the debian tarball.  Leading and trailing spaces are stripped.  Lines starting with ‘B<#>’ are comments and are skipped.  Empty lines are ignored.
+Ce fichier contient une liste de chemin de fichiers binaires (un par ligne) relatifs au répertoire racine source qui doivent être inclus dans l'archive tar debian. Les espaces placées avant ou après ces noms sont supprimées. Les lignes commençant par S<« B<#> »> sont des commentaires et sont ignorées, ainsi que les lignes vides.
 
 =head2 debian/source/options
 
@@ -538,15 +538,16 @@ Ce fichier contient la liste des options qui seront automatiquement ajoutées au
 
 Chaque option doit être placée sur une ligne distincte. Les lignes vides et les lignes commençant par le caractère S<« B<#> »> sont ignorées. Les caractères initiaux S<« B<--> »> doivent être retirés et les options courtes ne peuvent pas être utilisées. Des espaces optionnelles sont autorisées autour du symbole S<« B<=> »,> ainsi que des guillemets optionnels autour de la valeur d'une option donnée. Voici un exemple d'un tel S<fichier :>
 
- # let dpkg-source create a debian.tar.bz2 with maximal compression
- compression = "bzip2"
- compression-level = 9
- # use debian/patches/debian-changes as automatic patch
- single-debian-patch
- # ignore changes on config.{sub,guess}
- extend-diff-ignore = "(^|/)(config.sub|config.guess)$"
+  # autoriser dpkg-source à créer un fichier debian.tar.bz2 avec la
+  #compression maximale
+  compression = "bzip2"
+  compression-level = 9
+  # utiliser debian/patches/debian-changes comme correctif automatique
+  single-debian-patch
+  # ignorer les modifications dans config.{sub,guess}
+  extend-diff-ignore = "(^|/)(config.sub|config.guess)$"
 
-B<Note:> B<format> options are not accepted in this file, you should use B<debian/source/format> instead.
+S<B<Note :>> les options de B<format> ne sont pas acceptées dans ce fichier. Vous devriez utiliser B<debian/source/format> à la place.
 
 =head2 debian/source/local-options
 

@@ -22,9 +22,9 @@ B<DEBIAN/control>
 
 =head1 DESCRIPTION
 
-Each Debian binary package contains a B<control> file in its B<control> member, and its L<deb822(5)> format is a subset of the master B<debian/control> file in Debian source packages, see B<deb-src-control>(5).
+Chaque paquet de fichier binaire de Debian fournit un fichier B<control> dans le membre B<control> et leur format L<deb822(5)> est un sous-ensemble du fichier principal B<debian/control> dans les paquets source Debian, voir B<deb-src-control>(5).
 
-This file contains a number of fields.  Each field begins with a tag, such as B<Package> or B<Version> (case insensitive), followed by a colon, and the body of the field (case sensitive unless stated otherwise).  Fields are delimited only by field tags. In other words, field text may be multiple lines in length, but the installation tools will generally join lines when processing the body of the field (except in the case of the B<Description> field, see below).
+Ce fichier contient un certain nombre de champs. Chaque champ commence par une étiquette, telle que B<Package> ou B<Version> (la casse n'importe pas), suivie d'un S<« : »,> et du contenu du champ (sensible à la casse à moins que cela ne soit spécifié autrement). Les champs sont séparés seulement par des étiquettes de champ. En d'autres termes, le contenu d'un champ peut s'étendre sur plusieurs lignes, mais les outils d'installation joindront en général les lignes pendant le traitement du contenu du champ (sauf pour le champ B<Description>, voir ci-dessous).
 
 =head1 LES CHAMPS
 
@@ -44,21 +44,21 @@ C'est classiquement le numéro de version du paquet d'origine dans la forme choi
 
 =item B<Maintainer:> I<nom-complet-et-adresse-électronique> (recommandé)
 
-Le format de ce champ sera S<« Jean> Dupont S<E<lt>jdupont@foo.comE<gt> » ;> et c'est bien sûr le créateur du paquet, par opposition à l'auteur du programme mis en paquet.
+Le format de ce champ sera S<« Jean> Dupont S<E<lt>jdupont@foo.comE<gt> »> ; et c'est bien sûr le créateur du paquet, par opposition à l'auteur du programme mis en paquet.
 
 =item B<Description:> I<description-courte> (recommandé)
 
 =item S< >I<description-longue>
 
-Le format de la description du paquet est un résumé bref sur la première ligne (après le champ B<Description>). Les lignes suivantes peuvent servir à une description plus longue et plus détaillée. Chaque ligne de cette description longue doit être précédée d'une S<espace ;> quand c'est une ligne blanche, elle doit contenir un seul S<« B<.> »> après cette espace.
+Le format de la description du paquet est un résumé bref sur la première ligne (après le champ B<Description>). Les lignes suivantes peuvent servir à une description plus longue et plus détaillée. Chaque ligne de cette description longue doit être précédée d'une espace ; quand c'est une ligne blanche, elle doit contenir un seul S<« B<.> »> après cette espace.
 
 =item B<Section:> I<section>
 
-Champ général qui indique la catégorie d'un S<paquet ;> cette catégorie est fondée sur le programme que ce paquet installe. B<utils>, B<net>, B<mail>, B<text>, S<B<x11>, etc.,> représentent quelques catégories habituelles.
+Champ général qui indique la catégorie d'un paquet ; cette catégorie est fondée sur le programme que ce paquet installe. B<utils>, B<net>, B<mail>, B<text>, B<x11>, etc., représentent quelques catégories habituelles.
 
 =item B<Priority:> I<priorité>
 
-Définit l'importance du paquet à l'intérieur du système général. B<required>, B<standard>, B<optional>, S<B<extra>, etc.,> représentent des priorités habituelles.
+Définit l'importance du paquet à l'intérieur du système général. B<required>, B<standard>, B<optional>, B<extra>, etc., représentent des priorités habituelles.
 
 =back
 
@@ -66,27 +66,27 @@ Les champs B<Section> et B<Priority> possèdent un ensemble défini de valeurs a
 
 =over 
 
-=item B<Installed-Size:> I<size>
+=item B<Installed-Size:> I<taille>
 
-The approximate total size of the package's installed files, in KiB units. The algorithm to compute the size is described in L<deb-substvars(5)>.
+La taille approximative totale des fichiers installés du paquet, en Kio. L'algorithme de calcul de la taille est décrit dans L<deb-substvars(5)>.
 
 =item B<Protected:> B<yes>|B<no>
 
-This field is usually only needed when the answer is B<yes>.  It denotes a package that is required mostly for proper booting of the system or used for custom system-local meta-packages.  L<dpkg(1)> or any other installation tool will not allow a B<Protected> package to be removed (at least not without using one of the force options).
+On se sert habituellement de ce champ uniquement si la réponse est B<yes>. Cela signifie que ce paquet est exigé principalement pour un démarrage correct du système ou utilisé pour des méta-paquets personnalisés du système local. L<dpkg(1)> et les autres outils d'installation interdisent la suppression d'un paquet B<Protected> (du moins tant qu'une des options de forçage n'est pas utilisée).
 
-Supported since dpkg 1.20.1.
+Pris en charge depuis S<dpkg 1.20.1.>
 
 =item B<Essential:> B<yes>|B<no>
 
-This field is usually only needed when the answer is B<yes>.  It denotes a package that is required for the packaging system, for proper operation of the system in general or during boot (although the latter should be converted to B<Protected> field instead).  L<dpkg(1)> or any other installation tool will not allow an B<Essential> package to be removed (at least not without using one of the force options).
+On se sert habituellement de ce champ uniquement si la réponse est B<yes>. Cela signifie que ce paquet est exigé pour le système d'empaquetage, pour un fonctionnement correct du système en général ou durant le démarrage (même si dans ce dernier cas, il devrait être converti en champ B<Protected>). L<dpkg(1)> et les autres outils d'installation interdisent la suppression d'un paquet B<Essential> (du moins tant qu'une des options de forçage n'est pas utilisée).
 
 =item B<Build-Essential:> B<yes>|B<no>
 
 Ce champ est habituellement nécessaire seulement si la réponse est B<yes>, et il est généralement injecté par le logiciel d'archive. Il désigne un paquet qui est requis lors de la construction d'autres paquets.
 
-=item B<Architecture:> I<arch>|B<all> (required)
+=item B<Architecture:> I<arch>|B<all> (requis)
 
-L'architecture précise pour quel type de matériel le paquet a été compilé. Voici quelques architectures S<habituelles :> B<amd64>, B<armel>, B<i386>, S<B<powerpc>, etc.> Remarquez que l'option B<all> signifie que le paquet est indépendant de toute architecture. C'est le cas, par exemple, des scripts d'interpréteur de commandes (shell) ou Perl, ainsi que de la documentation.
+L'architecture précise pour quel type de matériel le paquet a été compilé. Voici quelques architectures S<habituelles :> B<amd64>, B<armel>, B<i386>, B<powerpc>, etc. Remarquez que l'option B<all> signifie que le paquet est indépendant de toute architecture. C'est le cas, par exemple, des scripts d'interpréteur de commandes (shell) ou Perl, ainsi que de la documentation.
 
 =item B<Origin:> I<nom>
 
@@ -102,7 +102,7 @@ I<URL> de la page d'accueil du projet amont.
 
 =item B<Tag:> I<liste-d'étiquettes>
 
-Liste d'étiquettes décrivant les qualités du paquet. La description et la liste des étiquettes S<(« tags »)> gérées peuvent être trouvées dans le paquet B<debtags>.
+Liste d'étiquettes décrivant les qualités du paquet. La description et la liste des étiquettes S<(« tags »)> prises en charge peuvent être trouvées dans le paquet B<debtags>.
 
 =item B<Multi-Arch:> B<no>|B<same>|B<foreign>|B<allowed>
 
@@ -112,7 +112,7 @@ Ce champ est utilisé pour indiquer comment ce paquet se comportera sur les inst
 
 =item B<no>
 
-C'est la valeur par défaut quand le champ est S<omis ;> dans ce cas, ajouter le champ avec une valeur B<no> explicite est généralement inutile.
+C'est la valeur par défaut quand le champ est omis ; dans ce cas, ajouter le champ avec une valeur B<no> explicite est généralement inutile.
 
 =item B<same>
 
@@ -138,7 +138,7 @@ Le nom du paquet source d'où est issu ce paquet binaire, s'il est différent du
 
 =item B<Installer-Menu-Item:> I<valeur>
 
-These fields are used by the debian-installer and are usually not needed. For more details about them, see L<https://salsa.debian.org/installer-team/debian-installer/-/raw/master/doc/devel/modules.txt>.
+Ces champs sont utilisés par l'installateur et ne sont en général pas nécessaires. Pour plus de détails, consultez L<https://salsa.debian.org/installer-team/debian-installer/-/raw/master/doc/devel/modules.txt>.
 
 =item B<Depends:> I<liste-de-paquets>
 
@@ -154,11 +154,11 @@ C'est la liste des paquets qu'on trouverait avec ce paquet dans toute installati
 
 =item B<Suggests:> I<liste-de-paquets>
 
-C'est la liste des paquets qui, associés avec ce paquet, peuvent améliorer son S<utilité ;> néanmoins, une installation sans ces paquets est parfaitement raisonnable.
+C'est la liste des paquets qui, associés avec ce paquet, peuvent améliorer son utilité ; néanmoins, une installation sans ces paquets est parfaitement raisonnable.
 
 =back
 
-La syntaxe des champs B<Depends>, B<Pre-Depends>, B<Recommends> et B<Suggests> est une liste d'ensembles de paquets alternatifs. Chaque ensemble est une liste de paquets séparés par des barres verticales (le symbole du tube) S<« B<|> ».> Les ensembles sont séparés par des virgules. Une virgule représente un S<« ET »> logique et une barre verticale représente un S<« OU »> S<logique ;> le tube a la précédence dans l'évaluation de l'expression. Chaque nom de paquet est suivi éventuellement par un type d'architecture après deux-points S<« B<:> »,> et par une contrainte sur le numéro de version mise entre parenthèses.
+La syntaxe des champs B<Depends>, B<Pre-Depends>, B<Recommends> et B<Suggests> est une liste d'ensembles de paquets alternatifs. Chaque ensemble est une liste de paquets séparés par des barres verticales (le symbole du tube) S<« B<|> ».> Les ensembles sont séparés par des virgules. Une virgule représente un S<« ET »> logique et une barre verticale représente un S<« OU »> logique ; le tube a la précédence dans l'évaluation de l'expression. Chaque nom de paquet est suivi éventuellement par un type d'architecture après deux-points S<« B<:> »,> et par une contrainte sur le numéro de version mise entre parenthèses.
 
 Un nom de type d'architecture peut être un nom d'architecture réelle de Debian (depuis S<dpkg 1.16.5)> ou B<any> (depuis S<dpkg 1.16.2).> S'il est omis, la valeur par défaut est l'architecture du paquet binaire actuel. Un nom d'architecture réelle de Debian correspondra exactement à l'architecture pour ce nom de paquet, B<any> correspondra à toute architecture pour ce nom de paquet si le paquet a été marqué B<Multi-Arch: allowed>.
 
@@ -168,15 +168,15 @@ Une contrainte sur le numéro de version peut commencer par S<« B<E<gt>E<gt>> �
 
 =item B<Breaks:> I<liste-de-paquets>
 
-C'est une liste de paquets que ce paquet S<« casse »,> par exemple en révélant des bogues quand les paquets concernés dépendent de celui-ci. Le programme de maintenance des paquets interdit la configuration de paquets S<cassés ;> une méthode usuelle de résolution est la mise à niveau des paquets mentionnés dans le champ B<Breaks>.
+C'est une liste de paquets que ce paquet S<« casse »,> par exemple en révélant des bogues quand les paquets concernés dépendent de celui-ci. Le programme de maintenance des paquets interdit la configuration de paquets cassés ; une méthode usuelle de résolution est la mise à niveau des paquets mentionnés dans le champ B<Breaks>.
 
 =item B<Conflicts:> I<liste-de-paquets>
 
-C'est une liste de paquets qui sont en conflit avec ce S<paquet ;> ils contiennent par exemple des fichiers qui ont le même nom. Le programme de maintenance des paquets interdit l'installation simultanée de paquets en conflit. Deux paquets en conflit renseigneront une ligne B<Conflicts> avec le nom de l'autre paquet.
+C'est une liste de paquets qui sont en conflit avec ce paquet ; ils contiennent par exemple des fichiers qui ont le même nom. Le programme de maintenance des paquets interdit l'installation simultanée de paquets en conflit. Deux paquets en conflit renseigneront une ligne B<Conflicts> avec le nom de l'autre paquet.
 
 =item B<Replaces:> I<liste-de-paquets>
 
-C'est une liste de paquets que ce paquet remplace. Il peut ainsi remplacer les fichiers de ces autres S<paquets ;> on se sert pour cela du champ B<Conflicts> pour forcer la suppression des autres paquets, si celui-là possède aussi les mêmes fichiers que le paquet en conflit.
+C'est une liste de paquets que ce paquet remplace. Il peut ainsi remplacer les fichiers de ces autres paquets ; on se sert pour cela du champ B<Conflicts> pour forcer la suppression des autres paquets, si celui-là possède aussi les mêmes fichiers que le paquet en conflit.
 
 =back
 
@@ -200,17 +200,17 @@ La syntaxe du champ B<Provides> est une liste de noms de paquets, séparés par 
 
 =item B<Built-Using:> I<liste-de-paquets>
 
-This dependency field lists extra source packages that were used during the build of this binary package, for license compliance purposes.  This is an indication to the archive maintenance software that these extra source packages must be kept whilst this binary package is maintained.  This field must be a comma-separated list of source package names with strict ‘B<=>’ version relationships enclosed within parenthesis.  Note that the archive maintenance software is likely to refuse to accept an upload which declares a B<Built-Using> relationship which cannot be satisfied within the archive.
+Ce champ de dépendance affiche les paquets source supplémentaires utilisés lors de la construction du paquet binaire, pour des raisons de conformité avec la licence. Il permet d'indiquer au logiciel de gestion de l'archive que des paquets source supplémentaires doivent être conservés tant que le paquet binaire est maintenu. Ce champ doit être une liste de paquets source, séparés par des virgules avec des références strictes de version S<« B<=> »> et mise entre parenthèses. Veuillez noter que le logiciel de gestion de l'archive risque de ne pas accepter un envoi qui déclare une relation B<Built-Using> qui ne peut pas être satisfaite dans l'archive.
 
-=item B<Static-Built-Using:> I<package-list>
+=item B<Static-Built-Using:> I<liste-de-paquets>
 
-This dependency field lists extra source packages that were used during the build of this binary package, for static building purposes (for example linking against static libraries, builds for source-centered languages such as Go or Rust, usage of header-only C/C++ libraries, injecting data blobs into code, etc.).  This is useful to track whether this package might need to be rebuilt when source packages listed here have been updated, for example due to security updates.  This field must be a comma-separated list of source package names with strict ‘B<=>’ version relationships enclosed within parenthesis.
+Ce champ de dépendance affiche les paquets source supplémentaires utilisés lors de la construction du paquet binaire, aux fins de construction statiques (par exemple, pour la liaison avec des bibliothèques statiques, les constructions pour des langages centrés sur le source tels que Go ou Rust, l'utilisation de bibliothèques C/C++ avec seulement des en-têtes, l'injection d'objets binaires (blob) de données dans le S<code, etc.).> C'est utile pour vérifier si ce paquet devrait être reconstruit lorsque les paquets source listés ont été mis à jour, par exemple à cause d'annonces de sécurité. Ce champ doit être une liste de noms de paquets source, séparés par des virgules avec des références strictes de version S<« B<=> »,> mise entre parenthèses.
 
-Supported since dpkg 1.21.3.
+Pris en charge depuis S<dpkg 1.21.3.>
 
-=item B<Built-For-Profiles:> I<profile-list> (obsolete)
+=item B<Built-For-Profiles:> I<liste-de-profils> (obsolète)
 
-Ce champ sert à spécifier une liste, séparée par des espaces, de profils de construction avec lesquels ce paquet binaire a été construit (depuis S<dpkg 1.17.2> et jusqu'à la S<version 1.18.18).> Les informations précédemment trouvées dans ce champ sont maintenant dans le champ B<.buildinfo> qui l'a remplacé.
+Ce champ sert à spécifier une liste, séparée par des espaces, de profils de construction avec lesquels ce paquet binaire a été construit (depuis dpkg 1.17.2 et jusqu'à la version 1.18.18). Les informations précédemment trouvées dans ce champ sont maintenant dans le champ B<.buildinfo> qui l'a remplacé.
 
 =item B<Auto-Built-Package:> I<liste-de-raisons>
 
@@ -237,14 +237,17 @@ Le format ou la manière de calculer chaque identifiant de construction n'est pa
  Provides: rgrep
  Conflicts: rgrep
  Description: GNU grep, egrep and fgrep.
-  The GNU family of grep utilities may be the "fastest grep in the west".
-  GNU grep is based on a fast lazy-state deterministic matcher (about
-  twice as fast as stock Unix egrep) hybridized with a Boyer-Moore-Gosper
-  search for a fixed string that eliminates impossible text from being
-  considered by the full regexp matcher without necessarily having to
-  look at every character. The result is typically many times faster
-  than Unix grep or egrep. (Regular expressions containing backreferencing
-  will run more slowly, however).
+  Il se peut que le grep de la famille GNU des utilitaires grep soit
+  le plus rapide de l'ouest ! Le grep de GNU est fondé sur un mécanisme
+  rapide de mise en correspondance déterministe d'états simples (environ
+  deux fois plus rapide que le S<« egrep »> standard d'Unix), modifié par une
+  recherche de type Boyer-Moore-Gosper qui cherche une chaîne donnée en
+  empêchant que les textes impossibles soient analysés par le mécanisme de
+  mise en correspondance d'expressions rationnelles et sans avoir
+  nécessairement besoin de voir chaque caractère. C'est beaucoup plus
+  rapide que les S<« grep »> ou S<« egrep »> d'Unix.
+  (Des expressions rationnelles contenant des références circulaires
+  ralentissent cependant le programme.)
 
 =head1 BOGUES
 

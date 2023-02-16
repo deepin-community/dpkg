@@ -138,7 +138,7 @@ Om satt, och flaggorna B<--local> och B<--package> inte har angivits, kommer B<d
 
 =item B<DPKG_DEBUG>
 
-Sets the debug mask (since dpkg 1.21.10) from an octal value.  The currently accepted flags are described in the B<dpkg --debug> option, but not all these flags might have an effect on this program.
+Anger felsökningsmasken (sedan dpkg 1.21.10) från ett oktalt värde. De flaggor som för närvarande godtas beskrivs i flaggan B<dpkg --debug>, men alla dess flaggor påverkar inte nödvändigtvis detta program.
 
 =item B<DPKG_COLORS>
 
@@ -164,7 +164,7 @@ Vid tillägg är standard B<--local> och B<--divert> I<original>B<.distrib>. Vid
 
 Kataloger kan inte omdirigeras med B<dpkg-divert>.
 
-Care should be taken when diverting shared libraries, B<ldconfig>(8) creates a symbolic link based on the DT_SONAME field embedded in the library.  Because B<ldconfig> does not honor diverts (only B<dpkg> does), the symlink may end up pointing at the diverted library, if a diverted library has the same SONAME as the undiverted one.
+Se upp när du omdirigerar delade bibliotek. B<ldconfig>(8) skapar en symbolisk länk baserad på DT_SONAME-fältet som är inbyggt i biblioteket. Eftersom B<ldconfig> inte följer omdirigeringar (bara B<dpkg> gör det) kan den symboliska länken komma att peka på det omdirigerade biblioteket om ett omdirigerat bibliotek har samma SONAME som det ej omdirigerade.
 
 =head1 EXEMPEL
 

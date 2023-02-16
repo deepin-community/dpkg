@@ -122,7 +122,7 @@ Fixe la valeur d'une variable de substitution. Consultez B<deb-substvars>(5) pou
 
 =item B<-T>I<fichier-substvars>
 
-Lecture des variables de substitution depuis S<I<fichier-substvars> ;> la valeur par défaut est B<debian/substvars>. Aucune substitution de variable n'est faite sur les champs de sortie, sauf pour les contenus extraits de chaque champ B<Description> du paquet binaire (depuis S<dpkg 1.19.0),> cependant la variable spéciale I<Format> remplacera le champ qui porte le même nom. Cette option peut être utilisée plusieurs fois pour lire les variables de substitution depuis plusieurs fichiers (depuis S<dpkg 1.15.6).>
+Lecture des variables de substitution depuis I<fichier-substvars> ; la valeur par défaut est B<debian/substvars>. Aucune substitution de variable n'est faite sur les champs de sortie, sauf pour les contenus extraits de chaque champ B<Description> du paquet binaire (depuis S<dpkg 1.19.0),> cependant la variable spéciale I<Format> remplacera le champ qui porte le même nom. Cette option peut être utilisée plusieurs fois pour lire les variables de substitution depuis plusieurs fichiers (depuis S<dpkg 1.15.6).>
 
 =item B<-D>I<champ>B<=>I<valeur>
 
@@ -154,7 +154,7 @@ Cherche les fichiers à installer dans I<répertoire-des-fichiers-à-installer> 
 
 =item B<-q>
 
-B<dpkg-genchanges> affiche habituellement des messages d'information sur la sortie d'erreur S<standard ;> par exemple, combien de fichiers source du paquet sont en cours d'installation. B<-q> supprime ces messages.
+B<dpkg-genchanges> affiche habituellement des messages d'information sur la sortie d'erreur standard ; par exemple, combien de fichiers source du paquet sont en cours d'installation. B<-q> supprime ces messages.
 
 =item B<-O>[I<nom-de-fichier>]
 
@@ -162,11 +162,11 @@ Affiche le fichier des modifications sur la sortie standard (par défaut) ou dan
 
 =item B<-?>, B<--help>
 
-Affiche un message d'aide puis quitte.
+Afficher un message d'aide puis quitter.
 
 =item B<--version>
 
-Affiche le numéro de version puis quitte.
+Afficher le numéro de version puis quitter.
 
 =back
 
@@ -180,7 +180,7 @@ Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement ac
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS S<– Native> Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
 
 =back
 

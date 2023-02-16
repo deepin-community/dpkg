@@ -54,7 +54,7 @@ B<Closes: #>I<nnnnn>
 
 =back
 
-in the change details, where B<#>I<nnnnn> is the bug number.  The exact Perl regular expression is:
+i ändringsdetaljerna, där B<#>I<nnnnn> är felrapportsnumret. Exakt Perl-reguljärt uttryck är:
 
 =over 
 
@@ -62,9 +62,9 @@ B</closes:\s*(?:bug)?\#?\s?\d+(?:,\s*(?:bug)?\#?\s?\d+)*/i>
 
 =back
 
-That is, the string should consist of the word B<closes:> followed by a comma-separated list of bug numbers.  Bug numbers may be preceded by the word B<bug> and/or a B<#> sign, as in C<Closes: 42, bug#43, #44, bug 45>. The words B<closes:> and B<bug> are not case sensitive.  The list of bug numbers may span multiple lines.
+Det vill säga, strängen bör bestå av ordet B<closes:> följt av en kommaavdelad lista med felrapportsnummer. Felrapporterna kan föregås av ordet B<bug> och/eller tecknet B<#>, som i C<Closes: 42, bug#43, #44, bug 45>. Ordet B<closes:> och B<bug> är inte skiftlägeskänsliga. Listan med relrapportsnummer kan fortsätta över flera rader.
 
-This information is conveyed via the B<Closes> field in the I<.changes> file.  Where, depending on the archive maintenance software, all the bug numbers listed might get automatically closed.
+Informationen vidareförs via fältet B<Closes> i I<.changes>-filen. Där, beroende på vilken arkivhanteringsprogramvra som används, alla listade felrapporter kan stängas automatiskt.
 
 Det namn och e-postadress för den ansvarige som används i ändringsloggen bör vara information om den person som förberedde denna utgåva av paketet. Det är B<inte> nödvändigtvis samma som insändaren eller den vanlige paketansvarige. Informationen kopieras till fältet B<Changed-By> i I<.changes>-filen, och kan senare användas för att sända en bekräftelse när det insända paketet har installerats i distributionsarkivet.
 

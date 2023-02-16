@@ -22,9 +22,9 @@ Het pakketbeheersysteem gebruikt gegevens die volgens een gangbare indeling weer
 
 =head1 SYNTAXIS
 
-A control file consists of one or more stanzas of fields (the stanzas sometimes used to be referred to as paragraphs).  The stanzas are separated by empty lines.  Parsers may accept lines consisting solely of U+0020 B<SPACE> and U+0009 B<TAB> as stanza separators, but control files should use empty lines.  Some control files allow only one stanza; others allow several, in which case each stanza usually refers to a different package. (For example, in source packages, the first stanza refers to the source package, and later stanzas refer to binary packages generated from the source.)  The ordering of the stanzas in control files is significant.
+Een controlebestand bestaat uit één of meer onderdelen die velden bevatten (de onderdelen worden soms ook met de term paragraaf aangeduid). De onderdelen worden onderling gescheiden door een lege regel. Bij ontleders (parsers) kunnen regels die enkel bestaan uit U+0020 B<SPATIE> en U+0009 B<TAB>, gebruikt worden als scheidingsteken tussen onderdelen, maar in controlebestanden moeten lege regels gebruikt worden. In sommige controlebestanden is enkel één onderdeel toegestaan, in andere meerdere. In dat geval heeft elk onderdeel meestal betrekking op een ander pakket. (In broncodepakketten bijvoorbeeld, heeft het eerste onderdeel betrekking op het broncodepakket en de volgende onderdelen op de binaire pakketten die uit de broncode gegenereerd worden.) De volgorde van de onderdelen in controlebestanden is betekenisvol.
 
-Each stanza consists of a series of data fields.  Each field consists of the field name followed by a colon (U+003A ‘B<:>’), and then the data/value associated with that field.  The field name is composed of US-ASCII characters excluding control characters, space, and colon (i.e., characters in the ranges U+0021 ‘B<!>’ through U+0039 ‘B<9>’, and U+003B ‘B<;>’ through U+007E ‘B<~>’, inclusive).  Field names must not begin with the comment character (U+0023 ‘B<#>’), nor with the hyphen character (U+002D ‘B<->’).
+Elk onderdeel bestaat uit een reeks gegevensvelden. Elk veld bestaat uit de veldnaam, gevolgd door een dubbelepunt (U+003A ‘B<:>’) en nadien de data/waarde die bij dat veld hoort. De veldnaam wordt gevormd uit US-ASCII-tekens met uitsluiting van controle-tekens, spatie en dubbelepunt (d.w.z. tekens uit het bereik U+0021 ‘B<!>’ tot U+0039 ‘B<9>’ en uit het bereik U+003B ‘B<;>’ tot en met U+007E ‘B<~>’). Veldnamen mogen niet beginnen met het commentaarteken (U+0023 ‘B<#>’) en evenmin met het koppelteken (U+002D ‘B<->’).
 
 Het veld eindigt op het einde van de regel of op het einde van de laatste vervolgregel (zie later). Er mag horizontale witruimte (U+0020 B<SPATIE> en U+0009 B<TAB>) voorkomen vlak voor en vlak na de waarde en daar wordt die genegeerd. Het is gebruikelijk om na de dubbelepunt een enkele spatie te plaatsen. Een voorbeeld van een veld zou kunnen zijn:
 
@@ -38,7 +38,7 @@ de veldnaam is B<Package> en de waarde van het veld is B<dpkg>.
 
 Lege veldwaarden mogen enkel voorkomen in controlebestanden van broncodepakketten (I<debian/control>). Dergelijke velden worden genegeerd.
 
-A stanza must not contain more than one instance of a particular field name.
+In een onderdeel mag een specifieke veldnaam slechts eenmaal voorkomen.
 
 Er bestaan drie types velden:
 
@@ -54,7 +54,7 @@ Er bestaan drie types velden:
 
 (uitgevouwen) De waarde van een uitgevouwen veld is een logische regel die verschillende regels mag beslaan. De regels na de eerste regel worden vervolgregels genoemd en moeten beginnen met een U+0020 B<SPATIE> of een U+0009 B<TAB>. Witruimte, met inbegrip van regeleindes, is in de veldwaarde van uitgevouwen velden betekenisloos.
 
-This folding method is similar to RFC5322, allowing control files that contain only one stanza and no multiline fields to be read by parsers written for RFC5322.
+Deze uitvouwmethode is gelijkaardig aan RFC5322, waardoor parsers die voor RFC5322 geschreven werden, ook in staat zijn controlebestanden te lezen die slechts één onderdeel en geen velden van het multiregel-type bevatten.
 
 =item B<multiline>
 
@@ -68,7 +68,7 @@ De aanwezigheid en de functie van een veld en de syntaxis van zijn waarde kunnen
 
 Veldnamen zijn niet hoofdlettergevoelig, maar het is gebruikelijk om in veldnamen hoofd- en kleine letters samen te gebruiken, zoals hierna geïllustreerd wordt. Veldwaarden zijn wel hoofdlettergevoelig, tenzij het in de beschrijving van het veld anders aangegeven wordt.
 
-Stanza separators (empty lines) and lines consisting only of U+0020 B<SPACE> and U+0009 B<TAB>, are not allowed within field values or between fields. Empty lines in field values are usually escaped by representing them by a U+0020 B<SPACE> followed by a dot (U+002E ‘B<.>’).
+Onderdeelscheidingstekens (lege regels) en regels die enkel bestaan uit U+0020 B<SPATIE> en U+0009 B<TAB>, mogen in veldwaarden en tussen velden niet gebruikt worden. Lege regels in veldwaarden worden meestal gemaskeerd door ze voor te stellen als een U+0020 B<SPATIE> gevolgd door een punt (U+002E ‘B<.>’).
 
 Regels die beginnen met U+0023 ‘B<#>’ zonder dat daar witruimte aan vooraf gaat, zijn commentaarregels. Zij zijn enkel toegelaten in controlebestanden van broncodepakketten (I<debian/control>) en in B<deb-origin>(5)-bestanden. Deze commentaarregels worden genegeerd, zelfs tussen twee vervolgregels in. Ze sluiten geen logische regels af.
 

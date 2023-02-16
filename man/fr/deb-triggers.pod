@@ -18,7 +18,7 @@ deb-triggers - Actions différées du paquet
 
 =head1 SYNOPSIS
 
-B<debian/triggers>, B<debian/>I<binary-package>B<.triggers>, B<DEBIAN/triggers>
+B<debian/triggers>, B<debian/>I<paquet-binaire>B<.triggers>, B<DEBIAN/triggers>
 
 =head1 DESCRIPTION
 
@@ -58,9 +58,9 @@ Les directives inconnues sont des erreurs qui empêcheront l'installation du paq
 
 Les variantes S<« -noawait »> doivent toujours être privilégiées quand c'est possible dans la mesure où les paquets provoquant une action différée ne sont pas placés en état S<« triggers-awaited »> (actions différées attendues), et peuvent donc être immédiatement configurés sans recourir à l'exécution de l'action différée. Si les paquets provoquant l'action différée sont des dépendances d'autres paquets mis à jour, cela évitera le lancement de l'action différée et rendra possible l'exécution de l'action différée une seule fois au cours des étapes finales de la mise à jour.
 
-Les variantes S<« -noawait »> ne sont gérées qu'à partir de S<dpkg 1.16.1> et provoqueront des erreurs avec les versions plus anciennes.
+Les variantes S<« -noawait »> ne sont gérées qu'à partir de dpkg 1.16.1 et provoqueront des erreurs avec les versions plus anciennes.
 
-Les alias de variantes S<« -await »> ne sont gérés qu'à partir de S<dpkg 1.17.21> et provoqueront des erreurs avec les versions plus anciennes.
+Les alias de variantes S<« -await »> ne sont gérés qu'à partir de dpkg 1.17.21 et provoqueront des erreurs avec les versions plus anciennes.
 
 Si un paquet fournit une directive B<interest-noawait>, toute activation mettra le paquet provoquant l'action différée en mode S<« noawait »,> indépendamment du mode d'attente demandé par l'activation (soit S<« await »,> soit S<« noawait »).> Si un paquet fournit une directive B<interest> ou B<interest-await>, toute activation mettra le paquet provoquant l'action différée en mode S<« await »> ou S<« noawait »> selon la manière dont il a été activé.
 

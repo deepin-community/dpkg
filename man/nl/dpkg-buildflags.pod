@@ -142,7 +142,7 @@ de vlag werd ingesteld/gewijzigd door een omgevingsspecifieke configuratie.
 
 =item B<--query>
 
-Print any information that can be useful to explain the behaviour of the program: current vendor, relevant environment variables, feature areas, state of all feature flags, whether a feature is handled as a builtin default by the compiler (since dpkg dpkg 1.21.14), and the compiler flags with their origin (since dpkg 1.19.0).
+Alle informatie tonen welke nuttig kan zijn om het gedrag van het programma te verklaren: huidige leverancier, relevante omgevingsvariabelen, functiegebieden, toestand van alle functievlaggen, of een functie door de compiler als een ingebouwde standaard wordt behandeld (sinds dpkg 1.21.14) en de compileervlaggen met hun oorsprong (sinds dpkg 1.19.0).
 
 Bijvoorbeeld:
 
@@ -155,6 +155,7 @@ Bijvoorbeeld:
   bug=no
   canary=no
  Builtins:
+
 
  Area: hardening
  Features:
@@ -177,7 +178,7 @@ Bijvoorbeeld:
 
 =item B<--query-features> I<gebied>
 
-Print the features enabled for a given area (since dpkg 1.16.2).  If the feature is handled (even if only on some architectures) as a builtin default by the compiler, then a B<Builtin> field is printed (since dpkg 1.21.14). The only currently recognized areas on Debian and derivatives are B<future>, B<qa>, B<reproducible>, B<sanitize> and B<hardening>, see the B<FEATURE AREAS> section for more details.  Exits with 0 if the area is known otherwise exits with 1.
+De functies weergeven die voor een opgegeven gebied geactiveerd zijn (sinds dpkg 1.16.2). Als de functie door de compiler als een ingebouwde standaard wordt behandeld (al is het maar op sommige architecturen), dan wordt een veld B<Builtin> weergegeven (sinds dpkg 1.21.14). Momenteel worden door Debian en zijn derivaten enkel de gebieden B<future>, B<qa>, B<reproducible>, B<sanitize> en B<hardening> herkend. Zie het onderdeel B<FUNCTIEGEBIEDEN> voor meer details. Sluit af met 0 als het gebied gekend is, anders met 1.
 
 De uitvoer is in RFC822-indeling met één sectie per functie. Bijvoorbeeld:
 

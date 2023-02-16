@@ -22,13 +22,13 @@ I<nom-du-fichier>B<.deb>
 
 =head1 DESCRIPTION
 
-Le format de fichier B<.deb> correspond aux paquets binaires Debian. Cette page de manuel décrit l'B<ancien> format, utilisé avant la S<version 0.93> de Debian. Veuillez consulter B<deb>(5) pour les informations sur le nouveau format.
+Le format de fichier B<.deb> correspond aux paquets binaires Debian. Cette page de manuel décrit l'B<ancien> format, utilisé avant la version 0.93 de Debian. Veuillez consulter B<deb>(5) pour les informations sur le nouveau format.
 
 =head1 FORMAT
 
 Le fichier consiste en deux lignes d'information au format texte ASCII, suivi par la concaténation de deux fichiers ustar compressés avec gzip.
 
-La première ligne indique la version du format, remplie sur S<8 chiffres,> c'est-à-dire B<0.939000> pour toutes les archives dans l'ancien format.
+La première ligne indique la version du format, remplie sur 8 chiffres, c'est-à-dire B<0.939000> pour toutes les archives dans l'ancien format.
 
 La deuxième ligne fournit un nombre décimal (sans zéros en tête), qui indique la taille de la première archive tar compressée avec gzip.
 

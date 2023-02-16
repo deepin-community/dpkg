@@ -113,7 +113,7 @@ Aktuell implementation: I B<preinst> kontrolleras om konffilen har ändrats, om 
 
 Vid uppgradering av ett paket kommer B<dpkg> inte att automatiskt byta ut en symbolisk länk mot en katalog, eller omvänt. Nedgraderingar stöds inte och sökvägen kommer lämnas som den var.
 
-Note: The symlinks and directories created during these switches need to be shipped in the new packages, or B<dpkg> will not be able to remove them on purge.
+Observera: De symboliska länkar och kataloger som skapas vid dessa växlingar måste sändas med i de nya paketen, om inte kommer B<dpkg> inte att kunna ta bort dem vid en rensning.
 
 =head2 Byta en symbolisk länk mot en katalog
 

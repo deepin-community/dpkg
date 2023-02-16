@@ -26,13 +26,13 @@ Filerna i B<%PKGCONFDIR%/origins> kan tillhandahålla information om olika åter
 
 De innehåller ett antal fält, eller kommentarer när raden börjar med ”B<#>”. Varje fält inleds med ett märke, till exempel B<Vendor> eller B<Parent>, följt av ett kolon och fältets innehåll. Fälten avdelas endast av fältmärken. Med andra ord kan fälten innehålla flera rader text, men verktygen slår ihop rader när fältets text behandlas.
 
-The file should be named according to the vendor name.  The usual convention is to name the vendor file using the vendor name in all lowercase, but some variation is permitted.
+Filen bör namnges i enlighet med återförsäljarens namn. Den vanliga konventionen är att namnge återförsäljarfilen genom att använda återförsäljarens namn skrivet med bara små bokstäver, men en viss variation tillåts.
 
-Namely (since dpkg 1.21.10), first, non-alphanumeric characters (‘B<[^A-Za-z0-9]>’) are mapped to dashes (‘B<->’), then the resulting name will be tried in sequence by lower-casing it, keeping it as is, lower-casing then capitalizing it (that is upper-casing the first character), and only capitalizing it.
+Nämligen (sedan dpkg 1.21.10), först att icke-alfanumeriska tecken (”B<[^A-Za-z0-9]>”) ersätts med bindestreck (”B<->”), varefter namnet som skapas kommer testas först med små bokstäver, som det är, göras om till små bokstäver med första bokstaven stor, och bara stora bokstäver.
 
-In addition, for historical and backwards compatibility, the name will be tried keeping it as is without non-alphanumeric characters remapping, then the resulting name will be tried in sequence by lower-casing it, keeping it as is, lower-casing then capitalizing it, and only capitalizing it.  And finally the name will be tried by remapping spaces to dashes (‘B<->’), then the resulting name will be tried in sequence by lower-casing it, keeping it as is, lower-casing then capitalizing it, and only capitalizing it.
+Dessutom, av historiska orskaer, kan namnet testas som det är utan att icke-alfanumeriska tecken ersätts, och därefter testas namnet först med små bokstäver, som det är, så med inledande stor bokstav och med stora bokstäver. Till sist kommer det att testas med att ersätta blanksteg med bindestreck (”B<->”), varefter namnet som skapas kommer testas först med små bokstäver, som det är, göras om till små bokstäver med första bokstaven stor, och bara stora bokstäver.
 
-But these backwards compatible module lookups will be removed during the dpkg 1.22.x release cycle.
+Dessa bakåtkompatibla moduluppslagningar kommer dock att tas bort under utgivningscykeln för dpkg 1.22.x.
 
 =head1 FÄLT
 

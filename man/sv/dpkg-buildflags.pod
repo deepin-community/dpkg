@@ -142,7 +142,7 @@ flaggan är satt/modifierad av en miljöspecifik konfiguration.
 
 =item B<--query>
 
-Print any information that can be useful to explain the behaviour of the program: current vendor, relevant environment variables, feature areas, state of all feature flags, whether a feature is handled as a builtin default by the compiler (since dpkg dpkg 1.21.14), and the compiler flags with their origin (since dpkg 1.19.0).
+Srkiv ut information som kan vara användbar för att förklara programmets beteende: aktuell återförsäljare, relevanta miljövariabler, funktionsområden, status för alla funktionsflaggor, huruvida en funktion hanteras av ett inbyggt förval av kompilatorn (sedan dpkg 1.21.14) och kompilatorflaggorna med sina ursprung (sedan dpkg 1.19.0).
 
 Till exempel:
 
@@ -177,7 +177,7 @@ Till exempel:
 
 =item B<--query-features> I<område>
 
-Print the features enabled for a given area (since dpkg 1.16.2).  If the feature is handled (even if only on some architectures) as a builtin default by the compiler, then a B<Builtin> field is printed (since dpkg 1.21.14). The only currently recognized areas on Debian and derivatives are B<future>, B<qa>, B<reproducible>, B<sanitize> and B<hardening>, see the B<FEATURE AREAS> section for more details.  Exits with 0 if the area is known otherwise exits with 1.
+Skriv ut funktioner aktiverade för ett givet område (sedan dpkg 1.16.2). Om funktionen hanteras (även om bara av några arkitekturer) som ett inbyggt förval av kompilatorn visas fältet B<Bultin> (sedan dpkg 1.21.14). De enda för närvarande kända områdena på Debian och dess derivat är B<future>, B<qa>, B<reproducible>, B<sanitize> och B<hardening>, se avsnittet B<FUNKTIONSOMRÅDEN> för fler detaljer. Avslutar med 0 om området är känt, avslutar annars med 1.
 
 Utdata är på RFC822-headerformat, med en sektion per funktion. Till exempel:
 
@@ -366,7 +366,7 @@ Inställningen (inaktiverad som förval) lägger till B<-Wl,-z,bindnow> till B<L
 
 Den här inställningen (utan globalt förval sedan dpkg 1.18.23, eftersom den aktiveras som förval numera av gcc på Debianarkitekturerna amd64, arm64, armel, armhf, hurd-i386, i386, kfreebsd-amd64, kfreebsd-i386, mips, mipsel, mips64el, powerpc, ppc64, ppc64el, riscv64, s390x, sparc och sparc64) lägger till de flaggor som krävs för att aktivera eller inaktivera PIE via gcc-specifikationsfiler, om det behövs, beroende på om gcc lägger till flaggorna själv på arkitekturen eller inte. Om inställningen aktiveras och gcc injicerar flaggorna lägger den inte till Någonting. Om inställningen är aktiverad och gcc inte injicerar flaggorna, lägger den till B<-fPIE> (via I<%PKGDATADIR%/pie-compiler.specs>) till B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> och B<FCFLAGS>, och B<-fPIE -pie> (via I<%PKGDATADIR%/pie-link.specs>) till B<LDFLAGS>. När inställningen är inaktiverad och gcc injicerar flaggorna, lägger den till B<-fno-PIE> (via I<%PKGDATADIR%/no-pie-compile.specs>) to B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<GCJFLAGS>, B<FFLAGS> till B<FCFLAGS>, och B<-fno-PIE -no-pie> (via I<%PKGDATADIR%/no-pie-link.specs>) till B<LDFLAGS>.
 
-Position Independent Executable (PIE) is needed to take advantage of Address Space Layout Randomization (ASLR), supported by some kernel versions.  While ASLR can already be enforced for data areas in the stack and heap (brk and mmap), the code areas must be compiled as position-independent.  Shared libraries already do this (B<-fPIC>), so they gain ASLR automatically, but binary .text regions need to be built as PIE to gain ASLR.  When this happens, ROP (Return Oriented Programming) attacks are much harder since there are no static locations to bounce off of during a memory corruption attack.
+Positionsoberoende exekverbara program (PIE) behövs för att dra fördel av slumpmässig adressrymd (ASLR), vilket stöds av vissa versioner av kärnan. Medan ASLR redan kan användas för datautrymmen i stacken och heap:en (brk och mmap), måste kodområden först kompileras som positionsoberoende. Delade bibliotek gör redan detta (-fPIC), så de drar automatiskt fördel av ASLR medan binära .text-regioner måste byggas med PIE för att uppnå ASLR. När detta sker är ROP-angrepp (Return Oriented Programming) mycket svårare eftersom det inte finns några statiska platser att studsa från i ett minnesfördärvningsangrepp.
 
 PIE är inte kompatibelt med B<-fPIC>, så allmän försiktighet måste tas vid bygge av delade objekt. Men eftersom PIE-flaggorna som skapas injiceras via gcc-specifikationsfiler bör det alltid vara säkert att ovillkorligen sätta dem oberoende av typen av objekt som kompileras eller länkas.
 
