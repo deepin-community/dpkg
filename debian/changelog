@@ -1,3 +1,9 @@
+dpkg (1.21.20-1deepin2) unstable; urgency=medium
+
+  * add loong64 support
+
+ -- Han Gao <gaohan@iscas.ac.cn>  Sat, 18 Feb 2023 23:45:56 +0800
+
 dpkg (1.21.20-1deepin1) unstable; urgency=medium
 
   [ lichenggang ]
