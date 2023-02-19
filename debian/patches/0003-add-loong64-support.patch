@@ -1,0 +1,72 @@
+Description: add loong64 support
+From: https://git.dpkg.org/git/dpkg/dpkg.git/patch/?id=f9187c8b13478824c9eff73c92a084cc50c34cad
+Author: Han Gao <gaohan@iscas.ac.cn>
+
+Last-Update: 2023-02-18
+
+Index: dpkg/data/cputable
+===================================================================
+--- dpkg.orig/data/cputable
++++ dpkg/data/cputable
+@@ -26,6 +26,7 @@ arm		arm		arm.*			32	little
+ arm64		aarch64		aarch64			64	little
+ avr32		avr32		avr32			32	big
+ hppa		hppa		hppa.*			32	big
++loong64		loongarch64	loongarch64		64	little
+ i386		i686		(i[34567]86|pentium)	32	little
+ ia64		ia64		ia64			64	little
+ m32r		m32r		m32r			32	big
+Index: dpkg/scripts/Dpkg/Shlibs/Objdump.pm
+===================================================================
+--- dpkg.orig/scripts/Dpkg/Shlibs/Objdump.pm
++++ dpkg/scripts/Dpkg/Shlibs/Objdump.pm
+@@ -104,6 +104,7 @@ use constant {
+     EM_XTENSA               => 94,
+     EM_MICROBLAZE           => 189,
+     EM_ARCV2                => 195,
++    EM_LOONGARCH            => 258,
+     EM_AVR_OLD              => 0x1057,
+     EM_OR1K_OLD             => 0x8472,
+     EM_ALPHA                => 0x9026,
+@@ -128,6 +129,11 @@ use constant {
+ 
+     EF_IA64_ABI64           => 0x00000010,
+ 
++    EF_LOONGARCH_SOFT_FLOAT     => 0x00000001,
++    EF_LOONGARCH_SINGLE_FLOAT   => 0x00000002,
++    EF_LOONGARCH_DOUBLE_FLOAT   => 0x00000003,
++    EF_LOONGARCH_ABI_MASK       => 0x00000007,
++
+     EF_MIPS_ABI2            => 0x00000020,
+     EF_MIPS_32BIT           => 0x00000100,
+     EF_MIPS_FP64            => 0x00000200,
+@@ -161,6 +167,7 @@ my %elf_mach_map = (
+ # behavior, and we do not drop dependencies.
+ my %elf_flags_mask = (
+     EM_IA64()               => EF_IA64_ABI64,
++    EM_LOONGARCH()          => EF_LOONGARCH_ABI_MASK,
+     EM_MIPS()               => EF_MIPS_ABI_MASK | EF_MIPS_ABI2,
+     EM_PPC64()              => EF_PPC64_ABI64,
+ );
+Index: dpkg/scripts/t/Dpkg_Arch.t
+===================================================================
+--- dpkg.orig/scripts/t/Dpkg_Arch.t
++++ dpkg/scripts/t/Dpkg_Arch.t
+@@ -16,7 +16,7 @@
+ use strict;
+ use warnings;
+ 
+-use Test::More tests => 18900;
++use Test::More tests => 19393;
+ 
+ use_ok('Dpkg::Arch', qw(debarch_to_debtuple debarch_to_multiarch
+                         debarch_eq debarch_is debarch_is_wildcard
+@@ -28,7 +28,7 @@ use_ok('Dpkg::Arch', qw(debarch_to_debtu
+                         get_host_gnu_type
+                         get_valid_arches));
+ 
+-my $KNOWN_ARCHES_TOTAL = 569;
++my $KNOWN_ARCHES_TOTAL = 584;
+ my @valid_arches = get_valid_arches();
+ 
+ sub get_valid_wildcards

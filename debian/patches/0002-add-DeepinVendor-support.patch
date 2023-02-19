@@ -1,30 +1,12 @@
-Description: <short summary of the patch>
- TODO: Put a short summary on the line above and replace this paragraph
- with a longer explanation of this change. Complete the meta-information
- with other relevant fields (see below for details). To make it easier, the
- information below has been extracted from the changelog. Adjust it or drop
- it.
- .
- dpkg (1.21.8.2-1+dde) unstable; urgency=medium
- .
-   * add deepin vendor
+Description: add deepin vendor
 Author: lichenggang <lichenggang@uniontech.com>
 
----
-The information above should follow the Patch Tagging Guidelines, please
-checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
-are templates for supplementary fields that you might want to add:
+Last-Update: 2023-02-19
 
-Origin: <vendor|upstream|other>, <url of original patch>
-Bug: <url in upstream bugtracker>
-Bug-Debian: https://bugs.debian.org/<bugnumber>
-Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
-Forwarded: <no|not-needed|url proving that it has been forwarded>
-Reviewed-By: <name and email of someone who approved the patch>
-Last-Update: 2022-11-23
-
+Index: dpkg/scripts/Dpkg/Vendor/Deepin.pm
+===================================================================
 --- /dev/null
-+++ dpkg-1.21.8.2/scripts/Dpkg/Vendor/Deepin.pm
++++ dpkg/scripts/Dpkg/Vendor/Deepin.pm
 @@ -0,0 +1,490 @@
 +# Copyright © 2009-2011 Raphaël Hertzog <hertzog@debian.org>
 +# Copyright © 2009, 2011-2017 Guillem Jover <guillem@debian.org>
@@ -516,3 +498,15 @@ Last-Update: 2022-11-23
 +=cut
 +
 +1;
+Index: dpkg/scripts/Makefile.am
+===================================================================
+--- dpkg.orig/scripts/Makefile.am
++++ dpkg/scripts/Makefile.am
+@@ -139,6 +139,7 @@ nobase_dist_perllib_DATA = \
+ 	Dpkg/Vendor.pm \
+ 	Dpkg/Vendor/Debian.pm \
+ 	Dpkg/Vendor/Default.pm \
++	Dpkg/Vendor/Deepin.pm \
+ 	Dpkg/Vendor/Devuan.pm \
+ 	Dpkg/Vendor/Ubuntu.pm \
+ 	Dpkg/Version.pm \
