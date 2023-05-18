@@ -1,0 +1,75 @@
+Description: <>dpkg-scanpackages: Add sha512 support
+ dpkg (1.21.20-1deepin3) unstable; urgency=medium
+ .
+   * dpkg-scanpackages: Add sha512 support.
+Author: LiChengGang <lichenggang@uniontech.com>
+
+--- dpkg-1.21.20.orig/scripts/t/Dpkg_Checksums.t
++++ dpkg-1.21.20/scripts/t/Dpkg_Checksums.t
+@@ -16,7 +16,7 @@
+ use strict;
+ use warnings;
+ 
+-use Test::More tests => 59;
++use Test::More tests => 67;
+ use Test::Dpkg qw(:paths);
+ 
+ BEGIN {
+@@ -33,6 +33,7 @@ my @data = (
+             md5 => 'd41d8cd98f00b204e9800998ecf8427e',
+             sha1 => 'da39a3ee5e6b4b0d3255bfef95601890afd80709',
+             sha256 => 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
++            sha512 => 'cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e',
+         }
+     }, {
+         file => 'data-1',
+@@ -41,6 +42,7 @@ my @data = (
+             md5 => '1b662eff496fde1a63cc5ff97beec10a',
+             sha1 => 'ff66a3dc152f273a19392d3099b2915c311c707e',
+             sha256 => 'f53cb4ee5128363210053c89627757c3dd864ab87e3ac9bff20dd6fe4175a140',
++            sha512 => '045b1b0989dcc228f740ce4de883f9960462d37a0f1c75af86655c24ba5f5f80102769fcc8c9066e2fd6bc70e38c01a9a64688b5a0c5a18b4be42200b96e9b7b',
+         }
+     }, {
+         file => 'data-2',
+@@ -49,6 +51,7 @@ my @data = (
+             md5 => '785400cfc51d16a06e2c34aa511b99ef',
+             sha1 => '329ba56c0c9c63b6e138f3970ac3628e476a6854',
+             sha256 => '217147cd3126a076ba3fd816566a80aaaffff5facc572394dbd6af61a49760d1',
++            sha512 => '523277b702a7bd2182221a1c66cb924a239d15a072ed07117b748931508bceea651f51f182ba98b1ac56de747565acfbad70544d2b173b3fa08a61a61ec1333e',
+         }
+     }
+ );
+@@ -76,7 +79,7 @@ sub test_checksums {
+ }
+ 
+ 
+-my @expected_checksums = qw(md5 sha1 sha256);
++my @expected_checksums = qw(md5 sha1 sha256 sha512);
+ my @known_checksums = checksums_get_list();
+ 
+ is_deeply(\@known_checksums, \@expected_checksums, 'List of known checksums');
+--- dpkg-1.21.20.orig/scripts/t/Dpkg_Control_Fields.t
++++ dpkg-1.21.20/scripts/t/Dpkg_Control_Fields.t
+@@ -20,7 +20,7 @@ use Test::More;
+ use Test::Dpkg qw(:paths);
+ 
+ BEGIN {
+-    plan tests => 2603;
++    plan tests => 2647;
+ 
+     use_ok('Dpkg::Control::Types');
+     use_ok('Dpkg::Control::FieldsCore');
+@@ -60,11 +60,13 @@ my @src_checksums = qw(
+     Checksums-Md5
+     Checksums-Sha1
+     Checksums-Sha256
++    Checksums-Sha512
+ );
+ my @bin_checksums = qw(
+     MD5sum
+     SHA1
+     SHA256
++    SHA512
+ );
+ my @src_files = (
+     @src_checksums,

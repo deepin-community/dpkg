@@ -1,3 +1,9 @@
+dpkg (1.21.20-1deepin3) unstable; urgency=medium
+
+  * dpkg-scanpackages: Add sha512 support.
+
+ -- LiChengGang <lichenggang@uniontech.com>  Thu, 18 May 2023 15:55:44 +0800
+
 dpkg (1.21.20-1deepin2) unstable; urgency=medium
 
   * add loong64 support

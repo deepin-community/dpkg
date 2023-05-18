@@ -1,0 +1,227 @@
+Description: <dpkg-scanpackages: Add sha512 support>
+ dpkg (1.21.20-1deepin3) unstable; urgency=medium
+
+  * dpkg-scanpackages: Add sha512 support
+  
+Author: LiChengGang <lichenggang@deepin.org>
+
+--- dpkg-1.21.20.orig/man/dpkg-scanpackages.pod
++++ dpkg-1.21.20/man/dpkg-scanpackages.pod
+@@ -108,7 +108,7 @@ scanning for all debs.
+ Only generate file hashes for the comma-specified list specified
+ (since dpkg 1.17.14).
+ The default is to generate all currently supported hashes.
+-Supported values: B<md5>, B<sha1>, B<sha256>.
++Supported values: B<md5>, B<sha1>, B<sha256>, B<sha512>.
+ 
+ =item B<-m>, B<--multiversion>
+ 
+--- dpkg-1.21.20.orig/man/po/de.po
++++ dpkg-1.21.20/man/po/de.po
+@@ -17834,7 +17834,7 @@ msgstr "B<-h>, B<--hash> I<Hash-Liste>"
+ msgid ""
+ "Only generate file hashes for the comma-specified list specified (since dpkg "
+ "1.17.14).  The default is to generate all currently supported hashes.  "
+-"Supported values: B<md5>, B<sha1>, B<sha256>."
++"Supported values: B<md5>, B<sha1>, B<sha256>, B<sha512>."
+ msgstr ""
+ "Datei-Hashes werden nur für die angegebene, durch Kommata getrennte Liste "
+ "erzeugt (seit Dpkg 1.17.14). Standardmäßig werden alle derzeit unterstützten "
+--- dpkg-1.21.20.orig/man/po/dpkg-man.pot
++++ dpkg-1.21.20/man/po/dpkg-man.pot
+@@ -13969,7 +13969,7 @@ msgstr ""
+ msgid ""
+ "Only generate file hashes for the comma-specified list specified (since dpkg "
+ "1.17.14).  The default is to generate all currently supported hashes.  "
+-"Supported values: B<md5>, B<sha1>, B<sha256>."
++"Supported values: B<md5>, B<sha1>, B<sha256>, B<sha512>."
+ msgstr ""
+ 
+ #. type: =item
+--- dpkg-1.21.20.orig/man/po/es.po
++++ dpkg-1.21.20/man/po/es.po
+@@ -19249,7 +19249,7 @@ msgstr "B<-a>, B<--arch> I<arquitectura>
+ msgid ""
+ "Only generate file hashes for the comma-specified list specified (since dpkg "
+ "1.17.14).  The default is to generate all currently supported hashes.  "
+-"Supported values: B<md5>, B<sha1>, B<sha256>."
++"Supported values: B<md5>, B<sha1>, B<sha256>, B<sha512>."
+ msgstr ""
+ 
+ #. type: =item
+--- dpkg-1.21.20.orig/man/po/fr.po
++++ dpkg-1.21.20/man/po/fr.po
+@@ -17938,7 +17938,7 @@ msgstr "B<-h>, B<--hash> I<liste-de-hach
+ msgid ""
+ "Only generate file hashes for the comma-specified list specified (since dpkg "
+ "1.17.14).  The default is to generate all currently supported hashes.  "
+-"Supported values: B<md5>, B<sha1>, B<sha256>."
++"Supported values: B<md5>, B<sha1>, B<sha256>, B<sha512>."
+ msgstr ""
+ "Générer uniquement le hachage de fichiers spécifiés (liste séparée par des "
+ "virgules - depuis dpkg 1.17.14). Par défaut, cela génère tous les hachages "
+--- dpkg-1.21.20.orig/man/po/hu.po
++++ dpkg-1.21.20/man/po/hu.po
+@@ -15073,7 +15073,7 @@ msgstr "B<--show>, B<-W>"
+ msgid ""
+ "Only generate file hashes for the comma-specified list specified (since dpkg "
+ "1.17.14).  The default is to generate all currently supported hashes.  "
+-"Supported values: B<md5>, B<sha1>, B<sha256>."
++"Supported values: B<md5>, B<sha1>, B<sha256>, B<sha512>."
+ msgstr ""
+ 
+ #. type: =item
+--- dpkg-1.21.20.orig/man/po/it.po
++++ dpkg-1.21.20/man/po/it.po
+@@ -17987,7 +17987,7 @@ msgstr "B<-h>, B<--hash> I<hash-list>"
+ msgid ""
+ "Only generate file hashes for the comma-specified list specified (since dpkg "
+ "1.17.14).  The default is to generate all currently supported hashes.  "
+-"Supported values: B<md5>, B<sha1>, B<sha256>."
++"Supported values: B<md5>, B<sha1>, B<sha256>, B<sha512>."
+ msgstr ""
+ "Genera solamente gli hash dei file per l'elenco separato da virgole "
+ "specificato. Il valore predefinito è di generare tutti gli hash attualmente "
+--- dpkg-1.21.20.orig/man/po/ja.po
++++ dpkg-1.21.20/man/po/ja.po
+@@ -18863,7 +18863,7 @@ msgstr "B<-a>, B<--arch> I<arch>"
+ msgid ""
+ "Only generate file hashes for the comma-specified list specified (since dpkg "
+ "1.17.14).  The default is to generate all currently supported hashes.  "
+-"Supported values: B<md5>, B<sha1>, B<sha256>."
++"Supported values: B<md5>, B<sha1>, B<sha256>, B<sha512>."
+ msgstr ""
+ 
+ #. type: =item
+--- dpkg-1.21.20.orig/man/po/nl.po
++++ dpkg-1.21.20/man/po/nl.po
+@@ -18031,7 +18031,7 @@ msgstr "B<-h>, B<--hash> I<hash-lijst>"
+ msgid ""
+ "Only generate file hashes for the comma-specified list specified (since dpkg "
+ "1.17.14).  The default is to generate all currently supported hashes.  "
+-"Supported values: B<md5>, B<sha1>, B<sha256>."
++"Supported values: B<md5>, B<sha1>, B<sha256>, B<sha512>."
+ msgstr ""
+ "Enkel bestandshashes genereren voor de opgegeven lijst van algoritmen, "
+ "onderling gescheiden door komma's (sinds dpkg 1.17.14). Standaard worden ze "
+--- dpkg-1.21.20.orig/man/po/pl.po
++++ dpkg-1.21.20/man/po/pl.po
+@@ -19139,7 +19139,7 @@ msgstr "B<-a>, B<--arch> I<architektura>
+ msgid ""
+ "Only generate file hashes for the comma-specified list specified (since dpkg "
+ "1.17.14).  The default is to generate all currently supported hashes.  "
+-"Supported values: B<md5>, B<sha1>, B<sha256>."
++"Supported values: B<md5>, B<sha1>, B<sha256>, B<sha512>."
+ msgstr ""
+ 
+ #. type: =item
+--- dpkg-1.21.20.orig/man/po/pt.po
++++ dpkg-1.21.20/man/po/pt.po
+@@ -17639,7 +17639,7 @@ msgstr "B<-h>, B<--hash> I<hash-list>"
+ msgid ""
+ "Only generate file hashes for the comma-specified list specified (since dpkg "
+ "1.17.14).  The default is to generate all currently supported hashes.  "
+-"Supported values: B<md5>, B<sha1>, B<sha256>."
++"Supported values: B<md5>, B<sha1>, B<sha256>, B<sha512>."
+ msgstr ""
+ "Apenas gera cinzas de ficheiros para a lista especificada, especificada-por-"
+ "vírgulas, (desde dpkg 1.17.14). A predefinição é gerar todos os hashes "
+--- dpkg-1.21.20.orig/man/po/pt_BR.po
++++ dpkg-1.21.20/man/po/pt_BR.po
+@@ -14674,7 +14674,7 @@ msgstr "B<--auto> I<ligação>"
+ msgid ""
+ "Only generate file hashes for the comma-specified list specified (since dpkg "
+ "1.17.14).  The default is to generate all currently supported hashes.  "
+-"Supported values: B<md5>, B<sha1>, B<sha256>."
++"Supported values: B<md5>, B<sha1>, B<sha256>, B<sha512>."
+ msgstr ""
+ 
+ #. type: =item
+--- dpkg-1.21.20.orig/man/po/ru.po
++++ dpkg-1.21.20/man/po/ru.po
+@@ -15044,7 +15044,7 @@ msgstr "B<-d>|B<--chdir> I<путь>"
+ msgid ""
+ "Only generate file hashes for the comma-specified list specified (since dpkg "
+ "1.17.14).  The default is to generate all currently supported hashes.  "
+-"Supported values: B<md5>, B<sha1>, B<sha256>."
++"Supported values: B<md5>, B<sha1>, B<sha256>, B<sha512>."
+ msgstr ""
+ 
+ #. type: =item
+--- dpkg-1.21.20.orig/man/po/sv.po
++++ dpkg-1.21.20/man/po/sv.po
+@@ -17376,7 +17376,7 @@ msgstr "B<-h>, B<--hash> I<hashlista>"
+ msgid ""
+ "Only generate file hashes for the comma-specified list specified (since dpkg "
+ "1.17.14).  The default is to generate all currently supported hashes.  "
+-"Supported values: B<md5>, B<sha1>, B<sha256>."
++"Supported values: B<md5>, B<sha1>, B<sha256>, B<sha512>."
+ msgstr ""
+ "Skapar bara filhashar för den angivna kommaavdelade listan (sedan dpkg "
+ "1.17.14). Förval är att generera alla hashar som stöds. Värden som stöds är: "
+--- dpkg-1.21.20.orig/man/po/zh_CN.po
++++ dpkg-1.21.20/man/po/zh_CN.po
+@@ -14411,7 +14411,7 @@ msgstr ""
+ msgid ""
+ "Only generate file hashes for the comma-specified list specified (since dpkg "
+ "1.17.14).  The default is to generate all currently supported hashes.  "
+-"Supported values: B<md5>, B<sha1>, B<sha256>."
++"Supported values: B<md5>, B<sha1>, B<sha256>, B<sha512>."
+ msgstr ""
+ 
+ #. type: =item
+--- dpkg-1.21.20.orig/scripts/Dpkg/Checksums.pm
++++ dpkg-1.21.20/scripts/Dpkg/Checksums.pm
+@@ -67,6 +67,12 @@ my $CHECKSUMS = {
+ 	regex => qr/[0-9a-f]{64}/,
+ 	strong => 1,
+     },
++    sha512 => {
++        name => 'SHA-512',
++        regex => qr/[0-9a-f]{128}/,
++        strong => 1,
++    },
++
+ };
+ 
+ =item @list = checksums_get_list()
+--- dpkg-1.21.20.orig/scripts/Dpkg/Control/FieldsCore.pm
++++ dpkg-1.21.20/scripts/Dpkg/Control/FieldsCore.pm
+@@ -227,6 +227,10 @@ our %FIELDS = (
+         name => 'Checksums-Sha256',
+         allowed => CTRL_PKG_SRC | CTRL_INDEX_SRC | ALL_FILE_MANIFEST,
+     },
++    'checksums-sha512' => {
++        name => 'Checksums-Sha512',
++        allowed => CTRL_PKG_SRC | CTRL_INDEX_SRC | ALL_FILE_MANIFEST,
++    },
+     'classes' => {
+         name => 'Classes',
+         allowed => CTRL_TESTS,
+@@ -468,6 +472,12 @@ our %FIELDS = (
+         allowed => CTRL_INDEX_PKG | CTRL_REPO_RELEASE,
+         separator => FIELD_SEP_LINE | FIELD_SEP_SPACE,
+     },
++    'sha512' => {
++        # XXX: Wrong capitalization due to historical reasons.
++        name => 'SHA512',
++        allowed => CTRL_INDEX_PKG | CTRL_REPO_RELEASE,
++        separator => FIELD_SEP_LINE | FIELD_SEP_SPACE,
++    },
+     'size' => {
+         name => 'Size',
+         allowed => CTRL_INDEX_PKG,
+@@ -670,11 +680,13 @@ my @src_checksums_fields = qw(
+     checksums-md5
+     checksums-sha1
+     checksums-sha256
++    checksums-sha512
+ );
+ my @bin_checksums_fields = qw(
+     md5sum
+     sha1
+     sha256
++    sha512
+ );
+ 
+ our %FIELD_ORDER = (

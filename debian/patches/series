@@ -1,3 +1,5 @@
 0001-add-sunway-support.patch
 0002-add-DeepinVendor-support.patch
 0003-add-loong64-support.patch
+0004-add-dpkg-scanpackages-sha512-support
+0004-add-dpkg-scanpackages-sha512-support2
