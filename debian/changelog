@@ -1,3 +1,9 @@
+dpkg (1.21.22deepin1) unstable; urgency=medium
+
+  * add deepin vendor.
+
+ -- LiChengGang <lichenggang@uniontech.com>  Fri, 29 Dec 2023 17:48:04 +0800
+
 dpkg (1.21.22) unstable; urgency=medium
 
   [ Guillem Jover ]
