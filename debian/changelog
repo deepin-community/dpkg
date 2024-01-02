@@ -1,21 +1,25 @@
-dpkg (1.21.20-1deepin2) unstable; urgency=medium
+dpkg (1.21.22) unstable; urgency=medium
 
-  * add loong64 support
+  [ Guillem Jover ]
+  * Code internals:
+    - libdpkg: Handle missing Version when formatting source:Upstream-Version.
+      Reported by John Scott <jscott@posteo.net>.
+  * Localization:
+    - Add Portuguese scripts translations.
+      Thanks to Américo Monteiro <a_monteiro@gmx.com>. Closes: #1032562
 
- -- Han Gao <gaohan@iscas.ac.cn>  Sat, 18 Feb 2023 23:45:56 +0800
+ -- Guillem Jover <guillem@debian.org>  Thu, 11 May 2023 04:04:01 +0200
 
-dpkg (1.21.20-1deepin1) unstable; urgency=medium
+dpkg (1.21.21) unstable; urgency=medium
 
-  [ lichenggang ]
-  * add deepin vendor
+  * Architecture support:
+    - Restore "arch: Add support for loong64 CPU". Closes: #1028654
+  * Localization:
+    - Update Dutch header boilerplate with an actual copyright line.
+    - Update French scripts translation.
+      Thanks to Sébastien Poher <sebastien@volted.net>.
 
-  [ Changwei Miao ]
-  * Add sunway support.
-    - Add sw64 in cpuinfo.
-    - Disable '-pie' and '-fstack-protector' for sw64.
-  * Disable 'merged-/usr-via-aliased-dirs' warning for uos/deepin.
-
- -- Tianyu Chen <chentianyu1@uniontech.com>  Wed, 15 Feb 2023 02:40:38 +0000
+ -- Guillem Jover <guillem@debian.org>  Sat, 25 Feb 2023 04:39:29 +0100
 
 dpkg (1.21.20) unstable; urgency=medium
 
@@ -66,21 +70,6 @@ dpkg (1.21.20) unstable; urgency=medium
     - Workaround po4a formatting issue in French translation.
 
  -- Guillem Jover <guillem@debian.org>  Tue, 07 Feb 2023 12:19:12 +0100
-
-dpkg (1.21.19-deepin2) unstable; urgency=medium
-
-  * add deepin vendor
-
- -- lichenggang <lichenggang@uniontech.com>  Wed, 23 Nov 2022 15:22:07 +0800
-
-dpkg (1.21.19-deepin1) unstable; urgency=medium
-
-  * Add sunway support.
-    - Add sw64 in cpuinfo.
-    - Disable '-pie' and '-fstack-protector' for sw64.
-  * Disable 'merged-/usr-via-aliased-dirs' warning for uos/deepin.
-
- -- Changwei Miao <miaochangwei@uniontech.com>  Tue, 26 Jul 2022 07:41:42 +0000
 
 dpkg (1.21.19) unstable; urgency=medium
 
