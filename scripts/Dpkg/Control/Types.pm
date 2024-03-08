@@ -11,34 +11,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::Control::Types;
-
-use strict;
-use warnings;
-
-our $VERSION = '0.01';
-our @EXPORT = qw(
-    CTRL_UNKNOWN
-    CTRL_INFO_SRC
-    CTRL_INFO_PKG
-    CTRL_REPO_RELEASE
-    CTRL_INDEX_SRC
-    CTRL_INDEX_PKG
-    CTRL_PKG_SRC
-    CTRL_PKG_DEB
-    CTRL_FILE_BUILDINFO
-    CTRL_FILE_CHANGES
-    CTRL_FILE_VENDOR
-    CTRL_FILE_STATUS
-    CTRL_CHANGELOG
-    CTRL_COPYRIGHT_HEADER
-    CTRL_COPYRIGHT_FILES
-    CTRL_COPYRIGHT_LICENSE
-    CTRL_TESTS
-);
-
-use Exporter qw(import);
-
 =encoding utf8
 
 =head1 NAME
@@ -48,27 +20,63 @@ Dpkg::Control::Types - export CTRL_* constants
 =head1 DESCRIPTION
 
 You should not use this module directly. Instead you more likely
-want to use Dpkg::Control which also re-exports the same constants.
+want to use L<Dpkg::Control> which also re-exports the same constants.
 
 This module has been introduced solely to avoid a dependency loop
-between Dpkg::Control and Dpkg::Control::Fields.
+between L<Dpkg::Control> and L<Dpkg::Control::Fields>.
+
+B<Note>: This is a private module, its API can change at any time.
 
 =cut
 
+package Dpkg::Control::Types 0.01;
+
+use strict;
+use warnings;
+
+our @EXPORT = qw(
+    CTRL_UNKNOWN
+    CTRL_TMPL_SRC
+    CTRL_TMPL_PKG
+    CTRL_REPO_RELEASE
+    CTRL_REPO_SRC
+    CTRL_REPO_PKG
+    CTRL_DSC
+    CTRL_DEB
+    CTRL_FILE_BUILDINFO
+    CTRL_FILE_CHANGES
+    CTRL_FILE_VENDOR
+    CTRL_FILE_STATUS
+    CTRL_CHANGELOG
+    CTRL_COPYRIGHT_HEADER
+    CTRL_COPYRIGHT_FILES
+    CTRL_COPYRIGHT_LICENSE
+    CTRL_TESTS
+
+    CTRL_INFO_SRC
+    CTRL_INFO_PKG
+    CTRL_PKG_SRC
+    CTRL_PKG_DEB
+    CTRL_INDEX_SRC
+    CTRL_INDEX_PKG
+);
+
+use Exporter qw(import);
+
 use constant {
     CTRL_UNKNOWN => 0,
-    # First control stanza in debian/control.
-    CTRL_INFO_SRC => 1 << 0,
-    # Subsequent control stanza in debian/control.
-    CTRL_INFO_PKG => 1 << 1,
+    # First source package control stanza in debian/control.
+    CTRL_TMPL_SRC => 1 << 0,
+    # Subsequent binary package control stanza in debian/control.
+    CTRL_TMPL_PKG => 1 << 1,
     # Entry in repository's Sources files.
-    CTRL_INDEX_SRC => 1 << 2,
+    CTRL_REPO_SRC => 1 << 2,
     # Entry in repository's Packages files.
-    CTRL_INDEX_PKG => 1 << 3,
+    CTRL_REPO_PKG => 1 << 3,
     # .dsc file of source package.
-    CTRL_PKG_SRC => 1 << 4,
+    CTRL_DSC => 1 << 4,
     # DEBIAN/control in binary packages.
-    CTRL_PKG_DEB => 1 << 5,
+    CTRL_DEB => 1 << 5,
     # .changes file.
     CTRL_FILE_CHANGES => 1 << 6,
     # File in $Dpkg::CONFDIR/origins.
@@ -89,6 +97,16 @@ use constant {
     CTRL_TESTS => 1 << 14,
     # .buildinfo file
     CTRL_FILE_BUILDINFO => 1 << 15,
+};
+
+# Backwards compatibility aliases.
+use constant {
+    CTRL_INFO_SRC => CTRL_TMPL_SRC,
+    CTRL_INFO_PKG => CTRL_TMPL_PKG,
+    CTRL_PKG_SRC => CTRL_DSC,
+    CTRL_PKG_DEB => CTRL_DEB,
+    CTRL_INDEX_SRC => CTRL_REPO_SRC,
+    CTRL_INDEX_PKG => CTRL_REPO_PKG,
 };
 
 =head1 CHANGES

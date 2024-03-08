@@ -69,7 +69,7 @@ De huidige computerarchitectuur (d.w.z. de architectuur waarvoor het pakket gebo
 
 =item B<vendor:Name>
 
-De naam van de huidige leverancier (sinds dpkg 1.20.0). Deze waarde is afkomstig van het B<Vendor>-veld voor het origin-bestand van de huidige leverancier, zoals B<dpkg-vendor>(1) het zou ophalen.
+De naam van de huidige leverancier (sinds dpkg 1.20.0). Deze waarde is afkomstig van het B<Vendor>-veld voor het origin-bestand van de huidige leverancier, zoals L<dpkg-vendor(1)> het zou ophalen.
 
 =item B<vendor:Id>
 
@@ -151,5 +151,5 @@ Lijst met substitutievariabelen en hun waarden.
 
 =head1 ZIE OOK
 
-B<dpkg>(1), B<dpkg-vendor>(1), B<dpkg-genchanges>(1), B<dpkg-gencontrol>(1), B<dpkg-shlibdeps>(1), B<dpkg-source>(1).
+L<dpkg(1)>, L<dpkg-vendor(1)>, L<dpkg-genchanges(1)>, L<dpkg-gencontrol(1)>, L<dpkg-shlibdeps(1)>, L<dpkg-source(1)>.
 

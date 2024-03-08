@@ -1,14 +1,15 @@
-# Dutch translation of dpkg.
+# Translation of dpkg to Dutch
 # Copyright © 1994-2016 Dpkg Developers
 # This file is distributed under the same license as the dpkg package.
+#
 # Frans Spiesschaert <Frans.Spiesschaert@yucom.be>, 2015-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dpkg 1.21.20\n"
+"Project-Id-Version: dpkg 1.22.1\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
-"PO-Revision-Date: 2023-01-26 12:24+0100\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
+"PO-Revision-Date: 2023-12-03 17:45+0100\n"
 "Last-Translator: Frans Spiesschaert <Frans.Spiesschaert@yucom.be>\n"
 "Language-Team: Debian Dutch l10n Team <debian-l10n-dutch@lists.debian.org>\n"
 "Language: nl\n"
@@ -179,6 +180,10 @@ msgstr "zoekbewerking mislukte"
 #, c-format
 msgid "unable to execute %s (%s)"
 msgstr "%s (%s) kan niet uitgevoerd worden"
+
+#: lib/dpkg/command.c
+msgid "PATH is not set"
+msgstr "PATH is niet ingesteld"
 
 #: lib/dpkg/compress.c
 #, c-format
@@ -1139,35 +1144,35 @@ msgstr "<bestandsindicator van pakketstatus en voortgang>"
 msgid "unable to write to status fd %d"
 msgstr "kan niet schrijven naar statusbestandsindicator %d"
 
-#: lib/dpkg/mlib.c utils/update-alternatives.c
+#: lib/dpkg/mustlib.c utils/update-alternatives.c
 msgid "failed to allocate memory"
 msgstr "geheugen toewijzen is mislukt"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "failed to dup for fd %d"
 msgstr "dup op bestandsindicator %d is mislukt"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "failed to dup for std%s"
 msgstr "dup op std%s is mislukt"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 msgid "failed to create pipe"
 msgstr "aanmaken van pijp is mislukt"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "error writing to '%s'"
 msgstr "fout bij schrijven naar '%s'"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "unable to read filedescriptor flags for %.250s"
 msgstr "kan de opties van de bestandsindicator voor %.250s niet lezen"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "unable to set close-on-exec flag for %.250s"
 msgstr "kan de optie close-on-exec voor %.250s niet instellen"
@@ -1595,6 +1600,13 @@ msgstr "ongeldige pakketnaam in aanduiding '%s%s%s': %s"
 msgid "illegal architecture name in specifier '%s:%s': %s"
 msgstr "ongeldige architectuurnaam in aanduiding '%s:%s': %s"
 
+#. TRANSLATORS: This is part of the progress output, it is a decimal
+#. * percentage.
+#: lib/dpkg/progress.c
+#, c-format
+msgid "%d%%"
+msgstr "%d%%"
+
 #: lib/dpkg/report.c utils/update-alternatives.c
 msgid "warning"
 msgstr "waarschuwing"
@@ -1899,13 +1911,13 @@ msgid "unexpected end of file reading '%.250s'"
 msgstr "onverwacht bestandseinde in '%.250s'"
 
 #: lib/dpkg/varbuf.c
-msgid "error formatting string into varbuf variable"
-msgstr "fout bij het opmaken van de tekenreeks als varbuf-variabele"
-
-#: lib/dpkg/varbuf.c
 #, c-format
 msgid "cannot grow varbuf to size %zu; it would overflow"
 msgstr "kan varbuf niet laten aangroeien tot de grootte %zu; het zou overlopen"
+
+#: lib/dpkg/varbuf.c
+msgid "error formatting string into varbuf variable"
+msgstr "fout bij het opmaken van de tekenreeks als varbuf-variabele"
 
 #: src/common/force.c
 msgid "Set all force options"
@@ -2042,16 +2054,15 @@ msgstr "Een essentieel pakket verwijderen"
 #: src/common/force.c
 #, c-format
 msgid ""
-"%s forcing options - control behaviour when problems found:\n"
+"%s forcing options - control behavior when problems found:\n"
 "  warn but continue:  --force-<thing>,<thing>,...\n"
 "  stop with error:    --refuse-<thing>,<thing>,... | --no-force-<thing>,...\n"
 " Forcing things:\n"
 msgstr ""
 "%s forceeropties - gedrag sturen als problemen gevonden werden:\n"
-"  waarschuwen maar verder gaan:\n"
-"              --force-<ding>,<ding>,...\n"
-"  stoppen met foutmelding:\n"
-"             --refuse-<ding>,<ding>,... | --no-force-<ding>,...\n"
+"  waarschuwen maar doorgaan:  --force-<ding>,<ding>,...\n"
+"  stoppen met foutmelding:    --refuse-<ding>,<ding>,... | --no-force-"
+"<ding>,...\n"
 " Dingen forceren:\n"
 
 #: src/common/force.c
@@ -2595,6 +2606,11 @@ msgstr " %7jd bytes, %5d regels   %c  %-20.127s %.127s\n"
 
 #: src/deb/info.c
 #, c-format
+msgid " %7jd bytes, %5d lines   %c  %.127s\n"
+msgstr " %7jd bytes, %5d regels   %c  %.127s\n"
+
+#: src/deb/info.c
+#, c-format
 msgid "     not a plain file          %.255s\n"
 msgstr "     geen gewoon bestand      %.255s\n"
 
@@ -2826,6 +2842,12 @@ msgstr "heb een actie-optie nodig"
 #, c-format
 msgid "invalid compressor parameters: %s"
 msgstr "ongeldige compressieparameters: %s"
+
+#: src/deb/main.c
+#, c-format
+msgid "unsupported deb format '%d.%d' with non-uniform compression"
+msgstr ""
+"niet-ondersteunde deb-indeling '%d.%d' met een niet-uniforme compressie"
 
 #: src/deb/main.c
 #, c-format
@@ -3245,6 +3267,7 @@ msgid "--%s takes no arguments"
 msgstr "--%s verwacht geen argumenten"
 
 #: src/split/queue.c
+#, c-format
 msgid "Junk files left around in the depot directory:\n"
 msgstr "Rommelbestanden zijn in de depotmap achtergebleven:\n"
 
@@ -3264,6 +3287,7 @@ msgid " %s (not a plain file)\n"
 msgstr " %s (geen gewoon bestand)\n"
 
 #: src/split/queue.c
+#, c-format
 msgid "Packages not yet reassembled:\n"
 msgstr "Nog niet opnieuw samengevoegde pakketten:\n"
 
@@ -3347,7 +3371,7 @@ msgstr "--split verwacht hoogstens een bronbestandsnaam en doelprefix"
 msgid "Use --help for help about diverting files."
 msgstr "Gebruik --help voor hulp i.v.m. het omleiden van bestanden."
 
-#: src/divert/main.c src/statoverride/main.c utils/update-alternatives.c
+#: src/divert/main.c src/statoverride/main.c
 #, c-format
 msgid "Debian %s version %s.\n"
 msgstr "Debian %s versie  %s.\n"
@@ -3896,7 +3920,7 @@ msgstr ""
 msgid "package '%s' is not available"
 msgstr "pakket '%s' is niet beschikbaar"
 
-#: src/query/main.c src/main/packages.c
+#: src/query/main.c
 #, c-format
 msgid "--%s needs at least one package name argument"
 msgstr "--%s heeft ten minste een pakketnaam als argument nodig"
@@ -5237,10 +5261,6 @@ msgid "installed"
 msgstr "geïnstalleerd"
 
 #: src/main/help.c
-msgid "PATH is not set"
-msgstr "PATH is niet ingesteld"
-
-#: src/main/help.c
 #, c-format
 msgid "'%s' not found in PATH or not executable"
 msgstr "'%s' niet gevonden in PATH of niet uitvoerbaar"
@@ -5673,6 +5693,12 @@ msgstr ""
 #, c-format
 msgid "--%s --pending does not take any non-option arguments"
 msgstr "--%s --pending accepteert geen niet-optionele argumenten"
+
+#: src/main/packages.c
+#, c-format
+msgid "--%s (without --pending) needs at least one package name argument"
+msgstr ""
+"--%s (zonder --pending) heeft ten minste een pakketnaam als argument nodig"
 
 #: src/main/packages.c
 #, c-format
@@ -6385,6 +6411,11 @@ msgid ""
 msgstr ""
 "verouderde optie '--%s'; niet-beschikbare pakketten worden automatisch "
 "opgeruimd"
+
+#: utils/update-alternatives.c
+#, c-format
+msgid "%s version %s.\n"
+msgstr "%s versie %s.\n"
 
 #: utils/update-alternatives.c
 #, c-format

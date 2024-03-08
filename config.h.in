@@ -3,6 +3,9 @@
 /* Define if building universal (internal helper macro) */
 #undef AC_APPLE_UNIVERSAL_BUILD
 
+/* The normal alignment of `max_align_t', in bytes. */
+#undef ALIGNOF_MAX_ALIGN_T
+
 /* Set this to the canonical dpkg architecture name. */
 #undef ARCHITECTURE
 
@@ -22,7 +25,16 @@
 #undef BUILD_UPDATE_ALTERNATIVES
 
 /* default dpkg-deb build compressor */
-#undef DPKG_DEB_DEFAULT_COMPRESSOR
+#undef DEB_DEFAULT_COMPRESSOR
+
+/* pager program used by dpkg */
+#undef DPKG_DEFAULT_PAGER
+
+/* POSIX shell interpreter used by dpkg */
+#undef DPKG_DEFAULT_SHELL
+
+/* Whether structured procfs supports LFS */
+#undef DPKG_STRUCTURED_PROCFS_SUPPORTS_LFS
 
 /* Define to 1 if translation of program messages to the user's native
    language is requested. */
@@ -75,6 +87,9 @@
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
+
+/* POSIX shell interpreter used by dpkg supports -- after -c */
+#undef HAVE_DPKG_SHELL_WITH_DASH_DASH
 
 /* Define to 1 if you have the <error.h> header file. */
 #undef HAVE_ERROR_H
@@ -132,9 +147,6 @@
 
 /* Define to 1 if you have the <libintl.h> header file. */
 #undef HAVE_LIBINTL_H
-
-/* Define to 1 if you have the `selinux' library (-lselinux). */
-#undef HAVE_LIBSELINUX
 
 /* Define to 1 if you have the <linux/fiemap.h> header file. */
 #undef HAVE_LINUX_FIEMAP_H
@@ -244,6 +256,12 @@
 /* Define to 1 if you have the `strtoimax' function. */
 #undef HAVE_STRTOIMAX
 
+/* Define to 1 if the system has the type `struct psinfo'. */
+#undef HAVE_STRUCT_PSINFO
+
+/* Define to 1 if you have the <sys/mkdev.h> header file. */
+#undef HAVE_SYS_MKDEV_H
+
 /* Define to 1 if you have the <sys/param.h> header file. */
 #undef HAVE_SYS_PARAM_H
 
@@ -340,11 +358,35 @@
 /* GNU patch program */
 #undef PATCH
 
-/* The size of `unsigned int', as computed by sizeof. */
-#undef SIZEOF_UNSIGNED_INT
+/* The size of `double', as computed by sizeof. */
+#undef SIZEOF_DOUBLE
 
-/* The size of `unsigned long', as computed by sizeof. */
-#undef SIZEOF_UNSIGNED_LONG
+/* The size of `float', as computed by sizeof. */
+#undef SIZEOF_FLOAT
+
+/* The size of `int', as computed by sizeof. */
+#undef SIZEOF_INT
+
+/* The size of `long', as computed by sizeof. */
+#undef SIZEOF_LONG
+
+/* The size of `long double', as computed by sizeof. */
+#undef SIZEOF_LONG_DOUBLE
+
+/* The size of `long long', as computed by sizeof. */
+#undef SIZEOF_LONG_LONG
+
+/* The size of `off_t', as computed by sizeof. */
+#undef SIZEOF_OFF_T
+
+/* The size of `short', as computed by sizeof. */
+#undef SIZEOF_SHORT
+
+/* The size of `time_t', as computed by sizeof. */
+#undef SIZEOF_TIME_T
+
+/* The size of `void *', as computed by sizeof. */
+#undef SIZEOF_VOID_P
 
 /* Define to 1 if all of the C90 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for
@@ -501,6 +543,12 @@
 
 /* Define for large files, on AIX-style hosts. */
 #undef _LARGE_FILES
+
+/* Define to 1 if type `char' is unsigned and your compiler does not
+   predefine this macro.  */
+#ifndef __CHAR_UNSIGNED__
+# undef __CHAR_UNSIGNED__
+#endif
 
 /* Define to empty if `const' does not conform to ANSI C. */
 #undef const

@@ -34,7 +34,7 @@ Symboldateien enthalten feiner-granulare Abhängigkeitsinformationen, indem sie 
 
 =item debian/*/DEBIAN/symbols
 
-Informationen über Laufzeitbibliotheken, die vom aktuellen Bauprozess erstellt werden, der auch B<dpkg-shlibdeps> aufruft. Sie werden von B<dpkg-gensymbols>(1) erstellt. Sie werden nur verwendet, falls die Bibliothek im Bau-Baum des Pakets gefunden wird. Die Symboldatei im Bau-Baum hat Vorrang gegenüber Symboldateien aus anderen Binärpaketen.
+Informationen über Laufzeitbibliotheken, die vom aktuellen Bauprozess erstellt werden, der auch B<dpkg-shlibdeps> aufruft. Sie werden von L<dpkg-gensymbols(1)> erstellt. Sie werden nur verwendet, falls die Bibliothek im Bau-Baum des Pakets gefunden wird. Die Symboldatei im Bau-Baum hat Vorrang gegenüber Symboldateien aus anderen Binärpaketen.
 
 =item %PKGCONFDIR%/symbols/I<Paket>.symbols.I<Architektur>
 
@@ -50,7 +50,7 @@ Vom Paket bereitgestellte Abhängigkeitsinformationen für Laufzeitbibliotheken.
 
 Während des Durchsuchens aller vom Programm verwendeten Symbole erinnert sich B<dpkg-shlibdeps> an die (höchste) Minimalversion, die von jeder Bibliothek benötigt wird. Am Ende des Prozesses ist es in der Lage, die minimale Abhängigkeit für jede eingesetzte Bibliothek zu schreiben (vorausgesetzt, die Informationen in den I<Symbol>-Dateien sind korrekt).
 
-Als Sicherheitsmaßnahme kann eine Symbols-Datei ein Meta-Informationsfeld B<Build-Depends-Package> enthalten. B<dpkg-shlibdeps> entnimmt dann die minimale Version, die von dem korrespondierenden Paket im Feld B<Build-Depends> benötigt wird, und verwendet diese Version, falls sie höher ist als die minimale Version, die beim Durchsuchen der Symbole ermittelt wurde.
+As a safe-guard measure, a symbols file can provide a B<Build-Depends-Package> or B<Build-Depends-Packages> meta-information field and B<dpkg-shlibdeps> will extract the minimal version required by the corresponding package in the B<Build-Depends> field and use this version if it's higher than the minimal version computed by scanning symbols.
 
 =head2 Shlibs-Dateien
 
@@ -235,7 +235,7 @@ von> I<Programm>B<) gefunden.>
 
 Die von I<Programm> benötigte Bibliothek wurde von B<dpkg-shlibdeps> in I<Bibliotheksdatei> gefunden, allerdings konnte B<dpkg-shlibdeps> keine Abhängigkeitsinformationen für diese Bibliothek ermitteln. Um die Abhängigkeit herauszufinden, hat es versucht, die Bibliothek mittels B<dpkg -S> I<Bibliotheksdatei> auf ein Debian-Paket abzubilden. Dann überprüfte es die zugehörigen Shlibs- und Symboldateien in %ADMINDIR%/info/ und die verschiedenen Paketbaubäume (debian/*/DEBIAN/).
 
-Dieser Fehlschlag kann durch defekte oder fehlende Shlibs- oder Symboldateien im Paket der Bibliothek ausgelöst werden. Er könnte auch auftreten, falls die Bibliothek im gleichen Quellpaket gebaut wird und die Shlibs-Datei noch nicht angelegt wurde (wobei Sie in diesem Fall debian/rules korrigieren müssen, damit die Shlibs-Datei erstellt wird, bevor B<dpkg-shlibdeps> aufgerufen wird). Defekte RPATH können auch dazu führen, dass die Bibliothek unter nicht-kanonischen Namen gefunden wird (beispielsweise /usr/lib/openoffice.org/../lib/libssl.so.0.9.8 statt /usr/lib/libssl.so.0.9.8), so dass dann diese keinem Paket zugeordnet ist; B<dpkg-shlibdeps> versucht dies zu umgehen, indem es auf einen kanonischen Namen (mittels B<realpath>(3)) zurückfällt, allerdings könnte dies manchmal nicht funktionieren. Es ist immer am besten, den RPATH zu bereinigen, um Probleme zu vermeiden.
+Dieser Fehlschlag kann durch defekte oder fehlende Shlibs- oder Symboldateien im Paket der Bibliothek ausgelöst werden. Er könnte auch auftreten, falls die Bibliothek im gleichen Quellpaket gebaut wird und die Shlibs-Datei noch nicht angelegt wurde (wobei Sie in diesem Fall debian/rules korrigieren müssen, damit die Shlibs-Datei erstellt wird, bevor B<dpkg-shlibdeps> aufgerufen wird). Defekte RPATH können auch dazu führen, dass die Bibliothek unter nicht-kanonischen Namen gefunden wird (beispielsweise /usr/lib/openoffice.org/../lib/libssl.so.0.9.8 statt /usr/lib/libssl.so.0.9.8), so dass dann diese keinem Paket zugeordnet ist; B<dpkg-shlibdeps> versucht dies zu umgehen, indem es auf einen kanonischen Namen (mittels L<realpath(3)>) zurückfällt, allerdings könnte dies manchmal nicht funktionieren. Es ist immer am besten, den RPATH zu bereinigen, um Probleme zu vermeiden.
 
 Viele weitere Informationen darüber, wo nach Abhängigkeitsinformationen gesucht wird, können durch einen Aufruf von B<dpkg-shlibdeps> im detaillierten Modus (B<-v>) erhalten werden. Dies kann nützlich sein, falls Sie nicht verstehen, warum es Ihnen diesen Fehler meldet.
 
@@ -243,7 +243,7 @@ Viele weitere Informationen darüber, wo nach Abhängigkeitsinformationen gesuch
 
 =head1 SIEHE AUCH
 
-B<deb-substvars>(5), B<deb-shlibs>(5), B<deb-symbols>(5), B<dpkg-gensymbols>(1).
+L<deb-substvars(5)>, L<deb-shlibs(5)>, L<deb-symbols(5)>, L<dpkg-gensymbols(1)>.
 
 
 =head1 ÜBERSETZUNG

@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-buildpackage - compila pacotes binários ou fonte a partir de fontes
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-buildpackage> [I<option>...]
 
@@ -28,7 +28,7 @@ B<dpkg-buildpackage> é um programa que automatiza os processos de compilar um p
 
 =item B<1.>
 
-Prepara o ambiente de compilação ao definir várias variáveis de ambiente. (veja B<ENVIRONMENT>), corre o hook B<init>, e chama B<dpkg-source --before-build> (a menos que B<-T> ou B<--target> sejam usados).
+Corre o hook B<preinit> antes de ler qualquer ficheiro fonte. Prepara o ambiente de compilação ao definir várias variáveis de ambiente. (veja B<ENVIRONMENT>), corre o hook B<init>, e chama B<dpkg-source --before-build> (a menos que B<-T> ou B<--target> sejam usados).
 
 =item B<2.>
 
@@ -52,7 +52,25 @@ Corre o hook B<buildinfo>, e chama B<dpkg-genbuildinfo> para gerar um ficheiro B
 
 =item B<7.>
 
-Corre o hook B<changes> e chama B<dpkg-genchanges> para gerar um ficheiro B<.changes>. O nome do ficheiro B<.changes> irá depender do tipo de compilação e será tão específico quando necessário mas não mais; para uma compilação que inclua B<any> o nome será I<source-name>B<_>I<binary-version>B<_>I<arch>B<.changes>, ou caso contrário para uma compilação que inclua B<all> o nome será I<source-name>B<_>I<binary-version>B<_>B<all.changes>, ou caso contrário para uma compilação que inclua B<source> o nome será I<source-name>B<_>I<source-version>B<_>B<source.changes>.  Muitas opções de B<dpkg-buildpackage> são reencaminhadas para B<dpkg-genchanges>.
+Corre o hook B<changes> e chama B<dpkg-genchanges> para gerar um ficheiro B<.changes>. O nome do ficheiro B<.changes> irá depender do tipo de compilação e será tão específico quanto necessário mas não mais; o nome irá ser:
+
+=over 
+
+=item I<source-name>B<_>I<binary-version>B<_>I<arch>B<.changes>
+
+para uma compilação que inclua B<any>
+
+=item I<source-name>B<_>I<binary-version>B<_>B<all.changes>
+
+caso contrário para uma compilação que inclua B<all>
+
+=item I<source-name>B<_>I<source-version>B<_>B<source.changes>.
+
+caso contrário para uma compilação que inclua B<source>
+
+=back
+
+Muitas opções do B<dpkg-buildpackage> são reencaminhadas para B<dpkg-genchanges>.
 
 =item B<8.>
 
@@ -94,7 +112,7 @@ Os valores permitidos são:
 
 Compila o pacote fonte.
 
-B<Nota:> Quando se usa este valor autónomo e se o que você quer é simplesmente (re-)compilar o pacote fonte a partir de uma árvore fonte limpa, usar B<dpkg-source> directamente é sempre uma melhor opção pois não requer que sejam instaladas quaisquer dependências de compilação as quais, caso contrário, são precisas para ser capaz de chamar o alvo B<clean>.
+B<Nota>: Quando se usa este valor autónomo e se o que você quer é simplesmente (re-)compilar o pacote fonte a partir de uma árvore fonte limpa, usar B<dpkg-source> directamente é sempre uma melhor opção pois não requer que sejam instaladas quaisquer dependências de compilação as quais, caso contrário, são precisas para ser capaz de chamar o alvo B<clean>.
 
 =item B<any>
 
@@ -220,7 +238,7 @@ Esta opção (desde dpkg 1.21.10) é equivalente à opção B<--jobs> excepto qu
 
 Isto deverá causar que todas as invocações make subsequentes herdam a opção assim forçando a definição paralela no empacotamento (e possivelmente o sistema de compilação do autor se isso usar L<make(1)>) independentemente do seu suporte para compilações paralelas, o que pode causar falhas na compilação.
 
-Nota: Qualquer Makefile que não seja seguro-paralelo deve ser considerado defeituoso. Estes devem ou tornados seguro-paralelo, ou marcados como não seguros com o alvo L<make(1)> B<.NOTPARALLEL>.
+B<Nota>: Qualquer Makefile que não seja seguro-paralelo deve ser considerado defeituoso. Estes devem ou tornados seguro-paralelo, ou marcados como não seguros com o alvo L<make(1)> B<.NOTPARALLEL>.
 
 =item B<-D>, B<--check-builddeps>
 
@@ -278,11 +296,51 @@ Passa a opção I<opção> ao I<comando-de-verificação> especificado com B<DEB
 
 Define o código shell especificado I<hook-command> como o hook I<hook-name>, o qual vai correr nos tempos especificados nos passos de execução (desde dpkg 1.17.6). Os hooks irão sempre ser executados mesmo que a acção seguinte não seja executada (excepto para o hook B<binary>). Todos os hooks irão correr no directório fonte desempacotado.
 
-B<Nota:> Os hooks podem afectar o processo de compilação, e causar falhas ao compilar se os seus comandos falharem,  portanto esteja atento a consequências indesejadas.
+Alguns hooks podem receber informação adicional através de variáveis de ambiente (desde dpkg 1.22.0). Todos os hooks obtêm o nome de hook na variável de ambiente B<DPKG_BUILDPACKAGE_HOOK_NAME> (desde dpkg 1.22.0).
+
+B<Nota>: Os hooks podem afectar o processo de compilação, e causar falhas ao compilar se os seus comandos falharem,  portanto esteja atento a consequências indesejadas.
 
 Os I<nome-de-hook> actualmente suportados são:
 
-B<init preclean source build binary buildinfo changes postclean check sign done>
+=over 
+
+=item B<preinit>
+
+=item B<init>
+
+=item B<preclean>
+
+=item B<source>
+
+Obtém B<DPKG_BUILDPACKAGE_HOOK_SOURCE_OPTIONS> com as listas de opções separadas-por-espaços que serão passadas à chamada B<dpkg-source>.
+
+=item B<build>
+
+Obtém B<DPKG_BUILDPACKAGE_HOOK_BUILD_TARGET> com o nome do alvo de compilação B<debian/rules> chamado, mas apenas se chamado.
+
+=item B<binary>
+
+Obtém B<DPKG_BUILDPACKAGE_HOOK_BINARY_TARGET> com o nome de alvo binário B<debian/rules> chamado, mas apenas se chamado.
+
+=item B<buildinfo>
+
+Obtém B<DPKG_BUILDPACKAGE_HOOK_BUILDINFO_OPTIONS> com as listas de opções separadas-por-espaços que serão passadas à chamada B<dpkg-genbuildinfo>.
+
+=item B<changes>
+
+Obtém B<DPKG_BUILDPACKAGE_HOOK_CHANGES_OPTIONS> com as listas de opções separadas-por-espaços que serão passadas à chamada B<dpkg-genchanges>.
+
+=item B<postclean>
+
+=item B<check>
+
+Obtém B<DPKG_BUILDPACKAGE_HOOK_CHECK_OPTIONS> com as listas de opções separadas-por-espaços que serão passadas à chamada do comando de verificação.
+
+=item B<sign>
+
+=item B<done>
+
+=back
 
 O I<comando-hook> suporta as seguintes strings de formato de substituição, que lhes serão aplicadas antes da execução.
 
@@ -328,19 +386,25 @@ Especifica uma interface backend OpenPGP a usar quando se invoca o I<sign-comman
 
 A predefinição é B<auto>, onde o melhor backend actual disponível irá ser usado. Os backends OpenPGP específicos suportados em ordem de preferência são:
 
-=over 2
+=over 4
 
-=item B<sop> (qualquer implementação conforme Stateless OpenPGP)
+=item B<sop>
 
-=item B<sq> (de Sequoia-PGP)
+(qualquer implementação em conformidade com Stateless OpenPGP)
 
-=item B<gpg> (de GnuPG)
+=item B<sq>
+
+(de Sequoia-PGP)
+
+=item B<gpg>
+
+(de GnuPG)
 
 =back
 
 =item B<-p>, B<--sign-command=>I<sign-command>
 
-Quando B<dpkg-buildpackage> precisa de executar comando backend OpenPGP para assinar um ficheiro de controle de fonte (B<.dsc>) ou um ficheiro B<.changes> irá correr I<sign-command> (procurando na B<PATH> se necessário) em vez do predefinido ou do comando backend auto-detectado (opção longa desde dpkg 1.18.8). I<sign-command> irá obter todos os argumentos definidos por B<--sign-backend>. I<sign-command> não deve conter espaços ou outros meta-caracteres de shell.
+Quando B<dpkg-buildpackage> precisa de executar comando backend OpenPGP para assinar um ficheiro de controle de fonte (B<.dsc>), um ficheiro B<.buildinfo> ou um ficheiro B<.changes> irá correr I<sign-command> (procurando na B<PATH> se necessário) em vez do predefinido ou auto-detectado comando backend (opção longa desde dpkg 1.18.8). O I<sign-command> irá obter todos os argumentos específicos de backend de acordo com o B<--sign-backend> selecionado. I<sign-command> não deve conter espaços ou outros meta-caracteres de shell.
 
 =item B<-k>, B<--sign-keyid=>I<key-id>
 
@@ -352,7 +416,7 @@ Especifica um ID-chave OpenPGP (seja uma impressão digital ou um ID de utilizad
 
 Especifica um I<key-file> OpenPGP que contem a chave secreta usada quando assinar pacotes (desde dpkg 1.21.10).
 
-Nota: Por razões de segurança é melhor o I<key-file> ser mantido bloqueado com uma palavra passe.
+B<Nota>: Por razões de segurança é melhor o I<key-file> ser mantido bloqueado com uma palavra passe.
 
 =item B<-us>, B<--unsigned-source>
 
@@ -450,9 +514,49 @@ Se definido, será usado para assinar os ficheiros B<.changes>, B<.buildinfo> e 
 
 =item B<DEB_BUILD_OPTIONS>
 
-Se definido, irá conter uma lista de opções separadas por espaços que podem afectar o processo de compilação em I<debian/rules>, e o comportamento de alguns comandos do dpkg.
+If set, it will contain a space-separated list of options that affect the behavior of some dpkg tools involved in package building, and might affect the package build process if the code in F<debian/rules> honors them.  These options can have parameters specified immediately after an equal sign (‘B<=>‘).  For options that support multiple parameters, these will not be separated by spaces, as these are reserved to separate options.
 
-Com B<nocheck> a variável B<DEB_CHECK_COMMAND> será ignorada. com B<parallel=>I<N> os trabalhos paralelos serão definidos para I<N>, sobrepostos pela opção B<--jobs-try>.
+O seguinte são opções conhecidas e suportadas pelas ferramentas do dpkg, outras opções honradas por F<debian/rules> podem ser definidas por políticas específicas da distribuição.
+
+=over 
+
+=item B<parallel=>I<N>
+
+O F<debian/rules> no empacotamento pode usar esta opção para definir o processo de compilação a usar I<N> trabalhos em paralelo. É sobreposto pelas opções B<--jobs> e B<--jobs-force>.
+
+=item B<nocheck>
+
+B<dpkg-buildpackage> irá ignorar a variável B<DEB_CHECK_COMMAND>. Não é esperado que o F<debian/rules> no empacotamento corra suites de teste durante a compilação.
+
+=item B<noopt>
+
+Se F<debian/rules> chamar B<dpkg-buildflags> para definir as bandeiras de compilação, essas serão definidas para não activar nenhumas optimizações.
+
+=item B<nostrip>
+
+O F<debian/rules> no empacotamento deve assegurar que os objectos não ficam com a sua informação de depuração removida. Se F<debian/rules> incluir o fragmento de make B<mk/buildtools.mk> a variável de make B<STRIP> irá respeitar esta opção.
+
+=item B<terse>
+
+B<dpkg-buildpackage> irá acrescentar a bandeira B<--no-print-directory> L<make(1)> à variável de ambiente B<MAKEFLAGS>. O F<debian/rules> no empacotamento deve reduzir nos detalhes, não sendo completamente silencioso.
+
+=item B<hardening=>I<feature-spec>
+
+=item B<reproducible=>I<feature-spec>
+
+=item B<abi=>I<feature-spec>
+
+=item B<future=>I<feature-spec>
+
+=item B<qa=>I<feature-spec>
+
+=item B<optimize=>I<feature-spec>
+
+=item B<sanitize=>I<feature-spec>
+
+These are feature areas that control build flag features.  See L<dpkg-buildflags(1)> for further details.
+
+=back
 
 =item B<DEB_BUILD_PROFILES>
 
@@ -484,7 +588,7 @@ B<dpkg-architecture> é chamado com os parâmetros B<-a> e B<-t> reencaminhados.
 
 =item B<DEB_RULES_REQUIRES_ROOT>
 
-Esta variável é definida para o valor obtido a partir do campo B<Rules-Requires-Root> ou a partir da linha de comandos. Quando definida, será um valor válido para o campo B<Rules-Requires-Root>. É usada para notificar B<debian/rules> se a especificação B<rootless-builds.txt> é suportada.
+This variable is set to the value obtained from the B<Rules-Requires-Root> field, the dpkg-build-api level or from the command-line.  When set, it will be a valid value for the B<Rules-Requires-Root> field.  It is used to notify B<debian/rules> whether the B<rootless-builds.txt> specification is supported.
 
 =item B<DEB_GAIN_ROOT_CMD>
 
@@ -522,13 +626,17 @@ Entre dpkg 1.14.17 e 1.16.1, B<dpkg-buildpackage> exportava as bandeiras de comp
 
 B<dpkg-buildpackage> está  a usar os alvos B<build-arch> e B<build-indep> desde dpkg 1.16.2. Esses alvos são assim obrigatórios. Mas para evitar ruturas de pacotes existentes, e facilitar a transição, se o pacote fonte não compilar ambos pacotes binários independentes e dependentes da arquitectura (desde dpkg 1.18.8) irá regressar ao uso de alvo B<build> se B<make -f debian/rules -qn> I<build-target> retornar 2 como código de saída.
 
+=head1 SEGURANÇA
+
+A compilação de pacotes binário ou fonte só deve ser executada sobre dados de fonte de confiança.
+
 =head1 BUGS
 
 Deverá ser possível especificar espaços e meta-caracteres de shell e argumentos iniciais para I<gain-root-command> e I<sign-command>.
 
 =head1 VEJA TAMBÉM
 
-I<%PKGDOCDIR%/spec/rootless-builds.txt>, B<dpkg-source>(1), B<dpkg-architecture>(1), B<dpkg-buildflags>(1), B<dpkg-genbuildinfo>(1), B<dpkg-genchanges>(1), B<fakeroot>(1), B<lintian>(1), L<https://datatracker.ietf.org/doc/draft-dkg-openpgp-stateless-cli/>, B<sq>(1), B<gpg>(1).
+I<%PKGDOCDIR%/spec/rootless-builds.txt>, L<dpkg-source(1)>, L<dpkg-architecture(1)>, L<dpkg-buildflags(1)>, L<dpkg-genbuildinfo(1)>, L<dpkg-genchanges(1)>, L<fakeroot(1)>, L<lintian(1)>, L<https://datatracker.ietf.org/doc/draft-dkg-openpgp-stateless-cli/>, L<sq(1)>, L<gpg(1)>.
 
 
 =head1 TRADUÇÃO

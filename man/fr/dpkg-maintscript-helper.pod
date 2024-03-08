@@ -44,7 +44,9 @@ I<nouveau-fichier-de-configuration> [I<dernière-version> [I<paquet>]]
 
 Ce programme est prévu pour être exécuté dans les scripts du responsable afin de réaliser certaines tâches que B<dpkg> ne peut pas (encore) prendre en charge directement à cause de limites de conception ou de limitations actuelles.
 
-La plupart de ces tâches nécessitent la coordination de plusieurs scripts du responsable (B<preinst>, B<postinst>, B<prerm>, B<postrm>). Pour éviter des erreurs, le même appel a simplement besoin d'être placé dans tous les scripts. Le programme adaptera alors son comportement en fonction de la variable d'environnement B<DPKG_MAINTSCRIPT_NAME> et des paramètres des scripts du responsable qui doivent être passés avec un double tiret.
+Many of those tasks require coordinated actions from several maintainer scripts (B<preinst>, B<postinst>, B<prerm>, B<postrm>).  To avoid mistakes the same call simply needs to be put in all scripts and the program will automatically adapt its behavior based on the environment variable B<DPKG_MAINTSCRIPT_NAME> and on the maintainer scripts arguments that you have to forward after a double hyphen.
+
+This program was introduced in dpkg 1.15.7.
 
 =head1 PARAMÈTRES COMMUNS
 
@@ -76,9 +78,9 @@ Cela signifie que si un paquet a besoin de renommer ou supprimer un fichier de c
 
 =head2 Supprimer un fichier de configuration
 
-S<Note :> cela peut être remplacé dans la majorité des cas par le drapeau C<remove-on-upgrade> dans F<DEBIAN/conffiles> (depuis S<dpkg 1.20.6),> voir L<deb-conffiles(5)>.
+B<Note>: This can be replaced in most cases by the C<remove-on-upgrade> flag in F<DEBIAN/conffiles> (since dpkg 1.20.6), see L<deb-conffiles(5)>.
 
-Si un fichier de configuration est complètement supprimé, il doit être effacé du disque sauf si l'administrateur local l'a modifié. Les éventuelles modifications locales doivent être conservées. Si la mise à jour du paquet est interrompue, le fichier de configuration rendu obsolète ne doit pas avoir disparu.
+If a conffile is completely removed, it should be removed from disk, unless the user has modified it.  If there are local modifications, they should be preserved.  If the package upgrade aborts, the newly obsolete conffile should not disappear.
 
 L'ensemble de ces pré-requis est mis en œuvre en utilisant les commandes shell suivantes dans les scripts B<preinst>, B<postinst> et S<B<postrm> :>
 
@@ -117,7 +119,7 @@ Détails de la mise en œuvre S<actuelle :> dans le script B<preinst>, il est v�
 
 Lors de la mise à niveau d'un paquet, B<dpkg> ne substitue pas automatiquement un lien symbolique à un répertoire ou le contraire. Les retours à une version inférieure ne sont pas pris en charge et le chemin sera laissé comme il est.
 
-S<Note :> Les liens symboliques et les répertoires créés pendant cette substitution doivent être fournis dans les nouveau paquets, sinon B<dpkg> sera incapable de les supprimer lors de la purge.
+B<Note>: The symlinks and directories created during these switches need to be shipped in the new packages, or B<dpkg> will not be able to remove them on purge.
 
 =head2 Substituer un lien symbolique à un répertoire
 
@@ -157,7 +159,7 @@ Détails de la mise en œuvre S<actuelle :> dans le script B<preinst>, il est v�
 
 =head1 INTÉGRATION DANS LES PAQUETS
 
-Lors de l'utilisation d'un assistant d'empaquetage, veuillez vérifier s'il ne dispose pas d'une intégration native de B<dpkg-maintscript-helper> ce qui vous facilitera la tâche. Voir par exemple B<dh_installdeb>(1).
+When using a packaging helper, please check if it has native B<dpkg-maintscript-helper> integration, which might make your life easier. See for example L<dh_installdeb(1)>.
 
 Comme B<dpkg-maintscript-helper> est utilisé dans le script B<preinst>, l'utiliser sans conditions impose une pré-dépendance afin de garantir que la version minimale nécessaire de B<dpkg> ait bien été préalablement configurée. La version minimale dépend de la commande S<utilisée :> ainsi pour B<rm_conffile> et B<mv_conffile>, cette version est 1.15.7.2, pour B<symlink_to_dir> et B<dir_to_symlink>, c'est S<1.17.14 :>
 
@@ -200,7 +202,7 @@ Fixe le mode de couleur (depuis S<dpkg 1.19.1).> Les valeurs admises actuellemen
 
 =head1 VOIR AUSSI
 
-B<dh_installdeb>(1)
+L<dh_installdeb(1)>.
 
 
 =head1 TRADUCTION

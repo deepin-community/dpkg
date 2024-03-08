@@ -14,12 +14,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::Source::Package::V1;
+=encoding utf8
+
+=head1 NAME
+
+Dpkg::Source::Package::V1 - class for source format 1.0
+
+=head1 DESCRIPTION
+
+This module provides a class to handle the source package format 1.0.
+
+B<Note>: This is a private module, its API can change at any time.
+
+=cut
+
+package Dpkg::Source::Package::V1 0.01;
 
 use strict;
 use warnings;
-
-our $VERSION = '0.01';
 
 use Errno qw(ENOENT);
 use Cwd;
@@ -335,18 +347,16 @@ sub do_build {
 	# creating a native .tar.gz
 	if ($origtargz) {
 	    $sourcestyle =~ y/aA/pP/; # .orig.tar.<ext>
-	} else {
-	    if (stat($origdir)) {
-		unless (-d _) {
-                    error(g_("unpacked orig '%s' exists but is not a directory"),
-		          $origdir);
-                }
-		$sourcestyle =~ y/aA/rR/; # .orig directory
-	    } elsif ($! != ENOENT) {
-		syserr(g_("unable to stat putative unpacked orig '%s'"), $origdir);
-	    } else {
-		$sourcestyle =~ y/aA/nn/; # Native tar.gz
-	    }
+        } elsif (stat($origdir)) {
+            unless (-d _) {
+                error(g_("unpacked orig '%s' exists but is not a directory"),
+                      $origdir);
+            }
+            $sourcestyle =~ y/aA/rR/; # .orig directory
+        } elsif ($! != ENOENT) {
+            syserr(g_("unable to stat putative unpacked orig '%s'"), $origdir);
+        } else {
+            $sourcestyle =~ y/aA/nn/; # Native tar.gz
 	}
     }
 
@@ -508,5 +518,13 @@ sub do_build {
         exit(1);
     }
 }
+
+=head1 CHANGES
+
+=head2 Version 0.xx
+
+This is a private module.
+
+=cut
 
 1;

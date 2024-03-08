@@ -44,7 +44,7 @@ Neue Pakete installieren oder ein Upgrad auf neuere Versionen durchführen.
 
 =back
 
-B<dselect> arbeitet als Oberfläche von B<dpkg>(1), dem systemnahen Debian-Paket-Handhabungswerkzeug. Es bietet einen Vollbildschirm-Paketauswahl-Verwalter mit einem Paketeabhängigkeits- und -konfliktlöser. Bei Aufruf mit Administratorprivilegien können Pakete installiert und entfernt sowie Upgrades durchgeführt werden. Verschiedene Zugriffsmethoden können konfiguriert werden, um verfügbare Paketinformationen und installierbare Pakete aus Paketdepots zu holen. Abhängig von der verwendeten Zugriffsmethode können diese Depots öffentliche Archiv-Server im Internet, lokale Archiv-Server oder CD-ROMs sein. Die empfohlene Zugriffsmethode ist I<apt>, die vom Paket B<apt>(8) bereitgestellt wird.
+B<dselect> arbeitet als Oberfläche von L<dpkg(1)>, dem systemnahen Debian-Paket-Handhabungswerkzeug. Es bietet einen Vollbildschirm-Paketauswahl-Verwalter mit einem Paketeabhängigkeits- und -konfliktlöser. Bei Aufruf mit Administratorprivilegien können Pakete installiert und entfernt sowie Upgrades durchgeführt werden. Verschiedene Zugriffsmethoden können konfiguriert werden, um verfügbare Paketinformationen und installierbare Pakete aus Paketdepots zu holen. Abhängig von der verwendeten Zugriffsmethode können diese Depots öffentliche Archiv-Server im Internet, lokale Archiv-Server oder physische Medien sein. Die empfohlene Zugriffsmethode ist I<apt>, die vom Paket L<apt(8)> bereitgestellt wird.
 
 Normalerweise wird B<dselect> ohne Parameter aufgerufen. Es wird ein interaktives Menü präsentiert, das dem Benutzer eine Liste von Befehlen anbietet. Falls ein Befehl als Argument übergeben wird, wird dieser Befehl sofort gestartet. Es sind noch mehrere Befehlszeilenparameter vorhanden, um das Laufzeitverhalten von B<dselect> zu verändern oder zusätzliche Informationen über das Programm anzuzeigen.
 
@@ -156,7 +156,7 @@ Wenn B<Dselect> gestartet wird, kann es die folgenden Befehle ausführen, entwed
 
 Wählt und konfiguriert eine Zugriffsmethode für Paketdepots.
 
-Standardmäßig stellt B<dselect> mehrere Methoden wie I<multi_cd>, I<mounted> oder I<ftp> zur Verfügung, aber andere Pakete können zusätzliche Methoden bereitstellen, z.B. stellt das B<apt>-Paket die I<apt>(8)-Zugriffsmethode bereit.
+Standardmäßig stellt B<dselect> mehrere Methoden wie I<media>, I<file> oder I<ftp> zur Verfügung, aber andere Pakete können zusätzliche Methoden bereitstellen, z.B. stellt das B<apt>-Paket die L<apt(8)>-Zugriffsmethode bereit.
 
 Die Verwendung der I<apt>-Zugriffsmethode wird nachdrücklich empfohlen.
 
@@ -164,7 +164,7 @@ Die Verwendung der I<apt>-Zugriffsmethode wird nachdrücklich empfohlen.
 
 Die verfügbare Paketdatenbank auffrischen.
 
-Holt die Liste der verfügbaren Paketversionen aus dem Paket-Depot, das für die aktuelle Zugriffsmethode konfiguriert ist, und aktualisiert die Datenbank von dpkg. Die Paketliste wird im Depot typischerweise in Dateien mit den Namen I<Packages> oder I<Packages.gz> bereitgestellt. Diese Dateien können von den Betreuern des Depots mit dem Programm B<dpkg-scanpackages>(1) erstellt werden.
+Holt die Liste der verfügbaren Paketversionen aus dem Paket-Depot, das für die aktuelle Zugriffsmethode konfiguriert ist, und aktualisiert die Datenbank von dpkg. Die Paketliste wird im Depot typischerweise in Dateien mit den Namen I<Packages> oder I<Packages.gz> bereitgestellt. Diese Dateien können von den Betreuern des Depots mit dem Programm L<dpkg-scanpackages(1)> erstellt werden.
 
 Die Details des Befehls „Erneuern“ hängen von der Implementierung der Zugriffsmethode ab. Normalerweise ist der Prozess unkompliziert und verlangt keine Benutzerinteraktionen.
 
@@ -184,9 +184,9 @@ Installiert ausgewählte Pakete.
 
 Die konfigurierte Zugriffsmethode wird installierbare oder für ein Upgrade verfügbare Pakete aus den relevanten Depots holen und dann mittels B<dpkg> installieren. Abhängig von der Implementation der Zugriffsmethode können alle Pakete vor der Installation bereits geholt werden, oder bei Bedarf geholt werden. Bei einigen Zugriffsmethoden werden auch Pakete entfernt, die zur Entfernung markiert wurden.
 
-Falls während der Installation ein Fehler auftrat, ist es normalerweise empfehlenswert, die Installation erneut durchzuführen. In den meisten Fällen wird das Problem verschwinden oder gelöst werden. Falls Probleme bleiben oder die durchgeführte Installation nicht korrekt war, untersuchen Sie bitte den Grund und die Umstände und reichen Sie einen Fehler in der Fehlerdatenbank von Debian ein. Anleitungen, wie dies erfolgen kann, sind auf L<https://bugs.debian.org/> verfügbar oder können durch Lesen der Dokumentation für B<bug>(1) oder B<reportbug>(1) (falls diese installiert sind) erhalten werden.
+Falls während der Installation ein Fehler auftrat, ist es normalerweise empfehlenswert, die Installation erneut durchzuführen. In den meisten Fällen wird das Problem verschwinden oder gelöst werden. Falls Probleme bleiben oder die durchgeführte Installation nicht korrekt war, untersuchen Sie bitte den Grund und die Umstände und reichen Sie einen Fehler in der Fehlerdatenbank von Debian ein. Anleitungen, wie dies erfolgen kann, sind auf L<https://bugs.debian.org/> verfügbar oder können durch Lesen der Dokumentation für L<bug(1)> oder L<reportbug(1)> (falls diese installiert sind) erhalten werden.
 
-Details des Installationsbefehls hängen von der Implementierung der Zugriffsmethode ab. Die Aufmerksamkeit und Eingabe des Benutzers könnten während der Installation, Konfiguration oder dem Entfernen von Paketen notwendig sein. Dies hängt von den Betreuerskripten im Paket ab. Einige Pakete verwenden die Bibliothek B<debconf>(1), die flexiblere oder sogar automatisierte Installationseinrichtungen erlaubt.
+Details des Installationsbefehls hängen von der Implementierung der Zugriffsmethode ab. Die Aufmerksamkeit und Eingabe des Benutzers könnten während der Installation, Konfiguration oder dem Entfernen von Paketen notwendig sein. Dies hängt von den Betreuerskripten im Paket ab. Einige Pakete verwenden die Bibliothek L<debconf(1)>, die flexiblere oder sogar automatisierte Installationseinrichtungen erlaubt.
 
 =head2 Konfig
 
@@ -206,7 +206,7 @@ Beendet das Programm mit dem Fehlercode Null (erfolgreich).
 
 =head2 Einführung
 
-B<dselect> setzt den Administrator direkt einigen Komplexitäten aus, die beim Verwalten großer Paketmengen mit vielen Abhängigkeiten untereinander auftreten. Für einen Benutzer, der sich mit den Konzepten und den Arten des Debian-Paktverwaltungssystems nicht auskennt, kann dies recht überwältigend sein. Obwohl B<dselect> darauf abzielt, die Paketverwaltung und -administration zu vereinfachen, kann es dazu nur ein Werkzeug sein und somit nicht ausreichende Administratorfähigkeiten und Administratorverständnis ersetzen. Es wird vom Benutzer erwartet, dass er mit den Konzepten des unterliegenden Debian-Paketsystems vertraut ist. Im Zweifelsfall ziehen Sie die Handbuchseite B<dpkg>(1) und die Richtlinien der Distribution zu Rate.
+B<dselect> setzt den Administrator direkt einigen Komplexitäten aus, die beim Verwalten großer Paketmengen mit vielen Abhängigkeiten untereinander auftreten. Für einen Benutzer, der sich mit den Konzepten und den Arten des Debian-Paktverwaltungssystems nicht auskennt, kann dies recht überwältigend sein. Obwohl B<dselect> darauf abzielt, die Paketverwaltung und -administration zu vereinfachen, kann es dazu nur ein Werkzeug sein und somit nicht ausreichende Administratorfähigkeiten und Administratorverständnis ersetzen. Es wird vom Benutzer erwartet, dass er mit den Konzepten des unterliegenden Debian-Paketsystems vertraut ist. Im Zweifelsfall ziehen Sie die Handbuchseite L<dpkg(1)> und die Richtlinien der Distribution zu Rate.
 
 Falls B<dselect> nicht im Experten- oder direkten Modus läuft, wird zuerst ein Hilfebildschirm angezeigt, wenn dieser Befehl vom Menü ausgewählt wird. Dem Benutzer wird I<nachdrücklich> empfohlen, die gesamten in der Online-Hilfe angezeigten Informationen zu prüfen, wenn diese angezeigt werden. Die Online-Hilfebildschirme können jederzeit mit der Taste ‚B<?>’ aufgerufen werden.
 
@@ -343,7 +343,7 @@ Die Paketauswahllisten und die Abhängigkeitskonflikte-Lösungsbildschirme könn
 
 =head2 Suchen und Sortieren
 
-Die Liste der Pakete kann nach Paketnamen durchsucht werden. Dies erfolgt durch Drücken von ‚B</>’ und der Eingabe einer einfachen Suchzeichenkette. Die Zeichenkette wird als regulärer Ausdruck gemäß B<regex>(7) interpretiert. Falls Sie zu dem Suchausdruck ‚B</d>’ hinzufügen, wird Dselect auch in Beschreibungen suchen. Falls Sie ‚B</id>’ hinzufügen, wird Groß-/Kleinschreibung ignoriert. Sie können die Suffixe wie folgt kombinieren: B<„/id“>. Wiederholtes Suchen wird durch Drücken von ‚B<n>’ oder ‚B<\>’ erreicht, bis das gewünschte Paket gefunden wurde. Falls die Suche das Ende der Liste erreicht, springt sie zum Anfang und fährt von dort fort.
+Die Liste der Pakete kann nach Paketnamen durchsucht werden. Dies erfolgt durch Drücken von ‚B</>’ und der Eingabe einer einfachen Suchzeichenkette. Die Zeichenkette wird als regulärer Ausdruck gemäß L<regex(7)> interpretiert. Falls Sie zu dem Suchausdruck ‚B</d>’ hinzufügen, wird Dselect auch in Beschreibungen suchen. Falls Sie ‚B</id>’ hinzufügen, wird Groß-/Kleinschreibung ignoriert. Sie können die Suffixe wie folgt kombinieren: B<„/id“>. Wiederholtes Suchen wird durch Drücken von ‚B<n>’ oder ‚B<\>’ erreicht, bis das gewünschte Paket gefunden wurde. Falls die Suche das Ende der Liste erreicht, springt sie zum Anfang und fährt von dort fort.
 
 Die List-Sortierreihenfolge kann durch wiederholtes Drücken der Tasten ‚B<o>’ and ‚B<O>’ verändert werden. Die folgenden neun Sortierreihenfolgen können ausgewählt werden:
 
@@ -465,11 +465,11 @@ Es gibt keine Hilfe-Option im Hauptmenü.
 
 Die sichtbare Liste von verfügbaren Paketen kann nicht verkleinert werden.
 
-Die eingebauten Zugriffsmethoden können sich nicht mehr mit aktuellen Qualitätsstandards messen. Verwenden Sie die von B<apt>(8) bereitgestellte Zugriffsmethode, sie funktioniert nicht nur, sondern ist sogar flexibler als die eingebauten Zugriffsmethoden.
+Die eingebauten Zugriffsmethoden können sich nicht mehr mit aktuellen Qualitätsstandards messen. Verwenden Sie die von L<apt(8)> bereitgestellte Zugriffsmethode, sie funktioniert nicht nur, sondern ist sogar flexibler als die eingebauten Zugriffsmethoden.
 
 =head1 SIEHE AUCH
 
-B<dpkg>(1), B<apt>(8), B<sources.list>(5), B<deb>(5).
+L<dpkg(1)>, L<apt(8)>, L<sources.list(5)>, L<deb(5)>.
 
 
 =head1 ÜBERSETZUNG

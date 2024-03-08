@@ -28,7 +28,23 @@ Jedes Feld beginnt mit einer Markierung, wie B<Source> oder B<Binary> (Groß-/Kl
 
 Die Steuerdaten können in eine Signatur mit einer wie in RFC4880 spezifizierten OpenPGP-ASCII-Hülle eingeschlossen sein.
 
-Der Name der B<.buildinfo>-Datei wird von der Art des Baus abhängen und wird so spezifisch wie notwendig sein, aber nicht mehr; für einen Bau, der B<any> enthält, wird der Name I<Quellname>B<_>I<Binärversion>B<_>I<Arch>B<.buildinfo> oder andernfalls für einen Bau, der B<all> enthält, wird der Name I<Quellname>B<_>I<Quellversion>B<_>B<all.buildinfo> oder andernfalls für einen Bau, der B<source> enthält, wird der Name I<Quellname>B<_>I<Binärversion>B<_>B<source.buildinfo> lauten.
+Der Name der B<.buildinfo>-Datei wird von der Art des Baus abhängen und wird so spezifisch wie notwendig sein, aber nicht mehr; der Name wird
+
+=over 
+
+=item I<Quellname>B<_>I<Binärversion>B<_>I<Arch>B<.buildinfo>
+
+lauten, wenn ein Bau B<any> einschließt und andernfalls
+
+=item I<Quellname>B<_>I<Binärversion>B<_>B<all.buildinfo>
+
+wenn ein Bau B<all> einschließt und andernfalls
+
+=item I<Quellname>B<_>I<Quellversion>B<_>B<source.buildinfo>
+
+wenn ein Bau B<source> einschließt.
+
+=back
 
 =head1 FELDER
 
@@ -52,7 +68,7 @@ Dieses durch Leerzeichen getrennte Feld führt die Architekturen der derzeit geb
 
 =item B<Version:> I<Versionszeichenkette> (verpflichtend)
 
-Typischerweise ist das die Original-Paketversionsnummer, in der Form, die der Programmautor verwendet. Es kann auch eine Debian-Revisionsnummer enthalten (für nicht aus Debian stammende Pakete). Das genaue Format und der Sortieralgorithmus sind in B<deb-version>(7) beschrieben.
+Typischerweise ist das die Original-Paketversionsnummer, in der Form, die der Programmautor verwendet. Es kann auch eine Debian-Revisionsnummer enthalten (für nicht aus Debian stammende Pakete). Das genaue Format und der Sortieralgorithmus sind in L<deb-version(7)> beschrieben.
 
 =item B<Binary-Only-Changes:>
 
@@ -84,7 +100,7 @@ Die Debian-Architektur für die Installation, unter der das Paket gebaut wurde. 
 
 =item B<Build-Date:> I<Baudatum>
 
-Das Datum, an dem das Paket letztmalig gebaut wurde. Es muss im gleichen Format wie in einem Eintrag bei B<deb-changelog>(5) sein.
+Das Datum, an dem das Paket letztmalig gebaut wurde. Es muss im gleichen Format wie in einem Eintrag bei L<deb-changelog(5)> sein.
 
 =item B<Build-Kernel-Version:> I<Bau-Kernel-Version>
 
@@ -156,7 +172,7 @@ Die Liste der Umgebungsvariablen, die bekanntermaßen den Paketbauprozess beeinf
 
 =head1 SIEHE AUCH
 
-L<deb822(5)>, B<deb-changes>(5), B<deb-version>(7), B<dpkg-genbuildinfo>(1).
+L<deb822(5)>, L<deb-changes(5)>, L<deb-version(7)>, L<dpkg-genbuildinfo(1)>.
 
 
 =head1 ÜBERSETZUNG

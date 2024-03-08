@@ -45,7 +45,7 @@ use Dpkg::Control::Tests;
 use Dpkg::Control::Fields;
 use Dpkg::Substvars;
 use Dpkg::Version;
-use Dpkg::Vars;
+use Dpkg::Package;
 use Dpkg::Changelog::Parse;
 use Dpkg::Source::Format;
 use Dpkg::Source::Package qw(get_default_diff_ignore_regex
@@ -272,24 +272,26 @@ if ($options{opmode} =~ /^(build|print-format|(before|after)-build|commit)$/) {
           $controlfile) unless defined $src_fields;
     my $src_sect = $src_fields->{'Section'} || 'unknown';
     my $src_prio = $src_fields->{'Priority'} || 'unknown';
-    foreach (keys %{$src_fields}) {
-	my $v = $src_fields->{$_};
-	if (m/^Source$/i) {
-	    set_source_package($v);
-	    $fields->{$_} = $v;
-	} elsif (m/^Uploaders$/i) {
-	    ($fields->{$_} = $v) =~ s/\s*[\r\n]\s*/ /g; # Merge in a single-line
-	} elsif (m/^Build-(?:Depends|Conflicts)(?:-Arch|-Indep)?$/i) {
+    foreach my $f (keys %{$src_fields}) {
+        my $v = $src_fields->{$f};
+
+        if ($f eq 'Source') {
+            set_source_name($v);
+            $fields->{$f} = $v;
+        } elsif ($f eq 'Uploaders') {
+            # Merge in a single-line.
+            ($fields->{$f} = $v) =~ s/\s*[\r\n]\s*/ /g;
+        } elsif (any { $f eq $_ } field_list_src_dep()) {
 	    my $dep;
-	    my $type = field_get_dep_type($_);
+            my $type = field_get_dep_type($f);
 	    $dep = deps_parse($v, build_dep => 1, union => $type eq 'union');
-	    error(g_('cannot parse %s field'), $_) unless defined $dep;
+            error(g_('cannot parse %s field'), $f) unless defined $dep;
 	    my $facts = Dpkg::Deps::KnownFacts->new();
 	    $dep->simplify_deps($facts);
 	    $dep->sort() if $type eq 'union';
-	    $fields->{$_} = $dep->output();
+            $fields->{$f} = $dep->output();
 	} else {
-            field_transfer_single($src_fields, $fields);
+            field_transfer_single($src_fields, $fields, $f);
 	}
     }
 
@@ -329,9 +331,10 @@ if ($options{opmode} =~ /^(build|print-format|(before|after)-build|commit)$/) {
 
         push @pkglist, $pkg_summary;
 	push @binarypackages, $p;
-	foreach (keys %{$pkg}) {
-	    my $v = $pkg->{$_};
-            if (m/^Architecture$/) {
+        foreach my $f (keys %{$pkg}) {
+            my $v = $pkg->{$f};
+
+            if ($f eq 'Architecture') {
                 # Gather all binary architectures in one set. 'any' and 'all'
                 # are special-cased as they need to be the only ones in the
                 # current stanza if present.
@@ -349,10 +352,10 @@ if ($options{opmode} =~ /^(build|print-format|(before|after)-build|commit)$/) {
                         push(@sourcearch, $a) unless $archadded{$a}++;
                     }
                 }
-            } elsif (m/^(?:Homepage|Description)$/) {
+            } elsif (any { $f eq $_ } qw(Homepage Description)) {
                 # Do not overwrite the same field from the source entry
             } else {
-                field_transfer_single($pkg, $fields);
+                field_transfer_single($pkg, $fields, $f);
             }
 	}
     }
@@ -385,23 +388,23 @@ if ($options{opmode} =~ /^(build|print-format|(before|after)-build|commit)$/) {
     set_testsuite_fields($fields, @binarypackages);
 
     # Scan fields of dpkg-parsechangelog
-    foreach (keys %{$changelog}) {
-        my $v = $changelog->{$_};
+    foreach my $f (keys %{$changelog}) {
+        my $v = $changelog->{$f};
 
-	if (m/^Source$/) {
-	    set_source_package($v);
-	    $fields->{$_} = $v;
-	} elsif (m/^Version$/) {
+        if ($f eq 'Source') {
+            set_source_name($v);
+            $fields->{$f} = $v;
+        } elsif ($f eq 'Version') {
 	    my ($ok, $error) = version_check($v);
             error($error) unless $ok;
-	    $fields->{$_} = $v;
-	} elsif (m/^Binary-Only$/) {
+            $fields->{$f} = $v;
+        } elsif ($f eq 'Binary-Only') {
 	    error(g_('building source for a binary-only release'))
 	        if $v eq 'yes' and $options{opmode} eq 'build';
-	} elsif (m/^Maintainer$/i) {
+        } elsif ($f eq 'Maintainer') {
             # Do not replace the field coming from the source entry
 	} else {
-            field_transfer_single($changelog, $fields);
+            field_transfer_single($changelog, $fields, $f);
 	}
     }
 
@@ -437,7 +440,7 @@ if ($options{opmode} =~ /^(build|print-format|(before|after)-build|commit)$/) {
 
     # Write the .dsc
     my $dscname = $srcpkg->get_basename(1) . '.dsc';
-    info(g_('building %s in %s'), get_source_package(), $dscname);
+    info(g_('building %s in %s'), get_source_name(), $dscname);
     $srcpkg->write_dsc(filename => $dscname,
 		       remove => \%remove,
 		       override => \%override,
@@ -479,12 +482,10 @@ if ($options{opmode} =~ /^(build|print-format|(before|after)-build|commit)$/) {
     unless ($options{no_check}) {
         if ($srcpkg->is_signed()) {
             $srcpkg->check_signature();
+        } elsif ($options{require_valid_signature}) {
+            error(g_("%s doesn't contain a valid OpenPGP signature"), $dsc);
         } else {
-            if ($options{require_valid_signature}) {
-                error(g_("%s doesn't contain a valid OpenPGP signature"), $dsc);
-            } else {
-                warning(g_('extracting unsigned source package (%s)'), $dsc);
-            }
+            warning(g_('extracting unsigned source package (%s)'), $dsc);
         }
         $srcpkg->check_checksums();
     }

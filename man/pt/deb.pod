@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb - Formato Debian de pacotes binários
 
-=head1 SINOPSE
+=head1 RESUMO
 
 I<filename>B<.deb>
 
@@ -24,7 +24,7 @@ I<filename>B<.deb>
 
 O formato B<.deb> é o formato de ficheiro de pacote binários Debian. É compreendido deste o dpkg 0.93.76, e é gerado por predefinição desde o dpkg 1.2.0 e 1.1.1elf (i386/compilações ELF).
 
-O formato descrito aqui é usado desde Debian 0.93; detalhes do formato antigo estão descritos em B<deb-old>(5).
+The format described here is used since Debian 0.93; details of the old format are described in L<deb-old(5)>.
 
 =head1 FORMATO
 
@@ -58,7 +58,7 @@ application/x-deb
 
 =head1 VEJA TAMBÉM
 
-B<deb-old>(5), B<dpkg-deb>(1), B<deb-control>(5), B<deb-conffiles>(5), B<deb-md5sums>(5), B<deb-triggers>(5), B<deb-shlibs>(5), B<deb-symbols>(5), B<deb-preinst>(5), B<deb-postinst>(5), B<deb-prerm>(5), B<deb-postrm>(5).
+L<deb-old(5)>, L<dpkg-deb(1)>, L<deb-control(5)>, L<deb-conffiles(5)>, L<deb-md5sums(5)>, L<deb-triggers(5)>, L<deb-shlibs(5)>, L<deb-symbols(5)>, L<deb-preinst(5)>, L<deb-postinst(5)>, L<deb-prerm(5)>, L<deb-postrm(5)>.
 
 
 =head1 TRADUÇÃO

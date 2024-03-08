@@ -39,7 +39,7 @@ Si le fichier de contrôle n'existe pas dans le paquet binaire, L<dpkg(1)> crée
 
 =head1 VOIR AUSSI
 
-B<md5sum>(1), B<dpkg-deb>(1), B<dpkg>(1).
+L<md5sum(1)>, L<dpkg-deb(1)>, L<dpkg(1)>.
 
 
 =head1 TRADUCTION

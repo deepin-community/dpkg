@@ -55,6 +55,7 @@ archqual
 backport
 buildinfo
 bzip2
+bzr
 canonicalized
 checksum
 checksums
@@ -63,7 +64,9 @@ debian
 decompressor
 dep
 deps
+dir
 dpkg
+dpkg-buildapi
 dpkg-buildflags
 dpkg-buildpackage
 dpkg-checkbuilddeps
@@ -74,6 +77,7 @@ dpkg-gencontrol
 dpkg-parsechangelog
 dpkg-mergechangelog
 dsc
+dselect
 dup'ed
 env
 envvar
@@ -90,6 +94,7 @@ lzma
 modelines
 multiarch
 nocheck
+objdump
 qa
 quiesced
 reportfile

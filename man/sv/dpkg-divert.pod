@@ -24,7 +24,7 @@ B<dpkg-divert> [I<flagga>...] I<åtgärd>
 
 B<dpkg-divert> är verktyget som används för att ställa in och uppdatera listan över omdirigeringar.
 
-Filomdirigeringar (I<diversions>) är ett sätt att tvinga B<dpkg>(1) att inte installera en fil på sin plats, utan på en I<omdirigerad> plats. Omdirigeringar kan användas i skript i Debianpaket för att flytta bort en fil när den orsakar en konflikt. Systemadministratörer kan också använda det för att överstyra några pakets konfigurationsfiler, eller när några filer (som inte markerats som konfigurationsfiler) måste bibehållas av B<dpkg> när en nyare version av ett paket som innehåller de filerna installeras.
+File I<diversions> are a way of forcing L<dpkg(1)> not to install a file into its location, but to a I<diverted> location.  Diversions can be used through the package maintainer scripts to move a file away when it causes a conflict.  System administrators can also use it to override some package's configuration file, or whenever some files (which aren't marked as “conffiles”) need to be preserved by B<dpkg>, when installing a newer version of a package which contains those files.
 
 =head1 KOMMANDON
 
@@ -154,7 +154,7 @@ Väljer färgläge (sedan dpkg 1.18.5). För närvarande godtas följande värde
 
 Filen som innehåller den aktuella listan med systemets omdirigeringar. Den är placerad i B<dpkg>:s administrativa katalog, tillsammans med andra filer som är viktiga för B<dpkg>, till exempel I<status> och I<available>.
 
-B<Observera:> B<dpkg-divert> behåller den gamla versionen av filen, med filtillägget I<-old>, innan den ersätter den med den nya.
+B<Observera>: B<dpkg-divert> behåller den gamla versionen av filen, med filtillägget I<-old>, innan den ersätter den med den nya.
 
 =back
 
@@ -164,7 +164,7 @@ Vid tillägg är standard B<--local> och B<--divert> I<original>B<.distrib>. Vid
 
 Kataloger kan inte omdirigeras med B<dpkg-divert>.
 
-Se upp när du omdirigerar delade bibliotek. B<ldconfig>(8) skapar en symbolisk länk baserad på DT_SONAME-fältet som är inbyggt i biblioteket. Eftersom B<ldconfig> inte följer omdirigeringar (bara B<dpkg> gör det) kan den symboliska länken komma att peka på det omdirigerade biblioteket om ett omdirigerat bibliotek har samma SONAME som det ej omdirigerade.
+Se upp när du omdirigerar delade bibliotek. L<ldconfig(8)> skapar en symbolisk länk baserad på DT_SONAME-fältet som är inbyggt i biblioteket. Eftersom B<ldconfig> inte följer omdirigeringar (bara B<dpkg> gör det) kan den symboliska länken komma att peka på det omdirigerade biblioteket om ett omdirigerat bibliotek har samma SONAME som det ej omdirigerade.
 
 =head1 EXEMPEL
 
@@ -187,7 +187,7 @@ För att ta bort omdirigeringen:
 
 =head1 SE ÄVEN
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 ÖVERSÄTTNING

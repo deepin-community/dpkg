@@ -24,13 +24,13 @@ B<dpkg-scansources> [I<flagga>...] I<binärkatalog> [I<överstyrningsfil> [I<sö
 
 B<dpkg-scansources> söker genom den givna I<binärkatalogen> efter I<.dsc>-filer. De används för att skapa ett Debiankällkodsindex, vilket skrivs på standard ut.
 
-I<Överstyrningsfil>en, om den anges, används för att ställa in prioriteter i de skapade indexstyckena, samt för att ersätta fält de paketansvariga ger i I<.dsc>-filerna. Filen kan vara komprimerad (sedan dpkg 1.15.5). Se B<deb-override>(5) för en beskrivning av formatet för denna fil.
+I<Överstyrningsfil>en, om den anges, används för att ställa in prioriteter i de skapade indexstyckena, samt för att ersätta fält de paketansvariga ger i I<.dsc>-filerna. Filen kan vara komprimerad (sedan dpkg 1.15.5). Se L<deb-override(5)> för en beskrivning av formatet för denna fil.
 
-B<Observera:> Eftersom överstyrningsfilen indexerar per binärpaket, inte källkodspaket, uppstår det ett problem här. Nuvarande implementation använder den högsta prioriteten av samtliga binärpaket som skapas av en I<.dsc>-fil som prioritet för källkodspaketet, och överstyrningsposten för det första binärpaket som listas i I<.dsc>-filen för att ersätta information från paketansvariga. Detta kan komma att ändras.
+B<Observera>: Eftersom överstyrningsfilen indexerar per binärpaket, inte källkodspaket, uppstår det ett problem här. Nuvarande implementation använder den högsta prioriteten av samtliga binärpaket som skapas av en I<.dsc>-fil som prioritet för källkodspaketet, och överstyrningsposten för det första binärpaket som listas i I<.dsc>-filen för att ersätta information från paketansvariga. Detta kan komma att ändras.
 
 I<sökvägsprefix> läggs, om den anges, till i början av katalogfältet i det skapade källkodsindexet. Du använder det normalt till att göra så att katalogfälten innehåller sökvägen från toppen av Debianarkivhierarkin.
 
-B<Observera:> Om du vill läsa den skapade Sources-filen med B<apt>(8) måste du antagligen komprimera filen med B<gzip>(1) (vilket skapar filen Sources.gz). B<apt>(8) ignorerar okomprimerade Sources-filer, förutom vid lokal åtkomst (dvs. B<file://>-källor).
+B<Observera>: Om du vill läsa den skapade Sources-filen med L<apt(8)> måste du antagligen komprimera filen med L<gzip(1)> (vilket skapar filen Sources.gz). L<apt(8)> ignorerar okomprimerade Sources-filer, förutom vid lokal åtkomst (dvs. B<file://>-källor).
 
 =head1 FLAGGOR
 
@@ -42,7 +42,7 @@ Sortera inte indexstyckena. De sorteras normalt efter namn på källkodspaketet.
 
 =item B<-e>, B<--extra-override> I<fil>
 
-Läs I<fil> för att hitta ytterligare överstyrningar (sedan dpkg 1.15.4; filen kan vara komprimerad sedan dpkg 1.15.5). Se B<deb-extra-override>(5) för mer information om dess format.
+Läs I<fil> för att hitta ytterligare överstyrningar (sedan dpkg 1.15.4; filen kan vara komprimerad sedan dpkg 1.15.5). Se L<deb-extra-override(5)> för mer information om dess format.
 
 =item B<-s>, B<--source-override> I<fil>
 
@@ -80,7 +80,7 @@ Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även 
 
 =head1 SE ÄVEN
 
-B<deb-override>(5), B<deb-extra-override>(5), B<dpkg-scanpackages>(1).
+L<deb-override(5)>, L<deb-extra-override(5)>, L<dpkg-scanpackages(1)>.
 
 
 =head1 ÖVERSÄTTNING

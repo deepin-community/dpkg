@@ -1,4 +1,4 @@
-# Copyright © 207, 2022 Guillem Jover <guillem@debian.org>
+# Copyright © 2007, 2022 Guillem Jover <guillem@debian.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,12 +13,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::OpenPGP::Backend::GnuPG;
+=encoding utf8
+
+=head1 NAME
+
+Dpkg::OpenPGP::Backend::GnuPG - OpenPGP backend for GnuPG
+
+=head1 DESCRIPTION
+
+This module provides a class that implements the OpenPGP backend
+for GnuPG.
+
+B<Note>: This is a private module, its API can change at any time.
+
+=cut
+
+package Dpkg::OpenPGP::Backend::GnuPG 0.01;
 
 use strict;
 use warnings;
-
-our $VERSION = '0.01';
 
 use POSIX qw(:sys_wait_h);
 use File::Temp;
@@ -33,7 +46,7 @@ use Dpkg::OpenPGP::ErrorCodes;
 use parent qw(Dpkg::OpenPGP::Backend);
 
 sub DEFAULT_CMDV {
-    return [ qw(gpgv) ];
+    return [ qw(gpgv-sq gpgv) ];
 }
 
 sub DEFAULT_CMDSTORE {
@@ -41,7 +54,7 @@ sub DEFAULT_CMDSTORE {
 }
 
 sub DEFAULT_CMD {
-    return [ qw(gpg) ];
+    return [ qw(gpg-sq gpg) ];
 }
 
 sub has_backend_cmd {
@@ -75,9 +88,18 @@ sub has_verify_cmd {
 sub get_trusted_keyrings {
     my $self = shift;
 
+    my $keystore;
+    if ($ENV{GNUPGHOME} && -e $ENV{GNUPGHOME}) {
+        $keystore = $ENV{GNUPGHOME};
+    } elsif ($ENV{HOME} && -e "$ENV{HOME}/.gnupg") {
+        $keystore = "$ENV{HOME}/.gnupg";
+    } else {
+        return;
+    }
+
     my @keyrings;
-    if (length $ENV{HOME} and -r "$ENV{HOME}/.gnupg/trustedkeys.gpg") {
-        push @keyrings, "$ENV{HOME}/.gnupg/trustedkeys.gpg";
+    foreach my $keyring (qw(trustedkeys.kbx trustedkeys.gpg)) {
+        push @keyrings, "$keystore/$keyring" if -r "$keystore/$keyring";
     }
     return @keyrings;
 }
@@ -232,7 +254,10 @@ sub _gpg_verify {
         # XXX: The internal dearmor() does not handle concatenated ASCII Armor,
         # but the old implementation handled such certificate keyrings, so to
         # avoid regressing for now, we fallback to use the GnuPG dearmor.
-        if (defined $self->{cmd}) {
+        if ($cert =~ m{\.kbx$}) {
+            # Accept GnuPG apparent keybox-format keyrings as-is.
+            $rc = 1;
+        } elsif (defined $self->{cmd}) {
             $rc = $self->_gpg_exec($self->{cmd}, @cmd_opts, '--yes',
                                           '--output', $certring,
                                           '--dearmor', $cert);
@@ -294,8 +319,16 @@ sub inline_sign {
     push @exec, '--output', $inlinesigned;
 
     my $rc = $self->_gpg_exec(@exec, '--clearsign', $data);
-    return OPENPGP_KEY_CANNOT_SIGN if $rc;
+    return OPENPGP_CMD_CANNOT_SIGN if $rc;
     return OPENPGP_OK;
 }
+
+=head1 CHANGES
+
+=head2 Version 0.xx
+
+This is a private module.
+
+=cut
 
 1;

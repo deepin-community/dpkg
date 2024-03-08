@@ -36,7 +36,7 @@ Styrinformationen kan omges av en OpenPGP-signatur i ASCII-skal, såsom beskrivs
 
 Värdet på det här fältet deklarerar formatversionen för källkodspaketet. Fältvärdet används av program som arbetar på källkodspaket för att tolka listan över filer i källkodspaketet och bestämma hur det ska pakcas upp. Syntaxen för fältet är ett huvudversionsnummer (”0-9”), en punkt (”.”), ett numeriskt underversionsnummer (”0-9”), och därefter en valfri undertyp efter ett blanksteg (” \t”), vilket, om det anges, är ett ord med små alfanumeriska (”a-z0-9”) tecken i paranteser (”()”). Undetypen är valfri i syntaxen men kan krävas för specifika källkodsformatversioner.
 
-De källkodsformat som för närvarande stöds av B<dpkg> är B<1.0>, B<2.0>, B<3.0 (native)>, B<3.0 (quilt)>, B<3.0 (git)>, B<3.0 (bzr)> och B<3.0 (custom)>. Se B<dpkg-source>(1) för beskrivningar.
+De källkodsformat som för närvarande stöds av B<dpkg> är B<1.0>, B<2.0>, B<3.0 (native)>, B<3.0 (quilt)>, B<3.0 (git)>, B<3.0 (bzr)> och B<3.0 (custom)>. Se L<dpkg-source(1)> för beskrivningar.
 
 =item B<Source:> I<källkodsnamn> (krävs)
 
@@ -58,7 +58,7 @@ Fältvärdet genereras normalt från fälten B<Architecture> i filen I<debian/co
 
 =item B<Version:> I<versionssträng> (krävs)
 
-Vanligtvis är detta det ursprungliga paketets versionsnummer på den form programmets författare använder. Den kan även innehålla ett Debianuppdateringsnummer (för paket vars källa är utanför Debian). Exakt format och sorteringsalgoritm beskrivs i B<deb-version>(7).
+Vanligtvis är detta det ursprungliga paketets versionsnummer på den form programmets författare använder. Den kan även innehålla ett Debianuppdateringsnummer (för paket vars källa är utanför Debian). Exakt format och sorteringsalgoritm beskrivs i L<deb-version(7)>.
 
 =item B<Origin:> I<namn>
 
@@ -106,7 +106,7 @@ I<Url>:en till ett webbgränssnitt för att bläddra i versionshanteringsarkivet
 
 =item B<Vcs-Svn:> I<url>
 
-Dessa fält anger I<url> till det versionshanteringssystemakriv som används för att underhålla paketet. Se B<deb-src-control>(5) för ytterligare detaljer.
+Dessa fält anger I<url> till det versionshanteringssystemakriv som används för att underhålla paketet. Se L<deb-src-control(5)> för ytterligare detaljer.
 
 =item B<Testsuite:> I<namnlist>
 
@@ -116,7 +116,7 @@ Fältet anger att källkodspaketet innehåller de angivna testsviterna. Värdet 
 
 Fältet anger den kommaavdelade unionen av alla testberoenden (fältet B<Depends> i filen I<debian/tests/control>), med alla begränsningar borttagna, och ELLER-beroenden tillplattade (det vill säga, konverterade till separata OCH-relationer), med undantag för binärar som skapas av detta källkodspaket och dess metaberoende-motsvarighet B<@>.
 
-Grund: fältet behövs eftersom man annars för att kunna hämta testbeorenden måste packa upp alla källkodspaketen.
+B<Grund>: fältet behövs eftersom man annars för att kunna hämta testbeorenden måste packa upp alla källkodspaketen.
 
 =item B<Build-Depends:> I<paketlista>
 
@@ -130,7 +130,7 @@ Grund: fältet behövs eftersom man annars för att kunna hämta testbeorenden m
 
 =item B<Build-Conflicts-Indep:> I<paketlista>
 
-Dessa fält anger relationer mellan källkodspaket och de paket som används för att bygga det. De diskuteras i manualsidan B<deb-src-control>(5).
+Dessa fält anger relationer mellan källkodspaket och de paket som används för att bygga det. De diskuteras i manualsidan L<deb-src-control(5)>.
 
 =item B<Package-List:>
 
@@ -190,7 +190,7 @@ Fältet B<Format> blandar formatet på själva B<.dsc>-filen och formatet på de
 
 =head1 SE ÄVEN
 
-L<deb822(5)>, B<deb-src-control>(5), B<deb-version>(7), B<dpkg-source>(1).
+L<deb822(5)>, L<deb-src-control(5)>, L<deb-version(7)>, L<dpkg-source(1)>.
 
 
 =head1 ÖVERSÄTTNING

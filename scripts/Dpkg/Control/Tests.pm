@@ -13,19 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::Control::Tests;
-
-use strict;
-use warnings;
-
-our $VERSION = '1.00';
-
-use Dpkg::Control;
-use Dpkg::Control::Tests::Entry;
-use Dpkg::Index;
-
-use parent qw(Dpkg::Index);
-
 =encoding utf8
 
 =head1 NAME
@@ -37,16 +24,29 @@ Dpkg::Control::Tests - parse files like debian/tests/control
 It provides a class to access data of files that follow the same
 syntax as F<debian/tests/control>.
 
+=cut
+
+package Dpkg::Control::Tests 1.00;
+
+use strict;
+use warnings;
+
+use Dpkg::Control;
+use Dpkg::Control::Tests::Entry;
+use Dpkg::Index;
+
+use parent qw(Dpkg::Index);
+
 =head1 METHODS
 
-All the methods of Dpkg::Index are available. Those listed below are either
+All the methods of L<Dpkg::Index> are available. Those listed below are either
 new or overridden with a different behavior.
 
 =over 4
 
 =item $c = Dpkg::Control::Tests->new(%opts)
 
-Create a new Dpkg::Control::Tests object, which inherits from Dpkg::Index.
+Create a new Dpkg::Control::Tests object, which inherits from L<Dpkg::Index>.
 
 =cut
 

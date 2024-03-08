@@ -72,7 +72,7 @@ Das Tilde-Zeichen und seine speziellen Sortiereigenschaften wurden in Dpkg 1.10 
 
 =head1 SIEHE AUCH
 
-B<deb-control>(5), B<deb>(5), B<dpkg>(1)
+L<deb-control(5)>, L<deb(5)>, L<dpkg(1)>
 
 
 =head1 ÜBERSETZUNG

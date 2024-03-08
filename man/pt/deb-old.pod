@@ -16,13 +16,13 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb-old - formato Debian de pacote binário do estilo antigo
 
-=head1 SINOPSE
+=head1 RESUMO
 
 I<filename>B<.deb>
 
 =head1 DESCRIÇÃO
 
-O formato B<.deb> é o formato de ficheiro de pacote binário Debian. Este manual descreve o formato B<antigo>, usando antes de Debian 0.93. Por favor veja B<deb>(5) para detalhes sobre o novo formato.
+The B<.deb> format is the Debian binary package file format.  This manual page describes the B<old> format, used before Debian 0.93.  Please see L<deb(5)> for details of the new format.
 
 =head1 FORMATO
 
@@ -42,7 +42,7 @@ O segundo ficheiro tar gzipado é o arquivo do sistema de ficheiros, contendo no
 
 =head1 VEJA TAMBÉM
 
-B<deb>(5), B<dpkg-deb>(1), B<deb-control>(5).
+L<deb(5)>, L<deb-control(5)>, L<dpkg-deb(1)>.
 
 
 =head1 TRADUÇÃO

@@ -26,7 +26,7 @@ Symbolfilmallar medföljer Debiankällkodspaket och dess format är en övermän
 
 =head2 Kommentarer
 
-Kommentarer stöds i symbolmallfilerna. Alla rader med ”#” som första tecken är kommentarer, såvida inte det börjar med ”#include” (se stycket B<Använda inkluderingar>). Rader som börjar med ”#MISSING:” är speciella kommentarer som dokumenterar symboler som har försvunnit.
+Kommentarer stöds i symbolmallfilerna. Alla rader med ”#” som första tecken är kommentarer, såvida inte det börjar med ”#include” (se stycket L</Använda inkluderingar>). Rader som börjar med ”#MISSING:” är speciella kommentarer som dokumenterar symboler som har försvunnit.
 
 =head2 Använda #PACKAGE#-substituering
 
@@ -34,7 +34,7 @@ I några sällsynta fall skiljer sig namnet på biblioteket mellan arkitekturer.
 
 =head2 Använda symboltaggar
 
-Symboltaggning är nyttigt för att markera symboler som är speciella på något sätt. Alla symboler kan ha ett godtyckligt antal taggar associerade med sig. Medan alla taggar tolkas och lagras är det bara ett par av dem som förstås av B<dpkg-gensymbols> och som utlöser specialhantering av symbolerna. Se undersymbolen B<Standardsymboltaggar> för mer information om dessa taggar.
+Symboltaggning är nyttigt för att markera symboler som är speciella på något sätt. Alla symboler kan ha ett godtyckligt antal taggar associerade med sig. Medan alla taggar tolkas och lagras är det bara ett par av dem som förstås av B<dpkg-gensymbols> och som utlöser specialhantering av symbolerna. Se undersymbolen L</Standardsymboltaggar> för mer information om dessa taggar.
 
 Taggarna anges precis före symbolnamnet (inga blanksteg tillåts mellan). Den börjar alltid med en vänsterparentes B<(>, slutar med en högerparentes B<)>, och måste innehålla minst en tagg. Ytterligare taggar avdelas med tecknet B<|>. En tagg kan ha ett värde, vilket separeras från taggnamnet med tecknet B<=>. Taggnamn och värden kan vara godtyckliga strängar, förutom att de inte kan innehålla de speciella tecknen B<)> B<|> B<=>. Symbolnamn som följer en taggangivelse kan, om så önskas, citeras med antingen B<'> eller B<"> för att tillåta blanksteg. Om inga taggar anges för symbolen tolkas dock citattecken som en del av symbolnamnet, vilket fortsätter till det första blanksteget.
 
@@ -44,7 +44,7 @@ Taggarna anges precis före symbolnamnet (inga blanksteg tillåts mellan). Den b
 
 Den första symbolen i exemplet är heter I<taggad citerad symbol> och har två taggar: I<tag1> med värdet I<jag är markerad> och I<taggnamn med blanksteg> som inte har något värde. Den andra symbolen heter I<taggad_ociterad_symbol> och är bara taggad med taggen som heter I<optional>. Den sista symbolen är ett exempel på en normal, otaggad symbol.
 
-Eftersom symboltaggar er en utökning av formatet i I<deb-symbols(5)> kan de bara användas i symbolfiler i källkodspaket (dessa filer är att anse som mallar som används för att bygga symbolfilerna som finns i binärpaketen). När B<dpkg-gensymbols> anropas utan flaggan B<-t> kommer det att mata ut symbolfiler kompatibla med B<deb-symbols>(5)-formatet: det hanterar symboler helt beroende på vad som beskrivs av standardtaggarna och tar bort alla taggar från utdata. I mall-läge (B<-t>) kommer däremot alla symboler och deras taggar (både standard och okända) att behållas i utdata och skrivas i sin originalform så som de lästes in.
+Eftersom symboltaggar er en utökning av formatet i I<deb-symbols(5)> kan de bara användas i symbolfiler i källkodspaket (dessa filer är att anse som mallar som används för att bygga symbolfilerna som finns i binärpaketen). När B<dpkg-gensymbols> anropas utan flaggan B<-t> kommer det att mata ut symbolfiler kompatibla med L<deb-symbols(5)>-formatet: det hanterar symboler helt beroende på vad som beskrivs av standardtaggarna och tar bort alla taggar från utdata. I mall-läge (B<-t>) kommer däremot alla symboler och deras taggar (både standard och okända) att behållas i utdata och skrivas i sin originalform så som de lästes in.
 
 =head2 Standardsymboltaggar
 
@@ -95,15 +95,15 @@ Ett alias för B<allow-internal> som avråds från (sedan dpkg 1.20.1, stöds se
 
 =item B<c++>
 
-Betecknar I<c++>-symbolmönster. Se stycket B<Använda symbolmönster> nedan.
+Betecknar I<c++>-symbolmönster. Se stycket L</Använda symbolmönster> nedan.
 
 =item B<symver>
 
-Anger I<symver> (symbolversion)-symbolmönstret. Se stycket B<Använda symbolmönster> nedan.
+Anger I<symver> (symbolversion)-symbolmönstret. Se stycket L</Använda symbolmönster> nedan.
 
 =item B<regex>
 
-Anger I<regex>-symbolmönstret. Se stycket I<Använda symbolmönster> nedan.
+Anger I<regex>-symbolmönstret. Se stycket L</Använda symbolmönster> nedan.
 
 =back
 
@@ -111,9 +111,9 @@ Anger I<regex>-symbolmönstret. Se stycket I<Använda symbolmönster> nedan.
 
 Till skillnad från vanliga symbolspecifikationer kan ett mönster täcka flera faktiska symboler från biblioteket. B<dpkg-gensymbols> kommer försöka matcha varje mönster mot varje faktisk symbol som I<inte> har en motsvarande specifik symbol definierad i symbolfilen. Så fort det första mönster som motsvarar symbolen hittas kommer alla dess taggar och egenskaper att användas som en basspecifikation för symbolen. Om inget mönster motsvarar symbolen kommer den att tolkas som ny.
 
-Ett mönster anses som tappat om det inte motsvarar några symboler i biblioteket. Som standard kommer detta få B<dpkg-genchanges> att misslyckas om B<-c1> eller högre anges. Om ett sådant misslyckande inte är önskvärt kan mönstret dock märkas med taggen I<optional>. Om mönstret då inte motsvarar någonting kommer det bara dyka upp i differensen som saknas (MISSING). Mönstret kan dessutom, precis som andra symboler, begränsas till specifika arkitekturer med hjälp av I<arch>-taggen. Se stycket B<Standardsymboltaggar> ovan för mer information.
+Ett mönster anses som tappat om det inte motsvarar några symboler i biblioteket. Som standard kommer detta få B<dpkg-genchanges> att misslyckas om B<-c1> eller högre anges. Om ett sådant misslyckande inte är önskvärt kan mönstret dock märkas med taggen I<optional>. Om mönstret då inte motsvarar någonting kommer det bara dyka upp i differensen som saknas (MISSING). Mönstret kan dessutom, precis som andra symboler, begränsas till specifika arkitekturer med hjälp av I<arch>-taggen. Se stycket L</Standardsymboltaggar> ovan för mer information.
 
-Mönster är en utökning av B<deb-symbols(5)>-formatet och är därför endast tillåtna i symbolfilmallar. Syntax för angivelse av mönster skiljer sig inte från den för en specifik symbol. Symbolnamnsdelen av specifikationen fungerar dock som ett uttryck som ska jämföras mot I<namn@version> för den faktiska symbolen. För att skilja mellan olika sorters mönster, taggas mönster normalt med en speciell tagg.
+Mönster är en utökning av L<deb-symbols(5)>-formatet och är därför endast tillåtna i symbolfilmallar. Syntax för angivelse av mönster skiljer sig inte från den för en specifik symbol. Symbolnamnsdelen av specifikationen fungerar dock som ett uttryck som ska jämföras mot I<namn@version> för den faktiska symbolen. För att skilja mellan olika sorters mönster, taggas mönster normalt med en speciell tagg.
 
 För närvarande stöder B<dpkg-gensymbols> tre grundläggande mönstertyper:
 
@@ -121,7 +121,7 @@ För närvarande stöder B<dpkg-gensymbols> tre grundläggande mönstertyper:
 
 =item B<c++>
 
-Detta mönster anges med taggen I<c++>. Den matchar enbart C++-symboler med deras avmanglade symbolnamn (som det skrivs ut av B<c++filt>(1)-verktyget). Det här mönstret är väldigt nyttigt för att matcha symboler vars manglade namn kan skilja sig mellan olika arkitekturer, medan deras avmanglade namn är desamma. En grupp dylika symboler är I<icke-virtuella ”thunks”> som har arkitekturspecifika offsetvärden inbyggda i sina manglade namn. En vanlig instans av detta fall är en virtuell destruktör som under diamantarv behöver en icke-virtuell ”thunk”-symbol. Även om till exempel ZThn8_N3NSB6ClassDD1Ev@Base på 32-bitarsarkitekturer troligtvis är _ZThn16_N3NSB6ClassDD1Ev@Base på64-bitarsarkitekturer, så kan de matchas med ett enda I<c++>-mönster:
+Detta mönster anges med taggen I<c++>. Den matchar enbart C++-symboler med deras avmanglade symbolnamn (som det skrivs ut av L<c++filt(1)>-verktyget). Det här mönstret är väldigt nyttigt för att matcha symboler vars manglade namn kan skilja sig mellan olika arkitekturer, medan deras avmanglade namn är desamma. En grupp dylika symboler är I<icke-virtuella ”thunks”> som har arkitekturspecifika offsetvärden inbyggda i sina manglade namn. En vanlig instans av detta fall är en virtuell destruktör som under diamantarv behöver en icke-virtuell ”thunk”-symbol. Även om till exempel ZThn8_N3NSB6ClassDD1Ev@Base på 32-bitarsarkitekturer troligtvis är _ZThn16_N3NSB6ClassDD1Ev@Base på 64-bitarsarkitekturer, så kan de matchas med ett enda I<c++>-mönster:
 
  libdummy.so.1 libdummy1 #MINVER#
   [...]
@@ -188,8 +188,8 @@ Inkluderingsdirektivet kan även taggas som alla andra symboler:
 Alla symboler som inkluderas från I<fil-att-inkludera> kommer att anses som standard vara taggade med I<tagg> ... I<taggN>. Du kan använda denna funktion för att skapa en gemensam I<paket>.symbols-fil som inkluderar arkitekturspecifika filer:
 
   gemensam_symbol1@Base 1.0
- (arch=amd64 ia64 alpha)#include "paket.symbols.64bit"
- (arch=!amd64 !ia64 !alpha)#include "paket.symbols.32bit"
+ (arch=amd64 ia64 alpha)#include "package.symbols.64-bit"
+ (arch=!amd64 !ia64 !alpha)#include "package.symbols.32-bit"
   gemensam_symbol2@Base 1.0
 
 =back
@@ -202,7 +202,7 @@ En inkluderad fil kan repetera huvudraden som innehåller SONAME:t för bibliote
   arkitekturspecifik_symbol@Base 1.0
 =head1 SE ÄVEN
 
-B<deb-symbols>(5), B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
+L<deb-symbols(5)>, L<dpkg-shlibdeps(1)>, L<dpkg-gensymbols(1)>.
 
 
 =head1 ÖVERSÄTTNING

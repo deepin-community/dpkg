@@ -42,7 +42,7 @@ On peut trouver les fichiers S<« override »,> dont on se sert pour établir le
 
 =head1 VOIR AUSSI
 
-B<dpkg-scanpackages>(1), B<dpkg-scansources>(1), B<apt-ftparchive>(1).
+L<dpkg-scanpackages(1)>, L<dpkg-scansources(1)>, L<apt-ftparchive(1)>.
 
 
 =head1 TRADUCTION

@@ -33,7 +33,7 @@ Z<>
           [optionale leere Zeile(n), entfernt, stripped]
   * I<Änderungsdetails>
     I<weitere_Änderungsdetails>
-          [leere Zeile(n), in der Ausgabe von B<dpkg-parsechangelog>(1) enthalten]
+          [leere Zeile(n), in der Ausgabe von L<dpkg-parsechangelog(1)> enthalten]
   * I<noch_weitere_Änderungsdetails>
           [optionale leere Zeile(n), entfernt]
   -- I<Betreuername> <I<E-Mail-Adresse>>  I<Datum>
@@ -42,7 +42,19 @@ I<Paket> und I<Version> sind der Quellpaketname und die Versionsnummer. Die Vers
 
 I<Distributionen> listet eine oder mehrere durch Leerzeichen getrennte Distributionen auf, in die diese Version nach dem Upload installiert werden soll. Es wird in das Feld B<Distribution> in der I<.changes>-Datei kopiert. B<Distribution> muss durch ein Semikolon (U+003B ‚B<;>’) abgeschlossen werden.
 
-I<Metadaten> listet eine oder mehrere durch Kommata getrennte I<Schlüssel>=I<Wert>-Objekte auf. Jeder Schlüssel darf nur Minus und alphanumerische Zeichen (Groß-/Kleinschreibung egal) enthalten, da diese auf B<deb822>(5)-Feldnamen abgebildet werden müssen. Die einzigen von B<dpkg> derzeit verstandenen I<Schlüsselwörter> sind B<urgency> und B<binary-only>. Der Wert von B<urgency> wird für das Feld B<Urgency> in der Datei I<.changes> für den Upload verwandt. B<binary-only> mit einem Wert von B<yes> wird verwandt, um anzuzeigen, dass dieser Changelog-Eintrag für einen rein-binären nicht-Betreuer-Upload (ein automatischer binärer Neubau, wo die einzige Änderung der Changelog-Eintrag darstellt) ist.
+I<Metadaten> listet eine oder mehrere durch Kommata getrennte I<Schlüssel>=I<Wert>-Objekte auf. Jeder Schlüssel darf nur Minus und alphanumerische Zeichen (Groß-/Kleinschreibung egal) enthalten, da diese auf L<deb822(5)>-Feldnamen abgebildet werden müssen. Die einzigen von B<dpkg> derzeit verstandenen I<Schlüsselwörter> sind:
+
+=over 
+
+=item B<urgency>
+
+Der Wert wird für das Feld B<Urgency> in der Datei I<.changes> für den Upload verwandt.
+
+=item B<binary-only>
+
+Wird mit einem Wert von B<yes> verwandt, um anzuzeigen, dass dieser Changelog-Eintrag für einen rein-binären nicht-Betreuer-Upload (ein automatischer binärer Neubau, wo die einzige Änderung der Changelog-Eintrag darstellt) ist.
+
+=back
 
 Die Änderungsdetails können tatsächlich eine Reihe von Zeilen, die mindestens mit zwei Leerzeichen (U+0020 B<LEERZEICHEN>) beginnen, sein, aber üblicherweise beginnt jede Änderung mit einem Stern und einem trennenden Leerzeichen und Folgezeilen werden so eingerückt, dass sie bündig mit dem obigen Text formatiert sind. Leerzeilen können hier verwandt weden, um Gruppen von Änderungen, falls gewünscht, zu trennen.
 
@@ -150,7 +162,7 @@ Der gesamte Changelog muss in UTF-8 kodiert sein.
 
 =head1 SIEHE AUCH
 
-B<deb822>(5), B<deb-version>(7), B<deb-changes>(5), B<dpkg-parsechangelog>(1).
+L<deb822(5)>, L<deb-changes(5)>, L<deb-version(7)>, L<dpkg-parsechangelog(1)>.
 
 
 =head1 ÜBERSETZUNG

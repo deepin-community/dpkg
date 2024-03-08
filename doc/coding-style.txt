@@ -71,31 +71,24 @@ or the output will get messed up.
 Dpkg C/C++ coding style 2016-01-29
 =======================
 
-C language extensions
-~~~~~~~~~~~~~~~~~~~~~
+Standards
+~~~~~~~~~
 
-The code base assumes C89 plus the following C99 extensions:
+The C code base assumes C99, except for the following features:
 
- * Designated initializers.
- * Compound literals.
- * Trailing comma in enum.
- * Variadic macros.
- * Working bool type in <stdbool.h>.
- * Working %j and %z printf modifiers.
- * Magic __func__ variable.
+ - Variable length arrays.
+ - Mixed declaration and code.
 
-Those are checked at build time, and it will abort in case a needed extension
-is not supported.
+The C++ code base assumes C++03, plus the following C++11 extension:
 
-C++ language extensions
-~~~~~~~~~~~~~~~~~~~~~~~
+ + Null pointer keyword (nullptr).
 
-The code base assumes C++03 plus the following C++11 extension:
+The code base assumes a POSIX.1-2008 compatible environment.
 
- * Null pointer keyword (nullptr).
-
-This is checked at build time, and it will use compatibility code in case the
-needed extension is not supported.
+The required features are checked at build time, and it will either use
+compatibility code in case the needed extensions are not supported and it
+is possible to support them, otherwise it will abort in case a needed one
+cannot be used.
 
 General
 ~~~~~~~
@@ -290,6 +283,13 @@ see what operation is being done:
 Dpkg Perl coding style 2019-03-27
 ======================
 
+Perl version
+~~~~~~~~~~~~
+
+We don't want to impose a too-recent Perl version, so only use features
+supported by the Perl version that is currently in Debian oldstable when
+possible. Currently that means Perl 5.32.1.
+
 General
 ~~~~~~~
 
@@ -320,13 +320,6 @@ if ($foo) {
         }
     }
 }
-
-Perl version
-~~~~~~~~~~~~
-
-We don't want to impose a too-recent Perl version, so only use features
-supported by the Perl version that is currently in Debian oldstable when
-possible. Currently that means Perl 5.28.1.
 
 Object methods
 ~~~~~~~~~~~~~~

@@ -32,7 +32,7 @@ B<shlibs>-Dateien bilden Laufzeitbibliotheknamen und -versionen (I<SONAMEs>) auf
 
 Die Felder I<Bibliothek> und I<Version> werden durch Leerraumzeichen begrenzt, das Feld I<Abhängigkeiten> geht aber bis zum Ende der Zeile. Das Feld I<Typ> ist optional und wird normalerweise nicht benötigt.
 
-Das Feld I<dependencies> hat die gleiche Syntax wie das Feld B<Depends> in einer binären B<control>-Datei, siehe B<deb-control>(5).
+Das Feld I<dependencies> hat die gleiche Syntax wie das Feld B<Depends> in einer binären B<control>-Datei, siehe L<deb-control(5)>.
 
 =head1 SONAME-FORMATE
 
@@ -54,6 +54,8 @@ I<Name>-I<Version>.so
 
 wobei I<Name> normalerweise B<lib> vorangestellt wird.
 
+Ersteres wird eher von dynamischen Bibliotheken mit stabilen Schnittstellen verwandt. Letzteres von dynamischen Bibliotheken mit instabilen Schnittstellen, bei denen die gesamte Version Teil des SONAME wird und vollständig beim Linken gegen diese Bibliotheken angegeben werden muss.
+
 =head1 BEISPIELE
 
 Die B<shlibs>-Datei für ein typisches Bibliothekspaket namens I<libcrunch1>, das eine Bibliothek mit dem SONAME I<libcrunch.so.1> bereitstellt, könnte wie folgt lauten:
@@ -68,7 +70,7 @@ I<Abhängigkeiten> muss die neuste Version des Pakets erwähnen, das neue Symbol
 
 =head1 SIEHE AUCH
 
-B<deb-control>(5), B<dpkg-shlibdeps>(1), B<deb-symbols>(5).
+L<deb-control(5)>, L<deb-symbols(5)>, L<dpkg-shlibdeps(1)>.
 
 
 =head1 ÜBERSETZUNG

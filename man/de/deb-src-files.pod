@@ -44,7 +44,7 @@ Diese Datei soll nicht direkt geändert werden, bitte verwenden Sie entweder B<d
 
 =head1 SIEHE AUCH
 
-B<dpkg-genchanges>(1), B<dpkg-distaddfile>(1).
+L<dpkg-genchanges(1)>, L<dpkg-distaddfile(1)>.
 
 
 =head1 ÜBERSETZUNG

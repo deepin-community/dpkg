@@ -44,13 +44,13 @@ Existierende Dateien werden überschrieben, falls sie den gleichen Namen wie der
 
 Dateien werden in ein Unterverzeichnis verschoben. Falls das als Argument existierende Verzeichnis existiert, dann werden die Dateien in das Verzeichnis verschoben, andernfalls wird das Zielverzeichnis aus dem „section“-Feld des Steuerteils des Pakets entnommen. Das Zielverzeichnis wird „unstable/binary-I<Architektur>/I<Bereich>“ sein. Falls die Sektion nicht in der Steuerdatei gefunden werden kann, dann wird B<no-section> angenommen, und in diesem Fall, wie auch für die Sektionen B<non-free> und B<contrib> ist das Zielverzeichnis „I<Bereich>/binary-I<Architektur>“. Das Sektionsfeld muss nicht angegeben werden, daher werden viele Pakete ihren Weg in das B<no-section>-Gebiet finden.
 
-B<Warnung>: I<Verwenden Sie diese Option mit Vorsicht, sie ist unordentlich.>
+B<Warnung>: Verwenden Sie diese Option mit Vorsicht, sie ist unordentlich.
 
 =item B<-c>, B<--create-dir>
 
 Diese Option kann zusammen mit der Option B<-s> verwendet werden. Falls das Zielverzeichnis nicht gefunden werden kann, wird es automatisch angelegt.
 
-B<Warnung>: I<Verwenden Sie diese Option mit Vorsicht.>
+B<Warnung>: Verwenden Sie diese Option mit Vorsicht.
 
 =item B<-?>, B<--help>
 
@@ -78,7 +78,7 @@ Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language Support, au
 
 =head1 FEHLER
 
-Einige Pakete folgen nicht der Namensstruktur I<Paket>B<_>I<Version>B<_>I<Architektur>B<.deb>. Pakete, die von B<dpkg-name> umbenannt wurden, folgen dieser Struktur. Im Allgemeinen hat diese keinen Einfluss darauf, wie Pakete von B<dselect>(1)/B<dpkg>(1) installiert werden, aber andere Installationswerkzeuge können auf diese Benennungsstruktur angewiesen sein.
+Einige Pakete folgen nicht der Namensstruktur I<Paket>B<_>I<Version>B<_>I<Architektur>B<.deb>. Pakete, die von B<dpkg-name> umbenannt wurden, folgen dieser Struktur. Im Allgemeinen hat diese keinen Einfluss darauf, wie Pakete von L<dselect(1)>/L<dpkg(1)> installiert werden, aber andere Installationswerkzeuge können auf diese Benennungsstruktur angewiesen sein.
 
 =head1 BEISPIELE
 
@@ -104,7 +104,7 @@ Dies kann beim Bau neuer Pakete verwendet werden.
 
 =head1 SIEHE AUCH
 
-B<deb>(5), B<deb-control>(5), B<dpkg>(1), B<dpkg-deb>(1), B<find>(1), B<xargs>(1).
+L<deb(5)>, L<deb-control(5)>, L<dpkg(1)>, L<dpkg-deb(1)>, L<find(1)>, L<xargs(1)>.
 
 
 =head1 ÜBERSETZUNG

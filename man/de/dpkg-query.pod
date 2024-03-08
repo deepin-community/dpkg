@@ -88,7 +88,7 @@ Fehler-Schalter:
 
 =back
 
-Ein Großbuchstabe als Status oder Fehler zeigt an, dass das Paket wahrscheinlich schwere Fehler verursachen wird. Bitte lesen Sie B<dpkg>(1) über die oben genannten Zustände und Schalter.
+Ein Großbuchstabe als Status oder Fehler zeigt an, dass das Paket wahrscheinlich schwere Fehler verursachen wird. Bitte lesen Sie L<dpkg(1)> über die oben genannten Zustände und Schalter.
 
 Das Ausgabeformat dieser Option kann nicht konfiguriert werden, variiert aber automatisch mit der Terminalbreite. Die Ausgabe ist für menschliche Leser gedacht und nicht leicht maschinenlesbar. Lesen Sie über die Optionen B<-W> (B<--show>) und B<--showformat>, um das Ausgabeformat zu konfigurieren.
 
@@ -113,7 +113,7 @@ Z<>
   Paket leitet andere um zu: I<umgeleitet-zu>
   umgeleitet durch I<Paket> zu: I<umgeleitet-zu>
 
-Tipp: Wenn Maschinen die Ausgabe auswerten, ist es üblich, die Locale auf B<C.UTF-8> zu setzen, um reproduzierbare Ausgaben zu erhalten.
+B<Tipp>: Wenn Maschinen die Ausgabe auswerten, ist es üblich, die Locale auf B<C.UTF-8> zu setzen, um reproduzierbare Ausgaben zu erhalten. Auf einigen Systemen könnte es auch notwendig sein, die Umgebungsvariable B<LANGUAGE> geeignet anzupassen, falls sie bereits gesetzt ist (siehe L<locale(7)>).
 
 Dieser Befehl wird weder die zusätzlichen Dateien, die durch Betreuer-Skripte angelegt wurden, noch Alternativen aufführen.
 
@@ -156,7 +156,7 @@ Z<>
   lokale Umleitung von: I<umgeleitet-von>
   lokale Umleitung zu: I<umgeleitet-zu>
 
-Tipp: Wenn Maschinen die Ausgabe auswerten, ist es üblich, die Locale auf B<C.UTF-8> zu setzen, um reproduzierbare Ausgaben zu erhalten.
+B<Tipp>: Wenn Maschinen die Ausgabe auswerten, ist es üblich, die Locale auf B<C.UTF-8> zu setzen, um reproduzierbare Ausgaben zu erhalten.
 
 =item B<-p>, B<--print-avail> [I<Paketname> …]
 
@@ -383,7 +383,7 @@ Setzt das auszuführende Programm, wenn ein Befehl über eine Shell ausgeführt 
 
 =item B<DPKG_PAGER>
 
-Setzt den zu verwendenden Pager-Befehl (seit Dpkg 1.19.1), der mit „B<$SHELL -c>“ ausgeführt wird. Falls B<SHELL> nicht gesetzt ist, wird stattdessen „B<sh>“ verwandt. B<DPKG_PAGER> setzt die Umgebungsvariable B<PAGER> außer Kraft (seit Dpkg 1.19.2).
+Setzt den zu verwendenden Pager-Befehl (seit Dpkg 1.19.1), der mit „B<$SHELL -c>“ ausgeführt wird. Falls B<SHELL> nicht gesetzt ist, wird stattdessen „B<%DPKG_DEFAULT_SHELL%>“ verwandt. B<DPKG_PAGER> setzt die Umgebungsvariable B<PAGER> außer Kraft (seit Dpkg 1.19.2).
 
 =item B<DPKG_ROOT>
 
@@ -413,9 +413,13 @@ Von B<dpkg-query> auf „B<-FRSXMQ>“ definiert, falls es nicht bereits gesetzt
 
 =back
 
+=head1 SICHERHEIT
+
+Abfrageaktionen sollten niemals Root benötigen und die Übertragung ihrer Ausführung auf nichtprivilegierte Benutzer mittels eines Werde-Root-Befehls kann Sicherheitsauswirkungen haben (wie eine Privilegieneskalation), beispielsweise wenn ein Seitenanzeigeprogramm von einem Werkzeug automatisch aufgerufen wird.
+
 =head1 SIEHE AUCH
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 ÜBERSETZUNG

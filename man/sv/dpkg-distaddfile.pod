@@ -72,7 +72,7 @@ Listan över genererade filer so ingår i insändningen som förbereds. B<dpkg-d
 
 =head1 SE ÄVEN
 
-B<deb-src-files>(5).
+L<deb-src-files(5)>.
 
 
 =head1 ÖVERSÄTTNING

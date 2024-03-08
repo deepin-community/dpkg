@@ -40,7 +40,7 @@ Stelt het versienummer in van het binaire pakket dat gegenereerd zal worden.
 
 =item B<-V>I<naam>B<=>I<waarde>
 
-Stel een uitvoersubstitutievariabele in. Zie B<deb-substvars>(5) voor een bespreking van uitvoersubstitutie.
+Stel een uitvoersubstitutievariabele in. Zie L<deb-substvars(5)> voor een bespreking van uitvoersubstitutie.
 
 =item B<-T>I<substvars-bestand>
 
@@ -68,7 +68,7 @@ De lijst van bestanden die geüpload moeten worden hier lezen of schrijven, eerd
 
 =item B<-F>I<changelog-indeling>
 
-Geeft de indeling van het bestand changelog aan. Zie B<dpkg-parsechangelog>(1) voor informatie over alternatieve indelingen.
+Geeft de indeling van het bestand changelog aan. Zie L<dpkg-parsechangelog(1)> voor informatie over alternatieve indelingen.
 
 =item B<-p>I<pakket>
 
@@ -130,5 +130,5 @@ De lijst van gegenereerde bestanden die deel uitmaken van de upload die voorbere
 
 =head1 ZIE OOK
 
-B<deb-substvars>(5), B<deb-src-control>(5), B<deb-changelog>(5), B<deb-control>(5).
+L<deb-substvars(5)>, L<deb-src-control(5)>, L<deb-changelog(5)>, L<deb-control(5)>.
 

@@ -22,7 +22,7 @@ B<dpkg-gensymbols> [I<Option> …]
 
 =head1 BESCHREIBUNG
 
-B<dpkg-gensymbols> durchsucht einen temporären Baubaum (standardmäßig debian/tmp), sucht nach Bibliotheken und erstellt eine Datei I<symbols>, die diese beschreibt. Diese Datei wird, falls sie nicht leer ist, in das Unterverzeichnis DEBIAN des Baubaums installiert, so dass sie schlussendlich in der Steuerinformation des Pakets auftaucht.
+B<dpkg-gensymbols> durchsucht einen temporären Baubaum (standardmäßig debian/tmp), sucht nach Bibliotheken und erstellt eine Datei I<symbols>, die diese beschreibt. Diese Datei wird, falls sie nicht leer ist, in das Unterverzeichnis DEBIAN des Baubaums installiert, so dass sie schlussendlich in der Steuerinformation des Pakets erscheint.
 
 Beim Erstellen dieser Dateien verwendet es als Eingabe einige vom Betreuer bereitgestellte Symboldateien. Es sucht nach den folgenden Dateien (und verwendet die erste, die gefunden wird):
 
@@ -50,9 +50,11 @@ Der Hauptzweck dieser Dateien besteht darin, die minimale Version bereitzustelle
 
 Wenn die erstellten Symboldateien sich von denen, die der Betreuer bereitgestellt hat, unterscheiden, wird B<dpkg-gensymbols> einen Diff zwischen den zwei Versionen anzeigen. Falls die Unterschiede desweiteren zu gravierend sind, wird es sogar fehlschlagen (Sie können einstellen, wie große Unterschiede Sie tolerieren können, sehen Sie hierzu die Option B<-c>).
 
+Dieses Programm wurde in Dpkg 1.14.8 hinzugefügt.
+
 =head1 SYMBOLDATEIEN PFLEGEN
 
-Das grundlegende Austauschformat der Symboldatei wird in B<deb-symbols>(5) beschrieben. Dies wird von den in Binärpaketen enthaltenen Symboldateien verwandt. Diese werden aus Vorlage-Symboldateien erstellt, deren Format auf Ersterem basiert, in B<deb-src-symbols>(5) beschrieben und in Quellpaketen enthalten ist.
+Das grundlegende Austauschformat der Symboldatei wird in L<deb-symbols(5)> beschrieben. Dies wird von den in Binärpaketen enthaltenen Symboldateien verwandt. Diese werden aus Vorlage-Symboldateien erstellt, deren Format auf Ersterem basiert, in L<deb-src-symbols(5)> beschrieben und in Quellpaketen enthalten ist.
 
 Die Symboldateien sind nur wirklich nützlich, falls sie die Entwicklung eines Paketes über mehrere Veröffentlichungen hinweg wiedergeben. Daher muss der Betreuer sie immer aktualisieren, wenn eine neues Symbol hinzugefügt wird, so dass die zugeordnete minimale Version der Realität entspricht.
 
@@ -106,7 +108,7 @@ Definiert die Paketversion. Standardmäßig wird die Version aus I<debian/change
 
 =item B<-e>I<Bibliotheksdatei>
 
-Untersucht nur die explizit aufgeführten Bibliotheken, statt nach allen öffentlichen Bibliotheken zu suchen. Sie können Shell-Muster, die zur Expansion von Pfadnamen verwandt werden (siehe die Handbuchseite B<File::Glob>(3perl) für weitere Details) in I<Bibliotheksdatei> verwenden, um mehrere Bibliotheken mit einem einzelnen Argument abzugleichen (andernfalls benötigen Sie mehrere B<-e>).
+Untersucht nur die explizit aufgeführten Bibliotheken, statt nach allen öffentlichen Bibliotheken zu suchen. Sie können Shell-Muster, die zur Expansion von Pfadnamen verwandt werden (siehe die Handbuchseite L<File::Glob> für weitere Details) in I<Bibliotheksdatei> verwenden, um mehrere Bibliotheken mit einem einzelnen Argument abzugleichen (andernfalls benötigen Sie mehrere B<-e>).
 
 =item B<-l>I<Verzeichnis>
 
@@ -124,7 +126,7 @@ Die erstellte Symbols-Datei auf die Standardausgabe oder nach I<Dateiname>, fall
 
 =item B<-t>
 
-Schreibt die Symboldatei im Vorlagenmodus statt im zu B<deb-symbols>(5) kompatiblen Format. Der Hauptunterschied besteht darin, dass im Vorlagenmodus die Symbolnamen und Kennzeichnungen in ihrer Originalform geschrieben werden, im Gegensatz zu den verarbeiteten Symbolnamen mit entfernten Kennzeichnungen im Kompatibilitätsmodus. Desweiteren könnten einige Symbole beim Schreiben einer Standard-B<deb-symbols>(5)-Datei entfernt werden (gemäß der Verarbeitungsregeln für Kennzeichen), während in der Symboldateivorlage immer alle Symbole geschrieben werden.
+Schreibt die Symboldatei im Vorlagenmodus statt im zu L<deb-symbols(5)> kompatiblen Format. Der Hauptunterschied besteht darin, dass im Vorlagenmodus die Symbolnamen und Kennzeichnungen in ihrer Originalform geschrieben werden, im Gegensatz zu den verarbeiteten Symbolnamen mit entfernten Kennzeichnungen im Kompatibilitätsmodus. Desweiteren könnten einige Symbole beim Schreiben einer Standard-L<deb-symbols(5)>-Datei entfernt werden (gemäß der Verarbeitungsregeln für Kennzeichen), während in der Symboldateivorlage immer alle Symbole geschrieben werden.
 
 =item B<-c>I<[0-4]>
 
@@ -202,7 +204,7 @@ Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language Support, au
 
 =head1 SIEHE AUCH
 
-L<https://people.redhat.com/drepper/symbol-versioning>, L<https://people.redhat.com/drepper/goodpractice.pdf>, L<https://people.redhat.com/drepper/dsohowto.pdf>, B<deb-src-symbol>(5), B<deb-symbols>(5), B<dpkg-shlibdeps>(1).
+L<https://people.redhat.com/drepper/symbol-versioning>, L<https://people.redhat.com/drepper/goodpractice.pdf>, L<https://people.redhat.com/drepper/dsohowto.pdf>, L<deb-src-symbol(5)>, L<deb-symbols(5)>, L<dpkg-shlibdeps(1)>.
 
 
 =head1 ÜBERSETZUNG

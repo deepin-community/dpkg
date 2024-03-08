@@ -58,7 +58,7 @@ Falls I<prerm> während B<remove in-favour> für eine Ersetzung aufgrund eines K
 
 =head1 SIEHE AUCH
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 ÜBERSETZUNG

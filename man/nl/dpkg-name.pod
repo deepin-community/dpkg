@@ -44,13 +44,13 @@ Bestaande bestanden zullen overschreven worden als ze dezelfde naam hebben als d
 
 Bestanden zullen naar een onderliggende map verplaatst worden. Indien de als argument opgegeven map bestaat, zullen de bestanden naar die map verplaatst worden, anders wordt de naam van de doelmap geëxtraheerd uit het sectieveld uit het controlegedeelte van het pakket. De doelmap zal «unstable/binary-I<architectuur>/I<sectie>» zijn. Indien de sectie niet gevonden wordt in het controlebestand, dan wordt uitgegaan van B<no-section>. In dat geval en ook voor de secties B<non-free> en B<contrib> is de doelmap «I<sectie>/binary-I<architectuur>». Het veld sectie is niet verplicht, zodat veel pakketten terechtkomen in het gebied B<no-section>.
 
-B<Warschuwing:> I<Gebruik deze optie met zorg, ze werkt rommelig.>
+B<Waarschuwing>: Gebruik deze optie met zorg, ze werkt rommelig.
 
 =item B<-c>, B<--create-dir>
 
 Deze optie kan samen met de optie B<-s> gebruikt worden. Als een doelmap niet aangetroffen wordt, zal ze automatisch aangemaakt worden.
 
-B<Warning:> I<Gebruik deze optie met zorg.>
+B<Waarschuwing>: Gebruik deze optie met zorg.
 
 =item B<-?>, B<--help>
 
@@ -78,7 +78,7 @@ Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het active
 
 =head1 BUGS
 
-Bepaalde pakketten volgen de naamstructuur I<pakket>B<_>I<versie>B<_>I<architectuur>B<.deb> niet. Pakketten die door B<dpkg-name> hernoemd worden, volgen deze structuur. Over het algemeen heeft dit geen invloed op de manier waarop pakketten door B<dselect>(1)/B<dpkg>(1) geïnstalleerd worden, maar ander installatiegereedschap kan eventueel steunen op die naamgevingsstructuur.
+Bepaalde pakketten volgen de naamstructuur I<pakket>B<_>I<versie>B<_>I<architectuur>B<.deb> niet. Pakketten die door B<dpkg-name> hernoemd worden, volgen deze structuur. Over het algemeen heeft dit geen invloed op de manier waarop pakketten door L<dselect(1)>/L<dpkg(1)> geïnstalleerd worden, maar ander installatiegereedschap kan eventueel steunen op die naamgevingsstructuur.
 
 =head1 VOORBEELDEN
 
@@ -104,5 +104,5 @@ Dit kan gebruikt worden bij het bouwen van nieuwe pakketten.
 
 =head1 ZIE OOK
 
-B<deb>(5), B<deb-control>(5), B<dpkg>(1), B<dpkg-deb>(1), B<find>(1), B<xargs>(1).
+L<deb(5)>, L<deb-control(5)>, L<dpkg(1)>, L<dpkg-deb(1)>, L<find(1)>, L<xargs(1)>.
 

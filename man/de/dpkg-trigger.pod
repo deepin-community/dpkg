@@ -30,6 +30,8 @@ Dies kann von Betreuerskripten in komplexen und durch Bedingungen beeinflusste S
 
 Nicht erkannte Triggernamen-Syntaxen sind für B<dpkg-trigger> ein Fehler.
 
+Dieses Programm wurde in Dpkg 1.14.17 hinzugefügt.
+
 =head1 BEFEHLE
 
 =over 
@@ -120,7 +122,7 @@ Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte sind: B
 
 =head1 SIEHE AUCH
 
-B<dpkg>(1), B<deb-triggers>(5), B<%PKGDOCDIR%/spec/triggers.txt>.
+L<dpkg(1)>, L<deb-triggers(5)>, B<%PKGDOCDIR%/spec/triggers.txt>.
 
 
 =head1 ÜBERSETZUNG

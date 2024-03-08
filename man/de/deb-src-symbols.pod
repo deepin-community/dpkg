@@ -26,7 +26,7 @@ Die Symboldateivorlagen werden in Debian-Quellpaketen ausgeliefert. Deren Format
 
 =head2 Kommentare
 
-In Symboldateien werden Kommentare unterstützt. Jede Zeile, die mit ‚#’ als erstem Zeichen beginnt, ist ein Kommentar, falls sie nicht mit ‚#include’ beginnt (siehe Abschnitt B<Includes verwenden>). Zeilen, die mit ‚#MISSING:’ anfangen, sind besondere Kommentare, die verschwundene Symbole dokumentieren.
+In Symboldateien werden Kommentare unterstützt. Jede Zeile, die mit ‚#’ als erstem Zeichen beginnt, ist ein Kommentar, falls sie nicht mit ‚#include’ beginnt (siehe Abschnitt L</Includes verwenden>). Zeilen, die mit ‚#MISSING:’ anfangen, sind besondere Kommentare, die verschwundene Symbole dokumentieren.
 
 =head2 Verwendung der #PACKAGE#-Ersetzung
 
@@ -34,7 +34,7 @@ In einigen seltenen Fällen sind die Namen der Bibliotheken nicht auf allen Arch
 
 =head2 Verwendung von Symbolkennzeichnungen
 
-Symbolkennzeichnungen sind nützlich, um Symbole zu markieren, die in irgendeiner Weise besonders sind. Jedes Symbol kann eine beliebige Anzahl zugeordneter Kennzeichnungen besitzen. Während alle Kennzeichnungen ausgewertet und gespeichert werden, werden nur einige von B<dpkg-gensymbols> verstanden und lösen eine Spezialbehandlung der Symbole aus. Lesen Sie den Unterabschnitt B<Standardsymbolkennzeichnungen> für eine Referenz dieser Kennzeichnungen.
+Symbolkennzeichnungen sind nützlich, um Symbole zu markieren, die in irgendeiner Weise besonders sind. Jedes Symbol kann eine beliebige Anzahl zugeordneter Kennzeichnungen besitzen. Während alle Kennzeichnungen ausgewertet und gespeichert werden, werden nur einige von B<dpkg-gensymbols> verstanden und lösen eine Spezialbehandlung der Symbole aus. Lesen Sie den Unterabschnitt L</Standardsymbolkennzeichnungen> für eine Referenz dieser Kennzeichnungen.
 
 Kennzeichnungsspezifikationen kommen direkt vor dem Symbolnamen (dazwischen sind keine Leerraumzeichen erlaubt). Sie beginnen immer mit einer öffnenden Klammer B<(>, enden mit einer schließenden Klammer B<)> und müssen mindestens eine Kennzeichnung enthalten. Mehrere Kennzeichnungen werden durch das Zeichen B<|> getrennt. Jede der Kennzeichnungen kann optional einen Wert enthalten, der von der Kennzeichnung durch das Zeichen B<=> getrennt wird. Kennzeichennamen und -werte können beliebige Zeichenketten sein, sie dürfen allerdings keine der der besonderen Zeichen B<)> B<|> B<=> enthalten. Symbolnamen, die einer Kennzeichnungsspezifikation folgen, können optional mit den Zeichen B<'> oder B<"> zitiert werden, um Leerraumzeichen darin zu erlauben. Falls keine Kennzeichnungen für das Symbol spezifiziert sind, werden Anführungszeichen als Teil des Symbolnamens behandelt, der bis zum ersten Leerzeichen geht.
 
@@ -43,7 +43,7 @@ Kennzeichnungsspezifikationen kommen direkt vor dem Symbolnamen (dazwischen sind
   ungekennzeichnetes_Symbol@Base 1.0
 Das erste Symbol im Beispiel heißt I<zitiertes gekennz Symbol> und hat zwei Kennzeichnungen: I<Kennz1> mit dem Wert I<bin markiert> und I<Name mit Leerraum> ohne Wert. Das zweite Symbol heißt I<gekennzeichnet_unzitiertes_Symbol> und ist nur mit dem Kennzeichen namens I<optional> gekennzeichnet. Das letzte Symbol ist ein Beispiel eines normalen, nicht gekennzeichneten Symbols.
 
-Da Symbolkennzeichnungen eine Erweiterung des Formats B<deb-symbols>(5) sind, können sie nur Teil der in Quellpaketen verwandten Symboldateien sein (diese Dateien sollten dann als Vorlagen zum Bau der Symboldateien, die in Binärpakete eingebettet werden, gesehen werden). Wenn B<dpkg-gensymbols> ohne die Option B<-t> aufgerufen wird, wird es alle Symbole ausgeben, die zum Format B<deb-symbols>(5) kompatibel sind: Es verarbeitet die Symbole entsprechend der Anforderungen ihrer Standardkennzeichnungen und entfernt alle Kennzeichnungen aus der Ausgabe. Im Gegensatz dazu werden alle Symbole und ihre Kennzeichnungen (sowohl die Standardkennzeichnungen als auch die unbekannten) im Vorlagenmodus (B<-t>) in der Ausgabe beibehalten und in ihrer Originalform, wie sie geladen wurden, auch geschrieben.
+Da Symbolkennzeichnungen eine Erweiterung des Formats L<deb-symbols(5)> sind, können sie nur Teil der in Quellpaketen verwandten Symboldateien sein (diese Dateien sollten dann als Vorlagen zum Bau der Symboldateien, die in Binärpakete eingebettet werden, gesehen werden). Wenn B<dpkg-gensymbols> ohne die Option B<-t> aufgerufen wird, wird es alle Symbole ausgeben, die zum Format L<deb-symbols(5)> kompatibel sind: Es verarbeitet die Symbole entsprechend der Anforderungen ihrer Standardkennzeichnungen und entfernt alle Kennzeichnungen aus der Ausgabe. Im Gegensatz dazu werden alle Symbole und ihre Kennzeichnungen (sowohl die Standardkennzeichnungen als auch die unbekannten) im Vorlagenmodus (B<-t>) in der Ausgabe beibehalten und in ihrer Originalform, wie sie geladen wurden, auch geschrieben.
 
 =head2 Standard-Symbolkennzeichnungen
 
@@ -95,15 +95,15 @@ Ein veralteter Alias für B<allow-internal> (seit Dpkg 1.20.1, unterstützt seit
 
 =item B<c++>
 
-Gibt I<c++>-Symbolmuster an. Lesen Sie den nachfolgenden Unterabschnitt B<Verwendung von Symbolmustern>.
+Gibt I<c++>-Symbolmuster an. Lesen Sie den nachfolgenden Unterabschnitt L</Verwendung von Symbolmustern>.
 
 =item B<symver>
 
-Gibt I<symver> (Symbolversion)-Symbolmuster an. Lesen Sie den nachfolgenden Unterabschnitt B<Verwendung von Symbolmustern>.
+Gibt I<symver> (Symbolversion)-Symbolmuster an. Lesen Sie den nachfolgenden Unterabschnitt L</Verwendung von Symbolmustern>.
 
 =item B<regex>
 
-Gibt I<regex>-Symbolmuster an. Lesen Sie den nachfolgenden Unterabschnitt B<Verwendung von Symbolmustern>.
+Gibt I<regex>-Symbolmuster an. Lesen Sie den nachfolgenden Unterabschnitt L</Verwendung von Symbolmustern>.
 
 =back
 
@@ -111,9 +111,9 @@ Gibt I<regex>-Symbolmuster an. Lesen Sie den nachfolgenden Unterabschnitt B<Verw
 
 Anders als die Standardsymbolspezifikation kann ein Muster mehrere reale Symbole aus der Bibliothek abdecken. B<dpkg-gensymbols> wird versuchen, jedes Muster auf jedes reale Symbol, für das I<kein> spezifisches Symbolgegenstück in der Symboldatei definiert ist, abzugleichen. Wann immer das erste passende Muster gefunden wurde, werden alle Kennzeichnungen und Eigenschaften als Basisspezifikation des Symbols verwandt. Falls keines der Muster passt, wird das Symbol als neu betrachtet.
 
-Ein Muster wird als verloren betrachtet, falls es auf kein Symbol in der Bibliothek passt. Standardmäßig wird dies ein Versagen von B<dpkg-gensymbols> in der Stufe B<-c1> oder höher auslösen. Falls der Fehlschlag allerdings unerwünscht ist, kann das Muster mit der Kennzeichnung I<optional> markiert werden. Falls das Muster dann auf nichts passt, wird es im Diff nur als MISSING (fehlend) auftauchen. Desweiteren kann das Muster wie jedes Symbol auf die spezielle Architektur mit der Kennzeichnung I<arch> beschränkt werden. Bitte lesen Sie den Unterabschnitt B<Standard-Symbolkennzeichnungen> oben für weitere Informationen.
+Ein Muster wird als verloren betrachtet, falls es auf kein Symbol in der Bibliothek passt. Standardmäßig wird dies ein Versagen von B<dpkg-gensymbols> in der Stufe B<-c1> oder höher auslösen. Falls der Fehlschlag allerdings unerwünscht ist, kann das Muster mit der Kennzeichnung I<optional> markiert werden. Falls das Muster dann auf nichts passt, wird es im Diff nur als MISSING (fehlend) auftauchen. Desweiteren kann das Muster wie jedes Symbol auf die spezielle Architektur mit der Kennzeichnung I<arch> beschränkt werden. Bitte lesen Sie den Unterabschnitt L</Standard-Symbolkennzeichnungen> oben für weitere Informationen.
 
-Muster sind eine Erweiterung des Formats B<deb-symbols>(5); sie sind daher nur in Symboldatei-Vorlagen gültig. Die Musterspezifikationssyntax unterscheidet sich nicht von der eines spezifischen Symbols. Allerdings dient der Symbolnamenteil der Spezifikation als Ausdruck, der gegen I<Name@Version> eines realen Symbols abgeglichen wird. Um zwischen den verschiedenen Mustertypen zu unterscheiden, wird es typischerweise mit einer speziellen Kennzeichnung gekennzeichnet.
+Muster sind eine Erweiterung des Formats L<deb-symbols(5)>; sie sind daher nur in Symboldatei-Vorlagen gültig. Die Musterspezifikationssyntax unterscheidet sich nicht von der eines spezifischen Symbols. Allerdings dient der Symbolnamenteil der Spezifikation als Ausdruck, der gegen I<Name@Version> eines realen Symbols abgeglichen wird. Um zwischen den verschiedenen Mustertypen zu unterscheiden, wird es typischerweise mit einer speziellen Kennzeichnung gekennzeichnet.
 
 Derzeit unterstützt B<dpkg-gensymbols> drei grundlegene Mustertypen:
 
@@ -121,7 +121,7 @@ Derzeit unterstützt B<dpkg-gensymbols> drei grundlegene Mustertypen:
 
 =item B<c++>
 
-Dieses Muster wird durch die Kennzeichnung I<c++> verzeichnet. Es passt nur auf die entworrenen („demangled“) Symbolnamen (wie sie vom Hilfswerkzeug B<c++filt>(1) ausgegeben werden). Dieses Muster ist sehr hilfreich, um auf Symbole zu passen, bei dem die verworrenen („mangled“) Namen sich auf verschiedenen Architekturen unterscheiden während die entworrenen die gleichen bleiben. Eine Gruppe solcher Symbole ist I<non-virtual thunks>, die einen architekturspezifischen Versatz in ihren verworrenen Namen eingebettet haben. Eine häufige Instanz dieses Falles ist ein virtueller Destruktor, der unter rautenförmiger Vererbung ein nicht-virtuelles Thunk-Symbol benötigt. Selbst wenn beispielsweise _ZThn8_N3NSB6ClassDD1Ev@Base auf 32 Bit-Architekturen _ZThn16_N3NSB6ClassDD1Ev@Base auf 64 Bit-Architekturen ist, kann es mit einem einzigen I<c++>-Muster abgeglichen werden:
+Dieses Muster wird durch die Kennzeichnung I<c++> verzeichnet. Es passt nur auf die entworrenen („demangled“) Symbolnamen (wie sie vom Hilfswerkzeug L<c++filt(1)> ausgegeben werden). Dieses Muster ist sehr hilfreich, um auf Symbole zu passen, bei dem die verworrenen („mangled“) Namen sich auf verschiedenen Architekturen unterscheiden während die entworrenen die gleichen bleiben. Eine Gruppe solcher Symbole ist I<non-virtual thunks>, die einen architekturspezifischen Versatz in ihren verworrenen Namen eingebettet haben. Eine häufige Instanz dieses Falles ist ein virtueller Destruktor, der unter rautenförmiger Vererbung ein nicht-virtuelles Thunk-Symbol benötigt. Selbst wenn beispielsweise _ZThn8_N3NSB6ClassDD1Ev@Base auf 32 Bit-Architekturen _ZThn16_N3NSB6ClassDD1Ev@Base auf 64 Bit-Architekturen ist, kann es mit einem einzigen I<c++>-Muster abgeglichen werden:
 
  libdummy.so.1 libdummy1 #MINVER#
   […]
@@ -192,8 +192,8 @@ Die Include-Direktive kann auch wie jedes Symbol gekennzeichnet werden:
 Als Ergebnis werden alle Symbole aus der I<einzubindende-Datei> standardmäßig als mit I<Kennzeichen> … I<KennzeichenN> gekennzeichnet betrachtet. Sie können diese Funktionalität benutzen, um eine gemeinsame Datei I<Paket>.symbols zu erstellen, die architekturspezifische Symboldateien einbindet:
 
   gemeinsames_Symbol1@Base 1.0
- (arch=amd64 ia64 alpha)#include "Paket.symbols.64bit"
- (arch=!amd64 !ia64 !alpha)#include "Paket.symbols.32bit"
+ (arch=amd64 ia64 alpha)#include "Paket.symbols.64-bit"
+ (arch=!amd64 !ia64 !alpha)#include "Paket.symbols.32-bit"
   gemeinsames_Symbol2@Base 1.0
 
 =back
@@ -207,7 +207,7 @@ Eine eingebundene Datei kann die Kopfzeile wiederholen, die den SONAME der Bibli
 
 =head1 SIEHE AUCH
 
-B<deb-symbols>(5), B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
+L<deb-symbols(5)>, L<dpkg-shlibdeps(1)>, L<dpkg-gensymbols(1)>.
 
 
 =head1 ÜBERSETZUNG

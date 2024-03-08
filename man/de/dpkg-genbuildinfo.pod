@@ -24,7 +24,7 @@ B<dpkg-genbuildinfo> [I<Optionen> …]
 
 B<dpkg-genbuildinfo> liest Informationen aus einem entpackten und gebauten Debian-Quellcodebaum und aus den darin erzeugten Dateien und erzeugt eine Debian-Steuerdatei, die die Bauumgebung und Bauartefakte beschreibt (Datei B<.buildinfo>).
 
-Dieser Befehl wurde in Dpkg 1.18.11 hinzugefügt.
+Dieses Programms wurde in Dpkg 1.18.11 hinzugefügt.
 
 =head1 OPTIONEN
 
@@ -74,7 +74,7 @@ Legt fest, wo die Liste der durch den Bau erstellten Dateien ist, statt B<debian
 
 =item B<-F>I<Changelog-Format>
 
-Spezifiziert das Format des Changelogs. Lesen Sie B<dpkg-parsechangelog>(1) für Informationen über alternative Formate.
+Spezifiziert das Format des Changelogs. Lesen Sie L<dpkg-parsechangelog(1)> für Informationen über alternative Formate.
 
 =item B<-O>[I<Dateiname>]
 
@@ -146,7 +146,7 @@ Die Liste der erstellten Dateien. B<dpkg-genbuildinfo> liest hier die Daten, wen
 
 =head1 SIEHE AUCH
 
-B<deb-buildinfo>(5).
+L<deb-buildinfo(5)>.
 
 
 =head1 ÜBERSETZUNG

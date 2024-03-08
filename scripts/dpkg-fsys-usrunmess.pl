@@ -22,7 +22,7 @@ use warnings;
 use feature qw(state);
 
 our ($PROGNAME) = $0 =~ m{(?:.*/)?([^/]*)};
-our $PROGVERSION = '1.21.x';
+our $PROGVERSION = '1.22.x';
 our $ADMINDIR = '/var/lib/dpkg/';
 
 use POSIX;
@@ -31,7 +31,6 @@ use File::Find;
 use Getopt::Long qw(:config posix_default bundling_values no_ignorecase);
 
 eval q{
-    pop @INC if $INC[-1] eq '.';
     use File::FcntlLock;
 };
 if ($@) {
@@ -506,8 +505,6 @@ print "Rebooting now is very strongly advised.\n";
 
 print "(Note: you might need to run 'hash -r' in your shell.)\n";
 
-1;
-
 ##
 ## Functions
 ##
@@ -623,11 +620,11 @@ sub usage
 
 sub usageerr
 {
-    my $msg = shift;
+    my ($msg, @args) = @_;
 
     state $printforhelp = 'Use --help for program usage information.';
 
-    $msg = sprintf $msg, @_ if @_;
+    $msg = sprintf $msg, @args if @args;
     warn "$PROGNAME: error: $msg\n";
     warn "$printforhelp\n";
     exit 2;

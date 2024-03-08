@@ -33,6 +33,39 @@
 
 /* Language definitions. */
 
+#ifndef __has_include
+#define __has_include(x)	0
+#endif
+
+/* Supported since clang 1.0. */
+#ifndef __has_warning
+#define __has_warning(w) (0)
+#endif
+
+#define DPKG_PRAGMA(x) _Pragma(#x)
+
+#if defined(__clang__)
+#define DPKG_PRAGMA_CC(x) DPKG_PRAGMA(clang x)
+#elif defined(__GNUC__)
+#define DPKG_PRAGMA_CC(x) DPKG_PRAGMA(GCC x)
+#else
+#define DPKG_PRAGMA_CC(x)
+#endif
+
+#define DPKG_IGNORE_WARNING(w) \
+       DPKG_PRAGMA_CC(diagnostic push); \
+       DPKG_PRAGMA_CC(diagnostic ignored w)
+#define DPKG_ACCEPT_WARNING() \
+       DPKG_PRAGMA_CC(diagnostic pop)
+
+#if __has_warning("-Wassign-enum")
+#define DPKG_IGNORE_WARNING_ASSIGN_ENUM()	DPKG_IGNORE_WARNING("-Wassign-enum")
+#define DPKG_ACCEPT_WARNING_ASSIGN_ENUM()	DPKG_ACCEPT_WARNING()
+#else
+#define DPKG_IGNORE_WARNING_ASSIGN_ENUM()
+#define DPKG_ACCEPT_WARNING_ASSIGN_ENUM()
+#endif
+
 /* Supported since gcc 5.1.0 and clang 2.9.0. For attributes that appeared
  * before these versions, in addition we need to do version checks.  */
 #ifndef __has_attribute
@@ -109,6 +142,13 @@
 #define DPKG_ATTR_NONSTRING
 #endif
 
+#if __has_attribute(__enum_extensibility__)
+#define DPKG_ATTR_ENUM_FLAGS \
+	__attribute__((__enum_extensibility__(closed),__flag_enum__))
+#else
+#define DPKG_ATTR_ENUM_FLAGS
+#endif
+
 #if defined(__cplusplus) && __cplusplus >= 201103L
 #define DPKG_ATTR_THROW(exception)
 #define DPKG_ATTR_NOEXCEPT		noexcept
@@ -134,7 +174,7 @@
  * to use either NULL or nullptr would be too cumbersome. Non-header files
  * should use the appropriate constant directly.
  */
-#if defined(__cplusplus)
+#if defined(__cplusplus) || __STDC_VERSION__ > 201710L
 #define DPKG_NULL      nullptr
 #else
 #define DPKG_NULL      NULL

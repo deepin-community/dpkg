@@ -28,9 +28,9 @@ Es sollte I<nicht> von Paketbetreuern verwendet werden, die verstehen wollen, wi
 
 =head1 BESCHREIBUNG
 
-B<dpkg> ist ein Werkzeug mittlerer Stufe, um Debian-Pakete zu installieren, zu bauen, zu entfernen und zu verwalten. Die primäre und benutzerfreundlichere Oberfläche für B<dpkg> als CLI (Befehlszeilenwerkzeug) ist B<apt>(8) und als TUI (Terminal-Benutzeroberfläche) ist B<aptitude>(8). B<dpkg> selbst wird komplett über Befehlszeilenoptionen gesteuert, die aus genau einer Aktion und Null oder mehreren Optionen bestehen. Der Aktionsparameter teilt B<dpkg> mit, was zu tun ist, und die Optionen steuern die Aktionen in irgendeiner Weise.
+B<dpkg> ist ein Werkzeug mittlerer Stufe, um Debian-Pakete zu installieren, zu bauen, zu entfernen und zu verwalten. Die primäre und benutzerfreundlichere Oberfläche für B<dpkg> als CLI (Befehlszeilenwerkzeug) ist L<apt(8)> und als TUI (Terminal-Benutzeroberfläche) ist L<aptitude(8)>. B<dpkg> selbst wird komplett über Befehlszeilenoptionen gesteuert, die aus genau einer Aktion und Null oder mehreren Optionen bestehen. Der Aktionsparameter teilt B<dpkg> mit, was zu tun ist, und die Optionen steuern die Aktionen in irgendeiner Weise.
 
-B<dpkg> kann auch als Oberfläche für B<dpkg-deb>(1) und B<dpkg-query>(1) verwendet werden. Die Liste der unterstützten Aktionen kann im Abschnitt B<AKTIONEN> gefunden werden. Falls so eine Aktion angetroffen wird, führt B<dpkg> einfach B<dpkg-deb> oder B<dpkg-query> mit den übergebenen Parametern aus, allerdings werden derzeit keine spezifischen Optionen an diese übergeben. Um solche Optionen zu verwenden, müssen die Backends direkt aufgerufen werden.
+B<dpkg> kann auch als Oberfläche für L<dpkg-deb(1)> und L<dpkg-query(1)> verwendet werden. Die Liste der unterstützten Aktionen kann im Abschnitt B<AKTIONEN> gefunden werden. Falls so eine Aktion angetroffen wird, führt B<dpkg> einfach B<dpkg-deb> oder B<dpkg-query> mit den übergebenen Parametern aus, allerdings werden derzeit keine spezifischen Optionen an diese übergeben. Um solche Optionen zu verwenden, müssen die Backends direkt aufgerufen werden.
 
 =head1 INFORMATIONEN ÜBER PAKETE
 
@@ -124,17 +124,33 @@ Installiert das Paket. Falls die Option B<--recursive> oder B<-R> angegeben ist,
 
 Die Installation besteht aus folgenden Schritten:
 
-B<1.> Die Steuerdateien aus dem neuen Paket wird entnommen.
+=over 4
 
-B<2.> Falls eine andere Version des gleichen Pakets vor der neuen Installation installiert war, dann wird das I<prerm>-Skript des alten Paketes ausgeführt.
+=item B<1.>
 
-B<3.> Das I<preinst>-Skript wird ausgeführt, falls dies vom Paket bereitgestellt wird.
+Die Steuerdateien aus dem neuen Paket wird entnommen.
 
-B<4.> Die neuen Dateien werden entpackt und gleichzeitig die alten Dateien gesichert, so dass diese, falls etwas schief geht, wiederhergestellt werden können.
+=item B<2.>
 
-B<5.> Falls eine andere Version des gleichen Pakets vor der neuen Installation installiert war, dann wird das I<postrm>-Skript des alten Paketes ausgeführt. Beachten Sie, dass dieses Skript nach dem I<preinst>-Skript des neuen Pakets ausgeführt wird, da neue Dateien zeitgleich zu der Entfernung alter Dateien geschrieben werden.
+Falls eine andere Version des gleichen Pakets vor der neuen Installation installiert war, dann wird das I<prerm>-Skript des alten Paketes ausgeführt.
 
-B<6.> Das Paket wird konfiguriert. Lesen Sie B<--configure> für detaillierte Informationen, wie dies geschieht.
+=item B<3.>
+
+Das I<preinst>-Skript wird ausgeführt, falls dies vom Paket bereitgestellt wird.
+
+=item B<4.>
+
+Die neuen Dateien werden entpackt und gleichzeitig die alten Dateien gesichert, so dass diese, falls etwas schief geht, wiederhergestellt werden können.
+
+=item B<5.>
+
+Falls eine andere Version des gleichen Pakets vor der neuen Installation installiert war, dann wird das I<postrm>-Skript des alten Paketes ausgeführt. Beachten Sie, dass dieses Skript nach dem I<preinst>-Skript des neuen Pakets ausgeführt wird, da neue Dateien zeitgleich zu der Entfernung alter Dateien geschrieben werden.
+
+=item B<6.>
+
+Das Paket wird konfiguriert. Lesen Sie B<--configure> für detaillierte Informationen, wie dies geschieht.
+
+=back
 
 =item B<--unpack> I<Paketdatei> …
 
@@ -146,13 +162,21 @@ Verarbeitet Trigger für B<Pre-Depends>, außer B<--no-triggers> wurde angegeben
 
 Konfiguriert ein entpacktes, aber noch nicht konfiguriertes Paket. Falls B<-a> oder B<--pending> anstelle von I<Paket> angegeben ist, werden alle entpackten, aber nicht konfigurierten Pakete konfiguriert.
 
-Um ein Paket zu rekonfigurieren, das bereits konfiguriert wurde, verwenden Sie stattdessen den Befehl B<dpkg-reconfigure>(8).
+Um ein Paket zu rekonfigurieren, das bereits konfiguriert wurde, verwenden Sie stattdessen den Befehl L<dpkg-reconfigure(8)>. Dieser Befehl ist Teil des Projekts B<debconf>.
 
 Die Konfiguration besteht aus folgenden Schritten:
 
-B<1.> Die Conffiles werden entpackt und gleichzeitig die alten Conffiles gesichert, so dass diese, falls etwas schief geht, wiederhergestellt werden können.
+=over 4
 
-B<2.> Das I<postinst>-Skript wird ausgeführt, falls dies vom Paket bereitgestellt wird.
+=item B<1.>
+
+Die Conffiles werden entpackt und gleichzeitig die alten Conffiles gesichert, so dass diese, falls etwas schief geht, wiederhergestellt werden können.
+
+=item B<2.>
+
+Das I<postinst>-Skript wird ausgeführt, falls dies vom Paket bereitgestellt wird.
+
+=back
 
 Verarbeitet Trigger, außer B<--no-triggers> wurde angegeben.
 
@@ -166,11 +190,21 @@ Entfernt ein installiertes Paket. Dies entfernt alles außer Conffiles und ander
 
 Entfernung eines Paketes besteht aus den folgenden Schritten:
 
-B<1.> Das I<prerm>-Skript wird ausgeführt
+=over 4
 
-B<2.> Die installierten Dateien werden entfernt
+=item B<1.>
 
-B<3.> Das I<postrm>-Skript wird ausgeführt
+Das I<prerm>-Skript wird ausgeführt.
+
+=item B<2.>
+
+Die installierten Dateien werden entfernt.
+
+=item B<3.>
+
+Das I<postrm>-Skript wird ausgeführt.
+
+=back
 
 Verarbeitet Trigger, außer B<--no-triggers> wurde angegeben.
 
@@ -182,9 +216,17 @@ B<Hinweis>: Einige Konfigurationsdateien können B<dpkg> nicht bekannt sein, da 
 
 Endgültiges Löschen eines Paketes besteht aus den folgenden Schritten:
 
-B<1.> Das Paket wird entfernt, falls es noch nicht entfernt ist. Lesen Sie B<--remove> für detaillierte Informationen, wie dies erfolgt.
+=over 4
 
-B<2.> Das I<postrm>-Skript wird ausgeführt.
+=item B<1.>
+
+Das Paket wird entfernt, falls es noch nicht entfernt ist. Lesen Sie B<--remove> für detaillierte Informationen, wie dies erfolgt.
+
+=item B<2.>
+
+Das I<postrm>-Skript wird ausgeführt.
+
+=back
 
 Verarbeitet Trigger, außer B<--no-triggers> wurde angegeben.
 
@@ -192,7 +234,7 @@ Verarbeitet Trigger, außer B<--no-triggers> wurde angegeben.
 
 Überprüft die Integrität von I<Paketname> oder allen Paketen, falls nicht angegeben, indem Informationen aus den durch ein Paket installierten Dateien mit den in der B<dpkg>-Datenbank gespeicherten Dateimetadateninformationen verglichen werden (seit Dpkg 1.17.2). Die Quelle der Dateimetadateninformationen in der Datenbank ist das Binärpaket selbst. Diese Metadaten werden zum Zeitpunkt des Entpackens während des Installationsprozesses gesammelt.
 
-Derzeit ist die einzige funktionale Prüfung eine Md5sum-Überprüfung der Dateiinhalte mit dem gespeicherten Wert in der Datei-Datenbank. Er wird nur geprüft, falls die Datenbank die Md5sum der Datei enthält. Um auf fehlende Metadaten in der Datenbank zu prüfen, kann der Befehl B<--audit> verwandt werden.
+Derzeit ist die einzige funktionale Prüfung eine Md5sum-Überprüfung der Dateiinhalte mit dem gespeicherten Wert in der Datei-Datenbank. Er wird nur geprüft, falls die Datenbank die Md5sum der Datei enthält. Um auf fehlende Metadaten in der Datenbank zu prüfen, kann der Befehl B<--audit> verwandt werden. Dies ist nur eine Integritätsprüfung und sollte nicht als irgend eine Art von Sicherheitsüberprüfung angesehen werden.
 
 Das Ausgabeformat kann mit der Option B<--verify-format> ausgewählt werden. Standardmäßig wird das Format B<rpm> verwandt. Das kann sich in der Zukunft aber ändern und daher sollten Programme, die die Ausgabe dieses Befehls auswerten, explizit das Format angeben, das sie erwarten.
 
@@ -238,7 +280,7 @@ Setzt den erbetenen Zustand von jedem nicht-essenziellen Paket auf „Deinstalla
 
 Sucht nach Paketen, die zur Installation ausgewählt wurden, die aber aus irgendeinem Grund noch nicht installiert wurden.
 
-B<Beachten Sie>: Dieser Befehl verwendet sowohl die Datei „available“ als auch die Paketauswahlen.
+B<Hinweis>: Dieser Befehl verwendet sowohl die Datei „available“ als auch die Paketauswahlen.
 
 =item B<--predep-package>
 
@@ -246,7 +288,7 @@ Gibt ein einzelnes Paket aus, das das Ziel einer oder mehrerer relevanter Vorabh
 
 Falls ein solches Paket vorhanden ist, wird es als Dateieintrag für „Packages“ ausgegeben, der passend weiterverarbeitet werden kann.
 
-B<Beachten Sie>: Dieser Befehl verwendet sowohl die Datei „available“ als auch die Paketauswahlen.
+B<Hinweis>: Dieser Befehl verwendet sowohl die Datei „available“ als auch die Paketauswahlen.
 
 Liefert 0 zurück, wenn ein Paket ausgegeben wird und 1, wenn kein passendes Paket verfügbar ist und 2 im Fehlerfall.
 
@@ -286,7 +328,7 @@ Unterstützt Epochen in Versionszeichenketten (seit Dpkg 1.4.0.7).
 
 =item B<long-filenames>
 
-Unterstützt in B<deb>(5)-Archiven lange Dateinamen (seit Dpkg 1.4.1.17).
+Unterstützt in L<deb(5)>-Archiven lange Dateinamen (seit Dpkg 1.4.1.17).
 
 =item B<multi-conrep>
 
@@ -364,7 +406,7 @@ Bei der Verwendung mit B<--robot> wird die Ausgabe der Programmversionsnummer in
 
 =item B<dpkg-deb-Aktionen>
 
-Lesen Sie B<dpkg-deb>(1) für weitere Informationen über die folgenden Aktionen und andere Aktionen, die durch die Oberfläche B<dpkg> nicht offengelegt werden.
+Lesen Sie L<dpkg-deb(1)> für weitere Informationen über die folgenden Aktionen und andere Aktionen, die durch die Oberfläche B<dpkg> nicht offengelegt werden.
 
 =over 
 
@@ -408,7 +450,7 @@ Zeigt Informationen über ein Paket an.
 
 =item B<dpkg-query-Aktionen>
 
-Lesen Sie B<dpkg-query>(1) für weitere Informationen über die folgenden Aktionen und andere Aktionen, die durch die Oberfläche B<dpkg> nicht offengelegt werden.
+Lesen Sie L<dpkg-query(1)> für weitere Informationen über die folgenden Aktionen und andere Aktionen, die durch die Oberfläche B<dpkg> nicht offengelegt werden.
 
 =over 
 
@@ -475,73 +517,135 @@ Schaltet Fehlersuche ein. I<Oktal> wird durch bitweise Oder-Verknüpfung der gew
 
 Erzwingt oder verweigert (B<no-force> und B<refuse> bedeuten das gleiche) bestimmte Sachen. I<Sachen> ist eine Kommata-getrennte Liste von Dingen, die im Folgenden beschrieben sind. B<--force-help> zeigt eine Meldung an, die diese beschreibt. Mit (*) markierte Dinge werden standardmäßig erzwungen.
 
-I<Warnung: Diese Optionen sind hauptsächlich für den Einsatz durch Experten gedacht. Der Einsatz ohne komplettes Verständnis der Effekte kann Ihr gesamtes System zerstören.>
+B<Warnung>: Diese Optionen sind hauptsächlich für den Einsatz durch Experten gedacht. Der Einsatz ohne komplettes Verständnis der Auswirkungen kann Ihr gesamtes System zerstören.
 
-B<all>: Schaltet alle „force“-Optionen ein (oder aus).
+=over 2
 
-B<downgrade>(*): Installiert ein Paket, selbst wenn eine neuere Version davon bereits installiert ist.
+=item B<all>:
 
-I<Warnung: Derzeit führt> B<dpkg> I<keine Abhängigkeitsüberprüfung bei der Installation älterer Versionen (als bereits installiert) durch (sog. Downgrade) und wird Sie daher nicht warnen, falls dadurch die Abhängigkeit eines anderen Pakets nicht mehr erfüllt ist. Dies kann ernsthafte Nebeneffekte haben, ein Downgrade einer essenziellen Systemkomponente kann Ihr gesamtes System unbrauchbar machen. Verwenden Sie diese Option mit Vorsicht.>
+Schaltet alle „force“-Optionen ein (oder aus).
 
-B<configure-any>: Konfiguriert auch jedes entpackte, aber unkonfigurierte Paket, von dem das aktuelle Paket abhängt.
+=item B<downgrade>(*):
 
-B<hold>: Erlaubt automatische Installationen, Upgrades und Entfernungen von Paketen, selbst wenn sie mit „halten“ markiert sind. B<Beachten Sie>: Wenn diese Aktionen explizit angefordert werden, wird der Paketauswahlzustand „halten“ immer ignoriert.
+Installiert ein Paket, selbst wenn eine neuere Version davon bereits installiert ist.
 
-B<remove-reinstreq>: Entfernt ein Paket, selbst falls es defekt ist und zur Neuinstallation markiert ist. Dies kann beispielsweise dazu führen, dass Teile des Pakets auf dem System bleiben und von B<dpkg> vergessen werden.
+B<Warnung>: Derzeit führt B<dpkg> keine Abhängigkeitsüberprüfung bei der Installation älterer Versionen (als bereits installiert) durch (sog. Downgrade) und wird Sie daher nicht warnen, falls dadurch die Abhängigkeit eines anderen Pakets nicht mehr erfüllt ist. Dies kann ernsthafte Nebeneffekte haben, ein Downgrade einer essenziellen Systemkomponente kann Ihr gesamtes System unbrauchbar machen. Verwenden Sie diese Option mit Vorsicht.
 
-B<remove-protected>: Entfernt, selbst falls das Paket als geschützt betrachtet wird (seit Dpkg 1.20.1). Geschützte Pakete enthalten hauptsächlich wichtige Teile der Systemstartinfrastruktur oder werden für angepasste systemlokale Metapakete verwandt. Diese zu entfernen kann dazu führen, dass das gesamte System nicht mehr starten oder benötigte Funktionalität zu Betrieb verlieren kann - verwenden Sie diese Option daher mit Vorsicht.
+=item B<configure-any>:
 
-B<remove-essential>: Entfernt, selbst falls das Paket als essenziell betrachtet wird. Essenzielle Pakete enthalten hauptsächlich sehr grundlegende Unix-Befehle. Diese werden für das Paketierungssystem, für den Betrieb des Systems im Allgemeinen oder während des Systemstarts benötigt (allerdings sollten Letztere stattdessen in geschützte Pakete umgewandelt werden). Diese zu entfernen kann dazu führen, dass das gesamte System nicht mehr arbeitet - verwenden Sie diese Option daher mit Vorsicht.
+Konfiguriert auch jedes entpackte, aber unkonfigurierte Paket, von dem das aktuelle Paket abhängt.
 
-B<depends>: Verwandelt alle Abhängigkeitsprobleme in Warnungen. Dies betrifft die Felder B<Pre-Depends> und B<Depends>.
+=item B<hold>:
 
-B<depends-version>: Ignoriert Versionen bei der Prüfung von Abhängigkeiten. Dies betrifft die Felder B<Pre-Depends> und B<Depends>.
+Erlaubt automatische Installationen, Upgrades und Entfernungen von Paketen, selbst wenn sie mit „halten“ markiert sind. B<Hinweis>: Wenn diese Aktionen explizit angefordert werden, wird der Paketauswahlzustand „halten“ immer ignoriert.
 
-B<breaks>: Installiert, selbst falls dies ein anderes Paket beschädigt (seit Dpkg 1.14.6). Dies betrifft das Feld B<Breaks>.
+=item B<remove-reinstreq>:
 
-B<conflicts>: Installiert, selbst wenn es mit einem anderen Paket in Konflikt steht. Dies ist gefährlich, da dies gewöhnlich dazu führt, dass einige Dateien überschrieben werden. Dies betrifft das Feld B<Conflicts>.
+Entfernt ein Paket, selbst falls es defekt ist und zur Neuinstallation markiert ist. Dies kann beispielsweise dazu führen, dass Teile des Pakets auf dem System bleiben und von B<dpkg> vergessen werden.
 
-B<confmiss>: Installiert die fehlende Conffile immer ohne Rückfrage. Dies ist gefährlich, da es bedeutet, dass eine Änderung (die Entfernung) an der Datei nicht erhalten wird.
+=item B<remove-protected>:
 
-B<confnew>: Falls eine Conffile modifiziert wurde und sich die Version im Paket geändert hat, wird immer die neue Version ohne Rückfrage installiert, es sei denn, B<--force-confdef> ist ebenfalls angegeben, in welchem Falle die Standardaktion bevorzugt wird.
+Entfernt, selbst falls das Paket als geschützt betrachtet wird (seit Dpkg 1.20.1). Geschützte Pakete enthalten hauptsächlich wichtige Teile der Systemstartinfrastruktur oder werden für angepasste systemlokale Metapakete verwandt. Diese zu entfernen kann dazu führen, dass das gesamte System nicht mehr starten oder benötigte Funktionalität zu Betrieb verlieren kann - verwenden Sie diese Option daher mit Vorsicht.
 
-B<confold>: Falls eine Conffile modifiziert wurde und sich die Version im Paket geändert hat, wird immer die alte Version ohne Rückfrage behalten, es sei denn, B<--force-confdef> ist ebenfalls angegeben, in welchem Falle die Standardaktion bevorzugt wird.
+=item B<remove-essential>:
 
-B<confdef>: Falls eine Conffile verändert wurde und sich die Version im Paket geändert hat, wird immer die Standardaktion ohne Rückfrage gewählt. Falls es keine Standardaktion gibt, wird angehalten, um den Benutzer zu fragen, es sei denn, B<--force-confnew> oder B<--force-confold> sind ebenfalls angegeben, in welchem Falle dies verwendet wird, um die letztendliche Aktion zu bestimmen.
+Entfernt, selbst falls das Paket als essenziell betrachtet wird. Essenzielle Pakete enthalten hauptsächlich sehr grundlegende Unix-Befehle. Diese werden für das Paketierungssystem, für den Betrieb des Systems im Allgemeinen oder während des Systemstarts benötigt (allerdings sollten Letztere stattdessen in geschützte Pakete umgewandelt werden). Diese zu entfernen kann dazu führen, dass das gesamte System nicht mehr arbeitet - verwenden Sie diese Option daher mit Vorsicht.
 
-B<confask>: Falls eine Conffile verändert wurde, wird immer angeboten, sie durch die Version aus dem Paket zu ersetzen, selbst falls sich die Version in dem Paket nicht geändert hat (seit Dpkg 1.15.8). Falls auch einer von B<--force-confnew>, B<--force-confold> oder B<--force-confdef> angegeben wird, wird sie dazu verwandt, die letztendliche Aktion zu ermitteln.
+=item B<depends>:
 
-B<overwrite>: Überschreibt die Datei aus einem Paket mit einer Datei aus einem anderen Paket.
+Verwandelt alle Abhängigkeitsprobleme in Warnungen. Dies betrifft die Felder B<Pre-Depends> und B<Depends>.
 
-B<overwrite-dir>: Überschreibt das Verzeichnis aus einem Paket mit einer Datei aus einem anderen Paket.
+=item B<depends-version>:
 
-B<overwrite-diverted>: Überschreibt eine umgeleitete („diverted“) Datei mit einer nicht umgeleiteten.
+Ignoriert Versionen bei der Prüfung von Abhängigkeiten. Dies betrifft die Felder B<Pre-Depends> und B<Depends>.
 
-B<statoverride-add>: Überschreibt eine existierende Status-Hinwegsetzung beim Hinzufügen (seit Dpkg 1.19.5).
+=item B<breaks>:
 
-B<statoverride-remove>: Ignoriert eine fehlende Status-Hinwegsetzung beim Entfernen (seit Dpkg 1.19.5).
+Installiert, selbst falls dies ein anderes Paket beschädigt (seit Dpkg 1.14.6). Dies betrifft das Feld B<Breaks>.
 
-B<security-mac>(*): Verwendet plattformspezifische „Mandatory Access Control (MAC)“-basierende Sicherheit bei der Installation von Dateien in das Dateisystem (seit Dpkg 1.19.5). Auf Linux-Systemen verwendet die Implementierung SELinux.
+=item B<conflicts>:
 
-B<unsafe-io>: Führt beim Entpacken keine sicheren E/A-Aktionen durch (seit Dpkg 1.15.8.6). Derzeit impliziert dies, dass vor Dateiumbenennungen kein Systemsync durchgeführt wird. Dieser Sync führt bei einigen Dateisystemen zu erheblichen Leistungseinbußen, unglücklicherweise bei solchen, die überhaupt sichere E/A aufgrund ihres unzuverlässigen Verhaltens benötigen, auf denen bei abrupten Systemabstürzen Dateien der Länge Null entstehen können.
+Installiert, selbst wenn es mit einem anderen Paket in Konflikt steht. Dies ist gefährlich, da dies gewöhnlich dazu führt, dass einige Dateien überschrieben werden. Dies betrifft das Feld B<Conflicts>.
+
+=item B<confmiss>:
+
+Installiert die fehlende Conffile immer ohne Rückfrage. Dies ist gefährlich, da es bedeutet, dass eine Änderung (die Entfernung) an der Datei nicht erhalten wird.
+
+=item B<confnew>:
+
+Falls eine Conffile modifiziert wurde und sich die Version im Paket geändert hat, wird immer die neue Version ohne Rückfrage installiert, es sei denn, B<--force-confdef> ist ebenfalls angegeben, in welchem Falle die Standardaktion bevorzugt wird.
+
+=item B<confold>:
+
+Falls eine Conffile modifiziert wurde und sich die Version im Paket geändert hat, wird immer die alte Version ohne Rückfrage behalten, es sei denn, B<--force-confdef> ist ebenfalls angegeben, in welchem Falle die Standardaktion bevorzugt wird.
+
+=item B<confdef>:
+
+Falls eine Conffile verändert wurde und sich die Version im Paket geändert hat, wird immer die Standardaktion ohne Rückfrage gewählt. Falls es keine Standardaktion gibt, wird angehalten, um den Benutzer zu fragen, es sei denn, B<--force-confnew> oder B<--force-confold> sind ebenfalls angegeben, in welchem Falle dies verwendet wird, um die letztendliche Aktion zu bestimmen.
+
+=item B<confask>:
+
+Falls eine Conffile verändert wurde, wird immer angeboten, sie durch die Version aus dem Paket zu ersetzen, selbst falls sich die Version in dem Paket nicht geändert hat (seit Dpkg 1.15.8). Falls auch einer von B<--force-confnew>, B<--force-confold> oder B<--force-confdef> angegeben wird, wird sie dazu verwandt, die letztendliche Aktion zu ermitteln.
+
+=item B<overwrite>:
+
+Überschreibt die Datei aus einem Paket mit einer Datei aus einem anderen Paket.
+
+=item B<overwrite-dir>:
+
+Überschreibt das Verzeichnis aus einem Paket mit einer Datei aus einem anderen Paket.
+
+=item B<overwrite-diverted>:
+
+Überschreibt eine umgeleitete („diverted“) Datei mit einer nicht umgeleiteten.
+
+=item B<statoverride-add>:
+
+Überschreibt eine existierende Status-Hinwegsetzung beim Hinzufügen (seit Dpkg 1.19.5).
+
+=item B<statoverride-remove>:
+
+Ignoriert eine fehlende Status-Hinwegsetzung beim Entfernen (seit Dpkg 1.19.5).
+
+=item B<security-mac>(*):
+
+Verwendet plattformspezifische „Mandatory Access Control (MAC)“-basierende Sicherheit bei der Installation von Dateien in das Dateisystem (seit Dpkg 1.19.5). Auf Linux-Systemen verwendet die Implementierung SELinux.
+
+=item B<unsafe-io>:
+
+Führt beim Entpacken keine sicheren E/A-Aktionen durch (seit Dpkg 1.15.8.6). Derzeit impliziert dies, dass vor Dateiumbenennungen kein Systemsync durchgeführt wird. Dieser Sync führt bei einigen Dateisystemen zu erheblichen Leistungseinbußen, unglücklicherweise bei solchen, die überhaupt sichere E/A aufgrund ihres unzuverlässigen Verhaltens benötigen, auf denen bei abrupten Systemabstürzen Dateien der Länge Null entstehen können.
 
 I<Hinweis>: Für den Hauptmissetäter Ext4 sollten Sie stattdessen die Einhängeoption B<nodelalloc> verwenden, die sowohl die Leistungseinbuße verhindert als auch Datensicherheitsprobleme vermeidet. Letzteres bedeutet, dass bei abrupten Systemabstürzen bei jeder Software, die keine Syncs vor atomaren Umbenennungen durchführt, keine Dateien der Länge Null generiert werden.
 
-I<Warnung: Die Verwendung dieser Option kann die Leistung erhöhen, allerdings können dabei Daten verloren gehen. Verwenden Sie die Option vorsichtig.>
+B<Warnung>: Die Verwendung dieser Option kann die Leistung erhöhen, allerdings können dabei Daten verloren gehen. Verwenden Sie die Option vorsichtig.
 
-B<script-chrootless>: Führt Skripte aus, ohne per B<chroot>(2) in das B<instdir> zu wechseln, selbst falls das Paket diese Vorgehensweise nicht unterstützt (seit Dpkg 1.18.5).
+=item B<script-chrootless>:
 
-I<Warnung: Dies kann Ihr Wirtsystem beschädigen, passen Sie sehr gut auf!>
+Führt Skripte aus, ohne per L<chroot(2)> in das B<instdir> zu wechseln, selbst falls das Paket diese Vorgehensweise nicht unterstützt (seit Dpkg 1.18.5).
 
-B<architecture>: Verarbeitet sogar Pakete mit der falschen oder keiner Architektur.
+I<Warnung>: Dies kann Ihr Wirtsystem beschädigen, passen Sie sehr gut auf!
 
-B<bad-version>: Verarbeitet sogar Pakete mit falschen Versionen (seit Dpkg 1.16.1).
+=item B<architecture>:
 
-B<bad-path>: Im B<PATH> fehlen wichtige Programme, daher sind Probleme wahrscheinlich.
+Verarbeitet sogar Pakete mit der falschen oder keiner Architektur.
 
-B<not-root>: Versucht Sachen zu (de)installieren, selbst falls nicht root.
+=item B<bad-version>:
 
-B<bad-verify>: Installiert ein Paket, selbst wenn die Authentizitätsprüfung fehlschlägt.
+Verarbeitet sogar Pakete mit falschen Versionen (seit Dpkg 1.16.1).
+
+=item B<bad-path>:
+
+Im B<PATH> fehlen wichtige Programme, daher sind Probleme wahrscheinlich.
+
+=item B<not-root>:
+
+Versucht Sachen zu (de)installieren, selbst falls nicht root.
+
+=item B<bad-verify>:
+
+Installiert ein Paket, selbst wenn die Authentizitätsprüfung fehlschlägt.
+
+=back
 
 =item B<--ignore-depends>=I<Paket>, …
 
@@ -551,7 +655,7 @@ Ignoriert Abhängigkeitsüberprüfungen für bestimmte Pakete (tatsächlich wird
 
 Erledigt alles, was gemacht werden soll, aber schreibt keine Änderungen. Dies wird verwendet, um zu sehen, was mit der spezifizierten Änderung passieren würde, ohne tatsächlich etwas zu modifizieren.
 
-Stellen Sie sicher, dass B<--no-act> vor dem Aktions-Parameter steht, andernfalls könnte dies zu unerwünschten Ergebnissen führen. (Beispielsweise wird B<dpkg --purge foo --no-act> zuerst das Paket „foo“ endgültig löschen und dann versuchen, das Paket „--no-act“ endgültig zu löschen, obwohl Sie wahrscheinlich davon ausgingen, dass tatsächlich gar nichts passieren sollte).
+Stellen Sie sicher, dass B<--no-act> vor dem Aktions-Parameter steht, andernfalls könnte dies zu unerwünschten Ergebnissen führen (beispielsweise wird B<dpkg --purge foo --no-act> zuerst das Paket „foo“ endgültig löschen und dann versuchen, das Paket „--no-act“ endgültig zu löschen, obwohl Sie wahrscheinlich davon ausgingen, dass tatsächlich gar nichts passieren sollte).
 
 =item B<-R>, B<--recursive>
 
@@ -567,7 +671,7 @@ Setzt das Standardadministrationsverzeichnis auf I<Verzeichnis>. Dieses Verzeich
 
 =item B<--instdir=>I<Verz>
 
-Setzt das voreingestellte Installationsverzeichnis. Dieses Verzeichnis gibt an, wo Pakete installiert werden. B<instdir> ist auch das Verzeichnis, das an B<chroot>(2) vor dem Aufruf der Installationsskripte des Paketes übergeben wird, was bedeutet, dass die Skripte B<instdir> als ein Wurzelverzeichnis sehen. Standardmäßig „I</>“.
+Setzt das voreingestellte Installationsverzeichnis. Dieses Verzeichnis gibt an, wo Pakete installiert werden. B<instdir> ist auch das Verzeichnis, das an L<chroot(2)> vor dem Aufruf der Installationsskripte des Paketes übergeben wird, was bedeutet, dass die Skripte B<instdir> als ein Wurzelverzeichnis sehen. Standardmäßig „I</>“.
 
 =item B<-root=>I<Verz>
 
@@ -587,7 +691,7 @@ Seit Dpkg 1.21.10 wird auch die Architektur berücksichtigt. Dadurch ist es mög
 
 =item B<--post-invoke=>I<Befehl>
 
-Setzt einen Aufruf-Hook I<Befehl>, der via „sh -c“ vor oder nach dem B<dpkg>-Aufruf der B<dpkg>-Aktionen I<unpack>, I<configure>, I<install>, I<triggers-only>, I<remove>, I<purge>, I<add-architecture> und I<remove-architecture> ausgeführt wird (seit Dpkg 1.15.4; Aktionen I<add-architecture> und I<remove-architecture> seit Dpkg 1.17.19). Diese Option kann mehrfach angegeben werden. Die Reihenfolge der Optionen bleibt erhalten, wobei Einträge aus den Konfigurationsdateien Vorrang haben. Die Umgebungsvariable B<DPKG_HOOK_ACTION> wird für die Hooks auf die aktuelle B<dpkg>-Aktion gesetzt.
+Setzt einen Aufruf-Hook I<Befehl>, der via „%DPKG_DEFAULT_SHELL% -c“ vor oder nach dem B<dpkg>-Aufruf der B<dpkg>-Aktionen I<unpack>, I<configure>, I<install>, I<triggers-only>, I<remove> und I<purge> (seit Dpkg 1.15.4;) und Aktionen I<add-architecture> Und I<remove-architecture> (seit Dpkg 1.17.19). Diese Option kann mehrfach angegeben werden. Die Reihenfolge der Optionen bleibt erhalten, wobei Einträge aus den Konfigurationsdateien Vorrang haben. Die Umgebungsvariable B<DPKG_HOOK_ACTION> wird für die Hooks auf die aktuelle B<dpkg>-Aktion gesetzt.
 
 B<Hinweis>: Oberflächen könnten B<dpkg> mehrere Male pro Ausführung aufrufen, wodurch die Hooks öfter als erwartet ausgeführt werden könnten.
 
@@ -597,9 +701,9 @@ B<Hinweis>: Oberflächen könnten B<dpkg> mehrere Male pro Ausführung aufrufen,
 
 Setzt I<Glob-Muster> als Pfadfilter, entweder durch Ausschluss oder durch Wiedereinschluss vorher ausgeschlossener Pfade, die während der Installation auf bestimmte Muster passen (seit Dpkg 1.15.8).
 
-I<Warnung: Beachten Sie, dass abhängig von den ausgeschlossenen Pfaden Sie Ihr System komplett beschädigen könnten. Verwenden Sie dies daher vorsichtig.>
+B<Warnung>: Beachten Sie, dass abhängig von den ausgeschlossenen Pfaden Sie Ihr System komplett beschädigen könnten. Verwenden Sie dies daher vorsichtig.
 
-Das Glob-Muster kann die gleichen Platzhalter wie in der Shell verwenden, wobei ‚*’ auf eine beliebige Folge von Zeichen, auch dem Leerzeichen und ‚/’, passt. Beispielsweise passt „I</usr/*/READ*>“ auf „I</usr/share/doc/package/README>“. Wie gewöhnlich passt ‚?’ auf ein einzelnes Zeichen (wieder auch auf ‚/’). Und ‚[’ beginnt eine Zeichenklasse, die eine Liste von Zeichen, Bereiche und Komplemente enthalten kann. Lesen Sie B<glob>(7) für detaillierte Informationen über das Globben. B<Hinweis>: Die aktuelle Implementierung könnte mehr Verzeichnisse und symbolische Links als benötigt wieder einschließen, insbesondere wenn es eine genauere Wiedereinschließung gibt. Um auf der sicheren Seite zu sein und in der Zukunft mögliche Entpackfehler zu vermeiden, könnte dies durch zukünftige Arbeiten behoben werden.
+Das Glob-Muster kann die gleichen Platzhalter wie in der Shell verwenden, wobei ‚*’ auf eine beliebige Folge von Zeichen, auch dem Leerzeichen und ‚/’, passt. Beispielsweise passt „I</usr/*/READ*>“ auf „I</usr/share/doc/package/README>“. Wie gewöhnlich passt ‚?’ auf ein einzelnes Zeichen (wieder auch auf ‚/’). Und ‚[’ beginnt eine Zeichenklasse, die eine Liste von Zeichen, Bereiche und Komplemente enthalten kann. Lesen Sie L<glob(7)> für detaillierte Informationen über das Globben. B<Hinweis>: Die aktuelle Implementierung könnte mehr Verzeichnisse und symbolische Links als benötigt wieder einschließen, insbesondere wenn es eine genauere Wiedereinschließung gibt. Um auf der sicheren Seite zu sein und in der Zukunft mögliche Entpackfehler zu vermeiden, könnte dies durch zukünftige Arbeiten behoben werden.
 
 Dies kann dazu verwandt werden, alle Pfade außer bestimmten zu entfernen, ein typischer Fall lautet:
 
@@ -610,9 +714,9 @@ Hiermit werden alle Dokumentationsdateien (außer den Copyright-Dateien) entfern
 
 Diese zwei Optionen können mehrfach angegeben und miteinander verschachtelt werden. Beide werden in der angegebenen Reihenfolge ausgewertet, wobei die letzte Regel, die auf eine Datei passt, die Entscheidung fällt.
 
-Die Filter werden beim Entpacken des Binärpakets angewandt und haben daher nur Wissen über den Typ des derzeit gefilterten Objekts (d.h. eine normale Datei oder ein Verzeichnis) und sehen daher nicht, welche Objekte als nächstes kommen. Da diese Filter Nebeneffekte haben (im Gegensatz zu B<find>(1)-Filtern) wird das Ausschließen eines genauen Pfadnamens, der ein Verzeichnisobjekt wie I</usr/share/doc> ist, nicht den gewünschten Effekt haben und nur der Pfadname wird ausgeschlossen (der automatisch wieder eingeschlossen werden könnte, falls der Code eine Notwendigkeit hierfür sieht). Alle folgenden Dateien innerhalb des Verzeichnisses werden beim Entpacken fehlschlagen.
+Die Filter werden beim Entpacken des Binärpakets angewandt und haben daher nur Wissen über den Typ des derzeit gefilterten Objekts (d.h. eine normale Datei oder ein Verzeichnis) und sehen daher nicht, welche Objekte als nächstes kommen. Da diese Filter Nebeneffekte haben (im Gegensatz zu L<find(1)>-Filtern) wird das Ausschließen eines genauen Pfadnamens, der ein Verzeichnisobjekt wie I</usr/share/doc> ist, nicht den gewünschten Effekt haben und nur der Pfadname wird ausgeschlossen (der automatisch wieder eingeschlossen werden könnte, falls der Code eine Notwendigkeit hierfür sieht). Alle folgenden Dateien innerhalb des Verzeichnisses werden beim Entpacken fehlschlagen.
 
-Tipp: Stellen Sie sicher, dass die Metazeichen nicht durch Ihre Shell expandiert werden.
+B<Tipp>: Stellen Sie sicher, dass die Metazeichen nicht durch Ihre Shell expandiert werden.
 
 =item B<--verify-format=>I<Formatname>
 
@@ -652,7 +756,7 @@ Die Dateimodusüberprüfung schlug fehl (seit Dpkg 1.21.0). Da Pfadnamen-Metadat
 
 =item 3 ‚B<5>‘
 
-Die Hashüberprüfung schlug fehl, was bedeutet, dass sich der Inhalt geändert hat.
+Die Hash-Überprüfung schlug fehl. Das bedeutet, dass sich der Dateiinhalt geändert hat. Dies ist nur eine Integritätsprüfung und sollte nicht als irgend eine Art von Sicherheitsüberpüfung angesehen werden.
 
 =item 4-9 ‚B<?>‘
 
@@ -703,7 +807,7 @@ Wird genau bevor eine Verarbeitungsstufe beginnt versandt. I<Stufe> ist eine der
 
 =item B<--status-logger>=I<Befehl>
 
-Schickt maschinenlesbare Paketstatus- und Fortschrittsinformationen an die Standardeingabe des I<Befehl>s der Shell, was dann mittels „sh -c“ ausgeführt wird (seit Dpkg 1.16.0). Diese Option kann mehrfach angegeben werden. Das verwandte Ausgabeformat ist identisch zu dem in B<--status-fd>.
+Schickt maschinenlesbare Paketstatus- und Fortschrittsinformationen an die Standardeingabe des I<Befehl>s der Shell, was dann mittels „DPKG_DEFAULT_SHELL% -c“ ausgeführt wird (seit Dpkg 1.16.0). Diese Option kann mehrfach angegeben werden. Das verwandte Ausgabeformat ist identisch zu dem in B<--status-fd>.
 
 =item B<--log=>I<Dateiname>
 
@@ -798,7 +902,7 @@ Das Programm, das B<dpkg> ausführen wird, wenn es eine neue interaktive Shell s
 
 =item B<DPKG_PAGER>
 
-Das Programm, das B<dpkg> ausführen wird, wenn es einen Pager mit „B<$SHELL -c>“ ausführt, beispielsweise zur Anzeige von Conffile-Dateiunterschieden. Falls B<SHELL> nicht gesetzt ist, wird stattdessen „B<sh>“ verwandt. B<DPKG_PAGER> setzt die Umgebungsvariable B<PAGER> außer Kraft (seit Dpkg 1.19.2).
+Das Programm, das B<dpkg> ausführen wird, wenn es einen Pager mit „B<$SHELL -c>“ ausführt, beispielsweise zur Anzeige von Conffile-Dateiunterschieden. Falls B<SHELL> nicht gesetzt ist, wird stattdessen „B<%DPKG_DEFAULT_SHELL%>“ verwandt. B<DPKG_PAGER> setzt die Umgebungsvariable B<PAGER> außer Kraft (seit Dpkg 1.19.2).
 
 =item B<DPKG_COLORS>
 
@@ -832,7 +936,7 @@ Von B<dpkg> auf „B<-FRSXMQ>“ definiert, falls es nicht bereits gesetzt ist o
 
 =item B<DPKG_ROOT>
 
-Durch B<dpkg> in der Betreuerskriptumgebung definiert, um anzuzeigen, auf welche Installation gehandelt werden soll (seit Dpkg 1.18.5). Der Wert soll jedem Pfad, auf den Betreuerskripte agieren, vorangestellt werden. Während des Normalbetriebs ist diese Variable leer. Bei der Installation von Paketen in ein anderes B<instdir> wird B<dpkg> normalerweise Betreuerskripte mittels B<chroot>(2) aufrufen und diese Variable leer lassen. Falls aber B<--force-script-chrootless> angegeben ist, wird dieser B<chroot>(2)-Aufruf übersprungen und B<instdir> ist nicht leer.
+Durch B<dpkg> in der Betreuerskriptumgebung definiert, um anzuzeigen, auf welche Installation gehandelt werden soll (seit Dpkg 1.18.5). Der Wert soll jedem Pfad, auf den Betreuerskripte agieren, vorangestellt werden. Während des Normalbetriebs ist diese Variable leer. Bei der Installation von Paketen in ein anderes B<instdir> wird B<dpkg> normalerweise Betreuerskripte mittels L<chroot(2)> aufrufen und diese Variable leer lassen. Falls aber B<--force-script-chrootless> angegeben ist, wird dieser L<chroot(2)>-Aufruf übersprungen und B<instdir> ist nicht leer.
 
 =item B<DPKG_ADMINDIR>
 
@@ -912,13 +1016,49 @@ Liste der verfügbaren Pakete.
 
 =item I<%ADMINDIR%/status>
 
-Status der verfügbaren Pakete. Diese Datei enthält Informationen darüber, ob ein Paket zur Entfernung markiert ist oder nicht, ob es installiert ist oder nicht usw. Lesen Sie den Abschnitt B<INFORMATIONEN ÜBER PAKETE> für weitere Informationen.
+Status der verfügbaren Pakete. Diese Datei enthält Informationen darüber, ob ein Paket zur Entfernung markiert ist oder nicht, ob es installiert ist oder nicht usw. Lesen Sie den Abschnitt L</INFORMATIONEN ÜBER PAKETE> für weitere Informationen.
 
 Die Statusdatei wird täglich nach I<%BACKUPSDIR%> gesichert. Dies kann hilfreich sein, falls sie aufgrund von Problemen mit dem Dateisystem verloren gegangen oder beschädigt worden ist.
 
 =back
 
-Das Format und die Inhalte eines Binärpakets sind in B<deb>(5) beschrieben.
+Das Format und die Inhalte eines Binärpakets sind in L<deb(5)> beschrieben.
+
+=head2 Dateisystem-Dateinamen
+
+Während des Entpackens und Konfigurierens verwendet B<dpkg> verschiedene Dateinamen zum Zwecke der Sicherung und zum Zurücksetzen. Es folgt eine vereinfachte Erklärung wie diese Dateinamen während der Paketinstallation verwandt werden.
+
+=over 
+
+=item F<*.dpkg-new>
+
+Während des Entpackens extrahiert B<dpkg> Dateisystemobjekte in I<Pfadnamen>B<.dpkg-new> (außer für bestehende Verzeichnisse oder Symlinks auf Verzeichnisse, die übersprungen werden). Sobald dies erledigt ist und nachdem Sicherungskopien der alten Objekte erstellt wurden, werden die Objekte in I<Pfadnamen> umbenannt.
+
+=item F<*.dpkg-tmp>
+
+Während des Entpackens legt B<dpkg> Sicherungskopien alter Dateisystemobjekte in I<Pfadname>B<.dpkg-tmp> nach dem Extrahieren der neuen Objekte an. Diese Sicherungskopien werden entweder durch Umbenennung für Verzeichnisse (aber nur wenn diese den Dateityp ändern), einer neuen Symlink-Kopie für Symlinks oder harte Links für alle anderen Dateisystemobjekte angelegt, außer für Conffiles, von denen keine Sicherungskopie angelegt wird, da sie in einer späteren Stufe verarbeitet werden.
+
+Falls zurückgesetzt werden muss, werden diese Sicherungskopien dazu verwandt, die vorherigen Inhalte der Objekte wiederherzustellen. Diese werden nach Abschluss der Installation automatisch entfernt.
+
+=item F<*.dpkg-old>
+
+Während der Konfiguration, bei der Installation einer neuen Version, kann B<dpkg> eine Sicherungskopie der vorherigen geänderten Conffile in I<Pfadname>B<.dpkg-old> anlegen.
+
+=item F<*.dpkg-dist>
+
+Während der Konfiguration, beim Beibehalten der alten Version, kann B<dpkg> eine Sicherungskopie der neuen unveränderten Conffile in I<Pfadname>B<.dpkg-dist> anlegen.
+
+=back
+
+=head1 SICHERHEIT
+
+Alle Aktionen, die Schreibzugriff auf die Datenbank oder das Dateisystem benötigen, werden als privilegierte Aktionen angesehen, die eine Eskalation zu Root erlauben könnten. Diese Aktionen dürfen niemals an nicht vertrauenswürdige Benutzer delegiert oder durch nicht vertrauenswürdige Pakete durchgeführt werden, da dies Root-Zugriff auf Ihr System ermöglichen könnte.
+
+Einige Aktionen (wie das Überprüfen von Paketen) könnten Root-Privilegien benötigen, damit sie auf Dateien im Dateisystem zugreifen können, die ansonsten aufgrund eingeschränkter Berechtigungen unzugreifbar wären. Abgesehen davon sollten sie normal funktionieren und in diesen Fällen geeignete Meldungen anzeigen.
+
+Abfrageaktionen sollten niemals Root benötigen und die Übertragung ihrer Ausführung auf nichtprivilegierte Benutzer mittels eines Werde-Root-Befehls kann Sicherheitsauswirkungen haben (wie eine Privilegieneskalation), beispielsweise wenn ein Seitenanzeigeprogramm von einem Werkzeug automatisch aufgerufen wird.
+
+Siehe auch den Abschnitt B<SICHERHEIT> der Handbuchseiten L<dpkg-deb(1)> und L<dpkg-split(1)>.
 
 =head1 FEHLER
 
@@ -926,7 +1066,7 @@ B<--no-act> gibt gewöhnlich weniger Informationen, als hilfreich sein könnten.
 
 =head1 BEISPIELE
 
-Um die installierten Pakete mit Bezug zum Editor B<vi>(1) aufzulisten (beachten Sie, dass B<dpkg-query> nicht mehr standardmäßig die Datei I<available> lädt und stattdessen dafür die Option B<dpkg-query> B<--load-avail> verwandt werden sollte):
+Um die installierten Pakete mit Bezug zum Editor L<vi(1)> aufzulisten (beachten Sie, dass B<dpkg-query> nicht mehr standardmäßig die Datei I<available> lädt und stattdessen dafür die Option B<dpkg-query> B<--load-avail> verwandt werden sollte):
 
 =over 
 
@@ -938,7 +1078,7 @@ Um die Einträge von zwei Paketen in I<%ADMINDIR%/available> zu sehen:
 
 =over 
 
- dpkg --print-avail elvis vim | less
+ dpkg --print-avail vim neovim | less
 
 =back
 
@@ -946,24 +1086,23 @@ Wenn Sie die Liste der Pakete selbst durchsuchen wollen:
 
 =over 
 
- less %ADMINDIR%/available
+ dpkg --print-avail | less
 
 =back
 
-Um ein installiertes Elvis-Paket zu entfernen:
+Um ein installiertes Neovim-Paket zu entfernen:
 
 =over 
 
- dpkg -r elvis
+ dpkg -r neovim
 
 =back
 
-Um ein Paket zu installieren, müssen Sie es erst in einem Archiv oder auf einer CD-ROM finden. Die Datei I<available> zeigt, dass das vim-Paket in der Sektion B<editors> ist:
+Um ein Paket zu installieren, müssen Sie es erst in einem Archiv oder auf einem physischen Medium finden. Wenn Sie ein auf einer Pool-Struktur basierendes Archiv verwenden, reicht es, den Archivbereich und den Paketnamen zu kennen, um den Pfadnamen abzuleiten:
 
 =over 
 
- cd /media/cdrom/pool/main/v/vim
- dpkg -i vim_4.5-3.deb
+ dpkg -i /media/bdrom/pool/main/v/vim/vim_9.0.2018-1_amd64.deb
 
 =back
 
@@ -971,7 +1110,7 @@ Um eine lokale Kopie der Paketauswahl-Zustände zu erstellen:
 
 =over 
 
- dpkg --get-selections> meine_auswahl
+ dpkg --get-selections >meine_auswahl
 
 =back
 
@@ -980,17 +1119,6 @@ Sie könnten diese Datei auf einen anderen Rechner übertragen und dann die Date
 =over 
 
  apt-cache dumpavail | dpkg --merge-avail
-
-=back
-
-Oder mit Dpkg 1.17.6 oder älter:
-
-=over 
-
- avail=$(mktemp)
- apt-cache dumpavail> "$avail"
- dpkg --merge-avail "$avail"
- rm "$avail"
 
 =back
 
@@ -1005,15 +1133,15 @@ Sie können sie dann wie folgt installieren:
 
 Beachten Sie, dass dies nichts wirklich installiert oder entfernt, sondern lediglich den Auswahlzustand der angeforderten Pakete setzt. Sie werden eine andere Anwendung benötigen, um die angeforderten Pakete tatsächlich herunterzuladen und zu installieren. Führen Sie beispielsweise B<apt-get dselect-upgrade> aus.
 
-Gewöhnlich werden Sie feststellen, dass B<dselect>(1) eine bequemere Art ist, den Paketauswahlzustand zu ändern.
+Gewöhnlich werden Sie feststellen, dass L<dselect(1)> eine bequemere Art ist, den Paketauswahlzustand zu ändern.
 
 =head1 ZUSÄTZLICHE FUNKTIONALITÄT
 
-Zusätzliche Funktionalität kann durch die Installation jedes der folgenden Pakete erhalten werden: B<apt>, B<aptitude> und B<debsums>.
+Zusätzliche Funktionalität kann durch die Installation jedes der folgenden Pakete erhalten werden: B<apt>, B<aptitude> und B<debsig-verify>.
 
 =head1 SIEHE AUCH
 
-B<aptitude>(8), B<apt>(8), B<dselect>(1), B<dpkg-deb>(1), B<dpkg-query>(1), B<deb>(5), B<deb-control>(5), B<dpkg.cfg>(5), and B<dpkg-reconfigure>(8).
+L<aptitude(8)>, L<apt(8)>, L<dselect(1)>, L<dpkg-deb(1)>, L<dpkg-query(1)>, L<deb(5)>, L<deb-control(5)>, L<dpkg.cfg(5)> und L<dpkg-reconfigure(8)>.
 
 =head1 AUTOREN
 

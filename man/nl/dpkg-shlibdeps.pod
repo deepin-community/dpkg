@@ -34,7 +34,7 @@ Symboolbestanden bevatten fijnmazige afhankelijkheidsinformatie door voor ieder 
 
 =item debian/*/DEBIAN/symbols
 
-Informatie over gedeelde bibliotheken die gegenereerd werd door het huidige bouwproces dat ook B<dpkg-shlibdeps> aanriep. Zij worden gegenereerd door B<dpkg-gensymbols>(1). Ze worden enkel gebruikt als de bibliotheek aangetroffen wordt in de bouwboom van een pakket. Het bestand symbols in die bouwboom heeft voorrang op symboolbestanden van andere binaire pakketten.
+Informatie over gedeelde bibliotheken die gegenereerd werd door het huidige bouwproces dat ook B<dpkg-shlibdeps> aanriep. Zij worden gegenereerd door L<dpkg-gensymbols(1)>. Ze worden enkel gebruikt als de bibliotheek aangetroffen wordt in de bouwboom van een pakket. Het bestand symbols in die bouwboom heeft voorrang op symboolbestanden van andere binaire pakketten.
 
 =item %PKGCONFDIR%/symbols/I<pakket>.symbols.I<arch>
 
@@ -50,7 +50,7 @@ Door een pakket verstrekte informatie over afhankelijkheidsrelaties tot gedeelde
 
 Tijdens het doorzoeken van de door al de programma's gebruikte symbolen, onthoudt B<dpkg-shlibdeps> van elke bibliotheek de (hoogste) minimale versie die nodig is. Op het eind van het proces is het in staat voor elke gebruikte bibliotheek uit te schrijven wat de minimale vereiste is (in de veronderstelling dat de informatie uit de I<symbols>-bestanden accuraat is).
 
-Bij wijze van beschermende maatregel kan een symbols-bestand een meta-informatieveld B<Build-Depends-Pakket> bevatten. Dan zal B<dpkg-shlibdeps> de door het corresponderende pakket vereiste minimale versie halen uit het veld B<Build-Depends> en deze versie gebruiken als ze hoger is dan de minimale versie die berekend werd via het doorzoeken van symbolen.
+As a safe-guard measure, a symbols file can provide a B<Build-Depends-Package> or B<Build-Depends-Packages> meta-information field and B<dpkg-shlibdeps> will extract the minimal version required by the corresponding package in the B<Build-Depends> field and use this version if it's higher than the minimal version computed by scanning symbols.
 
 =head2 Shlibs-bestanden
 
@@ -98,7 +98,7 @@ De gepaste afhankelijkheidsrelaties tot gedeelde bibliotheken die nodig zijn voo
 
 I<map> vooraan toevoegen aan de lijst van mappen waarin naar particuliere gedeelde bibliotheken gezocht moet worden (sinds dpkg 1.17.0). Deze optie kan meermaals gebruikt worden.
 
-B<Opmerking:> gebruik deze optie in de plaats van het instellen van B<LD_LIBRARY_PATH>, aangezien die omgevingsvariabele gebruikt wordt om de runtime linker aan te sturen. Daarvan misbruik maken om de paden van gedeelde bibliotheken in te stellen tijdens het bouwen van het programma, kan problematisch zijn, bijvoorbeeld bij het cross-compileren.
+B<Opmerking>: gebruik deze optie in de plaats van het instellen van B<LD_LIBRARY_PATH>, aangezien die omgevingsvariabele gebruikt wordt om de runtime linker aan te sturen. Daarvan misbruik maken om de paden van gedeelde bibliotheken in te stellen tijdens het bouwen van het programma, kan problematisch zijn, bijvoorbeeld bij het cross-compileren.
 
 =item B<-d>I<afhankelijkheidsveld>
 
@@ -235,7 +235,7 @@ B<(dat gebruikt wordt door> I<binair-bestand>B<).>
 
 De bibliotheek die I<binair-bestand> nodig heeft, werd door B<dpkg-shlibdeps> in I<bibliotheekbestand> gevonden, maar B<dpkg-shlibdeps> was niet in staat vereisteninformatie voor die bibliotheek te vinden. Om vereistengegevens te vinden heeft het geprobeerd de bibliotheek op te zoeken in een Debian pakket met behulp van B<dpkg -S> I<bibliotheekbestand>. Daarna heeft het de overeenkomstige shlibs- en symbols-bestanden nagekeken in %ADMINDIR%/info/ en in de verschillende bouwbomen van het pakket (debian/*/DEBIAN/).
 
-Deze mislukking kan veroorzaakt worden door een slecht of ontbrekend shlibs- of symbols-bestand in het pakket van de bibliotheek. Ze kan zich ook voordoen als de bibliotheek gebouwd wordt binnen hetzelfde broncodepakket en de shlibs-bestanden nog niet aangemaakt zijn (in dat geval moet u debian/rules repareren zodat de shlibs gemaakt worden voordat B<dpkg-shlibdeps> ingeroepen wordt). Een slecht RPATH kan er ook toe leiden dat de bibliotheek te vinden is onder een niet-conforme naam (bijvoorbeeld /usr/lib/openoffice.org/../lib/libssl.so.0.9.8 in plaats van /usr/lib/libssl.so.0.9.8), die aan geen enkel pakket gekoppeld is. B<dpkg-shlibdeps> tracht dit te omzeilen door terug te vallen op een conforme naam (met behulp van B<realpath>(3)), maar dit lukt niet altijd. Het is altijd het beste om het RPATH van het binair bestand uit te zuiveren om problemen te voorkomen.
+Deze mislukking kan veroorzaakt worden door een slecht of ontbrekend shlibs- of symbols-bestand in het pakket van de bibliotheek. Ze kan zich ook voordoen als de bibliotheek gebouwd wordt binnen hetzelfde broncodepakket en de shlibs-bestanden nog niet aangemaakt zijn (in dat geval moet u debian/rules repareren zodat de shlibs gemaakt worden voordat B<dpkg-shlibdeps> ingeroepen wordt). Een slecht RPATH kan er ook toe leiden dat de bibliotheek te vinden is onder een niet-conforme naam (bijvoorbeeld /usr/lib/openoffice.org/../lib/libssl.so.0.9.8 in plaats van /usr/lib/libssl.so.0.9.8), die aan geen enkel pakket gekoppeld is. B<dpkg-shlibdeps> tracht dit te omzeilen door terug te vallen op een conforme naam (met behulp van L<realpath(3)>), maar dit lukt niet altijd. Het is altijd het beste om het RPATH van het binair bestand uit te zuiveren om problemen te voorkomen.
 
 Het inroepen van B<dpkg-shlibdeps> in de breedsprakige modus (B<-v>) zal veel meer informatie geven over waar het programma de afhankelijkheidsinformatie tracht te vinden. Dit kan nuttig zijn indien u niet begrijpt waarom u deze foutmelding krijgt.
 
@@ -243,5 +243,5 @@ Het inroepen van B<dpkg-shlibdeps> in de breedsprakige modus (B<-v>) zal veel me
 
 =head1 ZIE OOK
 
-B<deb-substvars>(5), B<deb-shlibs>(5), B<deb-symbols>(5), B<dpkg-gensymbols>(1).
+L<deb-substvars(5)>, L<deb-shlibs(5)>, L<deb-symbols(5)>, L<dpkg-gensymbols(1)>.
 

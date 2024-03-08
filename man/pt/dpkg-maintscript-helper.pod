@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-maintscript-helper - contorna limitações conhecidas do dpkg em scripts de maintainer.
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-maintscript-helper> I<command> [I<parameter>...] B<--> I<maint-script-parameter>...
 
@@ -42,6 +42,8 @@ B<dpkg-maintscript-helper> I<command> [I<parameter>...] B<--> I<maint-script-par
 Este programa destina-se a ser corrido dentro de scripts de maintainer para conseguir algumas tarefas que o B<dpkg> (ainda) não pode lidar nativamente seja por limitações de desenho ou devido a limitações actuais,
 
 Muitas destas tarefas requerem acções coordenadas dos vários scripts de maintainer (B<preinst>, B<postinst>, B<prerm>, B<postrm>). Para evitar enganos a mesma chamada precisa simplesmente de englobar todos os scripts e o programa irá automaticamente adaptar o seu comportamento baseado na variável de ambiente B<DPKG_MAINTSCRIPT_NAME> e nos argumentos dos scripts do maintainer que você tem de reencaminhar após um duplo hífen.
+
+Este programa foi introduzido no dpkg 1.15.7.
 
 =head1 PARÂMETROS COMUNS
 
@@ -73,9 +75,9 @@ Isto significa que se um pacote se destina a renomear ou remover um conffile, de
 
 =head2 Remover um ficheiro de configuração
 
-Nota: Isto pode ser substituído na maioria dos casos pela bandeira C<remove-on-upgrade> em F<DEBIAN/conffiles> (desde dpkg 1.20.6), veja L<deb-conffiles(5)>.
+B<Nota>: Isto pode ser substituído na maioria dos casos pela bandeira C<remove-on-upgrade> em F<DEBIAN/conffiles> (desde dpkg 1.20.6), veja L<deb-conffiles(5)>.
 
-Se um conffile for completamente removido, deve ser removido do disco, a menos que o utilizador o tenha modificado. Se existirem modificações locais, estas devem ser preservadas. Se a actualização do pacote abortar, o conffile obsoleto mais recente não deve desaparecer.
+If a conffile is completely removed, it should be removed from disk, unless the user has modified it.  If there are local modifications, they should be preserved.  If the package upgrade aborts, the newly obsolete conffile should not disappear.
 
 tudo isto é implementado ao colocar o seguinte fragmento de shell nos scripts de maintainer B<preinst>, B<postinst> e B<postrm>:
 
@@ -113,7 +115,7 @@ Implementação actual: o B<preinst> verifica se o conffile foi modificado. Se s
 
 Ao actualiza um pacote, o B<dpkg> não irá mudar automaticamente de um link simbólico para um directório ou vice-versa. Downgrades (descidas de versão) não são suportados e o caminho irá ser deixado como está.
 
-Nota: Os links simbólicos e directórios criados durante esses switches precisam de ser enviados nos novos pacotes, ou o B<dpkg> não será capaz de os remover durante a purga.
+B<Nota>: Os links simbólicos e directórios criados durante esses switches precisam de ser enviados nos novos pacotes, ou o B<dpkg> não será capaz de os remover durante a purga.
 
 =head2 Alternar um link simbólico para directório
 
@@ -153,7 +155,7 @@ Implementação actual: o B<preinst> verifica se o directório existe, não cont
 
 =head1 INTEGRAÇÃO EM PACOTES
 
-Quando usar um ajudante de empacotamento, por favor verifique se ele tem integração com B<dpkg-maintscript-helper> nativa, o que pode tornar a sua vida mais fácil. Veja por exemplo B<dh_installdeb>(1).
+When using a packaging helper, please check if it has native B<dpkg-maintscript-helper> integration, which might make your life easier. See for example L<dh_installdeb(1)>.
 
 Dado que B<dpkg-maintscript-helper> é usado no B<preinst>, usa-lo incondicionalmente requer uma pré-dependência para assegurar que a versão requerida do B<dpkg> já foi desempacotada antes. A versão requerida depende do comando usado, para B<rm_conffile> e B<mv_conffile> é 1.15.7.2, para B<symlink_to_dir> e B<dir_to_symlink> é 1.17.14:
 
@@ -196,7 +198,7 @@ Define o modo de cor (desde dpkg 1.19.1). Os valores presentemente aceites são:
 
 =head1 VEJA TAMBÉM
 
-B<dh_installdeb>(1).
+L<dh_installdeb(1)>.
 
 
 =head1 TRADUÇÃO

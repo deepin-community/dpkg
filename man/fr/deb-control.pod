@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NOM
 
-deb-control - Format du fichier principal de contrôle dans les paquets binaires Debian
+deb-control - Debian binary package control file format
 
 =head1 SYNOPSIS
 
@@ -22,7 +22,7 @@ B<DEBIAN/control>
 
 =head1 DESCRIPTION
 
-Chaque paquet de fichier binaire de Debian fournit un fichier B<control> dans le membre B<control> et leur format L<deb822(5)> est un sous-ensemble du fichier principal B<debian/control> dans les paquets source Debian, voir B<deb-src-control>(5).
+Each Debian binary package contains a B<control> file in its B<control> member, and its L<deb822(5)> format is a subset of the B<debian/control> template source control file in Debian source packages, see L<deb-src-control(5)>.
 
 Ce fichier contient un certain nombre de champs. Chaque champ commence par une étiquette, telle que B<Package> ou B<Version> (la casse n'importe pas), suivie d'un S<« : »,> et du contenu du champ (sensible à la casse à moins que cela ne soit spécifié autrement). Les champs sont séparés seulement par des étiquettes de champ. En d'autres termes, le contenu d'un champ peut s'étendre sur plusieurs lignes, mais les outils d'installation joindront en général les lignes pendant le traitement du contenu du champ (sauf pour le champ B<Description>, voir ci-dessous).
 
@@ -40,7 +40,7 @@ Ce champ indique le type de paquet. La valeur B<udeb> est à utiliser pour les p
 
 =item B<Version:> I<chaîne-de-la-version> (requis)
 
-C'est classiquement le numéro de version du paquet d'origine dans la forme choisie par l'auteur du programme. Il peut y avoir aussi un numéro de révision Debian (pour les paquets non natifs). Le format exact et l'algorithme de tri sont décrits dans B<deb-version>(7).
+Typically, this is the original package's version number in whatever form the program's author uses.  It may also include a Debian revision number (for non-native packages).  The exact format and sorting algorithm are described in L<deb-version(7)>.
 
 =item B<Maintainer:> I<nom-complet-et-adresse-électronique> (recommandé)
 
@@ -214,7 +214,7 @@ Ce champ sert à spécifier une liste, séparée par des espaces, de profils de 
 
 =item B<Auto-Built-Package:> I<liste-de-raisons>
 
-Ce champ définit une liste, séparée par des espaces, des raisons pour lesquelles ce paquet a été généré automatiquement. Les paquets binaires marqués avec ce champ n'apparaîtront pas dans le fichier principal de contrôle des sources I<debian/control>. B<debug-symbols> est la seule raison utilisée actuellement.
+This field specifies a whitespace separated list of reasons why this package was auto-generated.  Binary packages marked with this field will not appear in the I<debian/control> template source control file.  The only currently used reason is B<debug-symbols>.
 
 =item B<Build-Ids:> I<liste-identifiants-de-construction-elf>
 
@@ -255,7 +255,7 @@ Le champ B<Build-Ids> utilise un nom plutôt générique à partir de son contex
 
 =head1 VOIR AUSSI
 
-L<deb822(5)>, B<deb-src-control>(5), B<deb>(5), B<deb-version>(7), B<debtags>(1), B<dpkg>(1), B<dpkg-deb>(1).
+L<deb822(5)>, L<deb-src-control(5)>, L<deb(5)>, L<deb-version(7)>, L<debtags(1)>, L<dpkg(1)>, L<dpkg-deb(1)>.
 
 
 =head1 TRADUCTION

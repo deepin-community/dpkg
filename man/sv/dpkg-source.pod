@@ -44,7 +44,7 @@ Om källkodspaketet använder ett annat format än standardformatet (gäller fö
 
 Bygg ett källkodpaket (B<--build> sedan dpkg 1.17.14). Det första argumentet som inte är en flagga tas som namn på katalogen som innehåller det debianiserade källkodsträdet (dvs. med underkatalogen ”debian” och kanske ändringar på originalfilerna). Beroende på vilket källkodspaketformat som används för att bygga formatet kan ytterligare parametrar kanske godtas.
 
-B<dpkg-source> kommer bygga källkodspaketet med det första format som fungerar från denna lista i denna ordning: formatet som anges med kommandoradsflaggan I<--format>, formatet som anges i I<debian/source/format>, ”1.0”. Standardvärdet ”1.0” rekommenderas ej och kommer att tas bort en gång i framtiden, du bör alltid dokumentera det önskade källkodsformatet i B<debian/source/format>. Se avsnittet B<FORMAT PÅ KÄLLKODSPAKET> för en utförlig beskrivning av de olika källkodspaketformaten.
+B<dpkg-source> kommer bygga källkodspaketet med det första format som fungerar från denna lista i denna ordning: formatet som anges med kommandoradsflaggan I<--format>, formatet som anges i I<debian/source/format>, ”1.0”. Standardvärdet ”1.0” rekommenderas ej och kommer att tas bort en gång i framtiden, du bör alltid dokumentera det önskade källkodsformatet i B<debian/source/format>. Se avsnittet L</FORMAT PÅ KÄLLKODSPAKET> för en utförlig beskrivning av de olika källkodspaketformaten.
 
 =item B<--print-format> I<katalog>
 
@@ -88,7 +88,7 @@ Anger ändringsloggsfil som information ska läsas från. Standardvärde är B<d
 
 =item B<-F>I<ändringsloggformat>
 
-Anger format på ändringsloggen. Se B<dpkg-parsechangelog>(1) för information om alternativa format.
+Anger format på ändringsloggen. Se L<dpkg-parsechangelog(1)> för information om alternativa format.
 
 =item B<--format=>I<värde>
 
@@ -96,7 +96,7 @@ Använd det givna formatet för att bygga källkodspaketet (sedan dpkg 1.14.17).
 
 =item B<-V>I<namn>B<=>I<värde>
 
-Ställer in en utdatasubstitueringsvariabel. Se B<deb-substvars>(5) för en beskrivning av utdatasubstituering.
+Ställer in en utdatasubstitueringsvariabel. Se L<deb-substvars(5)> för en beskrivning av utdatasubstituering.
 
 =item B<-T>I<substvars-fil>
 
@@ -132,13 +132,13 @@ Det reguljära uttrycket i perlformat som angavs utökar standardvärdet som anv
 
 =item B<-I>[I<filmönster>], B<--tar-ignore>[=I<filmönster>]
 
-Om flaggan anges kommer filnamnet att sändas vidare till B<tar>(1):s B<--exclude>-flagga när det anropas för att skapa en .orig.tar.gz eller .tar.gz-fil (B<--tar-ignore> sedan dpkg 1.15.6). Till exempel kommer B<-I>CVS att hoppa över CVS-kataloger när tar.gz-filen skapas. Flaggan kan upprepas flera gånger för att lista flera filnamn som ska uteslutas.
+Om flaggan anges kommer filnamnet att sändas vidare till L<tar(1)>:s B<--exclude>-flagga när det anropas för att skapa en .orig.tar.gz eller .tar.gz-fil (B<--tar-ignore> sedan dpkg 1.15.6). Till exempel kommer B<-I>CVS att hoppa över CVS-kataloger när tar.gz-filen skapas. Flaggan kan upprepas flera gånger för att lista flera filnamn som ska uteslutas.
 
 B<-I> ensamt lägger till satandard B<--exclude>-flaggor som filtrerar ut styrfiler och kataloger från de flesta vanliga versionshanteringssystem, säkerhetskopior, växlingsfiler och Libtool-byggutdatakataloger.
 
 =back
 
-B<Observera:> Även om de används till liknande ändamål, så har B<-i> och B<-I> väldigt olika syntax och semantik. B<-i> kan endast anges en gång och tar ett perl-kompatibelt reguljärt uttryck, vilket matchas mot den kompletta relativa sökvägen för varje fil. B<-I> kan anges flera gånger och tar ett filnamnssökmänster med skaljokertecken. Mönstret matchas mot den kompletta relativa sökvägen, men även individuellt mot varje komponent i sökvägen. Den exakta semantiken för tar:s B<--exclude>-flagga är något komplicerad, se L<https://www.gnu.org/software/tar/manual/tar.html#wildcards> för fullständig dokumentation.
+B<Observera>: Även om de används till liknande ändamål, så har B<-i> och B<-I> väldigt olika syntax och semantik. B<-i> kan endast anges en gång och tar ett perl-kompatibelt reguljärt uttryck, vilket matchas mot den kompletta relativa sökvägen för varje fil. B<-I> kan anges flera gånger och tar ett filnamnssökmänster med skaljokertecken. Mönstret matchas mot den kompletta relativa sökvägen, men även individuellt mot varje komponent i sökvägen. Den exakta semantiken för tar:s B<--exclude>-flagga är något komplicerad, se L<https://www.gnu.org/software/tar/manual/tar.html#wildcards> för fullständig dokumentation.
 
 Förvalt reguljärt uttryck och sökmönster för de bägge flaggorna kan ses i utdata för B<--help>-kommandot.
 
@@ -296,7 +296,7 @@ Huvud-originaltarbollen packas upp först, därefter packas alla ytterligare ori
 
 Alla patchar listade i B<debian/patches/>I<återförsäljare>B<.series> eller B<debian/patches/series> tillämpas sedan, där I<återförsäljare> är namnet på den aktuella återförsäljaren skrivet med små bokstäver, eller B<debian> om ingen har angivits. Om den förstnämnda filen används och den sistnämnda inte existerar (eller är en symbolisk länk), kommer den senare att ersättas av en symbolisk länk till den första. Tanken är att göra det enklare att använda B<quilt> till att hantera patchuppsättningen. Återförsäljarspecifika series-filer är tänkta att göra det möjligt att serialisera flera utvecklingsgrenar baserade på återförsäljaren, på ett deklarativt sätt, istället för att öppet koda den här hanteringen i B<debian/rules>. Detta är speciellt användbart när källkoden behöver patchas olika eftersom de rörda filerna inte stöder inbyggd villkorlig tillämpning. Observera att, även om B<dpkg-source> korrekt tolkar series-filer som använder explicita flaggor till patch-programmet (lagrade på kommandoraden efter patch-filnamnet och ett eller flera blanksteg), så ignoreras dessa flaggor och det förväntar sig att patchar kan tillämpas med flaggan B<-p1> till B<patch>. Det kommer därför visa en varning sådana flaggor upptäcks, och bygget kommer troligen att misslyckas.
 
-Oberbera att B<lintian>(1) kommer skapa ovillkorliga varningar när återförsäljarserier används på grund av en kontroversiell Debian-specifik dom, vilket inte bör påverka extern användning; för att tysta dessa kan dpkg:s lintianprofil användas genom att ge parametern ”B<--profile dpkg>” till B<lintian>(1).
+Oberbera att L<lintian(1)> kommer skapa ovillkorliga varningar när återförsäljarserier används på grund av en kontroversiell Debian-specifik dom, vilket inte bör påverka extern användning; för att tysta dessa kan dpkg:s lintianprofil användas genom att ge parametern ”B<--profile dpkg>” till L<lintian(1)>.
 
 Tidsstämplarna för alla patchade filer nollställs till den tidpunkt då källkodspaketet extraherades (vilket undviker tidsstämpelförskjutningar som kunde leda till problem när autogenererade filer patchas).
 
@@ -316,7 +316,7 @@ Den uppdaterade debiankatalogen, och listan över modifierade binärer, används
 
 Den automatiskt genererade diff-filen innehåller inte ändringar för VCS-specifika filer eller för många temporära filer (se standardvärdet som är knutet till flaggan B<-i> i texten för B<--help>). Detta gäller speciellt katalogen B<.pc> som används av B<quilt>, katalogen kommer att ignoreras när den automatiska patchen skapas.
 
-B<Observera:> B<dpkg-source> B<--before-build> (och B<--build>) ser till att alla  patchar som anges i seriefilen tillämpas så att paketbygget alltid har alla patchar tillämpade. Detta görs genom att hitta alla icke-tillämpade patchar (som anges i filen B<series> men inte i B<.pc/applied-patches>), och om den första patchen i listan kan tillämpas utan fel kommer samtliga att tillämpas. Flaggan B<--no-preparation> kan användas för att slå av detta beteende.
+B<Observera>: B<dpkg-source> B<--before-build> (och B<--build>) ser till att alla  patchar som anges i seriefilen tillämpas så att paketbygget alltid har alla patchar tillämpade. Detta görs genom att hitta alla icke-tillämpade patchar (som anges i filen B<series> men inte i B<.pc/applied-patches>), och om den första patchen i listan kan tillämpas utan fel kommer samtliga att tillämpas. Flaggan B<--no-preparation> kan användas för att slå av detta beteende.
 
 B<Lagra ändringar>
 
@@ -324,7 +324,7 @@ B<Lagra ändringar>
 
 =item B<--commit> [I<katalog>] [I<patchnamn>] [I<patch-fil>]
 
-Skapar en patch som motsvarar de lokala ändringar som inte hanteras av B<quilt>-patch-systemet och integrerar dem i patch-systemet under namnet I<patchnamn>. Om namnet saknas kommer programmet be om ett interaktivt. Om I<patch-fil> anges används den som patch som motsvarar de lokala ändringar som ska integreras. När patchen är integrerad startas ett redigeringsprogram så att du kan ange metainformationen i patchhuvudet.
+Skapar en patch som motsvarar de lokala ändringar som inte hanteras av B<quilt>-patch-systemet och integrerar dem i patch-systemet under namnet I<patchnamn>. Om namnet saknas kommer programmet be om ett interaktivt. Om I<patch-fil> anges används den som patch som motsvarar de lokala ändringar som ska integreras. När patchen är integrerad startas ett redigeringsprogram (det första som hittas av B<sensible-editor>, C<$VISUAL>, C<$EDITOR>, B<vi>) så att du kan ange metainformationen i patchhuvudet.
 
 Det är oftast nyttigt att sända med I<patchfil> efter att ett bygge där filen skapats i förväg misslyckas, och att patchfilen därför ska tas bort efter integrering. Observera även att ändringarna som finns i patchfilen redan måste ha applicerats på trädet och att filerna som modifieras av patchen inte får innehålla ytterligare ej beskrivna ändringar.
 
@@ -424,7 +424,7 @@ B<Bygga>
 
 Innan uppackningen fortsätter kommer en del tester att utföras för att se till att vi inte har några ej ignorerade ej incheckade ändringar.
 
-B<git-bundle>(1) används för att generera en bunt från git-arkivet. Som standard tas alla grenar och taggar i arkivet med i bunten.
+L<git-bundle(1)> används för att generera en bunt från git-arkivet. Som standard tas alla grenar och taggar i arkivet med i bunten.
 
 B<Byggflaggor>
 
@@ -432,7 +432,7 @@ B<Byggflaggor>
 
 =item B<--git-ref=>I<ref>
 
-Gör det möjligt att ange en git-referens som ska tas med i bunten. Om den anges överstyr den standardbeteendet som är att ta med alla grenar och taggar. Kan anges flera gånger. I<ref> kan vara namnet på en gren eller tagg som ska tas med. Den kan även vara vilken som helst annan parameter som kan sändas med till B<git-rev-list>(1). För att, till exempel, endast ta med grenen ”main”, använd B<--git-ref=>main. För att ta med alla taggar och grenar, förutom grenen ”private”, använd B<--git-ref=>--all B<--git-ref=>^private
+Gör det möjligt att ange en git-referens som ska tas med i bunten. Om den anges överstyr den standardbeteendet som är att ta med alla grenar och taggar. Kan anges flera gånger. I<ref> kan vara namnet på en gren eller tagg som ska tas med. Den kan även vara vilken som helst annan parameter som kan sändas med till L<git-rev-list(1)>. För att, till exempel, endast ta med grenen ”main”, använd B<--git-ref=>main. För att ta med alla taggar och grenar, förutom grenen ”private”, använd B<--git-ref=>--all B<--git-ref=>^private
 
 =item B<--git-depth=>I<antal>
 
@@ -496,7 +496,7 @@ Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även 
 
 =item B<SOURCE_DATE_EPOCH>
 
-Om satt kommer det användas som tidsstämpel (som sekunder sedan epoken) för att tvinga mtime i B<tar>(5)-filposterna.
+Om satt kommer det användas som tidsstämpel (som sekunder sedan epoken) för att tvinga mtime i L<tar(5)>-filposterna.
 
 =item B<VISUAL>
 
@@ -541,7 +541,7 @@ Ange varje flagga på en egen rad. Tomma rader och rader som börjar med ”B<#>
  single-debian-patch
  # ignorera ändringar i config.{sub,guess}
  extend-diff-ignore = "(^|/)(config.sub|config.guess)$"
-B<Observera:> B<format>-flaggor tillåts inte i den här filen, du bör använda filen B<debian/source/format> istället.
+B<Observera>: B<format>-flaggor tillåts inte i den här filen, du bör använda filen B<debian/source/format> istället.
 
 =head2 debian/source/local-options
 
@@ -559,13 +559,19 @@ Friformstext som läggs in på toppen av den automatiskt genererade patchen i fo
 
 Listar alla patchar som måste tillämpas (i den givna ordningen) ovanpå uppströmskällkodspaketet. Inledande och avslutande blanksteg tas bort. I<återförsäljare> är namnet på aktuell återförsäljare skrivet med små bokstäver. Om den återförsäljarspecifika series-filen inte existerar, kommer den återförsäljarlösa series-filen att användas istället. Rader som börjar med ”B<#>” är kommentarer och ignoreras. Tomma rader ignoreras. De rader som är kvar inleds med filnamnet på en patchfil (relativt till B<debian/patches/>-katalogen) upp till det första blankstegstecknet eller slutet på raden. Valfria flaggor till B<quilt> kan följa fram till slutet av raden eller det första ”B<#>” som följer på ett eller flera blanksteg (vilket anger början på en kommentar fram till slutet av raden).
 
+=head1 SÄKERHET
+
+Att utforska obetrodda källkodspaket eller att packa upp dem till en mellanstation kan anses som en säkerhetsgräns, och eventuellt brytande av gränser som uppstår av dessa operationer bör anses som en säkerhetssårbarhet. Men hantering av obetrodda källkodspaket bör inte tas lätt på, eftersom den exponerade ytan innehåller eventuella stödda komprimeringskommandon, kommandon för att hantera specifika dataformat (såsom L<tar(1)> eller L<patch(1)>) i tillägg till själva källkodformatet och styrfilerna. Att utföra dessa operationer på obetrodda data som root avråds å det bestämdaste från.
+
+Bygga källkodspaket bör endast utföras över betrodda data.
+
 =head1 PROGRAMFEL
 
 Tidpunkten på fältöverstyrning inträffar jämfört med inställning av vissa standardutdatafält är ganska förvirrad.
 
 =head1 SE ÄVEN
 
-B<deb-src-control>(5), B<deb-changelog>(5), B<deb-substvars>(5), B<dsc>(5).
+L<deb-src-control(5)>, L<deb-changelog(5)>, L<deb-substvars(5)>, L<dsc(5)>.
 
 
 =head1 ÖVERSÄTTNING

@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAAM
 
-deb-prerm - pre-verwijderingsscript van de pakketonderhouder
+deb-prerm - pre-verwijderingsscript van de pakketbeheerder
 
 =head1 OVERZICHT
 
@@ -22,7 +22,7 @@ B<DEBIAN/prerm>
 
 =head1 BESCHRIJVING
 
-Een pakket kan verschillende pre-verwijderingsacties uitvoeren via scripts van de pakketonderhouder door in zijn control-archief een uitvoerbaar bestand I<prerm> op te nemen (d.w.z. I<DEBIAN/prerm> bij het creëren van het pakket).
+Een pakket kan verschillende pre-verwijderingsacties uitvoeren via scripts van de pakketbeheerder door in zijn control-archief een uitvoerbaar bestand I<prerm> op te nemen (d.w.z. I<DEBIAN/prerm> bij het creëren van het pakket).
 
 Het script kan op de volgende manieren geactiveerd worden:
 
@@ -56,5 +56,5 @@ Vooraleer het pakket vervangen word ten gevolge van een conflict.
 
 =head1 ZIE OOK
 
-B<dpkg>(1).
+L<dpkg(1)>.
 

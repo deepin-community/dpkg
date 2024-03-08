@@ -70,7 +70,7 @@ Die Groß-/Kleinschreibung ist bei Feldnamen nicht relevant, aber normalerweise 
 
 Absatztrenner (leere Zeilen) und Zeilen, die nur aus U+0020 B<LEERZEICHEN> und U+0009 B<TABULAOREN> bestehen, sind in Feldwerten oder zwischen Feldern nicht erlaubt. Leere Zeilen und Feldwerte werden normalerweise maskiert, indem sie durch ein U+0020 B<LEERZEICHEN> gefolgt von einem Satzpunkt (U+002E ‚B<.>’) dargestellt werden.
 
-Zeilen, die mit U+0023 ‚B<#>’ ohne einen vorangestellten Leerraum beginnen, sind Kommentarzeilen, die nur in Quellpaketsteuerdateien (I<debian/control>) und in B<deb-origin>(5)-Dateien erlaubt sind. Diese Kommentarzeilen werden ignoriert, selbst zwischen zwei Fortsetzungszeilen. Sie beenden keine logischen Zeilen.
+Zeilen, die mit U+0023 ‚B<#>’ ohne einen vorangestellten Leerraum beginnen, sind Kommentarzeilen, die nur in Quellpaketsteuerdateien (I<debian/control>) und in L<deb-origin(5)>-Dateien erlaubt sind. Diese Kommentarzeilen werden ignoriert, selbst zwischen zwei Fortsetzungszeilen. Sie beenden keine logischen Zeilen.
 
 Alle Steuerdateien müssen in UTF-8 kodiert sein.
 

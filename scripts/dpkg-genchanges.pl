@@ -23,7 +23,6 @@ use strict;
 use warnings;
 
 use List::Util qw(any all none);
-use Encode;
 use POSIX qw(:errno_h :locale_h);
 
 use Dpkg ();
@@ -40,7 +39,7 @@ use Dpkg::Control::Info;
 use Dpkg::Control::Fields;
 use Dpkg::Control;
 use Dpkg::Substvars;
-use Dpkg::Vars;
+use Dpkg::Package;
 use Dpkg::Changelog::Parse;
 use Dpkg::Dist::Files;
 use Dpkg::Version;
@@ -60,11 +59,14 @@ my $host_arch = get_host_arch();
 my @profiles = get_build_profiles();
 my $changes_format = '1.8';
 
-my %p2f;           # - package to file map, has entries for "packagename"
-my %f2seccf;       # - package to section map, from control file
-my %f2pricf;       # - package to priority map, from control file
-my %sourcedefault; # - default values as taken from source (used for Section,
-                   #   Priority and Maintainer)
+# Package to file map, has entries for "packagename".
+my %pkg2file;
+# Package to section map, from control file.
+my %file2ctrlsec;
+# Package to priority map, from control file.
+my %file2ctrlpri;
+# Default values taken from source (used for Section, Priority and Maintainer).
+my %sourcedefault;
 
 my @descriptions;
 
@@ -125,6 +127,22 @@ sub usage {
   -?, --help               show this help message.
       --version            show the version.
 "), $Dpkg::PROGNAME;
+}
+
+sub format_desc
+{
+    my ($pkgname, $pkgtype, $desc) = @_;
+
+    # XXX: This does not correctly truncate characters based on their width,
+    # but on the number of characters which will not work for wide ones. But
+    # we do not have anything better in perl core.
+    utf8::decode($desc);
+    my $line = sprintf '%-10s - %-.65s', $pkgname, $desc;
+    utf8::encode($line);
+
+    $line .= " ($pkgtype)" if $pkgtype ne 'deb';
+
+    return $line;
 }
 
 
@@ -231,18 +249,18 @@ if (! $is_backport && defined $prev_changelog &&
 
 # Scan control info of source package
 my $src_fields = $control->get_source();
-foreach (keys %{$src_fields}) {
-    my $v = $src_fields->{$_};
-    if (m/^Source$/) {
-        set_source_package($v);
-    } elsif (m/^Section$|^Priority$/i) {
-        $sourcedefault{$_} = $v;
-    } elsif (m/^Description$/i) {
+foreach my $f (keys %{$src_fields}) {
+    my $v = $src_fields->{$f};
+    if ($f eq 'Source') {
+        set_source_name($v);
+    } elsif (any { $f eq $_ } qw(Section Priority)) {
+        $sourcedefault{$f} = $v;
+    } elsif ($f eq 'Description') {
         # Description in changes is computed, do not copy this field, only
         # initialize the description substvars.
         $substvars->set_desc_substvars($v);
     } else {
-        field_transfer_single($src_fields, $fields);
+        field_transfer_single($src_fields, $fields, $f);
     }
 }
 
@@ -255,12 +273,12 @@ if (build_has_any(BUILD_SOURCE)) {
     warning(g_('missing Section for source files')) if $sec eq '-';
     warning(g_('missing Priority for source files')) if $pri eq '-';
 
-    my $spackage = get_source_package();
+    my $spackage = get_source_name();
     (my $sversion = $substvars->get('source:Version')) =~ s/^\d+://;
 
     my $dsc = "${spackage}_${sversion}.dsc";
     my $dsc_pathname = "$uploadfilesdir/$dsc";
-    my $dsc_fields = Dpkg::Control->new(type => CTRL_PKG_SRC);
+    my $dsc_fields = Dpkg::Control->new(type => CTRL_DSC);
     $dsc_fields->load($dsc_pathname) or error(g_('%s is empty'), $dsc_pathname);
     $checksums->add_from_file($dsc_pathname, key => $dsc);
     $checksums->add_from_control($dsc_fields, use_files_for_md5 => 1);
@@ -289,9 +307,9 @@ if (build_has_any(BUILD_SOURCE)) {
         any { m/\.(?:debian\.tar|diff)\.$ext$/ } $checksums->get_files())
     {
         $origsrcmsg = g_('not including original source code in upload');
-        foreach my $f (grep { m/\.orig(-.+)?\.tar\.$ext$/ } $checksums->get_files()) {
-            $checksums->remove_file($f);
-            $checksums->remove_file("$f.asc");
+        foreach my $fn (grep { m/\.orig(-.+)?\.tar\.$ext$/ } $checksums->get_files()) {
+            $checksums->remove_file($fn);
+            $checksums->remove_file("$fn.asc");
         }
     } else {
         if ($sourcestyle =~ m/d/ &&
@@ -304,8 +322,8 @@ if (build_has_any(BUILD_SOURCE)) {
     push @archvalues, 'source';
 
     # Only add attributes for files being distributed.
-    for my $f ($checksums->get_files()) {
-        $dist->add_file($f, $sec, $pri);
+    for my $fn ($checksums->get_files()) {
+        $dist->add_file($fn, $sec, $pri);
     }
 } elsif (build_is(BUILD_ARCH_DEP)) {
     $origsrcmsg = g_('binary-only arch-specific upload ' .
@@ -322,13 +340,13 @@ my $dist_binaries = 0;
 $dist->load($fileslistfile) if -e $fileslistfile;
 
 foreach my $file ($dist->get_files()) {
-    my $f = $file->{filename};
+    my $fn = $file->{filename};
     my $p = $file->{package};
     my $a = $file->{arch};
 
     if (defined $p && $file->{package_type} eq 'buildinfo') {
         # We always distribute the .buildinfo file.
-        $checksums->add_from_file("$uploadfilesdir/$f", key => $f);
+        $checksums->add_from_file("$uploadfilesdir/$fn", key => $fn);
         next;
     }
 
@@ -344,11 +362,11 @@ foreach my $file ($dist->get_files()) {
         push @archvalues, $a if not $archadded{$a}++;
     }
     if (defined $p && $file->{package_type} =~ m/^u?deb$/) {
-        $p2f{$p} //= [];
-        push @{$p2f{$p}}, $f;
+        $pkg2file{$p} //= [];
+        push @{$pkg2file{$p}}, $fn;
     }
 
-    $checksums->add_from_file("$uploadfilesdir/$f", key => $f);
+    $checksums->add_from_file("$uploadfilesdir/$fn", key => $fn);
     $dist_binaries++;
 }
 
@@ -368,7 +386,7 @@ foreach my $pkg ($control->get_packages()) {
     my @restrictions;
     @restrictions = parse_build_profiles($bp) if defined $bp;
 
-    if (not defined($p2f{$p})) {
+    if (not defined $pkg2file{$p}) {
 	# No files for this package... warn if it's unexpected
 	if (((build_has_any(BUILD_ARCH_INDEP) and debarch_eq('all', $a)) or
 	     (build_has_any(BUILD_ARCH_DEP) and
@@ -384,21 +402,19 @@ foreach my $pkg ($control->get_packages()) {
 
     # Add description of all binary packages
     $d = $substvars->substvars($d);
-    my $desc = encode_utf8(sprintf('%-10s - %-.65s', $p, decode_utf8($d)));
-    $desc .= " ($pkg_type)" if $pkg_type ne 'deb';
-    push @descriptions, $desc;
+    push @descriptions, format_desc($p, $pkg_type, $d);
 
     # List of files for this binary package.
-    my @f = @{$p2f{$p}};
+    my @files = @{$pkg2file{$p}};
 
-    foreach (keys %{$pkg}) {
-	my $v = $pkg->{$_};
+    foreach my $f (keys %{$pkg}) {
+        my $v = $pkg->{$f};
 
-	if (m/^Section$/) {
-	    $f2seccf{$_} = $v foreach (@f);
-	} elsif (m/^Priority$/) {
-	    $f2pricf{$_} = $v foreach (@f);
-	} elsif (m/^Architecture$/) {
+        if ($f eq 'Section') {
+            $file2ctrlsec{$_} = $v foreach @files;
+        } elsif ($f eq 'Priority') {
+            $file2ctrlpri{$_} = $v foreach @files;
+        } elsif ($f eq 'Architecture') {
 	    if (build_has_any(BUILD_ARCH_DEP) and
 	        (any { debarch_is($host_arch, $_) } debarch_list_parse($v, positive => 1))) {
 		$v = $host_arch;
@@ -406,23 +422,23 @@ foreach my $pkg ($control->get_packages()) {
 		$v = '';
 	    }
 	    push(@archvalues, $v) if $v and not $archadded{$v}++;
-        } elsif (m/^Description$/) {
+        } elsif ($f eq 'Description') {
             # Description in changes is computed, do not copy this field
 	} else {
-            field_transfer_single($pkg, $fields);
+            field_transfer_single($pkg, $fields, $f);
 	}
     }
 }
 
 # Scan fields of dpkg-parsechangelog
-foreach (keys %{$changelog}) {
-    my $v = $changelog->{$_};
-    if (m/^Source$/i) {
-	set_source_package($v);
-    } elsif (m/^Maintainer$/i) {
+foreach my $f (keys %{$changelog}) {
+    my $v = $changelog->{$f};
+    if ($f eq 'Source') {
+        set_source_name($v);
+    } elsif ($f eq 'Maintainer') {
 	$fields->{'Changed-By'} = $v;
     } else {
-        field_transfer_single($changelog, $fields);
+        field_transfer_single($changelog, $fields, $f);
     }
 }
 
@@ -430,7 +446,7 @@ if ($changesdescription) {
     $fields->{'Changes'} = "\n" . file_slurp($changesdescription);
 }
 
-for my $p (keys %p2f) {
+for my $p (keys %pkg2file) {
     if (not defined $control->get_pkg_by_name($p)) {
         # Skip automatically generated packages (such as debugging symbol
         # packages), by using the Auto-Built-Package field.
@@ -438,16 +454,16 @@ for my $p (keys %p2f) {
             my $file = $dist->get_file($_);
 
             $file->{attrs}->{automatic} eq 'yes'
-        } @{$p2f{$p}};
+        } @{$pkg2file{$p}};
 
         warning(g_('package %s listed in files list but not in control info'), $p);
         next;
     }
 
-    foreach my $f (@{$p2f{$p}}) {
-	my $file = $dist->get_file($f);
+    foreach my $fn (@{$pkg2file{$p}}) {
+        my $file = $dist->get_file($fn);
 
-	my $sec = $f2seccf{$f} || $sourcedefault{'Section'} // '-';
+        my $sec = $file2ctrlsec{$fn} || $sourcedefault{'Section'} // '-';
 	if ($sec eq '-') {
 	    warning(g_("missing Section for binary package %s; using '-'"), $p);
 	}
@@ -456,7 +472,7 @@ for my $p (keys %p2f) {
 	             'files list'), $p, $sec, $file->{section});
 	}
 
-	my $pri = $f2pricf{$f} || $sourcedefault{'Priority'} // '-';
+        my $pri = $file2ctrlpri{$fn} || $sourcedefault{'Priority'} // '-';
 	if ($pri eq '-') {
 	    warning(g_("missing Priority for binary package %s; using '-'"), $p);
 	}
@@ -477,7 +493,7 @@ if (length $fields->{'Date'} == 0) {
     setlocale(LC_TIME, '');
 }
 
-$fields->{'Binary'} = join ' ', sort keys %p2f;
+$fields->{'Binary'} = join ' ', sort keys %pkg2file;
 # Avoid overly long line by splitting over multiple lines
 if (length($fields->{'Binary'}) > 980) {
     $fields->{'Binary'} =~ s/(.{0,980}) /$1\n/g;
@@ -491,18 +507,18 @@ $fields->{'Description'} = "\n" . join("\n", sort @descriptions);
 
 $fields->{'Files'} = '';
 
-foreach my $f ($checksums->get_files()) {
-    my $file = $dist->get_file($f);
+foreach my $fn ($checksums->get_files()) {
+    my $file = $dist->get_file($fn);
 
-    $fields->{'Files'} .= "\n" . $checksums->get_checksum($f, 'md5') .
-			  ' ' . $checksums->get_size($f) .
-			  " $file->{section} $file->{priority} $f";
+    $fields->{'Files'} .= "\n" . $checksums->get_checksum($fn, 'md5') .
+                          ' ' . $checksums->get_size($fn) .
+                          " $file->{section} $file->{priority} $fn";
 }
 $checksums->export_to_control($fields);
 # redundant with the Files field
 delete $fields->{'Checksums-Md5'};
 
-$fields->{'Source'} = get_source_package();
+$fields->{'Source'} = get_source_name();
 if ($fields->{'Version'} ne $substvars->get('source:Version')) {
     $fields->{'Source'} .= ' (' . $substvars->get('source:Version') . ')';
 }

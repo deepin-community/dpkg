@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-gensymbols - gera ficheiros symbols (informação de dependência de biblioteca partilhada)
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-gensymbols> [I<option>...]
 
@@ -50,9 +50,11 @@ O principal interesse desse ficheiros é disponibilizar a versão mínima associ
 
 Quando os ficheiros de símbolos gerados diferem daqueles fornecidos pelo maintainer, B<dpkg-gensymbols> irá escrever um diff entre as duas versões. Mais ainda, se a diferença for muito significante, irá mesmo falhar (você pode personalizar quanta diferença pode ser tolerada, veja a opção B<-c>).
 
+Este programa foi introduzido no dpkg 1.14.8.
+
 =head1 MANTENDO FICHEIROS DE SÍMBOLOS
 
-O formato de intercâmbio base do ficheiro de símbolos é descrito em B<deb-symbols>(5), o qual é usado pelos ficheiros symbols incluídos em pacotes binários. Estes são gerados a partir de ficheiros se símbolos modelo com um formato baseado no anterior, descrito em B<deb-src-symbols>(5) e incluído  em pacotes fonte.
+The base interchange format of the symbols file is described in L<deb-symbols(5)>, which is used by the symbols files included in binary packages.  These are generated from template symbols files with a format based on the former, described in L<deb-src-symbols(5)> and included in source packages.
 
 Os ficheiros de símbolos são apenas úteis se refletirem a evolução do pacote entre vários lançamentos. Assim o maintainer tem de os actualizar todas as vezes que é adicionado um novo símbolo para que a sua versão mínima associada corresponda à realidade.
 
@@ -106,13 +108,13 @@ Define a versão do pacote. Usa por predefinição a versão extraída de debian
 
 =item B<-e>I<library-file>
 
-Apenas analisa bibliotecas explicitas em vez de procurar todas as bibliotecas públicas. Você pode usar padrões de shell usadas para expansões de nome de caminho (veja o manual B<File::Glob>(3perl) para detalhes) em I<library-file> para corresponder a múltiplas bibliotecas com um único argumento (caso contrário você precisa de múltiplos B<-e>).
+Only analyze libraries explicitly listed instead of finding all public libraries.  You can use shell patterns used for pathname expansions (see the L<File::Glob> manual page for details) in I<library-file> to match multiple libraries with a single argument (otherwise you need multiple B<-e>).
 
 =item B<-l>I<directory>
 
 Precede I<directory> à lista de directórios a pesquisar por bibliotecas partilhadas privadas (desde dpkg 1.19.1). Esta opção pode ser usada várias vezes.
 
-B<Nota:> Use esta opção em vez de definir B<LD_LIBRARY_PATH>, pois essa variável de ambiente é usado para controlar o vinculador de tempo-de-execução e abusar dela para definir caminhos de bibliotecas partilhadas durante a compilação pode ser problemático quando, por exemplo, se faz compilações cruzadas.
+B<Nota>: Use esta opção em vez de definir B<LD_LIBRARY_PATH>, pois essa variável de ambiente é usado para controlar o vinculador de tempo-de-execução e abusar dela para definir caminhos de bibliotecas partilhadas durante a compilação pode ser problemático quando, por exemplo, se faz compilações cruzadas.
 
 =item B<-I>I<filename>
 
@@ -124,7 +126,7 @@ Escreve o ficheiro de símbolos gerado na saída standard ou em I<filename> se e
 
 =item B<-t>
 
-Escreve o ficheiro de símbolos em modo de modelo em vez do formato compatível com B<deb-symbols>(5). A principal diferença é que em modo de modelo os nomes dos símbolos e as etiquetas são escritos na sua forma original ao contrário dos nomes de símbolos pós-processados com as etiquetas despidas do modo de compatibilidade. Mais ainda, alguns símbolos podem ser omitidos quando se escreve um ficheiro B<deb-symbols>(5) standard (de acordo com as regras de processamento de etiquetas) enquanto que todos os símbolos são sempre escritos no ficheiro modelo de símbolos.
+Write the symbol file in template mode rather than the format compatible with L<deb-symbols(5)>.  The main difference is that in the template mode symbol names and tags are written in their original form contrary to the post-processed symbol names with tags stripped in the compatibility mode. Moreover, some symbols might be omitted when writing a standard L<deb-symbols(5)> file (according to the tag processing rules) while all symbols are always written to the symbol file template.
 
 =item B<-c>I<[0-4]>
 
@@ -202,7 +204,7 @@ Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nati
 
 =head1 VEJA TAMBÉM
 
-L<https://people.redhat.com/drepper/symbol-versioning>, L<https://people.redhat.com/drepper/goodpractice.pdf>, L<https://people.redhat.com/drepper/dsohowto.pdf>, B<deb-src-symbol>(5), B<deb-symbols>(5), B<dpkg-shlibdeps>(1).
+L<https://people.redhat.com/drepper/symbol-versioning>, L<https://people.redhat.com/drepper/goodpractice.pdf>, L<https://people.redhat.com/drepper/dsohowto.pdf>, L<deb-src-symbol(5)>, L<deb-symbols(5)>, L<dpkg-shlibdeps(1)>.
 
 
 =head1 TRADUÇÃO

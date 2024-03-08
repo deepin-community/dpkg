@@ -28,7 +28,23 @@ Ieder veld begint met een markering, zoals B<Source> of B<Binary> (niet hoofdlet
 
 De controle-data mogen ingesloten liggen in een OpenPGP-handtekening met ASCII-harnas volgens de specificatie RFC4880.
 
-De naam van het B<.buildinfo>-bestand is afhankelijk van het type bouw en is zo specifiek als nodig, maar niet meer. Voor een bouw die B<any> bevat, is de naam I<broncode-naam>B<_>I<binaire-versie>B<_>I<arch>B<.buildinfo>. In geval het een bouw betreft die B<all> bevat, is de naam I<broncode-naam>B<_>I<binaire-versie>B<_>B<all.buildinfo>. En in geval het een bouw betreft die B<source> bevat, is de naam I<broncode-naam>B<_>I<broncode-versie>B<_>B<source.buildinfo>.
+De naam van het B<.buildinfo>-bestand zal afhangen van het type bouw en zal zo specifiek zijn als nodig, maar niet meer dan dat; die naam zal zijn:
+
+=over 
+
+=item I<broncode-naam>B<_>I<versie-binair-bestand>B<_>I<arch>B<.buildinfo>
+
+voor een bouw die B<any> bevat
+
+=item I<broncode-naam>B<_>I<versie-binair-bestand>B<_>B<all.buildinfo>
+
+voor een bouw die daarentegen B<all> bevat
+
+=item I<broncode-naam>B<_>I<broncode-versie>B<_>B<source.buildinfo>
+
+voor een bouw die daarentegen B<source> bevat
+
+=back
 
 =head1 VELDEN
 
@@ -40,7 +56,7 @@ De waarde van dit veld bepaalt de indelingsversie van het bestand. De syntaxis v
 
 =item B<Source:> I<broncode-naam> [B<(>I<broncode-versie>B<)>] (verplicht)
 
-De naam van het broncodepakket. Indien de versie van het broncodepakket verschilt van de versie van het binaire pakket, dan zal de I<broncode-naam> gevolgd worden door een I<broncode-versie> tussen haakjes. Dit kan het geval zijn als de bouw gebeurt voor een uitsluitend binaire upload die niet door de onderhouder uitgevoerd wordt.
+De naam van het broncodepakket. Indien de versie van het broncodepakket verschilt van de versie van het binaire pakket, dan zal de I<broncode-naam> gevolgd worden door een I<broncode-versie> tussen haakjes. Dit kan het geval zijn als de bouw gebeurt voor een uitsluitend binaire upload die niet door de beheerder uitgevoerd wordt.
 
 =item B<Binary:> I<lijst-binaire-pakketten> (vereist in de context)
 
@@ -52,13 +68,13 @@ Dit veld met spaties als scheidingsteken, somt de architecturen op van de bestan
 
 =item B<Version:> I<versie-tekenreeks> (verplicht)
 
-Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de auteur van het programma er ook voor gebruikt. Het kan ook een Debian-revisienummer bevatten (voor niet uit Debian stammende pakketten). De exacte indeling en het sorteringsalgoritme worden beschreven in B<deb-version>(7).
+Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de auteur van het programma er ook voor gebruikt. Het kan ook een Debian-revisienummer bevatten (voor niet uit Debian stammende pakketten). De exacte indeling en het sorteringsalgoritme worden beschreven in L<deb-version(7)>.
 
 =item B<Binary-Only-Changes:>
 
 =item S< >I<changelog-item>
 
-Dit multiregel-veld bevat in voorkomend geval de samengevoegde tekst van het changelog-item voor een uitsluitend binaire upload die niet door de onderhouder uitgevoerd wordt (een binary-only non-maintainer upload - binNMU). Om van dit veld een geldig multiregel-veld te maken, worden lege regels vervangen door één enkel punt (‘.’) en springen alle regels in met één spatie. De exacte inhoud hangt af van de changelog-indeling.
+Dit multiregel-veld bevat in voorkomend geval de samengevoegde tekst van het changelog-item voor een uitsluitend binaire upload die niet door de beheerder uitgevoerd wordt (een binary-only non-maintainer upload - binNMU). Om van dit veld een geldig multiregel-veld te maken, worden lege regels vervangen door één enkel punt (‘.’) en springen alle regels in met één spatie. De exacte inhoud hangt af van de changelog-indeling.
 
 =item B<Checksums-Md5:> (verplicht)
 
@@ -84,7 +100,7 @@ De Debian-architectuur van de installatie waarin de pakketten gebouwd worden. Ge
 
 =item B<Build-Date:> I<bouwdatum>
 
-De datum waarop het pakket gebouwd werd. Hij moet dezelfde indeling hebben als de datum in een B<deb-changelog>(5)-item.
+De datum waarop het pakket gebouwd werd. Hij moet dezelfde indeling hebben als de datum in een L<deb-changelog(5)>-item.
 
 =item B<Build-Kernel-Version:> I<bouwkernel-versie>
 
@@ -156,5 +172,5 @@ De lijst met omgevingsvariabelen waarvan bekend is dat zij het proces van het bo
 
 =head1 ZIE OOK
 
-L<deb822(5)>, B<deb-changes>(5), B<deb-version>(7), B<dpkg-genbuildinfo>(1).
+L<deb822(5)>, L<deb-changes(5)>, L<deb-version(7)>, L<dpkg-genbuildinfo(1)>.
 

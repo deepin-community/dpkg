@@ -37,7 +37,7 @@ Tasks
    - Get rid of static variables inside functions.
    - Coalesce hash and checksum functions.
    - Split modstatdb_rw into mode and flags.
-   - Move fd function out of mlib.
+   - Move fd function out of mustlib.
    - Cleanup status chars -> strings hardcoded mappings all over the place.
      (Fix tied field enum with its dselect description (pkgdisplay.cc))
    - Refactor src/unpack.c.
@@ -61,7 +61,7 @@ Tasks
    - Add fnmatch, IRIX5 doesn't have it.
 
  * Man pages:
-   - Add example to dpkg-scanfoo manpages?
+   - Add example to dpkg-scanfoo manual pages?
    - Merge synopsis lines in dpkg-triggers.
    - Check all command vs action.
    - Check usage of '|' instead of ', '.

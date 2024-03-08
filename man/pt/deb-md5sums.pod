@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb-md5sums - resumos de ficheiros MD5 de pacote
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<DEBIAN/md5sums>
 
@@ -39,7 +39,7 @@ Se o ficheiro de controle não existir no pacote binário, o L<dpkg(1)> irá ger
 
 =head1 VEJA TAMBÉM
 
-B<md5sum>(1), B<dpkg-deb>(1), B<dpkg>(1).
+L<md5sum(1)>, L<dpkg-deb(1)>, L<dpkg(1)>.
 
 
 =head1 TRADUÇÃO

@@ -42,7 +42,7 @@ Die Override-Dateien, die für die Erstellung der offiziellen Paketliste verwend
 
 =head1 SIEHE AUCH
 
-B<dpkg-scanpackages>(1), B<dpkg-scansources>(1), B<apt-ftparchive>(1).
+L<dpkg-scanpackages(1)>, L<dpkg-scansources(1)>, L<apt-ftparchive(1)>.
 
 
 =head1 ÜBERSETZUNG

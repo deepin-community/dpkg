@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-genchanges - gera ficheiros .changes Debian
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-genchanges> [I<option>...]
 
@@ -118,7 +118,7 @@ Usa I<maintainer-address> como o nome e endereço de email do maintainer deste p
 
 =item B<-V>I<name>B<=>I<value>
 
-Define uma variável de substituição de saída. Veja B<deb-substvars>(5) para uma discussão sobre substituição da saída.
+Set an output substitution variable.  See L<deb-substvars(5)> for a discussion of output substitution.
 
 =item B<-T>I<substvars-file>
 
@@ -146,7 +146,7 @@ Lê a lista de ficheiros a serem enviados aqui, em vez de usar B<debian/files>.
 
 =item B<-F>I<changelog-format>
 
-Especifica o formato do registo de alterações. Veja B<dpkg-parsechangelog>(1) para informação acerca dos formatos alternativos.
+Specifies the format of the changelog.  See L<dpkg-parsechangelog(1)> for information about alternative formats.
 
 =item B<-u>I<upload-files-dir>
 
@@ -196,7 +196,7 @@ A lista de ficheiros gerados que são parte do envio (upload) que está a ser pr
 
 =head1 VEJA TAMBÉM
 
-B<deb-substvars>(5), B<deb-src-control>(5), B<deb-src-files>(5), B<deb-changelog>(5), B<deb-changes>(5).
+L<deb-substvars(5)>, L<deb-src-control(5)>, L<deb-src-files(5)>, L<deb-changelog(5)>, L<deb-changes(5)>.
 
 
 =head1 TRADUÇÃO

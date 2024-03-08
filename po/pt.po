@@ -1,12 +1,13 @@
-# Portuguese translation for dpkg.
+# Translation of dpkg to Portuguese
 # Copyright (C) 2004 Free Software Foundation, Inc.
+# This file is distributed under the same license as the dpkg package.
 #
 # Miguel Figueiredo <elmig@debianpt.org>, 2004-2019, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.21.20\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
 "PO-Revision-Date: 2023-02-04 14:11+0000\n"
 "Last-Translator: Miguel Figueiredo <elmig@debianpt.org>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -178,6 +179,10 @@ msgstr "falhou executar o seek"
 #, c-format
 msgid "unable to execute %s (%s)"
 msgstr "não foi possível executar %s (%s)"
+
+#: lib/dpkg/command.c
+msgid "PATH is not set"
+msgstr "PATH não está definido"
 
 #: lib/dpkg/compress.c
 #, c-format
@@ -1136,35 +1141,35 @@ msgstr "<estado do pacote e descriptor de progresso do ficheiro>"
 msgid "unable to write to status fd %d"
 msgstr "não foi possível escrever o status fd %d"
 
-#: lib/dpkg/mlib.c utils/update-alternatives.c
+#: lib/dpkg/mustlib.c utils/update-alternatives.c
 msgid "failed to allocate memory"
 msgstr "a alocação de memória falhou"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "failed to dup for fd %d"
 msgstr "falhou dup para fd %d"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "failed to dup for std%s"
 msgstr "falhou dup para std%s"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 msgid "failed to create pipe"
 msgstr "falhou criar um pipe"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "error writing to '%s'"
 msgstr "erro ao escrever para '%s'"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "unable to read filedescriptor flags for %.250s"
 msgstr "não foi possível ler flags de filedescriptor para %.250s"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "unable to set close-on-exec flag for %.250s"
 msgstr "não foi possível activar flag close-on-exec para %.250s"
@@ -1582,6 +1587,13 @@ msgstr "nome de pacote ilegal no especificador '%s%s%s': %s"
 msgid "illegal architecture name in specifier '%s:%s': %s"
 msgstr "nome ilegal de arquitectura no especificador '%s:%s': %s"
 
+#. TRANSLATORS: This is part of the progress output, it is a decimal
+#. * percentage.
+#: lib/dpkg/progress.c
+#, c-format
+msgid "%d%%"
+msgstr ""
+
 #: lib/dpkg/report.c utils/update-alternatives.c
 msgid "warning"
 msgstr "aviso"
@@ -1886,13 +1898,13 @@ msgid "unexpected end of file reading '%.250s'"
 msgstr "fim de ficheiro inesperado ao ler '%.250s'"
 
 #: lib/dpkg/varbuf.c
-msgid "error formatting string into varbuf variable"
-msgstr "erro ao formatar a string para uma variável varbuf"
-
-#: lib/dpkg/varbuf.c
 #, c-format
 msgid "cannot grow varbuf to size %zu; it would overflow"
 msgstr "não pode aumentar varbuf para o tamanho %zu; faria overflow"
+
+#: lib/dpkg/varbuf.c
+msgid "error formatting string into varbuf variable"
+msgstr "erro ao formatar a string para uma variável varbuf"
 
 #: src/common/force.c
 msgid "Set all force options"
@@ -2021,9 +2033,15 @@ msgid "Remove an essential package"
 msgstr "Remover um pacote essencial"
 
 #: src/common/force.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s forcing options - control behaviour when problems found:\n"
+#| "  warn but continue:  --force-<thing>,<thing>,...\n"
+#| "  stop with error:    --refuse-<thing>,<thing>,... | --no-force-"
+#| "<thing>,...\n"
+#| " Forcing things:\n"
 msgid ""
-"%s forcing options - control behaviour when problems found:\n"
+"%s forcing options - control behavior when problems found:\n"
 "  warn but continue:  --force-<thing>,<thing>,...\n"
 "  stop with error:    --refuse-<thing>,<thing>,... | --no-force-<thing>,...\n"
 " Forcing things:\n"
@@ -2568,6 +2586,12 @@ msgid " %7jd bytes, %5d lines   %c  %-20.127s %.127s\n"
 msgstr " %7jd bytes, %5d linhas   %c  %-20.127s %.127s\n"
 
 #: src/deb/info.c
+#, fuzzy, c-format
+#| msgid " %7jd bytes, %5d lines   %c  %-20.127s %.127s\n"
+msgid " %7jd bytes, %5d lines   %c  %.127s\n"
+msgstr " %7jd bytes, %5d linhas   %c  %-20.127s %.127s\n"
+
+#: src/deb/info.c
 #, c-format
 msgid "     not a plain file          %.255s\n"
 msgstr "     não é um ficheiro comum   %.255s\n"
@@ -2806,6 +2830,12 @@ msgstr "é necessária uma opção de acção"
 #, c-format
 msgid "invalid compressor parameters: %s"
 msgstr "parâmetros inválidos do compressor: %s'"
+
+#: src/deb/main.c
+#, fuzzy, c-format
+#| msgid "unsupported compression type '%s' with uniform compression"
+msgid "unsupported deb format '%d.%d' with non-uniform compression"
+msgstr "tipo de compressão '%s' não suportada com compressão uniforme"
 
 #: src/deb/main.c
 #, c-format
@@ -3228,6 +3258,7 @@ msgid "--%s takes no arguments"
 msgstr "--%s não leva argumentos"
 
 #: src/split/queue.c
+#, c-format
 msgid "Junk files left around in the depot directory:\n"
 msgstr "Ficheiros de lixo deixados no directório depot:\n"
 
@@ -3247,6 +3278,7 @@ msgid " %s (not a plain file)\n"
 msgstr " %s (não é um ficheiro comum)\n"
 
 #: src/split/queue.c
+#, c-format
 msgid "Packages not yet reassembled:\n"
 msgstr "Pacotes ainda não refeitos:\n"
 
@@ -3330,7 +3362,7 @@ msgstr "--split leva no máximo um ficheiro fonte e um prefixo de destino"
 msgid "Use --help for help about diverting files."
 msgstr "Use --help para ajuda sobre desvio de ficheiros."
 
-#: src/divert/main.c src/statoverride/main.c utils/update-alternatives.c
+#: src/divert/main.c src/statoverride/main.c
 #, c-format
 msgid "Debian %s version %s.\n"
 msgstr "Debian %s versão %s.\n"
@@ -3885,7 +3917,7 @@ msgstr ""
 msgid "package '%s' is not available"
 msgstr "o pacote '%s' não está disponível"
 
-#: src/query/main.c src/main/packages.c
+#: src/query/main.c
 #, c-format
 msgid "--%s needs at least one package name argument"
 msgstr "--%s necessita de pelo menos um argumento de nome de pacote"
@@ -5215,10 +5247,6 @@ msgid "installed"
 msgstr "instalado"
 
 #: src/main/help.c
-msgid "PATH is not set"
-msgstr "PATH não está definido"
-
-#: src/main/help.c
 #, c-format
 msgid "'%s' not found in PATH or not executable"
 msgstr "'%s' não foi encontrado em PATH ou não é executável"
@@ -5648,6 +5676,12 @@ msgstr ""
 #, c-format
 msgid "--%s --pending does not take any non-option arguments"
 msgstr "--%s --pending não leva quaisquer argumentos não-opção"
+
+#: src/main/packages.c
+#, fuzzy, c-format
+#| msgid "--%s needs at least one package name argument"
+msgid "--%s (without --pending) needs at least one package name argument"
+msgstr "--%s necessita de pelo menos um argumento de nome de pacote"
 
 #: src/main/packages.c
 #, c-format
@@ -6345,6 +6379,12 @@ msgid ""
 "obsolete '--%s' option; unavailable packages are automatically cleaned up"
 msgstr ""
 "opção '--%s' obsoleta, pacotes não disponíveis são automaticamente limpos"
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "Debian %s version %s.\n"
+msgid "%s version %s.\n"
+msgstr "Debian %s versão %s.\n"
 
 #: utils/update-alternatives.c
 #, c-format

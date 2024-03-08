@@ -57,7 +57,7 @@ struct varbuf {
 	char *buf;
 
 #ifdef __cplusplus
-	varbuf(size_t _size = 0);
+	explicit varbuf(size_t _size = 0);
 	~varbuf();
 	void init(size_t _size = 0);
 	void reset();
@@ -83,10 +83,17 @@ void varbuf_reset(struct varbuf *v);
 void varbuf_destroy(struct varbuf *v);
 void varbuf_free(struct varbuf *v);
 
+void varbuf_set_varbuf(struct varbuf *v, struct varbuf *other);
+void varbuf_set_buf(struct varbuf *v, const void *buf, size_t size);
+#define varbuf_set_str(v, s) varbuf_set_buf(v, s, strlen(s))
+#define varbuf_set_strn(v, s, n) varbuf_set_buf(v, s, strnlen(s, n))
+
+void varbuf_add_varbuf(struct varbuf *v, const struct varbuf *other);
 void varbuf_add_char(struct varbuf *v, int c);
 void varbuf_dup_char(struct varbuf *v, int c, size_t n);
 void varbuf_map_char(struct varbuf *v, int c_src, int c_dst);
 #define varbuf_add_str(v, s) varbuf_add_buf(v, s, strlen(s))
+#define varbuf_add_strn(v, s, n) varbuf_add_buf(v, s, strnlen(s, n))
 void varbuf_add_dir(struct varbuf *v, const char *dirname);
 void varbuf_add_buf(struct varbuf *v, const void *s, size_t size);
 void varbuf_end_str(struct varbuf *v);

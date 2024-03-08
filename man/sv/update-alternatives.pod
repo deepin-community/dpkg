@@ -22,17 +22,17 @@ B<update-alternatives> [I<flagga>...] I<åtgärd>
 
 =head1 BESKRIVNING
 
-B<update-alternatives> skapar, tar bort, underhåller och visar information om de symboliska länkar som ingår i Debians alternativsystem.
+B<update-alternatives> skapar, tar bort, underhåller och visar information om de symboliska länkar som ingår i alternativsystemet.
 
 Det är möjligt för flera kommandon som tillhandahåller identisk eller liknande funktionalitet att vara installerade på ett system samtidigt. Till exempel har många system flera textredigeringsprogram installerade samtidigt, vilket ger användarna på systemet valmöjligheter, var och en kan använda olika textredigeringsprogram om de så önskar, men det gör det svårt för ett program att göra ett bra val av textredigerare att anropa om en användare inte har gjort ett specifikt val.
 
-Debians alternativsystem försöker lösa detta problem. Ett generiskt namn i filsystemet delas av alla filer som tillhandahåller utbytbar funktionalitet. Alternativsystemet och systemadministratören anger tillsammans vilken specifik fil som ska refereras av sitt generiska namn. Till exempel kan alternativsystemet låta det generiska namnet I</usr/bin/editor> att peka mot I</usr/bin/nvi> som standard om både textredigeringsprogrammet B<ed>(1) och B<nvi>(1) båda är installerade på systemet. Systemadministratören kan överstyra detta och låta det peka på I</usr/bin/ed> istället, och alternativsystemet kommer inte ändra denna inställning förrän det ombeds att göra det.
+Alternativsystemet försöker lösa detta problem. Ett generiskt namn i filsystemet delas av alla filer som tillhandahåller utbytbar funktionalitet. Alternativsystemet och systemadministratören anger tillsammans vilken specifik fil som ska refereras av sitt generiska namn. Till exempel kan alternativsystemet låta det generiska namnet I</usr/bin/editor> att peka mot I</usr/bin/nvi> som standard om både textredigeringsprogrammet L<ed(1)> och L<nvi(1)> båda är installerade på systemet. Systemadministratören kan överstyra detta och låta det peka på I</usr/bin/ed> istället, och alternativsystemet kommer inte ändra denna inställning förrän det ombeds att göra det.
 
 Det generiska namnet är inte en direkt symbolisk länk till det valda alternativet. Istället är det en symbolisk länk till ett namn i katalogen I<alternatives>, vilket i sin tur är en symbolisk länk till den faktiska fil det pekar mot. Detta görs så att systemadministratörens ändringar kan begränsas till katalogen I<%CONFDIR%>: FHS (se detta) ger orsaker till varför detta är Bra.
 
-När alla paket som tillahandahåller en fil med en specifik funktionalitet installeras, ändras eller tas bort anropas B<update-alternatives> för att uppdatera information om filen i alternativsystemet. B<update-alternatives> anropas vanligtvis från Debians paketutvecklarskript B<postinst> (konfigurera) för att installera alternativet och från B<prerm> och B<postrm> (ta bort) för att ta bort alternativet. B<Observera:> i de flesta (om inte alla) fall bör inga andra utvecklarskript anropa B<update-alternatives>, specifikt varken B<upgrade> eller B<disappear>, eftersom alla sådana åtgärder kan gör att den manuella inställningen för ett alternativ går förlorat, eller att alternativet tillfälligt svänger eller permanent växlas när flera av dem har samma prioritet.
+När alla paket som tillahandahåller en fil med en specifik funktionalitet installeras, ändras eller tas bort anropas B<update-alternatives> för att uppdatera information om filen i alternativsystemet. B<update-alternatives> anropas vanligtvis från Debians paketutvecklarskript B<postinst> (konfigurera) för att installera alternativet och från B<prerm> och B<postrm> (ta bort) för att ta bort alternativet. B<Observera>: i de flesta (om inte alla) fall bör inga andra utvecklarskript anropa B<update-alternatives>, specifikt varken B<upgrade> eller B<disappear>, eftersom alla sådana åtgärder kan gör att den manuella inställningen för ett alternativ går förlorat, eller att alternativet tillfälligt svänger eller permanent växlas när flera av dem har samma prioritet.
 
-Det är ofta lämpligt för ett antal alternativ att vara synkroniserade, så att de ändras i grupp. Till exempel, om det är flera versioner av textredigeraren B<vi>(1) installerade bör manualsidan som refereras till av I</usr/share/man/man1/vi.1> motsvara den binär som refereras till av I</usr/bin/vi>. B<update-alternatives> hanterar detta genom I<huvud>- och I<slav>-länkar. När huvudlänken uppdateras ändras även anslutna slavlänkar. En huvudlänk och dess anslutna slavar utgör en I<länkgrupp>.
+Det är ofta lämpligt för ett antal alternativ att vara synkroniserade, så att de ändras i grupp. Till exempel, om det är flera versioner av textredigeraren L<vi(1)> installerade bör manualsidan som refereras till av I</usr/share/man/man1/vi.1> motsvara den binär som refereras till av I</usr/bin/vi>. B<update-alternatives> hanterar detta genom I<huvud>- och I<slav>-länkar. När huvudlänken uppdateras ändras även anslutna slavlänkar. En huvudlänk och dess anslutna slavar utgör en I<länkgrupp>.
 
 En länkgrupp kan vid varje given tidpunkt vara i ett av två lägen: automatisk eller manuell. När en grupp är i automatiskt läge kommer alternativsystemet automatiskt att bestämma när och hur länkar ska uppdateras då paket installeras eller tas bort. I manuellt läge kommer alternativsystemet att behålla administratörens val och undvika att ändra länkarna (förutom om något är trasigt).
 
@@ -139,7 +139,7 @@ Läs en alternativkonfiguration från standard in på formatet som skapas av B<-
 
 =item B<--query> I<namn>
 
-Visa information om länkgruppen på samma sätt som B<--display>, men i ett maskintolkbart sätt (sedan version 1.15.0, se stycket B<FRÅGEFORMAT> nedan).
+Visa information om länkgruppen på samma sätt som B<--display>, men i ett maskintolkbart sätt (sedan version 1.15.0, se stycket L</FRÅGEFORMAT> nedan).
 
 =item B<--list> I<namn>
 
@@ -360,7 +360,7 @@ För att återgå till att B<vi>-implementationen väljs automatiskt, utför det
 
 =head1 SE ÄVEN
 
-B<ln>(1), FHS (the Filesystem Hierarchy Standard).
+L<ln(1)>, FHS (the Filesystem Hierarchy Standard).
 
 
 =head1 ÖVERSÄTTNING

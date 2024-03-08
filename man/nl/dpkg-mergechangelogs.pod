@@ -26,6 +26,8 @@ Dit programma gebruikt de 3 beschikbare versies van Debian changelog om een same
 
 Elk item wordt aan de hand van zijn versienummer geïdentificeerd en er wordt van uitgegaan dat ze niet tegenstrijdig zijn. Zij worden eenvoudig samengevoegd in de juiste volgorde (volgens aflopend versienummer). Wanneer B<--merge-prereleases> gebruikt wordt, wordt het deel van het versienummer achter de tilde weggelaten, waardoor 1.0-1~exp1 en 1.0-1~exp5 beschouwd worden als hetzelfde item. Als dezelfde versie zowel in I<nieuw-a> als in I<nieuw-b> voorkomt, wordt geprobeerd een standaard regelgeoriënteerde 3-wegs samenvoeging uit te voeren (op voorwaarde dat de module Algorithm::Merge voorhanden is — ze maakt deel uit van het pakket libalgorithm-merge-perl —, anders krijgt u een algemene tegenstrijdigheid in verband met de inhoud van het item).
 
+Dit programma werd geïntroduceerd in dpkg 1.15.7.
+
 =head1 OPTIES
 
 =over 
@@ -68,7 +70,7 @@ Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het active
 
 =head1 BEPERKINGEN
 
-Alles wat niet door Dpkg::Changelog ontleed wordt, geraakt tijdens het samenvoegen verloren. Dit kan gaan om zaken zoals commentaar die daar niet hoort te staan, enz.
+Alles wat niet door L<Dpkg::Changelog> ontleed wordt, geraakt tijdens het samenvoegen verloren. Dit kan gaan om zaken zoals commentaar die daar niet hoort te staan, enz.
 
 =head1 INTEGRATIE MET GIT
 

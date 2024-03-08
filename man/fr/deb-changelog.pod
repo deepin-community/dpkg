@@ -29,20 +29,32 @@ Le format de I<debian/changelog> permet aux outils de construction du paquet de 
 Ce format est une série d'entrées comme S<celles-ci :>
 
 Z<>
-I<paquet> (I<version>) I<distributions>; I<métadonnées>
-          [ligne(s) blanches(s) facultative(s), retirée(s)]
-  * I<détails-de-modification>
-    I<plus-de-détails-de-modification>
-          [ligne(s) blanches(s), y compris dans la sortie de
-          B<dpkg-parsechangelog>(1)]
-  * I<encore-plus-de-détails-de-modification>
-          [ligne(s) blanches(s) facultative(s), retirée(s)]
- -- I<nom-responsable> E<lt>I<adresse-électronique>E<gt>  I<date>
+ I<package> (I<version>) I<distributions>; I<metadata>
+          [optional blank line(s), stripped]
+  * I<change-details>
+    I<more-change-details>
+          [blank line(s), included in L<dpkg-parsechangelog(1)> output]
+  * I<even-more-change-details>
+          [optional blank line(s), stripped]
+  -- I<maintainer-name> <I<email-address>>  I<date>
+
 I<paquet> et I<version> sont le nom et le numéro de version du paquet source. I<version> est délimité par les parenthèses U+00028 S<« B<(> »> et U+0029 S<« B<)> ».>
 
 I<distributions> liste une ou plusieurs distributions, séparées par une espace, dans lesquelles cette version peut être installée après S<téléchargement ;> l'entrée est copiée dans le champ B<Distribution> dans le fichier I<.changes>. I<distributions> doit se terminer par un point-virgule (U+003B S<« B<;> »).>
 
-I<metadata> est une liste de zéro ou plus de paires I<mot-clé>=I<valeur>, séparée par des virgules. Chaque I<mot-clé> peut seulement consister en un signe moins et des caractères alpha-numériques insensibles à la casse, car il est nécessaire qu'ils correspondent aux noms de champ B<deb822>(5). Les seuls I<mots-clés> gérés actuellement par B<dpkg> sont B<urgency> et B<binary-only>. La valeur d'B<urgency> est utilisée pour le champ B<Urgency> dans le fichier I<.changes> pour l'envoi. B<binary-only> avec une valeur B<yes> est utilisé pour indiquer que cette entrée de changelog est liée à un envoi seulement binaire (binNMU) (une reconstruction automatique du binaire avec uniquement une modification de l'entrée du changelog).
+I<metadata> lists zero or more comma-separated I<keyword>=I<value> items. Each keyword can contain only minus and case insensitive alphanumeric characters, as they need to be mapped to L<deb822(5)> field names.  The only I<keyword>s currently supported by B<dpkg> are:
+
+=over 
+
+=item B<urgency>
+
+Its value is used for the B<Urgency> field in the I<.changes> file for the upload.
+
+=item B<binary-only>
+
+With a B<yes> value, it is used to denote that this changelog entry is for a binary-only non-maintainer upload (an automatic binary rebuild with the only change being the changelog entry).
+
+=back
 
 Les détails de modification peuvent être en fait une série de lignes démarrant par au moins deux espaces (U+0020 B<ESPACE>), mais par convention, chaque modification débute par un astérisque et une espace de séparation et les lignes de continuation sont indentées de telle manière qu'elles s'alignent sur le début du texte au-dessus. Des lignes blanches peuvent être utilisées pour séparer des groupes de modifications, si désiré.
 
@@ -150,7 +162,7 @@ La totalité du journal des modifications doit être encodé en UTF-8.
 
 =head1 VOIR AUSSI
 
-B<deb822>(5), B<deb-version>(7), B<deb-changes>(5), B<dpkg-parsechangelog>(1).
+L<deb822(5)>, L<deb-changes(5)>, L<deb-version(7)>, L<dpkg-parsechangelog(1)>.
 
 
 =head1 TRADUCTION

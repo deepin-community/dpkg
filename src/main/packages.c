@@ -154,7 +154,8 @@ packages(const char *const *argv)
     enqueue_pending();
   } else {
     if (!*argv)
-      badusage(_("--%s needs at least one package name argument"), cipaction->olong);
+      badusage(_("--%s (without --pending) needs at least one package name argument"),
+               cipaction->olong);
 
     enqueue_specified(argv);
   }
@@ -171,7 +172,6 @@ packages(const char *const *argv)
 
 void process_queue(void) {
   struct pkg_list *rundown;
-  struct pkginfo *volatile pkg;
   volatile enum action action_todo;
   jmp_buf ejbuf;
   enum pkg_istobe istobe = PKG_ISTOBE_NORMAL;
@@ -219,6 +219,8 @@ void process_queue(void) {
   }
 
   while (!pkg_queue_is_empty(&queue)) {
+    struct pkginfo *volatile pkg;
+
     pkg = pkg_queue_pop(&queue);
     if (!pkg)
       continue; /* Duplicate, which we removed earlier. */
@@ -727,7 +729,7 @@ dependencies_ok(struct pkginfo *pkg, struct pkginfo *removing,
          * that's the only line. */
         varbuf_end_str(&oemsgs);
         varbuf_add_str(aemsgs, _("; however:\n"));
-        varbuf_add_str(aemsgs, oemsgs.buf);
+        varbuf_add_varbuf(aemsgs, &oemsgs);
       } else {
         varbuf_add_str(aemsgs, ".\n");
       }

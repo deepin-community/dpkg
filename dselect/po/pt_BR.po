@@ -1,5 +1,7 @@
-# Tradução para o Português (Brasil) do dpkg/dselect (Debian)
+# Translation of dselect to Brazilian Portuguese
 # Copyright © 1999, 2000 Software in the Public Interest.
+# This file is distributed under the same license as the dpkg package.
+#
 # Thiago Jung Bauermann <jungmann@cwb.matrix.com.br>, 1999.
 # Carlos Henrique Santos Laviola <claviola@brfree.com.br>, 2000.
 # André Luís Lopes <andrelop@ig.com.br>, 2002.
@@ -11,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dselect 1.13\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
 "PO-Revision-Date: 2008-06-09 02:53-0300\n"
 "Last-Translator: Felipe Augusto van de Wiel <faw@debian.org>\n"
 "Language-Team: Brazilian Portuguese <debian-l10n-portuguese@lists.debian."
@@ -61,7 +63,9 @@ msgid "cannot update screen after window resize"
 msgstr ""
 
 #: dselect/baselist.cc
-msgid "failed to allocate colour pair"
+#, fuzzy
+#| msgid "failed to allocate colour pair"
+msgid "cannot allocate color pair"
 msgstr "falhou ao alocar par de cores"
 
 #: dselect/baselist.cc
@@ -1029,15 +1033,19 @@ msgstr "parte da tela"
 #: dselect/main.cc
 #, fuzzy
 #| msgid "Null colour specification\n"
-msgid "null colour specification"
+msgid "missing color specification"
 msgstr "Especificação de cor nula\n"
 
 #: dselect/main.cc
-msgid "colour"
+#, fuzzy
+#| msgid "colour"
+msgid "color"
 msgstr "cor"
 
 #: dselect/main.cc
-msgid "colour attribute"
+#, fuzzy
+#| msgid "colour attribute"
+msgid "color attribute"
 msgstr "atributo cor"
 
 #: dselect/main.cc

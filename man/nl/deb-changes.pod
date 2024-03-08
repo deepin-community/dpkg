@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAAM
 
-deb-changes - Indeling van het Debian changes-bestand
+deb-changes - Indeling van het changes-controlebestand van een Debian-upload
 
 =head1 OVERZICHT
 
@@ -38,13 +38,13 @@ De waarde van dit veld bepaalt de indelingsversie van het bestand. De syntaxis v
 
 =item B<Date:> I<datum-van-uitgave> (verplicht)
 
-De datum waarop het pakket gebouwd werd of het laatst bewerkt. Hij moet in dezelfde indeling opgemaakt zijn als de datum in een B<deb-changelog>(5)-item.
+De datum waarop het pakket gebouwd werd of het laatst bewerkt. Hij moet in dezelfde indeling opgemaakt zijn als de datum in een L<deb-changelog(5)>-item.
 
 De waarde van dit veld wordt meestal gehaald uit het bestand I<debian/changelog>.
 
 =item B<Source:> I<broncode-naam> [B<(>I<broncode-versie>B<)>] (verplicht)
 
-De naam van het broncodepakket. Indien de versie van het broncodepakket verschilt van de versie van het binaire pakket, dan zal de I<broncode-naam> gevolgd worden door een I<broncode-versie> tussen haakjes. Dit kan het geval zijn als de upload een uitsluitend binaire upload is die niet door de onderhouder uitgevoerd wordt.
+De naam van het broncodepakket. Indien de versie van het broncodepakket verschilt van de versie van het binaire pakket, dan zal de I<broncode-naam> gevolgd worden door een I<broncode-versie> tussen haakjes. Dit kan het geval zijn als de upload een uitsluitend binaire upload is die niet door de beheerder uitgevoerd wordt.
 
 =item B<Binary:> I<lijst-binaire-pakketten> (vereist in de context)
 
@@ -56,7 +56,7 @@ Somt de architecturen op van de bestanden die momenteel geüpload worden. Gebrui
 
 =item B<Version:> I<versie-tekenreeks> (verplicht)
 
-Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de auteur van het programma er ook voor gebruikt. Het kan ook een Debian-revisienummer bevatten (voor niet uit Debian stammende pakketten). De exacte indeling en het sorteringsalgoritme worden beschreven in B<deb-version>(7).
+Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de auteur van het programma er ook voor gebruikt. Het kan ook een Debian-revisienummer bevatten (voor niet uit Debian stammende pakketten). De exacte indeling en het sorteringsalgoritme worden beschreven in L<deb-version(7)>.
 
 =item B<Distribution:> I<distributie>s (verplicht)
 
@@ -86,7 +86,7 @@ Een lijst van met komma's van elkaar gescheiden nummers van bugrapporten die doo
 
 =item B<Binary-Only: yes>
 
-Dit veld geeft aan dat deze upload gebeurt na de niet door de pakketonderhouder uitgevoerde bouw van uitsluitend het binaire pakket. Het vindt zijn oorsprong in het item met de sleutel/waarde-combinatie B<binary-only=yes> uit de metadata van het changelog-bestand.
+Dit veld geeft aan dat deze upload gebeurt na de niet door de pakketbeheerder uitgevoerde bouw van uitsluitend het binaire pakket. Het vindt zijn oorsprong in het item met de sleutel/waarde-combinatie B<binary-only=yes> uit de metadata van het changelog-bestand.
 
 =item B<Built-For-Profiles:> I<profiel-lijst>
 
@@ -128,5 +128,5 @@ Het veld B<Files> is niet consistent met de andere B<Checksums>-velden. De velde
 
 =head1 ZIE OOK
 
-L<deb822(5)>, B<deb-src-control>(5), B<deb-version>(7).
+L<deb822(5)>, L<deb-src-control(5)>, L<deb-version(7)>.
 

@@ -44,13 +44,13 @@ Befintliga filer kommer att skrivas över om de har samma namn som destinationsf
 
 Filerna kommer att flyttas till en underkatalog. Om katalogen i argumentet existerar kommer filerna att flyttas in i den katalogen, om inte kommer namnet på målkatalogen att hämtas från sektionsfältet i styrdelen av paketet. Målkatalogen kommer vara ”unstable/binary-I<arkitekur>I<sektion>”. Om sektionen inte hittas i styrfilen antas ”no-section”, och i så fall, samt för sektionerna ”non-free” och ”contrib”, är målkatalogen ”I<sektion>/binary-I<arkitektur>”. Sektionsfältet krävs inte, så flera paket hamnar i katalogen ”no-section”.
 
-B<Varning:> I<Använd den här flaggan med tillförsikt, den kan vara rörig.>
+B<Varning>: Använd den här flaggan med tillförsikt, den är rörig.
 
 =item B<-c>, B<--create-dir>
 
 Flaggan kan användas tillsammans med B<-s>-flaggan. Om en målkatalog inte existerar kommer den att skapas automatiskt. 
 
-B<Varning:> I<Använd denna flagga med tillförsikt.>
+B<Varning>: Använd denna flagga med tillförsikt.
 
 =item B<-?>, B<--help>
 
@@ -78,7 +78,7 @@ Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även 
 
 =head1 PROGRAMFEL
 
-Vissa paket följer inte namnstrukturen I<paket>B<_>I<version>B<_>I<arkitektur>B<.deb>. Paket vars namn ändrats med B<dpkg-name> kommer följa denna struktur. Normalt påverkar detta inte hur B<dselect>(1)/B<dpkg>(1) installerar paket, men vissa andra installationsverktyg kan vara beroende av denna namngivningsstruktur.
+Vissa paket följer inte namnstrukturen I<paket>B<_>I<version>B<_>I<arkitektur>B<.deb>. Paket vars namn ändrats med B<dpkg-name> kommer följa denna struktur. Normalt påverkar detta inte hur L<dselect(1)>/L<dpkg(1)> installerar paket, men vissa andra installationsverktyg kan vara beroende av denna namngivningsstruktur.
 
 =head1 EXEMPEL
 
@@ -104,7 +104,7 @@ Kan användas när nya paket byggs.
 
 =head1 SE ÄVEN
 
-B<deb>(5), B<deb-control>(5), B<dpkg>(1), B<dpkg-deb>(1), B<find>(1), B<xargs>(1).
+L<deb(5)>, L<deb-control(5)>, L<dpkg(1)>, L<dpkg-deb(1)>, L<find(1)>, L<xargs(1)>.
 
 
 =head1 ÖVERSÄTTNING

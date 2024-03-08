@@ -52,7 +52,7 @@ Falls I<postrm> während des Upgrades oder während eines fehlgeschlagenen Upgra
 
 =head1 SIEHE AUCH
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 ÜBERSETZUNG

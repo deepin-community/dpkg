@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-name - renomeia pacotes Debian para o nome de pacote completo
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-name> [I<option>...] [B<-->] I<file>...
 
@@ -44,13 +44,13 @@ Os ficheiros existentes serão sobrescritos se tiverem o mesmo nome que o nome d
 
 Os ficheiros serão movidos para um sub-directório. Se o directório dado como argumento existir, os ficheiros serão movidos para esse directório, caso contrário, o nome do directório alvo é extraído do campo section na parte de controlo do pacote. O directório alvo irá ser «unstable/binary-I<architecture>/I<section>».  Se a section não for encontrada no controlo, então é assumido B<no-section>, e neste caso, assim como para secções B<non-free> e B<contrib> o directório alvo é «I<section>/binary-I<architecture>».  O campo section não é necessário, assim muitos pacotes irão encontrar o seu caminho até à área B<no-section>.
 
-B<Warning:> I<Use esta opção com cuidado, ela faz porcaria.>
+B<Aviso>: Use esta opção com cuidado, ela faz porcaria.
 
 =item B<-c>, B<--create-dir>
 
 Esta opção pode ser usada em conjunto com a opção B<-s>. Se um directório meta não for encontrado será criado automaticamente.
 
-B<Aviso> I<Use esta opção com cuidado.>
+B<Aviso>: Use esta opção com cuidado.
 
 =item B<-?>, B<--help>
 
@@ -78,7 +78,7 @@ Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nati
 
 =head1 BUGS
 
-Alguns pacotes não seguem a estrutura de nome I<pacote>B<_>I<versão>B<_>I<arquitectura>B<.deb>. Os pacotes renomeados pelo B<dpkg-name> irá seguir estas estrutura. Geralmente isto não terá impacto sobre como os pacotes serão instalados pelos B<dselect>(1)/B<dpkg>(1), mas outras ferramentas de instalação podem depender desta estrutura de nomes.
+Some packages don't follow the name structure I<package>B<_>I<version>B<_>I<architecture>B<.deb>.  Packages renamed by B<dpkg-name> will follow this structure.  Generally this will have no impact on how packages are installed by L<dselect(1)>/L<dpkg(1)>, but other installation tools might depend on this naming structure.
 
 =head1 EXEMPLOS
 
@@ -104,7 +104,7 @@ Isto pode ser usado quando se compila novos pacotes.
 
 =head1 VEJA TAMBÉM
 
-B<deb>(5), B<deb-control>(5), B<dpkg>(1), B<dpkg-deb>(1), B<find>(1), B<xargs>(1).
+L<deb(5)>, L<deb-control(5)>, L<dpkg(1)>, L<dpkg-deb(1)>, L<find(1)>, L<xargs(1)>.
 
 
 =head1 TRADUÇÃO

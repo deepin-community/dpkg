@@ -40,7 +40,6 @@ sub join_lines($);
 
 BEGIN {
     eval q{
-        pop @INC if $INC[-1] eq '.';
         use Algorithm::Merge qw(merge);
     };
     if ($@) {
@@ -117,13 +116,14 @@ my @b = reverse @$chb;
 my @result; # Lines to output
 my $exitcode = 0; # 1 if conflict encountered
 
-unless (merge_block($cho, $cha, $chb, sub {
-			my $changes = shift;
-			my $tail = $changes->get_unparsed_tail();
-			chomp $tail if defined $tail;
-			return $tail;
-		    }))
-{
+sub merge_tail {
+    my $changes = shift;
+    my $tail = $changes->get_unparsed_tail();
+    chomp $tail if defined $tail;
+    return $tail;
+};
+
+unless (merge_block($cho, $cha, $chb, \&merge_tail)) {
     merge_conflict($cha->get_unparsed_tail(), $chb->get_unparsed_tail());
 }
 

@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb-buildinfo - formato Debian de ficheiro de informação de compilação
 
-=head1 SINOPSE
+=head1 RESUMO
 
 I<filename>B<.buildinfo>
 
@@ -28,7 +28,23 @@ Cada campo começa com uma etiqueta, tal como B<Source> ou B<Binary> (insensíve
 
 Os dados de controle podem estar inclusos numa assinatura OpenPGP ASCII Armored, como especificado em RFC4880.
 
-O nome do ficheiro B<.buildinfo> irá depender do tipo de compilação e irá ser tão específico quanto necessário e não mais; para uma compilação que inclui B<any> o nome será I<source-name>B<_>I<binary-version>B<_>I<arch>B<.buildinfo>, ou caso contrário para uma compilação que inclui B<all> o nome será I<source-name>B<_>I<binary-version>B<_>B<all.buildinfo>, ou caso contrário para uma compilação que inclui B<source> o nome será I<source-name>B<_>I<source-version>B<_>B<source.buildinfo>.
+O nome do ficheiro B<.buildinfo> irá depender do tipo de compilação e será tão específico quanto necessário mas não mais; o nome irá ser:
+
+=over 
+
+=item I<source-name>B<_>I<binary-version>B<_>I<arch>B<.buildinfo>
+
+para uma compilação que inclua B<any>
+
+=item I<source-name>B<_>I<binary-version>B<_>B<all.buildinfo>
+
+caso contrário para uma compilação que inclua B<all>
+
+=item I<source-name>B<_>I<source-version>B<_>B<source.buildinfo>
+
+caso contrário para uma compilação que inclua B<source>
+
+=back
 
 =head1 CAMPOS
 
@@ -52,7 +68,7 @@ Este campo separado por espaços lista as arquitecturas de todos os ficheiros ac
 
 =item B<Version:>I< string-de-versão> (obrigatório)
 
-Tipicamente, isto é o número de versão do pacote original seja em que formato o autor do programa usa. Pode também incluir um número de revisão Debian (para pacotes não-nativos). O formato exacto e algoritmo de ordenação estão descritos em B<deb-version>(7).
+Typically, this is the original package's version number in whatever form the program's author uses.  It may also include a Debian revision number (for non-native packages).  The exact format and sorting algorithm are described in L<deb-version(7)>.
 
 =item B<Binary-Only-Changes:>
 
@@ -84,7 +100,7 @@ A arquitectura Debian para a instalação dos pacotes que estão a ser compilado
 
 =item B<Build-Date:> I<build-date>
 
-A data em que o pacote foi compilado. Tem de estar no mesmo formato que a data duma entrada B<deb-changelog>(5).
+The date the package was built.  It must be in the same format as the date in a L<deb-changelog(5)> entry.
 
 =item B<Build-Kernel-Version:> I<build-kernel-version>
 
@@ -156,7 +172,7 @@ A lista de variáveis de ambiente que se sabe afectarem o processo de compilaç�
 
 =head1 VEJA TAMBÉM
 
-L<deb822(5)>, B<deb-changes>(5), B<deb-version>(7), B<dpkg-genbuildinfo>(1).
+L<deb822(5)>, L<deb-changes(5)>, L<deb-version(7)>, L<dpkg-genbuildinfo(1)>.
 
 
 =head1 TRADUÇÃO

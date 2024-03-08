@@ -40,7 +40,7 @@ För närvarande stöds endast en enda flagga, B<remove-on-upgrade>, som markera
 
 =head1 SE ÄVEN
 
-B<dpkg-deb>(1), B<dpkg>(1).
+L<dpkg-deb(1)>, L<dpkg(1)>.
 
 
 =head1 ÖVERSÄTTNING

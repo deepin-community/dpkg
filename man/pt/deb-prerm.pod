@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb-prerm - script de maintainer de pré-remoção do pacote
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<DEBIAN/prerm>
 
@@ -56,7 +56,7 @@ Antes do pacote ser substituído devido a conflito.
 
 =head1 VEJA TAMBÉM
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 TRADUÇÃO

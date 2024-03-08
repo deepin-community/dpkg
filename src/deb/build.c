@@ -169,7 +169,7 @@ file_treewalk_feed(const char *dir, int fd_out)
 
     nodename = str_fmt("./%s", virtname);
 
-    if (!nocheckflag && strchr(nodename, '\n'))
+    if (!opt_nocheck && strchr(nodename, '\n'))
       ohshit(_("newline not allowed in pathname '%s'"), nodename);
 
     /* We need to reorder the files so we can make sure that symlinks
@@ -177,10 +177,9 @@ file_treewalk_feed(const char *dir, int fd_out)
     if (S_ISLNK(treenode_get_mode(node))) {
       fi = file_info_new(nodename);
       file_info_list_append(&symlist, &symlist_end, fi);
-    } else {
-      if (fd_write(fd_out, nodename, strlen(nodename) + 1) < 0)
-        ohshite(_("failed to write filename to tar pipe (%s)"),
-                _("data member"));
+    } else if (fd_write(fd_out, nodename, strlen(nodename) + 1) < 0) {
+      ohshite(_("failed to write filename to tar pipe (%s)"),
+              _("data member"));
     }
 
     free(nodename);
@@ -582,7 +581,7 @@ do_build(const char *const *argv)
   ctrldir = str_fmt("%s/%s", dir, BUILDCONTROLDIR);
 
   /* Perform some sanity checks on the to-be-build package. */
-  if (nocheckflag) {
+  if (opt_nocheck) {
     if (debar == NULL)
       ohshit(_("target is directory - cannot skip control file check"));
     warning(_("not checking contents of control area"));
@@ -627,9 +626,8 @@ do_build(const char *const *argv)
   if (opt_uniform_compression) {
     control_compress_params = compress_params;
   } else {
-    control_compress_params.type = COMPRESSOR_TYPE_GZIP;
-    control_compress_params.strategy = COMPRESSOR_STRATEGY_NONE;
-    control_compress_params.level = -1;
+    control_compress_params = compress_params_deb0;
+
     if (!compressor_check_params(&control_compress_params, &err))
       internerr("invalid control member compressor params: %s", err.str);
   }

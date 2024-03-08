@@ -33,7 +33,7 @@ Z<>
           [valfri(a) blankrad(er), tas bort]
   * I<ändringsdetalj>
     I<fler-ändringsdetaljer>
-          [blankrad(er), tas med i utdata från B<dpkg-parsechangelog>(1)]
+          [blankrad(er), tas med i utdata från L<dpkg-parsechangelog(1)>]
   * I<ytterligare-ändringsdetaljer>
           [valfri(a) blankrad(er), tas bort]
   -- I<ansvarig-namn> <I<epost-adress>>  I<datum>
@@ -42,7 +42,19 @@ I<paket> och I<version> är källkodspaketets namn och versionsnummer. I<version
 
 I<distributioner> anger en eller flera blankstegsavdelade distributioner där den här versionen ska installeras efter insändning; värdet kopieras till fältet B<Distribution> i I<.changes>-filen. I<distributions> måste avslutas av ett semikolon (U+003B ”B<;>”).
 
-I<metadata> anger noll eller flera kommaseparerade poster på formen I<nyckelord>=I<värde>. Varje nyckelord innehåller endast minustecken och skiftlägesokänsliga alfanumeriska tecken, eftersom de måste kunna motsvara B<deb822>(5)-fältnamn. De enda I<nyckelord> som stöds av B<dpkg> för närvarande är B<urgency> och B<binary-only>. Värdet på B<urgency> används för fältet B<Urgency> i I<.changes>-filen vid insändning. B<binary-only> med värder B<yes> används för att ange att ändringsposten är för en insändning bestående av enbart binärer från någon annan än den paketansvarige (”binary-only non-maintainer upload”, en automatisk ombyggd binär där den enda ändringen är ändringsloggposten).
+I<metadata> anger noll eller flera kommaseparerade poster på formen I<nyckelord>=I<värde>. Varje nyckelord innehåller endast minustecken och skiftlägesokänsliga alfanumeriska tecken, eftersom de måste kunna motsvara L<deb822(5)>-fältnamn. De enda I<nyckelord> som stöds av B<dpkg> för närvarande är:
+
+=over 
+
+=item B<urgency> (brådska)
+
+Värdet används för fältet B<Urgency> i I<.changes>-filen vid insändning.
+
+=item B<binary-only> (endast binär)
+
+Med värdet B<yes> används fältet för att ange att ändringsposten är för en insändning bestående av enbart binärer från någon annan än den paketansvarige (”binary-only non-maintainer upload”, en automatisk ombyggd binär där den enda ändringen är ändringsloggposten).
+
+=back
 
 Ändringsdetaljerna kan faktiskt vara valfri serie av rader som börjar med minst två blanksteg (U+0020 B<SPACE>), men sedvanligen inleds varje ändring med en asterisk och ett avdelande blanksteg och fortsättningsrader har ett indrag så att de står i linje med början på texten över. Tomrader kan användas för att avdela grupper av ändringar här, om så önskas.
 
@@ -150,7 +162,7 @@ Hela ändringsloggen måste vara kodad i UTF-8.
 
 =head1 SE ÄVEN
 
-B<deb822>(5), B<deb-version>(7), B<deb-changes>(5), B<dpkg-parsechangelog>(1).
+L<deb822(5)>, L<deb-changes(5)>, L<deb-version(7)>, L<dpkg-parsechangelog(1)>.
 
 
 =head1 ÖVERSÄTTNING

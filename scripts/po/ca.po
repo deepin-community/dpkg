@@ -1,6 +1,7 @@
-# Catalan translation of dpkg-dev.
+# Translation of dpkg-dev to Catalan
 # Copyright © 2006, 2010 Software in the Public Interest, Inc.
 # This file is distributed under the same license as the dpkg package.
+#
 # Jordi Mallach <jordi@debian.org>, 2006, 2010.
 # Guillem Jover <guillem@debian.org>, 2010-2023.
 #
@@ -8,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg-dev 1.21.18\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
-"PO-Revision-Date: 2023-01-11 23:19+0100\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
+"PO-Revision-Date: 2023-12-17 20:30+0100\n"
 "Last-Translator: Guillem Jover <guillem@debian.org>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
 "Language: ca\n"
@@ -18,8 +19,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n!=1;\n"
 
-#: scripts/dpkg-architecture.pl scripts/dpkg-buildflags.pl
-#: scripts/dpkg-buildpackage.pl scripts/dpkg-checkbuilddeps.pl
+#: scripts/dpkg-architecture.pl scripts/dpkg-buildapi.pl
+#: scripts/dpkg-buildflags.pl scripts/dpkg-buildpackage.pl
+#: scripts/dpkg-buildtree.pl scripts/dpkg-checkbuilddeps.pl
 #: scripts/dpkg-distaddfile.pl scripts/dpkg-genbuildinfo.pl
 #: scripts/dpkg-genchanges.pl scripts/dpkg-gencontrol.pl
 #: scripts/dpkg-gensymbols.pl scripts/dpkg-mergechangelogs.pl
@@ -31,11 +33,11 @@ msgid "Debian %s version %s.\n"
 msgstr "Debian %s versió %s.\n"
 
 #: scripts/dpkg-architecture.pl scripts/dpkg-buildflags.pl
-#: scripts/dpkg-buildpackage.pl scripts/dpkg-distaddfile.pl
-#: scripts/dpkg-genbuildinfo.pl scripts/dpkg-genchanges.pl
-#: scripts/dpkg-gencontrol.pl scripts/dpkg-gensymbols.pl
-#: scripts/dpkg-parsechangelog.pl scripts/dpkg-shlibdeps.pl
-#: scripts/dpkg-source.pl scripts/dpkg-vendor.pl
+#: scripts/dpkg-buildpackage.pl scripts/dpkg-buildtree.pl
+#: scripts/dpkg-distaddfile.pl scripts/dpkg-genbuildinfo.pl
+#: scripts/dpkg-genchanges.pl scripts/dpkg-gencontrol.pl
+#: scripts/dpkg-gensymbols.pl scripts/dpkg-parsechangelog.pl
+#: scripts/dpkg-shlibdeps.pl scripts/dpkg-source.pl scripts/dpkg-vendor.pl
 msgid ""
 "\n"
 "This is free software; see the GNU General Public License version 2 or\n"
@@ -45,7 +47,7 @@ msgstr ""
 "Aquest és programari lliure; vegeu la Llicència Pública General GNU versió 2 "
 "o posterior per a les condicions de còpia. NO hi ha garantia.\n"
 
-#: scripts/dpkg-architecture.pl scripts/dpkg-vendor.pl
+#: scripts/dpkg-architecture.pl scripts/dpkg-buildapi.pl scripts/dpkg-vendor.pl
 #, perl-format
 msgid "Usage: %s [<option>...] [<command>]"
 msgstr "Forma d'ús: %s [<opció>…] [<ordre>]"
@@ -165,7 +167,8 @@ msgstr "%s no és un mètode de format de mostra admès"
 msgid "%s is not a supported variable name"
 msgstr "%s no és un nom de variable gestionat"
 
-#: scripts/dpkg-architecture.pl scripts/dpkg-buildflags.pl
+#: scripts/dpkg-architecture.pl scripts/dpkg-buildapi.pl
+#: scripts/dpkg-buildflags.pl scripts/dpkg-buildtree.pl
 #: scripts/dpkg-distaddfile.pl scripts/dpkg-genbuildinfo.pl
 #: scripts/dpkg-genchanges.pl scripts/dpkg-gencontrol.pl
 #: scripts/dpkg-gensymbols.pl scripts/dpkg-name.pl
@@ -184,13 +187,40 @@ msgstr ""
 "el tipus de sistema GNU %s especificat no correspon amb el tipus de sistema "
 "del CC %s, proveu a especificar una variable d'entorn CC correcta"
 
-#: scripts/dpkg-architecture.pl scripts/dpkg-shlibdeps.pl scripts/Dpkg/IPC.pm
+#: scripts/dpkg-architecture.pl scripts/Dpkg/IPC.pm
 #: scripts/Dpkg/Shlibs/Cppfilt.pm
 #, perl-format
 msgid "unable to execute %s"
 msgstr "no es pot executar %s"
 
-#: scripts/dpkg-buildflags.pl
+#: scripts/dpkg-buildapi.pl
+#, fuzzy
+#| msgid ""
+#| "Options:\n"
+#| "  -c<control-file>         get control info from this file.\n"
+#| "  -?, --help               show this help message.\n"
+#| "  -v, --version            show the version.\n"
+msgid ""
+"Commands:\n"
+"  -?, --help               show this help message.\n"
+"      --version            show the version."
+msgstr ""
+"Opcions:\n"
+"  -c<fitxer-control>       fitxer d'informació de control.\n"
+"  -?, --help               mostra aquest missatge d'ajuda.\n"
+"  -v, --version            mostra la versió.\n"
+
+#: scripts/dpkg-buildapi.pl
+msgid ""
+"Options:\n"
+"  -c<control-file>         get control info from this file.\n"
+msgstr ""
+
+#: scripts/dpkg-buildapi.pl
+msgid "no arguments accepted"
+msgstr "no s'accepten arguments"
+
+#: scripts/dpkg-buildflags.pl scripts/dpkg-buildtree.pl
 #, perl-format
 msgid "Usage: %s [<command>]"
 msgstr "Format d'ús: %s [<ordre>]"
@@ -202,7 +232,7 @@ msgid ""
 "  --origin <flag>    output the origin of the flag to stdout:\n"
 "                     value is one of vendor, system, user, env.\n"
 "  --status           output a synopsis with all parameters affecting the\n"
-"                     program behaviour, the resulting flags and their "
+"                     program behavior, the resulting flags and their "
 "origin.\n"
 "  --query            like --status, but in deb822 format.\n"
 "  --query-features <area>\n"
@@ -310,8 +340,8 @@ msgid ""
 "      --check-option=<opt>    pass <opt> to check <command>.\n"
 "      --hook-<name>=<command> set <command> as the hook <name>, known "
 "hooks:\n"
-"                                init preclean source build binary buildinfo\n"
-"                                changes postclean check sign done\n"
+"                                preinit init preclean source build binary\n"
+"                                buildinfo changes postclean check sign done\n"
 "      --buildinfo-file=<file> set the .buildinfo filename to generate.\n"
 "      --buildinfo-option=<opt>\n"
 "                              pass option <opt> to dpkg-genbuildinfo.\n"
@@ -399,8 +429,8 @@ msgstr ""
 "      --hook-<nom-lligam>=<ordre-lligam>\n"
 "                              estableix <ordre-lligam> com a lligam\n"
 "                                <nom-lligam>, s'admeten:\n"
-"                                init preclean source build binary changes\n"
-"                                postclean check sign done\n"
+"                                preinit init preclean source build binary\n"
+"                                buildinfo changes postclean check sign done\n"
 "      --buildinfo-file=<fitxer>\n"
 "                              estableix el fitxer .buildinfo a generar.\n"
 "      --buildinfo-option=<opció>\n"
@@ -748,6 +778,34 @@ msgid ""
 msgstr ""
 "s'ha d'actualitzar %s per admetre els objectius «build-arch» i «build-"
 "indep» (almenys sembla que manca «%s»)"
+
+#: scripts/dpkg-buildtree.pl
+#, fuzzy
+#| msgid ""
+#| "Options:\n"
+#| "  -c<control-file>         get control info from this file.\n"
+#| "  -?, --help               show this help message.\n"
+#| "  -v, --version            show the version.\n"
+msgid ""
+"Commands:\n"
+"  clean              clean dpkg generated artifacts from the build tree.\n"
+"  --help             show this help message.\n"
+"  --version          show the version.\n"
+msgstr ""
+"Opcions:\n"
+"  -c<fitxer-control>       fitxer d'informació de control.\n"
+"  -?, --help               mostra aquest missatge d'ajuda.\n"
+"  -v, --version            mostra la versió.\n"
+
+#: scripts/dpkg-buildtree.pl
+#, fuzzy, perl-format
+#| msgid "two commands specified: --%s and --%s"
+msgid "two commands specified: %s and %s"
+msgstr "s'ha especificat dos ordres: --%s i --%s"
+
+#: scripts/dpkg-buildtree.pl
+msgid "missing action"
+msgstr ""
 
 #: scripts/dpkg-checkbuilddeps.pl
 #, perl-format
@@ -1581,8 +1639,8 @@ msgstr "  %s (el paquet especifica %s, i no %s)"
 msgid "unconditional maintainer override for %s"
 msgstr "substitució de mantenidor incondicional per a %s"
 
-#: scripts/dpkg-scanpackages.pl scripts/dpkg-shlibdeps.pl scripts/Dpkg/IPC.pm
-#: scripts/Dpkg/Shlibs/Objdump.pm
+#: scripts/dpkg-scanpackages.pl scripts/Dpkg/IPC.pm
+#: scripts/Dpkg/Shlibs/Objdump/Object.pm
 #, perl-format
 msgid "cannot fork for %s"
 msgstr "no es pot fer «fork» per a %s"
@@ -2326,6 +2384,25 @@ msgstr ""
 msgid "'%s' is not a legal architecture in list '%s'"
 msgstr "«%s» no és una cadena d'arquitectura vàlida a la llista «%s»"
 
+#: scripts/Dpkg/BuildAPI.pm
+msgid "dpkg build API level needs an exact version"
+msgstr "el nivell d'API de construccío requereix una versió exacta"
+
+#: scripts/Dpkg/BuildAPI.pm
+#, perl-format
+msgid "dpkg build API level with conflicting versions: %s vs %s"
+msgstr "el nivel d'API de construcció conte vesions en conflicte: %s vs %s"
+
+#: scripts/Dpkg/BuildAPI.pm
+#, perl-format
+msgid "invalid dpkg build API level '%s'"
+msgstr "el nivell d'API de construcció «%s» no és vàlid"
+
+#: scripts/Dpkg/BuildAPI.pm
+#, perl-format
+msgid "dpkg build API level '%s' greater than max '%s'"
+msgstr "el nivell d'API de construcció «%s» és més gran que el màxim «%s»"
+
 #: scripts/Dpkg/BuildFlags.pm scripts/Dpkg/Compression/FileHandle.pm
 #: scripts/Dpkg/File.pm scripts/Dpkg/Interface/Storable.pm
 #: scripts/Dpkg/Shlibs/Objdump.pm scripts/Dpkg/Source/BinaryFiles.pm
@@ -2624,12 +2701,12 @@ msgid "invalid syntax for option in %s, line %d"
 msgstr "sintaxis no vàlida per a l'opció %s, línia %d"
 
 #: scripts/Dpkg/Control.pm
-msgid "general section of control info file"
-msgstr "secció general del fitxer d'informació de control"
+msgid "source package stanza of template control file"
+msgstr "paràgraf de paquet font del fitxer de control plantilla"
 
 #: scripts/Dpkg/Control.pm
-msgid "package's section of control info file"
-msgstr "secció del paquet del fitxer d'informació de control"
+msgid "binary package stanza of template control file"
+msgstr "paràgraf de paquet binari del fitxer de control plantilla"
 
 #: scripts/Dpkg/Control.pm
 msgid "parsed version of changelog"
@@ -2648,8 +2725,8 @@ msgid "license stanza of copyright file"
 msgstr "estrofa de llicencia del fitxer de copyright"
 
 #: scripts/Dpkg/Control.pm
-msgid "package's tests control file"
-msgstr "fitxer de control tests del paquet"
+msgid "source package tests control file"
+msgstr "fitxer de control tests del paquet font"
 
 #: scripts/Dpkg/Control.pm
 #, perl-format
@@ -2662,17 +2739,20 @@ msgid "stanza in repository's %s file"
 msgstr "estrofa al fitxer de dipòsit %s"
 
 #: scripts/Dpkg/Control.pm
-#, perl-format
-msgid "%s file"
-msgstr "fitxer %s"
+msgid "source package control file"
+msgstr "fitxer de control del paquet font"
 
 #: scripts/Dpkg/Control.pm
-msgid "control info of a .deb package"
-msgstr "informació de control d'un paquet .deb"
+msgid "binary package control file"
+msgstr "fitxer de control del paquet binari"
 
 #: scripts/Dpkg/Control.pm
 msgid "build information file"
 msgstr "fitxer d'informació de construcció"
+
+#: scripts/Dpkg/Control.pm
+msgid "upload changes control file"
+msgstr "fitxer de control de pujada de canvis"
 
 #: scripts/Dpkg/Control.pm
 msgid "vendor file"
@@ -2946,6 +3026,10 @@ msgid "specified key needs a keystore"
 msgstr "la clau especificada necessita un magatzem de claus"
 
 #: scripts/Dpkg/OpenPGP/ErrorCodes.pm
+msgid "OpenPGP backend command cannot sign"
+msgstr "l'ordre del fons OpenPGP no pot signar"
+
+#: scripts/Dpkg/OpenPGP/ErrorCodes.pm
 #, perl-format
 msgid "error code %d"
 msgstr "codi d'error %d"
@@ -2963,6 +3047,16 @@ msgstr "el caràcter «%s» no és permès"
 msgid "must start with an alphanumeric character"
 msgstr "ha de començar amb un caràcter alfanumèric"
 
+#: scripts/Dpkg/Package.pm
+#, perl-format
+msgid "source package name '%s' is illegal: %s"
+msgstr "el nom del paquet font «%s» no és legal: %s"
+
+#: scripts/Dpkg/Package.pm
+#, perl-format
+msgid "source package has two conflicting values - %s and %s"
+msgstr "el paquet font té dos valors contradictoris - %s i %s"
+
 #: scripts/Dpkg/Path.pm scripts/Dpkg/Source/Archive.pm
 #, perl-format
 msgid "pathname '%s' cannot be canonicalized"
@@ -2974,6 +3068,10 @@ msgid "pathname '%s' points outside source root (to '%s')"
 msgstr "el nom de camí «%s» apunta fora de l'arrel del codi font (a «%s»)"
 
 #: scripts/Dpkg/Shlibs.pm
+msgid "use -l option instead of LD_LIBRARY_PATH"
+msgstr "empreu l'opció -l en comptes de LD_LIBRARY_PATH"
+
+#: scripts/Dpkg/Shlibs.pm
 msgid ""
 "deprecated use of LD_LIBRARY_PATH with private library directory which "
 "interferes with cross-building, please use -l option instead"
@@ -2981,17 +3079,17 @@ msgstr ""
 "ús obsolet de LD_LIBRARY_PATH amb directori de biblioteques privades que "
 "interfereix amb la compilació creuada, empreu l'opció -l en el seu lloc"
 
-#: scripts/Dpkg/Shlibs.pm scripts/Dpkg/Shlibs/Objdump.pm
+#: scripts/Dpkg/Shlibs.pm scripts/Dpkg/Shlibs/Objdump/Object.pm
 #, perl-format
 msgid "unknown executable format in file '%s'"
 msgstr "el format del fitxer executable «%s» és desconegut"
 
-#: scripts/Dpkg/Shlibs/Objdump.pm
+#: scripts/Dpkg/Shlibs/Objdump/Object.pm
 #, perl-format
 msgid "couldn't parse dynamic relocation record: %s"
 msgstr "no s'ha pogut analitzar el registre dinàmic de reubicació: %s"
 
-#: scripts/Dpkg/Shlibs/Objdump.pm
+#: scripts/Dpkg/Shlibs/Objdump/Object.pm
 #, perl-format
 msgid "couldn't parse dynamic symbol definition: %s"
 msgstr "no s'ha pogut analitzar la definició dinàmica del símbol: %s"
@@ -4020,6 +4118,13 @@ msgstr "el diff «%s» aplica pedaços a alguna cosa que no és un fitxer pla"
 
 #: scripts/Dpkg/Source/Patch.pm
 #, perl-format
+msgid "diff '%s' patches hard link %s which can have unintended consequences"
+msgstr ""
+"el diff «%s» aplica pedaços a l'enllaç dur %s; pot tenir conseqüències "
+"inesperades"
+
+#: scripts/Dpkg/Source/Patch.pm
+#, perl-format
 msgid ""
 "diff '%s' patches files multiple times; split the diff in multiple files or "
 "merge the hunks into a single one"
@@ -4150,8 +4255,8 @@ msgstr "la versió del font %s no és vàlida"
 
 #: scripts/Dpkg/Substvars.pm
 #, perl-format
-msgid "too many substitutions - recursive ? - in '%s'"
-msgstr "massa substitucions (recursives?) a «%s»"
+msgid "too many ${%s} substitutions (recursive?) in '%s'"
+msgstr "massa substitucions ${%s} (recursives?) a «%s»"
 
 #: scripts/Dpkg/Substvars.pm
 #, perl-format
@@ -4167,16 +4272,6 @@ msgstr "la variable de substitució ${%s} s'utilitza, però no s'ha definit"
 #, perl-format
 msgid "substitution variable ${%s} unused, but is defined"
 msgstr "la variable de substitució ${%s} no s'utilitza, però s'ha definit"
-
-#: scripts/Dpkg/Vars.pm
-#, perl-format
-msgid "source package name '%s' is illegal: %s"
-msgstr "el nom del paquet font «%s» no és legal: %s"
-
-#: scripts/Dpkg/Vars.pm
-#, perl-format
-msgid "source package has two conflicting values - %s and %s"
-msgstr "el paquet font té dos valors contradictoris - %s i %s"
 
 #: scripts/Dpkg/Vendor.pm
 #, perl-format
@@ -4200,6 +4295,11 @@ msgstr ""
 #, perl-format
 msgid "unknown host architecture '%s'"
 msgstr "arquitectura de l'amfitrió '%s' desconeguda"
+
+#: scripts/Dpkg/Vendor/Debian.pm
+#, perl-format
+msgid "unknown abi attributes for architecture '%s'"
+msgstr "atributs abi de l'arquitectura '%s' desconeguts"
 
 #: scripts/Dpkg/Vendor/Ubuntu.pm
 msgid ""
@@ -4251,6 +4351,22 @@ msgstr "el número de versió conté un caràcter il·legal ‘%s‘"
 #, perl-format
 msgid "epoch part of the version number is not a number: '%s'"
 msgstr "l'època en la versió no és un número: «%s»"
+
+#~ msgid "Usage: %s [<option>...]\n"
+#~ msgstr "Forma d'ús: %s [<opció>…]\n"
+
+#~ msgid "general section of control info file"
+#~ msgstr "secció general del fitxer d'informació de control"
+
+#~ msgid "package's section of control info file"
+#~ msgstr "secció del paquet del fitxer d'informació de control"
+
+#, perl-format
+#~ msgid "%s file"
+#~ msgstr "fitxer %s"
+
+#~ msgid "control info of a .deb package"
+#~ msgstr "informació de control d'un paquet .deb"
 
 #, perl-format
 #~ msgid "cannot execute %s program"

@@ -142,9 +142,9 @@ sub parse_status {
 }
 
 sub append_deps {
-    my $pkgs = shift;
+    my ($pkgs, @deps) = @_;
 
-    foreach my $dep_str (@_) {
+    foreach my $dep_str (@deps) {
         next unless $dep_str;
 
         my $deps = deps_parse($dep_str, reduce_restrictions => 1,
@@ -154,8 +154,10 @@ sub append_deps {
         # We add every sub-dependencies as we cannot know which package in
         # an OR dependency has been effectively used.
         deps_iterate($deps, sub {
+            my $pkg = shift;
+
             push @{$pkgs},
-                $_[0]->{package} . (defined $_[0]->{archqual} ? ':' . $_[0]->{archqual} : '');
+                $pkg->{package} . (defined $pkg->{archqual} ? ':' . $pkg->{archqual} : '');
             1
         });
     }
@@ -498,7 +500,9 @@ $fields->{'Build-Architecture'} = get_build_arch();
 $fields->{'Build-Date'} = get_build_date();
 
 if ($use_feature{kernel}) {
-    my (undef, undef, $kern_rel, $kern_ver, undef) = POSIX::uname();
+    my ($kern_rel, $kern_ver);
+
+    ((undef) x 2, $kern_rel, $kern_ver, undef) = POSIX::uname();
     $fields->{'Build-Kernel-Version'} = "$kern_rel $kern_ver";
 }
 
@@ -591,5 +595,3 @@ if ($stdout) {
     rename "$outputfile.new", $outputfile
         or syserr(g_("cannot install output buildinfo file '%s'"), $outputfile);
 }
-
-1;

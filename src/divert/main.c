@@ -490,7 +490,7 @@ diversion_add(const char *const *argv)
 	    S_ISDIR(file_from.stat.st_mode))
 		badusage(_("cannot divert directories"));
 
-	fnn_from = fsys_hash_find_node(filename, 0);
+	fnn_from = fsys_hash_find_node(filename, FHFF_NONE);
 
 	/* Handle divertto. */
 	if (opt_divertto == NULL)
@@ -501,7 +501,7 @@ diversion_add(const char *const *argv)
 
 	file_init(&file_to, opt_divertto);
 
-	fnn_to = fsys_hash_find_node(opt_divertto, 0);
+	fnn_to = fsys_hash_find_node(opt_divertto, FHFF_NONE);
 
 	/* Handle package name. */
 	if (opt_pkgname == NULL)
@@ -630,7 +630,7 @@ diversion_remove(const char *const *argv)
 	modstatdb_open(msdbrw_readonly);
 	ensure_diversions();
 
-	namenode = fsys_hash_find_node(filename, FHFF_NONE);
+	namenode = fsys_hash_find_node(filename, FHFF_NO_NEW);
 
 	if (namenode == NULL || namenode->divert == NULL ||
 	    namenode->divert->useinstead == NULL) {
@@ -763,7 +763,7 @@ diversion_truename(const char *const *argv)
 	modstatdb_open(msdbrw_readonly);
 	ensure_diversions();
 
-	namenode = fsys_hash_find_node(filename, FHFF_NONE);
+	namenode = fsys_hash_find_node(filename, FHFF_NO_NEW);
 
 	/* Print the given name if file is not diverted. */
 	if (namenode && namenode->divert && namenode->divert->useinstead)
@@ -790,7 +790,7 @@ diversion_listpackage(const char *const *argv)
 	modstatdb_open(msdbrw_readonly);
 	ensure_diversions();
 
-	namenode = fsys_hash_find_node(filename, FHFF_NONE);
+	namenode = fsys_hash_find_node(filename, FHFF_NO_NEW);
 
 	/* Print nothing if file is not diverted. */
 	if (namenode == NULL || namenode->divert == NULL)

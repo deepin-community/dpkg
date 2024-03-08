@@ -45,6 +45,8 @@ Dieses Programm wurde so entworfen, dass es in Betreuerskripten ausgeführt werd
 
 Viele dieser Aufgaben benötigen koordinierte Aktionen aus mehreren Betreuerskripten (B<preinst>, B<postinst>, B<prerm>, B<postrm>). Um Fehler zu vermeiden, wird der gleiche Aufruf einfach in alle Skripte eingefügt und das Programm wird sein Verhalten automatisch abhängig von der Variable B<DPKG_MAINTSCRIPT_NAME> und den Argumenten im Betreuerskript, die Sie nach einem doppelten Bindestrich übergeben müssen, anpassen.
 
+Dieses Programm wurde in Dpkg 1.15.7 hinzugefügt.
+
 =head1 GEMEINSAME PARAMETER
 
 =over 
@@ -75,7 +77,7 @@ Das bedeutet, falls ein Paket eine Conffile umbenennen oder entfernen soll, muss
 
 =head2 Eine Conffile entfernen
 
-Hinweis: In den meisten Fällen kann dies durch den Schalter C<remove-on-upgrade> in F<DEBIAN/conffiles> (seit Dpkg 1.20.6) ersetzt werden, siehe L<deb-conffiles(5)>.
+B<Hinweis>: In den meisten Fällen kann dies durch den Schalter C<remove-on-upgrade> in F<DEBIAN/conffiles> (seit Dpkg 1.20.6) ersetzt werden, siehe L<deb-conffiles(5)>.
 
 Falls eine Conffile komplett entfernt wird, sollte sie von der Platte entfernt werden, falls der Benutzer sie nicht verändert hat. Falls es lokale Anpassungen gibt, sollten diese erhalten werden. Falls das Upgrade des Pakets abgebrochen wird, sollte die neuerdings veraltete Conffile nicht verschwinden.
 
@@ -115,7 +117,7 @@ Aktuelle Implementierung: das B<preinst> überprüft, ob die Conffile verändert
 
 Beim Upgrade eines Pakets wird B<dpkg> einen Symlink nicht automatisch in ein Verzeichnis und umgekehrt umwandeln. Installationen älterer Versionen („downgrades“) werden nicht unterstützt und der Pfad verbleibt wie er ist.
 
-Hinweis: Die während dieser Schalter erstellten Symlinks und Verzeichnisse müssen in dem neuen Paket ausgeliefert werden oder B<dpkg> wird nicht in der Lage sein, sie beim endgültigen Löschen zu entfernen.
+B<Hinweis>: Die während dieser Schalter erstellten Symlinks und Verzeichnisse müssen in dem neuen Paket ausgeliefert werden oder B<dpkg> wird nicht in der Lage sein, sie beim endgültigen Löschen zu entfernen.
 
 =head2 Einen Symlink in ein Verzeichnis umwandeln
 
@@ -155,7 +157,7 @@ Aktuelle Implementierung: das B<preinst> überprüft, ob das Verzeichnis existie
 
 =head1 INTEGRATION IN PAKETE
 
-Bei der Benutzung der Paketierungshelfer prüfen Sie bitte, ob eine native B<dpkg-maintscript-helper>-Integration existiert. Hierdurch könnte Ihr Aufwand verringert werden. Lesen Sie beispielsweise B<dh_installdeb>(1).
+Bei der Benutzung der Paketierungshelfer prüfen Sie bitte, ob eine native B<dpkg-maintscript-helper>-Integration existiert. Hierdurch könnte Ihr Aufwand verringert werden. Lesen Sie beispielsweise L<dh_installdeb(1)>.
 
 Da B<dpkg-maintscript-helper> im B<preinst> verwandt wird, benötigt der bedingungslose Einsatz eine prä-Abhängigkeit (I<pre-dependency>), um sicherzustellen, dass die Mindestversion von B<dpkg> bereits entpackt wurde. Die benötigte Version hängt vom verwandten Befehl ab, für B<rm_conffile> und B<mv_conffile> lautet sie 1.15.7.2, für B<symlink_to_dir> und B<dir_to_symlink> lautet sie 1.17.14:
 
@@ -198,7 +200,7 @@ Setzt den Farbmodus (seit Dpkg 1.19.1). Die derzeit unterstützten Werte sind: B
 
 =head1 SIEHE AUCH
 
-B<dh_installdeb>(1).
+L<dh_installdeb(1)>.
 
 
 =head1 ÜBERSETZUNG

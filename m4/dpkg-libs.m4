@@ -146,7 +146,7 @@ AC_DEFUN([DPKG_LIB_SELINUX], [
           AC_MSG_FAILURE([libselinux header not found])
         ])
       ])
-      AC_CHECK_LIB([selinux], [setexecfilecon], [], [
+      AC_CHECK_LIB([selinux], [setexecfilecon], [:], [
         AC_MSG_FAILURE([libselinux does not support setexecfilecon()])
       ])
     ], [
@@ -192,15 +192,42 @@ AC_DEFUN([DPKG_LIB_CURSES], [
   ], [
     _DPKG_CHECK_LIB_CURSES_NARROW()
   ])
+  dnl Check whether linking against the curses library also exposes the tinfo
+  dnl symbols, otherwise explicitly link against it.
+  dpkg_save_curses_LIBS=$LIBS
+  LIBS="$CURSES_LIBS"
+  AC_SEARCH_LIBS([tigetstr], [tinfo])
+  LIBS=$dpkg_save_curses_LIBS
+  AS_IF([test "x$ac_cv_search_tigetstr" != "xnone required" && \
+         test "x$ac_cv_search_tigetstr" != "xno"], [
+    CURSES_LIBS="${CURSES_LIBS:+$CURSES_LIBS }$ac_cv_search_tigetstr"
+  ])
   AS_IF([test "x$have_curses_header" != "xyes"], [
     AC_MSG_FAILURE([curses header not found])
   ])
   have_libcurses=yes
 ])# DPKG_LIB_CURSES
 
+# DPKG_LIB_RT
+# -----------
+# Check for rt library
+AC_DEFUN([DPKG_LIB_RT], [
+  AC_ARG_VAR([RT_LIBS], [linker flags for rt library])dnl
+  have_librt="no"
+  dpkg_save_librt_LIBS=$LIBS
+  AC_SEARCH_LIBS([clock_gettime], [rt])
+  LIBS=$dpkg_save_librt_LIBS
+  AS_IF([test "x$ac_cv_search_clock_gettime" = "xnone required"], [
+    have_librt="builtin"
+  ], [test "x$ac_cv_search_clock_gettime" != "xno"], [
+    have_librt="yes"
+    RT_LIBS="$ac_cv_search_clock_gettime"
+  ])
+])# DPKG_LIB_RT
+
 # DPKG_LIB_SOCKET
 # ---------------
-# Check for socket library
+# Check for Solaris socket library
 AC_DEFUN([DPKG_LIB_SOCKET], [
   AC_ARG_VAR([SOCKET_LIBS], [linker flags for socket library])dnl
   have_libsocket="no"

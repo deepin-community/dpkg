@@ -27,6 +27,7 @@ use Dpkg::OpenPGP::KeyHandle;
 
 my %backend_cmd = (
     auto => 'auto',
+    'gpg-sq' => 'gpg',
     gpg => 'gpg',
     sq => 'sq',
     sqop => 'sop',
@@ -112,5 +113,3 @@ foreach my $cmd (@cmds) {
 
     # TODO: Add more test cases.
 }
-
-1;

@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 start-stop-daemon - inicia e pára programas daemon do sistema
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<start-stop-daemon> [I<option>...] I<command>
 
@@ -24,7 +24,7 @@ B<start-stop-daemon> [I<option>...] I<command>
 
 B<start-stop-daemon> é usado para a criação e término de processos de nível-de-sistema. Usando uma destas opções de correspondência, o B<start-stop-daemon> pode ser configurado para procurar instâncias existentes de processos a correr.
 
-B<Nota:> A menos que B<--pid> ou B<--pidfile> sejam especificados, B<start-stop-daemon> comporta-se de modo semelhante a B<killall>(1). B<start-stop-daemon> irá sondar a tabela de processos em busca de qualquer processo que coincida com o nome de processo, pid parente, uid, e/u gid (se especificado). Quaisquer processos correspondentes irá prevenir um B<--start> de iniciar o daemon. A todos os processos correspondentes será enviado o sinal TERM (ou aquele especificado via B<--signal> ou B<--retry>) se for especificado B<--stop>.Para daemons que têm filhos de vida-longa que precisam sobreviver a um B<--stop>, você tem de especificar um pidfile.
+B<Note>: Unless B<--pid> or B<--pidfile> are specified, B<start-stop-daemon> behaves similar to L<killall(1)>.  B<start-stop-daemon> will scan the process table looking for any processes which match the process name, parent pid, uid, and/or gid (if specified).  Any matching process will prevent B<--start> from starting the daemon.  All matching processes will be sent the TERM signal (or the one specified via B<--signal> or B<--retry>) if B<--stop> is specified.  For daemons which have long-lived children which need to live through a B<--stop>, you must specify a pidfile.
 
 =head1 COMANDOS
 
@@ -70,27 +70,27 @@ Verifica por um processo com o I<ppid> (pid pai) especificado (desde versão 1.1
 
 Verifica se um processo criou o ficheiro I<pidfile>.
 
-B<Nota:> Usar esta opção de correspondência sozinha pode causar que se actue em processos intencionalmente, se o processo antigo terminou sem ser capaz de remover o seu I<pidfile>.
+B<Nota>: Usar esta opção de correspondência sozinha pode causar que se actue em processos intencionalmente, se o processo antigo terminou sem ser capaz de remover o seu I<pidfile>.
 
-B<Aviso:> Usar esta opção de correspondência com um pidfile gravável mundialmente ou usa-la sozinha com um daemon que escreve o pidfile como um utilizador sem privilégios (não-root) irá ser recusada com um erro (desde versão 1.19.3) pois isto é um risco de segurança, porque ou o utilizador consegue escrever nele, ou se o daemon ficar comprometido, não se pode confiar no conteúdo do pidfile, e depois um programa privilegiado (tal como um script de init corrido como root) acabaria a actuar em qualquer processo do sistema. Usar I</dev/null> está isento destas verificações.
+B<Aviso>: Usar esta opção de correspondência com um pidfile gravável mundialmente ou usa-la sozinha com um daemon que escreve o pidfile como um utilizador sem privilégios (não-root) irá ser recusada com um erro (desde versão 1.19.3) pois isto é um risco de segurança, porque ou o utilizador consegue escrever nele, ou se o daemon ficar comprometido, não se pode confiar no conteúdo do pidfile, e depois um programa privilegiado (tal como um script de init corrido como root) acabaria a actuar em qualquer processo do sistema. Usar I</dev/null> está isento destas verificações.
 
 =item B<-x>, B<--exec> I<executable>
 
 Verifica por processos que são instâncias deste I<executable>. O argumento I<executable> deve ser um nome de caminho absoluto.
 
-B<Nota:> Isto pode não funcionar como pretendido com com scripts de interpretação, pois o executável irá apontar para o interpretador. Tendo em conta que processos que correm dentro de uma chroot também irão corresponder, então poderão ser necessárias outras restrições de correspondência.
+B<Nota>: Isto pode não funcionar como pretendido com com scripts de interpretação, pois o executável irá apontar para o interpretador. Tendo em conta que processos que correm dentro de uma chroot também irão corresponder, então poderão ser necessárias outras restrições de correspondência.
 
 =item B<-n>, B<--name> I<process-name>
 
 Verifica por processos com o nome I<process-name>. O I<process-name> é geralmente o nome de ficheiro do processo, mas pode ter sido modificado pelo próprio processo.
 
-B<Nota:> Na maioria dos sistemas esta informação é obtida a partir do nome de comunicação do processo a partir do kernel, o que tem tendência a ter um limite de comprimento relativamente curto (assumir mais de 15 caracteres é não-portável).
+B<Nota>: Na maioria dos sistemas esta informação é obtida a partir do nome de comunicação do processo a partir do kernel, o que tem tendência a ter um limite de comprimento relativamente curto (assumir mais de 15 caracteres é não-portável).
 
 =item B<-u>, B<--user> I<username>|I<uid>
 
 Verifica por processos cujo dono é o utilizador especificado por I<username> ou I<uid>.
 
-B<Nota:> usar só esta opção de correspondência irá causar com que seja actuado em todos os processos que correspondem ao utilizador.
+B<Nota>: usar só esta opção de correspondência irá causar com que seja actuado em todos os processos que correspondem ao utilizador.
 
 =back
 
@@ -134,7 +134,7 @@ Não escreve mensagens informativas, apenas mostra mensagens de erro.
 
 =item B<-c>, B<--chuid> I<username>|I<uid>[B<:>I<group>|I<gid>]
 
-Muda para este nome-utilizador/uid antes de arrancar o processo. Você também pode especifica um grupo ao anexar B<:>, e depois o grupo ou gid do mesmo modo que faria com o comando B<chown>(1) (I<user>B<:>I<group>).  Se for especificado um utilizador sem um grupo, é usado o GID primários para esse utilizador. Quando usa esta opção você tem de compreender que os grupos primário e suplementar são também definidos, mesmo que a opção B<--group> não seja especificada. A opção B<--group> é apenas para grupos em que o utilizador não é normalmente um membro dele (tal como adicionar sociedade de grupo por-processo para utilizadores genéricos tipo B<nobody>).
+Change to this username/uid before starting the process.  You can also specify a group by appending a B<:>, then the group or gid in the same way as you would for the L<chown(1)> command (I<user>B<:>I<group>).  If a user is specified without a group, the primary GID for that user is used.  When using this option you must realize that the primary and supplemental groups are set as well, even if the B<--group> option is not specified.  The B<--group> option is only for groups that the user isn't normally a member of (like adding per process group membership for generic users like B<nobody>).
 
 =item B<-r>, B<--chroot> I<root>
 
@@ -148,11 +148,11 @@ Muda directório para I<caminho> antes de iniciar o processo. Isto é feito depo
 
 Tipicamente usado com programas que não se desanexam deles próprios. Esta opção irá forçar o B<start-stop-daemon> a bifurcar antes de iniciar o processo, e a força-lo para os bastidores.
 
-B<Warning: start-stop-daemon> não pode verificar o estado de saída se o processo falhar ao executar por B<qualquer> razão. Este é o último recurso, e destina-se apenas a programas que ou não fazem sentido a bifurcarem por si só, ou onde não é praticável adicionar-lhes o código para fazerem isto eles próprios.
+B<Aviso>: B<start-stop-daemon> não pode verificar o estado de saída se o processo falhar ao executar por B<qualquer> razão. Este é o último recurso, e destina-se apenas a programas que ou não fazem sentido a bifurcarem por si só, ou onde não é praticável adicionar-lhes o código para fazerem isto eles próprios.
 
 =item B<--notify-await>
 
-Espera pelo processo nos bastidores que envie uma notificação de prontidão antes de considerar o serviço arrancado (desde versão 1.19.3). Isto implementa partes do protocolo de prontidão do systemd, como especificado no manual B<sd_notify>(3). As seguintes variáveis são suportadas:
+Wait for the background process to send a readiness notification before considering the service started (since version 1.19.3).  This implements parts of the systemd readiness protocol, as specified in the L<sd_notify(3)> manual page.  The following variables are supported:
 
 =over 
 
@@ -206,7 +206,7 @@ Isto define o umask do processo antes de o iniciar (desde a versão 1.13.22).
 
 Usado quando se inicia um programa que não cria o seu próprio ficheiro pid. Esta opção irá fazer o B<start-stop-daemon> criar o ficheiro referenciado com B<--pidfile> e colocar o pid nele mesmo antes de executar o processo. Nota, o ficheiro só será removido quando se pára o programa se for usado B<--remove-pidfile>.
 
-B<Nota:> Esta funcionalidade pode não funcionar em todos os casos. Mais notavelmente quando o programa a ser executar bifurca do seu processo principal. Devido a isto, é geralmente apenas útil quando combinado com a opção B<--background>.
+B<Nota>: Esta funcionalidade pode não funcionar em todos os casos. Mais notavelmente quando o programa a ser executar bifurca do seu processo principal. Devido a isto, é geralmente apenas útil quando combinado com a opção B<--background>.
 
 =item B<--remove-pidfile>
 

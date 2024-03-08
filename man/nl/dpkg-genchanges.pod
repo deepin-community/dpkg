@@ -108,17 +108,17 @@ Maakt dat de changelog-informatie gebruikt wordt van alle versies die strikt gen
 
 Lees de beschrijving van de wijzigingen in het bestand I<beschrijving-wijzigingen> eerder dan de informatie te gebruiken uit het bestand changelog uit de broncodeboom.
 
-=item B<-m>I<adres-van-de-onderhouder>
+=item B<-m>I<adres-van-de-beheerder>
 
-Gebruik I<onderhouder-adres> als de naam en het e-mailadres van de onderhouder van dit pakket, eerder dan de informatie te gebruiken uit het bestand control van de broncodeboom.
+I<adres-van-de-beheerder> gebruiken als de naam en het e-mailadres van de beheerder van dit pakket, eerder dan de informatie te gebruiken uit het bestand control van de broncodeboom.
 
-=item B<-e>I<adres-van-de-onderhouder>
+=item B<-e>I<adres-van-de-beheerder>
 
-Gebruik I<onderhouder-adres> als de naam en het e-mailadres van de onderhouder van deze upload, eerder dan de informatie te gebruiken uit het bestand changelog van de broncodeboom.
+I<adres-van-de-beheerder> gebruiken als de naam en het e-mailadres van de beheerder van deze upload, eerder dan de informatie te gebruiken uit het bestand changelog van de broncodeboom.
 
 =item B<-V>I<naam>B<=>I<waarde>
 
-Een uitvoersubstitutievariabele instellen. Zie B<deb-substvars>(5) voor een bespreking van uitvoersubstitutie.
+Een uitvoersubstitutievariabele instellen. Zie L<deb-substvars(5)> voor een bespreking van uitvoersubstitutie.
 
 =item B<-T>I<substvars-bestand>
 
@@ -146,7 +146,7 @@ Hier de lijst van bestanden lezen welke geüpload moeten worden, eerder dan gebr
 
 =item B<-F>I<changelog-indeling>
 
-Geeft de indeling van het bestand changelog aan. Zie B<dpkg-parsechangelog>(1) voor informatie over alternatieve indelingen.
+Geeft de indeling van het bestand changelog aan. Zie L<dpkg-parsechangelog(1)> voor informatie over alternatieve indelingen.
 
 =item B<-u>I<map-upload-bestanden>
 
@@ -196,5 +196,5 @@ De lijst van gegenereerde bestanden die deel uitmaken van de upload die voorbere
 
 =head1 ZIE OOK
 
-B<deb-substvars>(5), B<deb-src-control>(5), B<deb-src-files>(5), B<deb-changelog>(5), B<deb-changes>(5).
+L<deb-substvars(5)>, L<deb-src-control(5)>, L<deb-src-files(5)>, L<deb-changelog(5)>, L<deb-changes(5)>.
 

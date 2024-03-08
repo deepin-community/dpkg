@@ -24,6 +24,8 @@ B<dpkg-vendor> [I<option>...] I<commande>
 
 B<dpkg-vendor> est un outil qui permet de récupérer des informations sur les éditeurs S<(« vendors »)> de distributions référencés dans B<%PKGCONFDIR%/origins>. B<%PKGCONFDIR%/origins/default> contient l'information relative à l'éditeur actuellement utilisé.
 
+This program was introduced in dpkg 1.15.1.
+
 =head1 COMMANDES
 
 =over 
@@ -80,7 +82,7 @@ Si cette variable est définie, elle sera utilisée pour décider l'activation d
 
 =head1 VOIR AUSSI
 
-B<deb-origin>(5).
+L<deb-origin(5)>.
 
 
 =head1 TRADUCTION

@@ -70,7 +70,7 @@ La I<nouvelle_version> est passée depuis S<dpkg 1.18.5.>
 
 =head1 VOIR AUSSI
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 TRADUCTION

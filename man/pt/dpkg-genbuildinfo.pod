@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-genbuildinfo - gera ficheiros .buildinfo de Debian
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-genbuildinfo> [I<option>...]
 
@@ -24,7 +24,7 @@ B<dpkg-genbuildinfo> [I<option>...]
 
 B<dpkg-genbuildinfo> lê informação a partir de uma árvore fonte Debian compilada e desempacotada e dos ficheiros que gerou, e gera um ficheiro de controle Debian que descreve o ambiente de compilação e os artefactos de compilação (ficheiro B<.buildinfo>).
 
-Este comando foi introduzido no dpkg 1.18.11.
+Este programa foi introduzido no dpkg 1.18.11.
 
 =head1 OPÇÕES
 
@@ -74,7 +74,7 @@ Especifica onde está a lista de ficheiros que foram produzidos pela compilaçã
 
 =item B<-F>I<changelog-format>
 
-Especifica o formato do registo de alterações. Veja B<dpkg-parsechangelog>(1) para informação acerca dos formatos alternativos.
+Specifies the format of the changelog.  See L<dpkg-parsechangelog(1)> for information about alternative formats.
 
 =item B<-O>[I<filename>]
 
@@ -146,7 +146,7 @@ A lista de ficheiros gerados.  B<dpkg-genbuildinfo> lê os dados aqui quando pro
 
 =head1 VEJA TAMBÉM
 
-B<deb-buildinfo>(5).
+L<deb-buildinfo(5)>.
 
 
 =head1 TRADUÇÃO

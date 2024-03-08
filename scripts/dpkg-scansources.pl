@@ -127,8 +127,8 @@ sub load_override {
 	if (!defined $maintainer) {
 	    # do nothing
         } elsif ($maintainer =~ /^(.*\S)\s*=>\s*(.*)$/) {
-	    $override{$package}[O_MAINT_FROM] = [split m{\s*//\s*}, $1];
 	    $override{$package}[O_MAINT_TO] = $2;
+	    $override{$package}[O_MAINT_FROM] = [split m{\s*//\s*}, $1];
         } else {
 	    $override{$package}[O_MAINT_TO] = $maintainer;
 	}
@@ -206,15 +206,16 @@ sub process_dsc {
     my ($prefix, $file) = @_;
 
     my $basename = $file;
+    ## no critic (RegularExpressions::ProhibitCaptureWithoutTest)
     my $dir = ($basename =~ s{^(.*)/}{}) ? $1 : '';
     $dir = "$prefix$dir";
     $dir =~ s{/+$}{};
     $dir = '.' if $dir eq '';
 
     # Parse ‘.dsc’ file.
-    my $fields = Dpkg::Control->new(type => CTRL_PKG_SRC);
+    my $fields = Dpkg::Control->new(type => CTRL_DSC);
     $fields->load($file);
-    $fields->set_options(type => CTRL_INDEX_SRC);
+    $fields->set_options(type => CTRL_REPO_SRC);
 
     # Get checksums
     my $checksums = Dpkg::Checksums->new();
@@ -238,17 +239,17 @@ sub process_dsc {
         ($override{$b} ? $priority{$override{$b}[O_PRIORITY]} : 0)
     } @binary;
     my $priority_override = $override{$binary_by_priority[-1]};
-    my $priority = $priority_override
-			? $priority_override->[O_PRIORITY]
-			: undef;
+    my $priority = $priority_override ?
+                   $priority_override->[O_PRIORITY] :
+                   undef;
     $fields->{Priority} = $priority if defined $priority;
 
     # For the section override, first check for a record from the source
     # override file, else use the regular override file.
     my $section_override = $override{"source/$source"} || $override{$source};
-    my $section = $section_override
-			? $section_override->[O_SECTION]
-			: undef;
+    my $section = $section_override ?
+                  $section_override->[O_SECTION] :
+                  undef;
     $fields->{Section} = $section if defined $section;
 
     # For the maintainer override, use the override record for the first
@@ -286,7 +287,7 @@ sub process_dsc {
 }
 
 usageerr(g_('one to three arguments expected'))
-    if @ARGV < 1 or @ARGV > 3;
+    if not 1 <= @ARGV <= 3;
 
 push @ARGV, undef if @ARGV < 2;
 push @ARGV, '' if @ARGV < 3;

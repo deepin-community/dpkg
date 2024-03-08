@@ -612,72 +612,76 @@ at_format='??'
 # Description of all the test groups.
 at_help_all="1;deb-format.at:1;dpkg-deb options;dpkg-deb command-line;
 2;deb-format.at:10;dpkg-deb .deb format 0.93x;dpkg-deb deb-old;
-3;deb-format.at:168;dpkg-deb .deb format 2.x;dpkg-deb deb;
-4;deb-content.at:1;dpkg-deb .deb conffiles;dpkg-deb deb conffiles;
-5;deb-fields.at:1;dpkg-deb .deb fields;dpkg-deb deb fields;
-6;deb-split.at:1;dpkg-split options;dpkg-split command-line;
-7;deb-split.at:9;dpkg-split .deb format;dpkg-split deb-split;
-8;realpath.at:1;dpkg-realpath options;dpkg-realpath command-line;
-9;realpath.at:9;dpkg-realpath path resolving;dpkg-realpath canonicalize;
-10;divert.at:1;dpkg-divert options;dpkg-divert command-line;
-11;divert.at:83;dpkg-divert query (empty db);dpkg-divert query;
-12;divert.at:94;dpkg-divert query (list);dpkg-divert query;
-13;divert.at:134;dpkg-divert query (listpackage + truename);dpkg-divert query;
-14;divert.at:160;dpkg-divert add (local rename);dpkg-divert add;
-15;divert.at:178;dpkg-divert add (local no-rename);dpkg-divert add;
-16;divert.at:196;dpkg-divert add (rename quiet);dpkg-divert add;
-17;divert.at:213;dpkg-divert add (test rename quiet);dpkg-divert add;
-18;divert.at:226;dpkg-divert add (rename missing quiet);dpkg-divert add;
-19;divert.at:243;dpkg-divert add (local rename quiet);dpkg-divert add;
-20;divert.at:260;dpkg-divert add (package rename quiet);dpkg-divert add;
-21;divert.at:274;dpkg-divert add (rename self-link);dpkg-divert add;
-22;divert.at:292;dpkg-divert add (rename other-file);dpkg-divert add;
-23;divert.at:305;dpkg-divert add (rename missing dir);dpkg-divert add;
-24;divert.at:319;dpkg-divert add (rename read-only dir);dpkg-divert fsys;
-25;divert.at:343;dpkg-divert add (rename no-access dir);dpkg-divert fsys;
-26;divert.at:367;dpkg-divert add second diversion;dpkg-divert add;
-27;divert.at:401;dpkg-divert add third diversion;dpkg-divert add;
-28;divert.at:420;dpkg-divert add (file owned by --package);dpkg-divert add;
-29;divert.at:447;dpkg-divert remove (missing);dpkg-divert remove;
-30;divert.at:459;dpkg-divert remove (divert-to);dpkg-divert remove;
-31;divert.at:494;dpkg-divert remove (plain);dpkg-divert remove;
-32;divert.at:517;dpkg-divert remove (by-package);dpkg-divert remove;
-33;divert.at:539;dpkg-divert remove (test);dpkg-divert remove;
-34;divert.at:564;dpkg-divert db (no-access);dpkg-divert db;
-35;divert.at:580;dpkg-divert db (truncated);dpkg-divert db;
-36;divert.at:598;dpkg-divert db (read-only dir);dpkg-divert db;
-37;divert.at:613;dpkg-divert db (disk full);dpkg-divert db;
-38;divert.at:628;dpkg-divert db (pathname is dir);dpkg-divert db;
-39;chdir.at:5;dpkg chdir opts;dpkg command-line chdir;
-40;chdir.at:5;dpkg chdir env;dpkg command-line chdir;
-41;chdir.at:5;dpkg chdir env+opt admindir;dpkg command-line chdir;
-42;chdir.at:5;dpkg chdir env+opt root;dpkg command-line chdir;
-43;chdir.at:5;dpkg chdir env+opt root+admindir;dpkg command-line chdir;
-44;chdir.at:5;dpkg-divert chdir opts;dpkg-divert command-line chdir;
-45;chdir.at:5;dpkg-divert chdir env;dpkg-divert command-line chdir;
-46;chdir.at:5;dpkg-divert chdir env+opt admindir;dpkg-divert command-line chdir;
-47;chdir.at:5;dpkg-divert chdir env+opt root;dpkg-divert command-line chdir;
-48;chdir.at:5;dpkg-divert chdir env+opt root+admindir;dpkg-divert command-line chdir;
-49;chdir.at:5;dpkg-statoverride chdir opts;dpkg-statoverride command-line chdir;
-50;chdir.at:5;dpkg-statoverride chdir env;dpkg-statoverride command-line chdir;
-51;chdir.at:5;dpkg-statoverride chdir env+opt admindir;dpkg-statoverride command-line chdir;
-52;chdir.at:5;dpkg-statoverride chdir env+opt root;dpkg-statoverride command-line chdir;
-53;chdir.at:5;dpkg-statoverride chdir env+opt root+admindir;dpkg-statoverride command-line chdir;
-54;chdir.at:329;dpkg-split chdir opts;dpkg-split command-line chdir;
-55;chdir.at:329;dpkg-split chdir env;dpkg-split command-line chdir;
-56;chdir.at:329;dpkg-split chdir env+opt admindir;dpkg-split command-line chdir;
-57;chdir.at:329;dpkg-split chdir env+opt root;dpkg-split command-line chdir;
-58;chdir.at:329;dpkg-split chdir env+opt root+admindir;dpkg-split command-line chdir;
-59;chdir.at:329;dpkg-query chdir opts;dpkg-query command-line chdir;
-60;chdir.at:329;dpkg-query chdir env;dpkg-query command-line chdir;
-61;chdir.at:329;dpkg-query chdir env+opt admindir;dpkg-query command-line chdir;
-62;chdir.at:329;dpkg-query chdir env+opt root;dpkg-query command-line chdir;
-63;chdir.at:329;dpkg-query chdir env+opt root+admindir;dpkg-query command-line chdir;
-64;chdir.at:329;dpkg-trigger chdir opts;dpkg-trigger command-line chdir;
-65;chdir.at:329;dpkg-trigger chdir env;dpkg-trigger command-line chdir;
-66;chdir.at:329;dpkg-trigger chdir env+opt admindir;dpkg-trigger command-line chdir;
-67;chdir.at:329;dpkg-trigger chdir env+opt root;dpkg-trigger command-line chdir;
-68;chdir.at:329;dpkg-trigger chdir env+opt root+admindir;dpkg-trigger command-line chdir;
+3;deb-format.at:208;dpkg-deb .deb format 2.x (core);dpkg-deb deb;
+4;deb-format.at:511;dpkg-deb .deb format 2.x (xz);dpkg-deb deb;
+5;deb-format.at:565;dpkg-deb .deb format 2.x (zstd);dpkg-deb deb;
+6;deb-format.at:616;dpkg-deb .deb format 2.x (bzip2);dpkg-deb deb;
+7;deb-format.at:644;dpkg-deb .deb format 2.x (lzma);dpkg-deb deb;
+8;deb-content.at:1;dpkg-deb .deb conffiles;dpkg-deb deb conffiles;
+9;deb-fields.at:1;dpkg-deb .deb fields;dpkg-deb deb fields;
+10;deb-split.at:1;dpkg-split options;dpkg-split command-line;
+11;deb-split.at:9;dpkg-split .deb format;dpkg-split deb-split;
+12;realpath.at:1;dpkg-realpath options;dpkg-realpath command-line;
+13;realpath.at:9;dpkg-realpath path resolving;dpkg-realpath canonicalize;
+14;divert.at:1;dpkg-divert options;dpkg-divert command-line;
+15;divert.at:83;dpkg-divert query (empty db);dpkg-divert query;
+16;divert.at:94;dpkg-divert query (list);dpkg-divert query;
+17;divert.at:134;dpkg-divert query (listpackage + truename);dpkg-divert query;
+18;divert.at:160;dpkg-divert add (local rename);dpkg-divert add;
+19;divert.at:178;dpkg-divert add (local no-rename);dpkg-divert add;
+20;divert.at:196;dpkg-divert add (rename quiet);dpkg-divert add;
+21;divert.at:213;dpkg-divert add (test rename quiet);dpkg-divert add;
+22;divert.at:226;dpkg-divert add (rename missing quiet);dpkg-divert add;
+23;divert.at:243;dpkg-divert add (local rename quiet);dpkg-divert add;
+24;divert.at:260;dpkg-divert add (package rename quiet);dpkg-divert add;
+25;divert.at:274;dpkg-divert add (rename self-link);dpkg-divert add;
+26;divert.at:292;dpkg-divert add (rename other-file);dpkg-divert add;
+27;divert.at:305;dpkg-divert add (rename missing dir);dpkg-divert add;
+28;divert.at:319;dpkg-divert add (rename read-only dir);dpkg-divert fsys;
+29;divert.at:343;dpkg-divert add (rename no-access dir);dpkg-divert fsys;
+30;divert.at:367;dpkg-divert add second diversion;dpkg-divert add;
+31;divert.at:401;dpkg-divert add third diversion;dpkg-divert add;
+32;divert.at:420;dpkg-divert add (file owned by --package);dpkg-divert add;
+33;divert.at:447;dpkg-divert remove (missing);dpkg-divert remove;
+34;divert.at:459;dpkg-divert remove (divert-to);dpkg-divert remove;
+35;divert.at:494;dpkg-divert remove (plain);dpkg-divert remove;
+36;divert.at:517;dpkg-divert remove (by-package);dpkg-divert remove;
+37;divert.at:539;dpkg-divert remove (test);dpkg-divert remove;
+38;divert.at:564;dpkg-divert db (no-access);dpkg-divert db;
+39;divert.at:580;dpkg-divert db (truncated);dpkg-divert db;
+40;divert.at:598;dpkg-divert db (read-only dir);dpkg-divert db;
+41;divert.at:613;dpkg-divert db (disk full);dpkg-divert db;
+42;divert.at:628;dpkg-divert db (pathname is dir);dpkg-divert db;
+43;chdir.at:5;dpkg chdir opts;dpkg command-line chdir;
+44;chdir.at:5;dpkg chdir env;dpkg command-line chdir;
+45;chdir.at:5;dpkg chdir env+opt admindir;dpkg command-line chdir;
+46;chdir.at:5;dpkg chdir env+opt root;dpkg command-line chdir;
+47;chdir.at:5;dpkg chdir env+opt root+admindir;dpkg command-line chdir;
+48;chdir.at:5;dpkg-divert chdir opts;dpkg-divert command-line chdir;
+49;chdir.at:5;dpkg-divert chdir env;dpkg-divert command-line chdir;
+50;chdir.at:5;dpkg-divert chdir env+opt admindir;dpkg-divert command-line chdir;
+51;chdir.at:5;dpkg-divert chdir env+opt root;dpkg-divert command-line chdir;
+52;chdir.at:5;dpkg-divert chdir env+opt root+admindir;dpkg-divert command-line chdir;
+53;chdir.at:5;dpkg-statoverride chdir opts;dpkg-statoverride command-line chdir;
+54;chdir.at:5;dpkg-statoverride chdir env;dpkg-statoverride command-line chdir;
+55;chdir.at:5;dpkg-statoverride chdir env+opt admindir;dpkg-statoverride command-line chdir;
+56;chdir.at:5;dpkg-statoverride chdir env+opt root;dpkg-statoverride command-line chdir;
+57;chdir.at:5;dpkg-statoverride chdir env+opt root+admindir;dpkg-statoverride command-line chdir;
+58;chdir.at:329;dpkg-split chdir opts;dpkg-split command-line chdir;
+59;chdir.at:329;dpkg-split chdir env;dpkg-split command-line chdir;
+60;chdir.at:329;dpkg-split chdir env+opt admindir;dpkg-split command-line chdir;
+61;chdir.at:329;dpkg-split chdir env+opt root;dpkg-split command-line chdir;
+62;chdir.at:329;dpkg-split chdir env+opt root+admindir;dpkg-split command-line chdir;
+63;chdir.at:329;dpkg-query chdir opts;dpkg-query command-line chdir;
+64;chdir.at:329;dpkg-query chdir env;dpkg-query command-line chdir;
+65;chdir.at:329;dpkg-query chdir env+opt admindir;dpkg-query command-line chdir;
+66;chdir.at:329;dpkg-query chdir env+opt root;dpkg-query command-line chdir;
+67;chdir.at:329;dpkg-query chdir env+opt root+admindir;dpkg-query command-line chdir;
+68;chdir.at:329;dpkg-trigger chdir opts;dpkg-trigger command-line chdir;
+69;chdir.at:329;dpkg-trigger chdir env;dpkg-trigger command-line chdir;
+70;chdir.at:329;dpkg-trigger chdir env+opt admindir;dpkg-trigger command-line chdir;
+71;chdir.at:329;dpkg-trigger chdir env+opt root;dpkg-trigger command-line chdir;
+72;chdir.at:329;dpkg-trigger chdir env+opt root+admindir;dpkg-trigger command-line chdir;
 "
 # List of the all the test groups.
 at_groups_all=`printf "%s\n" "$at_help_all" | sed 's/;.*//'`
@@ -691,7 +695,7 @@ at_fn_validate_ranges ()
   for at_grp
   do
     eval at_value=\$$at_grp
-    if test $at_value -lt 1 || test $at_value -gt 68; then
+    if test $at_value -lt 1 || test $at_value -gt 72; then
       printf "%s\n" "invalid test group: $at_value" >&2
       exit 1
     fi
@@ -996,7 +1000,7 @@ fi
 # List of tests.
 if $at_list_p; then
   cat <<_ATEOF || at_write_fail=1
-dpkg 1.21.22 test suite: dpkg tools functional test suite test groups:
+dpkg 1.22.5 test suite: dpkg tools functional test suite test groups:
 
  NUM: FILE-NAME:LINE     TEST-GROUP-NAME
       KEYWORDS
@@ -1037,7 +1041,7 @@ _ATEOF
   exit $at_write_fail
 fi
 if $at_version_p; then
-  printf "%s\n" "$as_me (dpkg 1.21.22)" &&
+  printf "%s\n" "$as_me (dpkg 1.22.5)" &&
   cat <<\_ATEOF || at_write_fail=1
 
 Copyright (C) 2021 Free Software Foundation, Inc.
@@ -1058,16 +1062,16 @@ esac
 # Category starts at test group 1.
 at_banner_text_1="Binary .deb packages"
 # Banner 2. testsuite.at:11
-# Category starts at test group 6.
+# Category starts at test group 10.
 at_banner_text_2="Split .deb packages"
 # Banner 3. testsuite.at:15
-# Category starts at test group 8.
+# Category starts at test group 12.
 at_banner_text_3="Resolve pathnames"
 # Banner 4. testsuite.at:19
-# Category starts at test group 10.
+# Category starts at test group 14.
 at_banner_text_4="Diversions"
 # Banner 5. testsuite.at:23
-# Category starts at test group 39.
+# Category starts at test group 43.
 at_banner_text_5="Change directory options"
 
 # Take any -C into account.
@@ -1236,13 +1240,13 @@ fi
 exec 5>>"$at_suite_log"
 
 # Banners and logs.
-printf "%s\n" "## ---------------------------------------------------------- ##
-## dpkg 1.21.22 test suite: dpkg tools functional test suite. ##
-## ---------------------------------------------------------- ##"
+printf "%s\n" "## --------------------------------------------------------- ##
+## dpkg 1.22.5 test suite: dpkg tools functional test suite. ##
+## --------------------------------------------------------- ##"
 {
-  printf "%s\n" "## ---------------------------------------------------------- ##
-## dpkg 1.21.22 test suite: dpkg tools functional test suite. ##
-## ---------------------------------------------------------- ##"
+  printf "%s\n" "## --------------------------------------------------------- ##
+## dpkg 1.22.5 test suite: dpkg tools functional test suite. ##
+## --------------------------------------------------------- ##"
   echo
 
   printf "%s\n" "$as_me: command line was:"
@@ -2101,7 +2105,7 @@ _ASBOX
   printf "%s\n" "Please send $at_msg and all information you think might help:
 
    To: <debian-dpkg@lists.debian.org>
-   Subject: [dpkg 1.21.22] $as_me: $at_msg1$at_msg2
+   Subject: [dpkg 1.22.5] $as_me: $at_msg1$at_msg2
 
 You may investigate any problem if you feel able to do so, in which
 case the test suite provides a good starting point.  Its output may
@@ -2213,8 +2217,7 @@ CTRL_TEMPL
 
 
 
-  $SED -e 's/^Description:.*$/& - deb old format support/' <'pkg-deb-old-format/DEBIAN/control' >'pkg-deb-old-format/DEBIAN/control.new'
-  mv 'pkg-deb-old-format/DEBIAN/control.new' 'pkg-deb-old-format/DEBIAN/control'
+  $PERL -p -i -E 's/^Description:.*$/$& - deb old format support/' 'pkg-deb-old-format/DEBIAN/control'
 
 cat >pkg-deb-old-format/file-templ <<'_ATEOF'
 test
@@ -2228,19 +2231,25 @@ cp \$top_srcdir/ChangeLog.old pkg-old-templ/
 chmod 0644 pkg-old-templ/ChangeLog.old
 chmod -R u+w pkg-old-templ
 find pkg-old-templ | xargs touch -t 197001010100.00
-dpkg-deb --deb-format=0.939000 --root-owner-group -Zgzip -b pkg-old-templ >/dev/null
+dpkg-deb --deb-format=0.939000 --root-owner-group -b pkg-old-templ >/dev/null
 
+dpkg-deb --ctrl-tarfile pkg-old-templ.deb >ctrl.tar
 dpkg-deb --fsys-tarfile pkg-old-templ.deb >fsys.tar
+gzip -n ctrl.tar
 gzip -n fsys.tar
 
 # Create deb-old 0.939
-cp pkg-old-templ.deb pkg-old.deb
+echo '0.939000' >pkg-old.deb
+
+  \$PERL -E 'say -s shift' \"ctrl.tar.gz\"  >>pkg-old.deb
+cat ctrl.tar.gz >>pkg-old.deb
+cat fsys.tar.gz >>pkg-old.deb
 
 # Create deb-old-old-old 0.931
 mkdir -p pkg-old-0931-templ/.DEBIAN
 cp pkg-old-templ/DEBIAN/* pkg-old-0931-templ/.DEBIAN/
 find pkg-old-0931-templ | xargs touch -t 197001010100.00
-tar czf ctrl-0931.tar.gz --format=gnu --mtime @0 --clamp-mtime --owner root:0 --group root:0 -C pkg-old-0931-templ .DEBIAN
+\$TAR czf ctrl-0931.tar.gz --format=gnu --mtime @0 --clamp-mtime --owner root:0 --group root:0 -C pkg-old-0931-templ .DEBIAN
 
 echo '0.931000' >pkg-old-0931.deb
 
@@ -2252,7 +2261,7 @@ cat fsys.tar.gz >>pkg-old-0931.deb
 mkdir -p pkg-old-0932-templ/DEBIAN
 cp pkg-old-templ/DEBIAN/* pkg-old-0932-templ/DEBIAN/
 find pkg-old-0932-templ | xargs touch -t 197001010100.00
-tar czf ctrl-0932.tar.gz --format=gnu --mtime @0 --clamp-mtime --owner root:0 --group root:0 -C pkg-old-0932-templ DEBIAN
+\$TAR czf ctrl-0932.tar.gz --format=gnu --mtime @0 --clamp-mtime --owner root:0 --group root:0 -C pkg-old-0932-templ DEBIAN
 
 # Create deb-old-old 0.932
 echo '0.932000' >pkg-old-0932.deb
@@ -2276,19 +2285,25 @@ cp $top_srcdir/ChangeLog.old pkg-old-templ/
 chmod 0644 pkg-old-templ/ChangeLog.old
 chmod -R u+w pkg-old-templ
 find pkg-old-templ | xargs touch -t 197001010100.00
-dpkg-deb --deb-format=0.939000 --root-owner-group -Zgzip -b pkg-old-templ >/dev/null
+dpkg-deb --deb-format=0.939000 --root-owner-group -b pkg-old-templ >/dev/null
 
+dpkg-deb --ctrl-tarfile pkg-old-templ.deb >ctrl.tar
 dpkg-deb --fsys-tarfile pkg-old-templ.deb >fsys.tar
+gzip -n ctrl.tar
 gzip -n fsys.tar
 
 # Create deb-old 0.939
-cp pkg-old-templ.deb pkg-old.deb
+echo '0.939000' >pkg-old.deb
+
+  $PERL -E 'say -s shift' "ctrl.tar.gz"  >>pkg-old.deb
+cat ctrl.tar.gz >>pkg-old.deb
+cat fsys.tar.gz >>pkg-old.deb
 
 # Create deb-old-old-old 0.931
 mkdir -p pkg-old-0931-templ/.DEBIAN
 cp pkg-old-templ/DEBIAN/* pkg-old-0931-templ/.DEBIAN/
 find pkg-old-0931-templ | xargs touch -t 197001010100.00
-tar czf ctrl-0931.tar.gz --format=gnu --mtime @0 --clamp-mtime --owner root:0 --group root:0 -C pkg-old-0931-templ .DEBIAN
+$TAR czf ctrl-0931.tar.gz --format=gnu --mtime @0 --clamp-mtime --owner root:0 --group root:0 -C pkg-old-0931-templ .DEBIAN
 
 echo '0.931000' >pkg-old-0931.deb
 
@@ -2300,7 +2315,7 @@ cat fsys.tar.gz >>pkg-old-0931.deb
 mkdir -p pkg-old-0932-templ/DEBIAN
 cp pkg-old-templ/DEBIAN/* pkg-old-0932-templ/DEBIAN/
 find pkg-old-0932-templ | xargs touch -t 197001010100.00
-tar czf ctrl-0932.tar.gz --format=gnu --mtime @0 --clamp-mtime --owner root:0 --group root:0 -C pkg-old-0932-templ DEBIAN
+$TAR czf ctrl-0932.tar.gz --format=gnu --mtime @0 --clamp-mtime --owner root:0 --group root:0 -C pkg-old-0932-templ DEBIAN
 
 # Create deb-old-old 0.932
 echo '0.932000' >pkg-old-0932.deb
@@ -2326,22 +2341,29 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
+DEB_OLD_CTRL_SIZE=$(
+  $PERL -E 'say -s shift' "ctrl.tar.gz" )
+DEB_OLD_FSYS_SIZE=$(
+  $PERL -E 'say -s shift' "fsys.tar.gz" )
+DEB_OLD_SIZE=$(
+  $PERL -E 'say -s shift' "pkg-old.deb" )
+
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:73:
+printf "%s\n" "$at_srcdir/deb-format.at:82:
 # Check old package metadata
-dpkg-deb -I pkg-old.deb | \$SED -e 's/ *\$//'
+dpkg-deb -I pkg-old.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:73"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:82"
 ( $at_check_trace;
 # Check old package metadata
-dpkg-deb -I pkg-old.deb | $SED -e 's/ *$//'
+dpkg-deb -I pkg-old.deb
 
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
 echo >>"$at_stdout"; printf "%s\n" " old Debian package, version 0.939000.
- size 174621 bytes: control archive=274, main archive=174334.
+ size $DEB_OLD_SIZE bytes: control archive=$DEB_OLD_CTRL_SIZE, main archive=$DEB_OLD_FSYS_SIZE.
      201 bytes,     7 lines      control
  Package: pkg-deb-old-format
  Version: 0.0-1
@@ -2352,27 +2374,32 @@ echo >>"$at_stdout"; printf "%s\n" " old Debian package, version 0.939000.
  Description: test package - deb old format support
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:73"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:82"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
+DEB_OLD_0931_SIZE=$(
+  $PERL -E 'say -s shift' "pkg-old-0931.deb" )
+DEB_OLD_0931_CTRL_SIZE=$(
+  $PERL -E 'say -s shift' "ctrl-0931.tar.gz" )
+
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:88:
+printf "%s\n" "$at_srcdir/deb-format.at:100:
 # Check old package metadata
-dpkg-deb -I pkg-old-0931.deb | \$SED -e 's/ *\$//'
+dpkg-deb -I pkg-old-0931.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:88"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:100"
 ( $at_check_trace;
 # Check old package metadata
-dpkg-deb -I pkg-old-0931.deb | $SED -e 's/ *$//'
+dpkg-deb -I pkg-old-0931.deb
 
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
 echo >>"$at_stdout"; printf "%s\n" " old Debian package, version 0.931000.
- size 175522 bytes: control archive=291, main archive=175218.
+ size $DEB_OLD_0931_SIZE bytes: control archive=$DEB_OLD_0931_CTRL_SIZE, main archive=$DEB_OLD_FSYS_SIZE.
      201 bytes,     7 lines      control
  Package: pkg-deb-old-format
  Version: 0.0-1
@@ -2383,58 +2410,32 @@ echo >>"$at_stdout"; printf "%s\n" " old Debian package, version 0.931000.
  Description: test package - deb old format support
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:88"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:100"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
+DEB_OLD_0932_SIZE=$(
+  $PERL -E 'say -s shift' "pkg-old-0932.deb" )
+DEB_OLD_0932_CTRL_SIZE=$(
+  $PERL -E 'say -s shift' "ctrl-0932.tar.gz" )
+
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:103:
+printf "%s\n" "$at_srcdir/deb-format.at:118:
 # Check old package metadata
-dpkg-deb -I pkg-old-0932.deb | \$SED -e 's/ *\$//'
+dpkg-deb -I pkg-old-0932.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:103"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:118"
 ( $at_check_trace;
 # Check old package metadata
-dpkg-deb -I pkg-old-0932.deb | $SED -e 's/ *$//'
+dpkg-deb -I pkg-old-0932.deb
 
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
 echo >>"$at_stdout"; printf "%s\n" " old Debian package, version 0.932000.
- size 175522 bytes: control archive=291, main archive=175218.
-     201 bytes,     7 lines      control
- Package: pkg-deb-old-format
- Version: 0.0-1
- Section: test
- Priority: extra
- Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
- Architecture: all
- Description: test package - deb old format support
-" | \
-  $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:103"
-$at_failed && at_fn_log_failure
-$at_traceon; }
-
-
-{ set +x
-printf "%s\n" "$at_srcdir/deb-format.at:118:
-# Check old package metadata
-dpkg-deb -I pkg-old-0933.deb | \$SED -e 's/ *\$//'
-"
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:118"
-( $at_check_trace;
-# Check old package metadata
-dpkg-deb -I pkg-old-0933.deb | $SED -e 's/ *$//'
-
-) >>"$at_stdout" 2>>"$at_stderr" 5>&-
-at_status=$? at_failed=false
-$at_check_filter
-at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; printf "%s\n" " old Debian package, version 0.933000.
- size 175522 bytes: control archive=291, main archive=175218.
+ size $DEB_OLD_0932_SIZE bytes: control archive=$DEB_OLD_0932_CTRL_SIZE, main archive=$DEB_OLD_FSYS_SIZE.
      201 bytes,     7 lines      control
  Package: pkg-deb-old-format
  Version: 0.0-1
@@ -2450,12 +2451,47 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
+DEB_OLD_0933_SIZE=$(
+  $PERL -E 'say -s shift' "pkg-old-0933.deb" )
+DEB_OLD_0933_CTRL_SIZE=$DEB_OLD_0932_CTRL_SIZE
+
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:133:
+printf "%s\n" "$at_srcdir/deb-format.at:136:
+# Check old package metadata
+dpkg-deb -I pkg-old-0933.deb
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:136"
+( $at_check_trace;
+# Check old package metadata
+dpkg-deb -I pkg-old-0933.deb
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; printf "%s\n" " old Debian package, version 0.933000.
+ size $DEB_OLD_0933_SIZE bytes: control archive=$DEB_OLD_0933_CTRL_SIZE, main archive=$DEB_OLD_FSYS_SIZE.
+     201 bytes,     7 lines      control
+ Package: pkg-deb-old-format
+ Version: 0.0-1
+ Section: test
+ Priority: extra
+ Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+ Architecture: all
+ Description: test package - deb old format support
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:136"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/deb-format.at:151:
 # Check old package contents
 dpkg-deb -c pkg-old.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:133"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:151"
 ( $at_check_trace;
 # Check old package contents
 dpkg-deb -c pkg-old.deb
@@ -2469,17 +2505,17 @@ echo >>"$at_stdout"; printf "%s\n" "drwxr-xr-x root/root         0 1970-01-01 00
 -rw-r--r-- root/root         5 1970-01-01 00:00 ./file-templ
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:133"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:151"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:141:
+printf "%s\n" "$at_srcdir/deb-format.at:159:
 # Check old package contents
 dpkg-deb -c pkg-old-0931.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:141"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:159"
 ( $at_check_trace;
 # Check old package contents
 dpkg-deb -c pkg-old-0931.deb
@@ -2493,17 +2529,17 @@ echo >>"$at_stdout"; printf "%s\n" "drwxr-xr-x root/root         0 1970-01-01 00
 -rw-r--r-- root/root         5 1970-01-01 00:00 ./file-templ
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:141"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:159"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:149:
+printf "%s\n" "$at_srcdir/deb-format.at:167:
 # Check old package contents
 dpkg-deb -c pkg-old-0932.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:149"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:167"
 ( $at_check_trace;
 # Check old package contents
 dpkg-deb -c pkg-old-0932.deb
@@ -2517,17 +2553,17 @@ echo >>"$at_stdout"; printf "%s\n" "drwxr-xr-x root/root         0 1970-01-01 00
 -rw-r--r-- root/root         5 1970-01-01 00:00 ./file-templ
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:149"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:167"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:157:
+printf "%s\n" "$at_srcdir/deb-format.at:175:
 # Check old package contents
 dpkg-deb -c pkg-old-0933.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:157"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:175"
 ( $at_check_trace;
 # Check old package contents
 dpkg-deb -c pkg-old-0933.deb
@@ -2541,7 +2577,7 @@ echo >>"$at_stdout"; printf "%s\n" "drwxr-xr-x root/root         0 1970-01-01 00
 -rw-r--r-- root/root         5 1970-01-01 00:00 ./file-templ
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:157"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:175"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
@@ -2552,8 +2588,8 @@ $at_traceon; }
 read at_status <"$at_status_file"
 #AT_STOP_2
 #AT_START_3
-at_fn_group_banner 3 'deb-format.at:168' \
-  "dpkg-deb .deb format 2.x" "                       " 1
+at_fn_group_banner 3 'deb-format.at:208' \
+  "dpkg-deb .deb format 2.x (core)" "                " 1
 at_xfail=no
 (
   printf "%s\n" "3. $at_setup_line: testing $at_desc ..."
@@ -2561,29 +2597,17 @@ at_xfail=no
 
 
 
-printf "%s\n" "deb-format.at:171" >"$at_check_line_file"
-(! command -v xz >/dev/null) \
-  && at_fn_check_skip 77 "$at_srcdir/deb-format.at:171"
-printf "%s\n" "deb-format.at:172" >"$at_check_line_file"
+printf "%s\n" "deb-format.at:211" >"$at_check_line_file"
 (! command -v gzip >/dev/null) \
-  && at_fn_check_skip 77 "$at_srcdir/deb-format.at:172"
-printf "%s\n" "deb-format.at:173" >"$at_check_line_file"
-(! command -v zstd >/dev/null) \
-  && at_fn_check_skip 77 "$at_srcdir/deb-format.at:173"
-printf "%s\n" "deb-format.at:174" >"$at_check_line_file"
-(! command -v bzip2 >/dev/null) \
-  && at_fn_check_skip 77 "$at_srcdir/deb-format.at:174"
-printf "%s\n" "deb-format.at:175" >"$at_check_line_file"
-(! command -v lzma >/dev/null) \
-  && at_fn_check_skip 77 "$at_srcdir/deb-format.at:175"
+  && at_fn_check_skip 77 "$at_srcdir/deb-format.at:211"
 
 : >pkg-deb-bogus-empty.deb
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:178:
+printf "%s\n" "$at_srcdir/deb-format.at:214:
 # Check truncated deb w/ 0 size
 dpkg-deb --info pkg-deb-bogus-empty.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:178"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:214"
 ( $at_check_trace;
 # Check truncated deb w/ 0 size
 dpkg-deb --info pkg-deb-bogus-empty.deb
@@ -2595,9 +2619,12 @@ echo >>"$at_stderr"; printf "%s\n" "dpkg-deb: error: unexpected end of file in a
 " | \
   $at_diff - "$at_stderr" || at_failed=:
 at_fn_diff_devnull "$at_stdout" || at_failed=:
-at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:178"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:214"
 $at_failed && at_fn_log_failure
 $at_traceon; }
+
+
+: >unknown
 
 
 
@@ -2616,90 +2643,70 @@ CTRL_TEMPL
 
 
 
-  $SED -e 's/^Description:.*$/& - deb format support/' <'pkg-deb-format/DEBIAN/control' >'pkg-deb-format/DEBIAN/control.new'
-  mv 'pkg-deb-format/DEBIAN/control.new' 'pkg-deb-format/DEBIAN/control'
+  $PERL -p -i -E 's/^Description:.*$/$& - deb format support/' 'pkg-deb-format/DEBIAN/control'
 
-cat >pkg-deb-format/file-templ <<'_ATEOF'
+  cat >pkg-deb-format/file-templ <<'_ATEOF'
 test
 _ATEOF
 
-{ set +x
-printf "%s\n" "$at_srcdir/deb-format.at:189:
-# Initialize the template package
-mv pkg-deb-format pkg-templ
-cp \$top_srcdir/ChangeLog.old pkg-templ/
-chmod 0644 pkg-templ/ChangeLog.old
-chmod -R u+w pkg-templ
-find pkg-templ | xargs touch -t 197001010100.00
-dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ >/dev/null
+  { set +x
+printf "%s\n" "$at_srcdir/deb-format.at:222:
+  # Initialize the template package
+  mv pkg-deb-format pkg-templ
+  cp \$top_srcdir/ChangeLog.old pkg-templ/
+  chmod 0644 pkg-templ/ChangeLog.old
+  chmod -R u+w pkg-templ
+  find pkg-templ | xargs touch -t 197001010100.00
+  dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ >/dev/null
 
-# Extract the base members
-ar x pkg-templ.deb
-gzip -c control.tar >control.tar.gz
-gzip -c data.tar >data.tar.gz
-xz -c control.tar >control.tar.xz
-xz -c data.tar >data.tar.xz
-zstd -c control.tar >control.tar.zst
-zstd -c data.tar >data.tar.zst
-bzip2 -c data.tar >data.tar.bz2
-lzma -c data.tar >data.tar.lzma
-touch _ignore
-touch unknown
-"
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:189"
+  # Extract the base members
+  ar x pkg-templ.deb
+  gzip -cn control.tar >control.tar.gz
+  gzip -cn data.tar >data.tar.gz
+  "
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:222"
 ( $at_check_trace;
-# Initialize the template package
-mv pkg-deb-format pkg-templ
-cp $top_srcdir/ChangeLog.old pkg-templ/
-chmod 0644 pkg-templ/ChangeLog.old
-chmod -R u+w pkg-templ
-find pkg-templ | xargs touch -t 197001010100.00
-dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ >/dev/null
+  # Initialize the template package
+  mv pkg-deb-format pkg-templ
+  cp $top_srcdir/ChangeLog.old pkg-templ/
+  chmod 0644 pkg-templ/ChangeLog.old
+  chmod -R u+w pkg-templ
+  find pkg-templ | xargs touch -t 197001010100.00
+  dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ >/dev/null
 
-# Extract the base members
-ar x pkg-templ.deb
-gzip -c control.tar >control.tar.gz
-gzip -c data.tar >data.tar.gz
-xz -c control.tar >control.tar.xz
-xz -c data.tar >data.tar.xz
-zstd -c control.tar >control.tar.zst
-zstd -c data.tar >data.tar.zst
-bzip2 -c data.tar >data.tar.bz2
-lzma -c data.tar >data.tar.lzma
-touch _ignore
-touch unknown
+  # Extract the base members
+  ar x pkg-templ.deb
+  gzip -cn control.tar >control.tar.gz
+  gzip -cn data.tar >data.tar.gz
 
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
 at_fn_diff_devnull "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:189"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:222"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
+
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:212:
+printf "%s\n" "$at_srcdir/deb-format.at:224:
 # Test debian-binary with 2.x versions
-cp pkg-templ.deb pkg-version-2x.deb
 echo 2.999 >debian-binary
-ar rc pkg-version-2x.deb debian-binary
+ar qSc pkg-version-2x.deb debian-binary control.tar data.tar
 ar t pkg-version-2x.deb
 ar x pkg-templ.deb debian-binary
-# XXX: Ideally we would have no need to strip trailing spaces.
-dpkg-deb -I pkg-version-2x.deb | \$SED -e 's/ *\$//'
+dpkg-deb -I pkg-version-2x.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:212"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:224"
 ( $at_check_trace;
 # Test debian-binary with 2.x versions
-cp pkg-templ.deb pkg-version-2x.deb
 echo 2.999 >debian-binary
-ar rc pkg-version-2x.deb debian-binary
+ar qSc pkg-version-2x.deb debian-binary control.tar data.tar
 ar t pkg-version-2x.deb
 ar x pkg-templ.deb debian-binary
-# XXX: Ideally we would have no need to strip trailing spaces.
-dpkg-deb -I pkg-version-2x.deb | $SED -e 's/ *$//'
+dpkg-deb -I pkg-version-2x.deb
 
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -2720,32 +2727,28 @@ data.tar
  Description: test package - deb format support
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:212"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:224"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:236:
+printf "%s\n" "$at_srcdir/deb-format.at:246:
 # Test debian-binary with extra lines
-cp pkg-templ.deb pkg-magic-extra.deb
 echo \"extra line\" >>debian-binary
-ar rc pkg-magic-extra.deb debian-binary
+ar qSc pkg-magic-extra.deb debian-binary control.tar data.tar
 ar t pkg-magic-extra.deb
 ar x pkg-templ.deb debian-binary
-# XXX: Ideally we would have no need to strip trailing spaces.
-dpkg-deb -I pkg-magic-extra.deb | \$SED -e 's/ *\$//'
+dpkg-deb -I pkg-magic-extra.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:236"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:246"
 ( $at_check_trace;
 # Test debian-binary with extra lines
-cp pkg-templ.deb pkg-magic-extra.deb
 echo "extra line" >>debian-binary
-ar rc pkg-magic-extra.deb debian-binary
+ar qSc pkg-magic-extra.deb debian-binary control.tar data.tar
 ar t pkg-magic-extra.deb
 ar x pkg-templ.deb debian-binary
-# XXX: Ideally we would have no need to strip trailing spaces.
-dpkg-deb -I pkg-magic-extra.deb | $SED -e 's/ *$//'
+dpkg-deb -I pkg-magic-extra.deb
 
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -2766,20 +2769,20 @@ data.tar
  Description: test package - deb format support
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:236"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:246"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:260:
+printf "%s\n" "$at_srcdir/deb-format.at:268:
 # Test missing debian-binary member
 cp pkg-templ.deb pkg-missing-magic.deb
 ar d pkg-missing-magic.deb debian-binary
 ar t pkg-missing-magic.deb
 dpkg-deb -I pkg-missing-magic.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:260"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:268"
 ( $at_check_trace;
 # Test missing debian-binary member
 cp pkg-templ.deb pkg-missing-magic.deb
@@ -2797,20 +2800,20 @@ echo >>"$at_stdout"; printf "%s\n" "control.tar
 data.tar
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:260"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:268"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:271:
+printf "%s\n" "$at_srcdir/deb-format.at:279:
 # Test missing control member
 cp pkg-templ.deb pkg-missing-control.deb
 ar d pkg-missing-control.deb control.tar
 ar t pkg-missing-control.deb
 dpkg-deb -I pkg-missing-control.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:271"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:279"
 ( $at_check_trace;
 # Test missing control member
 cp pkg-templ.deb pkg-missing-control.deb
@@ -2828,20 +2831,20 @@ echo >>"$at_stdout"; printf "%s\n" "debian-binary
 data.tar
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:271"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:279"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:282:
+printf "%s\n" "$at_srcdir/deb-format.at:290:
 # Test missing data member
 cp pkg-templ.deb pkg-missing-data.deb
 ar d pkg-missing-data.deb data.tar
 ar t pkg-missing-data.deb
 dpkg-deb -c pkg-missing-data.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:282"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:290"
 ( $at_check_trace;
 # Test missing data member
 cp pkg-templ.deb pkg-missing-data.deb
@@ -2859,24 +2862,22 @@ echo >>"$at_stdout"; printf "%s\n" "debian-binary
 control.tar
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:282"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:290"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:293:
+printf "%s\n" "$at_srcdir/deb-format.at:301:
 # Test duplicate debian-binary member
-cp pkg-templ.deb pkg-duplicate-magic.deb
-ar ra debian-binary pkg-duplicate-magic.deb debian-binary debian-binary
+ar qSc pkg-duplicate-magic.deb debian-binary debian-binary control.tar data.tar
 ar t pkg-duplicate-magic.deb
 dpkg-deb -I pkg-duplicate-magic.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:293"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:301"
 ( $at_check_trace;
 # Test duplicate debian-binary member
-cp pkg-templ.deb pkg-duplicate-magic.deb
-ar ra debian-binary pkg-duplicate-magic.deb debian-binary debian-binary
+ar qSc pkg-duplicate-magic.deb debian-binary debian-binary control.tar data.tar
 ar t pkg-duplicate-magic.deb
 dpkg-deb -I pkg-duplicate-magic.deb
 
@@ -2892,24 +2893,22 @@ control.tar
 data.tar
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:293"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:301"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:306:
+printf "%s\n" "$at_srcdir/deb-format.at:313:
 # Test duplicate control member
-cp pkg-templ.deb pkg-duplicate-control.deb
-ar ra control.tar pkg-duplicate-control.deb control.tar control.tar
+ar qSc pkg-duplicate-control.deb debian-binary control.tar control.tar data.tar
 ar t pkg-duplicate-control.deb
 dpkg-deb -c pkg-duplicate-control.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:306"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:313"
 ( $at_check_trace;
 # Test duplicate control member
-cp pkg-templ.deb pkg-duplicate-control.deb
-ar ra control.tar pkg-duplicate-control.deb control.tar control.tar
+ar qSc pkg-duplicate-control.deb debian-binary control.tar control.tar data.tar
 ar t pkg-duplicate-control.deb
 dpkg-deb -c pkg-duplicate-control.deb
 
@@ -2925,24 +2924,22 @@ control.tar
 data.tar
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:306"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:313"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:319:
+printf "%s\n" "$at_srcdir/deb-format.at:325:
 # Test mixed member (index 1)
-cp pkg-templ.deb pkg-mixed-1-member.deb
-ar ra debian-binary pkg-mixed-1-member.deb unknown
+ar qSc pkg-mixed-1-member.deb debian-binary unknown control.tar data.tar
 ar t pkg-mixed-1-member.deb
 dpkg-deb -I pkg-mixed-1-member.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:319"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:325"
 ( $at_check_trace;
 # Test mixed member (index 1)
-cp pkg-templ.deb pkg-mixed-1-member.deb
-ar ra debian-binary pkg-mixed-1-member.deb unknown
+ar qSc pkg-mixed-1-member.deb debian-binary unknown control.tar data.tar
 ar t pkg-mixed-1-member.deb
 dpkg-deb -I pkg-mixed-1-member.deb
 
@@ -2958,24 +2955,22 @@ control.tar
 data.tar
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:319"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:325"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:332:
+printf "%s\n" "$at_srcdir/deb-format.at:337:
 # Test mixed member (index 2)
-cp pkg-templ.deb pkg-mixed-2-member.deb
-ar ra control.tar pkg-mixed-2-member.deb unknown
+ar qSc pkg-mixed-2-member.deb debian-binary control.tar unknown data.tar
 ar t pkg-mixed-2-member.deb
 dpkg-deb -c pkg-mixed-2-member.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:332"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:337"
 ( $at_check_trace;
 # Test mixed member (index 2)
-cp pkg-templ.deb pkg-mixed-2-member.deb
-ar ra control.tar pkg-mixed-2-member.deb unknown
+ar qSc pkg-mixed-2-member.deb debian-binary control.tar unknown data.tar
 ar t pkg-mixed-2-member.deb
 dpkg-deb -c pkg-mixed-2-member.deb
 
@@ -2991,20 +2986,20 @@ unknown
 data.tar
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:332"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:337"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:345:
+printf "%s\n" "$at_srcdir/deb-format.at:349:
 # Test swapped control and data members
 cp pkg-templ.deb pkg-swap-members.deb
 ar ma data.tar pkg-swap-members.deb control.tar
 ar t pkg-swap-members.deb
 dpkg-deb -I pkg-swap-members.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:345"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:349"
 ( $at_check_trace;
 # Test swapped control and data members
 cp pkg-templ.deb pkg-swap-members.deb
@@ -3023,28 +3018,26 @@ data.tar
 control.tar
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:345"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:349"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:357:
+printf "%s\n" "$at_srcdir/deb-format.at:361:
 # Test extra member
 cp pkg-templ.deb pkg-extra-member.deb
-ar q pkg-extra-member.deb unknown
+ar qS pkg-extra-member.deb unknown
 ar t pkg-extra-member.deb
-# XXX: Ideally we would have no need to strip trailing spaces.
-dpkg-deb -I pkg-extra-member.deb | \$SED -e 's/ *\$//'
+dpkg-deb -I pkg-extra-member.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:357"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:361"
 ( $at_check_trace;
 # Test extra member
 cp pkg-templ.deb pkg-extra-member.deb
-ar q pkg-extra-member.deb unknown
+ar qS pkg-extra-member.deb unknown
 ar t pkg-extra-member.deb
-# XXX: Ideally we would have no need to strip trailing spaces.
-dpkg-deb -I pkg-extra-member.deb | $SED -e 's/ *$//'
+dpkg-deb -I pkg-extra-member.deb
 
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3066,28 +3059,25 @@ unknown
  Description: test package - deb format support
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:357"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:361"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
+: >_ignore
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:380:
+printf "%s\n" "$at_srcdir/deb-format.at:384:
 # Test _ member
-cp pkg-templ.deb pkg-under-member.deb
-ar ra debian-binary pkg-under-member.deb _ignore
+ar qSc pkg-under-member.deb debian-binary _ignore control.tar data.tar
 ar t pkg-under-member.deb
-# XXX: Ideally we would have no need to strip trailing spaces.
-dpkg-deb -I pkg-under-member.deb | \$SED -e 's/ *\$//'
+dpkg-deb -I pkg-under-member.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:380"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:384"
 ( $at_check_trace;
 # Test _ member
-cp pkg-templ.deb pkg-under-member.deb
-ar ra debian-binary pkg-under-member.deb _ignore
+ar qSc pkg-under-member.deb debian-binary _ignore control.tar data.tar
 ar t pkg-under-member.deb
-# XXX: Ideally we would have no need to strip trailing spaces.
-dpkg-deb -I pkg-under-member.deb | $SED -e 's/ *$//'
+dpkg-deb -I pkg-under-member.deb
 
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3109,24 +3099,24 @@ data.tar
  Description: test package - deb format support
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:380"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:384"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:403:
+printf "%s\n" "$at_srcdir/deb-format.at:405:
 # Test data.tar.bad member
-dd if=/dev/zero of=data.tar.bad bs=1K count=4 status=none
-ar rc pkg-data-bad.deb debian-binary control.tar.gz data.tar.bad
+\$PERL -E 'print \"\\0\" x 4096' >data.tar.bad
+ar qSc pkg-data-bad.deb debian-binary control.tar.gz data.tar.bad
 ar t pkg-data-bad.deb
 dpkg-deb -c pkg-data-bad.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:403"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:405"
 ( $at_check_trace;
 # Test data.tar.bad member
-dd if=/dev/zero of=data.tar.bad bs=1K count=4 status=none
-ar rc pkg-data-bad.deb debian-binary control.tar.gz data.tar.bad
+$PERL -E 'print "\0" x 4096' >data.tar.bad
+ar qSc pkg-data-bad.deb debian-binary control.tar.gz data.tar.bad
 ar t pkg-data-bad.deb
 dpkg-deb -c pkg-data-bad.deb
 
@@ -3141,26 +3131,24 @@ control.tar.gz
 data.tar.bad
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:403"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-format.at:405"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:415:
+printf "%s\n" "$at_srcdir/deb-format.at:417:
 # Test control.tar member
-ar rc pkg-control-none.deb debian-binary control.tar data.tar
+ar qSc pkg-control-none.deb debian-binary control.tar data.tar
 ar t pkg-control-none.deb
-# XXX: Ideally we would have no need to strip trailing spaces.
-dpkg-deb -I pkg-control-none.deb | \$SED -e 's/ *\$//'
+dpkg-deb -I pkg-control-none.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:415"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:417"
 ( $at_check_trace;
 # Test control.tar member
-ar rc pkg-control-none.deb debian-binary control.tar data.tar
+ar qSc pkg-control-none.deb debian-binary control.tar data.tar
 ar t pkg-control-none.deb
-# XXX: Ideally we would have no need to strip trailing spaces.
-dpkg-deb -I pkg-control-none.deb | $SED -e 's/ *$//'
+dpkg-deb -I pkg-control-none.deb
 
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -3181,84 +3169,22 @@ data.tar
  Description: test package - deb format support
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:415"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:417"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:436:
-# Test control.tar.xz member
-ar rc pkg-control-xz.deb debian-binary control.tar.xz data.tar.xz
-ar t pkg-control-xz.deb
-dpkg-deb -c pkg-control-xz.deb
-"
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:436"
-( $at_check_trace;
-# Test control.tar.xz member
-ar rc pkg-control-xz.deb debian-binary control.tar.xz data.tar.xz
-ar t pkg-control-xz.deb
-dpkg-deb -c pkg-control-xz.deb
-
-) >>"$at_stdout" 2>>"$at_stderr" 5>&-
-at_status=$? at_failed=false
-$at_check_filter
-at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; printf "%s\n" "debian-binary
-control.tar.xz
-data.tar.xz
-drwxr-xr-x root/root         0 1970-01-01 00:00 ./
--rw-r--r-- root/root    641345 1970-01-01 00:00 ./ChangeLog.old
--rw-r--r-- root/root         5 1970-01-01 00:00 ./file-templ
-" | \
-  $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:436"
-$at_failed && at_fn_log_failure
-$at_traceon; }
-
-
-{ set +x
-printf "%s\n" "$at_srcdir/deb-format.at:449:
-# Test control.tar.zst member
-ar rc pkg-control-zst.deb debian-binary control.tar.zst data.tar.zst
-ar t pkg-control-zst.deb
-dpkg-deb -c pkg-control-zst.deb
-"
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:449"
-( $at_check_trace;
-# Test control.tar.zst member
-ar rc pkg-control-zst.deb debian-binary control.tar.zst data.tar.zst
-ar t pkg-control-zst.deb
-dpkg-deb -c pkg-control-zst.deb
-
-) >>"$at_stdout" 2>>"$at_stderr" 5>&-
-at_status=$? at_failed=false
-$at_check_filter
-at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; printf "%s\n" "debian-binary
-control.tar.zst
-data.tar.zst
-drwxr-xr-x root/root         0 1970-01-01 00:00 ./
--rw-r--r-- root/root    641345 1970-01-01 00:00 ./ChangeLog.old
--rw-r--r-- root/root         5 1970-01-01 00:00 ./file-templ
-" | \
-  $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:449"
-$at_failed && at_fn_log_failure
-$at_traceon; }
-
-
-{ set +x
-printf "%s\n" "$at_srcdir/deb-format.at:462:
+printf "%s\n" "$at_srcdir/deb-format.at:437:
 # Test data.tar member
-ar rc pkg-data-none.deb debian-binary control.tar.gz data.tar
+ar qSc pkg-data-none.deb debian-binary control.tar.gz data.tar
 ar t pkg-data-none.deb
 dpkg-deb -c pkg-data-none.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:462"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:437"
 ( $at_check_trace;
 # Test data.tar member
-ar rc pkg-data-none.deb debian-binary control.tar.gz data.tar
+ar qSc pkg-data-none.deb debian-binary control.tar.gz data.tar
 ar t pkg-data-none.deb
 dpkg-deb -c pkg-data-none.deb
 
@@ -3274,22 +3200,22 @@ drwxr-xr-x root/root         0 1970-01-01 00:00 ./
 -rw-r--r-- root/root         5 1970-01-01 00:00 ./file-templ
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:462"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:437"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:475:
+printf "%s\n" "$at_srcdir/deb-format.at:450:
 # Test data.tar.gz member
-ar rc pkg-data-gz.deb debian-binary control.tar.gz data.tar.gz
+ar qSc pkg-data-gz.deb debian-binary control.tar.gz data.tar.gz
 ar t pkg-data-gz.deb
 dpkg-deb -c pkg-data-gz.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:475"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:450"
 ( $at_check_trace;
 # Test data.tar.gz member
-ar rc pkg-data-gz.deb debian-binary control.tar.gz data.tar.gz
+ar qSc pkg-data-gz.deb debian-binary control.tar.gz data.tar.gz
 ar t pkg-data-gz.deb
 dpkg-deb -c pkg-data-gz.deb
 
@@ -3305,22 +3231,268 @@ drwxr-xr-x root/root         0 1970-01-01 00:00 ./
 -rw-r--r-- root/root         5 1970-01-01 00:00 ./file-templ
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:475"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:450"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+# Create .deb with non-uniform data.tar/control.tar member compression
+ar qSc pkg-mixed-comp.deb debian-binary control.tar data.tar.gz
+DEB_MIXED_COMP_SIZE=$(
+  $PERL -E 'say -s shift' "pkg-mixed-comp.deb" )
+
+{ set +x
+printf "%s\n" "$at_srcdir/deb-format.at:467:
+# Test non-uniform data.tar/control.tar member compression
+ar t pkg-mixed-comp.deb
+dpkg-deb -I pkg-mixed-comp.deb
+dpkg-deb -c pkg-mixed-comp.deb
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:467"
+( $at_check_trace;
+# Test non-uniform data.tar/control.tar member compression
+ar t pkg-mixed-comp.deb
+dpkg-deb -I pkg-mixed-comp.deb
+dpkg-deb -c pkg-mixed-comp.deb
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; printf "%s\n" "debian-binary
+control.tar
+data.tar.gz
+ new Debian package, version 2.0.
+ size $DEB_MIXED_COMP_SIZE bytes: control archive=10240 bytes.
+     193 bytes,     7 lines      control
+ Package: pkg-deb-format
+ Version: 0.0-1
+ Section: test
+ Priority: extra
+ Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+ Architecture: all
+ Description: test package - deb format support
+drwxr-xr-x root/root         0 1970-01-01 00:00 ./
+-rw-r--r-- root/root    641345 1970-01-01 00:00 ./ChangeLog.old
+-rw-r--r-- root/root         5 1970-01-01 00:00 ./file-templ
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:467"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:488:
+printf "%s\n" "$at_srcdir/deb-format.at:490:
+# Test building and extracting none compressed archive
+dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ pkg-comp-none.deb >/dev/null
+dpkg-deb --ctrl-tarfile pkg-comp-none.deb >ctrl-none.tar
+dpkg-deb --fsys-tarfile pkg-comp-none.deb >fsys-none.tar
+cmp ctrl-none.tar control.tar
+cmp fsys-none.tar data.tar
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:490"
+( $at_check_trace;
+# Test building and extracting none compressed archive
+dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ pkg-comp-none.deb >/dev/null
+dpkg-deb --ctrl-tarfile pkg-comp-none.deb >ctrl-none.tar
+dpkg-deb --fsys-tarfile pkg-comp-none.deb >fsys-none.tar
+cmp ctrl-none.tar control.tar
+cmp fsys-none.tar data.tar
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:490"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/deb-format.at:499:
+# Test building and extracting gzip compressed archive
+dpkg-deb --uniform-compression --root-owner-group -Zgzip -b pkg-templ pkg-comp-gzip.deb >/dev/null
+dpkg-deb --ctrl-tarfile pkg-comp-gzip.deb >ctrl-gzip.tar
+dpkg-deb --fsys-tarfile pkg-comp-gzip.deb >fsys-gzip.tar
+cmp ctrl-gzip.tar control.tar
+cmp fsys-gzip.tar data.tar
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:499"
+( $at_check_trace;
+# Test building and extracting gzip compressed archive
+dpkg-deb --uniform-compression --root-owner-group -Zgzip -b pkg-templ pkg-comp-gzip.deb >/dev/null
+dpkg-deb --ctrl-tarfile pkg-comp-gzip.deb >ctrl-gzip.tar
+dpkg-deb --fsys-tarfile pkg-comp-gzip.deb >fsys-gzip.tar
+cmp ctrl-gzip.tar control.tar
+cmp fsys-gzip.tar data.tar
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:499"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+  set +x
+  $at_times_p && times >"$at_times_file"
+) 5>&1 2>&1 7>&- | eval $at_tee_pipe
+read at_status <"$at_status_file"
+#AT_STOP_3
+#AT_START_4
+at_fn_group_banner 4 'deb-format.at:511' \
+  "dpkg-deb .deb format 2.x (xz)" "                  " 1
+at_xfail=no
+(
+  printf "%s\n" "4. $at_setup_line: testing $at_desc ..."
+  $at_traceon
+
+
+
+printf "%s\n" "deb-format.at:514" >"$at_check_line_file"
+(! command -v gzip >/dev/null) \
+  && at_fn_check_skip 77 "$at_srcdir/deb-format.at:514"
+printf "%s\n" "deb-format.at:515" >"$at_check_line_file"
+(! command -v xz >/dev/null) \
+  && at_fn_check_skip 77 "$at_srcdir/deb-format.at:515"
+
+
+
+
+  mkdir -p 'pkg-deb-format/DEBIAN'
+
+  cat >'pkg-deb-format/DEBIAN/control' <<CTRL_TEMPL
+Package: pkg-deb-format
+Version: 0.0-1
+Section: test
+Priority: extra
+Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Architecture: all
+Description: test package
+CTRL_TEMPL
+
+
+
+  $PERL -p -i -E 's/^Description:.*$/$& - deb format support/' 'pkg-deb-format/DEBIAN/control'
+
+  cat >pkg-deb-format/file-templ <<'_ATEOF'
+test
+_ATEOF
+
+  { set +x
+printf "%s\n" "$at_srcdir/deb-format.at:517:
+  # Initialize the template package
+  mv pkg-deb-format pkg-templ
+  cp \$top_srcdir/ChangeLog.old pkg-templ/
+  chmod 0644 pkg-templ/ChangeLog.old
+  chmod -R u+w pkg-templ
+  find pkg-templ | xargs touch -t 197001010100.00
+  dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ >/dev/null
+
+  # Extract the base members
+  ar x pkg-templ.deb
+  gzip -cn control.tar >control.tar.gz
+  gzip -cn data.tar >data.tar.gz
+  "
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:517"
+( $at_check_trace;
+  # Initialize the template package
+  mv pkg-deb-format pkg-templ
+  cp $top_srcdir/ChangeLog.old pkg-templ/
+  chmod 0644 pkg-templ/ChangeLog.old
+  chmod -R u+w pkg-templ
+  find pkg-templ | xargs touch -t 197001010100.00
+  dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ >/dev/null
+
+  # Extract the base members
+  ar x pkg-templ.deb
+  gzip -cn control.tar >control.tar.gz
+  gzip -cn data.tar >data.tar.gz
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:517"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/deb-format.at:518:
+# Extract the base members
+# XXX: Due to a new behavior in xz 5.6.0, when it automatically reduces the
+# amount of threads it prints a warning on stderr, even w/o -T. We pass an
+# explicit -T+1 to force parallel mode but only use one thread as a workaround.
+xz -T+1 -c control.tar >control.tar.xz
+xz -T+1 -c data.tar >data.tar.xz
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:518"
+( $at_check_trace;
+# Extract the base members
+# XXX: Due to a new behavior in xz 5.6.0, when it automatically reduces the
+# amount of threads it prints a warning on stderr, even w/o -T. We pass an
+# explicit -T+1 to force parallel mode but only use one thread as a workaround.
+xz -T+1 -c control.tar >control.tar.xz
+xz -T+1 -c data.tar >data.tar.xz
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:518"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/deb-format.at:527:
+# Test control.tar.xz member
+ar qSc pkg-control-xz.deb debian-binary control.tar.xz data.tar.xz
+ar t pkg-control-xz.deb
+dpkg-deb -c pkg-control-xz.deb
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:527"
+( $at_check_trace;
+# Test control.tar.xz member
+ar qSc pkg-control-xz.deb debian-binary control.tar.xz data.tar.xz
+ar t pkg-control-xz.deb
+dpkg-deb -c pkg-control-xz.deb
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; printf "%s\n" "debian-binary
+control.tar.xz
+data.tar.xz
+drwxr-xr-x root/root         0 1970-01-01 00:00 ./
+-rw-r--r-- root/root    641345 1970-01-01 00:00 ./ChangeLog.old
+-rw-r--r-- root/root         5 1970-01-01 00:00 ./file-templ
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:527"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/deb-format.at:540:
 # Test data.tar.xz member
-ar rc pkg-data-xz.deb debian-binary control.tar.gz data.tar.xz
+ar qSc pkg-data-xz.deb debian-binary control.tar.gz data.tar.xz
 ar t pkg-data-xz.deb
 dpkg-deb -c pkg-data-xz.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:488"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:540"
 ( $at_check_trace;
 # Test data.tar.xz member
-ar rc pkg-data-xz.deb debian-binary control.tar.gz data.tar.xz
+ar qSc pkg-data-xz.deb debian-binary control.tar.gz data.tar.xz
 ar t pkg-data-xz.deb
 dpkg-deb -c pkg-data-xz.deb
 
@@ -3336,22 +3508,188 @@ drwxr-xr-x root/root         0 1970-01-01 00:00 ./
 -rw-r--r-- root/root         5 1970-01-01 00:00 ./file-templ
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:488"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:540"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:501:
+printf "%s\n" "$at_srcdir/deb-format.at:553:
+# Test building and extracting xz compressed archive
+dpkg-deb --uniform-compression --root-owner-group -Zxz -b pkg-templ pkg-comp-xz.deb >/dev/null
+dpkg-deb --ctrl-tarfile pkg-comp-xz.deb >ctrl-xz.tar
+dpkg-deb --fsys-tarfile pkg-comp-xz.deb >fsys-xz.tar
+cmp ctrl-xz.tar control.tar
+cmp fsys-xz.tar data.tar
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:553"
+( $at_check_trace;
+# Test building and extracting xz compressed archive
+dpkg-deb --uniform-compression --root-owner-group -Zxz -b pkg-templ pkg-comp-xz.deb >/dev/null
+dpkg-deb --ctrl-tarfile pkg-comp-xz.deb >ctrl-xz.tar
+dpkg-deb --fsys-tarfile pkg-comp-xz.deb >fsys-xz.tar
+cmp ctrl-xz.tar control.tar
+cmp fsys-xz.tar data.tar
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:553"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+  set +x
+  $at_times_p && times >"$at_times_file"
+) 5>&1 2>&1 7>&- | eval $at_tee_pipe
+read at_status <"$at_status_file"
+#AT_STOP_4
+#AT_START_5
+at_fn_group_banner 5 'deb-format.at:565' \
+  "dpkg-deb .deb format 2.x (zstd)" "                " 1
+at_xfail=no
+(
+  printf "%s\n" "5. $at_setup_line: testing $at_desc ..."
+  $at_traceon
+
+
+
+printf "%s\n" "deb-format.at:568" >"$at_check_line_file"
+(! command -v gzip >/dev/null) \
+  && at_fn_check_skip 77 "$at_srcdir/deb-format.at:568"
+printf "%s\n" "deb-format.at:569" >"$at_check_line_file"
+(! command -v zstd >/dev/null) \
+  && at_fn_check_skip 77 "$at_srcdir/deb-format.at:569"
+
+
+
+
+  mkdir -p 'pkg-deb-format/DEBIAN'
+
+  cat >'pkg-deb-format/DEBIAN/control' <<CTRL_TEMPL
+Package: pkg-deb-format
+Version: 0.0-1
+Section: test
+Priority: extra
+Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Architecture: all
+Description: test package
+CTRL_TEMPL
+
+
+
+  $PERL -p -i -E 's/^Description:.*$/$& - deb format support/' 'pkg-deb-format/DEBIAN/control'
+
+  cat >pkg-deb-format/file-templ <<'_ATEOF'
+test
+_ATEOF
+
+  { set +x
+printf "%s\n" "$at_srcdir/deb-format.at:571:
+  # Initialize the template package
+  mv pkg-deb-format pkg-templ
+  cp \$top_srcdir/ChangeLog.old pkg-templ/
+  chmod 0644 pkg-templ/ChangeLog.old
+  chmod -R u+w pkg-templ
+  find pkg-templ | xargs touch -t 197001010100.00
+  dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ >/dev/null
+
+  # Extract the base members
+  ar x pkg-templ.deb
+  gzip -cn control.tar >control.tar.gz
+  gzip -cn data.tar >data.tar.gz
+  "
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:571"
+( $at_check_trace;
+  # Initialize the template package
+  mv pkg-deb-format pkg-templ
+  cp $top_srcdir/ChangeLog.old pkg-templ/
+  chmod 0644 pkg-templ/ChangeLog.old
+  chmod -R u+w pkg-templ
+  find pkg-templ | xargs touch -t 197001010100.00
+  dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ >/dev/null
+
+  # Extract the base members
+  ar x pkg-templ.deb
+  gzip -cn control.tar >control.tar.gz
+  gzip -cn data.tar >data.tar.gz
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:571"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/deb-format.at:572:
+# Extract the base members
+zstd -c control.tar >control.tar.zst
+zstd -c data.tar >data.tar.zst
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:572"
+( $at_check_trace;
+# Extract the base members
+zstd -c control.tar >control.tar.zst
+zstd -c data.tar >data.tar.zst
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:572"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/deb-format.at:578:
+# Test control.tar.zst member
+ar qSc pkg-control-zst.deb debian-binary control.tar.zst data.tar.zst
+ar t pkg-control-zst.deb
+dpkg-deb -c pkg-control-zst.deb
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:578"
+( $at_check_trace;
+# Test control.tar.zst member
+ar qSc pkg-control-zst.deb debian-binary control.tar.zst data.tar.zst
+ar t pkg-control-zst.deb
+dpkg-deb -c pkg-control-zst.deb
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+echo >>"$at_stdout"; printf "%s\n" "debian-binary
+control.tar.zst
+data.tar.zst
+drwxr-xr-x root/root         0 1970-01-01 00:00 ./
+-rw-r--r-- root/root    641345 1970-01-01 00:00 ./ChangeLog.old
+-rw-r--r-- root/root         5 1970-01-01 00:00 ./file-templ
+" | \
+  $at_diff - "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:578"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/deb-format.at:591:
 # Test data.tar.zst member
-ar rc pkg-data-zst.deb debian-binary control.tar.gz data.tar.zst
+ar qSc pkg-data-zst.deb debian-binary control.tar.gz data.tar.zst
 ar t pkg-data-zst.deb
 dpkg-deb -c pkg-data-zst.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:501"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:591"
 ( $at_check_trace;
 # Test data.tar.zst member
-ar rc pkg-data-zst.deb debian-binary control.tar.gz data.tar.zst
+ar qSc pkg-data-zst.deb debian-binary control.tar.gz data.tar.zst
 ar t pkg-data-zst.deb
 dpkg-deb -c pkg-data-zst.deb
 
@@ -3367,22 +3705,155 @@ drwxr-xr-x root/root         0 1970-01-01 00:00 ./
 -rw-r--r-- root/root         5 1970-01-01 00:00 ./file-templ
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:501"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:591"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:514:
+printf "%s\n" "$at_srcdir/deb-format.at:604:
+# Test building and extracting zstd compressed archive
+dpkg-deb --uniform-compression --root-owner-group -Zzstd -b pkg-templ pkg-comp-zstd.deb >/dev/null
+dpkg-deb --ctrl-tarfile pkg-comp-zstd.deb >ctrl-zstd.tar
+dpkg-deb --fsys-tarfile pkg-comp-zstd.deb >fsys-zstd.tar
+cmp ctrl-zstd.tar control.tar
+cmp fsys-zstd.tar data.tar
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:604"
+( $at_check_trace;
+# Test building and extracting zstd compressed archive
+dpkg-deb --uniform-compression --root-owner-group -Zzstd -b pkg-templ pkg-comp-zstd.deb >/dev/null
+dpkg-deb --ctrl-tarfile pkg-comp-zstd.deb >ctrl-zstd.tar
+dpkg-deb --fsys-tarfile pkg-comp-zstd.deb >fsys-zstd.tar
+cmp ctrl-zstd.tar control.tar
+cmp fsys-zstd.tar data.tar
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:604"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+  set +x
+  $at_times_p && times >"$at_times_file"
+) 5>&1 2>&1 7>&- | eval $at_tee_pipe
+read at_status <"$at_status_file"
+#AT_STOP_5
+#AT_START_6
+at_fn_group_banner 6 'deb-format.at:616' \
+  "dpkg-deb .deb format 2.x (bzip2)" "               " 1
+at_xfail=no
+(
+  printf "%s\n" "6. $at_setup_line: testing $at_desc ..."
+  $at_traceon
+
+
+
+printf "%s\n" "deb-format.at:619" >"$at_check_line_file"
+(! command -v gzip >/dev/null) \
+  && at_fn_check_skip 77 "$at_srcdir/deb-format.at:619"
+printf "%s\n" "deb-format.at:620" >"$at_check_line_file"
+(! command -v bzip2 >/dev/null) \
+  && at_fn_check_skip 77 "$at_srcdir/deb-format.at:620"
+
+
+
+
+  mkdir -p 'pkg-deb-format/DEBIAN'
+
+  cat >'pkg-deb-format/DEBIAN/control' <<CTRL_TEMPL
+Package: pkg-deb-format
+Version: 0.0-1
+Section: test
+Priority: extra
+Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Architecture: all
+Description: test package
+CTRL_TEMPL
+
+
+
+  $PERL -p -i -E 's/^Description:.*$/$& - deb format support/' 'pkg-deb-format/DEBIAN/control'
+
+  cat >pkg-deb-format/file-templ <<'_ATEOF'
+test
+_ATEOF
+
+  { set +x
+printf "%s\n" "$at_srcdir/deb-format.at:622:
+  # Initialize the template package
+  mv pkg-deb-format pkg-templ
+  cp \$top_srcdir/ChangeLog.old pkg-templ/
+  chmod 0644 pkg-templ/ChangeLog.old
+  chmod -R u+w pkg-templ
+  find pkg-templ | xargs touch -t 197001010100.00
+  dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ >/dev/null
+
+  # Extract the base members
+  ar x pkg-templ.deb
+  gzip -cn control.tar >control.tar.gz
+  gzip -cn data.tar >data.tar.gz
+  "
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:622"
+( $at_check_trace;
+  # Initialize the template package
+  mv pkg-deb-format pkg-templ
+  cp $top_srcdir/ChangeLog.old pkg-templ/
+  chmod 0644 pkg-templ/ChangeLog.old
+  chmod -R u+w pkg-templ
+  find pkg-templ | xargs touch -t 197001010100.00
+  dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ >/dev/null
+
+  # Extract the base members
+  ar x pkg-templ.deb
+  gzip -cn control.tar >control.tar.gz
+  gzip -cn data.tar >data.tar.gz
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:622"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/deb-format.at:623:
+# Extract the base members
+bzip2 -c data.tar >data.tar.bz2
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:623"
+( $at_check_trace;
+# Extract the base members
+bzip2 -c data.tar >data.tar.bz2
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:623"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/deb-format.at:628:
 # Test data.tar.bz2 member
-ar rc pkg-data-bz2.deb debian-binary control.tar.gz data.tar.bz2
+ar qSc pkg-data-bz2.deb debian-binary control.tar.gz data.tar.bz2
 ar t pkg-data-bz2.deb
 dpkg-deb -c pkg-data-bz2.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:514"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:628"
 ( $at_check_trace;
 # Test data.tar.bz2 member
-ar rc pkg-data-bz2.deb debian-binary control.tar.gz data.tar.bz2
+ar qSc pkg-data-bz2.deb debian-binary control.tar.gz data.tar.bz2
 ar t pkg-data-bz2.deb
 dpkg-deb -c pkg-data-bz2.deb
 
@@ -3398,22 +3869,127 @@ drwxr-xr-x root/root         0 1970-01-01 00:00 ./
 -rw-r--r-- root/root         5 1970-01-01 00:00 ./file-templ
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:514"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:628"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+  set +x
+  $at_times_p && times >"$at_times_file"
+) 5>&1 2>&1 7>&- | eval $at_tee_pipe
+read at_status <"$at_status_file"
+#AT_STOP_6
+#AT_START_7
+at_fn_group_banner 7 'deb-format.at:644' \
+  "dpkg-deb .deb format 2.x (lzma)" "                " 1
+at_xfail=no
+(
+  printf "%s\n" "7. $at_setup_line: testing $at_desc ..."
+  $at_traceon
+
+
+
+printf "%s\n" "deb-format.at:647" >"$at_check_line_file"
+(! command -v gzip >/dev/null) \
+  && at_fn_check_skip 77 "$at_srcdir/deb-format.at:647"
+printf "%s\n" "deb-format.at:648" >"$at_check_line_file"
+(! command -v lzma >/dev/null) \
+  && at_fn_check_skip 77 "$at_srcdir/deb-format.at:648"
+
+
+
+
+  mkdir -p 'pkg-deb-format/DEBIAN'
+
+  cat >'pkg-deb-format/DEBIAN/control' <<CTRL_TEMPL
+Package: pkg-deb-format
+Version: 0.0-1
+Section: test
+Priority: extra
+Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
+Architecture: all
+Description: test package
+CTRL_TEMPL
+
+
+
+  $PERL -p -i -E 's/^Description:.*$/$& - deb format support/' 'pkg-deb-format/DEBIAN/control'
+
+  cat >pkg-deb-format/file-templ <<'_ATEOF'
+test
+_ATEOF
+
+  { set +x
+printf "%s\n" "$at_srcdir/deb-format.at:650:
+  # Initialize the template package
+  mv pkg-deb-format pkg-templ
+  cp \$top_srcdir/ChangeLog.old pkg-templ/
+  chmod 0644 pkg-templ/ChangeLog.old
+  chmod -R u+w pkg-templ
+  find pkg-templ | xargs touch -t 197001010100.00
+  dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ >/dev/null
+
+  # Extract the base members
+  ar x pkg-templ.deb
+  gzip -cn control.tar >control.tar.gz
+  gzip -cn data.tar >data.tar.gz
+  "
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:650"
+( $at_check_trace;
+  # Initialize the template package
+  mv pkg-deb-format pkg-templ
+  cp $top_srcdir/ChangeLog.old pkg-templ/
+  chmod 0644 pkg-templ/ChangeLog.old
+  chmod -R u+w pkg-templ
+  find pkg-templ | xargs touch -t 197001010100.00
+  dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ >/dev/null
+
+  # Extract the base members
+  ar x pkg-templ.deb
+  gzip -cn control.tar >control.tar.gz
+  gzip -cn data.tar >data.tar.gz
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:650"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-format.at:527:
+printf "%s\n" "$at_srcdir/deb-format.at:651:
+# Extract the base members
+lzma -c data.tar >data.tar.lzma
+"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:651"
+( $at_check_trace;
+# Extract the base members
+lzma -c data.tar >data.tar.lzma
+
+) >>"$at_stdout" 2>>"$at_stderr" 5>&-
+at_status=$? at_failed=false
+$at_check_filter
+at_fn_diff_devnull "$at_stderr" || at_failed=:
+at_fn_diff_devnull "$at_stdout" || at_failed=:
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:651"
+$at_failed && at_fn_log_failure
+$at_traceon; }
+
+
+{ set +x
+printf "%s\n" "$at_srcdir/deb-format.at:656:
 # Test data.tar.lzma member
-ar rc pkg-data-lzma.deb debian-binary control.tar.gz data.tar.lzma
+ar qSc pkg-data-lzma.deb debian-binary control.tar.gz data.tar.lzma
 ar t pkg-data-lzma.deb
 dpkg-deb -c pkg-data-lzma.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:527"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:656"
 ( $at_check_trace;
 # Test data.tar.lzma member
-ar rc pkg-data-lzma.deb debian-binary control.tar.gz data.tar.lzma
+ar qSc pkg-data-lzma.deb debian-binary control.tar.gz data.tar.lzma
 ar t pkg-data-lzma.deb
 dpkg-deb -c pkg-data-lzma.deb
 
@@ -3429,164 +4005,7 @@ drwxr-xr-x root/root         0 1970-01-01 00:00 ./
 -rw-r--r-- root/root         5 1970-01-01 00:00 ./file-templ
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:527"
-$at_failed && at_fn_log_failure
-$at_traceon; }
-
-
-{ set +x
-printf "%s\n" "$at_srcdir/deb-format.at:540:
-# Test non-uniform data.tar/control.tar member compression
-ar rc pkg-mixed-comp.deb debian-binary control.tar.xz data.tar.gz
-ar t pkg-mixed-comp.deb
-# XXX: Ideally we would have no need to strip trailing spaces.
-dpkg-deb -I pkg-mixed-comp.deb | \$SED -e 's/ *\$//'
-dpkg-deb -c pkg-mixed-comp.deb
-"
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:540"
-( $at_check_trace;
-# Test non-uniform data.tar/control.tar member compression
-ar rc pkg-mixed-comp.deb debian-binary control.tar.xz data.tar.gz
-ar t pkg-mixed-comp.deb
-# XXX: Ideally we would have no need to strip trailing spaces.
-dpkg-deb -I pkg-mixed-comp.deb | $SED -e 's/ *$//'
-dpkg-deb -c pkg-mixed-comp.deb
-
-) >>"$at_stdout" 2>>"$at_stderr" 5>&-
-at_status=$? at_failed=false
-$at_check_filter
-at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; printf "%s\n" "debian-binary
-control.tar.xz
-data.tar.gz
- new Debian package, version 2.0.
- size 175756 bytes: control archive=336 bytes.
-     193 bytes,     7 lines      control
- Package: pkg-deb-format
- Version: 0.0-1
- Section: test
- Priority: extra
- Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
- Architecture: all
- Description: test package - deb format support
-drwxr-xr-x root/root         0 1970-01-01 00:00 ./
--rw-r--r-- root/root    641345 1970-01-01 00:00 ./ChangeLog.old
--rw-r--r-- root/root         5 1970-01-01 00:00 ./file-templ
-" | \
-  $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:540"
-$at_failed && at_fn_log_failure
-$at_traceon; }
-
-
-{ set +x
-printf "%s\n" "$at_srcdir/deb-format.at:565:
-# Test building and extracting none compressed archive
-dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ pkg-comp-none.deb >/dev/null
-dpkg-deb --ctrl-tarfile pkg-comp-none.deb >ctrl-none.tar
-dpkg-deb --fsys-tarfile pkg-comp-none.deb >fsys-none.tar
-cmp ctrl-none.tar control.tar
-cmp fsys-none.tar data.tar
-"
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:565"
-( $at_check_trace;
-# Test building and extracting none compressed archive
-dpkg-deb --uniform-compression --root-owner-group -Znone -b pkg-templ pkg-comp-none.deb >/dev/null
-dpkg-deb --ctrl-tarfile pkg-comp-none.deb >ctrl-none.tar
-dpkg-deb --fsys-tarfile pkg-comp-none.deb >fsys-none.tar
-cmp ctrl-none.tar control.tar
-cmp fsys-none.tar data.tar
-
-) >>"$at_stdout" 2>>"$at_stderr" 5>&-
-at_status=$? at_failed=false
-$at_check_filter
-at_fn_diff_devnull "$at_stderr" || at_failed=:
-at_fn_diff_devnull "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:565"
-$at_failed && at_fn_log_failure
-$at_traceon; }
-
-
-{ set +x
-printf "%s\n" "$at_srcdir/deb-format.at:574:
-# Test building and extracting gzip compressed archive
-dpkg-deb --uniform-compression --root-owner-group -Zgzip -b pkg-templ pkg-comp-gzip.deb >/dev/null
-dpkg-deb --ctrl-tarfile pkg-comp-gzip.deb >ctrl-gzip.tar
-dpkg-deb --fsys-tarfile pkg-comp-gzip.deb >fsys-gzip.tar
-cmp ctrl-gzip.tar control.tar
-cmp fsys-gzip.tar data.tar
-"
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:574"
-( $at_check_trace;
-# Test building and extracting gzip compressed archive
-dpkg-deb --uniform-compression --root-owner-group -Zgzip -b pkg-templ pkg-comp-gzip.deb >/dev/null
-dpkg-deb --ctrl-tarfile pkg-comp-gzip.deb >ctrl-gzip.tar
-dpkg-deb --fsys-tarfile pkg-comp-gzip.deb >fsys-gzip.tar
-cmp ctrl-gzip.tar control.tar
-cmp fsys-gzip.tar data.tar
-
-) >>"$at_stdout" 2>>"$at_stderr" 5>&-
-at_status=$? at_failed=false
-$at_check_filter
-at_fn_diff_devnull "$at_stderr" || at_failed=:
-at_fn_diff_devnull "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:574"
-$at_failed && at_fn_log_failure
-$at_traceon; }
-
-
-{ set +x
-printf "%s\n" "$at_srcdir/deb-format.at:583:
-# Test building and extracting xz compressed archive
-dpkg-deb --uniform-compression --root-owner-group -Zxz -b pkg-templ pkg-comp-xz.deb >/dev/null
-dpkg-deb --ctrl-tarfile pkg-comp-xz.deb >ctrl-xz.tar
-dpkg-deb --fsys-tarfile pkg-comp-xz.deb >fsys-xz.tar
-cmp ctrl-xz.tar control.tar
-cmp fsys-xz.tar data.tar
-"
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:583"
-( $at_check_trace;
-# Test building and extracting xz compressed archive
-dpkg-deb --uniform-compression --root-owner-group -Zxz -b pkg-templ pkg-comp-xz.deb >/dev/null
-dpkg-deb --ctrl-tarfile pkg-comp-xz.deb >ctrl-xz.tar
-dpkg-deb --fsys-tarfile pkg-comp-xz.deb >fsys-xz.tar
-cmp ctrl-xz.tar control.tar
-cmp fsys-xz.tar data.tar
-
-) >>"$at_stdout" 2>>"$at_stderr" 5>&-
-at_status=$? at_failed=false
-$at_check_filter
-at_fn_diff_devnull "$at_stderr" || at_failed=:
-at_fn_diff_devnull "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:583"
-$at_failed && at_fn_log_failure
-$at_traceon; }
-
-
-{ set +x
-printf "%s\n" "$at_srcdir/deb-format.at:592:
-# Test building and extracting zstd compressed archive
-dpkg-deb --uniform-compression --root-owner-group -Zzstd -b pkg-templ pkg-comp-zstd.deb >/dev/null
-dpkg-deb --ctrl-tarfile pkg-comp-zstd.deb >ctrl-zstd.tar
-dpkg-deb --fsys-tarfile pkg-comp-zstd.deb >fsys-zstd.tar
-cmp ctrl-zstd.tar control.tar
-cmp fsys-zstd.tar data.tar
-"
-at_fn_check_prepare_notrace 'an embedded newline' "deb-format.at:592"
-( $at_check_trace;
-# Test building and extracting zstd compressed archive
-dpkg-deb --uniform-compression --root-owner-group -Zzstd -b pkg-templ pkg-comp-zstd.deb >/dev/null
-dpkg-deb --ctrl-tarfile pkg-comp-zstd.deb >ctrl-zstd.tar
-dpkg-deb --fsys-tarfile pkg-comp-zstd.deb >fsys-zstd.tar
-cmp ctrl-zstd.tar control.tar
-cmp fsys-zstd.tar data.tar
-
-) >>"$at_stdout" 2>>"$at_stderr" 5>&-
-at_status=$? at_failed=false
-$at_check_filter
-at_fn_diff_devnull "$at_stderr" || at_failed=:
-at_fn_diff_devnull "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:592"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-format.at:656"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
@@ -3595,13 +4014,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_3
-#AT_START_4
-at_fn_group_banner 4 'deb-content.at:1' \
+#AT_STOP_7
+#AT_START_8
+at_fn_group_banner 8 'deb-content.at:1' \
   "dpkg-deb .deb conffiles" "                        " 1
 at_xfail=no
 (
-  printf "%s\n" "4. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "8. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -4186,13 +4605,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_4
-#AT_START_5
-at_fn_group_banner 5 'deb-fields.at:1' \
+#AT_STOP_8
+#AT_START_9
+at_fn_group_banner 9 'deb-fields.at:1' \
   "dpkg-deb .deb fields" "                           " 1
 at_xfail=no
 (
-  printf "%s\n" "5. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "9. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -4250,16 +4669,15 @@ CTRL_TEMPL
 
 
 
-  $SED -e '/^Package:/aPackage-Type: udeb' <'pkg-package-type-use/DEBIAN/control' >'pkg-package-type-use/DEBIAN/control.new'
-  mv 'pkg-package-type-use/DEBIAN/control.new' 'pkg-package-type-use/DEBIAN/control'
+  $PERL -p -i -E 's/^Package: .*$/$&\nPackage-Type: udeb/' 'pkg-package-type-use/DEBIAN/control'
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-fields.at:13:
+printf "%s\n" "$at_srcdir/deb-fields.at:14:
 dpkg-deb -b pkg-package-type-use
 # Test presence of Package-Type field.
 test -n \"\$(dpkg-deb -f pkg-package-type-use.deb Package-Type)\"
 "
-at_fn_check_prepare_notrace 'a $(...) command substitution' "deb-fields.at:13"
+at_fn_check_prepare_notrace 'a $(...) command substitution' "deb-fields.at:14"
 ( $at_check_trace;
 dpkg-deb -b pkg-package-type-use
 # Test presence of Package-Type field.
@@ -4270,7 +4688,7 @@ at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
 echo stdout:; cat "$at_stdout"
-at_fn_check_status 0 $at_status "$at_srcdir/deb-fields.at:13"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-fields.at:14"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
@@ -4291,30 +4709,25 @@ CTRL_TEMPL
 
 
 
-  $SED -e 's/^Priority:/Class:/' <'pkg-obsolete-fields/DEBIAN/control' >'pkg-obsolete-fields/DEBIAN/control.new'
-  mv 'pkg-obsolete-fields/DEBIAN/control.new' 'pkg-obsolete-fields/DEBIAN/control'
+  $PERL -p -i -E 's/^Priority:/Class:/' 'pkg-obsolete-fields/DEBIAN/control'
 
 
-  $SED -e 's/^Version: 0.0-1/Version: 0.0/' <'pkg-obsolete-fields/DEBIAN/control' >'pkg-obsolete-fields/DEBIAN/control.new'
-  mv 'pkg-obsolete-fields/DEBIAN/control.new' 'pkg-obsolete-fields/DEBIAN/control'
+  $PERL -p -i -E 's/^Version: 0.0-1$/Version: 0.0/' 'pkg-obsolete-fields/DEBIAN/control'
 
 
-  $SED -e '/^Version:/aRevision: 1' <'pkg-obsolete-fields/DEBIAN/control' >'pkg-obsolete-fields/DEBIAN/control.new'
-  mv 'pkg-obsolete-fields/DEBIAN/control.new' 'pkg-obsolete-fields/DEBIAN/control'
+  $PERL -p -i -E 's/^Version:.*$/$&\nRevision: 1/' 'pkg-obsolete-fields/DEBIAN/control'
 
 
-  $SED -e '/^Package:/aOptional: suggests' <'pkg-obsolete-fields/DEBIAN/control' >'pkg-obsolete-fields/DEBIAN/control.new'
-  mv 'pkg-obsolete-fields/DEBIAN/control.new' 'pkg-obsolete-fields/DEBIAN/control'
+  $PERL -p -i -E 's/^Package:.*$/$&\nOptional: suggests/' 'pkg-obsolete-fields/DEBIAN/control'
 
 
-  $SED -e '/^Package:/aRecommended: recommends' <'pkg-obsolete-fields/DEBIAN/control' >'pkg-obsolete-fields/DEBIAN/control.new'
-  mv 'pkg-obsolete-fields/DEBIAN/control.new' 'pkg-obsolete-fields/DEBIAN/control'
+  $PERL -p -i -E 's/^Package:.*$/$&\nRecommended: recommends/' 'pkg-obsolete-fields/DEBIAN/control'
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-fields.at:25:
+printf "%s\n" "$at_srcdir/deb-fields.at:31:
 dpkg-deb -b pkg-obsolete-fields
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-fields.at:25"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-fields.at:31"
 ( $at_check_trace;
 dpkg-deb -b pkg-obsolete-fields
 
@@ -4333,16 +4746,16 @@ dpkg-deb: warning: ignoring 4 warnings about the control file(s)
 " | \
   $at_diff - "$at_stderr" || at_failed=:
 echo stdout:; cat "$at_stdout"
-at_fn_check_status 0 $at_status "$at_srcdir/deb-fields.at:25"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-fields.at:31"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-fields.at:38:
+printf "%s\n" "$at_srcdir/deb-fields.at:44:
 dpkg-deb -f pkg-obsolete-fields.deb \\
   Version Recommends Suggests Priority 2>/dev/null
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-fields.at:38"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-fields.at:44"
 ( $at_check_trace;
 dpkg-deb -f pkg-obsolete-fields.deb \
   Version Recommends Suggests Priority 2>/dev/null
@@ -4357,7 +4770,7 @@ Suggests: suggests
 Priority: extra
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-fields.at:38"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-fields.at:44"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
@@ -4366,13 +4779,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_5
-#AT_START_6
-at_fn_group_banner 6 'deb-split.at:1' \
+#AT_STOP_9
+#AT_START_10
+at_fn_group_banner 10 'deb-split.at:1' \
   "dpkg-split options" "                             " 2
 at_xfail=no
 (
-  printf "%s\n" "6. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "10. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -4408,13 +4821,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_6
-#AT_START_7
-at_fn_group_banner 7 'deb-split.at:9' \
+#AT_STOP_10
+#AT_START_11
+at_fn_group_banner 11 'deb-split.at:9' \
   "dpkg-split .deb format" "                         " 2
 at_xfail=no
 (
-  printf "%s\n" "7. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "11. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -4435,8 +4848,7 @@ CTRL_TEMPL
 
 
 
-  $SED -e 's/^Description:.*$/& - normal package to be split/' <'pkg-split/DEBIAN/control' >'pkg-split/DEBIAN/control.new'
-  mv 'pkg-split/DEBIAN/control.new' 'pkg-split/DEBIAN/control'
+  $PERL -p -i -E 's/^Description:.*$/$& - normal package to be split/' 'pkg-split/DEBIAN/control'
 
 { set +x
 printf "%s\n" "$at_srcdir/deb-split.at:15:
@@ -4468,17 +4880,19 @@ $at_traceon; }
 printf "%s\n" "$at_srcdir/deb-split.at:23:
 # Test splitting a package (in 10 parts: 9 * 210 KiB B + 158 KiB)
 dpkg-split -S 210 -s pkg-split.deb pkg-split-part
-for p in \$(seq 10); do
+for p in   1 2 3 4 5 6 7 8 9 10 ; do
   test -f pkg-split-part.\${p}of10.deb
 done
+ar x pkg-split-part.1of10.deb data.1
 "
-at_fn_check_prepare_notrace 'a $(...) command substitution' "deb-split.at:23"
+at_fn_check_prepare_notrace 'a ${...} parameter expansion' "deb-split.at:23"
 ( $at_check_trace;
 # Test splitting a package (in 10 parts: 9 * 210 KiB B + 158 KiB)
 dpkg-split -S 210 -s pkg-split.deb pkg-split-part
-for p in $(seq 10); do
+for p in   1 2 3 4 5 6 7 8 9 10 ; do
   test -f pkg-split-part.${p}of10.deb
 done
+ar x pkg-split-part.1of10.deb data.1
 
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
@@ -4502,24 +4916,20 @@ DEB_SPLIT_LAST_SIZE=183694
 DEB_SPLIT_PART_SIZE_VERSION=$((DEB_SPLIT_PART_SIZE + 2))
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-split.at:41:
+printf "%s\n" "$at_srcdir/deb-split.at:42:
 # Test debian-split with 2.x version
-cp pkg-split-part.1of10.deb pkg-split-part-version-2x.deb
-ar x pkg-split-part-version-2x.deb debian-split
-sed -e '1c2.999' debian-split >debian-split.new
-mv debian-split.new debian-split
-ar rc pkg-split-part-version-2x.deb debian-split
+ar x pkg-split-part.1of10.deb debian-split
+\$PERL -p -i -E 's/.*/2.999/ if \$. == 1' debian-split
+ar qSc pkg-split-part-version-2x.deb debian-split data.1
 ar t pkg-split-part-version-2x.deb
 dpkg-split -I pkg-split-part-version-2x.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:41"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:42"
 ( $at_check_trace;
 # Test debian-split with 2.x version
-cp pkg-split-part.1of10.deb pkg-split-part-version-2x.deb
-ar x pkg-split-part-version-2x.deb debian-split
-sed -e '1c2.999' debian-split >debian-split.new
-mv debian-split.new debian-split
-ar rc pkg-split-part-version-2x.deb debian-split
+ar x pkg-split-part.1of10.deb debian-split
+$PERL -p -i -E 's/.*/2.999/ if $. == 1' debian-split
+ar qSc pkg-split-part-version-2x.deb debian-split data.1
 ar t pkg-split-part-version-2x.deb
 dpkg-split -I pkg-split-part-version-2x.deb
 
@@ -4544,7 +4954,7 @@ pkg-split-part-version-2x.deb:
 
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:41"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:42"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
@@ -4552,22 +4962,20 @@ $at_traceon; }
 DEB_SPLIT_PART_SIZE_MAGIC_EXTRA=$((DEB_SPLIT_PART_SIZE + 10))
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-split.at:69:
+printf "%s\n" "$at_srcdir/deb-split.at:68:
 # Test debian-split with extra lines
-cp pkg-split-part.1of10.deb pkg-split-part-magic-extra.deb
-ar x pkg-split-part-magic-extra.deb debian-split
+ar x pkg-split-part.1of10.deb debian-split
 echo \"extra line\" >>debian-split
-ar rc pkg-split-part-magic-extra.deb debian-split
+ar qSc pkg-split-part-magic-extra.deb debian-split data.1
 ar t pkg-split-part-magic-extra.deb
 dpkg-split -I pkg-split-part-magic-extra.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:69"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:68"
 ( $at_check_trace;
 # Test debian-split with extra lines
-cp pkg-split-part.1of10.deb pkg-split-part-magic-extra.deb
-ar x pkg-split-part-magic-extra.deb debian-split
+ar x pkg-split-part.1of10.deb debian-split
 echo "extra line" >>debian-split
-ar rc pkg-split-part-magic-extra.deb debian-split
+ar qSc pkg-split-part-magic-extra.deb debian-split data.1
 ar t pkg-split-part-magic-extra.deb
 dpkg-split -I pkg-split-part-magic-extra.deb
 
@@ -4592,20 +5000,20 @@ pkg-split-part-magic-extra.deb:
 
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:69"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:68"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-split.at:94:
+printf "%s\n" "$at_srcdir/deb-split.at:92:
 # Test missing debian-split
 cp pkg-split-part.1of10.deb pkg-split-part-missing-magic.deb
 ar d pkg-split-part-missing-magic.deb debian-split
 ar t pkg-split-part-missing-magic.deb
 dpkg-split -I pkg-split-part-missing-magic.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:94"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:92"
 ( $at_check_trace;
 # Test missing debian-split
 cp pkg-split-part.1of10.deb pkg-split-part-missing-magic.deb
@@ -4621,20 +5029,20 @@ echo >>"$at_stdout"; printf "%s\n" "data.1
 file 'pkg-split-part-missing-magic.deb' is not an archive part
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:94"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:92"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-split.at:104:
+printf "%s\n" "$at_srcdir/deb-split.at:102:
 # Test missing data part member
 cp pkg-split-part.1of10.deb pkg-split-part-missing-data.deb
 ar d pkg-split-part-missing-data.deb data.1
 ar t pkg-split-part-missing-data.deb
 dpkg-split -I pkg-split-part-missing-data.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:104"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:102"
 ( $at_check_trace;
 # Test missing data part member
 cp pkg-split-part.1of10.deb pkg-split-part-missing-data.deb
@@ -4651,26 +5059,24 @@ echo >>"$at_stderr"; printf "%s\n" "dpkg-split: error: unexpected end of file in
 echo >>"$at_stdout"; printf "%s\n" "debian-split
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 2 $at_status "$at_srcdir/deb-split.at:104"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-split.at:102"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-split.at:114:
+printf "%s\n" "$at_srcdir/deb-split.at:112:
 # Test duplicate debian-split member
-cp pkg-split-part.1of10.deb pkg-split-part-duplicate-magic.deb
-ar x pkg-split-part-duplicate-magic.deb debian-split
-ar ra debian-split pkg-split-part-duplicate-magic.deb debian-split debian-split
+ar x pkg-split-part.1of10.deb debian-split data.1
+ar qSc pkg-split-part-duplicate-magic.deb debian-split debian-split data.1
 ar t pkg-split-part-duplicate-magic.deb
 dpkg-split -I pkg-split-part-duplicate-magic.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:114"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:112"
 ( $at_check_trace;
 # Test duplicate debian-split member
-cp pkg-split-part.1of10.deb pkg-split-part-duplicate-magic.deb
-ar x pkg-split-part-duplicate-magic.deb debian-split
-ar ra debian-split pkg-split-part-duplicate-magic.deb debian-split debian-split
+ar x pkg-split-part.1of10.deb debian-split data.1
+ar qSc pkg-split-part-duplicate-magic.deb debian-split debian-split data.1
 ar t pkg-split-part-duplicate-magic.deb
 dpkg-split -I pkg-split-part-duplicate-magic.deb
 
@@ -4685,26 +5091,26 @@ debian-split
 data.1
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 2 $at_status "$at_srcdir/deb-split.at:114"
+at_fn_check_status 2 $at_status "$at_srcdir/deb-split.at:112"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-split.at:127:
+printf "%s\n" "$at_srcdir/deb-split.at:124:
 # Test unknown extra member
 cp pkg-split-part.1of10.deb pkg-split-part-extra-member.deb
 echo \"some content\" >unknown
-ar q pkg-split-part-extra-member.deb unknown
+ar qS pkg-split-part-extra-member.deb unknown
 ar t pkg-split-part-extra-member.deb
 dpkg-split -I pkg-split-part-extra-member.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:127"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:124"
 ( $at_check_trace;
 # Test unknown extra member
 cp pkg-split-part.1of10.deb pkg-split-part-extra-member.deb
 echo "some content" >unknown
-ar q pkg-split-part-extra-member.deb unknown
+ar qS pkg-split-part-extra-member.deb unknown
 ar t pkg-split-part-extra-member.deb
 dpkg-split -I pkg-split-part-extra-member.deb
 
@@ -4730,17 +5136,17 @@ pkg-split-part-extra-member.deb:
 
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:127"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:124"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-split.at:152:
+printf "%s\n" "$at_srcdir/deb-split.at:149:
 # Test getting information about the split parts (parsing verification)
 dpkg-split -I pkg-split-part.1of10.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:152"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:149"
 ( $at_check_trace;
 # Test getting information about the split parts (parsing verification)
 dpkg-split -I pkg-split-part.1of10.deb
@@ -4764,16 +5170,16 @@ echo >>"$at_stdout"; printf "%s\n" "pkg-split-part.1of10.deb:
 
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:152"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:149"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-split.at:169:
+printf "%s\n" "$at_srcdir/deb-split.at:166:
 # Test getting information about the split parts (parsing verification)
 dpkg-split -I pkg-split-part.2of10.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:169"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:166"
 ( $at_check_trace;
 # Test getting information about the split parts (parsing verification)
 dpkg-split -I pkg-split-part.2of10.deb
@@ -4797,16 +5203,16 @@ echo >>"$at_stdout"; printf "%s\n" "pkg-split-part.2of10.deb:
 
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:169"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:166"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-split.at:186:
+printf "%s\n" "$at_srcdir/deb-split.at:183:
 # Test getting information about the split parts (parsing verification)
 dpkg-split -I pkg-split-part.9of10.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:186"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:183"
 ( $at_check_trace;
 # Test getting information about the split parts (parsing verification)
 dpkg-split -I pkg-split-part.9of10.deb
@@ -4830,16 +5236,16 @@ echo >>"$at_stdout"; printf "%s\n" "pkg-split-part.9of10.deb:
 
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:186"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:183"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-split.at:203:
+printf "%s\n" "$at_srcdir/deb-split.at:200:
 # Test getting information about the split parts (parsing verification)
 dpkg-split -I pkg-split-part.10of10.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:203"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:200"
 ( $at_check_trace;
 # Test getting information about the split parts (parsing verification)
 dpkg-split -I pkg-split-part.10of10.deb
@@ -4863,18 +5269,18 @@ echo >>"$at_stdout"; printf "%s\n" "pkg-split-part.10of10.deb:
 
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:203"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:200"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
 
 { set +x
-printf "%s\n" "$at_srcdir/deb-split.at:221:
+printf "%s\n" "$at_srcdir/deb-split.at:218:
 # Test joining the split parts back together
 dpkg-split -o pkg-joined.deb -j pkg-split-part.*.deb
 cmp pkg-split.deb pkg-joined.deb
 "
-at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:221"
+at_fn_check_prepare_notrace 'an embedded newline' "deb-split.at:218"
 ( $at_check_trace;
 # Test joining the split parts back together
 dpkg-split -o pkg-joined.deb -j pkg-split-part.*.deb
@@ -4887,7 +5293,7 @@ at_fn_diff_devnull "$at_stderr" || at_failed=:
 echo >>"$at_stdout"; printf "%s\n" "Putting package pkg-split together from 10 parts: 1 2 3 4 5 6 7 8 9 10 done
 " | \
   $at_diff - "$at_stdout" || at_failed=:
-at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:221"
+at_fn_check_status 0 $at_status "$at_srcdir/deb-split.at:218"
 $at_failed && at_fn_log_failure
 $at_traceon; }
 
@@ -4896,13 +5302,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_7
-#AT_START_8
-at_fn_group_banner 8 'realpath.at:1' \
+#AT_STOP_11
+#AT_START_12
+at_fn_group_banner 12 'realpath.at:1' \
   "dpkg-realpath options" "                          " 3
 at_xfail=no
 (
-  printf "%s\n" "8. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "12. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -4938,13 +5344,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_8
-#AT_START_9
-at_fn_group_banner 9 'realpath.at:9' \
+#AT_STOP_12
+#AT_START_13
+at_fn_group_banner 13 'realpath.at:9' \
   "dpkg-realpath path resolving" "                   " 3
 at_xfail=no
 (
-  printf "%s\n" "9. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "13. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -4953,12 +5359,12 @@ mkdir -p aa/bb/cc
 mkdir -p zz/yy/xx
 mkdir -p usr/bin
 : >aa/bb/cc/file
-ln -sfT aa/bb/cc/file zz/yy/xx/symlink-rel
-ln -sfT /aa/bb/cc/file zz/yy/xx/symlink-abs
+ln -sf aa/bb/cc/file zz/yy/xx/symlink-rel
+ln -sf /aa/bb/cc/file zz/yy/xx/symlink-abs
 : >usr/bin/a-shell
-ln -sfT /usr/bin/a-shell usr/bin/sh
+ln -sf /usr/bin/a-shell usr/bin/sh
 
-tmpdir="$(pwd)"
+tmpdir="$(  $PERL -MCwd=realpath,getcwd -E 'say realpath(getcwd())')"
 export DPKG_ROOT=
 
 # Relative paths
@@ -5333,13 +5739,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_9
-#AT_START_10
-at_fn_group_banner 10 'divert.at:1' \
+#AT_STOP_13
+#AT_START_14
+at_fn_group_banner 14 'divert.at:1' \
   "dpkg-divert options" "                            " 4
 at_xfail=no
 (
-  printf "%s\n" "10. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "14. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -5389,9 +5795,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:10: grep -qE '(takes a value|needs.*argument)' stderr"
+printf "%s\n" "$at_srcdir/divert.at:10: \$EGREP -q '(takes a value|needs.*argument)' stderr"
 at_fn_check_prepare_notrace 'a shell pipeline' "divert.at:10"
-( $at_check_trace; grep -qE '(takes a value|needs.*argument)' stderr
+( $at_check_trace; $EGREP -q '(takes a value|needs.*argument)' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5416,9 +5822,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:13: grep -q 'unknown option' stderr"
-at_fn_check_prepare_trace "divert.at:13"
-( $at_check_trace; grep -q 'unknown option' stderr
+printf "%s\n" "$at_srcdir/divert.at:13: \$GREP -q 'unknown option' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'unknown option' stderr" "divert.at:13"
+( $at_check_trace; $GREP -q 'unknown option' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5443,9 +5849,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:16: grep -qE '(conflicting|two).*remove.*add.*' stderr"
+printf "%s\n" "$at_srcdir/divert.at:16: \$EGREP -q '(conflicting|two).*remove.*add.*' stderr"
 at_fn_check_prepare_notrace 'a shell pipeline' "divert.at:16"
-( $at_check_trace; grep -qE '(conflicting|two).*remove.*add.*' stderr
+( $at_check_trace; $EGREP -q '(conflicting|two).*remove.*add.*' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5470,9 +5876,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:19: grep -qE '(takes a value|needs.*argument)' stderr"
+printf "%s\n" "$at_srcdir/divert.at:19: \$EGREP -q '(takes a value|needs.*argument)' stderr"
 at_fn_check_prepare_notrace 'a shell pipeline' "divert.at:19"
-( $at_check_trace; grep -qE '(takes a value|needs.*argument)' stderr
+( $at_check_trace; $EGREP -q '(takes a value|needs.*argument)' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5497,9 +5903,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:22: grep -q 'absolute' stderr"
-at_fn_check_prepare_trace "divert.at:22"
-( $at_check_trace; grep -q 'absolute' stderr
+printf "%s\n" "$at_srcdir/divert.at:22: \$GREP -q 'absolute' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'absolute' stderr" "divert.at:22"
+( $at_check_trace; $GREP -q 'absolute' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5526,9 +5932,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:26: grep -q 'newline' stderr"
-at_fn_check_prepare_trace "divert.at:26"
-( $at_check_trace; grep -q 'newline' stderr
+printf "%s\n" "$at_srcdir/divert.at:26: \$GREP -q 'newline' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'newline' stderr" "divert.at:26"
+( $at_check_trace; $GREP -q 'newline' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5553,9 +5959,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:29: grep -qE '(takes a value|needs.*argument)' stderr"
+printf "%s\n" "$at_srcdir/divert.at:29: \$EGREP -q '(takes a value|needs.*argument)' stderr"
 at_fn_check_prepare_notrace 'a shell pipeline' "divert.at:29"
-( $at_check_trace; grep -qE '(takes a value|needs.*argument)' stderr
+( $at_check_trace; $EGREP -q '(takes a value|needs.*argument)' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5582,9 +5988,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:33: grep -q 'newline' stderr"
-at_fn_check_prepare_trace "divert.at:33"
-( $at_check_trace; grep -q 'newline' stderr
+printf "%s\n" "$at_srcdir/divert.at:33: \$GREP -q 'newline' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'newline' stderr" "divert.at:33"
+( $at_check_trace; $GREP -q 'newline' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5609,9 +6015,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:36: grep -q 'needs a single argument' stderr"
-at_fn_check_prepare_trace "divert.at:36"
-( $at_check_trace; grep -q 'needs a single argument' stderr
+printf "%s\n" "$at_srcdir/divert.at:36: \$GREP -q 'needs a single argument' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'needs a single argument' stderr" "divert.at:36"
+( $at_check_trace; $GREP -q 'needs a single argument' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5636,9 +6042,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:39: grep -q 'absolute' stderr"
-at_fn_check_prepare_trace "divert.at:39"
-( $at_check_trace; grep -q 'absolute' stderr
+printf "%s\n" "$at_srcdir/divert.at:39: \$GREP -q 'absolute' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'absolute' stderr" "divert.at:39"
+( $at_check_trace; $GREP -q 'absolute' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5665,9 +6071,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:43: grep -q 'newline' stderr"
-at_fn_check_prepare_trace "divert.at:43"
-( $at_check_trace; grep -q 'newline' stderr
+printf "%s\n" "$at_srcdir/divert.at:43: \$GREP -q 'newline' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'newline' stderr" "divert.at:43"
+( $at_check_trace; $GREP -q 'newline' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5692,9 +6098,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:46: grep -qE 'director(y|ies)' stderr"
+printf "%s\n" "$at_srcdir/divert.at:46: \$EGREP -q 'director(y|ies)' stderr"
 at_fn_check_prepare_notrace 'a shell pipeline' "divert.at:46"
-( $at_check_trace; grep -qE 'director(y|ies)' stderr
+( $at_check_trace; $EGREP -q 'director(y|ies)' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5719,9 +6125,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:49: grep -q 'absolute' stderr"
-at_fn_check_prepare_trace "divert.at:49"
-( $at_check_trace; grep -q 'absolute' stderr
+printf "%s\n" "$at_srcdir/divert.at:49: \$GREP -q 'absolute' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'absolute' stderr" "divert.at:49"
+( $at_check_trace; $GREP -q 'absolute' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5746,9 +6152,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:52: grep -q 'needs a single argument' stderr"
-at_fn_check_prepare_trace "divert.at:52"
-( $at_check_trace; grep -q 'needs a single argument' stderr
+printf "%s\n" "$at_srcdir/divert.at:52: \$GREP -q 'needs a single argument' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'needs a single argument' stderr" "divert.at:52"
+( $at_check_trace; $GREP -q 'needs a single argument' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5773,9 +6179,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:55: grep -q 'absolute' stderr"
-at_fn_check_prepare_trace "divert.at:55"
-( $at_check_trace; grep -q 'absolute' stderr
+printf "%s\n" "$at_srcdir/divert.at:55: \$GREP -q 'absolute' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'absolute' stderr" "divert.at:55"
+( $at_check_trace; $GREP -q 'absolute' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5802,9 +6208,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:59: grep -q 'newline' stderr"
-at_fn_check_prepare_trace "divert.at:59"
-( $at_check_trace; grep -q 'newline' stderr
+printf "%s\n" "$at_srcdir/divert.at:59: \$GREP -q 'newline' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'newline' stderr" "divert.at:59"
+( $at_check_trace; $GREP -q 'newline' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5829,9 +6235,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:62: grep -q 'needs a single argument' stderr"
-at_fn_check_prepare_trace "divert.at:62"
-( $at_check_trace; grep -q 'needs a single argument' stderr
+printf "%s\n" "$at_srcdir/divert.at:62: \$GREP -q 'needs a single argument' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'needs a single argument' stderr" "divert.at:62"
+( $at_check_trace; $GREP -q 'needs a single argument' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5856,9 +6262,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:65: grep -q 'absolute' stderr"
-at_fn_check_prepare_trace "divert.at:65"
-( $at_check_trace; grep -q 'absolute' stderr
+printf "%s\n" "$at_srcdir/divert.at:65: \$GREP -q 'absolute' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'absolute' stderr" "divert.at:65"
+( $at_check_trace; $GREP -q 'absolute' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5885,9 +6291,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:69: grep -q 'newline' stderr"
-at_fn_check_prepare_trace "divert.at:69"
-( $at_check_trace; grep -q 'newline' stderr
+printf "%s\n" "$at_srcdir/divert.at:69: \$GREP -q 'newline' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'newline' stderr" "divert.at:69"
+( $at_check_trace; $GREP -q 'newline' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5912,9 +6318,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:72: grep -q 'needs a single argument' stderr"
-at_fn_check_prepare_trace "divert.at:72"
-( $at_check_trace; grep -q 'needs a single argument' stderr
+printf "%s\n" "$at_srcdir/divert.at:72: \$GREP -q 'needs a single argument' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'needs a single argument' stderr" "divert.at:72"
+( $at_check_trace; $GREP -q 'needs a single argument' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5939,9 +6345,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:75: grep -q 'absolute' stderr"
-at_fn_check_prepare_trace "divert.at:75"
-( $at_check_trace; grep -q 'absolute' stderr
+printf "%s\n" "$at_srcdir/divert.at:75: \$GREP -q 'absolute' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'absolute' stderr" "divert.at:75"
+( $at_check_trace; $GREP -q 'absolute' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5968,9 +6374,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:79: grep -q 'newline' stderr"
-at_fn_check_prepare_trace "divert.at:79"
-( $at_check_trace; grep -q 'newline' stderr
+printf "%s\n" "$at_srcdir/divert.at:79: \$GREP -q 'newline' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'newline' stderr" "divert.at:79"
+( $at_check_trace; $GREP -q 'newline' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -5985,13 +6391,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_10
-#AT_START_11
-at_fn_group_banner 11 'divert.at:83' \
+#AT_STOP_14
+#AT_START_15
+at_fn_group_banner 15 'divert.at:83' \
   "dpkg-divert query (empty db)" "                   " 4
 at_xfail=no
 (
-  printf "%s\n" "11. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "15. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -6045,13 +6451,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_11
-#AT_START_12
-at_fn_group_banner 12 'divert.at:94' \
+#AT_STOP_15
+#AT_START_16
+at_fn_group_banner 16 'divert.at:94' \
   "dpkg-divert query (list)" "                       " 4
 at_xfail=no
 (
-  printf "%s\n" "12. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "16. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -6251,13 +6657,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_12
-#AT_START_13
-at_fn_group_banner 13 'divert.at:134' \
+#AT_STOP_16
+#AT_START_17
+at_fn_group_banner 17 'divert.at:134' \
   "dpkg-divert query (listpackage + truename)" "     " 4
 at_xfail=no
 (
-  printf "%s\n" "13. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "17. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -6369,13 +6775,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_13
-#AT_START_14
-at_fn_group_banner 14 'divert.at:160' \
+#AT_STOP_17
+#AT_START_18
+at_fn_group_banner 18 'divert.at:160' \
   "dpkg-divert add (local rename)" "                 " 4
 at_xfail=no
 (
-  printf "%s\n" "14. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "18. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -6409,9 +6815,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:171: grep -q \"Adding.*local.*diversion.* /testdir/foo.* /testdir/foo.distrib\" stdout"
-at_fn_check_prepare_trace "divert.at:171"
-( $at_check_trace; grep -q "Adding.*local.*diversion.* /testdir/foo.* /testdir/foo.distrib" stdout
+printf "%s\n" "$at_srcdir/divert.at:171: \$GREP -q \"Adding.*local.*diversion.* /testdir/foo.* /testdir/foo.distrib\" stdout"
+at_fn_check_prepare_dynamic "$GREP -q \"Adding.*local.*diversion.* /testdir/foo.* /testdir/foo.distrib\" stdout" "divert.at:171"
+( $at_check_trace; $GREP -q "Adding.*local.*diversion.* /testdir/foo.* /testdir/foo.distrib" stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -6469,13 +6875,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_14
-#AT_START_15
-at_fn_group_banner 15 'divert.at:178' \
+#AT_STOP_18
+#AT_START_19
+at_fn_group_banner 19 'divert.at:178' \
   "dpkg-divert add (local no-rename)" "              " 4
 at_xfail=no
 (
-  printf "%s\n" "15. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "19. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -6509,9 +6915,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:189: grep -q \"Adding.*local.*diversion.* /testdir/foo.* /testdir/foo.distrib\" stdout"
-at_fn_check_prepare_trace "divert.at:189"
-( $at_check_trace; grep -q "Adding.*local.*diversion.* /testdir/foo.* /testdir/foo.distrib" stdout
+printf "%s\n" "$at_srcdir/divert.at:189: \$GREP -q \"Adding.*local.*diversion.* /testdir/foo.* /testdir/foo.distrib\" stdout"
+at_fn_check_prepare_dynamic "$GREP -q \"Adding.*local.*diversion.* /testdir/foo.* /testdir/foo.distrib\" stdout" "divert.at:189"
+( $at_check_trace; $GREP -q "Adding.*local.*diversion.* /testdir/foo.* /testdir/foo.distrib" stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -6569,13 +6975,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_15
-#AT_START_16
-at_fn_group_banner 16 'divert.at:196' \
+#AT_STOP_19
+#AT_START_20
+at_fn_group_banner 20 'divert.at:196' \
   "dpkg-divert add (rename quiet)" "                 " 4
 at_xfail=no
 (
-  printf "%s\n" "16. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "20. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -6656,13 +7062,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_16
-#AT_START_17
-at_fn_group_banner 17 'divert.at:213' \
+#AT_STOP_20
+#AT_START_21
+at_fn_group_banner 21 'divert.at:213' \
   "dpkg-divert add (test rename quiet)" "            " 4
 at_xfail=no
 (
-  printf "%s\n" "17. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "21. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -6737,13 +7143,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_17
-#AT_START_18
-at_fn_group_banner 18 'divert.at:226' \
+#AT_STOP_21
+#AT_START_22
+at_fn_group_banner 22 'divert.at:226' \
   "dpkg-divert add (rename missing quiet)" "         " 4
 at_xfail=no
 (
-  printf "%s\n" "18. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "22. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -6823,13 +7229,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_18
-#AT_START_19
-at_fn_group_banner 19 'divert.at:243' \
+#AT_STOP_22
+#AT_START_23
+at_fn_group_banner 23 'divert.at:243' \
   "dpkg-divert add (local rename quiet)" "           " 4
 at_xfail=no
 (
-  printf "%s\n" "19. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "23. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -6910,13 +7316,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_19
-#AT_START_20
-at_fn_group_banner 20 'divert.at:260' \
+#AT_STOP_23
+#AT_START_24
+at_fn_group_banner 24 'divert.at:260' \
   "dpkg-divert add (package rename quiet)" "         " 4
 at_xfail=no
 (
-  printf "%s\n" "20. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "24. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -6963,13 +7369,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_20
-#AT_START_21
-at_fn_group_banner 21 'divert.at:274' \
+#AT_STOP_24
+#AT_START_25
+at_fn_group_banner 25 'divert.at:274' \
   "dpkg-divert add (rename self-link)" "             " 4
 at_xfail=no
 (
-  printf "%s\n" "21. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "25. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -7053,13 +7459,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_21
-#AT_START_22
-at_fn_group_banner 22 'divert.at:292' \
+#AT_STOP_25
+#AT_START_26
+at_fn_group_banner 26 'divert.at:292' \
   "dpkg-divert add (rename other-file)" "            " 4
 at_xfail=no
 (
-  printf "%s\n" "22. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "26. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -7091,9 +7497,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:300: grep -q 'error: rename involves overwriting' stderr"
-at_fn_check_prepare_trace "divert.at:300"
-( $at_check_trace; grep -q 'error: rename involves overwriting' stderr
+printf "%s\n" "$at_srcdir/divert.at:300: \$GREP -q 'error: rename involves overwriting' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'error: rename involves overwriting' stderr" "divert.at:300"
+( $at_check_trace; $GREP -q 'error: rename involves overwriting' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7121,13 +7527,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_22
-#AT_START_23
-at_fn_group_banner 23 'divert.at:305' \
+#AT_STOP_26
+#AT_START_27
+at_fn_group_banner 27 'divert.at:305' \
   "dpkg-divert add (rename missing dir)" "           " 4
 at_xfail=no
 (
-  printf "%s\n" "23. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "27. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -7174,13 +7580,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_23
-#AT_START_24
-at_fn_group_banner 24 'divert.at:319' \
+#AT_STOP_27
+#AT_START_28
+at_fn_group_banner 28 'divert.at:319' \
   "dpkg-divert add (rename read-only dir)" "         " 4
 at_xfail=no
 (
-  printf "%s\n" "24. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "28. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -7222,9 +7628,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:332: grep -q 'error: .* Permission denied' stderr"
-at_fn_check_prepare_trace "divert.at:332"
-( $at_check_trace; grep -q 'error: .* Permission denied' stderr
+printf "%s\n" "$at_srcdir/divert.at:332: \$GREP -q 'error: .* Permission denied' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'error: .* Permission denied' stderr" "divert.at:332"
+( $at_check_trace; $GREP -q 'error: .* Permission denied' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7249,9 +7655,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:336: grep -q 'error: .* Permission denied' stderr"
-at_fn_check_prepare_trace "divert.at:336"
-( $at_check_trace; grep -q 'error: .* Permission denied' stderr
+printf "%s\n" "$at_srcdir/divert.at:336: \$GREP -q 'error: .* Permission denied' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'error: .* Permission denied' stderr" "divert.at:336"
+( $at_check_trace; $GREP -q 'error: .* Permission denied' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7283,13 +7689,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_24
-#AT_START_25
-at_fn_group_banner 25 'divert.at:343' \
+#AT_STOP_28
+#AT_START_29
+at_fn_group_banner 29 'divert.at:343' \
   "dpkg-divert add (rename no-access dir)" "         " 4
 at_xfail=no
 (
-  printf "%s\n" "25. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "29. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -7327,9 +7733,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:354: grep -q 'error: .* Permission denied' stderr"
-at_fn_check_prepare_trace "divert.at:354"
-( $at_check_trace; grep -q 'error: .* Permission denied' stderr
+printf "%s\n" "$at_srcdir/divert.at:354: \$GREP -q 'error: .* Permission denied' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'error: .* Permission denied' stderr" "divert.at:354"
+( $at_check_trace; $GREP -q 'error: .* Permission denied' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7354,9 +7760,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:358: grep -q 'error: .* Permission denied' stderr"
-at_fn_check_prepare_trace "divert.at:358"
-( $at_check_trace; grep -q 'error: .* Permission denied' stderr
+printf "%s\n" "$at_srcdir/divert.at:358: \$GREP -q 'error: .* Permission denied' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'error: .* Permission denied' stderr" "divert.at:358"
+( $at_check_trace; $GREP -q 'error: .* Permission denied' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7388,13 +7794,13 @@ rmdir dpkginst/testdir/nadir
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_25
-#AT_START_26
-at_fn_group_banner 26 'divert.at:367' \
+#AT_STOP_29
+#AT_START_30
+at_fn_group_banner 30 'divert.at:367' \
   "dpkg-divert add second diversion" "               " 4
 at_xfail=no
 (
-  printf "%s\n" "26. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "30. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -7421,9 +7827,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:374: grep -q 'Adding' stdout"
-at_fn_check_prepare_trace "divert.at:374"
-( $at_check_trace; grep -q 'Adding' stdout
+printf "%s\n" "$at_srcdir/divert.at:374: \$GREP -q 'Adding' stdout"
+at_fn_check_prepare_dynamic "$GREP -q 'Adding' stdout" "divert.at:374"
+( $at_check_trace; $GREP -q 'Adding' stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7448,9 +7854,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:377: grep -q 'Leaving' stdout"
-at_fn_check_prepare_trace "divert.at:377"
-( $at_check_trace; grep -q 'Leaving' stdout
+printf "%s\n" "$at_srcdir/divert.at:377: \$GREP -q 'Leaving' stdout"
+at_fn_check_prepare_dynamic "$GREP -q 'Leaving' stdout" "divert.at:377"
+( $at_check_trace; $GREP -q 'Leaving' stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7475,9 +7881,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:380: grep -q 'Leaving' stdout"
-at_fn_check_prepare_trace "divert.at:380"
-( $at_check_trace; grep -q 'Leaving' stdout
+printf "%s\n" "$at_srcdir/divert.at:380: \$GREP -q 'Leaving' stdout"
+at_fn_check_prepare_dynamic "$GREP -q 'Leaving' stdout" "divert.at:380"
+( $at_check_trace; $GREP -q 'Leaving' stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7502,9 +7908,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:384: grep -q 'clashes' stderr"
-at_fn_check_prepare_trace "divert.at:384"
-( $at_check_trace; grep -q 'clashes' stderr
+printf "%s\n" "$at_srcdir/divert.at:384: \$GREP -q 'clashes' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'clashes' stderr" "divert.at:384"
+( $at_check_trace; $GREP -q 'clashes' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7529,9 +7935,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:387: grep -q 'clashes' stderr"
-at_fn_check_prepare_trace "divert.at:387"
-( $at_check_trace; grep -q 'clashes' stderr
+printf "%s\n" "$at_srcdir/divert.at:387: \$GREP -q 'clashes' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'clashes' stderr" "divert.at:387"
+( $at_check_trace; $GREP -q 'clashes' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7556,9 +7962,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:391: grep -q 'clashes' stderr"
-at_fn_check_prepare_trace "divert.at:391"
-( $at_check_trace; grep -q 'clashes' stderr
+printf "%s\n" "$at_srcdir/divert.at:391: \$GREP -q 'clashes' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'clashes' stderr" "divert.at:391"
+( $at_check_trace; $GREP -q 'clashes' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7583,9 +7989,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:394: grep -q 'clashes' stderr"
-at_fn_check_prepare_trace "divert.at:394"
-( $at_check_trace; grep -q 'clashes' stderr
+printf "%s\n" "$at_srcdir/divert.at:394: \$GREP -q 'clashes' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'clashes' stderr" "divert.at:394"
+( $at_check_trace; $GREP -q 'clashes' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7610,9 +8016,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:397: grep -q 'clashes' stderr"
-at_fn_check_prepare_trace "divert.at:397"
-( $at_check_trace; grep -q 'clashes' stderr
+printf "%s\n" "$at_srcdir/divert.at:397: \$GREP -q 'clashes' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'clashes' stderr" "divert.at:397"
+( $at_check_trace; $GREP -q 'clashes' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7627,13 +8033,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_26
-#AT_START_27
-at_fn_group_banner 27 'divert.at:401' \
+#AT_STOP_30
+#AT_START_31
+at_fn_group_banner 31 'divert.at:401' \
   "dpkg-divert add third diversion" "                " 4
 at_xfail=no
 (
-  printf "%s\n" "27. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "31. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -7660,9 +8066,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:408: grep -q 'Adding' stdout"
-at_fn_check_prepare_trace "divert.at:408"
-( $at_check_trace; grep -q 'Adding' stdout
+printf "%s\n" "$at_srcdir/divert.at:408: \$GREP -q 'Adding' stdout"
+at_fn_check_prepare_dynamic "$GREP -q 'Adding' stdout" "divert.at:408"
+( $at_check_trace; $GREP -q 'Adding' stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7686,9 +8092,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:410: grep -q 'Adding' stdout"
-at_fn_check_prepare_trace "divert.at:410"
-( $at_check_trace; grep -q 'Adding' stdout
+printf "%s\n" "$at_srcdir/divert.at:410: \$GREP -q 'Adding' stdout"
+at_fn_check_prepare_dynamic "$GREP -q 'Adding' stdout" "divert.at:410"
+( $at_check_trace; $GREP -q 'Adding' stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7713,9 +8119,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:413: grep -q 'Leaving' stdout"
-at_fn_check_prepare_trace "divert.at:413"
-( $at_check_trace; grep -q 'Leaving' stdout
+printf "%s\n" "$at_srcdir/divert.at:413: \$GREP -q 'Leaving' stdout"
+at_fn_check_prepare_dynamic "$GREP -q 'Leaving' stdout" "divert.at:413"
+( $at_check_trace; $GREP -q 'Leaving' stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7739,9 +8145,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:416: grep -q 'clashes' stderr"
-at_fn_check_prepare_trace "divert.at:416"
-( $at_check_trace; grep -q 'clashes' stderr
+printf "%s\n" "$at_srcdir/divert.at:416: \$GREP -q 'clashes' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'clashes' stderr" "divert.at:416"
+( $at_check_trace; $GREP -q 'clashes' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7756,13 +8162,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_27
-#AT_START_28
-at_fn_group_banner 28 'divert.at:420' \
+#AT_STOP_31
+#AT_START_32
+at_fn_group_banner 32 'divert.at:420' \
   "dpkg-divert add (file owned by --package)" "      " 4
 at_xfail=no
 (
-  printf "%s\n" "28. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "32. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -7863,13 +8269,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_28
-#AT_START_29
-at_fn_group_banner 29 'divert.at:447' \
+#AT_STOP_32
+#AT_START_33
+at_fn_group_banner 33 'divert.at:447' \
   "dpkg-divert remove (missing)" "                   " 4
 at_xfail=no
 (
-  printf "%s\n" "29. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "33. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -7893,9 +8299,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:453: grep -q 'No diversion' stdout"
-at_fn_check_prepare_trace "divert.at:453"
-( $at_check_trace; grep -q 'No diversion' stdout
+printf "%s\n" "$at_srcdir/divert.at:453: \$GREP -q 'No diversion' stdout"
+at_fn_check_prepare_dynamic "$GREP -q 'No diversion' stdout" "divert.at:453"
+( $at_check_trace; $GREP -q 'No diversion' stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -7924,13 +8330,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_29
-#AT_START_30
-at_fn_group_banner 30 'divert.at:459' \
+#AT_STOP_33
+#AT_START_34
+at_fn_group_banner 34 'divert.at:459' \
   "dpkg-divert remove (divert-to)" "                 " 4
 at_xfail=no
 (
-  printf "%s\n" "30. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "34. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -8003,9 +8409,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:477: grep -q 'mismatch on divert-to' stderr"
-at_fn_check_prepare_trace "divert.at:477"
-( $at_check_trace; grep -q 'mismatch on divert-to' stderr
+printf "%s\n" "$at_srcdir/divert.at:477: \$GREP -q 'mismatch on divert-to' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'mismatch on divert-to' stderr" "divert.at:477"
+( $at_check_trace; $GREP -q 'mismatch on divert-to' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -8030,9 +8436,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:480: grep -q 'mismatch on package' stderr"
-at_fn_check_prepare_trace "divert.at:480"
-( $at_check_trace; grep -q 'mismatch on package' stderr
+printf "%s\n" "$at_srcdir/divert.at:480: \$GREP -q 'mismatch on package' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'mismatch on package' stderr" "divert.at:480"
+( $at_check_trace; $GREP -q 'mismatch on package' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -8057,9 +8463,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:484: grep -qE 'mismatch on (package|divert-to)' stderr"
+printf "%s\n" "$at_srcdir/divert.at:484: \$EGREP -q 'mismatch on (package|divert-to)' stderr"
 at_fn_check_prepare_notrace 'a shell pipeline' "divert.at:484"
-( $at_check_trace; grep -qE 'mismatch on (package|divert-to)' stderr
+( $at_check_trace; $EGREP -q 'mismatch on (package|divert-to)' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -8084,9 +8490,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:488: grep -qE 'Removing .*/testdir/foo' stdout"
-at_fn_check_prepare_trace "divert.at:488"
-( $at_check_trace; grep -qE 'Removing .*/testdir/foo' stdout
+printf "%s\n" "$at_srcdir/divert.at:488: \$EGREP -q 'Removing .*/testdir/foo' stdout"
+at_fn_check_prepare_dynamic "$EGREP -q 'Removing .*/testdir/foo' stdout" "divert.at:488"
+( $at_check_trace; $EGREP -q 'Removing .*/testdir/foo' stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -8115,13 +8521,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_30
-#AT_START_31
-at_fn_group_banner 31 'divert.at:494' \
+#AT_STOP_34
+#AT_START_35
+at_fn_group_banner 35 'divert.at:494' \
   "dpkg-divert remove (plain)" "                     " 4
 at_xfail=no
 (
-  printf "%s\n" "31. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "35. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -8194,9 +8600,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:511: grep -qE 'Removing .* /testdir/bar' stdout"
-at_fn_check_prepare_trace "divert.at:511"
-( $at_check_trace; grep -qE 'Removing .* /testdir/bar' stdout
+printf "%s\n" "$at_srcdir/divert.at:511: \$EGREP -q 'Removing .* /testdir/bar' stdout"
+at_fn_check_prepare_dynamic "$EGREP -q 'Removing .* /testdir/bar' stdout" "divert.at:511"
+( $at_check_trace; $EGREP -q 'Removing .* /testdir/bar' stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -8225,13 +8631,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_31
-#AT_START_32
-at_fn_group_banner 32 'divert.at:517' \
+#AT_STOP_35
+#AT_START_36
+at_fn_group_banner 36 'divert.at:517' \
   "dpkg-divert remove (by-package)" "                " 4
 at_xfail=no
 (
-  printf "%s\n" "32. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "36. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -8322,13 +8728,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_32
-#AT_START_33
-at_fn_group_banner 33 'divert.at:539' \
+#AT_STOP_36
+#AT_START_37
+at_fn_group_banner 37 'divert.at:539' \
   "dpkg-divert remove (test)" "                      " 4
 at_xfail=no
 (
-  printf "%s\n" "33. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "37. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -8376,9 +8782,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:552: grep -q 'Removing .*/testdir/foo' stdout"
-at_fn_check_prepare_trace "divert.at:552"
-( $at_check_trace; grep -q 'Removing .*/testdir/foo' stdout
+printf "%s\n" "$at_srcdir/divert.at:552: \$GREP -q 'Removing .*/testdir/foo' stdout"
+at_fn_check_prepare_dynamic "$GREP -q 'Removing .*/testdir/foo' stdout" "divert.at:552"
+( $at_check_trace; $GREP -q 'Removing .*/testdir/foo' stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -8493,13 +8899,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_33
-#AT_START_34
-at_fn_group_banner 34 'divert.at:564' \
+#AT_STOP_37
+#AT_START_38
+at_fn_group_banner 38 'divert.at:564' \
   "dpkg-divert db (no-access)" "                     " 4
 at_xfail=no
 (
-  printf "%s\n" "34. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "38. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -8532,9 +8938,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:575: grep -qE '(cannot|failed).*open' stderr"
+printf "%s\n" "$at_srcdir/divert.at:575: \$EGREP -q '(cannot|failed).*open' stderr"
 at_fn_check_prepare_notrace 'a shell pipeline' "divert.at:575"
-( $at_check_trace; grep -qE '(cannot|failed).*open' stderr
+( $at_check_trace; $EGREP -q '(cannot|failed).*open' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -8552,13 +8958,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_34
-#AT_START_35
-at_fn_group_banner 35 'divert.at:580' \
+#AT_STOP_38
+#AT_START_39
+at_fn_group_banner 39 'divert.at:580' \
   "dpkg-divert db (truncated)" "                     " 4
 at_xfail=no
 (
-  printf "%s\n" "35. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "39. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -8585,9 +8991,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:587: grep -qE '(corrupt|unexpected end of file)' stderr"
+printf "%s\n" "$at_srcdir/divert.at:587: \$EGREP -q '(corrupt|unexpected end of file)' stderr"
 at_fn_check_prepare_notrace 'a shell pipeline' "divert.at:587"
-( $at_check_trace; grep -qE '(corrupt|unexpected end of file)' stderr
+( $at_check_trace; $EGREP -q '(corrupt|unexpected end of file)' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -8621,9 +9027,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:594: grep -qE '(corrupt|unexpected end of file)' stderr"
+printf "%s\n" "$at_srcdir/divert.at:594: \$EGREP -q '(corrupt|unexpected end of file)' stderr"
 at_fn_check_prepare_notrace 'a shell pipeline' "divert.at:594"
-( $at_check_trace; grep -qE '(corrupt|unexpected end of file)' stderr
+( $at_check_trace; $EGREP -q '(corrupt|unexpected end of file)' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -8638,13 +9044,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_35
-#AT_START_36
-at_fn_group_banner 36 'divert.at:598' \
+#AT_STOP_39
+#AT_START_40
+at_fn_group_banner 40 'divert.at:598' \
   "dpkg-divert db (read-only dir)" "                 " 4
 at_xfail=no
 (
-  printf "%s\n" "36. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "40. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -8675,9 +9081,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:607: grep -q 'Adding' stdout"
-at_fn_check_prepare_trace "divert.at:607"
-( $at_check_trace; grep -q 'Adding' stdout
+printf "%s\n" "$at_srcdir/divert.at:607: \$GREP -q 'Adding' stdout"
+at_fn_check_prepare_dynamic "$GREP -q 'Adding' stdout" "divert.at:607"
+( $at_check_trace; $GREP -q 'Adding' stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -8688,9 +9094,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:608: grep -q 'create.*new' stderr"
-at_fn_check_prepare_trace "divert.at:608"
-( $at_check_trace; grep -q 'create.*new' stderr
+printf "%s\n" "$at_srcdir/divert.at:608: \$GREP -q 'create.*new' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'create.*new' stderr" "divert.at:608"
+( $at_check_trace; $GREP -q 'create.*new' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -8708,13 +9114,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_36
-#AT_START_37
-at_fn_group_banner 37 'divert.at:613' \
+#AT_STOP_40
+#AT_START_41
+at_fn_group_banner 41 'divert.at:613' \
   "dpkg-divert db (disk full)" "                     " 4
 at_xfail=no
 (
-  printf "%s\n" "37. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "41. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -8746,9 +9152,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:623: grep -q 'Adding' stdout"
-at_fn_check_prepare_trace "divert.at:623"
-( $at_check_trace; grep -q 'Adding' stdout
+printf "%s\n" "$at_srcdir/divert.at:623: \$GREP -q 'Adding' stdout"
+at_fn_check_prepare_dynamic "$GREP -q 'Adding' stdout" "divert.at:623"
+( $at_check_trace; $GREP -q 'Adding' stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -8759,9 +9165,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:624: grep -qE '(write|flush|close).*new' stderr"
+printf "%s\n" "$at_srcdir/divert.at:624: \$EGREP -q '(write|flush|close).*new' stderr"
 at_fn_check_prepare_notrace 'a shell pipeline' "divert.at:624"
-( $at_check_trace; grep -qE '(write|flush|close).*new' stderr
+( $at_check_trace; $EGREP -q '(write|flush|close).*new' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -8776,13 +9182,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_37
-#AT_START_38
-at_fn_group_banner 38 'divert.at:628' \
+#AT_STOP_41
+#AT_START_42
+at_fn_group_banner 42 'divert.at:628' \
   "dpkg-divert db (pathname is dir)" "               " 4
 at_xfail=no
 (
-  printf "%s\n" "38. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "42. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -8808,9 +9214,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:636: grep -q 'Adding' stdout"
-at_fn_check_prepare_trace "divert.at:636"
-( $at_check_trace; grep -q 'Adding' stdout
+printf "%s\n" "$at_srcdir/divert.at:636: \$GREP -q 'Adding' stdout"
+at_fn_check_prepare_dynamic "$GREP -q 'Adding' stdout" "divert.at:636"
+( $at_check_trace; $GREP -q 'Adding' stdout
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -8821,9 +9227,9 @@ $at_failed && at_fn_log_failure
 $at_traceon; }
 
 { set +x
-printf "%s\n" "$at_srcdir/divert.at:637: grep -q 'remov.*old' stderr"
-at_fn_check_prepare_trace "divert.at:637"
-( $at_check_trace; grep -q 'remov.*old' stderr
+printf "%s\n" "$at_srcdir/divert.at:637: \$GREP -q 'remov.*old' stderr"
+at_fn_check_prepare_dynamic "$GREP -q 'remov.*old' stderr" "divert.at:637"
+( $at_check_trace; $GREP -q 'remov.*old' stderr
 ) >>"$at_stdout" 2>>"$at_stderr" 5>&-
 at_status=$? at_failed=false
 $at_check_filter
@@ -8838,13 +9244,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_38
-#AT_START_39
-at_fn_group_banner 39 'chdir.at:5' \
+#AT_STOP_42
+#AT_START_43
+at_fn_group_banner 43 'chdir.at:5' \
   "dpkg chdir opts" "                                " 5
 at_xfail=no
 (
-  printf "%s\n" "39. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "43. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -9022,13 +9428,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_39
-#AT_START_40
-at_fn_group_banner 40 'chdir.at:5' \
+#AT_STOP_43
+#AT_START_44
+at_fn_group_banner 44 'chdir.at:5' \
   "dpkg chdir env" "                                 " 5
 at_xfail=no
 (
-  printf "%s\n" "40. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "44. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -9092,13 +9498,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_40
-#AT_START_41
-at_fn_group_banner 41 'chdir.at:5' \
+#AT_STOP_44
+#AT_START_45
+at_fn_group_banner 45 'chdir.at:5' \
   "dpkg chdir env+opt admindir" "                    " 5
 at_xfail=no
 (
-  printf "%s\n" "41. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "45. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -9298,13 +9704,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_41
-#AT_START_42
-at_fn_group_banner 42 'chdir.at:5' \
+#AT_STOP_45
+#AT_START_46
+at_fn_group_banner 46 'chdir.at:5' \
   "dpkg chdir env+opt root" "                        " 5
 at_xfail=no
 (
-  printf "%s\n" "42. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "46. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -9504,13 +9910,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_42
-#AT_START_43
-at_fn_group_banner 43 'chdir.at:5' \
+#AT_STOP_46
+#AT_START_47
+at_fn_group_banner 47 'chdir.at:5' \
   "dpkg chdir env+opt root+admindir" "               " 5
 at_xfail=no
 (
-  printf "%s\n" "43. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "47. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -9710,13 +10116,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_43
-#AT_START_44
-at_fn_group_banner 44 'chdir.at:5' \
+#AT_STOP_47
+#AT_START_48
+at_fn_group_banner 48 'chdir.at:5' \
   "dpkg-divert chdir opts" "                         " 5
 at_xfail=no
 (
-  printf "%s\n" "44. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "48. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -9894,13 +10300,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_44
-#AT_START_45
-at_fn_group_banner 45 'chdir.at:5' \
+#AT_STOP_48
+#AT_START_49
+at_fn_group_banner 49 'chdir.at:5' \
   "dpkg-divert chdir env" "                          " 5
 at_xfail=no
 (
-  printf "%s\n" "45. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "49. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -9964,13 +10370,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_45
-#AT_START_46
-at_fn_group_banner 46 'chdir.at:5' \
+#AT_STOP_49
+#AT_START_50
+at_fn_group_banner 50 'chdir.at:5' \
   "dpkg-divert chdir env+opt admindir" "             " 5
 at_xfail=no
 (
-  printf "%s\n" "46. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "50. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -10170,13 +10576,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_46
-#AT_START_47
-at_fn_group_banner 47 'chdir.at:5' \
+#AT_STOP_50
+#AT_START_51
+at_fn_group_banner 51 'chdir.at:5' \
   "dpkg-divert chdir env+opt root" "                 " 5
 at_xfail=no
 (
-  printf "%s\n" "47. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "51. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -10376,13 +10782,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_47
-#AT_START_48
-at_fn_group_banner 48 'chdir.at:5' \
+#AT_STOP_51
+#AT_START_52
+at_fn_group_banner 52 'chdir.at:5' \
   "dpkg-divert chdir env+opt root+admindir" "        " 5
 at_xfail=no
 (
-  printf "%s\n" "48. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "52. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -10582,13 +10988,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_48
-#AT_START_49
-at_fn_group_banner 49 'chdir.at:5' \
+#AT_STOP_52
+#AT_START_53
+at_fn_group_banner 53 'chdir.at:5' \
   "dpkg-statoverride chdir opts" "                   " 5
 at_xfail=no
 (
-  printf "%s\n" "49. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "53. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -10766,13 +11172,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_49
-#AT_START_50
-at_fn_group_banner 50 'chdir.at:5' \
+#AT_STOP_53
+#AT_START_54
+at_fn_group_banner 54 'chdir.at:5' \
   "dpkg-statoverride chdir env" "                    " 5
 at_xfail=no
 (
-  printf "%s\n" "50. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "54. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -10836,13 +11242,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_50
-#AT_START_51
-at_fn_group_banner 51 'chdir.at:5' \
+#AT_STOP_54
+#AT_START_55
+at_fn_group_banner 55 'chdir.at:5' \
   "dpkg-statoverride chdir env+opt admindir" "       " 5
 at_xfail=no
 (
-  printf "%s\n" "51. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "55. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -11042,13 +11448,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_51
-#AT_START_52
-at_fn_group_banner 52 'chdir.at:5' \
+#AT_STOP_55
+#AT_START_56
+at_fn_group_banner 56 'chdir.at:5' \
   "dpkg-statoverride chdir env+opt root" "           " 5
 at_xfail=no
 (
-  printf "%s\n" "52. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "56. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -11248,13 +11654,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_52
-#AT_START_53
-at_fn_group_banner 53 'chdir.at:5' \
+#AT_STOP_56
+#AT_START_57
+at_fn_group_banner 57 'chdir.at:5' \
   "dpkg-statoverride chdir env+opt root+admindir" "  " 5
 at_xfail=no
 (
-  printf "%s\n" "53. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "57. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -11454,13 +11860,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_53
-#AT_START_54
-at_fn_group_banner 54 'chdir.at:329' \
+#AT_STOP_57
+#AT_START_58
+at_fn_group_banner 58 'chdir.at:329' \
   "dpkg-split chdir opts" "                          " 5
 at_xfail=no
 (
-  printf "%s\n" "54. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "58. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -11536,13 +11942,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_54
-#AT_START_55
-at_fn_group_banner 55 'chdir.at:329' \
+#AT_STOP_58
+#AT_START_59
+at_fn_group_banner 59 'chdir.at:329' \
   "dpkg-split chdir env" "                           " 5
 at_xfail=no
 (
-  printf "%s\n" "55. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "59. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -11608,13 +12014,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_55
-#AT_START_56
-at_fn_group_banner 56 'chdir.at:329' \
+#AT_STOP_59
+#AT_START_60
+at_fn_group_banner 60 'chdir.at:329' \
   "dpkg-split chdir env+opt admindir" "              " 5
 at_xfail=no
 (
-  printf "%s\n" "56. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "60. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -11695,13 +12101,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_56
-#AT_START_57
-at_fn_group_banner 57 'chdir.at:329' \
+#AT_STOP_60
+#AT_START_61
+at_fn_group_banner 61 'chdir.at:329' \
   "dpkg-split chdir env+opt root" "                  " 5
 at_xfail=no
 (
-  printf "%s\n" "57. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "61. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -11782,13 +12188,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_57
-#AT_START_58
-at_fn_group_banner 58 'chdir.at:329' \
+#AT_STOP_61
+#AT_START_62
+at_fn_group_banner 62 'chdir.at:329' \
   "dpkg-split chdir env+opt root+admindir" "         " 5
 at_xfail=no
 (
-  printf "%s\n" "58. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "62. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -11869,13 +12275,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_58
-#AT_START_59
-at_fn_group_banner 59 'chdir.at:329' \
+#AT_STOP_62
+#AT_START_63
+at_fn_group_banner 63 'chdir.at:329' \
   "dpkg-query chdir opts" "                          " 5
 at_xfail=no
 (
-  printf "%s\n" "59. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "63. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -11951,13 +12357,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_59
-#AT_START_60
-at_fn_group_banner 60 'chdir.at:329' \
+#AT_STOP_63
+#AT_START_64
+at_fn_group_banner 64 'chdir.at:329' \
   "dpkg-query chdir env" "                           " 5
 at_xfail=no
 (
-  printf "%s\n" "60. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "64. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -12023,13 +12429,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_60
-#AT_START_61
-at_fn_group_banner 61 'chdir.at:329' \
+#AT_STOP_64
+#AT_START_65
+at_fn_group_banner 65 'chdir.at:329' \
   "dpkg-query chdir env+opt admindir" "              " 5
 at_xfail=no
 (
-  printf "%s\n" "61. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "65. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -12110,13 +12516,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_61
-#AT_START_62
-at_fn_group_banner 62 'chdir.at:329' \
+#AT_STOP_65
+#AT_START_66
+at_fn_group_banner 66 'chdir.at:329' \
   "dpkg-query chdir env+opt root" "                  " 5
 at_xfail=no
 (
-  printf "%s\n" "62. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "66. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -12197,13 +12603,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_62
-#AT_START_63
-at_fn_group_banner 63 'chdir.at:329' \
+#AT_STOP_66
+#AT_START_67
+at_fn_group_banner 67 'chdir.at:329' \
   "dpkg-query chdir env+opt root+admindir" "         " 5
 at_xfail=no
 (
-  printf "%s\n" "63. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "67. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -12284,13 +12690,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_63
-#AT_START_64
-at_fn_group_banner 64 'chdir.at:329' \
+#AT_STOP_67
+#AT_START_68
+at_fn_group_banner 68 'chdir.at:329' \
   "dpkg-trigger chdir opts" "                        " 5
 at_xfail=no
 (
-  printf "%s\n" "64. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "68. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -12366,13 +12772,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_64
-#AT_START_65
-at_fn_group_banner 65 'chdir.at:329' \
+#AT_STOP_68
+#AT_START_69
+at_fn_group_banner 69 'chdir.at:329' \
   "dpkg-trigger chdir env" "                         " 5
 at_xfail=no
 (
-  printf "%s\n" "65. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "69. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -12438,13 +12844,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_65
-#AT_START_66
-at_fn_group_banner 66 'chdir.at:329' \
+#AT_STOP_69
+#AT_START_70
+at_fn_group_banner 70 'chdir.at:329' \
   "dpkg-trigger chdir env+opt admindir" "            " 5
 at_xfail=no
 (
-  printf "%s\n" "66. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "70. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -12525,13 +12931,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_66
-#AT_START_67
-at_fn_group_banner 67 'chdir.at:329' \
+#AT_STOP_70
+#AT_START_71
+at_fn_group_banner 71 'chdir.at:329' \
   "dpkg-trigger chdir env+opt root" "                " 5
 at_xfail=no
 (
-  printf "%s\n" "67. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "71. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -12612,13 +13018,13 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_67
-#AT_START_68
-at_fn_group_banner 68 'chdir.at:329' \
+#AT_STOP_71
+#AT_START_72
+at_fn_group_banner 72 'chdir.at:329' \
   "dpkg-trigger chdir env+opt root+admindir" "       " 5
 at_xfail=no
 (
-  printf "%s\n" "68. $at_setup_line: testing $at_desc ..."
+  printf "%s\n" "72. $at_setup_line: testing $at_desc ..."
   $at_traceon
 
 
@@ -12699,4 +13105,4 @@ $at_traceon; }
   $at_times_p && times >"$at_times_file"
 ) 5>&1 2>&1 7>&- | eval $at_tee_pipe
 read at_status <"$at_status_file"
-#AT_STOP_68
+#AT_STOP_72

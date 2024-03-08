@@ -24,9 +24,9 @@ B<dpkg-architecture> [I<flagga>...] [I<åtgärd>]
 
 B<dpkg-architecture> innehåller en funktion för att bestämma och ställa in bygg- och värdarkitekturerna för att bygga paket.
 
-Byggarkitekturen bestäms alltid av antingen variabeln B<DEB_BUILD_ARCH> om den är satt (och B<--force> inte anges) eller genom ett externt anrop till B<dpkg>(1) och kan inte väljas från kommandoraden.
+Byggarkitekturen bestäms alltid av antingen variabeln B<DEB_BUILD_ARCH> om den är satt (och B<--force> inte anges) eller genom ett externt anrop till L<dpkg(1)> och kan inte väljas från kommandoraden.
 
-Du kan ange värdarkitektur genom att ange en av, eller båda, flaggorna B<--host-arch> och B<--host-type>, annars används variabeln B<DEB_HOST_ARCH> om den är satt (och B<--force> inte anges). Förvalet bestäms av ett externt anrop till B<gcc>(1), eller är detsamma som byggarkitekturen varken B<CC> eller gcc är tillgängliga. Det räcker att ange en av B<--host-arch> och B<-host-type>, värdet på den andra kommer ställas in till ett fungerande förval. Det är faktiskt oftast bättre att bara ange den ena eftersom B<dpkg-architecture> kommer varna dig om ditt val inte överensstämmer med förvalet.
+Du kan ange värdarkitektur genom att ange en av, eller båda, flaggorna B<--host-arch> och B<--host-type>, annars används variabeln B<DEB_HOST_ARCH> om den är satt (och B<--force> inte anges). Förvalet bestäms av ett externt anrop till L<gcc(1)>, eller är detsamma som byggarkitekturen varken B<CC> eller gcc är tillgängliga. Det räcker att ange en av B<--host-arch> och B<-host-type>, värdet på den andra kommer ställas in till ett fungerande förval. Det är faktiskt oftast bättre att bara ange den ena eftersom B<dpkg-architecture> kommer varna dig om ditt val inte överensstämmer med förvalet.
 
 =head1 KOMMANDON
 
@@ -59,6 +59,8 @@ Visar ett kommando liknande B<--print-set> men för att ta bort värdet för all
 =item B<-c>, B<--command> I<kommandosträng>
 
 Exekvera en I<kommandosträng> i en miljö som har alla variabler satta till det bestämda värdet.
+
+Om I<kommandosträng> innehåller skalmetatecken kommer det att anropas genom systemets bourne-skal.
 
 =item B<-L>, B<--list-known>
 
@@ -112,7 +114,7 @@ Väljer utdataformatet för B<--print-set> och B<--print-unset> (sedan dpkg 1.20
 
 =item B<-f>, B<--force>
 
-Värden som sätts av befintliga miljövariabler med samma namn som de som används av skriptet används (t.ex av B<dpkg-architecture>), såvida inte denna tvingande flagga anges. Det gör det möjligt för användaren att överstyra ett värde även om anropet till B<dpkg-architecture> är begravt djupt inuti ett annat skript (till exempel B<dpkg-buildpackage>(1)).
+Värden som sätts av befintliga miljövariabler med samma namn som de som används av skriptet används (t.ex av B<dpkg-architecture>), såvida inte denna tvingande flagga anges. Det gör det möjligt för användaren att överstyra ett värde även om anropet till B<dpkg-architecture> är begravt djupt inuti ett annat skript (till exempel L<dpkg-buildpackage(1)>).
 
 =back
 
@@ -448,7 +450,7 @@ De långa kommando- och flaggnamnen är endast tillgängliga sedan dpkg 1.17.17.
 
 =head1 SE ÄVEN
 
-B<dpkg-buildpackage>(1).
+L<dpkg-buildpackage(1)>.
 
 
 =head1 ÖVERSÄTTNING

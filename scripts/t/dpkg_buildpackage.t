@@ -31,7 +31,7 @@ use Dpkg::Substvars;
 
 test_needs_command('fakeroot');
 
-plan tests => 12;
+plan tests => 17;
 
 my $srcdir = rel2abs($ENV{srcdir} || '.');
 my $datadir = "$srcdir/t/dpkg_buildpackage";
@@ -86,6 +86,9 @@ my $tmpl_rules = <<'TMPL_RULES';
 
 DI := debian/${binary-name-all}
 DA := debian/${binary-name-any}
+
+# fakeroot confuses ASAN link order check.
+export ASAN_OPTIONS = verify_asan_link_order=0
 
 clean:
 	rm -f debian/files
@@ -183,14 +186,34 @@ sub test_build
 
     my $stderr;
 
+    my @hook_names = qw(
+        preinit
+        init
+        preclean
+        source
+        build
+        binary
+        buildinfo
+        changes
+        postclean
+        check
+        sign
+        done
+    );
+    my @hook_opts = map {
+        "--hook-$_=$datadir/hook a=%a p=%p v=%v s=%s u=%u >>../$basename\_$typename.hook"
+    } @hook_names;
+
     chdir $dirname;
     spawn(exec => [ $ENV{PERL}, "$srcdir/dpkg-buildpackage.pl",
                     "--admindir=$datadir/dpkgdb",
                     '--host-arch=amd64',
                     '--ignore-builtin-builddeps',
-                    '--unsigned-source', '--unsigned-changes',
-                    '--unsigned-buildinfo',
-                    "--build=$typename", '--check-command=' ],
+                    '--no-sign',
+                    "--build=$typename",
+                    '--check-command=',
+                    @hook_opts,
+                  ],
           error_to_string => \$stderr,
           wait_child => 1, nocheck => 1);
     chdir '..';
@@ -202,6 +225,8 @@ sub test_build
         # Rename the file to preserve on consecutive invocations.
         move("$basename\_amd64.changes", "$basename\_$typename.changes");
     }
+
+    test_diff("$basename\_$typename.hook");
 
     if (build_has_all(BUILD_SOURCE)) {
         test_diff("$basename.dsc");
@@ -217,5 +242,3 @@ test_build($basename, BUILD_ARCH_INDEP);
 test_build($basename, BUILD_ARCH_DEP);
 test_build($basename, BUILD_BINARY);
 test_build($basename, BUILD_FULL);
-
-1;

@@ -24,7 +24,7 @@ B<start-stop-daemon> [I<flagga>...] I<åtgärd>
 
 B<start-stop-daemon> används för att styra hur processer på systemnivå skapas och avslutas. Med hjälp av en av sökflaggorna kan B<start-stop-daemon> ställas in att hitta befintliga instanser av en körande process.
 
-B<Observera:> Om inte B<--pid> eller B<--pidfile> anges kommer B<start-stop-daemon> att jobba på ett sätt som liknar B<killall(1).> B<start-stop-daemon> kommer att söka i processtabellen efter processer med motsvarande namn på processen, användar-id och/eller grupp-id (om sådant anges). Alla processer som stämmer överens kommer tillsändas signalen TERM (eller den som anges med B<--signal> eller B<--retry>) om B<--stop> anges. För processer som har långlivade barn som måste överleva en B<--stop>, måste du ange en pidfil.
+B<Observera>: Om inte B<--pid> eller B<--pidfile> anges kommer B<start-stop-daemon> att jobba på ett sätt som liknar L<killall(1)>. B<start-stop-daemon> kommer att söka i processtabellen efter processer med motsvarande namn på processen, användar-id och/eller grupp-id (om sådant anges). Alla processer som stämmer överens kommer tillsändas signalen TERM (eller den som anges med B<--signal> eller B<--retry>) om B<--stop> anges. För processer som har långlivade barn som måste överleva en B<--stop>, måste du ange en pidfil.
 
 =head1 KOMMANDON
 
@@ -70,27 +70,27 @@ Se efter en process med angiven föräldra-pid I<ppid> (sedan version 1.17.7). I
 
 Kontrollera om en process har skapat filen I<pidfil>.
 
-B<Observera:> Om flaggan används på egen hand kan den orsaka att oönskade processer berörs, om den gamla processen avslutats utan att kunna ta bort I<pidfil>.
+B<Observera>: Om flaggan används på egen hand kan den orsaka att oönskade processer berörs, om den gamla processen avslutats utan att kunna ta bort I<pidfil>.
 
-B<Varning:> Om flaggan används med en pidfil som kan skrivas av alla eller om den används ensam tillsammans med en serverprocess som skriver pidfilen som en icke-privilegierad användare (icke-root) kommer det att avvisas med ett felmeddelande (sedan version 1.19.3) eftersom det är en säkerhetsrisk, då antingen alla användare kan skriva filen, eller om serverprocessen komprometteras och inte innehållet i pidfilen inte är betrott, så kan en privilegiserad körprocess (till exempel ett init-skript som körs som root) kunna arbeta mot vilken som helst systemprocess. I</dev/null> är undantaget från dessa kontroller.
+B<Varning>: Om flaggan används med en pidfil som kan skrivas av alla eller om den används ensam tillsammans med en serverprocess som skriver pidfilen som en icke-privilegierad användare (icke-root) kommer det att avvisas med ett felmeddelande (sedan version 1.19.3) eftersom det är en säkerhetsrisk, då antingen alla användare kan skriva filen, eller om serverprocessen komprometteras och inte innehållet i pidfilen inte är betrott, så kan en privilegiserad körprocess (till exempel ett init-skript som körs som root) kunna arbeta mot vilken som helst systemprocess. I</dev/null> är undantaget från dessa kontroller.
 
 =item B<-x>, B<--exec> I<programfil>
 
 Se efter processer som är instanser av I<programfil>. Flaggan I<programfil> bör vara en absolut sökväg.
 
-B<Observera:> Detta fungerar kanske inte som det ska för tolkade skript eftersom programfilen kommer peka på tolken. Notera att processer som körs inuti en chroot också kommer att träffas, så andra begränsningar kan behövas.
+B<Observera>: Detta fungerar kanske inte som det ska för tolkade skript eftersom programfilen kommer peka på tolken. Notera att processer som körs inuti en chroot också kommer att träffas, så andra begränsningar kan behövas.
 
 =item B<-n>, B<--name> I<processnamn>
 
 Se efter processer med namnet I<processnamn>. I<Processnamn> är vanligtvis processens filnamn, men kan ha ändrats av processen själv.
 
-B<Observera:> På de flesta system hämtas informationen från processens comm-namn från kärnan, vilket ofta har en relativt kort längdbegränsning (det är inte portablet att anta fler än 15 tecken).
+B<Observera>: På de flesta system hämtas informationen från processens comm-namn från kärnan, vilket ofta har en relativt kort längdbegränsning (det är inte portablet att anta fler än 15 tecken).
 
 =item B<-u>, B<--user> I<användarnamn>|I<användar-id>
 
 Sök efter processer som ägs av den användare som anges med I<användarnamn> eller I<användar-id>.
 
-B<Observera:> Om den här flaggan används på egen hand träffas alla processer som motsvarar användaren.
+B<Observera>: Om den här flaggan används på egen hand träffas alla processer som motsvarar användaren.
 
 =back
 
@@ -134,7 +134,7 @@ Skriv inte informationsmeddelanden; visa endast felmeddelanden.
 
 =item B<-c>, B<--chuid> I<användarnamn>|I<användar-id>[B<:>I<grupp>|I<grupp-id>]
 
-Byt till användarnamnet/användar-id:t innan processen startas. Du kan även ange en grupp genom att lägga till ett kolontecken, B<:>, följt av gruppnamnet eller grupp-id på samma sätt som du skull gjort till kommandot B<chown>(1) (I<användare>B<:>I<grupp>). Om du anger en användare utan att ange en grupp kommer användarens primära grupp-id att användas. När du använder alternativet måste du ha i åtanke att även både primär- och tilläggsgrupp sätts, även om B<--group>-flaggan inte anges. B<--group>-flaggan är bara till för grupper som användaren normalt inte är en medlem i (t.ex för att lägga till gruppmedlemskap för enskilda processer för standardanvändare såsom B<nobody>).
+Byt till användarnamnet/användar-id:t innan processen startas. Du kan även ange en grupp genom att lägga till ett kolontecken, B<:>, följt av gruppnamnet eller grupp-id på samma sätt som du skull gjort till kommandot L<chown(1)> (I<användare>B<:>I<grupp>). Om du anger en användare utan att ange en grupp kommer användarens primära grupp-id att användas. När du använder alternativet måste du ha i åtanke att även både primär- och tilläggsgrupp sätts, även om B<--group>-flaggan inte anges. B<--group>-flaggan är bara till för grupper som användaren normalt inte är en medlem i (t.ex för att lägga till gruppmedlemskap för enskilda processer för standardanvändare såsom B<nobody>).
 
 =item B<-r>, B<--chroot> I<rot>
 
@@ -148,11 +148,11 @@ Byt katalog till I<sökväg> innan processen startas. Detta görs efter byte av 
 
 Används typiskt med program som inte kopplar loss sig av sig själva. Flaggan tvingar B<start-stop-daemon> att förgrena sig (fork) innan processen startar, och tvinga den grenen att köra i bakgrunden.
 
-B<Varning: start-stop-daemon> kan inte kontrollera felstatus för processer som av B<någon som helst> anledning misslyckas med att exekvera. Detta är en sista utväg, och är endast avsett för program som det antingen inte är någon mening att förgrena på egen hand, eller där det inte är möjligt att lägga till kod för det på egen hand.
+B<Varning>: B<start-stop-daemon> kan inte kontrollera felstatus för processer som av B<någon som helst> anledning misslyckas med att exekvera. Detta är en sista utväg, och är endast avsett för program som det antingen inte är någon mening att förgrena på egen hand, eller där det inte är möjligt att lägga till kod för det på egen hand.
 
 =item B<--notify-await>
 
-Vänta på att bakgrundsprocessen sänder en bekräftelse på att den är redo innan tjänsten anses vara startad (sedan version 1.19.3). Detta implementar delar av systemd:s beredskapsprotokoll, så som det anges i manualsidan B<sd_notify>(3). Följande variabler stöds:
+Vänta på att bakgrundsprocessen sänder en bekräftelse på att den är redo innan tjänsten anses vara startad (sedan version 1.19.3). Detta implementar delar av systemd:s beredskapsprotokoll, så som det anges i manualsidan L<sd_notify(3)>. Följande variabler stöds:
 
 =over 
 
@@ -206,7 +206,7 @@ Ställer in umaskvärdet på processen innan den startas (sedan version 1.13.22)
 
 Används när ett program som inte skapar sin egen pidfil startas. Flaggan kommer att få B<start-stop-daemon> att skapa filen som anges med B<--pidfile> och lägga process-id i den precis innan processen startas. Observera att den endast kommer att tas bort när programmet stoppas om B<--remove-pidfile> används.
 
-B<Observera:> Funktionen kanske inte alltid fungerar. Framförallt inte när programmet som startas förgrenar sig (fork) från sin huvudprocess. Därför är flaggan oftast bara användbar i samband med flaggan B<--background>.
+B<Observera>: Funktionen kanske inte alltid fungerar. Framförallt inte när programmet som startas förgrenar sig (fork) från sin huvudprocess. Därför är flaggan oftast bara användbar i samband med flaggan B<--background>.
 
 =item B<--remove-pidfile>
 

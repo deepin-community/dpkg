@@ -21,6 +21,10 @@
  */
 
 #include <config.h>
+/* On at least Solaris <= 11.3 procfs is not compatible with LFS. */
+#if !DPKG_STRUCTURED_PROCFS_SUPPORTS_LFS
+#undef _FILE_OFFSET_BITS
+#endif
 #include <compat.h>
 
 #include <dpkg/macros.h>
@@ -49,8 +53,13 @@
 #  error Unknown architecture - cannot build start-stop-daemon
 #endif
 
+#if defined(OS_NetBSD)
 /* NetBSD needs this to expose struct proc. */
 #define _KMEMUSER 1
+#elif defined(OS_Solaris)
+/* Solaris needs this to expose the new structured procfs API. */
+#define _STRUCTURED_PROC 1
+#endif
 
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
@@ -190,7 +199,7 @@ enum action_code {
 	ACTION_STATUS,
 };
 
-enum match_code {
+enum LIBCOMPAT_ATTR_ENUM_FLAGS match_code {
 	MATCH_NONE	= 0,
 	MATCH_PID	= 1 << 0,
 	MATCH_PPID	= 1 << 1,
@@ -356,6 +365,8 @@ fatal(const char *format, ...)
 
 	va_start(args, format);
 	fatalv(0, format, args);
+	/* cppcheck-suppress[va_end_missing]:
+	 * False positive, fatalv() is non-returning. */
 }
 
 static void LIBCOMPAT_ATTR_NORET LIBCOMPAT_ATTR_PRINTF(1)
@@ -365,6 +376,8 @@ fatale(const char *format, ...)
 
 	va_start(args, format);
 	fatalv(errno, format, args);
+	/* cppcheck-suppress[va_end_missing]:
+	 * False positive, fatalv() is non-returning. */
 }
 
 #define BUG(...) bug(__FILE__, __LINE__, __func__, __VA_ARGS__)
@@ -656,7 +669,6 @@ wait_for_notify(int fd)
 {
 	struct timespec startat, now, elapsed, timeout, timeout_orig;
 	fd_set fdrs;
-	int rc;
 
 	timeout.tv_sec = notify_timeout;
 	timeout.tv_nsec = 0;
@@ -665,6 +677,8 @@ wait_for_notify(int fd)
 	timespec_gettime(&startat);
 
 	while (timeout.tv_sec >= 0 && timeout.tv_nsec >= 0) {
+		int rc;
+
 		FD_ZERO(&fdrs);
 		FD_SET(fd, &fdrs);
 
@@ -1177,10 +1191,8 @@ parse_schedule_item(const char *string, struct schedule_item *item)
 static void
 parse_schedule(const char *schedule_str)
 {
-	char item_buf[20];
 	const char *slash;
-	int count, repeatat;
-	size_t str_len;
+	int count;
 
 	count = 0;
 	for (slash = schedule_str; *slash; slash++)
@@ -1202,9 +1214,14 @@ parse_schedule(const char *schedule_str)
 		schedule[2].value = SIGKILL;
 		schedule[3] = schedule[1];
 	} else {
+		int repeatat;
+
 		count = 0;
 		repeatat = -1;
 		while (*schedule_str) {
+			char item_buf[20];
+			size_t str_len;
+
 			slash = strchrnul(schedule_str, '/');
 			str_len = (size_t)(slash - schedule_str);
 			if (str_len >= sizeof(item_buf))
@@ -1607,7 +1624,7 @@ proc_status_field(pid_t pid, const char *field)
 
 	return value;
 }
-#elif defined(OS_AIX)
+#elif (defined(OS_Solaris) || defined(OS_AIX)) && HAVE_STRUCT_PSINFO
 static bool
 proc_get_psinfo(pid_t pid, struct psinfo *psinfo)
 {
@@ -1738,7 +1755,7 @@ pid_is_exec(pid_t pid, const struct stat *esb)
 
 	return (sb.st_dev == esb->st_dev && sb.st_ino == esb->st_ino);
 }
-#elif defined(OS_AIX)
+#elif (defined(OS_Solaris) || defined(OS_AIX)) && HAVE_STRUCT_PSINFO
 static bool
 pid_is_exec(pid_t pid, const struct stat *esb)
 {
@@ -1869,7 +1886,7 @@ pid_is_exec(pid_t pid, const struct stat *esb)
 	else {
 		/* Tests indicate that this never happens, since
 		 * kvm_getargv itself cuts of tailing stuff. This is
-		 * not what the manpage says, however. */
+		 * not what the manual page says, however. */
 		strncpy(buf, *pid_argv_p, (end_argv_0_p - start_argv_0_p));
 		buf[(end_argv_0_p - start_argv_0_p) + 1] = '\0';
 		start_argv_0_p = buf;
@@ -1924,14 +1941,14 @@ pid_is_child(pid_t pid, pid_t ppid)
 static bool
 pid_is_child(pid_t pid, pid_t ppid)
 {
-	struct proc_bsdinfo info;
+	struct proc_bsdinfo pbi;
 
-	if (proc_pidinfo(pid, PROC_PIDTBSDINFO, 0, &info, sizeof(info)) < 0)
+	if (proc_pidinfo(pid, PROC_PIDTBSDINFO, 0, &pbi, sizeof(pbi)) < 0)
 		return false;
 
-	return (pid_t)info.pbi_ppid == ppid;
+	return (pid_t)pbi.pbi_ppid == ppid;
 }
-#elif defined(OS_AIX)
+#elif (defined(OS_Solaris) || defined(OS_AIX)) && HAVE_STRUCT_PSINFO
 static bool
 pid_is_child(pid_t pid, pid_t ppid)
 {
@@ -2033,14 +2050,14 @@ pid_is_user(pid_t pid, uid_t uid)
 static bool
 pid_is_user(pid_t pid, uid_t uid)
 {
-	struct proc_bsdinfo info;
+	struct proc_bsdinfo pbi;
 
-	if (proc_pidinfo(pid, PROC_PIDTBSDINFO, 0, &info, sizeof(info)) < 0)
+	if (proc_pidinfo(pid, PROC_PIDTBSDINFO, 0, &pbi, sizeof(pbi)) < 0)
 		return false;
 
-	return info.pbi_ruid == uid;
+	return pbi.pbi_ruid == uid;
 }
-#elif defined(OS_AIX)
+#elif (defined(OS_Solaris) || defined(OS_AIX)) && HAVE_STRUCT_PSINFO
 static bool
 pid_is_user(pid_t pid, uid_t uid)
 {
@@ -2165,7 +2182,7 @@ pid_is_cmd(pid_t pid, const char *name)
 
 	return false;
 }
-#elif defined(OS_AIX)
+#elif (defined(OS_Solaris) || defined(OS_AIX)) && HAVE_STRUCT_PSINFO
 static bool
 pid_is_cmd(pid_t pid, const char *name)
 {
@@ -2440,9 +2457,9 @@ do_procinit(void)
 	enum status_code prog_status = STATUS_DEAD;
 
 	while ((count = pstat_getproc(pst, sizeof(pst[0]), 10, idx)) > 0) {
-		enum status_code pid_status;
-
 		for (i = 0; i < count; i++) {
+			enum status_code pid_status;
+
 			pid_status = pid_check(pst[i].pst_pid);
 			if (pid_status < prog_status)
 				prog_status = pid_status;
@@ -2743,12 +2760,14 @@ static bool
 do_stop_timeout(int timeout, int *n_killed, int *n_notkilled)
 {
 	struct timespec stopat, before, after, interval, maxinterval;
-	int rc, ratio;
+	int ratio;
 
 	timespec_gettime(&stopat);
 	stopat.tv_sec += timeout;
 	ratio = 1;
 	for (;;) {
+		int rc;
+
 		timespec_gettime(&before);
 		if (timespec_cmp(&before, &stopat, >))
 			return false;
@@ -2829,6 +2848,8 @@ run_stop_schedule(void)
 
 	anykilled = false;
 	retry_nr = 0;
+	n_killed = 0;
+	n_notkilled = 0;
 
 	if (schedule == NULL) {
 		do_stop(signal_nr, &n_killed, &n_notkilled);

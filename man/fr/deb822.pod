@@ -70,7 +70,7 @@ Les noms de champ ne sont pas sensibles à la casse, mais il est habituel de met
 
 Les séparateurs de paragraphes (lignes vides) et les lignes constituées uniquement de U+0020 B<ESPACE> et U+0009 B<TABULATION>, ne sont pas permis dans les valeurs de champ ou entre les champs. Les lignes vides dans les valeurs de champ sont habituellement protégées par une U+0020 B<ESPACE> suivie par un point (U+002E S<« B<.> »).>
 
-Les lignes débutant par un U+0023 S<« B<#> »,> sans être précédées d'une espace sont des lignes de commentaires qui ne sont permises que dans les fichiers de contrôle de paquet source et dans les fichiers B<deb-origin>(5). Ces lignes de commentaires sont ignorées, même entre deux lignes de continuation. Elles ne peuvent pas terminer les lignes logiques.
+Lines starting with U+0023 ‘B<#>’, without any preceding whitespace are comments lines that are only permitted in source package control files (I<debian/control>) and in L<deb-origin(5)> files.  These comment lines are ignored, even between two continuation lines.  They do not end logical lines.
 
 Tous les fichiers de contrôle doivent être encodés en UTF-8.
 

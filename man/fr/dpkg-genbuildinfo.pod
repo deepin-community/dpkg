@@ -24,7 +24,7 @@ B<dpkg-genbuildinfo> [I<option>...]
 
 B<dpkg-genbuildinfo> lit les informations à la fois dans une arborescence debian dépaquetée et déjà construite et sur les fichiers qui ont été créés ; puis il crée un fichier de contrôle décrivant l'environnement et les objets de construction (c'est le fichier B<.buildinfo>).
 
-Cette commande a été introduite dans dpkg 1.18.11.
+This program was introduced in dpkg 1.18.11.
 
 =head1 OPTIONS
 
@@ -74,7 +74,7 @@ Indique où est la liste des fichiers qui ont été produits par la construction
 
 =item B<-F>I<format-du-fichier-des-changements>
 
-Indique le format du fichier des changements. Voir B<dpkg-parsechangelog>(1) pour plus d'informations à propos des formats gérés.
+Specifies the format of the changelog.  See L<dpkg-parsechangelog(1)> for information about alternative formats.
 
 =item B<-O>[I<nom-de-fichier>]
 
@@ -146,7 +146,7 @@ La liste des fichiers créés. B<dpkg-genbuildinfo> lit dans ce fichier les donn
 
 =head1 VOIR AUSSI
 
-B<deb-buildinfo>(5).
+L<deb-buildinfo(5)>.
 
 
 =head1 TRADUCTION

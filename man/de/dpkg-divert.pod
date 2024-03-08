@@ -24,7 +24,7 @@ B<dpkg-divert> [I<Option> …] I<Befehl>
 
 B<dpkg-divert> ist ein Hilfswerkzeug, um die Liste der Umleitungen einzurichten und zu aktualisieren.
 
-Datei-I<Diversionen> (Umleitungen) sind eine Möglichkeit, B<dpkg>(1) dazu zu zwingen, eine Datei nicht an ihren Standardplatz, sondern an einem I<umgeleiteten> Ort zu installieren. Umleitungen können innerhalb der Debian-Paketskripte verwendet werden, um eine Datei beiseitezuschieben, wenn sie einen Konflikt auslöst. Systemadministratoren können sie auch verwenden, um sich über die Konfigurationsdateien einiger Pakete hinwegzusetzen, oder wann immer einige Dateien (die nicht als „Conffiles“ markiert sind) von B<dpkg> erhalten werden müssen, wenn eine neuere Version eines Paketes, die diese Dateien enthält, installiert wird.
+Datei-I<Diversionen> (Umleitungen) sind eine Möglichkeit, L<dpkg(1)> dazu zu zwingen, eine Datei nicht an ihren Standardplatz, sondern an einem I<umgeleiteten> Ort zu installieren. Umleitungen können innerhalb der Paketbetreuerskripte verwendet werden, um eine Datei beiseitezuschieben, wenn sie einen Konflikt auslöst. Systemadministratoren können sie auch verwenden, um sich über die Konfigurationsdateien einiger Pakete hinwegzusetzen, oder wann immer einige Dateien (die nicht als „Conffiles“ markiert sind) von B<dpkg> erhalten werden müssen, wenn eine neuere Version eines Paketes, die diese Dateien enthält, installiert wird.
 
 =head1 BEFEHLE
 
@@ -164,7 +164,7 @@ Beim Hinzufügen ist die Standardeinstellung B<--local> und B<--divert> I<Origin
 
 Verzeichnisse können mit B<dpkg-divert> nicht umgeleitet werden.
 
-Vorsicht sollte beim Umleiten von Laufzeit-Bibliotheken walten gelassen werden, da B<ldconfig>(8) einen symbolischen Link, basierend auf dem in der Bibliothek eingebetteten DT_SONAME-Feld, anlegt. Da B<ldconfig> keine Umleitungen anerkennt (nur B<dpkg> tut dies), kann der Symlink am Ende auf die umgeleitete Bibliothek zeigen, falls die umgeleitete Bibliothek den gleichen SONAME wie die nicht umgeleitete hat.
+Vorsicht sollte beim Umleiten von Laufzeit-Bibliotheken walten gelassen werden, da L<ldconfig(8)> einen symbolischen Link, basierend auf dem in der Bibliothek eingebetteten DT_SONAME-Feld, anlegt. Da B<ldconfig> keine Umleitungen anerkennt (nur B<dpkg> tut dies), kann der Symlink am Ende auf die umgeleitete Bibliothek zeigen, falls die umgeleitete Bibliothek den gleichen SONAME wie die nicht umgeleitete hat.
 
 =head1 BEISPIELE
 
@@ -187,7 +187,7 @@ Um diese Umleitung zu entfernen:
 
 =head1 SIEHE AUCH
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 ÜBERSETZUNG

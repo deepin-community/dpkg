@@ -22,7 +22,7 @@ I<Dateiname>B<.deb>
 
 =head1 BESCHREIBUNG
 
-Das B<.deb>-Format ist das Debian-Binärpaketdateiformat. Diese Handbuchseite beschreibt das B<alte> Format, das vor Debian 0.93 verwendet wurde. Bitte lesen Sie B<deb>(5) für Details über das neue Format.
+Das B<.deb>-Format ist das Debian-Binärpaketdateiformat. Diese Handbuchseite beschreibt das B<alte> Format, das vor Debian 0.93 verwendet wurde. Bitte lesen Sie L<deb(5)> für Details über das neue Format.
 
 =head1 FORMAT
 
@@ -42,7 +42,7 @@ Die zweite gzippte Tar-Datei ist das Dateisystemarchiv, das Pfadnamen relativ zu
 
 =head1 SIEHE AUCH
 
-B<deb>(5), B<dpkg-deb>(1), B<deb-control>(5).
+L<deb(5)>, L<deb-control(5)>, L<dpkg-deb(1)>.
 
 
 =head1 ÜBERSETZUNG

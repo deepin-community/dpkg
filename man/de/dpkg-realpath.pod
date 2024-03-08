@@ -26,6 +26,8 @@ B<dpkg-realpath> ist ein Werkzeug (seit Dpkg 1.20.1), um einen Pfadnamen aufzul�
 
 Dies ist für den Einsatz durch andere Hilfsprogramme von B<dpkg> oder Betreuerskripten gedacht, statt L<realpath(1)> oder L<readlink(1)> zu verwenden, um einen kanonischen Pfad zu erhalten, da diese beiden Werkzeuge den kanonischen Pfad nur relativ zu F</> ermitteln können.
 
+Dieses Programm wurde in Dpkg 1.20.1 hinzugefügt.
+
 =head1 OPTIONEN
 
 =over 

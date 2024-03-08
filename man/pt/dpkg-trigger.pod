@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-trigger - um utilitário de trigger de pacote
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-trigger> [I<option>...] I<trigger-name>
 
@@ -29,6 +29,8 @@ B<dpkg-trigger> é uma ferramenta para activar explicitamente triggers e verific
 Isto pode ser usado pelos scripts do maintainer em situações complexas e condicionais onde os gatilhos do ficheiro, ou a directiva de ficheiro declarativa de gatilhos B<activate>, sejam insuficientemente ricos. Também pode ser usado para testes e por administradores de sistema (mas note que os gatilhos não serão realmente corridos pelo B<dpkg-trigger>).
 
 Sintaxes de nome de trigger não reconhecidas são um erro para o B<dpkg-trigger>.
+
+Este programa foi introduzido no dpkg 1.14.17.
 
 =head1 COMANDOS
 
@@ -120,7 +122,7 @@ Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B
 
 =head1 VEJA TAMBÉM
 
-B<dpkg>(1), B<deb-triggers>(5), B<%PKGDOCDIR%/spec/triggers.txt>.
+L<dpkg(1)>, L<deb-triggers(5)>, B<%PKGDOCDIR%/spec/triggers.txt>.
 
 
 =head1 TRADUÇÃO

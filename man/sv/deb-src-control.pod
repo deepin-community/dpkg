@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAMN
 
-deb-src-control - Debians filformat för källkodspakets huvudstyrfil
+deb-src-control - Debians filformat för källkodspakets mallstyrfil
 
 =head1 SYNOPS
 
@@ -22,9 +22,9 @@ B<debian/control>
 
 =head1 BESKRIVNING
 
-Varje Debiankällkodspaket innehåller huvudstyrfilen ”B<debian/control>”, och dess L<deb822(5)>-format är en övermängd av B<control>-filen som medföljer Debianbinärpaket, se B<deb-control>(5).
+Varje Debiankällkodspaket innehåller mallstyrfilen ”B<debian/control>”, och dess L<deb822(5)>-format är en övermängd av B<control>-filen som medföljer Debianbinärpaket, se B<deb-control>(5).
 
-Filen innehåller åtminstone två stycken, avdelade med en tomrad. Det första stycket innehåller all generell information om källkodspaketet, medan de följande styckena beskriver exakt ett binärpaket. Varje stycke består av åtminstone ett fält. Ett fält inleds med ett fältnamn, till exempel B<Package> eller B<Section> (skiftlägesokänsligt), följt av ett kolon, fältinnehållet (skiftlägekänsligt om inte annat anges) och ett nyradstecken. Flerradiga fält är också tillåtna, men varje ytterligare rad som inte innehåller ett fältnamn, bör starta med minst ett blanksteg. Innehållet i flerradsfält slås normalt samman till en enda rad av verktygen (förutom i fallet fältet B<Description>, se nedan). För att sätta in tomma rader i ett flerradsfält, skriver du en punkt efter blanksteget. Rader som börjar med ett ”B<#>” tolkas som kommentarer.
+Filen innehåller åtminstone två stycken, avdelade med en tomrad. Det första stycket kallas källkodspaketstycket och innehåller all generell information om källkodspaketet, medan de följande styckena kallas binärpaketstycken och beskriver exakt ett binärpaket per stycke. Varje stycke består av åtminstone ett fält. Ett fält inleds med ett fältnamn, till exempel B<Package> eller B<Section> (skiftlägesokänsligt), följt av ett kolon, fältinnehållet (skiftlägekänsligt om inte annat anges) och ett nyradstecken. Flerradiga fält är också tillåtna, men varje ytterligare rad som inte innehåller ett fältnamn, bör starta med minst ett blanksteg. Innehållet i flerradsfält slås normalt samman till en enda rad av verktygen (förutom i fallet fältet B<Description>, se nedan). För att sätta in tomma rader i ett flerradsfält, skriver du en punkt efter blanksteget. Rader som börjar med ett ”B<#>” tolkas som kommentarer.
 
 =head1 KÄLLKODSFÄLT
 
@@ -68,11 +68,11 @@ Det här fältet används för att ange om filen B<debian/rules> kräver (fake)r
 
 =item B<no> (nej)
 
-Binärmålen kommer inte kräva (fake)root överhuvudtaget.
+Binärmålen kommer inte kräva (fake)root överhuvudtaget. Detta är förval om B<dpkg-build-api>-nivån är ≥ 1.
 
 =item B<binary-targets>
 
-Binärmålen måste alltid köras under (fake)root. Detta är förvalet om fältet inte anges; även om det inte är strikt nödvändigt att lägga till fältet med värdet B<binary-targets> så anger det att paketet har analyserats för det här kravet.
+Binärmålen måste alltid köras under (fake)root. Detta är förvalet i B<dpkg-build-api>-nivå 0, om fältet inte anges; även om det inte är strikt nödvändigt att lägga till fältet med värdet B<binary-targets> så anger det att paketet har analyserats för det här kravet.
 
 =item I<impl-nyckelord>
 
@@ -90,7 +90,7 @@ När fältet är satt till ett av I<impl-nyckelord> kommer byggaren att exponera
 
 =item B<Testsuite-Triggers:> I<paketlista>
 
-Dessa fält beskrivs i manualsidan B<dsc>(5), eftersom de genereras från information hämtad från B<debian/tests/control> eller kopieras ordagrant till källkodsstyrfilen.
+Dessa fält beskrivs i manualsidan L<dsc(5)>, eftersom de genereras från information hämtad från B<debian/tests/control> eller kopieras ordagrant till källkodsstyrfilen.
 
 =item B<Vcs-Arch:> I<url>
 
@@ -154,9 +154,9 @@ Motsvarar B<Build-Conflicts>, men endast när de arkitekturoberoende paketen byg
 
 =back
 
-Syntaxen för fälten B<Build-Depends>, B<Build-Depends-Arch> och B<Build-Depends-Indep>-fälten är en lista med grupper av alternativa paket. Varje grupp innehåller en lista med paket avdelade med ett vertikalstreck (rör), ”B<|>”. Grupperna avdelas med kommatecken ”B<,>”, och kan avslutas med ett släpande komma som tas bort när fälten genereras till B<deb-control>(5) (sedan dpkg 1.10.14). Komma utläses som ”OCH”, och vertikalstrecken som ”ELLER”, där vertikalstrecken binder hårdare. Varje paketnamn kan eventuellt följas av en versionsnummerangivelse inom parenteser ”B<(>” och ”B<)>”, en arkitekturangivelse inom hakparenteser ”B<[>” och ”B<]>” samt en begränsningsformel som består av en eller flera listor med profilnamn inom vinkelparenteser ”B<E<lt>>” och ”B<E<gt>>”.
+Syntaxen för fälten B<Build-Depends>, B<Build-Depends-Arch> och B<Build-Depends-Indep>-fälten är en lista med grupper av alternativa paket. Varje grupp innehåller en lista med paket avdelade med ett vertikalstreck (rör), ”B<|>”. Grupperna avdelas med kommatecken ”B<,>”, och kan avslutas med ett släpande komma som tas bort när fälten genereras till L<deb-control(5)> (sedan dpkg 1.10.14). Komma utläses som ”OCH”, och vertikalstrecken som ”ELLER”, där vertikalstrecken binder hårdare. Varje paketnamn kan eventuellt följas av en versionsnummerangivelse inom parenteser ”B<(>” och ”B<)>”, en arkitekturangivelse inom hakparenteser ”B<[>” och ”B<]>” samt en begränsningsformel som består av en eller flera listor med profilnamn inom vinkelparenteser ”B<E<lt>>” och ”B<E<gt>>”.
 
-Syntaxen för fälten B<Build-Conflicts>, B<Build-Conflicts-Arch> och B<Build-Conflicts-Indep>-fälten är en kommaseparerad lista med paketnamn, där komma utläses som ”OCH”, och där listan kan avslutas med ett släpande komma som tas bort när fälten genereras till B<deb-control>(5) (sedan dpkg 1.10.14). Det är inte möjligt att ange alternativa paket med ”rör”. Varje paketnamn kan eventuellt följas av en versionsnummerangivelse inom parenteser, en arkitekturangivelse inom hakparenteser samt en begränsningsformel bestående av en eller flera listor med profilnamn inom vinkelparenteser.
+Syntaxen för fälten B<Build-Conflicts>, B<Build-Conflicts-Arch> och B<Build-Conflicts-Indep>-fälten är en kommaseparerad lista med paketnamn, där komma utläses som ”OCH”, och där listan kan avslutas med ett släpande komma som tas bort när fälten genereras till L<deb-control(5)> (sedan dpkg 1.10.14). Det är inte möjligt att ange alternativa paket med ”rör”. Varje paketnamn kan eventuellt följas av en versionsnummerangivelse inom parenteser, en arkitekturangivelse inom hakparenteser samt en begränsningsformel bestående av en eller flera listor med profilnamn inom vinkelparenteser.
 
 Ett arkitekturkvalificeringsnamn kan vara ett existerande Debianarkitekturnamn (sedan dpkg 1.16.5), B<any> (sedan dpkg 1.16.2) eller B<native> (sedan dpkg 1.16.5). Om det utesluts är förvalet för fältet B<Build-Depends> den aktuella värdarkitekturen, förvalet för B<Build-Conflicts> är B<any>. Ett existerande Debianarkitekturnamn motsvarar exakt den arkitekturen för det paketnamnet, B<any> motsvarar valfri arkitektur för paketnamnet om paketet har markerats som B<Multi-Arch: allowed> och B<native> motsvarar nuvarande byggarkitektur om paketet inte har markerats som B<Multi-Arch: foreign>.
 
@@ -184,7 +184,7 @@ Detta fält anger paketets typ. B<udeb> används för storleksbegränsade paket 
 
 =item B<Architecture:> I<ark>|B<all>|B<any> (krävs)
 
-Arkitekturen anger på vilken typ av maskinvara paketet körs. För paket som körs på alla arkitekturer används värdet B<any> (någon). För paket som är arkitekturoberoende, som skal- och Perlskript eller dokumentation, används värdet B<all> (alla). För att begränsa paket till en specifik uppsättning arkitekturer, anger du namnen på arkitekturerna avdelade med blanksteg. Det är även möjligt att ange arkitekturer med jokertecken i listan (se B<dpkg-architecture>(1) för mer information om dessa).
+Arkitekturen anger på vilken typ av maskinvara paketet körs. För paket som körs på alla arkitekturer används värdet B<any> (någon). För paket som är arkitekturoberoende, som skal- och Perlskript eller dokumentation, används värdet B<all> (alla). För att begränsa paket till en specifik uppsättning arkitekturer, anger du namnen på arkitekturerna avdelade med blanksteg. Det är även möjligt att ange arkitekturer med jokertecken i listan (se L<dpkg-architecture(1)> för mer information om dessa).
 
 =item B<Build-Profiles:> I<begränsningsformel>
 
@@ -206,7 +206,7 @@ Med andra ord, om ett stycke för ett binärpaket är försett med ett icke-tomt
 
 =item B<Description:> I<kort-beskrivning> (rekommenderas)
 
-Dessa fält beskrivs i manualsidan B<deb-control>(5), eftersom de kopieras ordagrant till binärpaketets styrfil.
+Dessa fält beskrivs i manualsidan L<deb-control(5)>, eftersom de kopieras ordagrant till binärpaketets styrfil.
 
 =item B<Depends:> I<paketlista>
 
@@ -230,7 +230,7 @@ Dessa fält beskrivs i manualsidan B<deb-control>(5), eftersom de kopieras ordag
 
 =item B<Static-Built-Using:> I<paketlista>
 
-Det här fältet anger beroenden mellan paket. De diskuteras i manualsidan B<deb-control>(5). När fälten förekommer i I<debian/control> kan de också avslutas med ett släpande kommatecken (sedan dpkg 1.10.14), ha arkitekturangivelser och begränsningsformler som alla reduceras när fälten för B<deb-control>(5) genereras.
+Det här fältet anger beroenden mellan paket. De diskuteras i manualsidan L<deb-control(5)>. När fälten förekommer i I<debian/control> kan de också avslutas med ett släpande kommatecken (sedan dpkg 1.10.14), ha arkitekturangivelser och begränsningsformler som alla reduceras när fälten för L<deb-control(5)> genereras.
 
 =item B<Subarchitecture:> I<värde>
 
@@ -250,15 +250,15 @@ Det är tillåtet att lägga till ytterligare användardefinierade fält till st
 
 =item B<S>
 
-Fältet kommer tas med i styrfilen för källkodspaket, se B<dsc>(5).
+Fältet kommer tas med i styrfilen för källkodspaket, se L<dsc(5)>.
 
 =item B<B>
 
-Fältet kommer tas med i styrfilen för binärpaketet, se B<deb-control>(5).
+Fältet kommer tas med i styrfilen för binärpaketet, se L<deb-control(5)>.
 
 =item B<C>
 
-Fältet kommer tas med i styrfilen för insändningen (.changes), se B<deb-changes>(5).
+Fältet kommer tas med i styrfilen för insändningen (.changes), se L<deb-changes(5)>.
 
 =back
 
@@ -279,7 +279,7 @@ Tänk på att dess användardefinierade fält använder den globala namnrymden, 
  Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
  Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git
  Standards-Version: 3.7.3
- Build-Depends: pkg-config, debhelper (>= 4.1.81),
+ Build-Depends: pkgconf, debhelper (>= 4.1.81),
   libselinux1-dev (>= 1.28-4) [!linux-any]
 
  Package: dpkg-dev
@@ -303,7 +303,7 @@ Tänk på att dess användardefinierade fält använder den globala namnrymden, 
 
 =head1 SE ÄVEN
 
-I<%PKGDOCDIR%/spec/rootless-builds.txt>, L<deb822(5)>, B<deb-control>(5), B<deb-version>(7), B<dpkg-source>(1)
+I<%PKGDOCDIR%/spec/rootless-builds.txt>, L<deb822(5)>, L<deb-control(5)>, L<deb-version(7)>, L<dpkg-source(1)>
 
 
 =head1 ÖVERSÄTTNING

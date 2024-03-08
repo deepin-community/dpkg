@@ -110,6 +110,8 @@ S<B<Note> :> certains répertoires pourraient subsister après la migration au c
 
 S<B<Attention> :> notez que cette opération peut potentiellement rendre le système inutilisable ou cassé en cas de plantage brutal, ou de redémarrage, d'état inattendu du système ou des bogues potentiel dans le script. Soyez prêt avec des médias de récupération et pensez à réaliser des sauvegarde au préalable.
 
+This program was introduced in dpkg 1.20.6.
+
 =head1 OPTIONS
 
 =over 

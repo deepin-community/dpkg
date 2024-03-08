@@ -174,7 +174,7 @@ Väljer färgläge (sedan dpkg 1.18.5). För närvarande godtas följande värde
 
 =item B<SOURCE_DATE_EPOCH>
 
-Om satt kommer det användas som tidsstämpel (som sekunder sedan epoken) i B<deb-split>(5):s B<ar>(5)-behållare.
+Om satt kommer det användas som tidsstämpel (som sekunder sedan epoken) i L<deb-split(5)>:s L<ar(5)>-behållare.
 
 =back
 
@@ -190,6 +190,14 @@ Filnamnen som används i katalogen är i ett internt format för B<dpkg-split> o
 
 =back
 
+=head1 SÄKERHET
+
+Att utforska eller slå ihop obetrodda delade arkiv bör anses som en säkerhetsgräns, och eventuellt brytande av gränser som uppstår av dessa operationer bör anses som en säkerhetssårbarhet. Att utföra dessa operationer på obetrodda data som root avråds å det bestämdaste från.
+
+Att automatiskt samla och förkasta delar av ett delat paket anses som privilegierade operationer som kan tillåta utökning av rootbehörigheter. Operationerna får aldrig delegeras till en obetrodd användare eller göras på obetrodda paket, eftersom det kan tillåta rootåtkomst till systemet.
+
+Dela paketarkiv bör endast utföras över betrodda data.
+
 =head1 PROGRAMFEL
 
 Kompletta detaljer för paket i kön kan inte fås utan att själv gräva i kö-katalogen.
@@ -198,7 +206,7 @@ Det finns inget lätt sätta att testa om en fil som kan vara en del av ett bin�
 
 =head1 SE ÄVEN
 
-B<deb>(5), B<deb-control>(5), B<dpkg-deb>(1), B<dpkg>(1).
+L<deb(5)>, L<deb-control(5)>, L<dpkg-deb(1)>, L<dpkg(1)>.
 
 
 =head1 ÖVERSÄTTNING

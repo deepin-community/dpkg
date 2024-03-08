@@ -72,7 +72,7 @@ Lista wygenerowanych plików, które są częścią przygotowywanego wydania. Ab
 
 =head1 ZOBACZ TAKŻE
 
-B<deb-src-files>(5).
+L<deb-src-files(5)>.
 
 
 =head1 TŁUMACZE

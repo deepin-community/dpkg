@@ -28,7 +28,7 @@ Denna fil består av en lista med MD5-kondensat (som 32 skiftlägesoberoende hex
 
 Avslutande snedstreck (U+002F B</>) i sökvägsnamnet kommer tas bort. Varken avslutande blanksteg eller rader som är tomma eller endast består av blanktecken tillåts.
 
-Om filen ”control” inte finns i det binära paketet kommer L<dpkg>(1)> att skapa motsvarande information vid uppackning (sedan B<dpkg> 1.16.3).
+Om filen ”control” inte finns i det binära paketet kommer L<dpkg(1)> att skapa motsvarande information vid uppackning (sedan B<dpkg> 1.16.3).
 
 =head1 EXEMPEL
 
@@ -39,7 +39,7 @@ Om filen ”control” inte finns i det binära paketet kommer L<dpkg>(1)> att s
 
 =head1 SE ÄVEN
 
-B<md5sum>(1), B<dpkg-deb>(1), B<dpkg>(1).
+L<md5sum(1)>, L<dpkg-deb(1)>, L<dpkg(1)>.
 
 
 =head1 ÖVERSÄTTNING

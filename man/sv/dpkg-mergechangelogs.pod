@@ -26,6 +26,8 @@ Programmet kommer använda de 3 angivna versionerna av Debianändringsloggen fö
 
 Enskilda poster identifieras av sitt versionsnummer och de antas inte stå i konflikt med varandra, de slås helt enkelt ihop i rätt ordning (enligt minskade versionsnummer). När B<--merge-prereleases> används ignoreras versionsnumret efter det sista tilde-tecknet, så att 1.0-1~exp1 och 1.0-1~exp5 anges vara samma post. När samma versionsnummer är tillgänglig i både I<ny-a> och I<ny-b> görs ett försök på en vanlig radbaserad trevägssammanslagning (förutsatt att modulen Algorithm::Merge är tillgänglig — den ingår i paketet libalgorithm-merge-perl — om inte får du en global konflikt på innehållet i posten).
 
+Kommandot introducerades i dpkg 1.15.7..
+
 =head1 FLAGGOR
 
 =over 
@@ -68,7 +70,7 @@ Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även 
 
 =head1 BEGRÄNSNINGAR
 
-Allt som inte tolkas av Dpkg::Changelog försvinner under sammanslagningen. Det kan gälla saker som kommentarer som inte skulle vara där, osv.
+Allt som inte tolkas av L<Dpkg::Changelog> försvinner under sammanslagningen. Det kan gälla saker som kommentarer som inte skulle vara där, osv.
 
 =head1 INTEGRATION MED GIT
 

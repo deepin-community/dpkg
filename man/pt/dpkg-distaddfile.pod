@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-distaddfile - adiciona entradas a debian/files
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-distaddfile> [I<option>...] I<filename section priority>
 
@@ -72,7 +72,7 @@ A lista de ficheiros gerados que fazem parte do envio a ser preparado. Pode ser 
 
 =head1 VEJA TAMBÉM
 
-B<deb-src-files>(5).
+L<deb-src-files(5)>.
 
 
 =head1 TRADUÇÃO

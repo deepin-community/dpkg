@@ -13,12 +13,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::Control::FieldsCore;
+=encoding utf8
+
+=head1 NAME
+
+Dpkg::Control::FieldsCore - manage (list of official) control fields
+
+=head1 DESCRIPTION
+
+The modules contains a list of field names with associated meta-data explaining
+in which type of control information they are allowed. The types are the
+CTRL_* constants exported by L<Dpkg::Control>.
+
+=cut
+
+package Dpkg::Control::FieldsCore 1.02;
 
 use strict;
 use warnings;
 
-our $VERSION = '1.01';
 our @EXPORT = qw(
     field_capitalize
     field_is_official
@@ -47,8 +60,8 @@ use Dpkg::ErrorHandling;
 use Dpkg::Control::Types;
 
 use constant {
-    ALL_PKG => CTRL_INFO_PKG | CTRL_INDEX_PKG | CTRL_PKG_DEB | CTRL_FILE_STATUS,
-    ALL_SRC => CTRL_INFO_SRC | CTRL_INDEX_SRC | CTRL_PKG_SRC,
+    ALL_PKG => CTRL_TMPL_PKG | CTRL_REPO_PKG | CTRL_DEB | CTRL_FILE_STATUS,
+    ALL_SRC => CTRL_TMPL_SRC | CTRL_REPO_SRC | CTRL_DSC,
     ALL_FILE_MANIFEST => CTRL_FILE_BUILDINFO | CTRL_FILE_CHANGES,
     ALL_CHANGES => CTRL_FILE_CHANGES | CTRL_CHANGELOG,
     ALL_COPYRIGHT => CTRL_COPYRIGHT_HEADER | CTRL_COPYRIGHT_FILES | CTRL_COPYRIGHT_LICENSE,
@@ -72,7 +85,7 @@ our %FIELDS = (
     },
     'architecture' => {
         name => 'Architecture',
-        allowed => (ALL_PKG | ALL_SRC | ALL_FILE_MANIFEST | CTRL_TESTS) & (~CTRL_INFO_SRC),
+        allowed => (ALL_PKG | ALL_SRC | ALL_FILE_MANIFEST | CTRL_TESTS) & (~CTRL_TMPL_SRC),
         separator => FIELD_SEP_SPACE,
     },
     'architectures' => {
@@ -82,12 +95,12 @@ our %FIELDS = (
     },
     'auto-built-package' => {
         name => 'Auto-Built-Package',
-        allowed => ALL_PKG & ~CTRL_INFO_PKG,
+        allowed => ALL_PKG & ~CTRL_TMPL_PKG,
         separator => FIELD_SEP_SPACE,
     },
     'binary' => {
         name => 'Binary',
-        allowed => CTRL_PKG_SRC | CTRL_INDEX_SRC | ALL_FILE_MANIFEST,
+        allowed => CTRL_DSC | CTRL_REPO_SRC | ALL_FILE_MANIFEST,
         # XXX: This field values are separated either by space or comma
         # depending on the context.
         separator => FIELD_SEP_SPACE | FIELD_SEP_COMMA,
@@ -109,7 +122,7 @@ our %FIELDS = (
     },
     'bugs' => {
         name => 'Bugs',
-        allowed => (ALL_PKG | CTRL_INFO_SRC | CTRL_FILE_VENDOR) & (~CTRL_INFO_PKG),
+        allowed => (ALL_PKG | CTRL_TMPL_SRC | CTRL_FILE_VENDOR) & (~CTRL_TMPL_PKG),
     },
     'build-architecture' => {
         name => 'Build-Architecture',
@@ -179,7 +192,7 @@ our %FIELDS = (
     },
     'build-profiles' => {
         name => 'Build-Profiles',
-        allowed => CTRL_INFO_PKG,
+        allowed => CTRL_TMPL_PKG,
         separator => FIELD_SEP_SPACE,
     },
     'build-tainted-by' => {
@@ -217,15 +230,15 @@ our %FIELDS = (
     },
     'checksums-md5' => {
         name => 'Checksums-Md5',
-        allowed => CTRL_PKG_SRC | CTRL_INDEX_SRC | ALL_FILE_MANIFEST,
+        allowed => CTRL_DSC | CTRL_REPO_SRC | ALL_FILE_MANIFEST,
     },
     'checksums-sha1' => {
         name => 'Checksums-Sha1',
-        allowed => CTRL_PKG_SRC | CTRL_INDEX_SRC | ALL_FILE_MANIFEST,
+        allowed => CTRL_DSC | CTRL_REPO_SRC | ALL_FILE_MANIFEST,
     },
     'checksums-sha256' => {
         name => 'Checksums-Sha256',
-        allowed => CTRL_PKG_SRC | CTRL_INDEX_SRC | ALL_FILE_MANIFEST,
+        allowed => CTRL_DSC | CTRL_REPO_SRC | ALL_FILE_MANIFEST,
     },
     'classes' => {
         name => 'Classes',
@@ -291,7 +304,7 @@ our %FIELDS = (
     },
     'directory' => {
         name => 'Directory',
-        allowed => CTRL_INDEX_SRC,
+        allowed => CTRL_REPO_SRC,
     },
     'distribution' => {
         name => 'Distribution',
@@ -320,17 +333,17 @@ our %FIELDS = (
     },
     'filename' => {
         name => 'Filename',
-        allowed => CTRL_INDEX_PKG,
+        allowed => CTRL_REPO_PKG,
         separator => FIELD_SEP_LINE | FIELD_SEP_SPACE,
     },
     'files' => {
         name => 'Files',
-        allowed => CTRL_PKG_SRC | CTRL_INDEX_SRC | CTRL_FILE_CHANGES | CTRL_COPYRIGHT_FILES,
+        allowed => CTRL_DSC | CTRL_REPO_SRC | CTRL_FILE_CHANGES | CTRL_COPYRIGHT_FILES,
         separator => FIELD_SEP_LINE | FIELD_SEP_SPACE,
     },
     'format' => {
         name => 'Format',
-        allowed => CTRL_PKG_SRC | CTRL_INDEX_SRC | ALL_FILE_MANIFEST | CTRL_COPYRIGHT_HEADER,
+        allowed => CTRL_DSC | CTRL_REPO_SRC | ALL_FILE_MANIFEST | CTRL_COPYRIGHT_HEADER,
     },
     'homepage' => {
         name => 'Homepage',
@@ -345,7 +358,7 @@ our %FIELDS = (
     },
     'installed-size' => {
         name => 'Installed-Size',
-        allowed => ALL_PKG & ~CTRL_INFO_PKG,
+        allowed => ALL_PKG & ~CTRL_TMPL_PKG,
     },
     'installer-menu-item' => {
         name => 'Installer-Menu-Item',
@@ -365,16 +378,16 @@ our %FIELDS = (
     },
     'origin' => {
         name => 'Origin',
-        allowed => (ALL_PKG | ALL_SRC | CTRL_REPO_RELEASE) & (~CTRL_INFO_PKG),
+        allowed => (ALL_PKG | ALL_SRC | CTRL_REPO_RELEASE) & (~CTRL_TMPL_PKG),
     },
     'maintainer' => {
         name => 'Maintainer',
-        allowed => CTRL_PKG_DEB | CTRL_INDEX_PKG | CTRL_FILE_STATUS | ALL_SRC  | ALL_CHANGES,
+        allowed => CTRL_DEB | CTRL_REPO_PKG | CTRL_FILE_STATUS | ALL_SRC  | ALL_CHANGES,
     },
     'md5sum' => {
         # XXX: Wrong capitalization due to historical reasons.
         name => 'MD5sum',
-        allowed => CTRL_INDEX_PKG | CTRL_REPO_RELEASE,
+        allowed => CTRL_REPO_PKG | CTRL_REPO_RELEASE,
         separator => FIELD_SEP_LINE | FIELD_SEP_SPACE,
     },
     'multi-arch' => {
@@ -391,11 +404,11 @@ our %FIELDS = (
     },
     'package' => {
         name => 'Package',
-        allowed => ALL_PKG | CTRL_INDEX_SRC,
+        allowed => ALL_PKG | CTRL_REPO_SRC,
     },
     'package-list' => {
         name => 'Package-List',
-        allowed => ALL_SRC & ~CTRL_INFO_SRC,
+        allowed => ALL_SRC & ~CTRL_TMPL_SRC,
         separator => FIELD_SEP_LINE | FIELD_SEP_SPACE,
     },
     'package-type' => {
@@ -415,7 +428,7 @@ our %FIELDS = (
     },
     'priority' => {
         name => 'Priority',
-        allowed => CTRL_INFO_SRC | CTRL_INDEX_SRC | ALL_PKG,
+        allowed => CTRL_TMPL_SRC | CTRL_REPO_SRC | ALL_PKG,
     },
     'protected' => {
         name => 'Protected',
@@ -449,34 +462,34 @@ our %FIELDS = (
     },
     'rules-requires-root' => {
         name => 'Rules-Requires-Root',
-        allowed => CTRL_INFO_SRC,
+        allowed => CTRL_TMPL_SRC,
         separator => FIELD_SEP_SPACE,
     },
     'section' => {
         name => 'Section',
-        allowed => CTRL_INFO_SRC | CTRL_INDEX_SRC | ALL_PKG,
+        allowed => CTRL_TMPL_SRC | CTRL_REPO_SRC | ALL_PKG,
     },
     'sha1' => {
         # XXX: Wrong capitalization due to historical reasons.
         name => 'SHA1',
-        allowed => CTRL_INDEX_PKG | CTRL_REPO_RELEASE,
+        allowed => CTRL_REPO_PKG | CTRL_REPO_RELEASE,
         separator => FIELD_SEP_LINE | FIELD_SEP_SPACE,
     },
     'sha256' => {
         # XXX: Wrong capitalization due to historical reasons.
         name => 'SHA256',
-        allowed => CTRL_INDEX_PKG | CTRL_REPO_RELEASE,
+        allowed => CTRL_REPO_PKG | CTRL_REPO_RELEASE,
         separator => FIELD_SEP_LINE | FIELD_SEP_SPACE,
     },
     'size' => {
         name => 'Size',
-        allowed => CTRL_INDEX_PKG,
+        allowed => CTRL_REPO_PKG,
         separator => FIELD_SEP_LINE | FIELD_SEP_SPACE,
     },
     'source' => {
         name => 'Source',
         allowed => (ALL_PKG | ALL_SRC | ALL_CHANGES | CTRL_COPYRIGHT_HEADER | CTRL_FILE_BUILDINFO) &
-                   (~(CTRL_INDEX_SRC | CTRL_INFO_PKG)),
+                   (~(CTRL_REPO_SRC | CTRL_TMPL_PKG)),
     },
     'standards-version' => {
         name => 'Standards-Version',
@@ -623,7 +636,7 @@ our %FIELDS = (
     'version' => {
         name => 'Version',
         allowed => (ALL_PKG | ALL_SRC | CTRL_FILE_BUILDINFO | ALL_CHANGES | CTRL_REPO_RELEASE) &
-                    (~(CTRL_INFO_SRC | CTRL_INFO_PKG)),
+                    (~(CTRL_TMPL_SRC | CTRL_TMPL_PKG)),
     },
 );
 
@@ -678,7 +691,7 @@ my @bin_checksums_fields = qw(
 );
 
 our %FIELD_ORDER = (
-    CTRL_INFO_SRC() => [
+    CTRL_TMPL_SRC() => [
         qw(
             source
             section
@@ -700,7 +713,7 @@ our %FIELD_ORDER = (
             description
         ),
     ],
-    CTRL_INFO_PKG() => [
+    CTRL_TMPL_PKG() => [
         qw(
             package
             package-type
@@ -725,7 +738,7 @@ our %FIELD_ORDER = (
             description
         ),
     ],
-    CTRL_PKG_SRC() => [
+    CTRL_DSC() => [
         qw(
             format
             source
@@ -750,7 +763,7 @@ our %FIELD_ORDER = (
             files
         ),
     ],
-    CTRL_PKG_DEB() => [
+    CTRL_DEB() => [
         qw(
             package
             package-type
@@ -781,7 +794,7 @@ our %FIELD_ORDER = (
             task
         ),
     ],
-    CTRL_INDEX_SRC() => [
+    CTRL_REPO_SRC() => [
         qw(
             format
             package
@@ -809,7 +822,7 @@ our %FIELD_ORDER = (
             files
         ),
     ],
-    CTRL_INDEX_PKG() => [
+    CTRL_REPO_PKG() => [
         qw(
             package
             package-type
@@ -1019,18 +1032,6 @@ our %FIELD_ORDER = (
     ],
 );
 
-=encoding utf8
-
-=head1 NAME
-
-Dpkg::Control::FieldsCore - manage (list of official) control fields
-
-=head1 DESCRIPTION
-
-The modules contains a list of fieldnames with associated meta-data explaining
-in which type of control information they are allowed. The types are the
-CTRL_* constants exported by Dpkg::Control.
-
 =head1 FUNCTIONS
 
 =over 4
@@ -1094,16 +1095,16 @@ sub field_is_allowed_in($@) {
 =item $new_field = field_transfer_single($from, $to, $field)
 
 If appropriate, copy the value of the field named $field taken from the
-$from Dpkg::Control object to the $to Dpkg::Control object.
+$from L<Dpkg::Control> object to the $to L<Dpkg::Control> object.
 
 Official fields are copied only if the field is allowed in both types of
 objects. Custom fields are treated in a specific manner. When the target
-is not among CTRL_PKG_SRC, CTRL_PKG_DEB or CTRL_FILE_CHANGES, then they
+is not among CTRL_DSC, CTRL_DEB or CTRL_FILE_CHANGES, then they
 are always copied as is (the X- prefix is kept). Otherwise they are not
 copied except if the target object matches the target destination encoded
 in the field name. The initial X denoting custom fields can be followed by
-one or more letters among "S" (Source: corresponds to CTRL_PKG_SRC), "B"
-(Binary: corresponds to CTRL_PKG_DEB) or "C" (Changes: corresponds to
+one or more letters among "S" (Source: corresponds to CTRL_DSC), "B"
+(Binary: corresponds to CTRL_DEB) or "C" (Changes: corresponds to
 CTRL_FILE_CHANGES).
 
 Returns undef if nothing has been copied or the name of the new field
@@ -1113,7 +1114,12 @@ added to $to otherwise.
 
 sub field_transfer_single($$;$) {
     my ($from, $to, $field) = @_;
-    $field //= $_;
+    if (not defined $field) {
+        warnings::warnif('deprecated',
+            'using Dpkg::Control::Fields::field_transfer_single() with an ' .
+            'an implicit field argument is deprecated');
+        $field = $_;
+    }
     my ($from_type, $to_type) = ($from->get_type(), $to->get_type());
     $field = field_capitalize($field);
 
@@ -1122,16 +1128,16 @@ sub field_transfer_single($$;$) {
         return $field;
     } elsif ($field =~ /^X([SBC]*)-/i) {
         my $dest = $1;
-        if (($dest =~ /B/i and $to_type == CTRL_PKG_DEB) or
-            ($dest =~ /S/i and $to_type == CTRL_PKG_SRC) or
+        if (($dest =~ /B/i and $to_type == CTRL_DEB) or
+            ($dest =~ /S/i and $to_type == CTRL_DSC) or
             ($dest =~ /C/i and $to_type == CTRL_FILE_CHANGES))
         {
             my $new = $field;
             $new =~ s/^X([SBC]*)-//i;
             $to->{$new} = $from->{$field};
             return $new;
-        } elsif ($to_type != CTRL_PKG_DEB and
-		 $to_type != CTRL_PKG_SRC and
+        } elsif ($to_type != CTRL_DEB and
+		 $to_type != CTRL_DSC and
 		 $to_type != CTRL_FILE_CHANGES)
 	{
 	    $to->{$field} = $from->{$field};
@@ -1198,8 +1204,8 @@ sub field_parse_binary_source($) {
     my $ctrl = shift;
     my $ctrl_type = $ctrl->get_type();
 
-    if ($ctrl_type != CTRL_INDEX_PKG and
-        $ctrl_type != CTRL_PKG_DEB and
+    if ($ctrl_type != CTRL_REPO_PKG and
+        $ctrl_type != CTRL_DEB and
         $ctrl_type != CTRL_FILE_CHANGES and
         $ctrl_type != CTRL_FILE_BUILDINFO and
         $ctrl_type != CTRL_FILE_STATUS) {
@@ -1239,7 +1245,7 @@ sub field_list_src_dep() {
     } sort {
         $FIELDS{$a}{dep_order} <=> $FIELDS{$b}{dep_order}
     } grep {
-        field_is_allowed_in($_, CTRL_PKG_SRC) and
+        field_is_allowed_in($_, CTRL_DSC) and
         exists $FIELDS{$_}{dependency}
     } keys %FIELDS;
     return @list;
@@ -1259,7 +1265,7 @@ sub field_list_pkg_dep() {
     } sort {
         $FIELDS{$a}{dep_order} <=> $FIELDS{$b}{dep_order}
     } grep {
-        field_is_allowed_in($_, CTRL_PKG_DEB) and
+        field_is_allowed_in($_, CTRL_DEB) and
         exists $FIELDS{$_}{dependency}
     } keys %FIELDS;
     return @list;
@@ -1363,6 +1369,10 @@ sub field_insert_before($$@) {
 =back
 
 =head1 CHANGES
+
+=head2 Version 1.02 (dpkg 1.22.0)
+
+Deprecate argument: field_transfer_single() implicit argument usage.
 
 =head2 Version 1.01 (dpkg 1.21.0)
 

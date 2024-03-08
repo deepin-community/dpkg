@@ -81,15 +81,15 @@ read_line(int fd, char *buf, size_t min_size, size_t max_size)
   size_t n = min_size;
 
   while (line_size < (ssize_t)max_size) {
-    ssize_t r;
+    ssize_t nread;
     char *nl;
 
-    r = fd_read(fd, buf + line_size, n);
-    if (r <= 0)
-      return r;
+    nread = fd_read(fd, buf + line_size, n);
+    if (nread <= 0)
+      return nread;
 
-    nl = memchr(buf + line_size, '\n', r);
-    line_size += r;
+    nl = memchr(buf + line_size, '\n', nread);
+    line_size += nread;
 
     if (nl != NULL) {
       nl[1] = '\0';
@@ -113,14 +113,12 @@ extracthalf(const char *debar, const char *dir,
   char versionbuf[40];
   struct deb_version version;
   off_t ctrllennum, memberlen = 0;
-  ssize_t r;
+  ssize_t rc;
   int dummy;
   pid_t c1=0,c2,c3;
   int p1[2], p2[2];
   int p2_out;
   char nlc;
-  int adminmember = -1;
-  bool header_done;
   struct compress_params decompress_params = {
     .type = COMPRESSOR_TYPE_GZIP,
     .threads_max = compress_params.threads_max,
@@ -128,19 +126,21 @@ extracthalf(const char *debar, const char *dir,
 
   ar = dpkg_ar_open(debar);
 
-  r = read_line(ar->fd, versionbuf, strlen(DPKG_AR_MAGIC), sizeof(versionbuf) - 1);
-  if (r <= 0)
-    read_fail(r, debar, _("archive magic version number"));
+  rc = read_line(ar->fd, versionbuf, strlen(DPKG_AR_MAGIC), sizeof(versionbuf) - 1);
+  if (rc <= 0)
+    read_fail(rc, debar, _("archive magic version number"));
 
   if (strcmp(versionbuf, DPKG_AR_MAGIC) == 0) {
+    int adminmember = -1;
+    bool header_done = false;
+
     ctrllennum= 0;
-    header_done = false;
     for (;;) {
       struct dpkg_ar_hdr arh;
 
-      r = fd_read(ar->fd, &arh, sizeof(arh));
-      if (r != sizeof(arh))
-        read_fail(r, debar, _("archive member header"));
+      rc = fd_read(ar->fd, &arh, sizeof(arh));
+      if (rc != sizeof(arh))
+        read_fail(rc, debar, _("archive member header"));
 
       if (dpkg_ar_member_is_illegal(&arh))
         ohshit(_("file '%.250s' is corrupt - bad archive header magic"), debar);
@@ -155,9 +155,9 @@ extracthalf(const char *debar, const char *dir,
           ohshit(_("file '%.250s' is not a Debian binary archive (try dpkg-split?)"),
                  debar);
         infobuf= m_malloc(memberlen+1);
-        r = fd_read(ar->fd, infobuf, memberlen + (memberlen & 1));
-        if (r != (memberlen + (memberlen & 1)))
-          read_fail(r, debar, _("archive information header member"));
+        rc = fd_read(ar->fd, infobuf, memberlen + (memberlen & 1));
+        if (rc != (memberlen + (memberlen & 1)))
+          read_fail(rc, debar, _("archive information header member"));
         infobuf[memberlen] = '\0';
 
         if (strchr(infobuf, '\n') == NULL)
@@ -245,9 +245,9 @@ extracthalf(const char *debar, const char *dir,
     if (errstr)
       ohshit(_("archive has invalid format version: %s"), errstr);
 
-    r = read_line(ar->fd, ctrllenbuf, 1, sizeof(ctrllenbuf) - 1);
-    if (r <= 0)
-      read_fail(r, debar, _("archive control member size"));
+    rc = read_line(ar->fd, ctrllenbuf, 1, sizeof(ctrllenbuf) - 1);
+    if (rc <= 0)
+      read_fail(rc, debar, _("archive control member size"));
     if (sscanf(ctrllenbuf, "%jd%c%d", (intmax_t *)&ctrllennum, &nlc, &dummy) != 2 ||
         nlc != '\n')
       ohshit(_("archive has malformed control member size '%s'"), ctrllenbuf);
@@ -306,6 +306,7 @@ extracthalf(const char *debar, const char *dir,
                       _("decompressing archive '%s' (size=%jd) member '%s'"),
                       ar->name, (intmax_t)ar->size,
                       admininfo ? ADMINMEMBER : DATAMEMBER);
+    dpkg_ar_close(ar);
     exit(0);
   }
   close(p1[0]);
@@ -366,7 +367,7 @@ extracthalf(const char *debar, const char *dir,
   if (c1 != -1)
     subproc_reap(c1, _("paste"), 0);
   if (version.major == 0 && admininfo) {
-    /* Handle the version as a float to preserve the behaviour of old code,
+    /* Handle the version as a float to preserve the behavior of old code,
      * because even if the format is defined to be padded by 0's that might
      * not have been always true for really ancient versions... */
     while (version.minor && (version.minor % 10) == 0)

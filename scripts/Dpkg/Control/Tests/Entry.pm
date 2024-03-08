@@ -13,19 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::Control::Tests::Entry;
-
-use strict;
-use warnings;
-
-our $VERSION = '1.00';
-
-use Dpkg::Gettext;
-use Dpkg::ErrorHandling;
-use Dpkg::Control;
-
-use parent qw(Dpkg::Control);
-
 =encoding utf8
 
 =head1 NAME
@@ -36,10 +23,23 @@ Dpkg::Control::Tests::Entry - represents a test suite entry
 
 This class represents a test suite entry.
 
+=cut
+
+package Dpkg::Control::Tests::Entry 1.00;
+
+use strict;
+use warnings;
+
+use Dpkg::Gettext;
+use Dpkg::ErrorHandling;
+use Dpkg::Control;
+
+use parent qw(Dpkg::Control);
+
 =head1 METHODS
 
-All the methods of Dpkg::Control are available. Those listed below are either
-new or overridden with a different behavior.
+All the methods of L<Dpkg::Control> are available. Those listed below are
+either new or overridden with a different behavior.
 
 =over 4
 

@@ -14,7 +14,9 @@ get_vendor()
   local origin="$DPKG_ROOT/etc/dpkg/origins/default"
   local vendor
 
-  if [ -e "$origin" ]; then
+  if [ -n "$DEB_VENDOR" ]; then
+    vendor="$DEB_VENDOR"
+  elif [ -e "$origin" ]; then
     vendor=$(sed -ne 's/^Vendor: *\([^ ]\+\) */\1/p' "$origin" | tr A-Z a-z)
   fi
 
@@ -51,61 +53,35 @@ check_merged_usr_via_aliased_dirs()
   done
 }
 
-# Version 1.21.0 had bogus handling of DPKG_ADMINDIR in update-alternatives,
-# and misplaced them, fix them up.
-fixup_misplaced_alternatives()
-(
-  admindir=${DPKG_ADMINDIR:-/var/lib/dpkg}
+setup_aliases()
+{
+  local prog=start-stop-daemon
 
-  cd "$admindir"
-
-  for file in *; do
-    if ! [ -f "$file" ]; then
-      # Ignore anything that is not a file.
-      continue
-    fi
-
-    # Check whether this is a known file we do not want to act on.
-    case "$file" in
-    arch|\
-    available|available-old|\
-    cmethopt|methlock|\
-    diversions|diversions-old|\
-    lock|lock-frontend|\
-    statoverride|statoverride-old|\
-    status|status-old)
-      # Ignore known files just to make sure.
-      continue
-      ;;
-    *)
-    esac
-
-    # Check whether the file looks like an alternative state file.
-    mode="$(head -1 "$file")"
-    case "$mode" in
-    auto|manual)
-      # Looks like a state file, we will handle this one.
-      echo "Moving misplaced alternative state file $admindir/$file..."
-      mv "$file" "alternatives/$file"
-      ;;
-    *)
-      warning "unknown dpkg database file $admindir/$file is not a misplaced alternative state... leaving as is"
-      continue
-      ;;
-    esac
-  done
-)
+  # Add a backward compatibility symlink alias for s-s-d, which is now
+  # installed in its canonical location.
+  if [ ! -f "$DPKG_ROOT/sbin/$prog" ]; then
+    ln -s "/usr/sbin/$prog" "$DPKG_ROOT/sbin/$prog"
+  fi
+}
 
 case "$1" in
 configure)
-  fixup_misplaced_alternatives
-
   check_merged_usr_via_aliased_dirs
+  setup_aliases
   ;;
 abort-upgrade|abort-deconfigure|abort-remove)
   ;;
 *)
   error "called with unknown argument '$1'"
+  ;;
+esac
+
+# Due to #932360 in debhelper we need to explicitly tell systemd to reload.
+case "$1" in
+configure|abort-upgrade|abort-deconfigure|abort-remove)
+  if [ -d /run/systemd/system ]; then
+    systemctl --system daemon-reload >/dev/null || true
+  fi
   ;;
 esac
 

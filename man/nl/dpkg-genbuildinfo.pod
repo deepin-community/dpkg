@@ -24,7 +24,7 @@ B<dpkg-genbuildinfo> [I<optie>...]
 
 B<dpkg-genbuildinfo> leest informatie uit een uitgepakte en gebouwde Debian broncodeboom en uit de bestanden die het gegenereerd heeft en maakt een Debian controlebestand aan dat de bouwomgeving en de bouwvoorwerpen (een bestand B<.buildinfo>).
 
-Dit commando werd geïntroduceerd in dpkg 1.18.11.
+Dit programma werd geïntroduceerd in dpkg 1.18.11.
 
 =head1 OPTIES
 
@@ -74,7 +74,7 @@ Specificeert waar zich de lijst van bestanden bevindt die door het bouwproces aa
 
 =item B<-F>I<changelog-indeling>
 
-Geeft de indeling van het bestand changelog aan. Zie B<dpkg-parsechangelog>(1) voor informatie over alternatieve indelingen.
+Geeft de indeling van het bestand changelog aan. Zie L<dpkg-parsechangelog(1)> voor informatie over alternatieve indelingen.
 
 =item B<-O>[I<bestandsnaam>]
 
@@ -146,5 +146,5 @@ De lijst van gegenereerde bestanden. B<dpkg-genbuildinfo> leest hier de gegevens
 
 =head1 ZIE OOK
 
-B<deb-buildinfo>(5).
+L<deb-buildinfo(5)>.
 

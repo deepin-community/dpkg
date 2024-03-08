@@ -40,5 +40,5 @@ Er wordt momenteel slechts één vlag ondersteund, B<remove-on-upgrade>, om te m
 
 =head1 ZIE OOK
 
-B<dpkg-deb>(1), B<dpkg>(1).
+L<dpkg-deb(1)>, L<dpkg(1)>.
 

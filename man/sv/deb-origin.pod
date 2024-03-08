@@ -63,7 +63,7 @@ Värdet på fältet bestämmer namnet på återförsäljaren som denna återför
  Bugs: debbugs://bugs.debian.org
 =head1 SE ÄVEN
 
-B<dpkg-vendor>(1)
+L<dpkg-vendor(1)>.
 
 
 =head1 ÖVERSÄTTNING

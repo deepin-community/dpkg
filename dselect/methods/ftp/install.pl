@@ -1,12 +1,13 @@
 #!/usr/bin/perl
 #
-# Copyright © 1996 Andy Guy <awpguy@acs.ucalgary.ca>
+# Copyright © 1996 Andy Guy <andy@cyteen.org>
 # Copyright © 1998 Martin Schulze <joey@infodrom.north.de>
 # Copyright © 1999, 2009 Raphaël Hertzog <hertzog@debian.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; version 2 of the License.
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,7 +24,6 @@ use File::Path qw(make_path remove_tree);
 use File::Basename;
 
 eval q{
-    pop @INC if $INC[-1] eq '.';
     use File::Find;
     use Data::Dumper;
 
@@ -34,7 +34,8 @@ if ($@) {
     exit 1;
 }
 
-use Dselect::Ftp;
+use Dselect::Method;
+use Dselect::Method::Ftp;
 
 my $ftp;
 
@@ -183,12 +184,12 @@ sub procpkgfile {
 }
 
 print "\nProcessing Package files...\n";
-my ($fn, $i, $j);
+my ($i, $j);
 $i = 0;
 foreach my $site (@{$CONFIG{site}}) {
   $j = 0;
   foreach my $dist (@{$site->[2]}) {
-    $fn = $dist;
+    my $fn = $dist;
     $fn =~ tr#/#_#;
     $fn = "Packages.$site->[0].$fn";
     if (-f $fn) {
@@ -296,16 +297,14 @@ if($totsize == 0) {
 	    if ($rsize + $totsize > $avsp) {
 		print "no room for: $fn\n";
 		delete $downloads{$fn};
-	    } else {
-		if(yesno($def, $downloads{$fn}
-			 ? "download: $fn ${rsize}k/${csize}k (total = ${totsize}k)"
-			 : "download: $fn ${rsize}k (total = ${totsize}k)")) {
-		    $def = 'y';
-		    $totsize += $rsize;
-		} else {
-		    $def = 'n';
-		    delete $downloads{$fn};
-		}
+            } elsif (yesno($def, $downloads{$fn}
+                           ? "download: $fn ${rsize}k/${csize}k (total = ${totsize}k)"
+                           : "download: $fn ${rsize}k (total = ${totsize}k)")) {
+                $def = 'y';
+                $totsize += $rsize;
+            } else {
+                $def = 'n';
+                delete $downloads{$fn};
 	    }
 	}
     }
@@ -413,6 +412,7 @@ if($totsize != 0) {
               if (yesno('y', "\nDo you want to retry downloading at once")) {
 		  # get the first $fn that foreach would give:
 		  # this is the one that got interrupted.
+                my $fn;
 		MY_ITER: foreach my $ffn (keys(%downloads)) {
 		    $fn = $ffn;
 		    last MY_ITER;
@@ -450,9 +450,9 @@ my %files; # package-version => files...
 sub chkdeb($) {
     my ($fn) = @_;
     # check to see if it is a .deb file
-    if(!system("dpkg-deb --info $fn 2>&1 >/dev/null && dpkg-deb --contents $fn 2>&1 >/dev/null")) {
+    if (!system "dpkg-deb --info $fn >/dev/null 2>&1 && dpkg-deb --contents $fn >/dev/null 2>&1") {
 	return 1;
-    } elsif(!system("dpkg-split --info $fn 2>&1 >/dev/null")) {
+    } elsif (!system "dpkg-split --info $fn >/dev/null 2>&1") {
 	return 2;
     }
     return 0;
@@ -586,13 +586,11 @@ sub removeinstalled {
 	    my($pkg, $ver) = getdebinfo($fn);
 	    if(!defined($pkg) || !defined($ver)) {
 		print "Could not get info for: $dir/$fn\n";
-	    } else {
-		if ($curpkgs{$pkg} and dcmpvers($ver, 'le', $curpkgs{$pkg})) {
-		    print "deleting: $dir/$fn\n";
-		    unlink $fn;
-		} else {
-		    print "leaving: $dir/$fn\n";
-		}
+            } elsif ($curpkgs{$pkg} and dcmpvers($ver, 'le', $curpkgs{$pkg})) {
+                print "deleting: $dir/$fn\n";
+                unlink $fn;
+            } else {
+                print "leaving: $dir/$fn\n";
 	    }
 	} else {
 	    print "non-debian: $dir/$fn\n";

@@ -28,7 +28,23 @@ Varje fält börjar med en etikett, såsom B<Source> eller B<Binary> (skiftläge
 
 Styrinformationen kan omges av en OpenPGP-signatur i ASCII-skal, såsom beskrivs i RFC4880.
 
-Namnet på B<.buildinfo>-filen kommer att bero på byggtypen och kommer att vara så specifik som möjligt, men inte mer; för ett bygge som innehåller B<any> (någon) kommer namnet vara I<källkodsnamn>B<_>I<binärversion>B<_>I<ark>B<.buildinfo>, om bygget annars innehåller B<all> (alla) kommer namnet vara I<källkodsnamn>B<_>I<binärversion>B<_>B<all.buildinfo>, om bygget annars innehåller B<source> (källkod) kommer namnet vara I<källkodsnamn>B<_>I<källkodsversion>B<_>B<source.buildinfo>.
+Namnet på B<.buildinfo>-filen kommer att bero på byggtypen och kommer att vara så specifik som möjligt, men inte mer; namnet kommer att vara:
+
+=over 
+
+=item I<källkodsnamn>B<_>I<binärversion>B<_>I<ark>B<.buildinfo>
+
+för ett bygge som innehåller B<any> (någon)
+
+=item I<källkodsnamn>B<_>I<binärversion>B<_>B<all.buildinfo>
+
+annars för ett bygge som innehåller B<all> (alla)
+
+=item I<källkodsnamn>B<_>I<källkodsversion>B<_>B<source.buildinfo>
+
+annars för ett bygge som innehåller B<source> (källkod)
+
+=back
 
 =head1 FÄLT
 
@@ -52,7 +68,7 @@ Detta blankstegsavdelade fält anger vilken sorts maskinvara paketet för tillf�
 
 =item B<Version:> I<versionssträng> (krävs)
 
-Vanligtvis är detta det ursprungliga paketets versionsnummer på den form programmets författare använder. Den kan även innehålla ett Debianuppdateringsnummer (för paket vars källa är utanför Debian). Exakt format och sorteringsalgoritm beskrivs i B<deb-version>(7).
+Vanligtvis är detta det ursprungliga paketets versionsnummer på den form programmets författare använder. Den kan även innehålla ett Debianuppdateringsnummer (för paket vars källa är utanför Debian). Exakt format och sorteringsalgoritm beskrivs i L<deb-version(7)>.
 
 =item B<Binary-Only-Changes:>
 
@@ -84,7 +100,7 @@ Debianarkitekturen för den installation paketen byggs i. Vanliga arkitekturer �
 
 =item B<Build-Date:> I<byggdatum>
 
-Datumet paketet byggdes. Det måste vara på samma format som datumet i en B<deb-changelog>(5)-post.
+Datumet paketet byggdes. Det måste vara på samma format som datumet i en L<deb-changelog(5)>-post.
 
 =item B<Build-Kernel-Version:> I<byggkärneversion>
 
@@ -156,7 +172,7 @@ Listan över miljövariabler som är kända för att påverka paketbyggprocessen
 
 =head1 SE ÄVEN
 
-L<deb822(5)>, B<deb-changes>(5), B<deb-version>(7), B<dpkg-genbuildinfo>(1).
+L<deb822(5)>, L<deb-changes(5)>, L<deb-version(7)>, L<dpkg-genbuildinfo(1)>.
 
 
 =head1 ÖVERSÄTTNING

@@ -36,7 +36,7 @@ De controle-data mogen ingesloten liggen in een OpenPGP-handtekening met ASCII-h
 
 De waarde van dit veld declareert de indelingsversie van het broncodepakket. De veldwaarde wordt door programma's die met een broncodepakket werken, gebruikt om de bestandenlijst in het broncodepakket te interpreteren en te bepalen hoe het uitgepakt moet worden. De syntaxis van de veldwaarde is: een numerieke hoofdversie (“0-9”), een punt (“.”), een numerieke onderversie (“0-9”), en dan eventueel na witruimte (“ \t”) een subtype dat, als het opgegeven wordt, bestaat uit een alfanumeriek (“a-z0-9”) woord tussen haakjes (“()”). Vanuit het oogpunt van syntaxis is het subtype optioneel, maar voor specifieke revisies van de indeling van broncodepakketten kan het een verplicht onderdeel zijn.
 
-De indelingen van de broncode die momenteel ondersteund worden door B<dpkg> zijn B<1.0>, B<2.0>, B<3.0 (native)>, B<3.0 (quilt)>, B<3.0 (git)>, B<3.0 (bzr)> en B<3.0 (custom)>. Raadpleeg B<dpkg-source>(1) voor de beschrijving ervan.
+De indelingen van de broncode die momenteel ondersteund worden door B<dpkg> zijn B<1.0>, B<2.0>, B<3.0 (native)>, B<3.0 (quilt)>, B<3.0 (git)>, B<3.0 (bzr)> en B<3.0 (custom)>. Raadpleeg L<dpkg-source(1)> voor de beschrijving ervan.
 
 =item B<Source:> I<broncode-naam> (verplicht)
 
@@ -58,7 +58,7 @@ De waarde van dit veld wordt gewoonlijk gegenereerd op basis van de B<Architectu
 
 =item B<Version:> I<versie-tekenreeks> (verplicht)
 
-Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de auteur van het programma er ook voor gebruikt. Het kan ook een Debian-revisienummer bevatten (voor niet uit Debian stammende pakketten). De exacte indeling en het sorteringsalgoritme worden beschreven in B<deb-version>(7).
+Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de auteur van het programma er ook voor gebruikt. Het kan ook een Debian-revisienummer bevatten (voor niet uit Debian stammende pakketten). De exacte indeling en het sorteringsalgoritme worden beschreven in L<deb-version(7)>.
 
 =item B<Origin:> I<naam>
 
@@ -70,7 +70,7 @@ Moet opgemaakt worden volgens de indeling “Joe Bloggs E<lt>jbloggs@foo.comE<gt
 
 =item B<Uploaders:> I<lijst van volledige-namen-en-e-mailadressen>
 
-Somt al de namen en de e-mailadressen op van de personen die het pakket mee onderhouden volgens dezelfde indeling als van het veld B<Maintainer>. Meerdere mede-onderhouders moeten onderling door een komma gescheiden worden.
+Somt al de namen en de e-mailadressen op van de personen die het pakket mee onderhouden volgens dezelfde indeling als van het veld B<Maintainer>. Meerdere mede-beheerders moeten onderling door een komma gescheiden worden.
 
 =item B<Description:> I<korte-beschrijving>
 
@@ -106,7 +106,7 @@ De I<url> van een webinterface waarmee door de opslagruimte van het versiecontro
 
 =item B<Vcs-Svn:> I<URL>
 
-Deze velden declareren de I<url> van de opslagruimte van het versiecontrolesysteem dat gebruikt wordt om dit pakket te onderhouden. Zie B<deb-src-control>(5) voor verdere informatie.
+Deze velden declareren de I<url> van de opslagruimte van het versiecontrolesysteem dat gebruikt wordt om dit pakket te onderhouden. Zie L<deb-src-control(5)> voor verdere informatie.
 
 =item B<Testsuite:> I<namenlijst>
 
@@ -116,7 +116,7 @@ Dit veld declareert dat het broncodepakket de opgegeven testsuites bevat. De waa
 
 Dit veld declareert de door komma's gescheiden unie van alle testvereisten (de velden B<Depends> uit het bestand I<debian/tests/control>), waaruit alle restricties verwijderd en alle OR-vereisten uitgevlakt werden (dit betekent omgezet naar aparte AND-relaties), uitgezonderd voor de binaire pakketten, gegenereerd door dit broncodepakket en het equivalent van zijn meta-vereiste B<@>.
 
-Motivering: dit veld is noodzakelijk omdat anders elk broncodepakket uitgepakt zou moeten worden om de testvereisten te kunnen achterhalen.
+B<Motivering>: dit veld is noodzakelijk omdat anders elk broncodepakket uitgepakt zou moeten worden om de testvereisten te kunnen achterhalen.
 
 =item B<Build-Depends:> I<pakketlijst>
 
@@ -130,7 +130,7 @@ Motivering: dit veld is noodzakelijk omdat anders elk broncodepakket uitgepakt z
 
 =item B<Build-Conflicts-Indep:> I<pakketlijst>
 
-Deze velden declareren de relaties tussen het broncodepakket en de pakketten die gebruikt worden om het te bouwen. Zij worden besproken in de man-pagina B<deb-src-control>(5).
+Deze velden declareren de relaties tussen het broncodepakket en de pakketten die gebruikt worden om het te bouwen. Zij worden besproken in de man-pagina L<deb-src-control(5)>.
 
 =item B<Package-List:>
 
@@ -191,5 +191,5 @@ Het veld B<Format> combineert de indeling van het B<.dsc>-bestand zelf en de ind
 
 =head1 ZIE OOK
 
-L<deb822(5)>, B<deb-src-control>(5), B<deb-version>(7), B<dpkg-source>(1).
+L<deb822(5)>, L<deb-src-control(5)>, L<deb-version(7)>, L<dpkg-source(1)>.
 

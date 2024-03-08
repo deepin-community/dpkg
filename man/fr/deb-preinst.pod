@@ -52,7 +52,7 @@ Si I<postrm> échoue lors de la mise à niveau ou échoue après l'échec de la 
 
 =head1 VOIR AUSSI
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 TRADUCTION

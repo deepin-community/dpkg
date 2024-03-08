@@ -1,14 +1,61 @@
-# serial 2
+# serial 3
 # Copyright © 2005 Scott James Remnant <scott@netsplit.com>
 # Copyright © 2007 Frank Lichtenheld <djpig@debian.org>
-# Copyright © 2007, 2009, 2011 Guillem Jover <guillem@debian.org>
+# Copyright © 2007-2023 Guillem Jover <guillem@debian.org>
+
+# DPKG_PROG_SHELL
+# ---------------
+# Locate a POSIX shell interpreter to use in dpkg. It should support
+# passing -- after -c for robust argument parsing.
+AC_DEFUN([DPKG_PROG_SHELL], [
+  AC_ARG_VAR([DPKG_SHELL], [default POSIX shell interpreter used by dpkg])
+  AC_CACHE_CHECK([for a POSIX sh that supports -- after -c], [ac_cv_path_DPKG_SHELL], [
+    AC_PATH_PROGS_FEATURE_CHECK([DPKG_SHELL], [sh dash bsh ksh bash], [
+      shellcheck=$(test -x $ac_path_DPKG_SHELL && \
+        $ac_path_DPKG_SHELL -c -- "echo yes" 2>/dev/null)
+      AS_IF([test "x$shellcheck" = "xyes"], [
+        ac_cv_path_DPKG_SHELL="$(AS_BASENAME([$ac_path_DPKG_SHELL]))"
+        ac_path_DPKG_SHELL_found=:
+      ])
+    ], [
+      ac_cv_path_DPKG_SHELL=none
+    ])
+  ])
+  dnl We could not find any shell supporting --, fallback to sh.
+  AS_IF([test "$ac_cv_path_DPKG_SHELL" = "none"], [
+    DPKG_SHELL=sh
+    dpkg_shell_supports_dash_dash=0
+  ], [
+    DPKG_SHELL=$ac_cv_path_DPKG_SHELL
+    dpkg_shell_supports_dash_dash=1
+  ])
+
+  AC_SUBST([DPKG_DEFAULT_SHELL], [$DPKG_SHELL])
+  AC_DEFINE_UNQUOTED([DPKG_DEFAULT_SHELL], ["$DPKG_SHELL"],
+    [POSIX shell interpreter used by dpkg])
+  AC_DEFINE_UNQUOTED([HAVE_DPKG_SHELL_WITH_DASH_DASH],
+    [$dpkg_shell_supports_dash_dash],
+    [POSIX shell interpreter used by dpkg supports -- after -c])
+])# DPKG_PROG_SHELL
+
+# DPKG_PROG_PAGER
+# ---------------
+# Locate a pager program to use in dpkg, if none are found we default to cat.
+AC_DEFUN([DPKG_PROG_PAGER], [
+  AC_ARG_VAR([DPKG_PAGER], [default pager program used by dpkg])
+  AC_CHECK_PROGS([DPKG_PAGER], [pager less more], [cat])
+
+  AC_SUBST([DPKG_DEFAULT_PAGER], [$DPKG_PAGER])
+  AC_DEFINE_UNQUOTED([DPKG_DEFAULT_PAGER], ["$DPKG_PAGER"],
+    [pager program used by dpkg])
+])# DPKG_PROG_PAGER
 
 # DPKG_PROG_PERL
 # --------------
 # Locate perl interpreter in the path
 AC_DEFUN([DPKG_PROG_PERL], [
   AC_ARG_VAR([PERL], [Perl interpreter])dnl
-  m4_define([_PERL_MIN_VERSION], [5.28.1])
+  m4_define([_PERL_MIN_VERSION], [5.32.1])
   AC_SUBST([PERL_MIN_VERSION], [_PERL_MIN_VERSION])
   AC_CACHE_CHECK([for perl >= _PERL_MIN_VERSION], [ac_cv_path_PERL], [
     AC_PATH_PROGS_FEATURE_CHECK([PERL], [perl], [
@@ -32,6 +79,8 @@ AC_DEFUN([DPKG_PROG_PERL], [
                          $r =~ s/$Config{vendorprefixexp}/\$(prefix)/;
                          print $r')
   ])
+  DPKG_WITH_DIR([perllibdir], [${PERL_LIBDIR}],
+    [perl modules directory])
 ])# DPKG_PROG_PERL
 
 # DPKG_PROG_PO4A

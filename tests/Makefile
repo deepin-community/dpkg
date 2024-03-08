@@ -20,8 +20,6 @@ TESTS_MANUAL += t-conffile-prompt
 TESTS_FAIL :=
 TESTS_FAIL += t-dir-leftover-deadlock
 TESTS_FAIL += t-dir-shared-replaces-lost
-TESTS_FAIL += t-disappear-depended
-TESTS_FAIL += t-conffile-divert-conffile
 TESTS_FAIL += t-breaks-multiarch
 
 TESTS_PASS :=
@@ -36,6 +34,7 @@ TESTS_PASS += t-unpack-symlink
 TESTS_PASS += t-unpack-hardlink
 TESTS_PASS += t-unpack-divert-hardlink
 TESTS_PASS += t-unpack-divert-nowarn
+TESTS_PASS += t-unpack-divert-overwrite
 TESTS_PASS += t-unpack-fifo
 ifdef DPKG_AS_ROOT
 # No permissions for devices
@@ -47,6 +46,9 @@ TESTS_PASS += t-depends
 TESTS_PASS += t-dir-leftover-parents
 TESTS_PASS += t-dir-leftover-conffile
 TESTS_PASS += t-disappear
+TESTS_PASS += t-disappear-depended
+TESTS_PASS += t-disappear-diverted
+TESTS_PASS += t-disappear-diverted-other
 TESTS_PASS += t-disappear-empty
 TESTS_PASS += t-provides
 TESTS_PASS += t-provides-self
@@ -56,6 +58,7 @@ TESTS_PASS += t-breaks
 TESTS_PASS += t-breaks-protected
 TESTS_PASS += t-breaks-essential
 TESTS_PASS += t-conflicts
+TESTS_PASS += t-conflicts-replaces
 TESTS_PASS += t-conflict-provide-replace-real
 TESTS_PASS += t-conflict-provide-replace-virtual
 TESTS_PASS += t-conflict-provide-replace-virtual-multiarch
@@ -83,6 +86,7 @@ TESTS_PASS += t-conffile-forcenew
 TESTS_PASS += t-conffile-forceask
 TESTS_PASS += t-conffile-root-option
 TESTS_PASS += t-conffile-divert-normal
+TESTS_PASS += t-conffile-divert-conffile
 TESTS_PASS += t-conffile-conflict
 TESTS_PASS += t-conffile-replaces
 TESTS_PASS += t-conffile-replaces-upgrade
@@ -114,6 +118,7 @@ endif
 # By default do nothing
 all help::
 	@echo "Run 'make test' to run all the tests"
+	@echo "Run 'make installtest' to run all the tests as installed"
 	@echo "Run 'make <test-id>-test' to run a specifict test"
 	@echo "Run 'make clean' to remove all intermediary files"
 	@echo ""
@@ -130,9 +135,12 @@ $(build_targets)::
 
 test_targets = $(addsuffix -test,$(TESTS))
 
+test:: export DPKG_BUILDTREE=$(realpath ..)
 test:: $(test_targets)
 $(test_targets)::
 	$(MAKE) -C $(subst -test,,$@) test
+
+installtest: $(test_targets)
 
 .PHONY: test $(test_targets)
 

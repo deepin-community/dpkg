@@ -1,13 +1,13 @@
-# German translation of the scripts in the dpkg package
+# Translation of dpkg-dev to German
+# (C) Helge Kreutzmann <debian@helgefjell.de>, 2007-2024.
 # This file is distributed under the same license as the dpkg package.
-# (C) Helge Kreutzmann <debian@helgefjell.de>, 2007-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dpkg-dev 1.21.14\n"
+"Project-Id-Version: dpkg-dev 1.22.5\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
-"PO-Revision-Date: 2023-01-02 17:18+0100\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
+"PO-Revision-Date: 2024-01-25 17:45+0100\n"
 "Last-Translator: Helge Kreutzmann <debian@helgefjell.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -16,8 +16,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: scripts/dpkg-architecture.pl scripts/dpkg-buildflags.pl
-#: scripts/dpkg-buildpackage.pl scripts/dpkg-checkbuilddeps.pl
+#: scripts/dpkg-architecture.pl scripts/dpkg-buildapi.pl
+#: scripts/dpkg-buildflags.pl scripts/dpkg-buildpackage.pl
+#: scripts/dpkg-buildtree.pl scripts/dpkg-checkbuilddeps.pl
 #: scripts/dpkg-distaddfile.pl scripts/dpkg-genbuildinfo.pl
 #: scripts/dpkg-genchanges.pl scripts/dpkg-gencontrol.pl
 #: scripts/dpkg-gensymbols.pl scripts/dpkg-mergechangelogs.pl
@@ -29,11 +30,11 @@ msgid "Debian %s version %s.\n"
 msgstr "Debian %s Version %s\n"
 
 #: scripts/dpkg-architecture.pl scripts/dpkg-buildflags.pl
-#: scripts/dpkg-buildpackage.pl scripts/dpkg-distaddfile.pl
-#: scripts/dpkg-genbuildinfo.pl scripts/dpkg-genchanges.pl
-#: scripts/dpkg-gencontrol.pl scripts/dpkg-gensymbols.pl
-#: scripts/dpkg-parsechangelog.pl scripts/dpkg-shlibdeps.pl
-#: scripts/dpkg-source.pl scripts/dpkg-vendor.pl
+#: scripts/dpkg-buildpackage.pl scripts/dpkg-buildtree.pl
+#: scripts/dpkg-distaddfile.pl scripts/dpkg-genbuildinfo.pl
+#: scripts/dpkg-genchanges.pl scripts/dpkg-gencontrol.pl
+#: scripts/dpkg-gensymbols.pl scripts/dpkg-parsechangelog.pl
+#: scripts/dpkg-shlibdeps.pl scripts/dpkg-source.pl scripts/dpkg-vendor.pl
 msgid ""
 "\n"
 "This is free software; see the GNU General Public License version 2 or\n"
@@ -43,7 +44,7 @@ msgstr ""
 "Dies ist freie Software. Lesen Sie die GNU General Public License Version 2\n"
 "oder neuer für die Kopierbedingungen. Es gibt KEINE Haftung.\n"
 
-#: scripts/dpkg-architecture.pl scripts/dpkg-vendor.pl
+#: scripts/dpkg-architecture.pl scripts/dpkg-buildapi.pl scripts/dpkg-vendor.pl
 #, perl-format
 msgid "Usage: %s [<option>...] [<command>]"
 msgstr "Aufruf: %s [<Option> …] [<Befehl>]"
@@ -159,7 +160,8 @@ msgstr "%s ist keine unterstütztes Print-Format"
 msgid "%s is not a supported variable name"
 msgstr "%s ist kein unterstützter Variablenname"
 
-#: scripts/dpkg-architecture.pl scripts/dpkg-buildflags.pl
+#: scripts/dpkg-architecture.pl scripts/dpkg-buildapi.pl
+#: scripts/dpkg-buildflags.pl scripts/dpkg-buildtree.pl
 #: scripts/dpkg-distaddfile.pl scripts/dpkg-genbuildinfo.pl
 #: scripts/dpkg-genchanges.pl scripts/dpkg-gencontrol.pl
 #: scripts/dpkg-gensymbols.pl scripts/dpkg-name.pl
@@ -178,13 +180,35 @@ msgstr ""
 "angegebener GNU-Systemtyp %s passt nicht zu CC-Systemtyp %s, versuchen Sie, "
 "eine korrekte CC-Umgebungsvariable zu setzen"
 
-#: scripts/dpkg-architecture.pl scripts/dpkg-shlibdeps.pl scripts/Dpkg/IPC.pm
+#: scripts/dpkg-architecture.pl scripts/Dpkg/IPC.pm
 #: scripts/Dpkg/Shlibs/Cppfilt.pm
 #, perl-format
 msgid "unable to execute %s"
 msgstr "%s konnte nicht ausgeführt werden"
 
-#: scripts/dpkg-buildflags.pl
+#: scripts/dpkg-buildapi.pl
+msgid ""
+"Commands:\n"
+"  -?, --help               show this help message.\n"
+"      --version            show the version."
+msgstr ""
+"Befehle:\n"
+"  -?, --help               diese Hilfemeldung anzeigen\n"
+"      --version            die Version anzeigen"
+
+#: scripts/dpkg-buildapi.pl
+msgid ""
+"Options:\n"
+"  -c<control-file>         get control info from this file.\n"
+msgstr ""
+"Options:\n"
+"  -c<Steuerdatei>          Steuerinformationen aus dieser Datei erhalten\n"
+
+#: scripts/dpkg-buildapi.pl
+msgid "no arguments accepted"
+msgstr "Es wird kein Argument akzeptiert."
+
+#: scripts/dpkg-buildflags.pl scripts/dpkg-buildtree.pl
 #, perl-format
 msgid "Usage: %s [<command>]"
 msgstr "Aufruf: %s [<Befehl>]"
@@ -196,7 +220,7 @@ msgid ""
 "  --origin <flag>    output the origin of the flag to stdout:\n"
 "                     value is one of vendor, system, user, env.\n"
 "  --status           output a synopsis with all parameters affecting the\n"
-"                     program behaviour, the resulting flags and their "
+"                     program behavior, the resulting flags and their "
 "origin.\n"
 "  --query            like --status, but in deb822 format.\n"
 "  --query-features <area>\n"
@@ -302,8 +326,8 @@ msgid ""
 "      --check-option=<opt>    pass <opt> to check <command>.\n"
 "      --hook-<name>=<command> set <command> as the hook <name>, known "
 "hooks:\n"
-"                                init preclean source build binary buildinfo\n"
-"                                changes postclean check sign done\n"
+"                                preinit init preclean source build binary\n"
+"                                buildinfo changes postclean check sign done\n"
 "      --buildinfo-file=<file> set the .buildinfo filename to generate.\n"
 "      --buildinfo-option=<opt>\n"
 "                              pass option <opt> to dpkg-genbuildinfo.\n"
@@ -381,7 +405,7 @@ msgstr ""
 "                      <Opt> an check-<Befehl> übergeben\n"
 "  --hook-<Name>=<Befehl>\n"
 "                      <Befehl> als Hook-<Name> setzen, bekannte Hooks:\n"
-"                        init preclean source build binary buildinfo\n"
+"                        preinit init preclean source build binary buildinfo\n"
 "                        changes postclean check sign done\n"
 "      --buildinfo-file=<Datei>\n"
 "                        den zu erstellenden .buildinfo-Dateinamen setzen\n"
@@ -739,6 +763,27 @@ msgid ""
 msgstr ""
 "%s muss aktualisiert werden, um die Ziele »build-arch« und »build-indep« zu "
 "unterstützen (zumindest »%s« scheint zu fehlen)."
+
+#: scripts/dpkg-buildtree.pl
+msgid ""
+"Commands:\n"
+"  clean              clean dpkg generated artifacts from the build tree.\n"
+"  --help             show this help message.\n"
+"  --version          show the version.\n"
+msgstr ""
+"Befehle:\n"
+"  clean              Dpkg-erstellte Artefakte aus dem Baubaum bereinigen.\n"
+"  --help             diese Hilfemeldung anzeigen\n"
+"  --version          die Version anzeigen\n"
+
+#: scripts/dpkg-buildtree.pl
+#, perl-format
+msgid "two commands specified: %s and %s"
+msgstr "zwei Befehle angegeben: %s und %s"
+
+#: scripts/dpkg-buildtree.pl
+msgid "missing action"
+msgstr "fehlende Aktion"
 
 #: scripts/dpkg-checkbuilddeps.pl
 #, perl-format
@@ -1104,7 +1149,7 @@ msgstr "Paket %s nicht in Steuer-Info"
 
 #: scripts/dpkg-gencontrol.pl scripts/dpkg-gensymbols.pl
 msgid "no package stanza found in control info"
-msgstr "kein package-Eintrag in Steuer-Info gefunden"
+msgstr "kein package-Absatz in Steuer-Info gefunden"
 
 #: scripts/dpkg-gencontrol.pl scripts/dpkg-gensymbols.pl
 #, perl-format
@@ -1554,8 +1599,8 @@ msgstr "  %s (laut Paket %s, nicht %s)"
 msgid "unconditional maintainer override for %s"
 msgstr "bedingungslose Übersteuerung (»override«) des Betreuers für %s"
 
-#: scripts/dpkg-scanpackages.pl scripts/dpkg-shlibdeps.pl scripts/Dpkg/IPC.pm
-#: scripts/Dpkg/Shlibs/Objdump.pm
+#: scripts/dpkg-scanpackages.pl scripts/Dpkg/IPC.pm
+#: scripts/Dpkg/Shlibs/Objdump/Object.pm
 #, perl-format
 msgid "cannot fork for %s"
 msgstr "fork kann für %s nicht ausgeführt werden"
@@ -2308,6 +2353,25 @@ msgstr ""
 msgid "'%s' is not a legal architecture in list '%s'"
 msgstr "»%s« ist keine gültige Architektur in der Liste »%s«"
 
+#: scripts/Dpkg/BuildAPI.pm
+msgid "dpkg build API level needs an exact version"
+msgstr "Dpkg-Bau-API-Stufe benötigt eine genaue Version"
+
+#: scripts/Dpkg/BuildAPI.pm
+#, perl-format
+msgid "dpkg build API level with conflicting versions: %s vs %s"
+msgstr "Dpkg-Bau-API-Stufe mit in Konflikt stehenden Versionen: %s bzw. %s"
+
+#: scripts/Dpkg/BuildAPI.pm
+#, perl-format
+msgid "invalid dpkg build API level '%s'"
+msgstr "Ungültige Dpkg-Bau-API-Stufe »%s«"
+
+#: scripts/Dpkg/BuildAPI.pm
+#, perl-format
+msgid "dpkg build API level '%s' greater than max '%s'"
+msgstr "Dpkg-Bau-API-Stufe »%s« größer als Maximum »%s«"
+
 #: scripts/Dpkg/BuildFlags.pm scripts/Dpkg/Compression/FileHandle.pm
 #: scripts/Dpkg/File.pm scripts/Dpkg/Interface/Storable.pm
 #: scripts/Dpkg/Shlibs/Objdump.pm scripts/Dpkg/Source/BinaryFiles.pm
@@ -2610,12 +2674,12 @@ msgid "invalid syntax for option in %s, line %d"
 msgstr "Syntaxfehler für Option in %s in Zeile %d"
 
 #: scripts/Dpkg/Control.pm
-msgid "general section of control info file"
-msgstr "allgemeiner Abschnitt der Steuer-Infodatei"
+msgid "source package stanza of template control file"
+msgstr "kein »source package«-Absatz in Vorlagen-Steuer-Datei gefunden"
 
 #: scripts/Dpkg/Control.pm
-msgid "package's section of control info file"
-msgstr "Paketabschnitt der Steuer-Infodatei"
+msgid "binary package stanza of template control file"
+msgstr "Absatz »binary package« von Vorlagen-Steuer-Datei"
 
 #: scripts/Dpkg/Control.pm
 msgid "parsed version of changelog"
@@ -2623,19 +2687,19 @@ msgstr "ausgewertete Version des Changelogs"
 
 #: scripts/Dpkg/Control.pm
 msgid "header stanza of copyright file"
-msgstr "»header«-Anteil der Copyright-Datei"
+msgstr "»header«-Absatz der Copyright-Datei"
 
 #: scripts/Dpkg/Control.pm
 msgid "files stanza of copyright file"
-msgstr "»files«-Anteil der Copyright-Datei"
+msgstr "»files«-Absatz der Copyright-Datei"
 
 #: scripts/Dpkg/Control.pm
 msgid "license stanza of copyright file"
-msgstr "»license«-Anteil der Copyright-Datei"
+msgstr "»license«-Absatz der Copyright-Datei"
 
 #: scripts/Dpkg/Control.pm
-msgid "package's tests control file"
-msgstr "Teststeuerdatei des Pakets"
+msgid "source package tests control file"
+msgstr "Teststeuerdatei des Quellpakets"
 
 #: scripts/Dpkg/Control.pm
 #, perl-format
@@ -2648,17 +2712,20 @@ msgid "stanza in repository's %s file"
 msgstr "Absatz in Datei %s des Depots"
 
 #: scripts/Dpkg/Control.pm
-#, perl-format
-msgid "%s file"
-msgstr "%s-Datei"
+msgid "source package control file"
+msgstr "Quellpaket-Steuerdatei"
 
 #: scripts/Dpkg/Control.pm
-msgid "control info of a .deb package"
-msgstr "Steuerinfo eines .deb-Pakets"
+msgid "binary package control file"
+msgstr "Binärpaket-Steuerdatei"
 
 #: scripts/Dpkg/Control.pm
 msgid "build information file"
 msgstr "Bauinformationsdatei"
+
+#: scripts/Dpkg/Control.pm
+msgid "upload changes control file"
+msgstr "Änderungs-Steuerdatei hochladen"
 
 #: scripts/Dpkg/Control.pm
 msgid "vendor file"
@@ -2931,6 +2998,10 @@ msgid "specified key needs a keystore"
 msgstr "angegebener Schlüssel benötigt einen Schlüsselspeicher"
 
 #: scripts/Dpkg/OpenPGP/ErrorCodes.pm
+msgid "OpenPGP backend command cannot sign"
+msgstr "OpenPGP-Backendbefehl kann nicht signieren"
+
+#: scripts/Dpkg/OpenPGP/ErrorCodes.pm
 #, perl-format
 msgid "error code %d"
 msgstr "Fehler-Code %d"
@@ -2948,6 +3019,16 @@ msgstr "Zeichen »%s« ist nicht erlaubt"
 msgid "must start with an alphanumeric character"
 msgstr "muss mit einem alphanumerischen Zeichen beginnen"
 
+#: scripts/Dpkg/Package.pm
+#, perl-format
+msgid "source package name '%s' is illegal: %s"
+msgstr "Quellpaketname »%s« ist ungültig: »%s«"
+
+#: scripts/Dpkg/Package.pm
+#, perl-format
+msgid "source package has two conflicting values - %s and %s"
+msgstr "zwei widersprüchliche Werte für Quellpaket - %s und %s"
+
 #: scripts/Dpkg/Path.pm scripts/Dpkg/Source/Archive.pm
 #, perl-format
 msgid "pathname '%s' cannot be canonicalized"
@@ -2959,6 +3040,10 @@ msgid "pathname '%s' points outside source root (to '%s')"
 msgstr "Pfadname »%s« zeigt außerhalb der Quellwurzel (nach „%s“)"
 
 #: scripts/Dpkg/Shlibs.pm
+msgid "use -l option instead of LD_LIBRARY_PATH"
+msgstr "verwenden Sie die Option »-l« statt LD_LIBRARY_PATH"
+
+#: scripts/Dpkg/Shlibs.pm
 msgid ""
 "deprecated use of LD_LIBRARY_PATH with private library directory which "
 "interferes with cross-building, please use -l option instead"
@@ -2966,18 +3051,18 @@ msgstr ""
 "veraltete Verwendung von LD_LIBRARY_PATH mit privaten Bibliotheksverzeichnis "
 "stört Cross-Bau, bitte verwenden Sie stattdessen die Option »-l«"
 
-#: scripts/Dpkg/Shlibs.pm scripts/Dpkg/Shlibs/Objdump.pm
+#: scripts/Dpkg/Shlibs.pm scripts/Dpkg/Shlibs/Objdump/Object.pm
 #, perl-format
 msgid "unknown executable format in file '%s'"
 msgstr "unbekanntes Programmformat in Datei »%s«"
 
-#: scripts/Dpkg/Shlibs/Objdump.pm
+#: scripts/Dpkg/Shlibs/Objdump/Object.pm
 #, perl-format
 msgid "couldn't parse dynamic relocation record: %s"
 msgstr ""
 "dynamischer Adressverschiebungseintrag konnte nicht ausgewertet werden: %s"
 
-#: scripts/Dpkg/Shlibs/Objdump.pm
+#: scripts/Dpkg/Shlibs/Objdump/Object.pm
 #, perl-format
 msgid "couldn't parse dynamic symbol definition: %s"
 msgstr "Definition der dynamischen Symbole konnte nicht ausgewertet werden: %s"
@@ -4014,6 +4099,13 @@ msgstr "Diff »%s« patcht etwas, das keine gewöhnliche Datei ist"
 
 #: scripts/Dpkg/Source/Patch.pm
 #, perl-format
+msgid "diff '%s' patches hard link %s which can have unintended consequences"
+msgstr ""
+"Diff %s patcht den harten Link %s, was unbeabsichtigte Konsequenzen haben "
+"kann"
+
+#: scripts/Dpkg/Source/Patch.pm
+#, perl-format
 msgid ""
 "diff '%s' patches files multiple times; split the diff in multiple files or "
 "merge the hunks into a single one"
@@ -4144,8 +4236,8 @@ msgstr "ungültiges Quellversion %s"
 
 #: scripts/Dpkg/Substvars.pm
 #, perl-format
-msgid "too many substitutions - recursive ? - in '%s'"
-msgstr "zu viele - rekursive? - Substitutionen in »%s«"
+msgid "too many ${%s} substitutions (recursive?) in '%s'"
+msgstr "zu viele - rekursive? - ${%s}-Substitutionen in »%s«"
 
 #: scripts/Dpkg/Substvars.pm
 #, perl-format
@@ -4161,16 +4253,6 @@ msgstr "Substitutionsvariable ${%s} verwandt, aber nicht definiert"
 #, perl-format
 msgid "substitution variable ${%s} unused, but is defined"
 msgstr "Substitutionsvariable ${%s} unbenutzt, aber definiert"
-
-#: scripts/Dpkg/Vars.pm
-#, perl-format
-msgid "source package name '%s' is illegal: %s"
-msgstr "Quellpaketname »%s« ist ungültig: »%s«"
-
-#: scripts/Dpkg/Vars.pm
-#, perl-format
-msgid "source package has two conflicting values - %s and %s"
-msgstr "zwei widersprüchliche Werte für Quellpaket - %s und %s"
 
 #: scripts/Dpkg/Vendor.pm
 #, perl-format
@@ -4194,6 +4276,11 @@ msgstr ""
 #, perl-format
 msgid "unknown host architecture '%s'"
 msgstr "unbekannte Host-Architektur »%s«"
+
+#: scripts/Dpkg/Vendor/Debian.pm
+#, perl-format
+msgid "unknown abi attributes for architecture '%s'"
+msgstr "unbekannte ABI-Attribute für Architektur »%s«"
 
 #: scripts/Dpkg/Vendor/Ubuntu.pm
 msgid ""
@@ -4245,6 +4332,23 @@ msgstr "Versionsnummer enthält ungültiges Zeichen »%s«"
 #, perl-format
 msgid "epoch part of the version number is not a number: '%s'"
 msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
+
+#, perl-format
+#~ msgid "Usage: %s [<option>...]\n"
+#~ msgstr "Aufruf: %s [<Option>…]\n"
+
+#~ msgid "general section of control info file"
+#~ msgstr "allgemeiner Abschnitt der Steuer-Infodatei"
+
+#~ msgid "package's section of control info file"
+#~ msgstr "Paketabschnitt der Steuer-Infodatei"
+
+#, perl-format
+#~ msgid "%s file"
+#~ msgstr "%s-Datei"
+
+#~ msgid "control info of a .deb package"
+#~ msgstr "Steuerinfo eines .deb-Pakets"
 
 #, perl-format
 #~ msgid "cannot verify inline signature on %s since GnuPG is not installed"
@@ -4317,7 +4421,7 @@ msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
 #~ msgid ""
 #~ "binary package stanza %s is using an obsolete Build-Profiles field syntax"
 #~ msgstr ""
-#~ "Binärpaketeintrag %s verwendet eine veraltete Build-Profiles-Feldsyntax"
+#~ "Binärpaketabsatz %s verwendet eine veraltete Build-Profiles-Feldsyntax"
 
 #~ msgid "format variant must be in lowercase"
 #~ msgstr "Formatvariante muss Kleinbuchstaben verwenden"
@@ -4355,9 +4459,6 @@ msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
 
 #~ msgid "deprecated substitution variable ${%s}"
 #~ msgstr "veraltete Substitutionsvariable ${%s}"
-
-#~ msgid "missing library directory"
-#~ msgstr "fehlendes Bibliotheksverzeichnis"
 
 #~ msgid "Usage: %s [<option>...] [<changelog-file>]"
 #~ msgstr "Aufruf: %s [<Option> …] [<Changelog-Datei>]"
@@ -4584,9 +4685,6 @@ msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
 
 #~ msgid "binary-only upload - not including any source code"
 #~ msgstr "rein binärer Upload - es ist kein Quellcode hinzugefügt"
-
-#~ msgid "diff %s patches file with unknown escape sequence \\%s"
-#~ msgstr "Diff %s patcht Datei mit unbekannter Maskierung \\%s"
 
 #~ msgid "open new files list file"
 #~ msgstr "neue Dateilistendatei öffnen"
@@ -4916,9 +5014,6 @@ msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
 
 #~ msgid "cannot open .dsc file %s"
 #~ msgstr "kann .dsc-Datei %s nicht öffnen"
-
-#~ msgid "source control file %s"
-#~ msgstr "Quell-Steuerdatei %s"
 
 #~ msgid "Conflicting sizes `%u' and `%u' for file `%s'"
 #~ msgstr "Widersprüchliche Größen »%u« und »%u« für Datei »%s«"

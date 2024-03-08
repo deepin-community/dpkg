@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb-changelog - formato do ficheiro changelog de pacotes fonte dpkg
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<debian/changelog>
 
@@ -33,7 +33,7 @@ Z<>
           [optional blank line(s), stripped]
   * I<change-details>
     I<more-change-details>
-          [blank line(s), included in B<dpkg-parsechangelog>(1) output]
+          [blank line(s), included in L<dpkg-parsechangelog(1)> output]
   * I<even-more-change-details>
           [optional blank line(s), stripped]
   -- I<maintainer-name> <I<email-address>>  I<date>
@@ -42,7 +42,19 @@ I<package> e I<version> são o nome do pacote fonte e o número da versão. I<ve
 
 I<distributions> lista uma ou mais distribuições separadas por espaços onde esta versão deve ser instalada quando é enviada; é copiado para o campo B<Distribution> no ficheiro I<.changes>. I<distributions> tem de ser terminada com um caractere ponto e vírgula (U+003B ‘B<;>’).
 
-I<metadata> lista zero ou mais itens I<keyword>=I<value> separados por espaços. Cada palavra-chave pode conter apenas os caracteres menos e alfanuméricos insensíveis a maiúsculas/minúsculas, pois precisam de ser mapeadas para nomes de campos B<deb822>(5). As únicas I<keyword>s presentemente suportadas pelo B<dpkg> são B<urgency> e B<binary-only>.  o valor de B<urgency> é usado para o campo B<Urgency> no ficheiro I<changes> para o envio.  B<binary-only> com um valor B<yes>, é usado para indicar que esta entrada no changelog é para um envio de não-maintainer apenas-binário (uma recompilação binária automática com a única alteração sendo a entrada no registo de alterações).
+I<metadata> lists zero or more comma-separated I<keyword>=I<value> items. Each keyword can contain only minus and case insensitive alphanumeric characters, as they need to be mapped to L<deb822(5)> field names.  The only I<keyword>s currently supported by B<dpkg> are:
+
+=over 
+
+=item B<urgency>
+
+O seu valor é usado para o campo B<Urgency> no ficheiro I<.changes> para o envio.
+
+=item B<binary-only>
+
+Com um valor B<yes>, é usado para denotar que esta entrada no changelog é para um envio binary-only non-maintainer (uma recompilação binária automática com a única alteração a ser a entrada changelog).
+
+=back
 
 Os detalhes da alteração podem de facto serem qualquer série de linhas começando com pelo menos dois espaços (U+0020 B<SPACE>), mas convencionalmente cada alteração começa com um asterisco e um espaço de separação e as linhas de continuação são recuadas para as alinhar com o inicio de texto em cima. Linhas vazias podem ser usadas aqui para separar grupos de alterações, se desejado.
 
@@ -150,7 +162,7 @@ Todo o changelog tem de estar codificado em UTF-8.
 
 =head1 VEJA TAMBÉM
 
-B<deb822>(5), B<deb-version>(7), B<deb-changes>(5), B<dpkg-parsechangelog>(1).
+L<deb822(5)>, L<deb-changes(5)>, L<deb-version(7)>, L<dpkg-parsechangelog(1)>.
 
 
 =head1 TRADUÇÃO

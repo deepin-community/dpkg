@@ -118,7 +118,7 @@ Utilise I<adresse-du-responsable> comme nom et adresse électronique du responsa
 
 =item B<-V>I<nom>B<=>I<valeur>
 
-Fixe la valeur d'une variable de substitution. Consultez B<deb-substvars>(5) pour une discussion sur la valeur de substitution.
+Set an output substitution variable.  See L<deb-substvars(5)> for a discussion of output substitution.
 
 =item B<-T>I<fichier-substvars>
 
@@ -146,7 +146,7 @@ Lit ou écrit la liste des fichiers qui doivent être envoyés vers l'archive da
 
 =item B<-F>I<format-du-fichier-des-changements>
 
-Indique le format du fichier des changements. Voir B<dpkg-parsechangelog>(1) pour plus d'informations à propos des formats gérés.
+Specifies the format of the changelog.  See L<dpkg-parsechangelog(1)> for information about alternative formats.
 
 =item B<-u>I<répertoire-des-fichiers-à-installer>
 
@@ -196,7 +196,7 @@ La liste des fichiers créés qui seront envoyés sur le serveur. B<dpkg-genchan
 
 =head1 VOIR AUSSI
 
-B<deb-substvars>(5), B<deb-src-control>(5), B<deb-src-files>(5), B<deb-changelog>(5), B<deb-changes>(5).
+L<deb-substvars(5)>, L<deb-src-control(5)>, L<deb-src-files(5)>, L<deb-changelog(5)>, L<deb-changes(5)>.
 
 
 =head1 TRADUCTION

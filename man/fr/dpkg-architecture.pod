@@ -24,9 +24,9 @@ B<dpkg-architecture> [I<option>...] [I<commande>]
 
 B<dpkg-architecture> aide à déterminer et à fixer l'architecture de construction et l'architecture hôte pour la création d'un paquet.
 
-L'architecture de construction est toujours déterminée par soit la variable B<DEB_BUILD_ARCH> si elle est définie (et que B<--force> n'a pas été spécifié) ou par un appel externe à B<dpkg>(1). Elle ne peut pas être spécifiée en ligne de commande.
+The build architecture is always determined by either the B<DEB_BUILD_ARCH> variable if set (and B<--force> not being specified) or by an external call to L<dpkg(1)>, and cannot be set at the command line.
 
-Vous pouvez spécifier une architecture hôte en utilisant une des options B<--host-arch> et B<--host-type> (ou les deux), autrement la variable B<DEB_HOST_ARCH> est utilisée si elle est définie (et que B<--force> n'a pas été spécifié). Par défaut, la valeur est déterminée par un appel à B<gcc>(1), ou en utilisant l'architecture de construction si B<CC> ou gcc ne sont pas disponibles. Utiliser une seule des options B<--host-arch> et B<--host-type> est suffisant, la valeur de l'une est utilisée comme valeur par défaut de l'autre. Bien sûr, il est préférable de n'en préciser qu'une seule, puisque B<dpkg-architecture> affichera un avertissement si le choix ne correspond pas à la valeur par défaut.
+You can specify the host architecture by providing one or both of the options B<--host-arch> and B<--host-type>, otherwise the B<DEB_HOST_ARCH> variable is used if set (and B<--force> not being specified).  The default is determined by an external call to L<gcc(1)>, or the same as the build architecture if B<CC> or gcc are both not available.  One out of B<--host-arch> and B<--host-type> is sufficient, the value of the other will be set to a usable default.  Indeed, it is often better to only specify one, because B<dpkg-architecture> will warn you if your choice does not match the default.
 
 =head1 COMMANDES
 
@@ -59,6 +59,8 @@ Afficher une commande similaire à celle produite par B<--print-set>, mais pour 
 =item B<-c>, B<--command> I<chaîne-de-commande>
 
 Exécuter une I<chaîne-de-commande> dans un environnement où toutes les variables sont positionnées aux valeurs spécifiées.
+
+If the I<command-string> contains shell metacharacters, then it will be invoked through the system bourne shell.
 
 =item B<-L>, B<--list-known>
 
@@ -112,7 +114,7 @@ Configurer le format de sortie de B<--print-set> et B<--print-unset> (depuis S<d
 
 =item B<-f>, B<--force>
 
-Les valeurs positionnées par les variables d'environnement ayant le même nom que celles utilisées par les scripts sont prises en compte (c'est-à-dire utilisées par B<dpkg-architecture>), sauf si cette option est présente. Cela permet à un utilisateur de surcharger une valeur même lorsque l'appel à B<dpkg-architecture> est inclus dans un autre script (par exemple B<dpkg-buildpackage>(1)).
+Values set by existing environment variables with the same name as used by the scripts are honored (i.e. used by B<dpkg-architecture>), except if this force flag is present.  This allows the user to override a value even when the call to B<dpkg-architecture> is buried in some other script (for example L<dpkg-buildpackage(1)>).
 
 =back
 
@@ -448,7 +450,7 @@ Tous les noms de commandes et d'options longs ne sont disponibles qu'à partir d
 
 =head1 VOIR AUSSI
 
-B<dpkg-buildpackage>(1).
+L<dpkg-buildpackage(1)>.
 
 
 =head1 TRADUCTION

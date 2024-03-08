@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAAM
 
-deb-src-control - Indeling van het hoofdcontrolebestand van Debian-broncodepakketten
+deb-src-control - Indeling van het sjablooncontrolebestand van Debian-broncodepakketten
 
 =head1 OVERZICHT
 
@@ -22,9 +22,9 @@ B<debian/control>
 
 =head1 BESCHRIJVING
 
-Elk Debian bronpakket bevat het hoofdcontrolebestand «B<debian/control>» en de L<deb822(5)>-indeling ervan is een superverzameling van het B<control>-bestand dat meekomt in binaire Debian-pakketten, zie B<deb-control>(5).
+Elk Debian bronpakket bevat het sjablooncontrolebestand «B<debian/control>» en de L<deb822(5)>-indeling ervan is een superverzameling van het B<control>-bestand dat meekomt in binaire Debian-pakketten, zie L<deb-control(5)>.
 
-Dit bestand bevat tenminste twee onderdelen, gescheiden door een witregel. Het eerste onderdeel vermeldt alle informatie over het broncodepakket in het algemeen, terwijl elk daaropvolgend onderdeel exact één binair pakket beschrijft. Elk onderdeel bestaat minstens uit één veld. Een veld begint met een veldnaam, zoals B<Package> of B<Section> (niet hoofdlettergevoelig), gevolgd door een dubbele punt, het tekstgedeelte van het veld (hoofdlettergevoelig tenzij anders vermeld) en een regeleinde. Velden mogen ook uit meerdere regels bestaan, maar iedere bijkomende regel zonder veldnaam moet minstens met één spatie beginnen. Gereedschap voegt de inhoud van velden die uit meerdere regels bestaan, meestal samen tot één regel (behalve in het geval van het veld B<Description>; zie hierna). Om lege regels toe te voegen in een veld dat uit meerdere regels bestaat, moet u na de spatie een punt toevoegen. Regels die met een ‘B<#>’ beginnen worden als commentaar behandeld.
+Dit bestand bevat tenminste twee onderdelen, gescheiden door een witregel. Het eerste onderdeel wordt het bronpakketgedeelte genoemd en vermeldt alle informatie over het broncodepakket in het algemeen, terwijl elk daaropvolgend onderdeel binair-pakketgedeelte genoemd wordt en exact één binair pakket beschrijft. Elk onderdeel bestaat minstens uit één veld. Een veld begint met een veldnaam, zoals B<Package> of B<Section> (niet hoofdlettergevoelig), gevolgd door een dubbele punt, het tekstgedeelte van het veld (hoofdlettergevoelig tenzij anders vermeld) en een regeleinde. Velden mogen ook uit meerdere regels bestaan, maar iedere bijkomende regel zonder veldnaam moet minstens met één spatie beginnen. Gereedschap voegt de inhoud van velden die uit meerdere regels bestaan, meestal samen tot één regel (behalve in het geval van het veld B<Description>; zie hierna). Om lege regels toe te voegen in een veld dat uit meerdere regels bestaat, moet u na de spatie een punt toevoegen. Regels die met een ‘B<#>’ beginnen worden als commentaar behandeld.
 
 =head1 VELDEN BRONCODEPAKKET
 
@@ -40,7 +40,7 @@ Moet volgens de indeling «Joe Bloggs E<lt>jbloggs@foo.comE<gt>» opgemaakt zijn
 
 =item B<Uploaders:> I<volledige-naam-en-e-mailadres>
 
-Somt al de namen en de e-mailadressen op van de personen die het pakket mee onderhouden volgens dezelfde indeling als van het veld B<Maintainer>. Meerdere mede-onderhouders moeten onderling door een komma gescheiden worden.
+Somt al de namen en de e-mailadressen op van de personen die het pakket mee onderhouden volgens dezelfde indeling als van het veld B<Maintainer>. Meerdere mede-beheerders moeten onderling door een komma gescheiden worden.
 
 =item B<Standards-Version:> I<versietekenreeks>
 
@@ -68,11 +68,11 @@ Dit veld wordt gebruikt om aan te geven of het bestand B<debian/rules> voorrecht
 
 =item B<no>
 
-De binaire targets zullen (fake)root helemaal niet nodig hebben.
+De binaire targets zullen (fake)root helemaal niet nodig hebben. Dit is de standaard in B<dpkg-build-api> level >= 1.
 
 =item B<binary-targets>
 
-De binaire targets moeten altijd onder (fake)root uitgevoerd worden. Dit is de standaardwaarde als dit veld ontbreekt. Als dit veld toegevoegd wordt met een expliciete B<binary-targets>, terwijl dit strikt genomen niet nodig is, geeft dit aan dat de noodzaak ervan onderzocht werd.
+De binaire targets moeten altijd onder (fake)root uitgevoerd worden. Dit is de standaardwaarde in B<dpkg-build-api> level 0 als dit veld ontbreekt. Als dit veld toegevoegd wordt met een expliciete B<binary-targets>, terwijl dit strikt genomen niet nodig is, geeft dit aan dat de noodzaak ervan onderzocht werd.
 
 =item I<impl-trefwoorden>
 
@@ -90,7 +90,7 @@ Wanneer het veld ingesteld is op een van de I<impl-trefwoorden>, zal het bouwpro
 
 =item B<Testsuite-Triggers:> I<pakketlijst>
 
-Deze velden worden beschreven in de man-pagina B<dsc>(5), aangezien zij gegenereerd worden op basis van informatie, afgeleid uit B<debian/tests/control>, of letterlijk naar het controlebestand van de broncode gekopieerd worden.
+Deze velden worden beschreven in de man-pagina L<dsc(5)>, aangezien zij gegenereerd worden op basis van informatie, afgeleid uit B<debian/tests/control>, of letterlijk naar het controlebestand van de broncode gekopieerd worden.
 
 =item B<Vcs-Arch:> I<URL>
 
@@ -112,7 +112,7 @@ De I<URL> van de opslagruimte van het versiecontrolesysteem dat gebruikt wordt b
 
 =item B<Vcs-Browser:> I<URL>
 
-De I<URL> van een webinterface om door de opslagruimte van het versiecontrolesysteem te bladeren.
+De I<url> van een webinterface waarmee door de opslagruimte van het versiecontrolesysteem kan gebladerd worden.
 
 =item B<Origin:> I<naam>
 
@@ -154,9 +154,9 @@ Hetzelfde als B<Build-Conflicts>, maar enkel bij het bouwen van de architectuuro
 
 =back
 
-De syntaxis van de velden B<Build-Depends>, B<Build-Depends-Arch> en B<Build-Depends-Indep> is een lijst van groepen van alternatieve pakketten. Elke groep is een lijst van pakketten die onderling gescheiden worden door het symbool verticale streep (of “pijp”), ‘B<|>’. De groepen worden onderling gescheiden door komma's ‘B<,>’ en de lijst kan eindigen met een afsluitende komma, die bij het genereren van de velden voor B<deb-control>(5) weggelaten zal worden (sinds dpkg 1.10.14). Een komma moet geïnterpreteerd worden als een “AND” en een pijp als een “OR”, waarbij pijpen de sterkste binding hebben. Elke pakketnaam kan facultatief gevolgd worden door een architectuurkwalificatie, die toegevoegd wordt na een dubbele punt ‘B<:>’, facultatief gevolgd door de vermelding van een versienummer tussen ronde haakjes ‘B<(>’ en ‘B<)>’, een architectuurspecificatie tussen vierkante haakjes ‘B<[>’ en ‘B<]>’ en een restrictieformule die bestaat uit één of meer lijsten van profielnamen tussen punthaakjes ‘B<E<lt>>’ en ‘B<E<gt>>’.
+De syntaxis van de velden B<Build-Depends>, B<Build-Depends-Arch> en B<Build-Depends-Indep> is een lijst van groepen van alternatieve pakketten. Elke groep is een lijst van pakketten die onderling gescheiden worden door het symbool verticale streep (of “pijp”), ‘B<|>’. De groepen worden onderling gescheiden door komma's ‘B<,>’ en de lijst kan eindigen met een afsluitende komma, die bij het genereren van de velden voor L<deb-control(5)> weggelaten zal worden (sinds dpkg 1.10.14). Een komma moet geïnterpreteerd worden als een “AND” en een pijp als een “OR”, waarbij pijpen de sterkste binding hebben. Elke pakketnaam kan facultatief gevolgd worden door een architectuurkwalificatie, die toegevoegd wordt na een dubbele punt ‘B<:>’, facultatief gevolgd door de vermelding van een versienummer tussen ronde haakjes ‘B<(>’ en ‘B<)>’, een architectuurspecificatie tussen vierkante haakjes ‘B<[>’ en ‘B<]>’ en een restrictieformule die bestaat uit één of meer lijsten van profielnamen tussen punthaakjes ‘B<E<lt>>’ en ‘B<E<gt>>’.
 
-De syntaxis van de velden B<Build-Conflicts>, B<Build-Conflicts-Arch> en B<Build-Conflicts-Indep> is een lijst van pakketnamen die onderling gescheiden zijn door een komma, waarbij de komma geïnterpreteerd moet worden als een “AND” en waarbij de lijst kan eindigen met een afsluitende komma, die bij het genereren van de velden voor B<deb-control>(5) weggelaten zal worden (sinds dpkg 1.10.14).. Het specificeren van alternatieve pakketten met behulp van een “pijp” wordt niet ondersteund. Elke pakketnaam kan facultatief gevolgd worden door de vermelding van een versienummer tussen ronde haakjes, een architectuurspecificatie tussen vierkante haakjes en een restrictieformule die bestaat uit één of meer lijsten van profielnamen tussen punthaakjes.
+De syntaxis van de velden B<Build-Conflicts>, B<Build-Conflicts-Arch> en B<Build-Conflicts-Indep> is een lijst van pakketnamen die onderling gescheiden zijn door een komma, waarbij de komma geïnterpreteerd moet worden als een “AND” en waarbij de lijst kan eindigen met een afsluitende komma, die bij het genereren van de velden voor L<deb-control(5)> weggelaten zal worden (sinds dpkg 1.10.14).. Het specificeren van alternatieve pakketten met behulp van een “pijp” wordt niet ondersteund. Elke pakketnaam kan facultatief gevolgd worden door de vermelding van een versienummer tussen ronde haakjes, een architectuurspecificatie tussen vierkante haakjes en een restrictieformule die bestaat uit één of meer lijsten van profielnamen tussen punthaakjes.
 
 De naam van een architectuurkwalificatie kan een echte Debian-architectuurnaam zijn (sinds dpkg 1.16.5), B<any> (sinds dpkg 1.16.2) of B<native> (since dpkg 1.16.5). Indien ze weggelaten is, is de standaard voor het veld B<Build-Depends> de architectuur van de huidige computer en voor het veld B<Build-Conflicts> is dat B<any>. Een echte Debian-architectuurnaam komt exact overeen met die architectuur voor die pakketnaam; B<any> komt overeen met om het even welke architectuur voor die pakketnaam als het pakket gemarkeerd werd als B<Multi-Arch: allowed>; B<native> komt overeen met de huidige bouwarchitectuur indien het pakket niet gemarkeerd werd als B<Multi-Arch: foreign>.
 
@@ -184,7 +184,7 @@ Dit veld definieert het pakkettype. B<udeb> is voor pakketten waarvan de omvang 
 
 =item B<Architecture:> I<arch>|B<all>|B<any> (verplicht)
 
-De architectuur geeft aan op welk type hardware dit pakket werkt. Gebruik de waarde B<any> voor pakketten die op alle architecturen werken. Voor pakketten die architectuuronafhankelijk zijn, zoals shell- en Perl-scripts of documentatie, moet u de waarde B<all> gebruiken. Om pakketten tot een bepaalde set van architecturen te beperken, moet u de namen van de architecturen opgeven, onderling gescheiden door een spatie. Het is ook mogelijk om architectuur-jokers te plaatsen in de lijst (zie B<dpkg-architecture>(1) voor bijkomende informatie daarover).
+De architectuur geeft aan op welk type hardware dit pakket werkt. Gebruik de waarde B<any> voor pakketten die op alle architecturen werken. Voor pakketten die architectuuronafhankelijk zijn, zoals shell- en Perl-scripts of documentatie, moet u de waarde B<all> gebruiken. Om pakketten tot een bepaalde set van architecturen te beperken, moet u de namen van de architecturen opgeven, onderling gescheiden door een spatie. Het is ook mogelijk om architectuur-jokers te plaatsen in de lijst (zie L<dpkg-architecture(1)> voor bijkomende informatie daarover).
 
 =item B<Build-Profiles:> I<restrictie-formule>
 
@@ -206,7 +206,7 @@ Met andere woorden, indien aan jet onderdeel over een binair pakket een niet-lee
 
 =item B<Description:> I<korte-beschrijving> (aanbevolen)
 
-Deze velden worden beschreven in de man-pagina B<deb-control>(5), vermits zij letterlijk naar het controlebestand van het binaire pakket gekopieerd worden.
+Deze velden worden beschreven in de man-pagina L<deb-control(5)>, vermits zij letterlijk naar het controlebestand van het binaire pakket gekopieerd worden.
 
 =item B<Depends:> I<pakketlijst>
 
@@ -230,7 +230,7 @@ Deze velden worden beschreven in de man-pagina B<deb-control>(5), vermits zij le
 
 =item B<Static-Built-Using:> I<pakketlijst>
 
-Deze velden benoemen relaties tussen pakketten. Ze worden besproken in de man-pagina B<deb-control>(5). Wanneer deze velden in I<debian/control> voorkomen, kunnen ze ook eindigen met een afsluitende komma (sinds dpkg 1.10.14), kunnen ze architectuurspecificaties bevatten en restrictieformules bevatten, wat bij het genereren van de velden voor B<deb-control>(5) allemaal teruggebracht zal worden.
+Deze velden benoemen relaties tussen pakketten. Ze worden besproken in de man-pagina L<deb-control(5)>. Wanneer deze velden in I<debian/control> voorkomen, kunnen ze ook eindigen met een afsluitende komma (sinds dpkg 1.10.14), kunnen ze architectuurspecificaties bevatten en restrictieformules bevatten, wat bij het genereren van de velden voor L<deb-control(5)> allemaal teruggebracht zal worden.
 
 =item B<Subarchitecture:> I<waarde>
 
@@ -250,15 +250,15 @@ Het is toegelaten om aan het bestand control bijkomende door de gebruiker gedefi
 
 =item B<S>
 
-Het veld zal voorkomen in het control-bestand van het broncodepakket, zie B<dsc>(5).
+Het veld zal voorkomen in het control-bestand van het broncodepakket, zie L<dsc(5)>.
 
 =item B<B>
 
-Het veld zal voorkomen in het control-bestand van het binair pakket, zie B<deb-control>(5).
+Het veld zal voorkomen in het control-bestand van het binair pakket, zie L<deb-control(5)>.
 
 =item B<C>
 
-Het veld zal voorkomen in het controlebestand (.changes) van de upload, zie B<deb-changes>(5).
+Het veld zal voorkomen in het controlebestand (.changes) van de upload, zie L<deb-changes(5)>.
 
 =back
 
@@ -279,7 +279,7 @@ Houd er rekening mee dat deze door de gebruiker gedefinieerde velden gebruik mak
  Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
  Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git
  Standards-Version: 3.7.3
- Build-Depends: pkg-config, debhelper (>= 4.1.81),
+ Build-Depends: pkgconf, debhelper (>= 4.1.81),
   libselinux1-dev (>= 1.28-4) [!linux-any]
 
  Package: dpkg-dev
@@ -303,5 +303,5 @@ Houd er rekening mee dat deze door de gebruiker gedefinieerde velden gebruik mak
 
 =head1 ZIE OOK
 
-I<%PKGDOCDIR%/spec/rootless-builds.txt>, L<deb822(5)>, B<deb-control>(5), B<deb-version>(7), B<dpkg-source>(1)
+I<%PKGDOCDIR%/spec/rootless-builds.txt>, L<deb822(5)>, L<deb-control(5)>, L<deb-version(7)>, L<dpkg-source(1)>
 

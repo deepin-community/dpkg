@@ -14,34 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::Vendor;
-
-use strict;
-use warnings;
-use feature qw(state);
-
-our $VERSION = '1.02';
-our @EXPORT_OK = qw(
-    get_current_vendor
-    get_vendor_info
-    get_vendor_file
-    get_vendor_dir
-    get_vendor_object
-    run_vendor_hook
-);
-
-use Exporter qw(import);
-use List::Util qw(uniq);
-
-use Dpkg ();
-use Dpkg::ErrorHandling;
-use Dpkg::Gettext;
-use Dpkg::BuildEnv;
-use Dpkg::Control::HashCore;
-
-my $origins = "$Dpkg::CONFDIR/origins";
-$origins = $ENV{DPKG_ORIGINS_DIR} if $ENV{DPKG_ORIGINS_DIR};
-
 =encoding utf8
 
 =head1 NAME
@@ -68,6 +40,35 @@ is to name the vendor file using the vendor name in all lowercase, but some
 variation is permitted. Namely, spaces are mapped to dashes ('-'), and the
 file can have the same casing as the Vendor field, or it can be capitalized.
 
+=cut
+
+package Dpkg::Vendor 1.02;
+
+use strict;
+use warnings;
+use feature qw(state);
+
+our @EXPORT_OK = qw(
+    get_current_vendor
+    get_vendor_info
+    get_vendor_file
+    get_vendor_dir
+    get_vendor_object
+    run_vendor_hook
+);
+
+use Exporter qw(import);
+use List::Util qw(uniq);
+
+use Dpkg ();
+use Dpkg::ErrorHandling;
+use Dpkg::Gettext;
+use Dpkg::BuildEnv;
+use Dpkg::Control::HashCore;
+
+my $origins = "$Dpkg::CONFDIR/origins";
+$origins = $ENV{DPKG_ORIGINS_DIR} if $ENV{DPKG_ORIGINS_DIR};
+
 =head1 FUNCTIONS
 
 =over 4
@@ -85,7 +86,7 @@ sub get_vendor_dir {
 
 =item $fields = get_vendor_info($name)
 
-Returns a Dpkg::Control object with the information parsed from the
+Returns a L<Dpkg::Control> object with the information parsed from the
 corresponding vendor file in $Dpkg::CONFDIR/origins/. If $name is omitted,
 it will use $Dpkg::CONFDIR/origins/default which is supposed to be a symlink
 to the vendor of the currently installed operating system. Returns undef
@@ -188,7 +189,7 @@ sub get_current_vendor() {
 
 Return the Dpkg::Vendor::* object of the corresponding vendor.
 If $name is omitted, return the object of the current vendor.
-If no vendor can be identified, then return the Dpkg::Vendor::Default
+If no vendor can be identified, then return the L<Dpkg::Vendor::Default>
 object.
 
 The module name will be derived from the vendor name, by splitting parts
@@ -228,7 +229,6 @@ sub get_vendor_object {
 
     foreach my $name (uniq @names) {
         eval qq{
-            pop \@INC if \$INC[-1] eq '.';
             require Dpkg::Vendor::$name;
             \$obj = Dpkg::Vendor::$name->new();
         };
@@ -258,8 +258,10 @@ Run a hook implemented by the current vendor object.
 =cut
 
 sub run_vendor_hook {
+    my @args = @_;
     my $vendor_obj = get_vendor_object();
-    $vendor_obj->run_hook(@_);
+
+    $vendor_obj->run_hook(@args);
 }
 
 =back
@@ -282,7 +284,7 @@ Mark the module as public.
 
 =head1 SEE ALSO
 
-deb-origin(5).
+L<deb-origin(5)>.
 
 =cut
 

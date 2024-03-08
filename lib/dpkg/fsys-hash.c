@@ -89,18 +89,16 @@ fsys_hash_find_node(const char *name, enum fsys_hash_find_flags flags)
 			          (*pointerp)->name);
 
 		if (strcmp((*pointerp)->name + 1, name) == 0)
-			break;
+			return *pointerp;
 		pointerp = &(*pointerp)->next;
 	}
-	if (*pointerp)
-		return *pointerp;
 
-	if (flags & FHFF_NONE)
+	if (flags & FHFF_NO_NEW)
 		return NULL;
 
 	newnode = nfmalloc(sizeof(*newnode));
 	memset(newnode, 0, sizeof(*newnode));
-	if ((flags & FHFF_NOCOPY) && name > orig_name && name[-1] == '/') {
+	if ((flags & FHFF_NO_COPY) && name > orig_name && name[-1] == '/') {
 		newnode->name = name - 1;
 	} else {
 		char *newname = nfmalloc(strlen(name) + 2);

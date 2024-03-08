@@ -12,14 +12,16 @@ AC_DEFUN([DPKG_CHECK_COMPILER_FLAG], [
     m4_define([dpkg_compiler], [$CC])
     m4_define([dpkg_varname], [CFLAGS])
     m4_define([dpkg_varname_save], [dpkg_save_CFLAGS])
-    m4_define([dpkg_varname_export], [COMPILER_CFLAGS])
+    m4_define([dpkg_varname_export], [DPKG_COMPILER_CFLAGS])
+    m4_pattern_allow([DPKG_COMPILER_CFLAGS])
     AS_VAR_PUSHDEF([dpkg_varname_cache], [dpkg_cv_cflags_$1])
   ],
   [C++], [
     m4_define([dpkg_compiler], [$CXX])
     m4_define([dpkg_varname], [CXXFLAGS])
     m4_define([dpkg_varname_save], [dpkg_save_CXXFLAGS])
-    m4_define([dpkg_varname_export], [COMPILER_CXXFLAGS])
+    m4_define([dpkg_varname_export], [DPKG_COMPILER_CXXFLAGS])
+    m4_pattern_allow([DPKG_COMPILER_CXXFLAGS])
     AS_VAR_PUSHDEF([dpkg_varname_cache], [dpkg_cv_cxxflags_$1])
   ])
   AC_CACHE_CHECK([whether ]dpkg_compiler[ accepts $1], [dpkg_varname_cache], [
@@ -47,10 +49,22 @@ AC_DEFUN([DPKG_CHECK_COMPILER_WARNINGS], [
   DPKG_CHECK_COMPILER_FLAG([-Wall])
   DPKG_CHECK_COMPILER_FLAG([-Wextra])
 
+  DPKG_CHECK_COMPILER_FLAG([-Walloca])
+  DPKG_CHECK_COMPILER_FLAG([-Walloc-zero])
+  DPKG_CHECK_COMPILER_FLAG([-Warray-bounds-pointer-arithmetic])
+  DPKG_CHECK_COMPILER_FLAG([-Wassign-enum])
+  DPKG_CHECK_COMPILER_FLAG([-Wbitfield-enum-conversion])
   DPKG_CHECK_COMPILER_FLAG([-Wcast-align])
+  DPKG_CHECK_COMPILER_FLAG([-Wconditional-uninitialized])
+  DPKG_CHECK_COMPILER_FLAG([-Wdate-time])
   DPKG_CHECK_COMPILER_FLAG([-Wdocumentation])
+  DPKG_CHECK_COMPILER_FLAG([-Wduplicate-enum])
   DPKG_CHECK_COMPILER_FLAG([-Wduplicated-branches])
   DPKG_CHECK_COMPILER_FLAG([-Wduplicated-cond])
+  DPKG_CHECK_COMPILER_FLAG([-Wextra-semi])
+  DPKG_CHECK_COMPILER_FLAG([-Wflexible-array-extensions])
+  DPKG_CHECK_COMPILER_FLAG([-Wfloat-conversion])
+  DPKG_CHECK_COMPILER_FLAG([-Wfloat-equal])
   DPKG_CHECK_COMPILER_FLAG([-Wformat -Wformat-security])
   DPKG_CHECK_COMPILER_FLAG([-Wformat=2])
   DPKG_CHECK_COMPILER_FLAG([-Winit-self])
@@ -58,6 +72,8 @@ AC_DEFUN([DPKG_CHECK_COMPILER_WARNINGS], [
   DPKG_CHECK_COMPILER_FLAG([-Wlogical-op])
   DPKG_CHECK_COMPILER_FLAG([-Wmissing-declarations])
   DPKG_CHECK_COMPILER_FLAG([-Wmissing-format-attribute])
+  DPKG_CHECK_COMPILER_FLAG([-Wmissing-variable-declarations])
+  DPKG_CHECK_COMPILER_FLAG([-Wnewline-eof])
   DPKG_CHECK_COMPILER_FLAG([-Wno-missing-field-initializers])
   DPKG_CHECK_COMPILER_FLAG([-Wno-nonnull-compare])
   DPKG_CHECK_COMPILER_FLAG([-Wno-tautological-constant-out-of-range-compare])
@@ -69,16 +85,26 @@ AC_DEFUN([DPKG_CHECK_COMPILER_WARNINGS], [
   DPKG_CHECK_COMPILER_FLAG([-Wrestrict])
   DPKG_CHECK_COMPILER_FLAG([-Wshadow])
   DPKG_CHECK_COMPILER_FLAG([-Wshift-negative-value])
+  DPKG_CHECK_COMPILER_FLAG([-Wshift-overflow=2])
+  DPKG_CHECK_COMPILER_FLAG([-Wshift-sign-overflow])
   DPKG_CHECK_COMPILER_FLAG([-Wsizeof-array-argument])
+  DPKG_CHECK_COMPILER_FLAG([-Wstrict-overflow=2])
   DPKG_CHECK_COMPILER_FLAG([-Wswitch-bool])
   DPKG_CHECK_COMPILER_FLAG([-Wvla])
   DPKG_CHECK_COMPILER_FLAG([-Wwrite-strings])
+  DPKG_CHECK_COMPILER_FLAG([-Wxor-used-as-pow])
 
   AC_LANG_CASE(
   [C], [
     DPKG_CHECK_COMPILER_FLAG([-Wbad-function-cast])
     DPKG_CHECK_COMPILER_FLAG([-Wc99-c11-compat])
+    DPKG_CHECK_COMPILER_FLAG([-Wc99-compat])
+    DPKG_CHECK_COMPILER_FLAG([-Wc11-extensions])
+    DPKG_CHECK_COMPILER_FLAG([-Wc2x-compat])
+    DPKG_CHECK_COMPILER_FLAG([-Wc2x-extensions])
+    DPKG_CHECK_COMPILER_FLAG([-Wpre-c2x-compat])
     DPKG_CHECK_COMPILER_FLAG([-Wdeclaration-after-statement])
+    DPKG_CHECK_COMPILER_FLAG([-Wenum-int-mismatch])
     DPKG_CHECK_COMPILER_FLAG([-Wmissing-prototypes])
     DPKG_CHECK_COMPILER_FLAG([-Wnested-externs])
     DPKG_CHECK_COMPILER_FLAG([-Wold-style-definition])
@@ -86,6 +112,8 @@ AC_DEFUN([DPKG_CHECK_COMPILER_WARNINGS], [
   ],
   [C++], [
     DPKG_CHECK_COMPILER_FLAG([-Wc++11-compat])
+    DPKG_CHECK_COMPILER_FLAG([-Wc++11-compat-pedantic])
+    DPKG_CHECK_COMPILER_FLAG([-Wc++11-extensions])
     DPKG_CHECK_COMPILER_FLAG([-Wcast-qual])
     DPKG_CHECK_COMPILER_FLAG([-Wold-style-cast])
     AS_IF([test "x$dpkg_cv_cxx11" = "xyes"], [
@@ -109,6 +137,60 @@ AC_DEFUN([DPKG_COMPILER_WARNINGS], [
     DPKG_CHECK_COMPILER_WARNINGS
     AC_LANG_POP([C++])
 
+    CFLAGS="$DPKG_COMPILER_CFLAGS $CFLAGS"
+    CXXFLAGS="$DPKG_COMPILER_CXXFLAGS $CXXFLAGS"
+  ])
+])
+
+# DPKG_CHECK_COMPILER_SANITIZER
+# -----------------------------
+# Check whether the compiler sanitizer options are supported.
+AC_DEFUN([DPKG_CHECK_COMPILER_SANITIZER], [
+  DPKG_CHECK_COMPILER_FLAG([-fno-omit-frame-pointer])
+  DPKG_CHECK_COMPILER_FLAG([-fsanitize=address])
+  DPKG_CHECK_COMPILER_FLAG([-fsanitize=undefined])
+])
+
+# DPKG_COMPILER_SANITIZER
+# -----------------------
+# Add configure option to enable compiler sanitizer support options.
+AC_DEFUN([DPKG_COMPILER_SANITIZER], [
+  AC_ARG_ENABLE([compiler-sanitizer],
+    [AS_HELP_STRING([--enable-compiler-sanitizer],
+      [Enable compiler sanitizer support])],
+    [], [enable_compiler_sanitizer=no])
+
+  AS_IF([test "x$enable_compiler_sanitizer" = "xyes"], [
+    DPKG_CHECK_COMPILER_SANITIZER
+    AC_LANG_PUSH([C++])
+    DPKG_CHECK_COMPILER_SANITIZER
+    AC_LANG_POP([C++])
+
+    LDFLAGS="$DPKG_COMPILER_CFLAGS $LDFLAGS"
+    CFLAGS="$DPKG_COMPILER_CFLAGS $CFLAGS"
+    CXXFLAGS="$DPKG_COMPILER_CXXFLAGS $CXXFLAGS"
+  ])
+])
+
+# DPKG_COMPILER_ANALYZER
+# ----------------------
+# Add configure option to enable compiler analyzer support options.
+# Note: This is only intended for development use, as enabling this option
+# unconditionally can generate large amounts of false positives that
+# require sentient triage intervention.
+AC_DEFUN([DPKG_COMPILER_ANALYZER], [
+  AC_ARG_ENABLE([compiler-analyzer],
+    [AS_HELP_STRING([--enable-compiler-analyzer],
+      [Enable compiler analyzer support])],
+    [], [enable_compiler_analyzer=no])
+
+  AS_IF([test "x$enable_compiler_analyzer" = "xyes"], [
+    DPKG_CHECK_COMPILER_FLAG([-fanalyzer])
+    AC_LANG_PUSH([C++])
+    DPKG_CHECK_COMPILER_FLAG([-fanalyzer])
+    AC_LANG_POP([C++])
+
+    LDFLAGS="$COMPILER_CFLAGS $LDFLAGS"
     CFLAGS="$COMPILER_CFLAGS $CFLAGS"
     CXXFLAGS="$COMPILER_CXXFLAGS $CXXFLAGS"
   ])

@@ -88,7 +88,7 @@ Foutvlaggen:
 
 =back
 
-Een toestand die aangeduid wordt met een hoofdletter of een foutletter wijzen erop dat het waarschijnlijk is dat het pakket ernstige problemen zal veroorzaken. Gelieve B<dpkg>(1) te raadplegen voor informatie over de bovenstaande toestanden en vlaggen.
+Een toestand die aangeduid wordt met een hoofdletter of een foutletter wijzen erop dat het waarschijnlijk is dat het pakket ernstige problemen zal veroorzaken. Gelieve L<dpkg(1)> te raadplegen voor informatie over de bovenstaande toestanden en vlaggen.
 
 De indeling van de uitvoer van deze optie kan niet geconfigureerd worden, maar varieert automatisch om te passen binnen de breedte van de terminal. Ze is bedoeld om door personen gelezen te worden, en kan niet gemakkelijk gelezen worden door een machine. Zie B<-W> (B<--show>) en B<--showformat> voor een manier om de indeling van de uitvoer te configureren.
 
@@ -113,9 +113,9 @@ Z<>
   pakket leidt andere om naar: I<omgeleid-naar>
   omgeleid door I<pkkt> naar: I<omgeleid-naar>
 
-Hint: wanneer de uitvoer machinaal wordt verwerkt, is het gebruikelijk om de landinstelling in te stellen op B<C.UTF-8> om reproduceerbare resultaten te krijgen.
+B<Hint>: wanneer de uitvoer machinaal wordt verwerkt, is het gebruikelijk om de landinstelling in te stellen op B<C.UTF-8> om reproduceerbare resultaten te krijgen. Op sommige systemen kan dit ook vereisen dat de omgevingsvariabele B<LANGUAGE> op de juiste manier wordt aangepast als deze al is ingesteld (zie L<locale(7)>).
 
-Dit commando geeft geen extra bestanden weer die door scripts van de pakketonderhouder aangemaakt werden en ook geen alternatieven.
+Dit commando geeft geen extra bestanden weer die door scripts van de beheerder aangemaakt werden en ook geen alternatieven.
 
 =item B<--control-list> I<pakketnaam>
 
@@ -129,7 +129,7 @@ Het I<controlebestand> dat uit I<pakketnaam> op uw systeem geïnstalleerd werd, 
 
 De paden van controlebestanden opsommen die uit I<pakketnaam> op uw systeem geïnstalleerd werden (sinds dpkg 1.15.4). Indien I<controlebestand> opgegeven werd, toon dan enkel het pad voor dat controlebestand als het bestaat.
 
-B<Waarschuwing>: dit commando wordt uitgefaseerd, omdat het rechtstreekse toegang verleent tot de interne database van dpkg. Gelieve in plaats daarvan over te schakelen op het gebruik van B<--control-list> en B<--control-show> in alle gevallen waarin deze commando's hetzelfde eindresultaat kunnen geven. Dit commando zal evenwel niet verwijderd worden zolang er nog minstens één geval is waarin dit commando nodig is (d.w.z. als een schadelijk postrm-script van een pakketonderhouder verwijderd moet worden) en zolang daarvoor geen goede oplossing bestaat.
+B<Waarschuwing>: dit commando wordt uitgefaseerd, omdat het rechtstreekse toegang verleent tot de interne database van dpkg. Gelieve in plaats daarvan over te schakelen op het gebruik van B<--control-list> en B<--control-show> in alle gevallen waarin deze commando's hetzelfde eindresultaat kunnen geven. Dit commando zal evenwel niet verwijderd worden zolang er nog minstens één geval is waarin dit commando nodig is (d.w.z. als een schadelijk postrm-script van een beheerder verwijderd moet worden) en zolang daarvoor geen goede oplossing bestaat.
 
 =item B<-S>, B<--search> I<zoekpatroon-bestandsnaam>...
 
@@ -137,7 +137,7 @@ Pakketten zoeken die bestanden hebben die overeenkomen met het opgegeven patroon
 
 Wanneer het eerste teken in het I<zoekpatroon-bestandsnaam> niet een van de tekens ‘B<*[?/>’ is, dan zal het beschouwd worden als deeltekenreeksvergelijking en zal het impliciet geplaatst worden tussen ‘B<*>’ (zoals in B<*>I<zoekpatroon-bestandsnaam>B<*>). Indien de daaropvolgende tekenreeks een van de tekens ‘B<*[?\>’ bevat, dan zal ze behandeld worden als een glob-patroon, anders zal een eventuele afsluitende ‘B</>’ of ‘B</.>’ verwijderd worden en zal er een letterlijke padopzoeking uitgevoerd worden.
 
-Dit commando geeft geen extra bestanden weer die door scripts van de pakketonderhouder aangemaakt werden en ook geen alternatieven.
+Dit commando geeft geen extra bestanden weer die door scripts van de beheerder aangemaakt werden en ook geen alternatieven.
 
 De opmaak van de uitvoer bestaat uit één regel per overeenkomend patroon, met een lijst van pakketten waarin de padnaam voorkomt, gescheiden door een komma (U+002C 'B<,>') en een spatie (U+0020 'B< >'), gevolgd door een dubbele punt (U+003A 'B<:>') en een spatie, gevolgd door de padnaam. Als in:
 
@@ -156,7 +156,7 @@ Z<>
   lokale omleiding van: I<omgeleid-van>
   lokale omleiding naar: I<omgeleid-naar>
 
-Hint: wanneer de uitvoer machinaal wordt verwerkt, is het gebruikelijk om de landinstelling in te stellen op B<C.UTF-8> om reproduceerbare resultaten te krijgen.
+B<Hint>: wanneer de uitvoer machinaal wordt verwerkt, is het gebruikelijk om de landinstelling in te stellen op B<C.UTF-8> om reproduceerbare resultaten te krijgen.
 
 =item B<-p>, B<--print-avail> [I<pakketnaam>...]
 
@@ -340,7 +340,7 @@ Het bevat het versienummer van de toeleveraarsbroncode voor dit binaire pakket (
 
 =back
 
-De standaard indelingstekenreeks is “B<${binary:Package}\t${Version}\n>”. In feite kunnen ook alle andere velden die in het statusbestand te vinden zijn (d.w.z. door de gebruiker gedefinieerde velden) opgevraagd worden. Zij zullen evenwel als zodanig weergegeven worden, zonder conversie of foutcontrole. Om de naam van de onderhouder van B<dpkg> en de geïnstalleerde versie te bekomen, kunt u het volgende commando uitvoeren:
+De standaard indelingstekenreeks is “B<${binary:Package}\t${Version}\n>”. In feite kunnen ook alle andere velden die in het statusbestand te vinden zijn (d.w.z. door de gebruiker gedefinieerde velden) opgevraagd worden. Zij zullen evenwel als zodanig weergegeven worden, zonder conversie of foutcontrole. Om de naam van de beheerder van B<dpkg> en de geïnstalleerde versie te bekomen, kunt u het volgende commando uitvoeren:
 
 =over 
 
@@ -383,7 +383,7 @@ Stelt het uit te voeren programma in wanneer een commando via een shell voortgeb
 
 =item B<DPKG_PAGER>
 
-Stelt het te gebruiken pagineringscommando in (sinds dpkg 1.19.1), hetwelk uitgevoerd zal worden met «B<$SHELL -c>». Indien B<SHELL> niet ingesteld is, zal «B<sh>» gebruikt worden. B<DPKG_PAGER> overschrijft de omgevingsvariabele B<PAGER> (sinds dpkg 1.19.2).
+Stelt het te gebruiken pagineringscommando in (sinds dpkg 1.19.1), hetwelk uitgevoerd zal worden met «B<$SHELL -c>». Indien B<SHELL> niet ingesteld is, zal «B<%DPKG_DEFAULT_SHELL%>» gebruikt worden. B<DPKG_PAGER> overschrijft de omgevingsvariabele B<PAGER> (sinds dpkg 1.19.2).
 
 =item B<DPKG_ROOT>
 
@@ -413,7 +413,11 @@ Indien niet reeds ingesteld, wordt het als “B<-FRSXMQ>” gedefinieerd door B<
 
 =back
 
+=head1 BEVEILIGING
+
+Query-operaties zouden nooit root mogen vereisen, en het delegeren van hun uitvoering naar niet-geprivilegieerde gebruikers via een commando om beheerdersrechten te verwerden, kan veiligheidsimplicaties hebben (zoals een probleem van rechtenuitbreiding), bijvoorbeeld wanneer een pagineringsprogramma automatisch wordt aangeroepen door het hulpmiddel.
+
 =head1 ZIE OOK
 
-B<dpkg>(1).
+L<dpkg(1)>.
 

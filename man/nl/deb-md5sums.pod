@@ -39,5 +39,5 @@ Als het controlebestand niet bestaat in het binaire pakket, zal L<dpkg(1)> de ov
 
 =head1 ZIE OOK
 
-B<md5sum>(1), B<dpkg-deb>(1), B<dpkg>(1).
+L<md5sum(1)>, L<dpkg-deb(1)>, L<dpkg(1)>.
 

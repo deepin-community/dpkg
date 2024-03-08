@@ -1,4 +1,5 @@
-# Czech translation for dpkg.
+# Translation of dselect to Czech
+# This file is distributed under the same license as the dpkg package.
 #
 # Petr Cech <cech@debian.org>, 1999, 2000, 2001.
 # Miroslav Kure <kurem@debian.cz>, 2004-2023.
@@ -10,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dselect 1.17.0\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
 "PO-Revision-Date: 2023-01-26 13:52+0100\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -56,7 +57,9 @@ msgid "cannot update screen after window resize"
 msgstr "nelze aktualizovat obrazovku po změně velikosti okna"
 
 #: dselect/baselist.cc
-msgid "failed to allocate colour pair"
+#, fuzzy
+#| msgid "failed to allocate colour pair"
+msgid "cannot allocate color pair"
 msgstr "nepovedlo se alokovat pár barev"
 
 #: dselect/baselist.cc
@@ -882,15 +885,21 @@ msgid "screen part"
 msgstr "část obrazovky"
 
 #: dselect/main.cc
-msgid "null colour specification"
+#, fuzzy
+#| msgid "null colour specification"
+msgid "missing color specification"
 msgstr "zadání prázdné barvy"
 
 #: dselect/main.cc
-msgid "colour"
+#, fuzzy
+#| msgid "colour"
+msgid "color"
 msgstr "barva"
 
 #: dselect/main.cc
-msgid "colour attribute"
+#, fuzzy
+#| msgid "colour attribute"
+msgid "color attribute"
 msgstr "atribut barvy"
 
 #: dselect/main.cc

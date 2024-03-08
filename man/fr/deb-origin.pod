@@ -64,7 +64,7 @@ La valeur de ce champ donne le nom du distributeur dont le présent éditeur est
 
 =head1 VOIR AUSSI
 
-B<dpkg-vendor>(1)
+L<dpkg-vendor(1)>.
 
 
 =head1 TRADUCTION

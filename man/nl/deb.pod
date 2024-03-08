@@ -24,7 +24,7 @@ I<bestandsnaam>B<.deb>
 
 Het B<.deb>-formaat is de indeling van een binair pakketbestand in Debian. Sinds dpkg 0.93.76 kan ermee gewerkt worden en standaard wordt ze gegenereerd sinds dpkg 1.2.0 en 1.1.1elf (i386/ELF-compilaties).
 
-De hier beschreven indeling wordt gebruikt sinds Debian 0.93; de oude indeling wordt gedetailleerd beschreven in B<deb-old>(5).
+De hier beschreven indeling wordt gebruikt sinds Debian 0.93; de oude indeling wordt gedetailleerd beschreven in L<deb-old(5)>.
 
 =head1 INDELING
 
@@ -36,7 +36,7 @@ Het eerste element wordt B<debian-binary> genoemd en bevat een aantal regels, ge
 
 Indien het hoofdversienummer gewijzigd werd, werd een niet-compatibele wijziging gemaakt en zou het programma moeten stoppen. Indien dit niet het geval is, dan zou het programma in staat moeten zijn probleemloos voort te gaan, tenzij het in het archief (behalve op het einde) een onverwacht element tegenkomt, zoals hierna beschreven wordt.
 
-Het tweede vereiste element wordt B<control.tar> genoemd. Het is een tar-archief dat de controle-informatie van het pakket bevat, ofwel niet-gecomprimeerd (ondersteund sinds dpkg 1.17.6) of gecomprimeerd met gzip (met de extensie B<.gz>), met xz (met de extensie B<.xz>, ondersteund sinds 1.17.6) of met zstd (met de extensie B<.zst>, ondersteund sinds dpkg 1.21.18), onder de vorm van een reeks gewone bestanden, waarvan het bestand B<control>, dat de kern van de controle-informatie bevat, verplicht deel uitmaakt. De bestanden B<md5sums>, B<conffiles>, B<triggers>, B<shlibs> en B<symbols> bevatten facultatieve controle-informatie en de bestanden B<preinst>, B<postinst>, B<prerm> en B<postrm> zijn facultatieve scripts van de pakketonderhouder. Het controle-tar-archief kan facultatief een vermelding bevatten van ‘B<.>’, de huidige map.
+Het tweede vereiste element wordt B<control.tar> genoemd. Het is een tar-archief dat de controle-informatie van het pakket bevat, ofwel niet-gecomprimeerd (ondersteund sinds dpkg 1.17.6) of gecomprimeerd met gzip (met de extensie B<.gz>), met xz (met de extensie B<.xz>, ondersteund sinds 1.17.6) of met zstd (met de extensie B<.zst>, ondersteund sinds dpkg 1.21.18), onder de vorm van een reeks gewone bestanden, waarvan het bestand B<control>, dat de kern van de controle-informatie bevat, verplicht deel uitmaakt. De bestanden B<md5sums>, B<conffiles>, B<triggers>, B<shlibs> en B<symbols> bevatten facultatieve controle-informatie en de bestanden B<preinst>, B<postinst>, B<prerm> en B<postrm> zijn facultatieve scripts van de pakketbeheerder. Het controle-tar-archief kan facultatief een vermelding bevatten van ‘B<.>’, de huidige map.
 
 Het derde en laatste verplichte element wordt B<data.tar> genoemd. Het bevat het bestandssysteem in de vorm van een tar-archief, dat ofwel niet-gecomprimeerd is (ondersteund sinds dpkg 1.10.24) of gecomprimeerd met gzip (met de extensie B<.gz>), met xz (met de extensie B<.xz>, ondersteund sinds dpkg 1.15.6), met zstd (met de extensie B<.zst>, ondersteund sinds dpkg 1.21.18), met bzip2 (met de extensie B<.bz2>, ondersteund sinds dpkg 1.10.24) of met lzma (met de extensie B<.lzma>, ondersteund sinds dpkg 1.13.25).
 
@@ -58,5 +58,5 @@ application/x-deb
 
 =head1 ZIE OOK
 
-B<deb-old>(5), B<dpkg-deb>(1), B<deb-control>(5), B<deb-conffiles>(5), B<deb-md5sums>(5), B<deb-triggers>(5), B<deb-shlibs>(5), B<deb-symbols>(5), B<deb-preinst>(5), B<deb-postinst>(5), B<deb-prerm>(5), B<deb-postrm>(5).
+L<deb-old(5)>, L<dpkg-deb(1)>, L<deb-control(5)>, L<deb-conffiles(5)>, L<deb-md5sums(5)>, L<deb-triggers(5)>, L<deb-shlibs(5)>, L<deb-symbols(5)>, L<deb-preinst(5)>, L<deb-postinst(5)>, L<deb-prerm(5)>, L<deb-postrm(5)>.
 

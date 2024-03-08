@@ -1,5 +1,6 @@
-# Vietnamese translation for Dselect.
+# Translation of dselect to Vietnamese
 # This file is distributed under the same license as the dpkg package.
+#
 # Phan Vinh Thinh <teppi@vnoss.org>, 2005.
 # Clytie Siddall <clytie@riverland.net.au>, 2006.
 # Trần Ngọc Quân <vnwildman@gmail.com>, 2014.
@@ -8,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dselect 1.17.22\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
 "PO-Revision-Date: 2014-12-01 08:20+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <debian-l10n-vietnamese@lists.debian.org>\n"
@@ -58,7 +59,9 @@ msgid "cannot update screen after window resize"
 msgstr ""
 
 #: dselect/baselist.cc
-msgid "failed to allocate colour pair"
+#, fuzzy
+#| msgid "failed to allocate colour pair"
+msgid "cannot allocate color pair"
 msgstr "viếc cấp phát cặp màu bị lỗi"
 
 #: dselect/baselist.cc
@@ -998,15 +1001,21 @@ msgid "screen part"
 msgstr "phần màn hình"
 
 #: dselect/main.cc
-msgid "null colour specification"
+#, fuzzy
+#| msgid "null colour specification"
+msgid "missing color specification"
 msgstr "đặc tả màu là null"
 
 #: dselect/main.cc
-msgid "colour"
+#, fuzzy
+#| msgid "colour"
+msgid "color"
 msgstr "màu"
 
 #: dselect/main.cc
-msgid "colour attribute"
+#, fuzzy
+#| msgid "colour attribute"
+msgid "color attribute"
 msgstr "thuộc tính màu"
 
 #: dselect/main.cc

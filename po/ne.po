@@ -1,4 +1,5 @@
-# translation of dpkg_po_ne.po to Nepali
+# Translation of dpkg to Nepali
+# This file is distributed under the same license as the dpkg package.
 #
 # Mahesh Subedi <submanesh@hotmail.com>, 2006.
 # Shiva Pokharel <pokharelshiva@hotmail.com>, 2006.
@@ -8,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.17.0\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
 "PO-Revision-Date: 2015-04-07 09:51+0200\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -198,6 +199,11 @@ msgstr "टार कार्यान्वयन गर्न असफल"
 #, fuzzy, c-format
 msgid "unable to execute %s (%s)"
 msgstr "%s कार्यन्वयन गर्न अक्षम"
+
+#: lib/dpkg/command.c
+#, fuzzy
+msgid "PATH is not set"
+msgstr "dpkg - त्रुटि: PATH सेट गरेको छैन ।\n"
 
 #: lib/dpkg/compress.c
 #, c-format
@@ -1208,36 +1214,36 @@ msgstr ""
 msgid "unable to write to status fd %d"
 msgstr "`%.250s' को अद्यावधिक गरिएको वस्तुस्थिति लेख्न अक्षम"
 
-#: lib/dpkg/mlib.c utils/update-alternatives.c
+#: lib/dpkg/mustlib.c utils/update-alternatives.c
 #, fuzzy
 msgid "failed to allocate memory"
 msgstr "डाइरेक्टरी सिर्जना गर्न असफल"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "failed to dup for fd %d"
 msgstr "fd %d का लागि dub गर्न असफल"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "failed to dup for std%s"
 msgstr "std%s का लागि dup गर्न असफल"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 msgid "failed to create pipe"
 msgstr "पाइप सिर्जना गर्न असफल"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, fuzzy, c-format
 msgid "error writing to '%s'"
 msgstr "लेख्दै गर्दा त्रुटि `%s'"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "unable to read filedescriptor flags for %.250s"
 msgstr "%.250s का लागि फाँट स्क्रिप्टर झण्डाहरू पढ्न अक्षम"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "unable to set close-on-exec flag for %.250s"
 msgstr "%.250s का लागि बन्द-मा-कार्यान्वयन सेट गर्न अक्षम"
@@ -1675,6 +1681,13 @@ msgstr "लाइन %d: %.250s मा अवैध प्याकेज ना
 msgid "illegal architecture name in specifier '%s:%s': %s"
 msgstr "लाइन %d: %.250s मा अवैध प्याकेज नाम"
 
+#. TRANSLATORS: This is part of the progress output, it is a decimal
+#. * percentage.
+#: lib/dpkg/progress.c
+#, c-format
+msgid "%d%%"
+msgstr ""
+
 #: lib/dpkg/report.c utils/update-alternatives.c
 msgid "warning"
 msgstr "चेतावनी"
@@ -1978,12 +1991,12 @@ msgid "unexpected end of file reading '%.250s'"
 msgstr "%.250s मा अनपेक्षित फाइलको समाप्ति"
 
 #: lib/dpkg/varbuf.c
-msgid "error formatting string into varbuf variable"
+#, c-format
+msgid "cannot grow varbuf to size %zu; it would overflow"
 msgstr ""
 
 #: lib/dpkg/varbuf.c
-#, c-format
-msgid "cannot grow varbuf to size %zu; it would overflow"
+msgid "error formatting string into varbuf variable"
 msgstr ""
 
 #: src/common/force.c
@@ -2113,7 +2126,7 @@ msgstr ""
 #: src/common/force.c
 #, c-format
 msgid ""
-"%s forcing options - control behaviour when problems found:\n"
+"%s forcing options - control behavior when problems found:\n"
 "  warn but continue:  --force-<thing>,<thing>,...\n"
 "  stop with error:    --refuse-<thing>,<thing>,... | --no-force-<thing>,...\n"
 " Forcing things:\n"
@@ -2691,6 +2704,12 @@ msgid " %7jd bytes, %5d lines   %c  %-20.127s %.127s\n"
 msgstr " %7ld bytes, %5d lines   %c  %-20.127s %.127s\n"
 
 #: src/deb/info.c
+#, fuzzy, c-format
+#| msgid " %7ld bytes, %5d lines   %c  %-20.127s %.127s\n"
+msgid " %7jd bytes, %5d lines   %c  %.127s\n"
+msgstr " %7ld bytes, %5d lines   %c  %-20.127s %.127s\n"
+
+#: src/deb/info.c
 #, c-format
 msgid "     not a plain file          %.255s\n"
 msgstr "     एउटा सादा फाइल होइन          %.255s\n"
@@ -2944,6 +2963,12 @@ msgstr "एउटा कार्य विकल्प आवश्यक"
 #, fuzzy, c-format
 msgid "invalid compressor parameters: %s"
 msgstr "--%s का लागि इन्जिटर अवैध: `%.250s'   "
+
+#: src/deb/main.c
+#, fuzzy, c-format
+#| msgid "unknown compression type `%s'!"
+msgid "unsupported deb format '%d.%d' with non-uniform compression"
+msgstr "अज्ञात सङ्कुचन प्रकार `%s'!"
 
 #: src/deb/main.c
 #, fuzzy, c-format
@@ -3387,6 +3412,7 @@ msgid "--%s takes no arguments"
 msgstr "--%s ले कुनै तर्कहरू लिदैन"
 
 #: src/split/queue.c
+#, c-format
 msgid "Junk files left around in the depot directory:\n"
 msgstr "जंक फाइलहरू डिपोट डाइरेक्ट्री वरिपरि छोडिन्छ:\n"
 
@@ -3407,6 +3433,7 @@ msgid " %s (not a plain file)\n"
 msgstr " %s (खाली फाइल होइन)\n"
 
 #: src/split/queue.c
+#, c-format
 msgid "Packages not yet reassembled:\n"
 msgstr "प्याकेजहरू अहिले सम्म पुन:जोडिएको छैन:\n"
 
@@ -3490,7 +3517,7 @@ msgstr "--विभाजनले बढीमा स्रोत फाइल�
 msgid "Use --help for help about diverting files."
 msgstr "मद्दतको लागि dpkg-split --help टाइप गर्नुहोस्"
 
-#: src/divert/main.c src/statoverride/main.c utils/update-alternatives.c
+#: src/divert/main.c src/statoverride/main.c
 #, c-format
 msgid "Debian %s version %s.\n"
 msgstr "डेबियन %s संस्करण %s \n"
@@ -4058,7 +4085,7 @@ msgstr ""
 msgid "package '%s' is not available"
 msgstr "प्याकेज `%s' उपलब्ध छैन ।\n"
 
-#: src/query/main.c src/main/packages.c
+#: src/query/main.c
 #, c-format
 msgid "--%s needs at least one package name argument"
 msgstr "--%s लाई कम्तिमा पनि एउटा प्याकेज नाम तर्क आवश्यक पर्दछ"
@@ -5429,11 +5456,6 @@ msgid "installed"
 msgstr "स्थापित"
 
 #: src/main/help.c
-#, fuzzy
-msgid "PATH is not set"
-msgstr "dpkg - त्रुटि: PATH सेट गरेको छैन ।\n"
-
-#: src/main/help.c
 #, fuzzy, c-format
 msgid "'%s' not found in PATH or not executable"
 msgstr "dpkg: `%s' लाई PATH फेला पारिएन ।\n"
@@ -5845,6 +5867,12 @@ msgstr ""
 #, c-format
 msgid "--%s --pending does not take any non-option arguments"
 msgstr "--%s -विचाराधिनले कुनै विकल्प बिहिन तर्कहरू लिदैन"
+
+#: src/main/packages.c
+#, fuzzy, c-format
+#| msgid "--%s needs at least one package name argument"
+msgid "--%s (without --pending) needs at least one package name argument"
+msgstr "--%s लाई कम्तिमा पनि एउटा प्याकेज नाम तर्क आवश्यक पर्दछ"
 
 #: src/main/packages.c
 #, c-format
@@ -6574,6 +6602,12 @@ msgstr[1] "%d प्याकेज(हरू) बारेको सूचन�
 msgid ""
 "obsolete '--%s' option; unavailable packages are automatically cleaned up"
 msgstr ""
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "Debian %s version %s.\n"
+msgid "%s version %s.\n"
+msgstr "डेबियन %s संस्करण %s \n"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format

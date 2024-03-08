@@ -1,5 +1,7 @@
-# Texte für Debian dpkg/po/de.po
+# Translation of dpkg to German
 # Copyright © 2023 Dpkg Developers.
+# This file is distributed under the same license as the dpkg package.
+#
 # Hartmut Koptein <koptein@debian.org>, Apr 2000.
 # Erich Schubert <debian@vitavonni.de>, March 2001.
 # Michael Piefel <piefel@debian.org>, 2001-2005.
@@ -9,10 +11,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dpkg 1.21.18\n"
+"Project-Id-Version: dpkg 1.22.1~\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
-"PO-Revision-Date: 2023-01-10 21:06+0100\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
+"PO-Revision-Date: 2023-10-27 18:31+0200\n"
 "Last-Translator: Sven Joachim <svenjoac@gmx.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -181,6 +183,10 @@ msgstr "Positionierung fehlgeschlagen"
 #, c-format
 msgid "unable to execute %s (%s)"
 msgstr "%s (%s) kann nicht ausgeführt werden"
+
+#: lib/dpkg/command.c
+msgid "PATH is not set"
+msgstr "PATH ist nicht gesetzt"
 
 #: lib/dpkg/compress.c
 #, c-format
@@ -1138,35 +1144,35 @@ msgstr "<Dateideskriptor für Paketstatus und Fortschritt>"
 msgid "unable to write to status fd %d"
 msgstr "Nach Status-Dateideskriptor %d kann nicht geschrieben werden"
 
-#: lib/dpkg/mlib.c utils/update-alternatives.c
+#: lib/dpkg/mustlib.c utils/update-alternatives.c
 msgid "failed to allocate memory"
 msgstr "Speicherzuweisung fehlgeschlagen"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "failed to dup for fd %d"
 msgstr "dup fehlgeschlagen für Dateideskriptor %d"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "failed to dup for std%s"
 msgstr "dup fehlgeschlagen für std%s"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 msgid "failed to create pipe"
 msgstr "Pipe konnte nicht angelegt werden"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "error writing to '%s'"
 msgstr "Fehler beim Schreiben von »%s«"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "unable to read filedescriptor flags for %.250s"
 msgstr "Dateideskriptorflags für »%.250s« können nicht gelesen werden"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "unable to set close-on-exec flag for %.250s"
 msgstr "»close-on-exec«-Flag für »%.250s« kann nicht gesetzt werden"
@@ -1585,6 +1591,13 @@ msgstr "ungültiger Paketname in Spezifizierer »%s%s%s«: %s"
 msgid "illegal architecture name in specifier '%s:%s': %s"
 msgstr "ungültiger Architekturname in Spezifizierer »%s:%s«: %s"
 
+#. TRANSLATORS: This is part of the progress output, it is a decimal
+#. * percentage.
+#: lib/dpkg/progress.c
+#, c-format
+msgid "%d%%"
+msgstr "%d%%"
+
 #: lib/dpkg/report.c utils/update-alternatives.c
 msgid "warning"
 msgstr "Warnung"
@@ -1892,13 +1905,13 @@ msgid "unexpected end of file reading '%.250s'"
 msgstr "Unerwartetes Dateiende beim Lesen von »%.250s«"
 
 #: lib/dpkg/varbuf.c
-msgid "error formatting string into varbuf variable"
-msgstr "Fehler beim Formatieren von Zeichenkette in varbuf-Variable"
-
-#: lib/dpkg/varbuf.c
 #, c-format
 msgid "cannot grow varbuf to size %zu; it would overflow"
 msgstr "varbuf kann nicht auf %zu vergrößert werden; es würde überlaufen"
+
+#: lib/dpkg/varbuf.c
+msgid "error formatting string into varbuf variable"
+msgstr "Fehler beim Formatieren von Zeichenkette in varbuf-Variable"
 
 #: src/common/force.c
 msgid "Set all force options"
@@ -2047,7 +2060,7 @@ msgstr "Ein essenzielles Paket entfernen"
 #: src/common/force.c
 #, c-format
 msgid ""
-"%s forcing options - control behaviour when problems found:\n"
+"%s forcing options - control behavior when problems found:\n"
 "  warn but continue:  --force-<thing>,<thing>,...\n"
 "  stop with error:    --refuse-<thing>,<thing>,... | --no-force-<thing>,...\n"
 " Forcing things:\n"
@@ -2591,6 +2604,11 @@ msgstr " %7jd Byte, %5d Zeilen   %c  %-20.127s %.127s\n"
 
 #: src/deb/info.c
 #, c-format
+msgid " %7jd bytes, %5d lines   %c  %.127s\n"
+msgstr " %7jd Byte, %5d Zeilen   %c  %.127s\n"
+
+#: src/deb/info.c
+#, c-format
 msgid "     not a plain file          %.255s\n"
 msgstr "     keine gewöhnliche Datei   %.255s\n"
 
@@ -2829,6 +2847,12 @@ msgstr "eine Aktions-Option wird benötigt"
 #, c-format
 msgid "invalid compressor parameters: %s"
 msgstr "ungültige Komprimiererparameter: %s"
+
+#: src/deb/main.c
+#, c-format
+msgid "unsupported deb format '%d.%d' with non-uniform compression"
+msgstr ""
+"nicht unterstütztes deb-Format »%d.%d« mit uneinheitlicher Komprimierung"
 
 #: src/deb/main.c
 #, c-format
@@ -3247,6 +3271,7 @@ msgid "--%s takes no arguments"
 msgstr "--%s akzeptiert keine Argumente"
 
 #: src/split/queue.c
+#, c-format
 msgid "Junk files left around in the depot directory:\n"
 msgstr "Sinnlose Dateien im Depot-Verzeichnis übriggeblieben:\n"
 
@@ -3266,6 +3291,7 @@ msgid " %s (not a plain file)\n"
 msgstr " %s (keine gewöhnliche Datei)\n"
 
 #: src/split/queue.c
+#, c-format
 msgid "Packages not yet reassembled:\n"
 msgstr "Pakete noch nicht wieder zusammengefügt:\n"
 
@@ -3350,7 +3376,7 @@ msgstr ""
 msgid "Use --help for help about diverting files."
 msgstr "Verwenden Sie --help für Hilfe zum Umleiten von Dateien."
 
-#: src/divert/main.c src/statoverride/main.c utils/update-alternatives.c
+#: src/divert/main.c src/statoverride/main.c
 #, c-format
 msgid "Debian %s version %s.\n"
 msgstr "Debian %s Version %s.\n"
@@ -3911,7 +3937,7 @@ msgstr ""
 msgid "package '%s' is not available"
 msgstr "Paket »%s« ist nicht verfügbar"
 
-#: src/query/main.c src/main/packages.c
+#: src/query/main.c
 #, c-format
 msgid "--%s needs at least one package name argument"
 msgstr "--%s benötigt mindestens ein Paketnamen-Argument"
@@ -5264,10 +5290,6 @@ msgid "installed"
 msgstr "installiert"
 
 #: src/main/help.c
-msgid "PATH is not set"
-msgstr "PATH ist nicht gesetzt"
-
-#: src/main/help.c
 #, c-format
 msgid "'%s' not found in PATH or not executable"
 msgstr "»%s« wurde im PATH nicht gefunden oder ist nicht ausführbar"
@@ -5707,6 +5729,11 @@ msgstr ""
 #, c-format
 msgid "--%s --pending does not take any non-option arguments"
 msgstr "--%s --pending akzeptiert keine Nicht-Options-Argumente"
+
+#: src/main/packages.c
+#, c-format
+msgid "--%s (without --pending) needs at least one package name argument"
+msgstr "--%s (ohne --pending) benötigt mindestens ein Paketnamen-Argument"
 
 #: src/main/packages.c
 #, c-format
@@ -6413,6 +6440,11 @@ msgid ""
 msgstr ""
 "veraltete Option »--%s«, nicht verfügbare Pakete werden automatisch "
 "aufgeräumt"
+
+#: utils/update-alternatives.c
+#, c-format
+msgid "%s version %s.\n"
+msgstr "%s Version %s.\n"
 
 #: utils/update-alternatives.c
 #, c-format

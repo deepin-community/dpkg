@@ -70,7 +70,7 @@ Fältnamn är inte skiftlägeskänsliga, men det är vanligt använda både stor
 
 Styckeavdelare (tomma rader) och rader som endast består av +0020 B<SPACE> och U+0009 B<TAB>, tillåts inte inuti fältvärden eller mellan fält. Tomma rader i fältvärden citeras vanligtvis genom att representera dem med ett U+0020 B<SPACE> följt av en punkt (U+002E ”B<.>”).
 
-Rader som inleds med U+0023 ”B<#>”, utan något tidigare blanktecken är kommentarsrader och tillåts bara i källkodspaketets styrfiler (I<debian/control>) och i B<deb-origin>(5)-filer. Dessa kommentarsrader ignoreras, också mellan två fortsättningsrader. De avslutar inte logiska rader.
+Rader som inleds med U+0023 ”B<#>”, utan något tidigare blanktecken är kommentarsrader och tillåts bara i källkodspaketets styrfiler (I<debian/control>) och i L<deb-origin(5)>-filer. Dessa kommentarsrader ignoreras, också mellan två fortsättningsrader. De avslutar inte logiska rader.
 
 Alla styrfiler måste använda teckenkodningen UTF-8. 
 

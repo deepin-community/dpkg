@@ -72,7 +72,7 @@ La liste des fichiers créés qui seront installés sur le serveur. B<dpkg-dista
 
 =head1 VOIR AUSSI
 
-B<deb-src-files>(5).
+L<deb-src-files(5)>.
 
 
 =head1 TRADUCTION

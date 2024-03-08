@@ -106,7 +106,8 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/dpkg-arch.m4 \
 	$(top_srcdir)/m4/dpkg-build.m4 \
 	$(top_srcdir)/m4/dpkg-compiler.m4 \
 	$(top_srcdir)/m4/dpkg-coverage.m4 \
-	$(top_srcdir)/m4/dpkg-funcs.m4 $(top_srcdir)/m4/dpkg-libs.m4 \
+	$(top_srcdir)/m4/dpkg-funcs.m4 \
+	$(top_srcdir)/m4/dpkg-headers.m4 $(top_srcdir)/m4/dpkg-libs.m4 \
 	$(top_srcdir)/m4/dpkg-linker.m4 $(top_srcdir)/m4/dpkg-progs.m4 \
 	$(top_srcdir)/m4/dpkg-types.m4 \
 	$(top_srcdir)/m4/dpkg-unicode.m4 $(top_srcdir)/m4/gettext.m4 \
@@ -206,10 +207,15 @@ CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
+DEB_DEFAULT_COMPRESSOR = @DEB_DEFAULT_COMPRESSOR@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
 DOXYGEN = @DOXYGEN@
+DPKG_DEFAULT_PAGER = @DPKG_DEFAULT_PAGER@
+DPKG_DEFAULT_SHELL = @DPKG_DEFAULT_SHELL@
+DPKG_PAGER = @DPKG_PAGER@
+DPKG_SHELL = @DPKG_SHELL@
 DSYMUTIL = @DSYMUTIL@
 DUMPBIN = @DUMPBIN@
 ECHO_C = @ECHO_C@
@@ -293,6 +299,7 @@ POD2MAN = @POD2MAN@
 POSUB = @POSUB@
 PS_LIBS = @PS_LIBS@
 RANLIB = @RANLIB@
+RT_LIBS = @RT_LIBS@
 SED = @SED@
 SELINUX_CFLAGS = @SELINUX_CFLAGS@
 SELINUX_LIBS = @SELINUX_LIBS@
@@ -319,6 +326,7 @@ ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
 ac_ct_DUMPBIN = @ac_ct_DUMPBIN@
+aclocaldir = @aclocaldir@
 admindir = @admindir@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
@@ -326,6 +334,7 @@ am__quote = @am__quote@
 am__tar = @am__tar@
 am__untar = @am__untar@
 backupsdir = @backupsdir@
+bashcompletionsdir = @bashcompletionsdir@
 bindir = @bindir@
 build = @build@
 build_alias = @build_alias@
@@ -337,6 +346,7 @@ datadir = @datadir@
 datarootdir = @datarootdir@
 devlibdir = @devlibdir@
 docdir = @docdir@
+docspecdir = @docspecdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
 host = @host@
@@ -354,10 +364,14 @@ localedir = @localedir@
 localstatedir = @localstatedir@
 logdir = @logdir@
 mandir = @mandir@
+methodsdir = @methodsdir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
 pdfdir = @pdfdir@
+perllibdir = @perllibdir@
 pkgconfdir = @pkgconfdir@
+pkgconfigdir = @pkgconfigdir@
+polkitactionsdir = @polkitactionsdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
@@ -371,24 +385,6 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 zshcompletionsdir = @zshcompletionsdir@
-man_MANS = deb-buildinfo.5 deb-changelog.5 deb-changes.5 \
-	deb-conffiles.5 deb-control.5 deb-extra-override.5 \
-	deb-md5sums.5 deb-old.5 deb-origin.5 deb-override.5 \
-	deb-postinst.5 deb-postrm.5 deb-preinst.5 deb-prerm.5 \
-	deb-shlibs.5 deb-split.5 deb-src-control.5 deb-src-files.5 \
-	deb-src-rules.5 deb-src-symbols.5 deb-substvars.5 \
-	deb-symbols.5 deb-triggers.5 deb-version.7 deb.5 deb822.5 \
-	dpkg-architecture.1 dpkg-buildflags.1 dpkg-buildpackage.1 \
-	dpkg-checkbuilddeps.1 dpkg-deb.1 dpkg-distaddfile.1 \
-	dpkg-divert.1 dpkg-fsys-usrunmess.8 dpkg-genbuildinfo.1 \
-	dpkg-genchanges.1 dpkg-gencontrol.1 dpkg-gensymbols.1 \
-	dpkg-maintscript-helper.1 dpkg-mergechangelogs.1 dpkg-name.1 \
-	dpkg-parsechangelog.1 dpkg-query.1 dpkg-realpath.1 \
-	dpkg-scanpackages.1 dpkg-scansources.1 dpkg-shlibdeps.1 \
-	dpkg-source.1 dpkg-split.1 dpkg-statoverride.1 dpkg-trigger.1 \
-	dpkg-vendor.1 dpkg.1 dpkg.cfg.5 dsc.5 $(am__append_1) \
-	$(am__append_2) $(am__append_3)
-CLEANFILES = $(man_MANS)
 
 # Man page sources.
 EXTRA_DIST = po/ChangeLog.old po/dpkg-man.pot po/po4a.cfg \
@@ -400,8 +396,9 @@ EXTRA_DIST = po/ChangeLog.old po/dpkg-man.pot po/po4a.cfg \
 	deb-split.pod deb-src-control.pod deb-src-files.pod \
 	deb-src-rules.pod deb-src-symbols.pod deb-substvars.pod \
 	deb-symbols.pod deb-triggers.pod deb-version.pod deb.pod \
-	deb822.pod dpkg-architecture.pod dpkg-buildflags.pod \
-	dpkg-buildpackage.pod dpkg-checkbuilddeps.pod dpkg-deb.pod \
+	deb822.pod dpkg-architecture.pod dpkg-build-api.pod \
+	dpkg-buildapi.pod dpkg-buildflags.pod dpkg-buildpackage.pod \
+	dpkg-buildtree.pod dpkg-checkbuilddeps.pod dpkg-deb.pod \
 	dpkg-distaddfile.pod dpkg-divert.pod dpkg-fsys-usrunmess.pod \
 	dpkg-genbuildinfo.pod dpkg-genchanges.pod dpkg-gencontrol.pod \
 	dpkg-gensymbols.pod dpkg-maintscript-helper.pod \
@@ -412,6 +409,25 @@ EXTRA_DIST = po/ChangeLog.old po/dpkg-man.pot po/po4a.cfg \
 	dpkg-vendor.pod dpkg.cfg.pod dpkg.pod dsc.pod dselect.cfg.pod \
 	dselect.pod start-stop-daemon.pod update-alternatives.pod # \
 	EOL
+CLEANFILES = $(man_MANS)
+man_MANS = deb-buildinfo.5 deb-changelog.5 deb-changes.5 \
+	deb-conffiles.5 deb-control.5 deb-extra-override.5 \
+	deb-md5sums.5 deb-old.5 deb-origin.5 deb-override.5 \
+	deb-postinst.5 deb-postrm.5 deb-preinst.5 deb-prerm.5 \
+	deb-shlibs.5 deb-split.5 deb-src-control.5 deb-src-files.5 \
+	deb-src-rules.5 deb-src-symbols.5 deb-substvars.5 \
+	deb-symbols.5 deb-triggers.5 deb-version.7 deb.5 deb822.5 \
+	dpkg-architecture.1 dpkg-build-api.7 dpkg-buildapi.1 \
+	dpkg-buildflags.1 dpkg-buildpackage.1 dpkg-buildtree.1 \
+	dpkg-checkbuilddeps.1 dpkg-deb.1 dpkg-distaddfile.1 \
+	dpkg-divert.1 dpkg-fsys-usrunmess.8 dpkg-genbuildinfo.1 \
+	dpkg-genchanges.1 dpkg-gencontrol.1 dpkg-gensymbols.1 \
+	dpkg-maintscript-helper.1 dpkg-mergechangelogs.1 dpkg-name.1 \
+	dpkg-parsechangelog.1 dpkg-query.1 dpkg-realpath.1 \
+	dpkg-scanpackages.1 dpkg-scansources.1 dpkg-shlibdeps.1 \
+	dpkg-source.1 dpkg-split.1 dpkg-statoverride.1 dpkg-trigger.1 \
+	dpkg-vendor.1 dpkg.1 dpkg.cfg.5 dsc.5 $(am__append_1) \
+	$(am__append_2) $(am__append_3)
 
 # Extract the list of languages from the po4a config file.
 LINGUAS_DIST = `$(SED) -ne 's/^.*\[po4a_langs\] \(.*\)$$/\1/p' $(srcdir)/po/po4a.cfg`
@@ -457,6 +473,9 @@ PODSUBST = $(SED) \
 	-e 's:%PKGDATADIR%:$(pkgdatadir):g' \
 	-e 's:%INSTDIR_ENVVAR%:DPKG_ROOT:g' \
 	-e 's:%ADMINDIR_ENVVAR%:DPKG_ADMINDIR:g' \
+	-e 's:%DEB_DEFAULT_COMPRESSOR%:$(DEB_DEFAULT_COMPRESSOR):g' \
+	-e 's:%DPKG_DEFAULT_PAGER%:$(DPKG_DEFAULT_PAGER):g' \
+	-e 's:%DPKG_DEFAULT_SHELL%:$(DPKG_DEFAULT_SHELL):g' \
 	# EOL
 
 MANFIXUP = $(SED) \

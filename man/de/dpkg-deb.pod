@@ -94,11 +94,11 @@ Das Eingebearchiv wird (derzeit) nicht sequenziell verarbeitet, daher wird das E
 
 =item B<--ctrl-tarfile> I<Archiv>
 
-Entnimmt die Steuerdaten aus einem Binärpaket und schickt sie zur Standardausgabe im B<tar>-Format (seit Dpkg 1.17.14. Dies kann zusammen mit B<tar>(1) verwendet werden, um eine bestimmte B<control>-Datei aus einem Paketarchiv zu extrahieren. Das Eingabearchiv wird immer sequenziell verarbeitet.
+Entnimmt die Steuerdaten aus einem Binärpaket und schickt sie zur Standardausgabe im B<tar>-Format (seit Dpkg 1.17.14. Dies kann zusammen mit L<tar(1)> verwendet werden, um eine bestimmte B<control>-Datei aus einem Paketarchiv zu extrahieren. Das Eingabearchiv wird immer sequenziell verarbeitet.
 
 =item B<--fsys-tarfile> I<Archiv>
 
-Entnimmt die Dateisystembaumdaten aus einem Binärpaket und schickt sie zur Standardausgabe im B<tar>-Format. Dies kann zusammen mit B<tar>(1) verwendet werden, um eine bestimmte Datei aus einem Paketarchiv zu extrahieren. Das Eingabearchiv wird immer sequenziell verarbeitet.
+Entnimmt die Dateisystembaumdaten aus einem Binärpaket und schickt sie zur Standardausgabe im B<tar>-Format. Dies kann zusammen mit L<tar(1)> verwendet werden, um eine bestimmte Datei aus einem Paketarchiv zu extrahieren. Das Eingabearchiv wird immer sequenziell verarbeitet.
 
 =item B<-e>, B<--control> I<Archiv> [I<Verzeichnis>]
 
@@ -126,7 +126,7 @@ Gibt die Version aus und beendet das Programm.
 
 Diese Option wird dazu verwendet, das Format der Ausgabe anzugeben, das B<--show> verwenden wird. Das Format ist eine Zeichenkette, die für jedes aufgeführte Paket ausgegeben wird.
 
-Die Zeichenkette darf jedes Statusfeld in der Form „${I<Feldname>}“ referenzieren, eine Liste der möglichen Felder kann leicht mittels B<-I> für das gleiche Paket ermittelt werden. Eine komplette Erläuterung der Formatieroptionen (darunter die Maskiersequenzen und Feld-Tabulatoren) kann in der Erklärung der Option B<--showformat> von B<dpkg-query>(1) gefunden werden.
+Die Zeichenkette darf jedes Statusfeld in der Form „${I<Feldname>}“ referenzieren, eine Liste der möglichen Felder kann leicht mittels B<-I> für das gleiche Paket ermittelt werden. Eine komplette Erläuterung der Formatieroptionen (darunter die Maskiersequenzen und Feld-Tabulatoren) kann in der Erklärung der Option B<--showformat> von L<dpkg-query(1)> gefunden werden.
 
 Die Voreinstellung für dieses Feld ist „${Package}\t${Version}\n“.
 
@@ -140,7 +140,7 @@ Gibt die zu verwendende Komprimierstrategie an, die für den Komprimierer-Backen
 
 =item B<-Z>I<Komprimierart>
 
-Gibt die Art der Komprimierung beim Bau eines Pakets an. Erlaubte Werte sind B<gzip>, B<xz> (seit Dpkg 1.15.6), B<zstd> (seit Dpkg 1.21.18) und B<none> (voreingestellt ist B<xz>).
+Gibt die Art der Komprimierung beim Bau eines Pakets an. Erlaubte Werte sind B<gzip>, B<xz> (seit Dpkg 1.15.6), B<zstd> (seit Dpkg 1.21.18) und B<none> (voreingestellt ist B<%DEB_DEFAULT_COMPRESSOR%>).
 
 =item B<--[no-]uniform-compression>
 
@@ -222,13 +222,19 @@ Falls gesetzt, wird B<dpkg-deb> es als das Verzeichnis verwenden, in dem tempor�
 
 =item B<SOURCE_DATE_EPOCH>
 
-Falls gesetzt, wird es als Zeitstempel (als Sekunden seit der Epoche) in dem B<ar>(5)-Container von B<deb>(5) und zum Festlegen der Mtime in den Dateieinträgen von B<tar>(5) verwandt.
+Falls gesetzt, wird es als Zeitstempel (als Sekunden seit der Epoche) in dem L<ar(5)>-Container von L<deb(5)> und zum Festlegen der Mtime in den Dateieinträgen von L<tar(5)> verwandt.
 
 =back
 
 =head1 BEMERKUNGEN
 
 Versuchen Sie nicht, nur mit B<dpkg-deb> Software zu installieren! Sie müssen B<dpkg> selber verwenden, um sicherzustellen, dass alle Dateien an den richtigen Ort platziert werden, die Paketskripte ausgeführt werden und sein Status und Inhalt aufgezeichnet wird.
+
+=head1 SICHERHEIT
+
+Untersuchen nicht vertrauenswürdiger Paketarchive oder ihr Entpacken in ein Arbeitsverzeichnis sollte als Sicherheitsgrenze betrachtet werden und jede Verletzung dieser Grenze, die aus diesen Aktionen resultiert, sollte als Sicherheitsverwundbarkeit betrachtet werden. Allerdings sollte der Umgang mit nicht vertrauenswürdigen Paketarchiven nicht leichtherzig erfolgen, da die Oberfläche alle unterstützten Komprimierungsbibliotheken umfasst, zusätzliche zu den Archivformaten und Steuerdateien selbst. Es wird nachdrücklich davon abgeraten, diese Aktionen auf nicht vertrauenswürdigen Daten als Root durchzuführen.
+
+Das Bauen von Paketarchiven sollte nur mit vertrauenswürdigen Daten erfolgen.
 
 =head1 FEHLER
 
@@ -238,7 +244,7 @@ B<.deb>-Dateien werden nicht authentifiziert; in der Tat gibt es noch nicht mal 
 
 =head1 SIEHE AUCH
 
-F<%PKGDOCDIR%/spec/rootless-builds.txt>, B<deb>(5), B<deb-control>(5), B<dpkg>(1), B<dselect>(1).
+F<%PKGDOCDIR%/spec/rootless-builds.txt>, L<deb(5)>, L<deb-control(5)>, L<dpkg(1)>, L<dselect(1)>.
 
 
 =head1 ÜBERSETZUNG
