@@ -22,7 +22,7 @@ B<DEBIAN/symbols>
 
 =head1 BESCHREIBUNG
 
-Die Symboldateien werden in Debian-Binärpaketen ausgeliefert. Deren Format ist eine Teilmenge der Vorlagensymboldateien, die von B<dpkg-gensymbols>(1) in Debian-Quellpaketen verwandt wird, siehe L<deb-src-symbols(5)>.
+Die Symboldateien werden in Debian-Binärpaketen ausgeliefert. Deren Format ist eine Teilmenge der Vorlagensymboldateien, die von L<dpkg-gensymbols(1)> in Debian-Quellpaketen verwandt wird, siehe L<deb-src-symbols(5)>.
 
 Das Format eines Eintrags für eine erweiterte Abhängigkeitsinformation einer Laufzeitbibliothek („shared library“) lautet:
 
@@ -34,7 +34,7 @@ Z<>
  [...]
   I<Symbol> I<minimale_Version> [I<Kennung_der_Abhängigkeitsvorlage>]
 
-Der I<Bibliotheks-Soname> ist genau der Wert des SONAME-Feldes, wie er von B<objdump>(1) exportiert wird. Eine I<Abhängigkeitsvorlage> ist eine Abhängigkeit, in der I<#MINVER#> dynamisch entweder von einer Versionsprüfung der Art „(E<gt>= I<Minimalversion>)“ oder durch nichts ersetzt wird, falls eine nicht-versionierte Abhängigkeit als ausreichend erachtet wird.
+Der I<Bibliotheks-Soname> ist genau der Wert des SONAME-Feldes, wie er von L<objdump(1)> exportiert wird. Eine I<Abhängigkeitsvorlage> ist eine Abhängigkeit, in der I<#MINVER#> dynamisch entweder von einer Versionsprüfung der Art „(E<gt>= I<Minimalversion>)“ oder durch nichts ersetzt wird, falls eine nicht-versionierte Abhängigkeit als ausreichend erachtet wird.
 
 Jedem exportierten I<Symbol> (aufgeführt als I<Name>@I<Version>, mit I<Version> als „Base“, falls die Bibliothek nicht versioniert ist) wird eine I<Minimalversion> seiner Abhängigkeitsvorlage zugeordnet (die Hauptabhängigkeitsvorlage wird immer verwandt und wird am Ende mit der abhängigen, in I<Kennung_der_Abhängigkeitsvorlage> referenzierten Vorlage (falls vorhanden) kombiniert). Die erste alternative Abhängigkeitsvorlage wird mit 1 nummeriert, die zweite mit 2 usw. Jede Spalte ist genau durch ein Leerraum abgetrennt.
 
@@ -81,7 +81,7 @@ Ein veralteter Alias für B<Allow-Internal-Symbol-Groups> (seit Dpkg 1.20.1, unt
 
 =head1 SIEHE AUCH
 
-L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, L<deb-src-symbols(5)>, B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
+L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, L<deb-src-symbols(5)>, L<dpkg-shlibdeps(1)>, L<dpkg-gensymbols(1)>.
 
 
 =head1 ÜBERSETZUNG

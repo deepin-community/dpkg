@@ -50,9 +50,11 @@ Dessa filer är i huvudsak intressanta för att kunna tillhandahålla den minima
 
 När den genererade symbolfilen skiljer sig mot den version som tillhandahållits av de paketansvariga kommer B<dpkg-gensymbols> att skriva ut en differens mellan de två versionerna. Om ändringarna är för stora kommer programmet dessutom att misslyckas (du kan justera hur stora ändringar du kan tolerera, se flaggan B<-c>).
 
+Programmet introducerades i dpkg 1.14.8.
+
 =head1 UNDERHÅLLA SYMBOLFILER
 
-Det grundläggande utväxlingsformatet för symbolfilen beskrivs i B<deb-symbols>(5), vilket används av symbolfilerna som inkluderas i bärpaket. Dessa genereras från mallsymbolfiler med ett format som baseras på det tidigare nämnda, beskrivet i B<deb-src-symbols>(5) och inkluderas i källkodspaket.
+Det grundläggande utväxlingsformatet för symbolfilen beskrivs i L<deb-symbols(5)>, vilket används av symbolfilerna som inkluderas i bärpaket. Dessa genereras från mallsymbolfiler med ett format som baseras på det tidigare nämnda, beskrivet i L<deb-src-symbols(5)> och inkluderas i källkodspaket.
 
 Symbolfilerna är bara riktigt nyttiga om de motsvarar hur paketet har utvecklats över flera versioner. De paketansvariga måste därför uppdatera dem varje gång en ny symbol läggs till så att dess associerade minimala version motsvarar verkligheten.
 
@@ -106,7 +108,7 @@ Definiera paketversion. Standardvärdet är versionen som hämtas från debian/c
 
 =item B<-e>I<biblioteksfil>
 
-Analyserar endast bibliotek som listats explicit istället för att hitta alla publika bibliotek. Du kan använda ett jokertecken för filnamn (se manualsidan B<File::Glob>(3perl) för detaljer) i I<biblioteksfil> för att träffa multipla bibliotek med ett enda argument (annars behöver du flera B<-e>).
+Analyserar endast bibliotek som listats explicit istället för att hitta alla publika bibliotek. Du kan använda ett jokertecken för filnamn (se manualsidan L<File::Glob> för detaljer) i I<biblioteksfil> för att träffa multipla bibliotek med ett enda argument (annars behöver du flera B<-e>).
 
 =item B<-l>I<katalog>
 
@@ -124,7 +126,7 @@ Visa den genererade symbolfilen på standard ut eller spara som I<filnamn> om de
 
 =item B<-t>
 
-Skriv symbolfilen i mall-läge istället för i formatet kompatibelt med B<deb-symbols>(5). Huvudskillnaden är att symbolnamn och taggar skrivs i sin originalform i mall-läget, till skillnad från de efterbehandlade symbolnamnen med borttagna taggar som skrivs i det kompatibla läget. Dessutom kan vissa symboler uteslutas när en vanlig B<deb-symbols>(5)-fil skrivs (i enlighet med tagghanteringsreglerna) medan alla symboler alltid skrivs till symbolfilsmallen.
+Skriv symbolfilen i mall-läge istället för i formatet kompatibelt med L<deb-symbols(5)>. Huvudskillnaden är att symbolnamn och taggar skrivs i sin originalform i mall-läget, till skillnad från de efterbehandlade symbolnamnen med borttagna taggar som skrivs i det kompatibla läget. Dessutom kan vissa symboler uteslutas när en vanlig L<deb-symbols(5)>-fil skrivs (i enlighet med tagghanteringsreglerna) medan alla symboler alltid skrivs till symbolfilsmallen.
 
 =item B<-c>I<[0-4]>
 
@@ -202,7 +204,7 @@ Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även 
 
 =head1 SE ÄVEN
 
-L<https://people.redhat.com/drepper/symbol-versioning>, L<https://people.redhat.com/drepper/goodpractice.pdf>, L<https://people.redhat.com/drepper/dsohowto.pdf>, B<deb-src-symbol>(5), B<deb-symbols>(5), B<dpkg-shlibdeps>(1).
+L<https://people.redhat.com/drepper/symbol-versioning>, L<https://people.redhat.com/drepper/goodpractice.pdf>, L<https://people.redhat.com/drepper/dsohowto.pdf>, L<deb-src-symbol(5)>, L<deb-symbols(5)>, L<dpkg-shlibdeps(1)>.
 
 
 =head1 ÖVERSÄTTNING

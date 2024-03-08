@@ -24,13 +24,13 @@ B<dpkg> [I<optie>...] I<actie>
 
 Deze handleiding is bedoeld voor gebruikers die de commandoregelopties van dpkg en de pakkettoestanden meer in detail willen begrijpen dan met de info van B<dpkg --help> mogelijk is.
 
-Zij zou I<niet> gebruikt moeten worden door pakketonderhouders die willen begrijpen hoe B<dpkg> hun pakketten installeert. De beschrijving van wat B<dpkg> doet bij het installeren en verwijderen van pakketten is bijzonder inadequaat.
+Zij zou I<niet> gebruikt moeten worden door pakketbeheerders die willen begrijpen hoe B<dpkg> hun pakketten installeert. De beschrijving van wat B<dpkg> doet bij het installeren en verwijderen van pakketten is bijzonder inadequaat.
 
 =head1 BESCHRIJVING
 
-B<dpkg> is gereedschap op een tussenniveau voor het installeren, bouwen, verwijderen en beheren van Debian pakketten. Het belangrijkste en meer gebruikersvriendelijke frontend voor B<dpkg> als commandoregelinterface (CLI - command-line interface) is B<apt>(8) en is B<aptitude>(8) als terminalgebruikersinterface (TUI - terminal user interface). B<dpkg> zelf wordt volledig gestuurd via commandoregelparameters, die bestaan uit exact één actie en nul of meer opties. De actieparameter zegt B<dpkg> wat het moet doen en de opties sturen in zekere zin het gedrag van de actie.
+B<dpkg> is gereedschap op een tussenniveau voor het installeren, bouwen, verwijderen en beheren van Debian pakketten. Het belangrijkste en meer gebruikersvriendelijke frontend voor B<dpkg> als commandoregelinterface (CLI - command-line interface) is L<apt(8)> en is L<aptitude(8)> als terminalgebruikersinterface (TUI - terminal user interface). B<dpkg> zelf wordt volledig gestuurd via commandoregelparameters, die bestaan uit exact één actie en nul of meer opties. De actieparameter zegt B<dpkg> wat het moet doen en de opties sturen in zekere zin het gedrag van de actie.
 
-B<dpkg> kan ook gebruikt worden als een frontend voor B<dpkg-deb>(1) en B<dpkg-query>(1). De lijst van ondersteunde acties kunt u verderop in het onderdeel B<ACTIES> vinden. Indien B<dpkg> een dergelijke actie tegenkomt, voert het gewoon B<dpkg-deb> of B<dpkg-query> uit met de parameters die het meekreeg. Maar momenteel worden aan hen geen specifieke opties doorgegeven. Indien u een dergelijke optie wenst te gebruiken moet u deze programma's rechtstreeks gebruiken.
+B<dpkg> kan ook gebruikt worden als een frontend voor L<dpkg-deb(1)> en L<dpkg-query(1)>. De lijst van ondersteunde acties kunt u verderop in het onderdeel B<ACTIES> vinden. Indien B<dpkg> een dergelijke actie tegenkomt, voert het gewoon B<dpkg-deb> of B<dpkg-query> uit met de parameters die het meekreeg. Maar momenteel worden aan hen geen specifieke opties doorgegeven. Indien u een dergelijke optie wenst te gebruiken moet u deze programma's rechtstreeks gebruiken.
 
 =head1 INFORMATIE OVER PAKKETTEN
 
@@ -124,17 +124,33 @@ Het pakket installeren. Indien de optie B<--recursive> of B<-R> opgegeven werd, 
 
 Een installatie bestaat uit de volgende stappen:
 
-B<1.> Het extraheren van de controle-bestanden van het nieuwe pakket.
+=over 4
 
-B<2.> Indien voorafgaand aan de nieuwe installatie een andere versie van hetzelfde pakket geïnstalleerd was, het I<prerm>-script van het oude pakket uitvoeren.
+=item B<1.>
 
-B<3.> Indien het pakket een I<preinst>-script meelevert, dat uitvoeren.
+De controle-bestanden van het nieuwe pakket extraheren.
 
-B<4.> Het uitpakken van de nieuwe bestanden en tegelijk een reservekopie van de oude bestanden maken, zodat ze hersteld kunnen worden mocht er iets fout lopen.
+=item B<2.>
 
-B<5.> Indien voorafgaand aan de nieuwe installatie een andere versie van hetzelfde pakket geïnstalleerd was, het I<postrm>-script van het oude pakket uitvoeren. Merk op dat dit script uitgevoerd wordt na het I<preinst>-script van het nieuwe pakket, omdat nieuwe bestanden neergeschreven worden tegelijk met het verwijderen van oude bestanden.
+Indien voorafgaand aan de nieuwe installatie een andere versie van hetzelfde pakket geïnstalleerd was, het I<prerm>-script van het oude pakket uitvoeren.
 
-B<6.> Het configureren van het pakket. Zie B<--configure> voor gedetailleerde informatie over hoe dit gebeurt.
+=item B<3.>
+
+Indien het pakket een I<preinst>-script meelevert, dat uitvoeren.
+
+=item B<4.>
+
+De nieuwe bestanden uitpakken en tegelijk een reservekopie van de oude bestanden maken, zodat ze hersteld kunnen worden mocht er iets fout lopen.
+
+=item B<5.>
+
+Indien voorafgaand aan de nieuwe installatie een andere versie van hetzelfde pakket geïnstalleerd was, het I<postrm>-script van het oude pakket uitvoeren. Merk op dat dit script uitgevoerd wordt na het I<preinst>-script van het nieuwe pakket, omdat nieuwe bestanden neergeschreven worden tegelijk met het verwijderen van oude bestanden.
+
+=item B<6.>
+
+Het pakket configureren. Zie B<--configure> voor gedetailleerde informatie over hoe dit gebeurt.
+
+=back
 
 =item B<--unpack> I<pakketbestand>...
 
@@ -146,13 +162,21 @@ Zal triggers voor B<Pre-Depends> verwerken, tenzij B<--no-triggers> opgegeven we
 
 Een pakket configureren dat uitgepakt, maar nog niet geconfigureerd werd. Indien echter B<-a> of B<--pending> opgegeven wordt in plaats van I<pakket>, worden alle uitgepakte maar niet-geconfigureerde pakketten geconfigureerd.
 
-Om een pakket dat reeds geconfigureerd werd opnieuw te configureren, moet u echter het commando B<dpkg-reconfigure>(8) gebruiken.
+Om een pakket dat reeds geconfigureerd werd opnieuw te configureren, moet u echter het commando L<dpkg-reconfigure(8)> gebruiken (dat deel uitmaakt van het B<debconf>-project).
 
 Het configureren bestaat uit de volgende stappen:
 
-B<1.> Het uitpakken van de configuratiebestanden en tegelijk een reservekopie maken van de oude configuratiebestanden, zodat ze hersteld kunnen worden mocht er iets fout lopen.
+=over 4
 
-B<2.> Indien het pakket een I<postinst>-script meelevert, dat uitvoeren.
+=item B<1.>
+
+De configuratiebestanden uitpakken en tegelijk een reservekopie maken van de oude configuratiebestanden, zodat ze hersteld kunnen worden mocht er iets fout lopen.
+
+=item B<2.>
+
+Het script I<postinst> uitvoeren, als dit door het pakket wordt geleverd.
+
+=back
 
 Zal triggers verwerken, tenzij B<--no-triggers> werd opgegeven.
 
@@ -166,11 +190,21 @@ Een geïnstalleerd pakket verwijderen. Dit verwijdert alles behalve de configura
 
 Het verwijderen van een pakket bestaat uit de volgende stappen:
 
-B<1.> Het uitvoeren van het I<prerm>-script
+=over 4
 
-B<2.> Het verwijderen van de geïnstalleerde bestanden
+=item B<1.>
 
-B<3.> Het uitvoeren van het I<postrm>-script
+Het script I<prerm> uitvoeren.
+
+=item B<2.>
+
+De geïnstalleerde bestanden verwijderen.
+
+=item B<3.>
+
+Het script I<postrm> uitvoeren.
+
+=back
 
 Zal triggers verwerken, tenzij B<--no-triggers> werd opgegeven.
 
@@ -178,13 +212,21 @@ Zal triggers verwerken, tenzij B<--no-triggers> werd opgegeven.
 
 Een geïnstalleerd of een reeds verwijderd pakket wissen. Dit verwijdert alles, inclusief configuratiebestanden en alles wat anders opgeruimd wordt vanuit I<postrm>. Indien B<-a> of B<--pending> opgegeven werd in plaats van een pakketnaam, dan zullen alle uitgepakte of verwijderde pakketten die echter in het bestand I<%ADMINDIR%/status> gemarkeerd zijn om gewist te worden, gewist worden.
 
-Merk op: sommige configuratiebestanden kunnen onbekend zijn voor B<dpkg> omdat ze via de configuratiescripts gecreëerd en afzonderlijk afgehandeld worden. In dat geval zal B<dpkg> ze niet zelf verwijderen, maar het I<postrm>-script van het pakket (dat door B<dpkg> geactiveerd wordt) moet tijdens een wis-operatie voor hun verwijdering zorgen. Dit is uiteraard enkel van toepassing op bestanden in systeemmappen, niet op configuratiebestanden die neergeschreven werden in de persoonlijke map van gebruikers.
+B<Merk op>: sommige configuratiebestanden kunnen onbekend zijn voor B<dpkg> omdat ze via de configuratiescripts gecreëerd en afzonderlijk afgehandeld worden. In dat geval zal B<dpkg> ze niet zelf verwijderen, maar het I<postrm>-script van het pakket (dat door B<dpkg> geactiveerd wordt) moet tijdens een wis-operatie voor hun verwijdering zorgen. Dit is uiteraard enkel van toepassing op bestanden in systeemmappen, niet op configuratiebestanden die neergeschreven werden in de persoonlijke map van gebruikers.
 
 Het wissen van een pakket bestaat uit de volgende stappen:
 
-B<1.> Het verwijderen van het pakket als het nog niet verwijderd was. Zie B<--remove> voor gedetailleerde informatie over hoe dit gebeurt.
+=over 4
 
-B<2.> Het script I<postrm> uitvoeren.
+=item B<1.>
+
+Het pakket verwijderen als het nog niet verwijderd was. Zie B<--remove> voor gedetailleerde informatie over hoe dit gebeurt.
+
+=item B<2.>
+
+Het script I<postrm> uitvoeren.
+
+=back
 
 Zal triggers verwerken, tenzij B<--no-triggers> werd opgegeven.
 
@@ -192,7 +234,7 @@ Zal triggers verwerken, tenzij B<--no-triggers> werd opgegeven.
 
 Controleert de integriteit van I<pakketnaam> of van alle pakketten indien er geen naam opgegeven werd. De controle gebeurt door een vergelijking te maken van informatie uit de bestanden die door een pakket geïnstalleerd worden met de metadata-informatie over die bestanden die in de database van B<dpkg> opgeslagen is (sinds dpkg 1.17.2). De metadata-informatie over die bestanden in de database is afkomstig van het binaire pakket zelf. Die metadata worden verzameld tijdens het installatieproces op het moment van het uitpakken van het pakket.
 
-Momenteel is de enige functionele toets die uitgevoerd wordt, een verificatie van de md5-controlesom van de inhoud van het bestand tegenover de opgeslagen waarde in de bestandsdatabase. De toets wordt enkel uitgevoerd als de database de md5-controlesom van het bestand bevat. Om na te gaan of er eventueel metadata ontbreken in de database, kan het commando B<--audit> gebruikt worden.
+Momenteel is de enige functionele toets die uitgevoerd wordt, een verificatie van de md5-controlesom van de inhoud van het bestand tegenover de opgeslagen waarde in de bestandsdatabase. De toets wordt enkel uitgevoerd als de database de md5-controlesom van het bestand bevat. Om na te gaan of er eventueel metadata ontbreken in de database, kan het commando B<--audit> gebruikt worden. Dit is slechts een integriteitscontrole en mag niet worden beschouwd als enige vorm van veiligheidsverificatie.
 
 De indeling van de uitvoer kan met de optie B<--verify-format> gekozen worden. Standaard wordt de indeling B<rpm> gebruikt, maar dit kan in de toekomst veranderen en om die reden zouden programma's die de uitvoer van dit commando ontleden, expliciet moeten aangeven welke indeling zij verwachten.
 
@@ -238,7 +280,7 @@ De gevraagde status voor elk niet-essentieel pakket instellen op deinstall (de-i
 
 Zoekt pakketten op die geselecteerd werden om geïnstalleerd te worden, maar die om één of andere reden nog niet geïnstalleerd werden.
 
-B<Merk op:> dit commando maakt zowel gebruik van het bestand available als van de pakketselectie.
+B<Merk op>: dit commando maakt zowel gebruik van het bestand available als van de pakketselectie.
 
 =item B<--predep-package>
 
@@ -246,7 +288,7 @@ Eén enkel pakket tonen dat het doel is van een of meer relevante voorafgaande v
 
 Indien er een dergelijk pakket is, geef het dan weer in de vorm van een item voor het bestand Packages dat passend verder bewerkt kan worden.
 
-B<Merk op:> dit commando maakt zowel gebruik van het bestand available als van de pakketselectie.
+B<Merk op>: dit commando maakt zowel gebruik van het bestand available als van de pakketselectie.
 
 Geeft 0 terug als een pakket weergegeven werd, 1 als geen geschikt pakket te vinden is en 2 in geval van een fout.
 
@@ -286,7 +328,7 @@ Biedt ondersteuning voor epoches in versietekenreeksen (sinds dpkg 1.4.0.7).
 
 =item B<long-filenames>
 
-Biedt ondersteuning voor lange bestandsnamen in archieven van het type B<deb>(5) (sinds dpkg 1.4.1.17).
+Biedt ondersteuning voor lange bestandsnamen in archieven van het type L<deb(5)> (sinds dpkg 1.4.1.17).
 
 =item B<multi-conrep>
 
@@ -340,7 +382,7 @@ Versienummers vergelijken, waarbij I<op> een binaire operator is. B<dpkg> geeft 
 
 Een reeks commando's accepteren op invoerbestandsindicator I<n>.
 
-B<Merk op:> Extra opties die werden ingesteld op de opdrachtregel of via deze bestandsindicator, worden niet opnieuw ingesteld voor volgende opdrachten die tijdens dezelfde doorloop worden uitgevoerd.
+B<Merk op>: Extra opties die werden ingesteld op de opdrachtregel of via deze bestandsindicator, worden niet opnieuw ingesteld voor volgende opdrachten die tijdens dezelfde doorloop worden uitgevoerd.
 
 =end uitgeschakeld
 
@@ -364,7 +406,7 @@ Wanneer dit gebruikt wordt met B<--robot>, zal de uitvoer het versienummer bevat
 
 =item B<dpkg-deb actions>
 
-Zie B<dpkg-deb>(1) voor meer informatie over de volgende acties, en andere acties en opties die niet worden weergegeven door de B<dpkg>-frontend.
+Zie L<dpkg-deb(1)> voor meer informatie over de volgende acties, en andere acties en opties die niet worden weergegeven door de B<dpkg>-frontend.
 
 =over 
 
@@ -408,7 +450,7 @@ Informatie over een pakket tonen.
 
 =item B<dpkg-query acties>
 
-Zie B<dpkg-query>(1) voor meer informatie over de volgende acties, en andere acties en opties die niet worden weergegeven door de B<dpkg>-frontend.
+Zie L<dpkg-query(1)> voor meer informatie over de volgende acties, en andere acties en opties die niet worden weergegeven door de B<dpkg>-frontend.
 
 =over 
 
@@ -475,73 +517,135 @@ Debuggen inschakelen. I<octaal> wordt gevormd door de gewenste waarden uit de on
 
 Het uitvoeren van sommige dingen opleggen of weigeren (B<no-force> en B<refuse> betekenen hetzelfde). I<dingen> is een door komma's gescheiden lijst van hierna gespecificeerde zaken. B<--force-help> geeft er een beschrijving van weer. Zaken die met een (*) gemarkeerd zijn, worden standaard opgelegd.
 
-I<Waarschuwing: Deze opties zijn vooral bedoeld om enkel door experts gebruikt te worden. Er gebruik van maken zonder een volkomen begrip van hun effecten kan uw volledig systeem defect maken.>
+B<Waarschuwing>: Deze opties zijn vooral bedoeld om enkel door experts gebruikt te worden. Er gebruik van maken zonder een volkomen begrip van hun effecten kan uw volledig systeem defect maken.
 
-B<all>: Schakelt alle forceer-opties aan (of uit).
+=over 2
 
-B<downgrade>(*): Een pakket installeren, zelfs als reeds een nieuwere versie ervan geïnstalleerd is.
+=item B<all>:
 
-I<Waarschuwing: Momenteel voert> B<dpkg> I<geen enkele vereistencontrole uit bij degradaties en zal dan ook niet waarschuwen indien een degradatie een vereiste van een ander pakket defect maakt. Dit kan ernstige neveneffecten hebben. Degraderen van essentiële componenten van het systeem kan zelfs uw hele systeem onbruikbaar maken. Te gebruiken met voorzichtigheid.>
+Schakelt alle forceer-opties aan (of uit).
 
-B<configure-any>: Ook elk uitgepakt maar niet-geconfigureerd pakket waarvan het huidige pakket afhankelijk is, configureren.
+=item B<downgrade>(*):
 
-B<hold>: Automatische installaties, opwaarderingen en verwijderingen van pakketten toestaan, zelfs al zijn ze als te behouden (on "hold") gemarkeerd. B<Merk op:> Wanneer expliciet om deze acties gevraagd wordt, zal de selectiestatus "hold" van het pakket altijd genegeerd worden.
+Een pakket installeren, zelfs als reeds een nieuwere versie ervan geïnstalleerd is.
 
-B<remove-reinstreq>: Een pakket verwijderen, zelfs als het defect is en er aangegeven staat dat een herinstallatie nodig is. Dit kan bijvoorbeeld tot gevolg hebben dat delen van het pakket op het systeem achterblijven, maar B<dpkg> zal er dan niet meer van op de hoogte zijn.
+B<Waarschuwing>: Momenteel voert B<dpkg> geen enkele vereistencontrole uit bij degradaties en zal dan ook niet waarschuwen indien een degradatie een vereiste van een ander pakket defect maakt. Dit kan ernstige neveneffecten hebben. Degraderen van essentiële componenten van het systeem kan zelfs uw hele systeem onbruikbaar maken. Te gebruiken met voorzichtigheid.
 
-B<remove-protected>: Het pakket verwijderen, zelfs al wordt het als beschermd beschouwd (sinds dpkg 1.20.1). Beschermde pakketten bevatten meestal belangrijke infrastructuur voor de systeemopstart of worden gebruikt voor aangepaste systeem-lokale metapakketten. Ze verwijderen kan tot gevolg hebben dat het hele systeem niet langer kan opstarten of functionaliteit verliest die vereist is om te functioneren. Gebruik dit dus met de nodige voorzichtigheid.
+=item B<configure-any>:
 
-B<remove-essential>: Het pakket verwijderen, zelfs al wordt het als essentieel beschouwd. Essentiële pakketten bevatten meestal zeer elementaire Unix-commando's, die nodig zijn voor het verpakkingssysteem, voor de werking van het systeem in het algemeen of tijdens het opstarten (hoewel deze laatste in plaats daarvan zouden moeten worden geconverteerd naar beschermde pakketten). Ze verwijderen kan tot gevolg hebben dat het hele systeem stopt met werken. Gebruik dit dus met de nodige voorzichtigheid.
+Ook elk uitgepakt maar niet-geconfigureerd pakket waarvan het huidige pakket afhankelijk is, configureren.
 
-B<depends>: Alle vereistenproblemen omzetten in waarschuwingen. Dit heeft invloed op de velden B<Pre-Depends> en B<Depends>.
+=item B<hold>:
 
-B<depends-version>: Zich niet om versies bekommeren bij het toetsen van vereisten. Dit heeft invloed op de velden B<Pre-Depends> en B<Depends>.
+Automatische installaties, opwaarderingen en verwijderingen van pakketten toestaan, zelfs al zijn ze als te behouden (on "hold") gemarkeerd. B<Merk op>: wanneer expliciet om deze acties gevraagd wordt, zal de selectiestatus "hold" van het pakket altijd genegeerd worden.
 
-B<breaks>: Installeren, zelfs als dit een ander pakket defect zou maken (sinds dpkg 1.14.6). Dit heeft invloed op het veld B<Breaks>.
+=item B<remove-reinstreq>:
 
-B<conflicts>: Installeren, zelfs als er een tegenstelling is met een ander pakket. Dit is gevaarlijk, want gewoonlijk zal dit het overschrijven van bepaalde bestanden tot gevolg hebben. Dit heeft invloed op het veld B<Conflicts>.
+Een pakket verwijderen, zelfs als het defect is en er aangegeven staat dat een herinstallatie nodig is. Dit kan bijvoorbeeld tot gevolg hebben dat delen van het pakket op het systeem achterblijven, maar B<dpkg> zal er dan niet meer van op de hoogte zijn.
 
-B<confmiss>: Zonder vragen steeds het ontbrekende configuratiebestand installeren. Dit is gevaarlijk, aangezien het betekent dat een verandering die aan een bestand aangebracht werd (het verwijderen ervan), niet behouden wordt.
+=item B<remove-protected>:
 
-B<confnew>: Als een configuratiebestand aangepast werd en de versie uit het pakket gewijzigd werd, dan steeds zonder vragen de nieuwe versie installeren, tenzij ook B<--force-confdef> opgegeven werd. In dat geval wordt de voorkeur gegeven aan de standaardactie.
+Het pakket verwijderen, zelfs al wordt het als beschermd beschouwd (sinds dpkg 1.20.1). Beschermde pakketten bevatten meestal belangrijke infrastructuur voor de systeemopstart of worden gebruikt voor aangepaste systeem-lokale metapakketten. Ze verwijderen kan tot gevolg hebben dat het hele systeem niet langer kan opstarten of functionaliteit verliest die vereist is om te functioneren. Gebruik dit dus met de nodige voorzichtigheid.
 
-B<confold>: Als een configuratiebestand aangepast werd en de versie uit het pakket gewijzigd werd, dan steeds zonder vragen de oude versie behouden, tenzij ook B<--force-confdef> opgegeven werd. In dat geval wordt de voorkeur gegeven aan de standaardactie.
+=item B<remove-essential>:
 
-B<confdef>: Als een configuratiebestand aangepast werd en de versie uit het pakket gewijzigd werd, dan steeds zonder vragen voor de standaardactie kiezen. Indien er geen standaardactie is, zal het programma stoppen en de gebruiker een vraag stellen, tenzij ook B<--force-confnew> of B<--force-confold> opgegeven werd. In dat geval zal het dit gebruiken om over de uiteindelijke actie te beslissen.
+Het pakket verwijderen, zelfs al wordt het als essentieel beschouwd. Essentiële pakketten bevatten meestal zeer elementaire Unix-commando's, die nodig zijn voor het verpakkingssysteem, voor de werking van het systeem in het algemeen of tijdens het opstarten (hoewel deze laatste in plaats daarvan zouden moeten worden geconverteerd naar beschermde pakketten). Ze verwijderen kan tot gevolg hebben dat het hele systeem stopt met werken. Gebruik dit dus met de nodige voorzichtigheid.
 
-B<confask>: Als een configuratiebestand aangepast werd, altijd aanbieden om het te vervangen door de versie uit het pakket, ook al werd de versie uit het pakket niet gewijzigd (sinds dpkg 1.15.8). Indien ook een van de opties B<--force-confnew>, B<--force-confold> of B<--force-confdef> opgegeven werd, zal het die gebruiken om over de uiteindelijke actie te beslissen.
+=item B<depends>:
 
-B<overwrite>: Een bestand van een pakket overschrijven met het bestand van een ander pakket.
+Alle vereistenproblemen omzetten in waarschuwingen. Dit heeft invloed op de velden B<Pre-Depends> en B<Depends>.
 
-B<overwrite-dir>: Een map van een pakket overschrijven met het bestand van een ander pakket.
+=item B<depends-version>:
 
-B<overwrite-diverted>: Een omgeleid bestand overschrijven met een niet-omgeleide versie.
+Zich niet om versies bekommeren bij het toetsen van vereisten. Dit heeft invloed op de velden B<Pre-Depends> en B<Depends>.
 
-B<statoverride-add>: Bij het toevoegen ervan een bestaande statusmodificatie overschrijven (sinds dpkg 1.19.5).
+=item B<breaks>:
 
-B<statoverride-remove>: Bij het verwijderen ervan een ontbrekende statusmodificatie negeren (sinds dpkg 1.19.5).
+Installeren, zelfs als dit een ander pakket defect zou maken (sinds dpkg 1.14.6). Dit heeft invloed op het veld B<Breaks>.
 
-B<security-mac>(*): Bij het installeren van bestanden op het bestandssysteem gebruik maken van platformspecifieke beveiliging, gebaseerd op Mandatory Access Controls (MAC) (since dpkg 1.19.5). Op Linux-systemen gebruikt de implementatie SELinux.
+=item B<conflicts>:
 
-B<unsafe-io>: Bij het uitpakken geen veilige I/O-operaties uitvoeren (sinds dpkg 1.15.8.6). Momenteel houdt dit in dat geen bestandssysteemsynchronisatie gebeurt vooraleer bestanden hernoemd worden. Daarvan is geweten dat dit op sommige bestandssystemen tot aanzienlijk slechtere prestaties leidt, en dit jammer genoeg vooral op die bestandssystemen die veilige I/O het meest nodig hebben omwille van hun onbetrouwbaar gedrag, hetgeen bij abrupte systeemcrashes aanleiding kan geven tot bestanden met lengte zero.
+Installeren, zelfs als er een tegenstelling is met een ander pakket. Dit is gevaarlijk, want gewoonlijk zal dit het overschrijven van bepaalde bestanden tot gevolg hebben. Dit heeft invloed op het veld B<Conflicts>.
+
+=item B<confmiss>:
+
+Zonder vragen steeds het ontbrekende configuratiebestand installeren. Dit is gevaarlijk, aangezien het betekent dat een verandering die aan een bestand aangebracht werd (het verwijderen ervan), niet behouden wordt.
+
+=item B<confnew>:
+
+Als een configuratiebestand aangepast werd en de versie uit het pakket gewijzigd werd, dan steeds zonder vragen de nieuwe versie installeren, tenzij ook B<--force-confdef> opgegeven werd. In dat geval wordt de voorkeur gegeven aan de standaardactie.
+
+=item B<confold>:
+
+Als een configuratiebestand aangepast werd en de versie uit het pakket gewijzigd werd, dan steeds zonder vragen de oude versie behouden, tenzij ook B<--force-confdef> opgegeven werd. In dat geval wordt de voorkeur gegeven aan de standaardactie.
+
+=item B<confdef>:
+
+Als een configuratiebestand aangepast werd en de versie uit het pakket gewijzigd werd, dan steeds zonder vragen voor de standaardactie kiezen. Indien er geen standaardactie is, zal het programma stoppen en de gebruiker een vraag stellen, tenzij ook B<--force-confnew> of B<--force-confold> opgegeven werd. In dat geval zal het dit gebruiken om over de uiteindelijke actie te beslissen.
+
+=item B<confask>:
+
+Als een configuratiebestand aangepast werd, altijd aanbieden om het te vervangen door de versie uit het pakket, ook al werd de versie uit het pakket niet gewijzigd (sinds dpkg 1.15.8). Indien ook een van de opties B<--force-confnew>, B<--force-confold> of B<--force-confdef> opgegeven werd, zal het die gebruiken om over de uiteindelijke actie te beslissen.
+
+=item B<overwrite>:
+
+Een bestand van een pakket overschrijven met het bestand van een ander pakket.
+
+=item B<overwrite-dir>:
+
+Een map van een pakket overschrijven met het bestand van een ander pakket.
+
+=item B<overwrite-diverted>:
+
+Een omgeleid bestand overschrijven met een niet-omgeleide versie.
+
+=item B<statoverride-add>:
+
+Bij het toevoegen ervan een bestaande statusmodificatie overschrijven (sinds dpkg 1.19.5).
+
+=item B<statoverride-remove>:
+
+Bij het verwijderen ervan een ontbrekende statusmodificatie negeren (sinds dpkg 1.19.5).
+
+=item B<security-mac>(*):
+
+Bij het installeren van bestanden op het bestandssysteem gebruik maken van platformspecifieke beveiliging, gebaseerd op Mandatory Access Controls (MAC) (since dpkg 1.19.5). Op Linux-systemen gebruikt de implementatie SELinux.
+
+=item B<unsafe-io>:
+
+Bij het uitpakken geen veilige I/O-operaties uitvoeren (sinds dpkg 1.15.8.6). Momenteel houdt dit in dat geen bestandssysteemsynchronisatie gebeurt vooraleer bestanden hernoemd worden. Daarvan is geweten dat dit op sommige bestandssystemen tot aanzienlijk slechtere prestaties leidt, en dit jammer genoeg vooral op die bestandssystemen die veilige I/O het meest nodig hebben omwille van hun onbetrouwbaar gedrag, hetgeen bij abrupte systeemcrashes aanleiding kan geven tot bestanden met lengte zero.
 
 I<Opmerking>: Overweeg liever om voor ext4, de belangrijkste betrokkene, gebruik te maken van de aankoppeloptie B<nodelalloc>, waardoor zowel het prestatieverlies als de problemen inzake de betrouwbaarheid van gegevens opgevangen worden. Dit laatste door er voor te zorgen dat het bestandssysteem geen bestanden aanmaakt met lengte zero als er zich een abrupte crash voordoet en software actief is die geen synchronisatie uitvoert voorafgaand aan een atomische hernoeming.
 
-I<Waarschuwing: Het gebruik van deze optie kan de prestaties verbeteren ten koste van het verlies van gegevens. Gebruik ze behoedzaam.>
+B<Waarschuwing>: het gebruik van deze optie kan de prestaties verbeteren ten koste van het verlies van gegevens. Gebruik ze behoedzaam.
 
-B<script-chrootless>: De scripts van de pakketonderhouder uitvoeren zonder te B<chroot>(2)en naar B<instdir>, zelfs als het pakket deze werkwijze niet ondersteunt (sinds dpkg 1.18.5).
+=item B<script-chrootless>:
 
-I<Waarschuwing: Dit kan uw computersysteem vernietigen, gebruik dit uiterst behoedzaam.>
+De scripts van de pakketbeheerder uitvoeren zonder te L<chroot(2)>en naar B<instdir>, zelfs als het pakket deze werkwijze niet ondersteunt (sinds dpkg 1.18.5).
 
-B<architecture>: Pakketten verwerken, zelfs als ze de verkeerde of geen architectuur hebben.
+B<Waarschuwing>: dit kan uw computersysteem vernietigen, gebruik dit uiterst behoedzaam.
 
-B<bad-version>: Pakketten verwerken, zelfs als ze een verkeerde versie hebben (sinds dpkg 1.16.1).
+=item B<architecture>:
 
-B<bad-path>: In B<PATH> ontbreken belangrijke programma's, waardoor het waarschijnlijk is dat er zich problemen zullen voordoen.
+Pakketten verwerken, zelfs als ze de verkeerde of geen architectuur hebben.
 
-B<not-root>: Proberen om zaken te (de-)installeren, zelfs in opdracht van een niet-systeembeheerder.
+=item B<bad-version>:
 
-B<bad-verify>: Een pakket installeren, zelfs als de authenticiteitscontrole mislukt.
+Pakketten verwerken, zelfs als ze een verkeerde versie hebben (sinds dpkg 1.16.1).
+
+=item B<bad-path>:
+
+In B<PATH> ontbreken belangrijke programma's, waardoor het waarschijnlijk is dat er zich problemen zullen voordoen.
+
+=item B<not-root>:
+
+Proberen om zaken te (de-)installeren, zelfs in opdracht van een niet-systeembeheerder.
+
+=item B<bad-verify>:
+
+Een pakket installeren, zelfs als de authenticiteitscontrole mislukt.
+
+=back
 
 =item B<--ignore-depends>=I<pakket>,...
 
@@ -551,7 +655,7 @@ Voor de opgegeven pakketten het toetsen van afhankelijkheden negeren (eigenlijk 
 
 Alles wat gedaan moet worden, uitvoeren, maar geen veranderingen wegschrijven. Dit wordt gebruikt om te zien wat er bij de opgegeven actie zou gebeuren, zonder dat er effectief iets gewijzigd wordt.
 
-Zorg ervoor om B<--no-act> voor de actie-parameter op te geven, anders zou u ongewenste resultaten kunnen bekomen. (bijvoorbeeld zal B<dpkg --purge foo --no-act> eerst pakket "foo" wissen en dan proberen pakket "--no-act" te wissen, ook al verwachtte u wellicht dat er niets gedaan zou worden)
+Be sure to give B<--no-act> before the action-parameter, or you might end up with undesirable results (e.g. B<dpkg --purge foo --no-act> will first purge package “foo” and then try to purge package ”--no-act”, even though you probably expected it to actually do nothing).
 
 =item B<-R>, B<--recursive>
 
@@ -567,7 +671,7 @@ De administratieve map instellen op I<directory>. In deze map zitten veel bestan
 
 =item B<--instdir=>I<map>
 
-Instellen van de installatiemap, welke de map aangeeft waarin pakketten geïnstalleerd zullen worden. B<instdir> is ook de map die aan B<chroot>(2) doorgegeven wordt vooraleer de installatiescripts van een pakket uitgevoerd worden, waardoor de scripts B<instdir> als de hoofdmap beschouwen. Standaard is dat «I</>».
+Instellen van de installatiemap, welke de map aangeeft waarin pakketten geïnstalleerd zullen worden. B<instdir> is ook de map die aan L<chroot(2)> doorgegeven wordt vooraleer de installatiescripts van een pakket uitgevoerd worden, waardoor de scripts B<instdir> als de hoofdmap beschouwen. Standaard is dat «I</>».
 
 =item B<--root=>I<map>
 
@@ -587,9 +691,9 @@ Sinds dpkg 1.21.10 wordt ook rekening gehouden met de architectuur, wat het moge
 
 =item B<--post-invoke=>I<commando>
 
-Instellen dat een uitbreiding (hook) I<commando> via "sh -c" moet uitgevoerd worden voor of na het uitvoeren van B<dpkg> bij de acties I<unpack>, I<configure>, I<install>, I<triggers-only>, I<remove>, I<purge>, I<add-architecture> en I<remove-architecture> van B<dpkg> (sinds dpkg 1.15.4 en de acties I<add-architecture> en I<remove-architecture> sinds dpkg 1.17.19). Deze optie kan meermaals opgegeven worden. De volgorde waarin de opties opgegeven worden, wordt behouden, waarbij deze uit de configuratiebestanden voorrang hebben. De omgevingsvariabele B<DPKG_HOOK_ACTION> wordt ingesteld voor de uitbreidingen (hooks) bij de huidige actie van B<dpkg>.
+Instellen dat een uitbreiding (hook) I<commando> via "%DPKG_DEFAULT_SHELL% -c" moet uitgevoerd worden voor of na het uitvoeren van B<dpkg> bij de acties I<unpack>, I<configure>, I<install>, I<triggers-only>, I<remove>, I<purge> (sinds dpkg 1.15.4) en de acties I<add-architecture> en I<remove-architecture> (sinds dpkg 1.17.19) van B<dpkg>. Deze optie kan meermaals opgegeven worden. De volgorde waarin de opties opgegeven worden, wordt behouden, waarbij deze uit de configuratiebestanden voorrang hebben. De omgevingsvariabele B<DPKG_HOOK_ACTION> wordt ingesteld voor de uitbreidingen (hooks) bij de huidige actie van B<dpkg>.
 
-B<Opmerking:> Frontends kunnen B<dpkg> meerdere keren per aanroep aanroepen, waardoor de uitbreidingen meer keren dan verwacht uitgevoerd kunnen worden.
+B<Opmerking>: frontends kunnen B<dpkg> meerdere keren per aanroep aanroepen, waardoor de uitbreidingen meer keren dan verwacht uitgevoerd kunnen worden.
 
 =item B<--path-exclude=>I<glob-patroon>
 
@@ -597,9 +701,9 @@ B<Opmerking:> Frontends kunnen B<dpkg> meerdere keren per aanroep aanroepen, waa
 
 Het I<glob-patroon> bij het installeren instellen als een filter voor paden, ofwel door paden die aan het opgegeven patroon beantwoorden, uit te sluiten ofwel door eerder uitgesloten paden opnieuw toe te voegen (sinds dpkg 1.15.8).
 
-I<Waarschuwing: Houd er rekening mee dat u, afhankelijk van de paden die uitgesloten worden, uw systeem volledig defect kunt maken. Gebruik dit behoedzaam.>
+B<Waarschuwing>: Houd er rekening mee dat u, afhankelijk van de paden die uitgesloten worden, uw systeem volledig defect kunt maken. Gebruik dit behoedzaam.
 
-In de glob-patronen kunnen dezelfde jokertekens gebruikt worden als in de shell, waarbij ‘*’ overeenkomt met om het even welke reeks tekens, met inbegrip van de lege tekenreeks evenals van ‘/’. Bijvoorbeeld, «I</usr/*/READ*>» komt overeen met «I</usr/share/doc/package/README>». Zoals gebruikelijk komt ‘?’ overeen met één willekeurig teken (opnieuw met inbegrip van ‘/’). En ‘[’ geeft het begin aan van een klasse van tekens, die een lijst van tekens, bereiken of complementaties kan bevatten. Zie B<glob>(7) voor gedetailleerde informatie over het gebruik van glob-patronen. B<Opmerking:> Het is mogelijk dat de huidige implementatie meer mappen en symbolische koppelingen opnieuw opneemt dan nodig is, in het bijzonder wanneer er een meer specifieke heropname is. Dit is om op veilig te spelen en mogelijke mislukkingen bij het uitpakken te vermijden. In de toekomst kan eraan gewerkt worden om dit te verbeteren.
+In de glob-patronen kunnen dezelfde jokertekens gebruikt worden als in de shell, waarbij ‘*’ overeenkomt met om het even welke reeks tekens, met inbegrip van de lege tekenreeks evenals van ‘/’. Bijvoorbeeld, «I</usr/*/READ*>» komt overeen met «I</usr/share/doc/package/README>». Zoals gebruikelijk komt ‘?’ overeen met één willekeurig teken (opnieuw met inbegrip van ‘/’). En ‘[’ geeft het begin aan van een klasse van tekens, die een lijst van tekens, bereiken of complementaties kan bevatten. Zie L<glob(7)> voor gedetailleerde informatie over het gebruik van glob-patronen. B<Opmerking>: het is mogelijk dat de huidige implementatie meer mappen en symbolische koppelingen opnieuw opneemt dan nodig is, in het bijzonder wanneer er een meer specifieke heropname is. Dit is om op veilig te spelen en mogelijke mislukkingen bij het uitpakken te vermijden. In de toekomst kan eraan gewerkt worden om dit te verbeteren.
 
 Dit kan gebruikt worden om alle paden te verwijderen op enkele specifieke paden na. Een typische casus is:
 
@@ -610,9 +714,9 @@ om alle documentatiebestanden op de copyrightbestanden na te verwijderen.
 
 Deze twee opties kunnen meermaals opgegeven en afwisselend ingevoegd worden. Ze worden allebei in de opgegeven volgorde verwerkt, waarbij de laatste regel die een overeenkomst met een bestandsnaam oplevert, de uiteindelijke beslissing geeft.
 
-De filters worden toegepast bij het uitpakken van de binaire pakketten en hebben als zodanig enkel weet van het type object dat op dat ogenblik gefilterd wordt (bijv. een gewoon bestand of een map) en hebben geen zicht op welke objecten nadien zullen komen. Omdat deze filters neveneffecten hebben (in tegenstelling tot B<find>(1)-filters), zal het uitsluiten van een exacte padnaam, die toevallig een map-object, zoals I</usr/share/doc>, blijkt te zijn, niet het gewenste effect hebben en zal enkel die padnaam uitgesloten worden (die automatisch terug toegevoegd kan worden als de code dit noodzakelijk acht). Van alle erop volgende bestanden die zich in die mappen bevinden, zal het uitpakken mislukken.
+De filters worden toegepast bij het uitpakken van de binaire pakketten en hebben als zodanig enkel weet van het type object dat op dat ogenblik gefilterd wordt (bijv. een gewoon bestand of een map) en hebben geen zicht op welke objecten nadien zullen komen. Omdat deze filters neveneffecten hebben (in tegenstelling tot L<find(1)>-filters), zal het uitsluiten van een exacte padnaam, die toevallig een map-object, zoals I</usr/share/doc>, blijkt te zijn, niet het gewenste effect hebben en zal enkel die padnaam uitgesloten worden (die automatisch terug toegevoegd kan worden als de code dit noodzakelijk acht). Van alle erop volgende bestanden die zich in die mappen bevinden, zal het uitpakken mislukken.
 
-Suggestie: zorg ervoor dat de glob-patronen niet weggewerkt worden door uw shell.
+B<Hint>: zorg ervoor dat de glob-patronen niet weggewerkt worden door uw shell.
 
 =item B<--verify-format> I<naam-van-indeling>
 
@@ -652,7 +756,7 @@ De controle van de bestandsmodus is mislukt (sinds dpkg 1.21.0). Omdat metagegev
 
 =item 3 ‘B<5>’
 
-De controle van de frommel is mislukt, wat betekent dat de inhoud van het bestand is gewijzigd.
+De controle van de hashwaarde is mislukt, wat betekent dat de inhoud van het bestand is veranderd. Dit is slechts een integriteitscontrole en mag niet worden beschouwd als enige vorm van veiligheidsverificatie.
 
 =item 4-9 ‘B<?>’
 
@@ -703,7 +807,7 @@ Verzonden juist voor het begin van een verwerkingsfase. I<fase> is een van de vo
 
 =item B<--status-logger>=I<commando>
 
-Door een machine te lezen informatie over pakketstatus en voortgang versturen naar de standaardinvoer van het shell-commando I<commando> dat via "sh -c" moet uitgevoerd worden (sinds dpkg 1.16.0). Deze optie kan meermaals opgegeven worden. De indeling van de uitvoer is dezelfde als bij B<--status-fd>.
+Door een machine te lezen informatie over pakketstatus en voortgang versturen naar de standaardinvoer van het shell-commando I<commando> dat via "%DPKG_DEFAULT_SHELL% -c" moet uitgevoerd worden (sinds dpkg 1.16.0). Deze optie kan meermaals opgegeven worden. De indeling van de uitvoer is dezelfde als bij B<--status-fd>.
 
 =item B<--log=>I<bestandsnaam>
 
@@ -798,7 +902,7 @@ Het programma dat B<dpkg> zal uitvoeren bij het starten van een nieuwe interacti
 
 =item B<DPKG_PAGER>
 
-Het programma dat B<dpkg> zal uitvoeren als het gebruik maakt van een pagineringsprogramma, dat uitgevoerd zal worden met «B<$SHELL -c>», bijvoorbeeld voor het tonen van de verschillen tussen de configuratiebestanden. Indien B<SHELL> niet ingesteld is, dan zal «B<sh>» gebruikt worden. B<DPKG_PAGER> overschrijft de omgevingsvariabele B<PAGER> (sinds dpkg 1.19.2).
+Het programma dat B<dpkg> zal uitvoeren als het gebruik maakt van een pagineringsprogramma, dat uitgevoerd zal worden met «B<$SHELL -c>», bijvoorbeeld voor het tonen van de verschillen tussen de configuratiebestanden. Indien B<SHELL> niet ingesteld is, dan zal «B<%DPKG_DEFAULT_SHELL%>» gebruikt worden. B<DPKG_PAGER> overschrijft de omgevingsvariabele B<PAGER> (sinds dpkg 1.19.2).
 
 =item B<DPKG_COLORS>
 
@@ -832,11 +936,11 @@ Ingeval dit niet reeds ingesteld is, wordt dit door B<dpkg> als “B<-FRSXMQ>”
 
 =item B<DPKG_ROOT>
 
-Gedefinieerd door B<dpkg> in de omgeving van het pakketonderhouderscript om aan te geven op welke installatie gewerkt moet worden (sinds dpkg 1.18.5). Het is de bedoeling dat deze waarde vooraan toegevoegd wordt aan elk pad waarop scripts van de pakketonderhouder ageren. Tijdens een normale operatie is deze variabele leeg. Indien pakketten geïnstalleerd worden in een afwijkende B<instdir> (installatiemap), zal B<dpkg> de scripts van de pakketonderhouder normaal uitvoeren met behulp van B<chroot>(2) en deze variabele leeg laten, maar indien B<--force-script-chrootless> opgegeven werd, wordt het aanroepen van B<chroot>(2) overgeslagen en is B<instdir> niet leeg.
+Gedefinieerd door B<dpkg> in de omgeving van het pakketbeheerderscript om aan te geven op welke installatie gewerkt moet worden (sinds dpkg 1.18.5). Het is de bedoeling dat deze waarde vooraan toegevoegd wordt aan elk pad waarop scripts van de pakketbeheerder ageren. Tijdens een normale operatie is deze variabele leeg. Indien pakketten geïnstalleerd worden in een afwijkende B<instdir> (installatiemap), zal B<dpkg> de scripts van de pakketbeheerder normaal uitvoeren met behulp van L<chroot(2)> en deze variabele leeg laten, maar indien B<--force-script-chrootless> opgegeven werd, wordt het aanroepen van L<chroot(2)> overgeslagen en is B<instdir> niet leeg.
 
 =item B<DPKG_ADMINDIR>
 
-Gedefinieerd door B<dpkg> binnen de omgeving van het script van de pakketonderhouder om aan te geven welke map B<dpkg> moet gebruiken als administratieve map (sinds dpkg 1.16.0). Deze variabele wordt steeds ingesteld op de huidige waarde van B<--admindir>.
+Gedefinieerd door B<dpkg> binnen de omgeving van het script van de beheerder om aan te geven welke map B<dpkg> moet gebruiken als administratieve map (sinds dpkg 1.16.0). Deze variabele wordt steeds ingesteld op de huidige waarde van B<--admindir>.
 
 =item B<DPKG_FORCE>
 
@@ -860,27 +964,27 @@ Gedefinieerd door B<dpkg> in de shell die geactiveerd wordt bij het uitvoeren va
 
 =item B<DPKG_RUNNING_VERSION>
 
-Gedefinieerd door B<dpkg> binnen de omgeving van het script van de pakketonderhouder als de versie van het exemplaar van B<dpkg> dat momenteel uitgevoerd wordt (sinds dpkg 1.14.17).
+Gedefinieerd door B<dpkg> binnen de omgeving van het script van de beheerder als de versie van het exemplaar van B<dpkg> dat momenteel uitgevoerd wordt (sinds dpkg 1.14.17).
 
 =item B<DPKG_MAINTSCRIPT_PACKAGE>
 
-Gedefinieerd door B<dpkg> binnen de omgeving van het script van de pakketonderhouder als de naam van het pakket (zonder architectuurkwalificatie) dat behandeld wordt (sinds dpkg 1.14.17).
+Gedefinieerd door B<dpkg> binnen de omgeving van het script van de beheerder als de naam van het pakket (zonder architectuurkwalificatie) dat behandeld wordt (sinds dpkg 1.14.17).
 
 =item B<DPKG_MAINTSCRIPT_PACKAGE_REFCOUNT>
 
-Gedefinieerd door B<dpkg> binnen de omgeving van het script van de pakketonderhouder als het pakketreferentieaantal, d.w.z. het aantal pakketexemplaren met een status groter dan B<not-installed> (niet-geïnstalleerd) (sinds dpkg 1.17.2).
+Gedefinieerd door B<dpkg> binnen de omgeving van het script van de beheerder als het pakketreferentieaantal, d.w.z. het aantal pakketexemplaren met een status groter dan B<not-installed> (niet-geïnstalleerd) (sinds dpkg 1.17.2).
 
 =item B<DPKG_MAINTSCRIPT_ARCH>
 
-Gedefinieerd door B<dpkg> binnen de omgeving van het script van de pakketonderhouder als de architectuur waarvoor het pakket gebouwd werd (sinds dpkg 1.15.4).
+Gedefinieerd door B<dpkg> binnen de omgeving van het script van de beheerder als de architectuur waarvoor het pakket gebouwd werd (sinds dpkg 1.15.4).
 
 =item B<DPKG_MAINTSCRIPT_NAME>
 
-Gedefinieerd door B<dpkg> binnen de omgeving van het script van de pakketonderhouder als de naam van het script dat uitgevoerd wordt. Dit is een van de volgende: B<preinst>, B<postinst>, B<prerm> of B<postrm> (sinds dpkg 1.15.7).
+Gedefinieerd door B<dpkg> binnen de omgeving van het script van de beheerder als de naam van het script dat uitgevoerd wordt. Dit is een van de volgende: B<preinst>, B<postinst>, B<prerm> of B<postrm> (sinds dpkg 1.15.7).
 
 =item B<DPKG_MAINTSCRIPT_DEBUG>
 
-Gedefinieerd door B<dpkg> binnen de omgeving van het script van de pakketonderhouder als de waarde (‘B<0>’ of ‘B<1>’), waarmee nota genomen wordt van het feit of debuggen aangevraagd werd (met de optie B<--debug>) voor de scripts van de pakketonderhouder (sinds dpkg 1.18.4).
+Gedefinieerd door B<dpkg> binnen de omgeving van het script van de beheerder als de waarde (‘B<0>’ of ‘B<1>’), waarmee nota genomen wordt van het feit of debuggen aangevraagd werd (met de optie B<--debug>) voor de scripts van de beheerder (sinds dpkg 1.18.4).
 
 =back
 
@@ -912,13 +1016,49 @@ Lijst van beschikbare pakketten.
 
 =item I<%ADMINDIR%/status>
 
-Status van de beschikbare pakketten. Dit bestand bevat informatie over het feit of een pakket al dan niet gemarkeerd werd om verwijderd te worden, of het al dan niet geïnstalleerd is, enz. Zie het onderdeel B<INFORMATIE OVER PAKKETTEN> voor meer informatie.
+Status van de beschikbare pakketten. Dit bestand bevat informatie over het feit of een pakket al dan niet gemarkeerd werd om verwijderd te worden, of het al dan niet geïnstalleerd is, enz. Zie het onderdeel L</INFORMATIE OVER PAKKETTEN> voor meer informatie.
 
 Dagelijks wordt een reservekopie van het statusbestand gemaakt in I<%BACKUPSDIR%>. Dit kan nuttig zijn mocht het bestand verloren gegaan zijn of beschadigd ten gevolge van problemen met het bestandssysteem.
 
 =back
 
-De indeling en de inhoud van een binair pakket worden beschreven in B<deb>(5).
+De indeling en de inhoud van een binair pakket worden beschreven in L<deb(5)>.
+
+=head2 Bestandsnamen van bestandssystemen
+
+Tijdens het uitpakken en configureren gebruikt B<dpkg> verschillende bestandsnamen voor doeleinden als een back-up maken en een actie terugdraaien. Hieronder volgt een vereenvoudigde uitleg van hoe deze bestandsnamen gebruikt worden tijdens de installatie van het pakket.
+
+=over 
+
+=item F<*.dpkg-new>
+
+Tijdens het uitpakken pakt B<dpkg> nieuwe bestandssysteemobjecten uit in I<padnaam>B<.dpkg-new> (behalve voor bestaande mappen of symbolische koppelingen naar mappen die worden overgeslagen); zodra dat gedaan is en na back-ups te hebben gemaakt van de oude objecten, worden de objecten hernoemd naar I<padnaam>.
+
+=item F<*.dpkg-tmp>
+
+Tijdens het uitpakken maakt B<dpkg> back-ups van de oude bestandssysteemobjecten in I<padnaam>B<.dpkg-tmp> na het uitpakken van de nieuwe objecten. Deze back-ups worden uitgevoerd als ofwel een hernoemen van mappen (maar alleen als ze van bestandstype veranderen), ofwel een nieuwe kopie van de symbolische koppeling voor symbolische koppelingen, ofwel een harde koppeling voor elk ander bestandssysteemobject, behalve voor configuratiebestanden die geen back-ups krijgen omdat ze in een later stadium verwerkt worden.
+
+Als het nodig is om de actie terug te draaien, worden deze back-ups gebruikt om de vorige inhoud van de objecten te herstellen. Deze worden automatisch verwijderd nadat de installatie is voltooid.
+
+=item F<*.dpkg-old>
+
+Tijdens de configuratie, wanneer een nieuwe versie wordt geïnstalleerd, kan B<dpkg> een back-up maken van het vorige gewijzigde configuratiebestand in I<padnaam>B<.dpkg-old>.
+
+=item F<*.dpkg-dist>
+
+Tijdens de configuratie kan B<dpkg>, wanneer de oude versie behouden blijft, een back-up maken van het nieuwe ongewijzigde configuratiebestand in I<padnaam>B<.dpkg-dist>.
+
+=back
+
+=head1 BEVEILIGING
+
+Elke bewerking waarvoor schrijftoegang tot de database of het bestandssysteem nodig is, wordt beschouwd als een bevoorrechte bewerking die uitbreiding naar root-rechten mogelijk maakt. Deze handelingen mogen nooit gedelegeerd worden naar een niet-vertrouwde gebruiker of uitgevoerd worden op niet-vertrouwde pakketten, omdat dit root-toegang tot het systeem mogelijk maakt.
+
+Sommige bewerkingen (zoals pakketverificatie) kunnen systeembeheerdersrechten nodig hebben om toegang te krijgen tot bestanden op het bestandssysteem die anders ontoegankelijk zouden zijn vanwege beperkte rechten, maar zouden verder normaal moeten werken en in die gevallen de juiste berichten moeten produceren.
+
+Query-operaties zouden nooit root mogen vereisen, en het delegeren van hun uitvoering naar niet-geprivilegieerde gebruikers via een commando om beheerdersrechten te verwerden, kan veiligheidsimplicaties hebben (zoals een probleem van rechtenuitbreiding), bijvoorbeeld wanneer een pagineringsprogramma automatisch wordt aangeroepen door het hulpmiddel.
+
+Zie ook de sectie B<SECURITY> van de man-pagina's L<dpkg-deb(1)> en L<dpkg-split(1)>.
 
 =head1 BUGS
 
@@ -926,7 +1066,7 @@ B<--no-act> geeft gewoonlijk minder informatie dan nuttig kan zijn.
 
 =head1 VOORBEELDEN
 
-Om de geïnstalleerde pakketten op te sommen die verband houden met de editor B<vi>(1) (merk op dat B<dpkg-query> standaard niet langer het bestand I<available> laadt en dat in de plaats daarvan daarvoor de optie B<dpkg-query> B<--load-avail> gebruikt moet worden):
+Om de geïnstalleerde pakketten op te sommen die verband houden met de editor L<vi(1)> (merk op dat B<dpkg-query> standaard niet langer het bestand I<available> laadt en dat in de plaats daarvan daarvoor de optie B<dpkg-query> B<--load-avail> gebruikt moet worden):
 
 =over 
 
@@ -938,7 +1078,7 @@ Om de items uit I<%ADMINDIR%/available> over twee pakketten te zien:
 
 =over 
 
- dpkg --print-avail elvis vim | less
+ dpkg --print-avail vim neovim | less
 
 =back
 
@@ -946,24 +1086,23 @@ Om zelf in de lijst van pakketten te zoeken:
 
 =over 
 
- less %ADMINDIR%/available
+ dpkg --print-avail | less
 
 =back
 
-Om een geïnstalleerde pakket elvis te verwijderen:
+Om een geïnstalleerde pakket neovim te verwijderen:
 
 =over 
 
- dpkg -r elvis
+ dpkg -r neovim
 
 =back
 
-Om een pakket te installeren moet u het eerst zoeken in een archief of op een CD. Het bestand I<available> laat zien dat het pakket vim zich in de sectie B<editors> bevindt:
+Om een pakket te installeren moet u het eerst zoeken in een archief of op een mediaschijf. Wanneer u een archief gebruikt dat is gebaseerd op een poolstructuur, is het kennen van het archiefgebied en de naam van het pakket voldoende om de padnaam af te leiden:
 
 =over 
 
- cd /media/cdrom/pool/main/v/vim
- dpkg -i vim_4.5-3.deb
+ dpkg -i /media/bdrom/pool/main/v/vim/vim_9.0.2018-1_amd64.deb
 
 =back
 
@@ -971,7 +1110,7 @@ Om een lokale kopie te maken van de pakketselectietoestand:
 
 =over 
 
- dpkg --get-selections> mijnselecties
+ dpkg --get-selections >mijnselecties
 
 =back
 
@@ -980,17 +1119,6 @@ U zou dit bestand kunnen overbrengen naar een andere computer en nadat u daar he
 =over 
 
  apt-cache dumpavail | dpkg --merge-avail
-
-=back
-
-of met dpkg 1.17.6 of vroegere versies:
-
-=over 
-
- avail=$(mktemp)
- apt-cache dumpavail> "$avail"
- dpkg --merge-avail "$avail"
- rm "$avail"
 
 =back
 
@@ -1005,15 +1133,15 @@ kunt u het installeren met:
 
 Merk op dat dit eigenlijk niet echt iets installeert of verwijdert, maar enkel de selectiestatus voor de gevraagde pakketten instelt. U heeft een andere toepassing nodig om de gevraagde pakketten echt te downloaden en te installeren. Voer bijvoorbeeld B<apt-get dselect-upgrade> uit.
 
-U zult ondervinden dat B<dselect>(1) gewoonlijk een meer comfortabele manier biedt om de selectiestatus van pakketten te wijzigen.
+U zult ondervinden dat L<dselect(1)> gewoonlijk een meer comfortabele manier biedt om de selectiestatus van pakketten te wijzigen.
 
 =head1 BIJKOMENDE FUNCTIONALITEIT
 
-U kunt bijkomende functionaliteit verkrijgen door het installeren van elk van de volgende pakketten: B<apt>, B<aptitude> en B<debsums>.
+U kunt bijkomende functionaliteit verkrijgen door het installeren van elk van de volgende pakketten: B<apt>, B<aptitude> en B<debsig-verify>.
 
 =head1 ZIE OOK
 
-B<aptitude>(8), B<apt>(8), B<dselect>(1), B<dpkg-deb>(1), B<dpkg-query>(1), B<deb>(5), B<deb-control>(5), B<dpkg.cfg>(5), en B<dpkg-reconfigure>(8).
+L<aptitude(8)>, L<apt(8)>, L<dselect(1)>, L<dpkg-deb(1)>, L<dpkg-query(1)>, L<deb(5)>, L<deb-control(5)>, L<dpkg.cfg(5)> en L<dpkg-reconfigure(8)>.
 
 =head1 AUTEURS
 

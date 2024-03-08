@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb-override - ficheiro de sobreposição de arquivo Debian
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<override>
 
@@ -42,7 +42,7 @@ Os ficheiros de sobreposição usados para criar as listas de Pacotes oficiais p
 
 =head1 VEJA TAMBÉM
 
-B<dpkg-scanpackages>(1), B<dpkg-scansources>(1), B<apt-ftparchive>(1).
+L<dpkg-scanpackages(1)>, L<dpkg-scansources(1)>, L<apt-ftparchive(1)>.
 
 
 =head1 TRADUÇÃO

@@ -89,8 +89,8 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 @HAVE_SYS_ERRLIST_TRUE@am__append_1 = strerror.c
-@HAVE_GETOPT_FALSE@am__append_2 = getopt.c getopt.h
-@HAVE_GETOPT_LONG_FALSE@@HAVE_GETOPT_TRUE@am__append_3 = getopt.c getopt.h
+@HAVE_GETOPT_FALSE@am__append_2 = getopt.c getopt.h getopt_int.h
+@HAVE_GETOPT_LONG_FALSE@@HAVE_GETOPT_TRUE@am__append_3 = getopt.c getopt.h getopt_int.h
 @HAVE_GETOPT_LONG_FALSE@am__append_4 = getopt1.c
 @HAVE_OBSTACK_FREE_FALSE@am__append_5 = obstack.c obstack.h
 @HAVE_STRNLEN_FALSE@am__append_6 = strnlen.c
@@ -109,7 +109,8 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/dpkg-arch.m4 \
 	$(top_srcdir)/m4/dpkg-build.m4 \
 	$(top_srcdir)/m4/dpkg-compiler.m4 \
 	$(top_srcdir)/m4/dpkg-coverage.m4 \
-	$(top_srcdir)/m4/dpkg-funcs.m4 $(top_srcdir)/m4/dpkg-libs.m4 \
+	$(top_srcdir)/m4/dpkg-funcs.m4 \
+	$(top_srcdir)/m4/dpkg-headers.m4 $(top_srcdir)/m4/dpkg-libs.m4 \
 	$(top_srcdir)/m4/dpkg-linker.m4 $(top_srcdir)/m4/dpkg-progs.m4 \
 	$(top_srcdir)/m4/dpkg-types.m4 \
 	$(top_srcdir)/m4/dpkg-unicode.m4 $(top_srcdir)/m4/gettext.m4 \
@@ -148,10 +149,10 @@ am__v_lt_0 = --silent
 am__v_lt_1 = 
 libcompat_la_LIBADD =
 am__libcompat_la_SOURCES_DIST = empty.c compat.h compat-zlib.h \
-	gettext.h getopt.c getopt.h getopt1.c obstack.c obstack.h \
-	strnlen.c strchrnul.c strndup.c strerror.c strsignal.c \
-	snprintf.c vsnprintf.c asprintf.c vasprintf.c alphasort.c \
-	scandir.c unsetenv.c
+	gettext.h getopt.c getopt.h getopt_int.h getopt1.c obstack.c \
+	obstack.h strnlen.c strchrnul.c strndup.c strerror.c \
+	strsignal.c snprintf.c vsnprintf.c asprintf.c vasprintf.c \
+	alphasort.c scandir.c unsetenv.c
 @HAVE_GETOPT_FALSE@am__objects_2 = getopt.lo
 @HAVE_GETOPT_LONG_FALSE@@HAVE_GETOPT_TRUE@am__objects_3 = getopt.lo
 @HAVE_GETOPT_LONG_FALSE@am__objects_4 = getopt1.lo
@@ -279,10 +280,15 @@ CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
+DEB_DEFAULT_COMPRESSOR = @DEB_DEFAULT_COMPRESSOR@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
 DOXYGEN = @DOXYGEN@
+DPKG_DEFAULT_PAGER = @DPKG_DEFAULT_PAGER@
+DPKG_DEFAULT_SHELL = @DPKG_DEFAULT_SHELL@
+DPKG_PAGER = @DPKG_PAGER@
+DPKG_SHELL = @DPKG_SHELL@
 DSYMUTIL = @DSYMUTIL@
 DUMPBIN = @DUMPBIN@
 ECHO_C = @ECHO_C@
@@ -366,6 +372,7 @@ POD2MAN = @POD2MAN@
 POSUB = @POSUB@
 PS_LIBS = @PS_LIBS@
 RANLIB = @RANLIB@
+RT_LIBS = @RT_LIBS@
 SED = @SED@
 SELINUX_CFLAGS = @SELINUX_CFLAGS@
 SELINUX_LIBS = @SELINUX_LIBS@
@@ -392,6 +399,7 @@ ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
 ac_ct_DUMPBIN = @ac_ct_DUMPBIN@
+aclocaldir = @aclocaldir@
 admindir = @admindir@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
@@ -399,6 +407,7 @@ am__quote = @am__quote@
 am__tar = @am__tar@
 am__untar = @am__untar@
 backupsdir = @backupsdir@
+bashcompletionsdir = @bashcompletionsdir@
 bindir = @bindir@
 build = @build@
 build_alias = @build_alias@
@@ -410,6 +419,7 @@ datadir = @datadir@
 datarootdir = @datarootdir@
 devlibdir = @devlibdir@
 docdir = @docdir@
+docspecdir = @docspecdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
 host = @host@
@@ -427,10 +437,14 @@ localedir = @localedir@
 localstatedir = @localstatedir@
 logdir = @logdir@
 mandir = @mandir@
+methodsdir = @methodsdir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
 pdfdir = @pdfdir@
+perllibdir = @perllibdir@
 pkgconfdir = @pkgconfdir@
+pkgconfigdir = @pkgconfigdir@
+polkitactionsdir = @polkitactionsdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@

@@ -72,7 +72,7 @@ Le caractère tilde S<(« ~ »)> et sa propriété spéciale pour les comparaiso
 
 =head1 VOIR AUSSI
 
-B<deb-control>(5), B<deb>(5), B<dpkg>(1).
+L<deb-control(5)>, L<deb(5)>, L<dpkg(1)>
 
 
 =head1 TRADUCTION

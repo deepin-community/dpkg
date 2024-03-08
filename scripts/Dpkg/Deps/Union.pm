@@ -19,8 +19,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::Deps::Union;
-
 =encoding utf8
 
 =head1 NAME
@@ -30,14 +28,14 @@ Dpkg::Deps::Union - list of unrelated dependencies
 =head1 DESCRIPTION
 
 This class represents a list of relationships.
-It inherits from Dpkg::Deps::Multiple.
+It inherits from L<Dpkg::Deps::Multiple>.
 
 =cut
 
+package Dpkg::Deps::Union 1.00;
+
 use strict;
 use warnings;
-
-our $VERSION = '1.00';
 
 use parent qw(Dpkg::Deps::Multiple);
 
@@ -47,7 +45,7 @@ use parent qw(Dpkg::Deps::Multiple);
 
 =item $dep->output([$fh])
 
-The output method uses ", " to join the list of relationships.
+The output() method uses ", " to join the list of relationships.
 
 =cut
 

@@ -30,5 +30,5 @@ I<~/.dpkg.cfg>
 
 =head1 ZIE OOK
 
-B<dpkg>(1).
+L<dpkg(1)>.
 

@@ -1,5 +1,7 @@
-# Tradução para o Português (Brasil) do dpkg (Debian)
+# Translation of dpkg to Brazilian Portuguese
 # Copyright © 1999, 2000 Software in the Public Interest.
+# This file is distributed under the same license as the dpkg package.
+#
 # Thiago Jung Bauermann <jungmann@cwb.matrix.com.br>, 1999.
 # Carlos Henrique Santos Laviola <claviola@brfree.com.br>, 2000.
 # André Luís Lopes <andrelop@ig.com.br>, 2002.
@@ -12,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.13\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
 "PO-Revision-Date: 2015-04-07 09:52+0200\n"
 "Last-Translator: Felipe Augusto van de Wiel (faw) <faw@debian.org>\n"
 "Language-Team: Brazilian Portuguese <debian-l10n-portuguese@lists.debian."
@@ -204,6 +206,11 @@ msgstr "falhou ao executar tar"
 #, fuzzy, c-format
 msgid "unable to execute %s (%s)"
 msgstr "impossível executar %s"
+
+#: lib/dpkg/command.c
+#, fuzzy
+msgid "PATH is not set"
+msgstr "dpkg - erro: PATH não está definido.\n"
 
 #: lib/dpkg/compress.c
 #, c-format
@@ -1250,35 +1257,35 @@ msgstr "<estado do pacote e progresso do descritor de arquivo>"
 msgid "unable to write to status fd %d"
 msgstr "impossível escrever estado atualizado de '%.250s'"
 
-#: lib/dpkg/mlib.c utils/update-alternatives.c
+#: lib/dpkg/mustlib.c utils/update-alternatives.c
 msgid "failed to allocate memory"
 msgstr "falhou ao alocar memória"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "failed to dup for fd %d"
 msgstr "dup para fd %d falhou"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "failed to dup for std%s"
 msgstr "dup para std%s falhou"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 msgid "failed to create pipe"
 msgstr "falhou ao criar \"pipe\""
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, fuzzy, c-format
 msgid "error writing to '%s'"
 msgstr "erro escrevendo '%s'"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "unable to read filedescriptor flags for %.250s"
 msgstr "impossível ler as \"flags\" do descritor de arquivos para %.250s"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "unable to set close-on-exec flag for %.250s"
 msgstr "impossível definir a \"flag\" 'close-on-exec' para %.250s"
@@ -1733,6 +1740,13 @@ msgstr "nome de pacote ilegal no gatilho em espera '%.255s': %s"
 msgid "illegal architecture name in specifier '%s:%s': %s"
 msgstr "nome de pacote ilegal no gatilho em espera '%.255s': %s"
 
+#. TRANSLATORS: This is part of the progress output, it is a decimal
+#. * percentage.
+#: lib/dpkg/progress.c
+#, c-format
+msgid "%d%%"
+msgstr ""
+
 #: lib/dpkg/report.c utils/update-alternatives.c
 msgid "warning"
 msgstr "aviso"
@@ -2050,12 +2064,12 @@ msgid "unexpected end of file reading '%.250s'"
 msgstr "fim de arquivo não esperado em %.250s"
 
 #: lib/dpkg/varbuf.c
-msgid "error formatting string into varbuf variable"
+#, c-format
+msgid "cannot grow varbuf to size %zu; it would overflow"
 msgstr ""
 
 #: lib/dpkg/varbuf.c
-#, c-format
-msgid "cannot grow varbuf to size %zu; it would overflow"
+msgid "error formatting string into varbuf variable"
 msgstr ""
 
 #: src/common/force.c
@@ -2185,7 +2199,7 @@ msgstr ""
 #: src/common/force.c
 #, c-format
 msgid ""
-"%s forcing options - control behaviour when problems found:\n"
+"%s forcing options - control behavior when problems found:\n"
 "  warn but continue:  --force-<thing>,<thing>,...\n"
 "  stop with error:    --refuse-<thing>,<thing>,... | --no-force-<thing>,...\n"
 " Forcing things:\n"
@@ -2790,6 +2804,12 @@ msgid " %7jd bytes, %5d lines   %c  %-20.127s %.127s\n"
 msgstr " %7ld bytes, %5d linhas   %c  %-20.127s %.127s\n"
 
 #: src/deb/info.c
+#, fuzzy, c-format
+#| msgid " %7ld bytes, %5d lines   %c  %-20.127s %.127s\n"
+msgid " %7jd bytes, %5d lines   %c  %.127s\n"
+msgstr " %7ld bytes, %5d linhas   %c  %-20.127s %.127s\n"
+
+#: src/deb/info.c
 #, c-format
 msgid "     not a plain file          %.255s\n"
 msgstr "     não é um arquivo simples  %.255s\n"
@@ -3042,6 +3062,12 @@ msgstr "necessário uma opção de ação"
 #, fuzzy, c-format
 msgid "invalid compressor parameters: %s"
 msgstr "inteiro inválido para --%s: '%.250s'"
+
+#: src/deb/main.c
+#, fuzzy, c-format
+#| msgid "unknown compression type `%s'!"
+msgid "unsupported deb format '%d.%d' with non-uniform compression"
+msgstr "tipo de compressão desconhecido '%s'!"
 
 #: src/deb/main.c
 #, fuzzy, c-format
@@ -3493,6 +3519,7 @@ msgid "--%s takes no arguments"
 msgstr "--%s não aceita argumentos"
 
 #: src/split/queue.c
+#, c-format
 msgid "Junk files left around in the depot directory:\n"
 msgstr "Arquivos lixo deixados para trás no diretório \"depot\":\n"
 
@@ -3513,6 +3540,7 @@ msgid " %s (not a plain file)\n"
 msgstr " %s (não é um arquivo simples)\n"
 
 #: src/split/queue.c
+#, c-format
 msgid "Packages not yet reassembled:\n"
 msgstr "Pacotes ainda não remontados:\n"
 
@@ -3598,7 +3626,7 @@ msgstr ""
 msgid "Use --help for help about diverting files."
 msgstr "Digite dpkg-trigger --help para ajuda sobre este utilitário."
 
-#: src/divert/main.c src/statoverride/main.c utils/update-alternatives.c
+#: src/divert/main.c src/statoverride/main.c
 #, c-format
 msgid "Debian %s version %s.\n"
 msgstr "Debian %s versão %s.\n"
@@ -4197,7 +4225,7 @@ msgstr ""
 msgid "package '%s' is not available"
 msgstr "Pacote '%s' não está disponível.\n"
 
-#: src/query/main.c src/main/packages.c
+#: src/query/main.c
 #, c-format
 msgid "--%s needs at least one package name argument"
 msgstr "--%s precisa de pelo menos um nome de pacote como argumento"
@@ -5626,11 +5654,6 @@ msgid "installed"
 msgstr "instalado"
 
 #: src/main/help.c
-#, fuzzy
-msgid "PATH is not set"
-msgstr "dpkg - erro: PATH não está definido.\n"
-
-#: src/main/help.c
 #, fuzzy, c-format
 msgid "'%s' not found in PATH or not executable"
 msgstr "dpkg: '%s' não encontrado no PATH.\n"
@@ -6105,6 +6128,12 @@ msgstr ""
 #, c-format
 msgid "--%s --pending does not take any non-option arguments"
 msgstr "--%s --pending não aceita argumento que não seja opção"
+
+#: src/main/packages.c
+#, fuzzy, c-format
+#| msgid "--%s needs at least one package name argument"
+msgid "--%s (without --pending) needs at least one package name argument"
+msgstr "--%s precisa de pelo menos um nome de pacote como argumento"
 
 #: src/main/packages.c
 #, c-format
@@ -6870,6 +6899,12 @@ msgstr[1] "Informações sobre %d pacote(s) foram atualizadas.\n"
 msgid ""
 "obsolete '--%s' option; unavailable packages are automatically cleaned up"
 msgstr ""
+
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+#| msgid "Debian %s version %s.\n"
+msgid "%s version %s.\n"
+msgstr "Debian %s versão %s.\n"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format

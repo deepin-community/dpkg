@@ -24,7 +24,7 @@ B<start-stop-daemon> [I<option>...] I<commande>
 
 On se sert de B<start-stop-daemon> pour contrôler la création ou l'arrêt de processus système. En utilisant une des options de correspondance, B<start-stop-daemon> peut être configuré pour trouver les exemplaires présents d'un processus en fonctionnement.
 
-S<B<Note> :> à moins d'utiliser B<--pid> ou B<--pidfile>, le programme B<start-stop-daemon> se comporte comme B<killall>(1). B<start-stop-daemon> recherche dans le tableau des processus tout processus qui correspond au nom, pid parent, uid et/ou gid du processus (si indiqué). Toute correspondance empêchera B<--start> de démarrer le démon. Tous les processus qui correspondent recevront le signal TERM (ou le signal indiqué par B<--signal> ou B<--retry>) si B<--stop> est indiqué. Pour les démons avec des processus enfants qui doivent survivre à un B<--stop>, il est nécessaire d'indiquer un fichier pid S<(« pidfile »).>
+B<Note>: Unless B<--pid> or B<--pidfile> are specified, B<start-stop-daemon> behaves similar to L<killall(1)>.  B<start-stop-daemon> will scan the process table looking for any processes which match the process name, parent pid, uid, and/or gid (if specified).  Any matching process will prevent B<--start> from starting the daemon.  All matching processes will be sent the TERM signal (or the one specified via B<--signal> or B<--retry>) if B<--stop> is specified.  For daemons which have long-lived children which need to live through a B<--stop>, you must specify a pidfile.
 
 =head1 COMMANDES
 
@@ -70,27 +70,27 @@ Vérifie l'existence d'un processus avec le pid parent I<pid-parent> spécifié 
 
 Cherche les processus dont les identifiants sont précisés dans I<fichier-pid>.
 
-S<B<Note> :> l'utilisation de l'option de correspondance seule peut provoquer des actions sur des processus non prévus, si l'ancien processus s'est terminé sans avoir retiré le I<fichier-pid>.
+B<Note>: Using this matching option alone might cause unintended processes to be acted on, if the old process terminated without being able to remove the I<pidfile>.
 
-S<B<Attention> :> L'utilisation de cette option de correspondance avec un fichier pid accessible à tous en écriture ou seule avec un démon qui écrit le fichier pid comme utilisateur non privilégié (pas root) sera refusée avec une erreur (depuis la version 1.19.3), car c'est un risque de sécurité, parce que, si le démon se trouve compromis, le contenu du fichier pid ne peut plus être sûr, et ainsi, un exécutant privilégié (comme un script init exécuté entant que root) pourrait en fin de compte agir sur n'importe quel processus du système. L'utilisation de I</dev/null> est exclue de ces vérifications.
+B<Warning>: Using this match option with a world-writable pidfile or using it alone with a daemon that writes the pidfile as an unprivileged (non-root) user will be refused with an error (since version 1.19.3) as this is a security risk, because either any user can write to it, or if the daemon gets compromised, the contents of the pidfile cannot be trusted, and then a privileged runner (such as an init script executed as root) would end up acting on any system process.  Using I</dev/null> is exempt from these checks.
 
 =item B<-x>, B<--exec> I<exécutable>
 
 Contrôle l'existence de processus qui soient des exemplaires de cet I<exécutable>. Le paramètre I<exécutable> doit être un chemin absolu.
 
-S<B<Note> :> cela peut ne pas fonctionner avec des scripts interprétés, car l'exécutable sera alors l'interpréteur. Des processus en exécution au sein d'un environnement fermé d'exécution S<(« chroot »)> seront également trouvés et il peut donc être nécessaire d'ajouter d'autres restrictions de correspondance.
+B<Note>: This might not work as intended with interpreted scripts, as the executable will point to the interpreter.  Take into account processes running from inside a chroot will also be matched, so other match restrictions might be needed.
 
 =item B<-n>, B<--name> I<nom-de-processus>
 
 Contrôle l'existence de processus avec I<nom-de-processus> comme nom. Le I<nom-de-processus> est en général le nom du fichier du processus, mais peut avoir été modifié par le processus lui-même.
 
-S<B<Note> :> sur la plupart des systèmes, cette information est récupérée par le nom de communication du noyau, ce qui induit une limite de longueur assez courte (la portabilité impose de ne pas supposer plus de 15 caractères).
+B<Note>: On most systems this information is retrieved from the process comm name from the kernel, which tends to have a relatively short length limit (assuming more than 15 characters is non-portable).
 
 =item B<-u>, B<--user> I<identifiant>|I<uid>
 
 Contrôle l'existence de processus dont le propriétaire est I<identifiant> ou I<uid>.
 
-S<B<Note> :> si cette option est utilisée seule, tous les processus de cet utilisateur seront concernés par l'action.
+B<Note>: Using this matching option alone will cause all processes matching the user to be acted on.
 
 =back
 
@@ -134,7 +134,7 @@ N'affiche pas de messages d'information ; affiche seulement les messages d'erreu
 
 =item B<-c>, B<--chuid> I<identifiant>|I<uid>[B<:>I<groupe>|I<gid>]
 
-Change pour cet utilisateur ou S<« uid »> avant de lancer le processus. On peut aussi préciser un groupe en ajoutant un B<:>, puis le groupe ou un S<« gid »> de la même façon qu'avec la commande B<chown>(1) (I<utilisateur>B<:>I<groupe>). Lorsqu'un utilisateur est indiqué mais pas de groupe alors le groupe primaire de celui-ci est utilisé. Quand on utilise cette option, on doit veiller à ce que les groupes primaires ainsi que les groupes secondaires existent bien, même si l'option B<--group> n'est pas spécifiée. L'option B<--group> sert seulement pour les groupes dont l'utilisateur n'est pas membre (c'est comme rendre membre d'un groupe-pour-processus des utilisateurs génériques comme B<nobody>).
+Change to this username/uid before starting the process.  You can also specify a group by appending a B<:>, then the group or gid in the same way as you would for the L<chown(1)> command (I<user>B<:>I<group>).  If a user is specified without a group, the primary GID for that user is used.  When using this option you must realize that the primary and supplemental groups are set as well, even if the B<--group> option is not specified.  The B<--group> option is only for groups that the user isn't normally a member of (like adding per process group membership for generic users like B<nobody>).
 
 =item B<-r>, B<--chroot> I<root>
 
@@ -148,11 +148,11 @@ Change de répertoire pour I<chemin> avant de commencer le processus. Cela est f
 
 Utilisé généralement pour les programmes qui ne S<« se> S<détachent »> pas d'eux-mêmes. Cette option oblige B<start-stop-daemon> à se dupliquer (fork) avant de lancer le processus, et l'oblige à passer en arrière-plan.
 
-S<B<AVERTISSEMENT :> start-stop-daemon> ne peut pas vérifier le code de sortie quand, pour B<une raison ou une autre>, le processus échoue. C'est un expédient dont on se servira seulement pour des programmes dont la duplication n'a pas de sens ou bien des programmes dont le code n'est pas adaptable pour leur ajouter cette fonctionnalité.
+B<Warning>: B<start-stop-daemon> cannot check the exit status if the process fails to execute for B<any> reason.  This is a last resort, and is only meant for programs that either make no sense forking on their own, or where it's not feasible to add the code for them to do this themselves.
 
 =item B<--notify-await>
 
-Attend que le processus en arrière-plan envoie une notification de disponibilité avant de considérer que le service est démarré (depuis la version 1.19.3). Cela met en œuvre des éléments du protocole de disponibilité de systemd, comme spécifié dans la page de manuel de B<sd_notify>(3). Les variables suivantes sont prises en S<charge :>
+Wait for the background process to send a readiness notification before considering the service started (since version 1.19.3).  This implements parts of the systemd readiness protocol, as specified in the L<sd_notify(3)> manual page.  The following variables are supported:
 
 =over 
 
@@ -206,7 +206,7 @@ Cela modifie le masque utilisateur du processus avant qu'il ne soit lancé (depu
 
 Utilisé lors du lancement d'un programme qui ne crée pas son propre fichier identificateur S<« pid ».> Cette option indique à B<start-stop-daemon> de créer le fichier référencé par B<--pidfile> et placer le S<« pid »> dans ce fichier juste avant d'exécuter le processus. Il faut remarquer que ce fichier ne sera supprimé quand le programme s'arrête que si B<--remove-pidfile> est utilisé.
 
-S<B<NOTE :>> il se peut que cette caractéristique ne marche pas dans tous les cas. Notamment quand le programme qui est exécuté se duplique. À cause de cela, cette option n'est habituellement utile que combinée avec l'option B<--background>.
+B<Note>: This feature may not work in all cases.  Most notably when the program being executed forks from its main process.  Because of this, it is usually only useful when combined with the B<--background> option.
 
 =item B<--remove-pidfile>
 

@@ -30,7 +30,7 @@ I<~/.dselect.cfg>
 
 =head1 VEJA TAMBÉM
 
-B<dselect>(1).
+L<dselect(1)>.
 
 
 =head1 TRADUÇÃO

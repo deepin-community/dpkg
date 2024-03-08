@@ -21,7 +21,7 @@
 use strict;
 use warnings;
 
-use lib 'scripts';
+use lib qw(scripts);
 
 use List::Util qw(uniq);
 use Text::Wrap;
@@ -68,7 +68,7 @@ my %sections = (
     'code-int' => {
         title => 'Code internals',
         type => 'internal',
-        match => qr/^(?:lib(?:compat|dpkg)?|src|scripts|utils): /,
+        match => qr/^(?:lib(?:compat|dpkg)?|src|scripts|perl|utils): /,
         keep => 1,
     },
     'build-sys' => {
@@ -296,4 +296,3 @@ foreach my $groupname (@groups) {
         print @entries;
     }
 }
-1;

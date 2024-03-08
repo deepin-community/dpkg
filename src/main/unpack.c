@@ -46,6 +46,7 @@
 #include <dpkg/pkg.h>
 #include <dpkg/pkg-queue.h>
 #include <dpkg/path.h>
+#include <dpkg/command.h>
 #include <dpkg/buffer.h>
 #include <dpkg/subproc.h>
 #include <dpkg/dir.h>
@@ -132,7 +133,7 @@ deb_verify(const char *filename)
 
   /* We have to check on every unpack, in case the debsig-verify package
    * gets installed or removed. */
-  if (!find_command(DEBSIGVERIFY))
+  if (!command_in_path(DEBSIGVERIFY))
     return;
 
   printf(_("Authenticating %s ...\n"), filename);
@@ -394,7 +395,7 @@ deb_parse_conffiles(const struct pkginfo *pkg, const char *control_conffiles,
       }
     }
 
-    namenode = fsys_hash_find_node(conffilename, 0);
+    namenode = fsys_hash_find_node(conffilename, FHFF_NONE);
     namenode->oldhash = NEWCONFFILEFLAG;
     newconff = tar_fsys_namenode_queue_push(newconffiles, namenode);
 
@@ -614,10 +615,7 @@ pkg_remove_conffile_on_upgrade(struct pkginfo *pkg, struct fsys_namenode *nameno
     return;
   }
 
-  varbuf_reset(&cdrext);
-  varbuf_add_str(&cdrext, cdr.buf);
-  varbuf_end_str(&cdrext);
-
+  varbuf_set_varbuf(&cdrext, &cdr);
   varbuf_snapshot(&cdrext, &cdrext_state);
 
   iter = fsys_node_pkgs_iter_new(namenode);
@@ -775,8 +773,7 @@ pkg_remove_old_files(struct pkginfo *pkg,
         if (cfile->namenode->file_ondisk_id == NULL) {
           struct stat tmp_stat;
 
-          varbuf_reset(&cfilename);
-          varbuf_add_str(&cfilename, dpkg_fsys_get_dir());
+          varbuf_set_str(&cfilename, dpkg_fsys_get_dir());
           varbuf_add_str(&cfilename, cfile->namenode->name);
           varbuf_end_str(&cfilename);
 
@@ -854,8 +851,7 @@ static void
 pkg_update_fields(struct pkginfo *pkg, struct fsys_namenode_queue *newconffiles)
 {
   struct dependency *newdeplist, **newdeplistlastp;
-  struct dependency *newdep, *dep;
-  struct deppossi **newpossilastp, *possi, *newpossi;
+  struct dependency *dep;
   struct conffile **iconffileslastp, *newiconff;
   struct fsys_namenode_list *cfile;
 
@@ -866,6 +862,9 @@ pkg_update_fields(struct pkginfo *pkg, struct fsys_namenode_queue *newconffiles)
   newdeplist = NULL;
   newdeplistlastp = &newdeplist;
   for (dep = pkg->available.depends; dep; dep = dep->next) {
+    struct deppossi **newpossilastp, *possi;
+    struct dependency *newdep;
+
     newdep = nfmalloc(sizeof(*newdep));
     newdep->up = pkg;
     newdep->next = NULL;
@@ -873,6 +872,8 @@ pkg_update_fields(struct pkginfo *pkg, struct fsys_namenode_queue *newconffiles)
     newpossilastp = &newdep->list;
 
     for (possi = dep->list; possi; possi = possi->next) {
+      struct deppossi *newpossi;
+
       newpossi = nfmalloc(sizeof(*newpossi));
       newpossi->up = newdep;
       newpossi->ed = possi->ed;

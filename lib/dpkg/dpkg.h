@@ -94,9 +94,6 @@ DPKG_BEGIN_DECLS
 #define IMPORTANTFMT      "%04d"
 #define MAXUPDATES         250
 
-#define DEFAULTSHELL        "sh"
-#define DEFAULTPAGER        "pager"
-
 #define MD5HASHLEN           32
 #define MAXTRIGDIRECTIVE     256
 
@@ -135,7 +132,7 @@ void cu_closedir(int argc, void **argv);
 void cu_closefd(int argc, void **argv);
 void cu_filename(int argc, void **argv);
 
-/*** from mlib.c ***/
+/*** from mustlib.c ***/
 
 void setcloexec(int fd, const char *fn);
 void *m_malloc(size_t);

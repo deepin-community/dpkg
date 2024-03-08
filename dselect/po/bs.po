@@ -1,13 +1,14 @@
-# translation of dselect to Bosnian.
+# Translation of dselect to Bosnian
 # Copyright © 2004 Dpkg Developers
 # This file is distributed under the same license as the dpkg package.
+#
 # Safir Šećerović <sapphire@linux.org.ba>, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dselect 1.13\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
 "PO-Revision-Date: 2006-02-17 08:55+0200\n"
 "Last-Translator: Safir Šećerović <sapphire@linux.org.ba>\n"
 "Language-Team: Bosnian <lokal@linux.org.ba>\n"
@@ -51,7 +52,7 @@ msgid "cannot update screen after window resize"
 msgstr ""
 
 #: dselect/baselist.cc
-msgid "failed to allocate colour pair"
+msgid "cannot allocate color pair"
 msgstr ""
 
 #: dselect/baselist.cc
@@ -688,15 +689,17 @@ msgid "screen part"
 msgstr ""
 
 #: dselect/main.cc
-msgid "null colour specification"
+msgid "missing color specification"
 msgstr ""
 
 #: dselect/main.cc
-msgid "colour"
+#, fuzzy
+#| msgid "colour"
+msgid "color"
 msgstr "boja"
 
 #: dselect/main.cc
-msgid "colour attribute"
+msgid "color attribute"
 msgstr ""
 
 #: dselect/main.cc

@@ -22,9 +22,11 @@ B<dpkg-realpath> [I<optie>...] I<padnaam>
 
 =head1 BESCHRIJVING
 
-B<dpkg-realpath> is een hulpmiddel (sinds dpkg 1.20.1) om een padnaam op te zoeken, die rekening houdt met de L<dpkg (1)>-hoofdmap, ofwel impliciet vanuit de omgevingsvariabele B<DPKG_ROOT> of vanuit de commandoregelopties B<--root> of B<--instdir>, en een absolute I<padnaam> terugkeert, relatief ten opzichte van de hoofdmap. De hoofdmap mag niet aan de op te zoeken I<padnaam> voorafgaan.
+B<dpkg-realpath> is een hulpmiddel (sinds dpkg 1.20.1) om een padnaam op te zoeken, die rekening houdt met de L<dpkg(1)>-hoofdmap, ofwel impliciet vanuit de omgevingsvariabele B<DPKG_ROOT> of vanuit de commandoregelopties B<--root> of B<--instdir>, en een absolute I<padnaam> terugkeert, relatief ten opzichte van de hoofdmap. De hoofdmap mag niet aan de op te zoeken I<padnaam> voorafgaan.
 
 Dit is bedoeld om te worden gebruikt door andere B<dpkg>-hulpprogramma's of door scripts van beheerders in plaats van L<realpath(1)> of L<readlink(1)> te gebruiken om conforme padnamen te bekomen, aangezien deze laatste commando's geen dergelijke conformering ondersteunen ten opzichte van een andere hoofdmap dan F</>.
+
+Dit programma werd geïntroduceerd in dpkg 1.20.1.
 
 =head1 OPTIES
 

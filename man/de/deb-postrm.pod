@@ -70,7 +70,7 @@ Die I<neue_Version> wird erst seit Dpkg 1.18.5 übergeben.
 
 =head1 SIEHE AUCH
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 ÜBERSETZUNG

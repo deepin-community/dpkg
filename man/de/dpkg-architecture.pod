@@ -24,9 +24,9 @@ B<dpkg-architecture> [I<Option> …] [I<Befehl>]
 
 B<dpkg-architecture> stellt eine Möglichkeit bereit, die Rechner-Architektur für den Paketbau zu bestimmen und zu setzen.
 
-Die Bau-Architektur wird immer über due Variable B<DEB_BUILD_ARCH> (falls diese gesetzt und B<--force> nicht angegeben ist) oder durch einen externen Aufruf an B<dpkg>(1) bestimmt und kann nicht auf der Befehlszeile gesetzt werden.
+Die Bau-Architektur wird immer über due Variable B<DEB_BUILD_ARCH> (falls diese gesetzt und B<--force> nicht angegeben ist) oder durch einen externen Aufruf an L<dpkg(1)> bestimmt und kann nicht auf der Befehlszeile gesetzt werden.
 
-Sie können die Host-Architektur (Wirt-Architektur) spezifizieren, indem Sie eine oder beide der Optionen B<--host-arch> oder B<--host-type> verwenden (andernfalls wird die Variable B<DEB_HOST_ARCH> verwandt, falls sie gesetzt und B<--force> nicht angegeben ist). Der Standardwert wird über einen externen Aufruf an B<gcc>(1) ermittelt oder ist identisch mit der Bauarchitektur, falls sowohl B<CC> als auch GCC nicht verfügbar sind. Einer von B<--host-arch> oder B<--host-type> ist ausreichend, der Wert des anderen wird auf einen brauchbaren Wert gesetzt. Tatsächlich ist es oft besser, nur einen der beiden anzugeben, da B<dpkg-architecture> Sie warnen wird, falls Ihre Wahl nicht mit dem Standardwert übereinstimmt.
+Sie können die Host-Architektur (Wirt-Architektur) spezifizieren, indem Sie eine oder beide der Optionen B<--host-arch> oder B<--host-type> verwenden (andernfalls wird die Variable B<DEB_HOST_ARCH> verwandt, falls sie gesetzt und B<--force> nicht angegeben ist). Der Standardwert wird über einen externen Aufruf an L<gcc(1)> ermittelt oder ist identisch mit der Bauarchitektur, falls sowohl B<CC> als auch GCC nicht verfügbar sind. Einer von B<--host-arch> oder B<--host-type> ist ausreichend, der Wert des anderen wird auf einen brauchbaren Wert gesetzt. Tatsächlich ist es oft besser, nur einen der beiden anzugeben, da B<dpkg-architecture> Sie warnen wird, falls Ihre Wahl nicht mit dem Standardwert übereinstimmt.
 
 =head1 BEFEHLE
 
@@ -59,6 +59,8 @@ Gibt ähnlich wie B<--print-set> einen Export-Befehl aus, der alle Variablen lö
 =item B<-c>, B<--command> I<Befehlszeichenkette>
 
 Führt eine I<Befehlszeichenkette> in einer Umgebung aus, in der alle Variablen auf die festgelegten Werte gesetzt sind.
+
+Falls die I<Befehlszeichenkette> Shell-Metazeichen enthält, dann wird sie durch die System-Bourne-Shell aufgerufen.
 
 =item B<-L>, B<--list-known>
 
@@ -112,7 +114,7 @@ Setzt das Ausgabeformat für B<--print-set> und B<--print-unset> (seit Dpkg 1.20
 
 =item B<-f>, B<--force>
 
-Existierende Umgebungsvariablen mit dem gleichen Namen wie vom Skript verwendet werden nicht überschrieben (d.h. sie werden von B<dpkg-architecture> verwendet), es sei denn, die „force“-Markierung ist gesetzt. Dies erlaubt es dem Benutzer, einen Wert zu überschreiben, selbst wenn der Aufruf von B<dpkg-architecture> tief in einem anderen Skript versteckt ist (beispielsweise B<dpkg-buildpackage>(1)).
+Existierende Umgebungsvariablen mit dem gleichen Namen wie vom Skript verwendet werden nicht überschrieben (d.h. sie werden von B<dpkg-architecture> verwendet), es sei denn, die „force“-Markierung ist gesetzt. Dies erlaubt es dem Benutzer, einen Wert zu überschreiben, selbst wenn der Aufruf von B<dpkg-architecture> tief in einem anderen Skript versteckt ist (beispielsweise L<dpkg-buildpackage(1)>).
 
 =back
 
@@ -448,7 +450,7 @@ Alle langen Befehle und Optionennamen sind seit Dpkg 1.17.17 verfügbar.
 
 =head1 SIEHE AUCH
 
-B<dpkg-buildpackage>(1).
+L<dpkg-buildpackage(1)>.
 
 
 =head1 ÜBERSETZUNG

@@ -30,17 +30,19 @@ B<dpkg-statoverride>
 =head1 DESCRIPTION
 
 “B<stat overrides>” are a way to tell
-B<dpkg>(1)
+L<dpkg(1)>
 to use a different owner
 or mode for a path when a package is installed (this applies to any
 filesystem object that
 B<dpkg>
-handles, including directories, devices, etc.). This can be used to
+handles, including directories, devices, etc.).
+This can be used to
 force programs that are normally setuid to be install without a setuid
 flag, or only executable by a certain group.
 
 B<dpkg-statoverride> is a utility to manage the list of stat
-overrides. It has three basic functions: adding, removing and listing
+overrides.
+It has three basic functions: adding, removing and listing
 overrides.
 
 =head1 COMMANDS
@@ -49,7 +51,8 @@ overrides.
 
 =item B<--add> I<user group mode path>
 
-Add an override for I<path>. I<path> does not need to exist nor be known to
+Add an override for I<path>.
+I<path> does not need to exist nor be known to
 B<dpkg> when this command is used; the override will be stored and used later.
 Users and groups can be specified by their name (for example B<root>
 or B<nobody>), or by their number by prepending the number with a
@@ -66,7 +69,8 @@ unchanged by this command.
 
 =item B<--list> [I<glob-pattern>]
 
-List all overrides. If a glob pattern is specified restrict the output
+List all overrides.
+If a glob pattern is specified restrict the output
 to overrides which match the glob.
 
 =item B<--help>
@@ -116,26 +120,35 @@ I<things> is a comma separated list of things specified below.
 B<--force-help> displays a message describing them.
 Things marked with (*) are forced by default.
 
-I<Warning: These options are mostly intended to be used by experts only.
+B<Warning>: These options are mostly intended to be used by experts only.
 Using them without fully understanding their effects may break your whole
-system.>
+system.
 
-B<all>:
+=over 4
+
+=item B<all>:
+
 Turns on (or off) all force options.
 
-B<statoverride-add>:
+=item B<statoverride-add>:
+
 Overwrite an existing stat override when adding it (since dpkg 1.19.5).
 
-B<statoverride-remove>:
+=item B<statoverride-remove>:
+
 Ignore a missing stat override when removing it (since dpkg 1.19.5).
 
-B<security-mac>(*):
+=item B<security-mac>(*):
+
 Use platform-specific Mandatory Access Controls (MAC) based security when
 installing files into the filesystem (since dpkg 1.19.5).
 On Linux systems the implementation uses SELinux.
 
-B<not-root>:
+=item B<not-root>:
+
 Try to (de)install things even when not root (since dpkg 1.21.8).
+
+=back
 
 =item B<--force>
 
@@ -216,15 +229,16 @@ B<never>.
 
 =item I<%ADMINDIR%/statoverride>
 
-File which contains the current list of stat overrides of the system. It
+File which contains the current list of stat overrides of the system.
+It
 is located in the B<dpkg> administration directory, along with other files
 important to B<dpkg>, such as I<status> or I<available>.
 
-B<Note:> B<dpkg-statoverride> preserves the old copy of this file, with
+B<Note>: B<dpkg-statoverride> preserves the old copy of this file, with
 extension “-old”, before replacing it with the new one.
 
 =back
 
 =head1 SEE ALSO
 
-B<dpkg>(1).
+L<dpkg(1)>.

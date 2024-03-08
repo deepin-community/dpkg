@@ -42,5 +42,5 @@ De extra override-bestanden die gebruikt worden om de officiële Packages-lijste
 
 =head1 ZIE OOK
 
-B<dpkg-scanpackages>(1), B<dpkg-scansources>(1), B<apt-ftparchive>(1).
+L<dpkg-scanpackages(1)>, L<dpkg-scansources(1)>, L<apt-ftparchive(1)>.
 

@@ -14,6 +14,7 @@
 
 @SET_MAKE@
 
+
 VPATH = @srcdir@
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
@@ -95,7 +96,8 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/dpkg-arch.m4 \
 	$(top_srcdir)/m4/dpkg-build.m4 \
 	$(top_srcdir)/m4/dpkg-compiler.m4 \
 	$(top_srcdir)/m4/dpkg-coverage.m4 \
-	$(top_srcdir)/m4/dpkg-funcs.m4 $(top_srcdir)/m4/dpkg-libs.m4 \
+	$(top_srcdir)/m4/dpkg-funcs.m4 \
+	$(top_srcdir)/m4/dpkg-headers.m4 $(top_srcdir)/m4/dpkg-libs.m4 \
 	$(top_srcdir)/m4/dpkg-linker.m4 $(top_srcdir)/m4/dpkg-progs.m4 \
 	$(top_srcdir)/m4/dpkg-types.m4 \
 	$(top_srcdir)/m4/dpkg-unicode.m4 $(top_srcdir)/m4/gettext.m4 \
@@ -109,12 +111,14 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/dpkg-arch.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
+DIST_COMMON = $(srcdir)/Makefile.am $(dist_bashcompletions_DATA) \
+	$(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am__installdirs = "$(DESTDIR)$(bindir)"
+am__installdirs = "$(DESTDIR)$(bindir)" \
+	"$(DESTDIR)$(bashcompletionsdir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_dselect_OBJECTS = cxx-support.$(OBJEXT) basecmds.$(OBJEXT) \
 	baselist.$(OBJEXT) basetop.$(OBJEXT) bindings.$(OBJEXT) \
@@ -208,6 +212,34 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
+am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+am__vpath_adj = case $$p in \
+    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
+    *) f=$$p;; \
+  esac;
+am__strip_dir = f=`echo $$p | sed -e 's|^.*/||'`;
+am__install_max = 40
+am__nobase_strip_setup = \
+  srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*|]/\\\\&/g'`
+am__nobase_strip = \
+  for p in $$list; do echo "$$p"; done | sed -e "s|$$srcdirstrip/||"
+am__nobase_list = $(am__nobase_strip_setup); \
+  for p in $$list; do echo "$$p $$p"; done | \
+  sed "s| $$srcdirstrip/| |;"' / .*\//!s/ .*/ ./; s,\( .*\)/[^/]*$$,\1,' | \
+  $(AWK) 'BEGIN { files["."] = "" } { files[$$2] = files[$$2] " " $$1; \
+    if (++n[$$2] == $(am__install_max)) \
+      { print $$2, files[$$2]; n[$$2] = 0; files[$$2] = "" } } \
+    END { for (dir in files) print dir, files[dir] }'
+am__base_list = \
+  sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
+  sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
+am__uninstall_files_from_dir = { \
+  test -z "$$files" \
+    || { test ! -d "$$dir" && test ! -f "$$dir" && test ! -r "$$dir"; } \
+    || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
+         $(am__cd) "$$dir" && rm -f $$files; }; \
+  }
+DATA = $(dist_bashcompletions_DATA)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 am__recursive_targets = \
@@ -286,10 +318,15 @@ CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
+DEB_DEFAULT_COMPRESSOR = @DEB_DEFAULT_COMPRESSOR@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
 DOXYGEN = @DOXYGEN@
+DPKG_DEFAULT_PAGER = @DPKG_DEFAULT_PAGER@
+DPKG_DEFAULT_SHELL = @DPKG_DEFAULT_SHELL@
+DPKG_PAGER = @DPKG_PAGER@
+DPKG_SHELL = @DPKG_SHELL@
 DSYMUTIL = @DSYMUTIL@
 DUMPBIN = @DUMPBIN@
 ECHO_C = @ECHO_C@
@@ -373,6 +410,7 @@ POD2MAN = @POD2MAN@
 POSUB = @POSUB@
 PS_LIBS = @PS_LIBS@
 RANLIB = @RANLIB@
+RT_LIBS = @RT_LIBS@
 SED = @SED@
 SELINUX_CFLAGS = @SELINUX_CFLAGS@
 SELINUX_LIBS = @SELINUX_LIBS@
@@ -399,6 +437,7 @@ ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
 ac_ct_DUMPBIN = @ac_ct_DUMPBIN@
+aclocaldir = @aclocaldir@
 admindir = @admindir@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
@@ -406,6 +445,7 @@ am__quote = @am__quote@
 am__tar = @am__tar@
 am__untar = @am__untar@
 backupsdir = @backupsdir@
+bashcompletionsdir = @bashcompletionsdir@
 bindir = @bindir@
 build = @build@
 build_alias = @build_alias@
@@ -417,6 +457,7 @@ datadir = @datadir@
 datarootdir = @datarootdir@
 devlibdir = @devlibdir@
 docdir = @docdir@
+docspecdir = @docspecdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
 host = @host@
@@ -434,10 +475,14 @@ localedir = @localedir@
 localstatedir = @localstatedir@
 logdir = @logdir@
 mandir = @mandir@
+methodsdir = @methodsdir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
 pdfdir = @pdfdir@
+perllibdir = @perllibdir@
 pkgconfdir = @pkgconfdir@
+pkgconfigdir = @pkgconfigdir@
+polkitactionsdir = @polkitactionsdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
@@ -504,8 +549,19 @@ dselect_LDADD = \
 	../lib/compat/libcompat.la \
 	# EOL
 
-EXTRA_DIST = keyoverride mkcurkeys.pl
-CLEANFILES = curkeys.hpp curkeys.h
+dist_bashcompletions_DATA = \
+	# EOL
+
+EXTRA_DIST = \
+	keyoverride \
+	mkcurkeys.pl \
+	# EOL
+
+CLEANFILES = \
+	curkeys.hpp \
+	curkeys.h \
+	# EOL
+
 all: all-recursive
 
 .SUFFIXES:
@@ -655,6 +711,27 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+install-dist_bashcompletionsDATA: $(dist_bashcompletions_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(dist_bashcompletions_DATA)'; test -n "$(bashcompletionsdir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(bashcompletionsdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(bashcompletionsdir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(bashcompletionsdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(bashcompletionsdir)" || exit $$?; \
+	done
+
+uninstall-dist_bashcompletionsDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(dist_bashcompletions_DATA)'; test -n "$(bashcompletionsdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(bashcompletionsdir)'; $(am__uninstall_files_from_dir)
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run 'make' without going through this Makefile.
@@ -814,10 +891,10 @@ distdir-am: $(DISTFILES)
 	done
 check-am: all-am
 check: check-recursive
-all-am: Makefile $(PROGRAMS)
+all-am: Makefile $(PROGRAMS) $(DATA)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(bindir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(bashcompletionsdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-recursive
@@ -892,7 +969,7 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-data-local
+install-data-am: install-data-local install-dist_bashcompletionsDATA
 
 install-dvi: install-dvi-recursive
 
@@ -957,7 +1034,7 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-binPROGRAMS
+uninstall-am: uninstall-binPROGRAMS uninstall-dist_bashcompletionsDATA
 
 .MAKE: $(am__recursive_targets) install-am install-strip
 
@@ -967,15 +1044,16 @@ uninstall-am: uninstall-binPROGRAMS
 	distclean distclean-compile distclean-generic \
 	distclean-libtool distclean-tags distdir dvi dvi-am html \
 	html-am info info-am install install-am install-binPROGRAMS \
-	install-data install-data-am install-data-local install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	installdirs-am maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am uninstall-binPROGRAMS
+	install-data install-data-am install-data-local \
+	install-dist_bashcompletionsDATA install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am install-man install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs installdirs-am \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags tags-am uninstall uninstall-am \
+	uninstall-binPROGRAMS uninstall-dist_bashcompletionsDATA
 
 .PRECIOUS: Makefile
 

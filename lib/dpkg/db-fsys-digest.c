@@ -60,7 +60,7 @@ write_filehash_except(struct pkginfo *pkg, struct pkgbin *pkgbin,
 	atomic_file_open(file);
 
 	for (; list; list = list->next) {
-		 struct fsys_namenode *namenode = list->namenode;
+		const struct fsys_namenode *namenode = list->namenode;
 
 		if (mask && (namenode->flags & mask))
 			continue;
@@ -125,7 +125,7 @@ parse_filehash_buffer(struct varbuf *buf,
 		      thisline, filename);
 
 		/* Add the file to the list. */
-		namenode = fsys_hash_find_node(filename, 0);
+		namenode = fsys_hash_find_node(filename, FHFF_NONE);
 		namenode->newhash = nfstrsave(thisline);
 	}
 }

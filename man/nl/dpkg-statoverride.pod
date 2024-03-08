@@ -22,7 +22,7 @@ B<dpkg-statoverride> [I<optie>...] I<commando>
 
 =head1 BESCHRIJVING
 
-“B<stat overrides>” zijn een manier om aan B<dpkg>(1) te laten weten dat het bij het installeren van een pakket een andere eigenaar of modus moet gebruiken voor een bepaald pad (dit is van toepassing op elk bestandssysteemobject dat B<dpkg> verwerkt, met inbegrip van mappen, apparaten, enz.). Dit kan gebruikt worden om af te dwingen dat programma's die normaal setuid zijn, geïnstalleerd worden zonder een setuid-vlag of dat ze enkel uitgevoerd kunnen worden door een bepaalde groep.
+“B<stat overrides>” zijn een manier om aan L<dpkg(1)> te laten weten dat het bij het installeren van een pakket een andere eigenaar of modus moet gebruiken voor een bepaald pad (dit is van toepassing op elk bestandssysteemobject dat B<dpkg> verwerkt, met inbegrip van mappen, apparaten, enz.). Dit kan gebruikt worden om af te dwingen dat programma's die normaal setuid zijn, geïnstalleerd worden zonder een setuid-vlag of dat ze enkel uitgevoerd kunnen worden door een bepaalde groep.
 
 B<dpkg-statoverride> is een hulpmiddel voor het beheren van de lijst met statusmodificaties (stat overrides). Het heeft drie basisfuncties: toevoegen, verwijderen en opsommen van modificaties.
 
@@ -80,17 +80,31 @@ De hoofdmap instellen op B<map>, hetgeen de installatiemap instelt op «I<map>»
 
 Het uitvoeren van sommige dingen opleggen of weigeren (B<no-force> en B<refuse> betekenen hetzelfde) (sinds dpkg 1.19.5). I<dingen> is een door komma's gescheiden lijst van hierna gespecificeerde zaken. B<--force-help> geeft er een beschrijving van weer. Zaken die met een (*) gemarkeerd zijn, worden standaard opgelegd.
 
-I<Waarschuwing: Deze opties zijn vooral bedoeld om enkel door experts gebruikt te worden. Er gebruik van maken zonder een volkomen begrip van hun effecten kan uw volledig systeem defect maken.>
+B<Waarschuwing>: Deze opties zijn vooral bedoeld om enkel door experts gebruikt te worden. Er gebruik van maken zonder een volkomen begrip van hun effecten kan uw volledig systeem defect maken.
 
-B<all>: Schakelt alle forceer-opties aan (of uit).
+=over 4
 
-B<statoverride-add>: Bij het toevoegen ervan een bestaande statusmodificatie overschrijven (sinds dpkg 1.19.5).
+=item B<all>:
 
-B<statoverride-remove>: Bij het verwijderen ervan een ontbrekende statusmodificatie negeren (sinds dpkg 1.19.5).
+Schakelt alle forceer-opties aan (of uit).
 
-B<security-mac>(*): Bij het installeren van bestanden op het bestandssysteem gebruik maken van platformspecifieke beveiliging, gebaseerd op Mandatory Access Controls (MAC) (since dpkg 1.19.5). Op Linux-systemen gebruikt de implementatie SELinux.
+=item B<statoverride-add>:
 
-B<not-root>: Proberen om zaken te (de-)installeren, zelfs als niet-systeembeheerder (sinds dpkg 1.21.8).
+Bij het toevoegen ervan een bestaande statusmodificatie overschrijven (sinds dpkg 1.19.5).
+
+=item B<statoverride-remove>:
+
+Bij het verwijderen ervan een ontbrekende statusmodificatie negeren (sinds dpkg 1.19.5).
+
+=item B<security-mac>(*):
+
+Bij het installeren van bestanden op het bestandssysteem gebruik maken van platformspecifieke beveiliging, gebaseerd op Mandatory Access Controls (MAC) (since dpkg 1.19.5). Op Linux-systemen gebruikt de implementatie SELinux.
+
+=item B<not-root>:
+
+Proberen om zaken te (de-)installeren, zelfs als niet-systeembeheerder (sinds dpkg 1.21.8).
+
+=back
 
 =item B<--force>
 
@@ -158,11 +172,11 @@ Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen
 
 Bestand dat de huidige lijst van statusmodificaties van het systeem bevat. Het bevindt zich in de administratieve map van B<dpkg> samen met andere bestanden die van belang zijn voor B<dpkg>, zoals I<status> en I<available>.
 
-B<Opmerking:> B<dpkg-statoverride> bewaart de oude kopie van dit bestand met de extensie “-old” vooraleer het dit door het nieuwe bestand vervangt.
+B<Opmerking>: B<dpkg-statoverride> bewaart de oude kopie van dit bestand met de extensie “-old” vooraleer het dit door het nieuwe bestand vervangt.
 
 =back
 
 =head1 ZIE OOK
 
-B<dpkg>(1).
+L<dpkg(1)>.
 

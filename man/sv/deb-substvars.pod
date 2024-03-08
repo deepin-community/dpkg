@@ -69,7 +69,7 @@ Aktuell värdarkitektur (dvs., arkitekturen paketet byggs för, motsvarigheten t
 
 =item B<vendor:Name>
 
-Aktuellt återförsäljarnamn (sedan dpkg 1.20.0). Värdet kommer från fältet B<Vendor> för aktuell återförsäljares origin-fil, så som B<dpkg-cendor>(1) skulle hämta det.
+Aktuellt återförsäljarnamn (sedan dpkg 1.20.0). Värdet kommer från fältet B<Vendor> för aktuell återförsäljares origin-fil, så som L<dpkg-vendor(1)> skulle hämta det.
 
 =item B<vendor:Id>
 
@@ -103,7 +103,7 @@ Källkodspaketet utökade beskricning, hämtad från källkods-strofens B<Descri
 
 Den ungefärliga totala storleken på paketets installerade filer. Värdet kopieras in i motsvarande fält i styrfilen. Om du ställer in det kommer det att ersätta värdet på fältet. Om variabeln inte är satt kommer B<dpkg-gencontrol> att beräkna dess standardvärde genom att summera storleken på alla vanliga filer och symboliska länkar avrundat till 1 KiB-enheter, och ett grundvärde på 1 KiB för andra filsystemsobjekttyper. Hårda länkar räknas bara som vanliga filer en gång.
 
-B<Observera:> Tänk på att det här aldrig kan vara något annat än ett närmevärde eftersom den faktiska storleken som används på det installerade systemet i stor grad beror på vilket filsystem som används och dess parameterar, vilket kan komma att använda mer eller mindre plats än vad som anges i det här fältet.
+B<Observera>: Tänk på att det här aldrig kan vara något annat än ett närmevärde eftersom den faktiska storleken som används på det installerade systemet i stor grad beror på vilket filsystem som används och dess parameterar, vilket kan komma att använda mer eller mindre plats än vad som anges i det här fältet.
 
 =item B<Extra-Size>
 
@@ -151,7 +151,7 @@ Lista över substitueringsvariabler och -värden.
 
 =head1 SE ÄVEN
 
-B<dpkg>(1), B<dpkg-vendor>(1), B<dpkg-genchanges>(1), B<dpkg-gencontrol>(1), B<dpkg-shlibdeps>(1), B<dpkg-source>(1).
+L<dpkg(1)>, L<dpkg-vendor(1)>, L<dpkg-genchanges(1)>, L<dpkg-gencontrol(1)>, L<dpkg-shlibdeps(1)>, L<dpkg-source(1)>.
 
 
 =head1 ÖVERSÄTTNING

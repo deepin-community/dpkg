@@ -22,7 +22,7 @@ I<nombre-fichero>B<.deb>
 
 =head1 DESCRIPCIÓN
 
-El formato B<.deb> es el formato de fichero de paquete binario de Debian. Esta página de manual describe el formato B<antiguo>, usado previamente a la versión 0.93 de Debian. Consulte el manual B<deb>(5) para más detalles sobre el nuevo formato.
+The B<.deb> format is the Debian binary package file format.  This manual page describes the B<old> format, used before Debian 0.93.  Please see L<deb(5)> for details of the new format.
 
 =head1 FORMATO
 
@@ -36,13 +36,13 @@ Cada línea finaliza con un único carácter de nueva línea.
 
 El primer fichero tar contiene la información de control como un conjunto de ficheros comunes. El fichero B<control> debe estar presente, ya que contiene la información de control básica.
 
-In some very old archives, the files in the control tarfile may optionally be in a B<DEBIAN> subdirectory. In that case, the B<DEBIAN> subdirectory will be in the control tarfile too, and the control tarfile will have only files in that directory. Optionally the control tarfile may contain an entry for ‘B<.>’, that is, the current directory.
+In some very old archives, the files in the control tarfile may optionally be in a B<DEBIAN> subdirectory.  In that case, the B<DEBIAN> subdirectory will be in the control tarfile too, and the control tarfile will have only files in that directory.  Optionally the control tarfile may contain an entry for ‘B<.>’, that is, the current directory.
 
 El segundo fichero tar comprimido con gzip es el archivo del sistema de ficheros, que contiene las rutas relativas al directorio raíz del sistema donde se instalará. Los nombres de ruta no tienen barras precedentes.
 
 =head1 VÉASE TAMBIÉN
 
-B<deb>(5), B<dpkg-deb>(1), B<deb-control>(5).
+L<deb(5)>, L<deb-control(5)>, L<dpkg-deb(1)>.
 
 
 =head1 TRADUCTOR

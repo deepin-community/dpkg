@@ -72,7 +72,7 @@ Die Liste der erzeugten Dateien, die Teil des vorbereiteten Uploads sind. B<dpkg
 
 =head1 SIEHE AUCH
 
-B<deb-src-files>(5).
+L<deb-src-files(5)>.
 
 
 =head1 ÜBERSETZUNG

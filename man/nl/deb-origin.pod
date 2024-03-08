@@ -64,5 +64,5 @@ De waarde van dit veld bepaalt de naam van de leverancier waarvan deze leveranci
 
 =head1 ZIE OOK
 
-B<dpkg-vendor>(1)
+L<dpkg-vendor(1)>.
 

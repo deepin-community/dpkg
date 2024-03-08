@@ -40,7 +40,7 @@ Es wird derzeit nur ein Schalter unterstützt. B<remove-on-upgrade> markiert, da
 
 =head1 SIEHE AUCH
 
-B<dpkg-deb>(1), B<dpkg>(1).
+L<dpkg-deb(1)>, L<dpkg(1)>.
 
 
 =head1 ÜBERSETZUNG

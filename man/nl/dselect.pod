@@ -44,7 +44,7 @@ Nieuwe pakketten installeren of opwaarderen naar recentere versies.
 
 =back
 
-B<dselect> functioneert als een frontend voor B<dpkg>(1), het primaire Debian gereedschap voor het behandelen van pakketten. Het maakt gebruik van het volledige scherm om een systeem ter beschikking te stellen voor het beheren van pakketselecties met een oplosser voor vereisten en tegenstrijdigheden. Indien het uitgevoerd wordt met beheerdersrechten, kunnen er pakketten mee geïnstalleerd, opgewaardeerd of verwijderd worden. Verschillende benaderingsmethodes kunnen ingesteld worden voor het ophalen van informatie over beschikbare pakketversies en voor het ophalen van installeerbare pakketten uit pakketbronnen. Afhankelijk van de gebruikte benaderingsmethode kunnen deze pakketbronnen publieke archiefservers zijn op het internet, lokale archiefservers of cd's. De aanbevolen benaderingsmethode is I<apt>, welke door het pakket B<apt>(8) geleverd wordt.
+B<dselect> functioneert als een frontend voor L<dpkg(1)>, het primaire Debian gereedschap voor het behandelen van pakketten. Het maakt gebruik van het volledige scherm om een systeem ter beschikking te stellen voor het beheren van pakketselecties met een oplosser voor vereisten en tegenstrijdigheden. Indien het uitgevoerd wordt met beheerdersrechten, kunnen er pakketten mee geïnstalleerd, opgewaardeerd of verwijderd worden. Verschillende benaderingsmethodes kunnen ingesteld worden voor het ophalen van informatie over beschikbare pakketversies en voor het ophalen van installeerbare pakketten uit pakketbronnen. Afhankelijk van de gebruikte benaderingsmethode kunnen deze pakketbronnen publieke archiefservers zijn op het internet, lokale archiefservers of mediaschijven. De aanbevolen benaderingsmethode is I<apt>, welke door het pakket L<apt(8)> geleverd wordt.
 
 Gewoonlijk wordt B<dselect> zonder parameters gestart. Er wordt een interactief menu weergegeven dat de gebruiker een lijst met commando's biedt. Indien een commando opgegeven wordt als argument, dan wordt dat commando onmiddellijk opgestart. Er kunnen ook nog verschillende commandoregelparameters gebruikt worden om de werking van B<dselect> aan te passen of bijkomende informatie over het programma te tonen.
 
@@ -140,11 +140,11 @@ Facultatief kan er na de kleuropgave opnieuw een dubbele punt staan en een attri
 
 =item B<-?>, B<--help>
 
-Geef een korte hulptekst weer en sluit succesvol af.
+Een korte hulptekst weergeven en succesvol afsluiten.
 
 =item B<--version>
 
-Toon versie-informatie en sluit succesvol af.
+Versie-informatie tonen en succesvol afsluiten.
 
 =back
 
@@ -154,9 +154,9 @@ Als B<dselect> opgestart wordt, kan het de volgende commando's uitvoeren, ofwel 
 
 =head2 toegang
 
-Kies en configureer een benaderingsmethode om pakketbronnen te benaderen.
+Een benaderingsmethode om pakketbronnen te benaderen kiezen en configureren.
 
-Standaard biedt B<dselect> diverse benaderingsmethodes, zoals I<multi_cd>, I<mounted> of I<ftp>, maar andere pakketten kunnen andere methodes aanbieden, zoals bijvoorbeeld het pakket B<apt>(8) dat de benaderingsmethode I<apt> aanbiedt.
+Standaard biedt B<dselect> diverse methodes, zoals I<media>, I<file> of I<ftp>, maar andere pakketten kunnen andere methodes aanbieden, zoals bijvoorbeeld het pakket L<apt(8)> dat de benaderingsmethode I<apt> aanbiedt.
 
 Het gebruik van de benaderingsmethode I<apt> wordt sterk aanbevolen.
 
@@ -164,7 +164,7 @@ Het gebruik van de benaderingsmethode I<apt> wordt sterk aanbevolen.
 
 Ververs de database met beschikbare pakketten.
 
-Haalt een lijst van beschikbare pakketversies op uit de voor de huidige benaderingsmethode geconfigureerde pakketbronnen en werkt de database van dpkg bij. Gewoonlijk wordt de pakketlijst door de pakketbron aangeleverd onder de vorm van een bestand met de naam I<Packages> of I<Packages.gz>. Deze bestanden kunnen door onderhouders van pakketbronnen gegenereerd worden met het programma B<dpkg-scanpackages>(1).
+Haalt een lijst van beschikbare pakketversies op uit de voor de huidige benaderingsmethode geconfigureerde pakketbronnen en werkt de database van dpkg bij. Gewoonlijk wordt de pakketlijst door de pakketbron aangeleverd onder de vorm van een bestand met de naam I<Packages> of I<Packages.gz>. Deze bestanden kunnen door beheerders van pakketbronnen gegenereerd worden met het programma L<dpkg-scanpackages(1)>.
 
 De bijzonderheden van het update-commando zijn afhankelijk van de implementatie van de benaderingsmethode. Normaal gezien is het een eenvoudig proces dat geen tussenkomst van de gebruiker nodig heeft.
 
@@ -184,9 +184,9 @@ Installeert geselecteerde pakketten.
 
 De geconfigureerde benaderingsmethode zal installeerbare of opwaardeerbare pakketten ophalen uit de betrokken pakketbronnen en ze met behulp van B<dpkg> installeren. Afhankelijk van de implementatie van de benaderingsmethode, kunnen alle pakketten voor de installatie vooraf opgehaald worden, of opgehaald worden als dat nodig is. Sommige benaderingsmethodes kunnen ook pakketten verwijderen die gemarkeerd waren om verwijderd te worden.
 
-Indien zich tijdens het installeren een fout voordeed, wordt over het algemeen aangeraden om het commando install nogmaals uit te voeren. In de meeste gevallen zullen de problemen verdwijnen of opgelost geraken. Indien er problemen blijven bestaan of de uitgevoerde installatie niet correct was, gelieve dan op zoek te gaan naar de oorzaken ervan en de omstandigheden te onderzoeken en een bugrapport te sturen naar het bugvolgsysteem van Debian. Instructies over hoe u dit kunt doen, zijn te vinden op L<https://bugs.debian.org/> of u kunt de documentatie lezen bij B<bug>(1) of B<reportbug>(1) mochten die geïnstalleerd zijn.
+Indien zich tijdens het installeren een fout voordeed, wordt over het algemeen aangeraden om het commando install nogmaals uit te voeren. In de meeste gevallen zullen de problemen verdwijnen of opgelost geraken. Indien er problemen blijven bestaan of de uitgevoerde installatie niet correct was, gelieve dan op zoek te gaan naar de oorzaken ervan en de omstandigheden te onderzoeken en een bugrapport te sturen naar het bugvolgsysteem van Debian. Instructies over hoe u dit kunt doen, zijn te vinden op L<https://bugs.debian.org/> of u kunt de documentatie lezen bij L<bug(1)> of L<reportbug(1)> mochten die geïnstalleerd zijn.
 
-De bijzonderheden van het install-commando hangen af van de implementatie van de benaderingsmethode. Er kan behoefte zijn aan aandacht en invoer vanwege de gebruiker tijdens het installeren, configureren of verwijderen van pakketten. Dit is afhankelijk van de scripts van de pakketonderhouder uit het pakket. Een aantal pakketten maakt gebruik van de bibliotheek B<debconf>(1) die meer flexibele installatieopstellingen en zelfs geautomatiseerde installaties toelaat.
+De bijzonderheden van het install-commando hangen af van de implementatie van de benaderingsmethode. Er kan behoefte zijn aan aandacht en invoer vanwege de gebruiker tijdens het installeren, configureren of verwijderen van pakketten. Dit is afhankelijk van de scripts van de pakketbeheerder in het pakket. Een aantal pakketten maakt gebruik van de bibliotheek L<debconf(1)> die meer flexibele installatieopstellingen en zelfs geautomatiseerde installaties toelaat.
 
 =head2 configureren
 
@@ -206,7 +206,7 @@ Sluit het programma af met de foutcode nul (succesvol).
 
 =head2 Inleiding
 
-B<dselect> stelt de beheerder rechtstreeks bloot aan sommige aspecten van de complexiteit van het beheren van een grote hoeveelheid pakketten met een grote onderlinge afhankelijkheid. Voor een gebruiker die niet vertrouwd is met het concept en de werkwijze van het Debian pakketbeheersysteem kan dit behoorlijk overdonderend zijn. Hoewel B<dselect> erop gericht is pakketbeheer te vergemakkelijken, is het niet meer dan een instrument ervoor en er kan niet van verwacht worden dat het afdoend in de plaats treedt van de vaardigheden en de kennis van de beheerder. Van de gebruiker wordt vereist dat hij vertrouwd is met de onderliggende concepten van het Debian pakketsysteem. Gelieve in geval van twijfel de man-pagina van B<dpkg>(1) te raadplegen en de beleidsrichtlijnen van de distributie.
+B<dselect> stelt de beheerder rechtstreeks bloot aan sommige aspecten van de complexiteit van het beheren van een grote hoeveelheid pakketten met een grote onderlinge afhankelijkheid. Voor een gebruiker die niet vertrouwd is met het concept en de werkwijze van het Debian pakketbeheersysteem kan dit behoorlijk overdonderend zijn. Hoewel B<dselect> erop gericht is pakketbeheer te vergemakkelijken, is het niet meer dan een instrument ervoor en er kan niet van verwacht worden dat het afdoend in de plaats treedt van de vaardigheden en de kennis van de beheerder. Van de gebruiker wordt vereist dat hij vertrouwd is met de onderliggende concepten van het Debian pakketsysteem. Gelieve in geval van twijfel de man-pagina van L<dpkg(1)> te raadplegen en de beleidsrichtlijnen van de distributie.
 
 Tenzij B<dselect> uitgevoerd wordt in de rechtstreekse of de expertmodus, wordt eerst een hulpscherm getoond als u dit commando via het menu uitvoert. Het wordt de gebruiker I<ten stelligste> aangeraden om bij het verschijnen van een online hulpvenster alle informatie eruit grondig te bestuderen. Op elk moment kan een online hulpvenster opgeroepen worden met de ‘B<?>’-toets.
 
@@ -343,7 +343,7 @@ Men kan door de pakketselectielijst en in de schermen voor het oplossen van vere
 
 =head2 Zoeken en sorteren
 
-In de pakketlijst kan gezocht worden op pakketnaam. Dit gebeurt door op ‘B</>’ te drukken en een eenvoudige zoektekenreeks in te typen. De tekenreeks wordt als een B<regex>(7) reguliere expressie geïnterpreteerd. Indien u ‘B</d>’ toevoegt aan de zoekexpressie, dan zal dselect ook in de beschrijvingen zoeken. Indien u ‘B</i>’ toevoegt, dan zal de zoekbewerking hoofdletterongevoelig zijn. U kunt deze beide suffixen op de volgende manier combineren: ‘B</id>’. Herhaalde zoekbewerkingen gebeuren door telkens opnieuw op de toets ‘B<n>’ of ‘B<\>’ te drukken, totdat het gewenste pakket gevonden werd. Indien de zoekbewerking onderaan de lijst uitkomt, loopt ze door naar boven en zoekt van daaraf verder.
+In de pakketlijst kan gezocht worden op pakketnaam. Dit gebeurt door op ‘B</>’ te drukken en een eenvoudige zoektekenreeks in te typen. De tekenreeks wordt als een L<regex(7)> reguliere expressie geïnterpreteerd. Indien u ‘B</d>’ toevoegt aan de zoekexpressie, dan zal dselect ook in de beschrijvingen zoeken. Indien u ‘B</i>’ toevoegt, dan zal de zoekbewerking hoofdletterongevoelig zijn. U kunt deze beide suffixen op de volgende manier combineren: ‘B</id>’. Herhaalde zoekbewerkingen gebeuren door telkens opnieuw op de toets ‘B<n>’ of ‘B<\>’ te drukken, totdat het gewenste pakket gevonden werd. Indien de zoekbewerking onderaan de lijst uitkomt, loopt ze door naar boven en zoekt van daaraf verder.
 
 De volgorde van de lijst kan veranderd worden door herhaaldelijk op de toetsen ‘B<o>’ en ‘B<O>’ te drukken. Uit de volgende negen volgordes kan gekozen worden:
 
@@ -465,9 +465,9 @@ Het hoofdmenu bevat geen hulp-optie.
 
 De zichtbare lijst van beschikbare pakketten kan niet gereduceerd worden.
 
-De ingebouwde benaderingsmethodes voldoen niet langer aan de huidige kwaliteitsnormen. Gebruik de benaderingsmethode die B<apt>(8) voorziet. Die is niet enkel niet defect, ze is ook veel flexibeler dan de ingebouwde benaderingsmethodes.
+De ingebouwde benaderingsmethodes voldoen niet langer aan de huidige kwaliteitsnormen. Gebruik de benaderingsmethode die L<apt(8)> voorziet. Die is niet enkel niet defect, ze is ook veel flexibeler dan de ingebouwde benaderingsmethodes.
 
 =head1 ZIE OOK
 
-B<dpkg>(1), B<apt>(8), B<sources.list>(5), B<deb>(5).
+L<dpkg(1)>, L<apt(8)>, L<sources.list(5)>, L<deb(5)>.
 

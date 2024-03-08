@@ -114,13 +114,14 @@ static int
 verify_digest(const char *filename, struct fsys_namenode *fnn,
               struct verify_checks *checks)
 {
-	struct dpkg_error err;
 	static int fd;
-	char hash[MD5HASHLEN + 1];
 
 	fd = open(filename, O_RDONLY);
 
 	if (fd >= 0) {
+		struct dpkg_error err;
+		char hash[MD5HASHLEN + 1];
+
 		push_cleanup(cu_closefd, ehflag_bombout, 1, &fd);
 		if (fd_md5(fd, hash, -1, &err) < 0)
 			ohshit(_("cannot compute MD5 digest for file '%s': %s"),
@@ -189,8 +190,7 @@ verify_package(struct pkginfo *pkg)
 
 		fnn = namenodetouse(file->namenode, pkg, &pkg->installed);
 
-		varbuf_reset(&filename);
-		varbuf_add_str(&filename, dpkg_fsys_get_dir());
+		varbuf_set_str(&filename, dpkg_fsys_get_dir());
 		varbuf_add_str(&filename, fnn->name);
 		varbuf_end_str(&filename);
 

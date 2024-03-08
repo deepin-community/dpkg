@@ -22,7 +22,7 @@ B<DEBIAN/symbols>
 
 =head1 BESKRIVNING
 
-Symbolfiler medföljer Debianbinärpaket och dess format är en undermängd av symbolfilmallarna som används av B<dpkg-gensymbols>(1) i Debiankällkodspaket, se L<deb-src-symbols(5)>.
+Symbolfiler medföljer Debianbinärpaket och dess format är en undermängd av symbolfilmallarna som används av L<dpkg-gensymbols(1)> i Debiankällkodspaket, se L<deb-src-symbols(5)>.
 
 Formatet för posterna med utökad beroendeinformation för delade bibliotek i dessa filer är:
 
@@ -34,7 +34,7 @@ Z<>
  [...]
   I<symbol> I<minsta-version> [I<id-för-beroendemall>]
 
-I<biblioteks-sonamn> är det exakta värdet från SONAME-fältet, som det exporteras från B<objdump>(1). En I<beroendemall> är ett beroende där I<#MINVER#> dynamiskt ersätts av en versionskontrollrad ”(E<gt>= I<minsta-version>)” eller av ingenting (om ett ej versionsstyrt beroende anses tillräckligt).
+I<biblioteks-sonamn> är det exakta värdet från SONAME-fältet, som det exporteras från L<objdump(1)>. En I<beroendemall> är ett beroende där I<#MINVER#> dynamiskt ersätts av en versionskontrollrad ”(E<gt>= I<minsta-version>)” eller av ingenting (om ett ej versionsstyrt beroende anses tillräckligt).
 
 Varje exporterad I<symbol> (anges som I<namn>@I<version>, där I<version> är ”Base” om biblioteket inte är versionsstyrt) associeras med en I<minsta-version> i sin beroendemall (huvudberoendemallen används alltid och kommer att kombineras med beroendemallen som anges med I<id-för-beroendemall> om den finns). Den första alternativa beroendemallen får nummer 1, den andra 2, osv. Varje kolumn avdelas av exakt ett enkelt blanktecken.
 
@@ -80,7 +80,7 @@ Ett alias för B<Allow-Internal-Symbol-Groups> som avråds från (sedan dpkg 1.2
 
 =head1 SE ÄVEN
 
-L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, L<deb-src-symbols(5)>, B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
+L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, L<deb-src-symbols(5)>, L<dpkg-shlibdeps(1)>, L<dpkg-gensymbols(1)>.
 
 
 =head1 ÖVERSÄTTNING

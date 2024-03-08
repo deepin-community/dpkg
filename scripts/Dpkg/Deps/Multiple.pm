@@ -19,8 +19,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::Deps::Multiple;
-
 =encoding utf8
 
 =head1 NAME
@@ -34,10 +32,10 @@ of dependencies. It is the base class for Dpkg::Deps::{AND,OR,Union}.
 
 =cut
 
+package Dpkg::Deps::Multiple 1.02;
+
 use strict;
 use warnings;
-
-our $VERSION = '1.02';
 
 use Carp;
 
@@ -56,9 +54,9 @@ Creates a new object.
 =cut
 
 sub new {
-    my $this = shift;
+    my ($this, @deps) = @_;
     my $class = ref($this) || $this;
-    my $self = { list => [ @_ ] };
+    my $self = { list => [ @deps ] };
 
     bless $self, $class;
     return $self;
@@ -84,9 +82,9 @@ Adds new dependency objects at the end of the list.
 =cut
 
 sub add {
-    my $self = shift;
+    my ($self, @deps) = @_;
 
-    push @{$self->{list}}, @_;
+    push @{$self->{list}}, @deps;
 }
 
 =item $dep->get_deps()
@@ -137,7 +135,7 @@ sub arch_is_concerned {
 Simplifies the dependencies to contain only information relevant to the
 given architecture. The non-relevant sub-dependencies are simply removed.
 
-This trims off the architecture restriction list of Dpkg::Deps::Simple
+This trims off the architecture restriction list of L<Dpkg::Deps::Simple>
 objects.
 
 =cut
@@ -190,7 +188,7 @@ sub profile_is_concerned {
 Simplifies the dependencies to contain only information relevant to the
 given profile. The non-relevant sub-dependencies are simply removed.
 
-This trims off the profile restriction list of Dpkg::Deps::Simple objects.
+This trims off the profile restriction list of L<Dpkg::Deps::Simple> objects.
 
 =cut
 
@@ -208,7 +206,7 @@ sub reduce_profiles {
 =item $dep->is_empty()
 
 Returns true if the dependency is empty and doesn't contain any useful
-information. This is true when a (descendant of) Dpkg::Deps::Multiple
+information. This is true when a (descendant of) L<Dpkg::Deps::Multiple>
 contains an empty list of dependencies.
 
 =cut

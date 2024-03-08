@@ -16,13 +16,13 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb-symbols - ficheiro de informação de biblioteca partilhada extensiva de Debian
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<DEBIAN/symbols>
 
 =head1 DESCRIÇÃO
 
-Os ficheiros symbol são enviados em pacotes binários Debian, e o seu formato é um sub-conjunto dos ficheiros symbol modelo usados por B<dpkg-gensymbols>(1)  em pacotes fonte Debian, veja L<deb-src-symbols(5)>.
+The symbol files are shipped in Debian binary packages, and its format is a subset of the template symbol files used by L<dpkg-gensymbols(1)> in Debian source packages, see L<deb-src-symbols(5)>.
 
 O formato para uma entrada de informação de dependência de biblioteca partilhada extensiva nestes ficheiros é:
 
@@ -34,7 +34,7 @@ Z<>
  [...]
   I<symbol> I<minimal-version> [I<id-of-dependency-template>]
 
-O I<library-soname> é exactamente o valor do campo SONAME como exportado por B<objdump>(1). Um I<dependency-template> é uma dependência onde I<#MINVER#> é substituída dinamicamente seja por uma verificação de versão tipo “(E<gt>= I<minimal-version>)” ou por nada (se uma dependência isenta-de-versão for considerada suficiente).
+The I<library-soname> is exactly the value of the SONAME field as exported by L<objdump(1)>.  A I<dependency-template> is a dependency where I<#MINVER#> is dynamically replaced either by a version check like “(E<gt>= I<minimal-version>)” or by nothing (if an unversioned dependency is deemed sufficient).
 
 Cada I<symbol> exportado (listado como I<name>@I<version>, com I<version> sendo “Base” se a biblioteca for isenta-de-versão) estiver associado a um I<minimal-version> do seu modelo de dependência (o modelo de dependência principal é sempre usado e irá acabar sendo combinado com o modelo de dependência referenciado por I<id-of-dependency-template> se presente). O primeiro modelo de dependência alternativa é numerado 1, o segundo 2, etc. Cada coluna é separada por exactamente um único espaço em branco.
 
@@ -81,7 +81,7 @@ Um alias descontinuado para B<Allow-Internal-Symbol-Groups> (desde dpkg 1.20.1, 
 
 =head1 VEJA TAMBÉM
 
-L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, L<deb-src-symbols(5)>, B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
+L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, L<deb-src-symbols(5)>, L<dpkg-shlibdeps(1)>, L<dpkg-gensymbols(1)>.
 
 
 =head1 TRADUÇÃO

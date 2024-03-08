@@ -57,9 +57,18 @@ dselect_LDADD = \
 	../lib/compat/libcompat.la \
 	# EOL
 
+dist_bashcompletions_DATA = \
+	# EOL
 
-EXTRA_DIST = keyoverride mkcurkeys.pl
-CLEANFILES = curkeys.hpp curkeys.h
+EXTRA_DIST = \
+	keyoverride \
+	mkcurkeys.pl \
+	# EOL
+
+CLEANFILES = \
+	curkeys.hpp \
+	curkeys.h \
+	# EOL
 
 curkeys.$(OBJEXT): curkeys.h
 curkeys.hpp: dselect-curses.h

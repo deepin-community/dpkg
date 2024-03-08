@@ -14,26 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::Compression::FileHandle;
-
-use strict;
-use warnings;
-
-our $VERSION = '1.01';
-
-use Carp;
-
-use Dpkg::Compression;
-use Dpkg::Compression::Process;
-use Dpkg::Gettext;
-use Dpkg::ErrorHandling;
-
-use parent qw(IO::File Tie::Handle);
-
-# Useful reference to understand some kludges required to
-# have the class behave like a filehandle
-# http://blog.woobling.org/2009/10/are-filehandles-objects.html
-
 =encoding utf8
 
 =head1 NAME
@@ -79,30 +59,50 @@ Dpkg::Compression::FileHandle - class dealing transparently with file compressio
 Dpkg::Compression::FileHandle is a class that can be used
 like any filehandle and that deals transparently with compressed
 files. By default, the compression scheme is guessed from the filename
-but you can override this behaviour with the method C<set_compression>.
+but you can override this behavior with the method set_compression().
 
 If you don't open the file explicitly, it will be auto-opened on the
 first read or write operation based on the filename set at creation time
-(or later with the C<set_filename> method).
+(or later with the set_filename() method).
 
 Once a file has been opened, the filehandle must be closed before being
 able to open another file.
+
+=cut
+
+package Dpkg::Compression::FileHandle 1.01;
+
+use strict;
+use warnings;
+
+use Carp;
+
+use Dpkg::Compression;
+use Dpkg::Compression::Process;
+use Dpkg::Gettext;
+use Dpkg::ErrorHandling;
+
+use parent qw(IO::File Tie::Handle);
+
+# Useful reference to understand some kludges required to
+# have the class behave like a filehandle
+# http://blog.woobling.org/2009/10/are-filehandles-objects.html
 
 =head1 STANDARD FUNCTIONS
 
 The standard functions acting on filehandles should accept a
 Dpkg::Compression::FileHandle object transparently including
-C<open> (only when using the variant with 3 parameters), C<close>,
-C<binmode>, C<eof>, C<fileno>, C<getc>, C<print>, C<printf>, C<read>,
-C<sysread>, C<say>, C<write>, C<syswrite>, C<seek>, C<sysseek>, C<tell>.
+open() (only when using the variant with 3 parameters), close(),
+binmode(), eof(), fileno(), getc(), print(), printf(), read(),
+sysread(), say(), write(), syswrite(), seek(), sysseek(), tell().
 
-Note however that C<seek> and C<sysseek> will only work on uncompressed
+Note however that seek() and sysseek() will only work on uncompressed
 files as compressed files are really pipes to the compressor programs
 and you can't seek on a pipe.
 
 =head1 FileHandle METHODS
 
-The class inherits from IO::File so all methods that work on this
+The class inherits from L<IO::File> so all methods that work on this
 class should work for Dpkg::Compression::FileHandle too. There
 may be exceptions though.
 
@@ -207,9 +207,10 @@ sub READLINE {
 }
 
 sub OPEN {
-    my ($self) = shift;
-    if (scalar(@_) == 2) {
-	my ($mode, $filename) = @_;
+    my ($self, @args) = @_;
+
+    if (scalar @args == 2) {
+        my ($mode, $filename) = @args;
 	$self->set_filename($filename);
 	if ($mode eq '>') {
 	    $self->_open_for_write();
@@ -227,10 +228,10 @@ sub OPEN {
 }
 
 sub CLOSE {
-    my ($self) = shift;
+    my ($self, @args) = @_;
     my $ret = 1;
     if (defined *$self->{file}) {
-	$ret = *$self->{file}->close(@_) if *$self->{file}->opened();
+        $ret = *$self->{file}->close(@args) if *$self->{file}->opened();
     } else {
 	$ret = 0;
     }
@@ -239,34 +240,39 @@ sub CLOSE {
 }
 
 sub FILENO {
-    my ($self) = shift;
-    return *$self->{file}->fileno(@_) if defined *$self->{file};
+    my ($self, @args) = @_;
+
+    return *$self->{file}->fileno(@args) if defined *$self->{file};
     return;
 }
 
 sub EOF {
     # Since perl 5.12, an integer parameter is passed describing how the
     # function got called, just ignore it.
-    my ($self, $param) = (shift, shift);
-    return *$self->{file}->eof(@_) if defined *$self->{file};
+    my ($self, $param, @args) = @_;
+
+    return *$self->{file}->eof(@args) if defined *$self->{file};
     return 1;
 }
 
 sub SEEK {
-    my ($self) = shift;
-    return *$self->{file}->seek(@_) if defined *$self->{file};
+    my ($self, @args) = @_;
+
+    return *$self->{file}->seek(@args) if defined *$self->{file};
     return 0;
 }
 
 sub TELL {
-    my ($self) = shift;
-    return *$self->{file}->tell(@_) if defined *$self->{file};
+    my ($self, @args) = @_;
+
+    return *$self->{file}->tell(@args) if defined *$self->{file};
     return -1;
 }
 
 sub BINMODE {
-    my ($self) = shift;
-    return *$self->{file}->binmode(@_) if defined *$self->{file};
+    my ($self, @args) = @_;
+
+    return *$self->{file}->binmode(@args) if defined *$self->{file};
     return;
 }
 
@@ -277,7 +283,7 @@ sub BINMODE {
 =item $fh->set_compression($comp)
 
 Defines the compression method used. $comp should one of the methods supported by
-B<Dpkg::Compression> or "none" or "auto". "none" indicates that the file is
+L<Dpkg::Compression> or "none" or "auto". "none" indicates that the file is
 uncompressed and "auto" indicates that the method must be guessed based
 on the filename extension used.
 
@@ -294,7 +300,7 @@ sub set_compression {
 =item $fh->set_compression_level($level)
 
 Indicate the desired compression level. It should be a value accepted
-by the function C<compression_is_valid_level> of B<Dpkg::Compression>.
+by the function compression_is_valid_level() of L<Dpkg::Compression>.
 
 =cut
 
@@ -358,7 +364,7 @@ sub get_filename {
 
 Returns "0" if no compression is used and the compression method used
 otherwise. If the compression is set to "auto", the value returned
-depends on the extension of the filename obtained with the B<get_filename>
+depends on the extension of the filename obtained with the get_filename()
 method.
 
 =cut

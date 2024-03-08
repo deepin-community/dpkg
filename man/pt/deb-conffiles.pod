@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb-conffiles - conffiles de pacote
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<DEBIAN/conffiles>
 
@@ -40,7 +40,7 @@ Presentemente só há uma bandeira suportada, B<remove-on-upgrade>, para marcar 
 
 =head1 VEJA TAMBÉM
 
-B<dpkg-deb>(1), B<dpkg>(1).
+L<dpkg-deb(1)>, L<dpkg(1)>.
 
 
 =head1 TRADUÇÃO

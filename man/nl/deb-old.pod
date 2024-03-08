@@ -22,7 +22,7 @@ I<bestandsnaam>B<.deb>
 
 =head1 BESCHRIJVING
 
-Het B<.deb>-formaat is de indeling voor een binair pakketbestand in Debian. Deze man-pagina beschrijft de B<oude> indeling die voor Debian 0.93 in gebruik was. Zie B<deb>(5) voor de details van de nieuwe indeling.
+Het B<.deb>-formaat is de indeling voor een binair pakketbestand in Debian. Deze man-pagina beschrijft de B<oude> indeling die voor Debian 0.93 in gebruik was. Zie L<deb(5)> voor de details van de nieuwe indeling.
 
 =head1 INDELING
 
@@ -42,5 +42,5 @@ Het tweede met gzip gecomprimeerde tar-bestand is het archief van het bestandssy
 
 =head1 ZIE OOK
 
-B<deb>(5), B<dpkg-deb>(1), B<deb-control>(5).
+L<deb(5)>, L<deb-control(5)>, L<dpkg-deb(1)>.
 

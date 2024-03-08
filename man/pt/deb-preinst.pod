@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb-preinst - script de maintainer de pré-instalação do pacote
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<DEBIAN/preinst>
 
@@ -52,7 +52,7 @@ Se I<postrm> falhar durante actualização ou falhar numa actualização falhada
 
 =head1 VEJA TAMBÉM
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 TRADUÇÃO

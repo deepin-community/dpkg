@@ -40,7 +40,7 @@ Setzt die Versionsnummer des zu erstellenden Binärpaketes.
 
 =item B<-V>I<Name>B<=>I<Wert>
 
-Setzt eine Ausgabeersetzungsvariable. Lesen Sie B<deb-substvars>(5) für eine Besprechung der Ausgabeersetzung.
+Setzt eine Ausgabeersetzungsvariable. Lesen Sie L<deb-substvars(5)> für eine Besprechung der Ausgabeersetzung.
 
 =item B<-T>I<Substvars-Datei>
 
@@ -68,7 +68,7 @@ Liest oder schreibt die Liste der hochzuladenden Dateien hierher, statt B<debian
 
 =item B<-F>I<Changelog-Format>
 
-Spezifiziert das Format des Changelogs. Lesen Sie B<dpkg-parsechangelog>(1) für Informationen über alternative Formate.
+Spezifiziert das Format des Changelogs. Lesen Sie L<dpkg-parsechangelog(1)> für Informationen über alternative Formate.
 
 =item B<-p>I<Paket>
 
@@ -130,7 +130,7 @@ Die Liste der erstellten Dateien, die Teil des Uploads sind, der vorbereitet wir
 
 =head1 SIEHE AUCH
 
-B<deb-substvars>(5), B<deb-src-control>(5), B<deb-changelog>(5), B<deb-control>(5).
+L<deb-substvars(5)>, L<deb-src-control(5)>, L<deb-changelog(5)>, L<deb-control(5)>.
 
 
 =head1 ÜBERSETZUNG

@@ -16,13 +16,15 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-vendor - recolhe informação acerca dos fornecedores da distribuição
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-vendor> [I<option>...] I<command>
 
 =head1 DESCRIÇÃO
 
 B<dpkg-vendor> é uma ferramenta para inquirir informação acerca dos fornecedores listados em B<%PKGCONFDIR%/origins>. B<%PKGCONFDIR%/origins/default> contém informação acerca do fornecedor actual.
+
+Este programa foi introduzido no dpkg 1.15.1.
 
 =head1 COMANDOS
 
@@ -80,7 +82,7 @@ Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nati
 
 =head1 VEJA TAMBÉM
 
-B<deb-origin>(5).
+L<deb-origin(5)>.
 
 
 =head1 TRADUÇÃO

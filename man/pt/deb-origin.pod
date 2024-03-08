@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb-origin - Ficheiros de informação específicos do fornecedor
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<%PKGCONFDIR%/origins/>I<filename>
 
@@ -64,7 +64,7 @@ O valor deste campo determina o nome de fornecedor do fornecedor de onde este fo
 
 =head1 VEJA TAMBÉM
 
-B<dpkg-vendor>(1)
+L<dpkg-vendor(1)>.
 
 
 =head1 TRADUÇÃO

@@ -30,5 +30,5 @@ I<~/.dselect.cfg>
 
 =head1 ZIE OOK
 
-B<dselect>(1).
+L<dselect(1)>.
 

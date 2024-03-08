@@ -1,16 +1,17 @@
-# Dutch translation for deselect.
-# Copyright (C) 2008,2011 Dpkg Developers
+# Translation of dselect to Dutch
+# Copyright © 2008,2011 Dpkg Developers
 # This file is distributed under the same license as the dpkg package.
+#
 # Bart Cornelis <cobaco@skolelinux.no>, 2008.
 # Jeroen Schot <schot@a-eskwadraat.nl>, 2011.
-# Frans Spiesschaert <Frans.Spiesschaert@yucom.be>, 2014, 2022.
+# Frans Spiesschaert <Frans.Spiesschaert@yucom.be>, 2014, 2022-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dselect 1.21.7\n"
+"Project-Id-Version: dselect 1.22.0\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
-"PO-Revision-Date: 2022-04-09 16:01+0200\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
+"PO-Revision-Date: 2023-09-11 21:13+0200\n"
 "Last-Translator: Frans Spiesschaert <Frans.Spiesschaert@yucom.be>\n"
 "Language-Team: Debian Dutch l10n Team <debian-l10n-dutch@lists.debian.org>\n"
 "Language: nl\n"
@@ -58,8 +59,8 @@ msgid "cannot update screen after window resize"
 msgstr "kan scherm niet bijwerken na wijziging venstergrootte"
 
 #: dselect/baselist.cc
-msgid "failed to allocate colour pair"
-msgstr "kon kleurenpaar niet toewijzen"
+msgid "cannot allocate color pair"
+msgstr "kan kleurenpaar niet toewijzen"
 
 #: dselect/baselist.cc
 msgid "failed to create title window"
@@ -906,15 +907,15 @@ msgid "screen part"
 msgstr "schermdeel"
 
 #: dselect/main.cc
-msgid "null colour specification"
-msgstr "blanco-kleur specificatie"
+msgid "missing color specification"
+msgstr "ontbrekende kleurspecificatie"
 
 #: dselect/main.cc
-msgid "colour"
+msgid "color"
 msgstr "kleur"
 
 #: dselect/main.cc
-msgid "colour attribute"
+msgid "color attribute"
 msgstr "kleurattribuut"
 
 #: dselect/main.cc

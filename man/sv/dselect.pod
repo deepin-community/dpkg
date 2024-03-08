@@ -44,7 +44,7 @@ Installera nya paket eller uppgradera till nyare versioner.
 
 =back
 
-B<dselect> arbetar som ett skal runt B<dpkg>(1), Debians lågnivåpakethanteringsverktyg. Det har en fullskärmspaketvalshanterare som hanterar beroenden och konflikter mellan paket. När det körs med administratörsbehörighet kan paket installeras, uppgraderas och tas bort. Olika åtkomstmetoder kan konfigureras för att hämta tillgänglig information om paketversioner och installerbara paket från paketsamlingar. Beroende på åtkomstmetoden kan dessa samlingar vara öppna arkivservrar på Internet, lokala arkivservrar eller finnas på CD-ROM. Den rekommenderade åtkomstmetoden är I<apt>, vilken tillhandahålls av paketet B<apt>(8).
+B<dselect> arbetar som ett skal runt L<dpkg(1)>, Debians lågnivåpakethanteringsverktyg. Det har en fullskärmspaketvalshanterare som hanterar beroenden och konflikter mellan paket. När det körs med administratörsbehörighet kan paket installeras, uppgraderas och tas bort. Olika åtkomstmetoder kan konfigureras för att hämta tillgänglig information om paketversioner och installerbara paket från paketsamlingar. Beroende på åtkomstmetoden kan dessa samlingar vara öppna arkivservrar på Internet, lokala arkivservrar eller finnas på mediaskivor. Den rekommenderade åtkomstmetoden är I<apt>, vilken tillhandahålls av paketet L<apt(8)>.
 
 Vanligtvis anropas B<dselect> utan parametrar. En interaktiv meny visas då, vilken ger användaren en lista med kommandon. Om ett kommando ges som kommandoradsflagga startas detta med en gång. Flera kommandoradsflaggor finns ändå att tillgå för att förändra hur B<dselect> arbetar eller för att visa ytterligare information om programmet.
 
@@ -154,7 +154,7 @@ När B<dselect> startas kan det utföra följande kommandon, antingen direkt om 
 
 Väljer och konfigurerar en åtkomstmetod för att komma åt paketsamlingen.
 
-Som standard ger B<dselect> flera olika metoder, såsom I<multi_cd>, I<mounted> och I<ftp>, men andra paket kan tillhandahålla ytterligare metoder, till exempel ges åtkomstmetoden I<apt> av paketet B<apt>(8).
+Som standard ger B<dselect> flera olika metoder, såsom I<media>, I<file> och I<ftp>, men andra paket kan tillhandahålla ytterligare metoder, till exempel ges åtkomstmetoden I<apt> av paketet L<apt(8)>.
 
 Åtkomstmetoden I<apt> rekommenderas starkt.
 
@@ -162,7 +162,7 @@ Som standard ger B<dselect> flera olika metoder, såsom I<multi_cd>, I<mounted> 
 
 Uppdatera databasen med tillgängliga paket.
 
-Hämtar en lista över tillgängliga paket från paketsamlingen som konfigurerats för den aktuella åtkomstmetoden, och uppdaterar dpkg:s databas. Paketlistor finns normalt på paketsamlingarna i filer vid namn B<Packages> eller B<Packages.gz>. Dessa filer kan genereras av de som underhåller samlingarna genom att använda programmet B<dpkg-scanpackages(1)>.
+Hämtar en lista över tillgängliga paket från paketsamlingen som konfigurerats för den aktuella åtkomstmetoden, och uppdaterar dpkg:s databas. Paketlistor finns normalt på paketsamlingarna i filer vid namn B<Packages> eller B<Packages.gz>. Dessa filer kan genereras av de som underhåller samlingarna genom att använda programmet L<dpkg-scanpackages(1)>.
 
 Vilka detaljer som ges om uppdateringen beror på hur åtkomstmetoden är implementerad. Normalt är processen självförklarande och behöver ingen interaktion med användaren.
 
@@ -182,9 +182,9 @@ Installerar valda paket.
 
 Den valda åtkomstmetoden hämtar installerbara eller uppgraderbara paket från relevanta paketsamlingar och installerar dem med B<dpkg>. Beroende på hur åtkomstmetoden implementerats hämtas antingen alla paket innan installationen, eller så hämtas de när så är nödvändigt. Några åtkomstmetoder kommer även ta bort paket som markerades för borttagning.
 
-Om ett fel uppstod under installationen är rekommenderas det vanligen att köra installationen på nytt. I de flesta fall kommer problemet försvinna eller lösas. Om problemet kvarstår eller den installation som genomfördes var felaktig, ber vi dig undersöka orsaken och omständigheterna och rapportera ett fel i Debians felrapporteringssystem. Instruktioner om hur du gör det finns på L<https://bugs.debian.org/> eller genom att läsa dokumentationen för B<bug>(1) eller B<reportbug>(1), om dessa är installerade.
+Om ett fel uppstod under installationen är rekommenderas det vanligen att köra installationen på nytt. I de flesta fall kommer problemet försvinna eller lösas. Om problemet kvarstår eller den installation som genomfördes var felaktig, ber vi dig undersöka orsaken och omständigheterna och rapportera ett fel i Debians felrapporteringssystem. Instruktioner om hur du gör det finns på L<https://bugs.debian.org/> eller genom att läsa dokumentationen för L<bug(1)> eller L<reportbug(1)>, om dessa är installerade.
 
-Detaljerna för hur installationen genomförs beror på hur åtkomstmetoden är implementerad. Uppmärksamhet och indata från användaren kan behövas under installation, konfiguration eller borttagning av paket, beroende på hur utvecklarskripten i paketen ser ut. Vissa paket använder B<debconf>(1)-biblioteket, vilket möjliggör mer flexibel, eller till och med automatiserad, installation och inställning.
+Detaljerna för hur installationen genomförs beror på hur åtkomstmetoden är implementerad. Uppmärksamhet och indata från användaren kan behövas under installation, konfiguration eller borttagning av paket, beroende på hur utvecklarskripten i paketen ser ut. Vissa paket använder L<debconf(1)>-biblioteket, vilket möjliggör mer flexibel, eller till och med automatiserad, installation och inställning.
 
 =head2 config (konfigurera)
 
@@ -204,7 +204,7 @@ Avslutar programmet med felkod noll (lyckat).
 
 =head2 Introduktion
 
-B<dselect> utsätter direkt administratören för delar av den komplexitet det innebär att hantera stora mängder paket med många inbördes beroenden. För en användare som inte är nära förtrogen med koncepten och hur Debians pakethanteringssystem fungerar kan det te sig rätt så överväldigande. Trots att B<dselect>s målsättning är att förenkla administration och hantering av paket är det bara en del av helheten, och kan inte antas vara ett tillräckligt substitut för administratörsfärdighet och -förståelse. Användaren är tvungen att ha kunskap om det underliggande paketsystemet i Debian. Om tvivel föreligger, konsultera manualsidan B<dpkg>(1) och  distributionens policy.
+B<dselect> utsätter direkt administratören för delar av den komplexitet det innebär att hantera stora mängder paket med många inbördes beroenden. För en användare som inte är nära förtrogen med koncepten och hur Debians pakethanteringssystem fungerar kan det te sig rätt så överväldigande. Trots att B<dselect>s målsättning är att förenkla administration och hantering av paket är det bara en del av helheten, och kan inte antas vara ett tillräckligt substitut för administratörsfärdighet och -förståelse. Användaren är tvungen att ha kunskap om det underliggande paketsystemet i Debian. Om tvivel föreligger, konsultera manualsidan L<dpkg(1)> och  distributionens policy.
 
 Så länge inte B<dselect> körs i expert- eller direktläge visas en hjälpskärm först när det här kommandot väljs i menyn.  Användaren rekommenderas I<å det bestämdaste> att studera all information som finns i direkthjälpskärmarna när de dyker upp. Direkthjälpskärmarna kan när som helst nås via tangenten ”B<?>”.
 
@@ -340,7 +340,7 @@ Paketvallistan och beroendekonfliktslösningnskärmarna kan navigeras genom att 
 
 =head2 Sökning och sortering
 
-Det går att söka i paketlistan efter paketnamn. Detta görs genom att trycka ”B</>”> och ange en enkel söksträng. Strängen tolkas som ett reguljärt uttryck enligt B<regex>(7). Om du lägger till ”B</d>”> till sökuttrycket kommer dselect även söka beskrivningar. Om du lägger till ”B</i>”> kommer sökningen att ignorera skillnader mellan gemener och versaler. Du kan kombinera dessa båda suffix så här: ”B</id>”>. Sökningen kan upprepas genom att trycka på tangenten ”B<n>”> eller ”B<\>”> tills det önskade paketet hittas. Om sökningen når slutet på listan hoppar den till början och fortsätter sökningen därifrån.
+Det går att söka i paketlistan efter paketnamn. Detta görs genom att trycka ”B</>”> och ange en enkel söksträng. Strängen tolkas som ett reguljärt uttryck enligt L<regex(7)>. Om du lägger till ”B</d>”> till sökuttrycket kommer dselect även söka beskrivningar. Om du lägger till ”B</i>”> kommer sökningen att ignorera skillnader mellan gemener och versaler. Du kan kombinera dessa båda suffix så här: ”B</id>”>. Sökningen kan upprepas genom att trycka på tangenten ”B<n>”> eller ”B<\>”> tills det önskade paketet hittas. Om sökningen når slutet på listan hoppar den till början och fortsätter sökningen därifrån.
 
 Listans sorteringsordning kan ändras genom att trycka på tangenterna ”B<o>”> och ”B<O>”> upprepade gånger. Följande nio sorteringsordningar kan väljas:
 
@@ -462,11 +462,11 @@ Det finns inget hjälpalternativ i huvudmenyn.
 
 Den synliga listan med tillgängliga paket kan inte förminskas.
 
-De inbyggda åtkomstmetoderna kan inte längre nå nuvarande kvalitetsstandard. Använd åtkomstmetoden som ges av B<apt>(8), den är inte bara inte trasig, utan även mycket flexiblare än de inbyggda åtkomstmetoderna.
+De inbyggda åtkomstmetoderna kan inte längre nå nuvarande kvalitetsstandard. Använd åtkomstmetoden som ges av L<apt(8)>, den är inte bara inte trasig, utan även mycket flexiblare än de inbyggda åtkomstmetoderna.
 
 =head1 SE ÄVEN
 
-B<dpkg>(1), B<apt>(8), B<sources.list>(5), B<deb>(5).
+L<dpkg(1)>, L<apt(8)>, L<sources.list(5)>, L<deb(5)>.
 
 
 =head1 ÖVERSÄTTNING

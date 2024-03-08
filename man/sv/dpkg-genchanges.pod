@@ -118,7 +118,7 @@ Använd I<paketansvarige-adress> som namn och e-postadress till ansvarig för de
 
 =item B<-V>I<namn>B<=>I<värde>
 
-Ställer in en utdatasubstitueringsvariabel. Se B<deb-substvars>(5) för en beskrivning av utdatasubstituering.
+Ställer in en utdatasubstitueringsvariabel. Se L<deb-substvars(5)> för en beskrivning av utdatasubstituering.
 
 =item B<-T>I<substvars-fil>
 
@@ -146,7 +146,7 @@ Läser listan över filer som ska sändas in härifrån, istället för att anv�
 
 =item B<-F>I<ändringsloggformat>
 
-Anger format på ändringsloggen. Se B<dpkg-parsechangelog>(1) för information om alternativa format.
+Anger format på ändringsloggen. Se L<dpkg-parsechangelog(1)> för information om alternativa format.
 
 =item B<-u>I<insändningskatalog>
 
@@ -196,7 +196,7 @@ Listan över genererade filer som är en del av den insändning som förbereds. 
 
 =head1 SE ÄVEN
 
-B<deb-substvars>(5), B<deb-src-control>(5), B<deb-src-files>(5), B<deb-changelog>(5), B<deb-changes>(5).
+L<deb-substvars(5)>, L<deb-src-control(5)>, L<deb-src-files(5)>, L<deb-changelog(5)>, L<deb-changes(5)>.
 
 
 =head1 ÖVERSÄTTNING

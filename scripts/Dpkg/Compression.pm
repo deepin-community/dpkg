@@ -14,12 +14,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::Compression;
+=encoding utf8
+
+=head1 NAME
+
+Dpkg::Compression - simple database of available compression methods
+
+=head1 DESCRIPTION
+
+This modules provides a few public functions and a public regex to
+interact with the set of supported compression methods.
+
+=cut
+
+package Dpkg::Compression 2.01;
 
 use strict;
 use warnings;
 
-our $VERSION = '2.01';
 our @EXPORT = qw(
     compression_is_supported
     compression_get_list
@@ -46,19 +58,6 @@ use List::Util qw(any);
 
 use Dpkg::ErrorHandling;
 use Dpkg::Gettext;
-
-=encoding utf8
-
-=head1 NAME
-
-Dpkg::Compression - simple database of available compression methods
-
-=head1 DESCRIPTION
-
-This modules provides a few public functions and a public regex to
-interact with the set of supported compression methods.
-
-=cut
 
 my %COMP = (
     gzip => {
@@ -208,7 +207,7 @@ sub compression_get_file_extension {
 =item $comp = compression_get_default()
 
 Return the default compression method. It is "xz" unless
-C<compression_set_default> has been used to change it.
+compression_set_default() has been used to change it.
 
 =cut
 
@@ -236,7 +235,7 @@ Return the global default compression level used when compressing data if
 it has been set, otherwise the default level for the default compressor.
 
 It's "9" for "gzip" and "bzip2", "6" for "xz" and "lzma", unless
-C<compression_set_default_level> has been used to change it.
+compression_set_default_level() has been used to change it.
 
 =cut
 
@@ -252,7 +251,7 @@ sub compression_get_default_level {
 
 Change the global default compression level. Passing undef as the level will
 reset it to the global default compressor specific default, otherwise errors
-out if the level is not valid (see C<compression_is_valid_level>).
+out if the level is not valid (see compression_is_valid_level()).
 
 =cut
 
@@ -287,7 +286,7 @@ sub compression_get_level {
 
 Change the compression level for a specific compressor. Passing undef as
 the level will reset it to the specific default compressor level, otherwise
-errors out if the level is not valid (see C<compression_is_valid_level>).
+errors out if the level is not valid (see compression_is_valid_level()).
 
 =cut
 
@@ -342,7 +341,7 @@ sub compression_set_threads {
 
 =item @exec = compression_get_cmdline_compress($comp)
 
-Returns a list ready to be passed to C<exec>, its first element is the
+Returns a list ready to be passed to exec(), its first element is the
 program name for compression and the following elements are parameters
 for the program.
 
@@ -385,7 +384,7 @@ sub compression_get_cmdline_compress {
 
 =item @exec = compression_get_cmdline_decompress($comp)
 
-Returns a list ready to be passed to C<exec>, its first element is the
+Returns a list ready to be passed to exec(), its first element is the
 program name for decompression and the following elements are parameters
 for the program.
 

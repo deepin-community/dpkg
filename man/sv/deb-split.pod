@@ -76,7 +76,7 @@ Dessa poster måste ligga i exakt denna ordning. Nuvarande implementationer bör
 
 =head1 SE ÄVEN
 
-B<deb>(5), B<dpkg-split>(1).
+L<deb(5)>, L<dpkg-split(1)>.
 
 
 =head1 ÖVERSÄTTNING

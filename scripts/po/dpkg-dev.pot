@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: dpkg 1.21.22\n"
+"Project-Id-Version: dpkg 1.22.5\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,8 +18,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: scripts/dpkg-architecture.pl scripts/dpkg-buildflags.pl
-#: scripts/dpkg-buildpackage.pl scripts/dpkg-checkbuilddeps.pl
+#: scripts/dpkg-architecture.pl scripts/dpkg-buildapi.pl
+#: scripts/dpkg-buildflags.pl scripts/dpkg-buildpackage.pl
+#: scripts/dpkg-buildtree.pl scripts/dpkg-checkbuilddeps.pl
 #: scripts/dpkg-distaddfile.pl scripts/dpkg-genbuildinfo.pl
 #: scripts/dpkg-genchanges.pl scripts/dpkg-gencontrol.pl
 #: scripts/dpkg-gensymbols.pl scripts/dpkg-mergechangelogs.pl
@@ -31,18 +32,18 @@ msgid "Debian %s version %s.\n"
 msgstr ""
 
 #: scripts/dpkg-architecture.pl scripts/dpkg-buildflags.pl
-#: scripts/dpkg-buildpackage.pl scripts/dpkg-distaddfile.pl
-#: scripts/dpkg-genbuildinfo.pl scripts/dpkg-genchanges.pl
-#: scripts/dpkg-gencontrol.pl scripts/dpkg-gensymbols.pl
-#: scripts/dpkg-parsechangelog.pl scripts/dpkg-shlibdeps.pl
-#: scripts/dpkg-source.pl scripts/dpkg-vendor.pl
+#: scripts/dpkg-buildpackage.pl scripts/dpkg-buildtree.pl
+#: scripts/dpkg-distaddfile.pl scripts/dpkg-genbuildinfo.pl
+#: scripts/dpkg-genchanges.pl scripts/dpkg-gencontrol.pl
+#: scripts/dpkg-gensymbols.pl scripts/dpkg-parsechangelog.pl
+#: scripts/dpkg-shlibdeps.pl scripts/dpkg-source.pl scripts/dpkg-vendor.pl
 msgid ""
 "\n"
 "This is free software; see the GNU General Public License version 2 or\n"
 "later for copying conditions. There is NO warranty.\n"
 msgstr ""
 
-#: scripts/dpkg-architecture.pl scripts/dpkg-vendor.pl
+#: scripts/dpkg-architecture.pl scripts/dpkg-buildapi.pl scripts/dpkg-vendor.pl
 #, perl-format
 msgid "Usage: %s [<option>...] [<command>]"
 msgstr ""
@@ -118,7 +119,8 @@ msgstr ""
 msgid "%s is not a supported variable name"
 msgstr ""
 
-#: scripts/dpkg-architecture.pl scripts/dpkg-buildflags.pl
+#: scripts/dpkg-architecture.pl scripts/dpkg-buildapi.pl
+#: scripts/dpkg-buildflags.pl scripts/dpkg-buildtree.pl
 #: scripts/dpkg-distaddfile.pl scripts/dpkg-genbuildinfo.pl
 #: scripts/dpkg-genchanges.pl scripts/dpkg-gencontrol.pl
 #: scripts/dpkg-gensymbols.pl scripts/dpkg-name.pl
@@ -135,13 +137,30 @@ msgid ""
 "correct CC environment variable"
 msgstr ""
 
-#: scripts/dpkg-architecture.pl scripts/dpkg-shlibdeps.pl scripts/Dpkg/IPC.pm
+#: scripts/dpkg-architecture.pl scripts/Dpkg/IPC.pm
 #: scripts/Dpkg/Shlibs/Cppfilt.pm
 #, perl-format
 msgid "unable to execute %s"
 msgstr ""
 
-#: scripts/dpkg-buildflags.pl
+#: scripts/dpkg-buildapi.pl
+msgid ""
+"Commands:\n"
+"  -?, --help               show this help message.\n"
+"      --version            show the version."
+msgstr ""
+
+#: scripts/dpkg-buildapi.pl
+msgid ""
+"Options:\n"
+"  -c<control-file>         get control info from this file.\n"
+msgstr ""
+
+#: scripts/dpkg-buildapi.pl
+msgid "no arguments accepted"
+msgstr ""
+
+#: scripts/dpkg-buildflags.pl scripts/dpkg-buildtree.pl
 #, perl-format
 msgid "Usage: %s [<command>]"
 msgstr ""
@@ -153,7 +172,7 @@ msgid ""
 "  --origin <flag>    output the origin of the flag to stdout:\n"
 "                     value is one of vendor, system, user, env.\n"
 "  --status           output a synopsis with all parameters affecting the\n"
-"                     program behaviour, the resulting flags and their "
+"                     program behavior, the resulting flags and their "
 "origin.\n"
 "  --query            like --status, but in deb822 format.\n"
 "  --query-features <area>\n"
@@ -238,8 +257,8 @@ msgid ""
 "      --check-option=<opt>    pass <opt> to check <command>.\n"
 "      --hook-<name>=<command> set <command> as the hook <name>, known "
 "hooks:\n"
-"                                init preclean source build binary buildinfo\n"
-"                                changes postclean check sign done\n"
+"                                preinit init preclean source build binary\n"
+"                                buildinfo changes postclean check sign done\n"
 "      --buildinfo-file=<file> set the .buildinfo filename to generate.\n"
 "      --buildinfo-option=<opt>\n"
 "                              pass option <opt> to dpkg-genbuildinfo.\n"
@@ -539,6 +558,23 @@ msgstr ""
 msgid ""
 "%s must be updated to support the 'build-arch' and 'build-indep' targets (at "
 "least '%s' seems to be missing)"
+msgstr ""
+
+#: scripts/dpkg-buildtree.pl
+msgid ""
+"Commands:\n"
+"  clean              clean dpkg generated artifacts from the build tree.\n"
+"  --help             show this help message.\n"
+"  --version          show the version.\n"
+msgstr ""
+
+#: scripts/dpkg-buildtree.pl
+#, perl-format
+msgid "two commands specified: %s and %s"
+msgstr ""
+
+#: scripts/dpkg-buildtree.pl
+msgid "missing action"
 msgstr ""
 
 #: scripts/dpkg-checkbuilddeps.pl
@@ -1147,8 +1183,8 @@ msgstr ""
 msgid "unconditional maintainer override for %s"
 msgstr ""
 
-#: scripts/dpkg-scanpackages.pl scripts/dpkg-shlibdeps.pl scripts/Dpkg/IPC.pm
-#: scripts/Dpkg/Shlibs/Objdump.pm
+#: scripts/dpkg-scanpackages.pl scripts/Dpkg/IPC.pm
+#: scripts/Dpkg/Shlibs/Objdump/Object.pm
 #, perl-format
 msgid "cannot fork for %s"
 msgstr ""
@@ -1737,6 +1773,25 @@ msgstr ""
 msgid "'%s' is not a legal architecture in list '%s'"
 msgstr ""
 
+#: scripts/Dpkg/BuildAPI.pm
+msgid "dpkg build API level needs an exact version"
+msgstr ""
+
+#: scripts/Dpkg/BuildAPI.pm
+#, perl-format
+msgid "dpkg build API level with conflicting versions: %s vs %s"
+msgstr ""
+
+#: scripts/Dpkg/BuildAPI.pm
+#, perl-format
+msgid "invalid dpkg build API level '%s'"
+msgstr ""
+
+#: scripts/Dpkg/BuildAPI.pm
+#, perl-format
+msgid "dpkg build API level '%s' greater than max '%s'"
+msgstr ""
+
 #: scripts/Dpkg/BuildFlags.pm scripts/Dpkg/Compression/FileHandle.pm
 #: scripts/Dpkg/File.pm scripts/Dpkg/Interface/Storable.pm
 #: scripts/Dpkg/Shlibs/Objdump.pm scripts/Dpkg/Source/BinaryFiles.pm
@@ -2031,11 +2086,11 @@ msgid "invalid syntax for option in %s, line %d"
 msgstr ""
 
 #: scripts/Dpkg/Control.pm
-msgid "general section of control info file"
+msgid "source package stanza of template control file"
 msgstr ""
 
 #: scripts/Dpkg/Control.pm
-msgid "package's section of control info file"
+msgid "binary package stanza of template control file"
 msgstr ""
 
 #: scripts/Dpkg/Control.pm
@@ -2055,7 +2110,7 @@ msgid "license stanza of copyright file"
 msgstr ""
 
 #: scripts/Dpkg/Control.pm
-msgid "package's tests control file"
+msgid "source package tests control file"
 msgstr ""
 
 #: scripts/Dpkg/Control.pm
@@ -2069,16 +2124,19 @@ msgid "stanza in repository's %s file"
 msgstr ""
 
 #: scripts/Dpkg/Control.pm
-#, perl-format
-msgid "%s file"
+msgid "source package control file"
 msgstr ""
 
 #: scripts/Dpkg/Control.pm
-msgid "control info of a .deb package"
+msgid "binary package control file"
 msgstr ""
 
 #: scripts/Dpkg/Control.pm
 msgid "build information file"
+msgstr ""
+
+#: scripts/Dpkg/Control.pm
+msgid "upload changes control file"
 msgstr ""
 
 #: scripts/Dpkg/Control.pm
@@ -2350,6 +2408,10 @@ msgid "specified key needs a keystore"
 msgstr ""
 
 #: scripts/Dpkg/OpenPGP/ErrorCodes.pm
+msgid "OpenPGP backend command cannot sign"
+msgstr ""
+
+#: scripts/Dpkg/OpenPGP/ErrorCodes.pm
 #, perl-format
 msgid "error code %d"
 msgstr ""
@@ -2367,6 +2429,16 @@ msgstr ""
 msgid "must start with an alphanumeric character"
 msgstr ""
 
+#: scripts/Dpkg/Package.pm
+#, perl-format
+msgid "source package name '%s' is illegal: %s"
+msgstr ""
+
+#: scripts/Dpkg/Package.pm
+#, perl-format
+msgid "source package has two conflicting values - %s and %s"
+msgstr ""
+
 #: scripts/Dpkg/Path.pm scripts/Dpkg/Source/Archive.pm
 #, perl-format
 msgid "pathname '%s' cannot be canonicalized"
@@ -2378,22 +2450,26 @@ msgid "pathname '%s' points outside source root (to '%s')"
 msgstr ""
 
 #: scripts/Dpkg/Shlibs.pm
+msgid "use -l option instead of LD_LIBRARY_PATH"
+msgstr ""
+
+#: scripts/Dpkg/Shlibs.pm
 msgid ""
 "deprecated use of LD_LIBRARY_PATH with private library directory which "
 "interferes with cross-building, please use -l option instead"
 msgstr ""
 
-#: scripts/Dpkg/Shlibs.pm scripts/Dpkg/Shlibs/Objdump.pm
+#: scripts/Dpkg/Shlibs.pm scripts/Dpkg/Shlibs/Objdump/Object.pm
 #, perl-format
 msgid "unknown executable format in file '%s'"
 msgstr ""
 
-#: scripts/Dpkg/Shlibs/Objdump.pm
+#: scripts/Dpkg/Shlibs/Objdump/Object.pm
 #, perl-format
 msgid "couldn't parse dynamic relocation record: %s"
 msgstr ""
 
-#: scripts/Dpkg/Shlibs/Objdump.pm
+#: scripts/Dpkg/Shlibs/Objdump/Object.pm
 #, perl-format
 msgid "couldn't parse dynamic symbol definition: %s"
 msgstr ""
@@ -3370,6 +3446,11 @@ msgstr ""
 
 #: scripts/Dpkg/Source/Patch.pm
 #, perl-format
+msgid "diff '%s' patches hard link %s which can have unintended consequences"
+msgstr ""
+
+#: scripts/Dpkg/Source/Patch.pm
+#, perl-format
 msgid ""
 "diff '%s' patches files multiple times; split the diff in multiple files or "
 "merge the hunks into a single one"
@@ -3492,7 +3573,7 @@ msgstr ""
 
 #: scripts/Dpkg/Substvars.pm
 #, perl-format
-msgid "too many substitutions - recursive ? - in '%s'"
+msgid "too many ${%s} substitutions (recursive?) in '%s'"
 msgstr ""
 
 #: scripts/Dpkg/Substvars.pm
@@ -3508,16 +3589,6 @@ msgstr ""
 #: scripts/Dpkg/Substvars.pm
 #, perl-format
 msgid "substitution variable ${%s} unused, but is defined"
-msgstr ""
-
-#: scripts/Dpkg/Vars.pm
-#, perl-format
-msgid "source package name '%s' is illegal: %s"
-msgstr ""
-
-#: scripts/Dpkg/Vars.pm
-#, perl-format
-msgid "source package has two conflicting values - %s and %s"
 msgstr ""
 
 #: scripts/Dpkg/Vendor.pm
@@ -3537,6 +3608,11 @@ msgstr ""
 #: scripts/Dpkg/Vendor/Debian.pm
 #, perl-format
 msgid "unknown host architecture '%s'"
+msgstr ""
+
+#: scripts/Dpkg/Vendor/Debian.pm
+#, perl-format
+msgid "unknown abi attributes for architecture '%s'"
 msgstr ""
 
 #: scripts/Dpkg/Vendor/Ubuntu.pm

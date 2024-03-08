@@ -118,7 +118,7 @@ Verwendet I<Betreueradresse> als Namen und E-Mail-Adresse des Betreuers für die
 
 =item B<-V>I<Name>B<=>I<Wert>
 
-Setzt eine Ausgabeersetzungsvariable. Lesen Sie B<deb-substvars>(5) für eine Besprechung der Ausgabeersetzung.
+Setzt eine Ausgabeersetzungsvariable. Lesen Sie L<deb-substvars(5)> für eine Besprechung der Ausgabeersetzung.
 
 =item B<-T>I<Substvars-Datei>
 
@@ -146,7 +146,7 @@ Liest die Liste der hochzuladenden Dateien von hier, statt B<debian/files> zu ve
 
 =item B<-F>I<Changelog-Format>
 
-Spezifiziert das Format des Changelogs. Lesen Sie B<dpkg-parsechangelog>(1) für Informationen über alternative Formate.
+Spezifiziert das Format des Changelogs. Lesen Sie L<dpkg-parsechangelog(1)> für Informationen über alternative Formate.
 
 =item B<-u>I<Hochladedateiverzeichnis>
 
@@ -196,7 +196,7 @@ Die Liste der erstellten Dateien, die Teil der zum Hochladen vorbereiteten Datei
 
 =head1 SIEHE AUCH
 
-B<deb-substvars>(5), B<deb-src-control>(5), B<deb-src-files>(5), B<deb-changelog>(5), B<deb-changes>(5).
+L<deb-substvars(5)>, L<deb-src-control(5)>, L<deb-src-files(5)>, L<deb-changelog(5)>, L<deb-changes(5)>.
 
 
 =head1 ÜBERSETZUNG

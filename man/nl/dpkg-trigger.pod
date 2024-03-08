@@ -26,9 +26,11 @@ B<dpkg-trigger> [I<optie>...] I<commando>
 
 B<dpkg-trigger> is gereedschap om triggers expliciet te activeren en na te gaan of ze door het exemplaar van B<dpkg> dat actief is, ondersteund worden.
 
-Dit kan gebruikt worden door scripts van de pakketonderhouder in complexe en voorwaardelijke situaties waarvoor het bestand triggers of de declaratieve opdracht B<activate> van het triggercontrolebestand onvoldoende verfijnd zijn. Het kan ook voor testdoeleinden en door systeembeheerders gebruikt worden (maar merk op dat de triggers niet effectief uitgevoerd worden door B<dpkg-trigger>).
+Dit kan gebruikt worden door scripts van de beheerder in complexe en voorwaardelijke situaties waarvoor het bestand triggers of de declaratieve opdracht B<activate> van het triggercontrolebestand onvoldoende verfijnd zijn. Het kan ook voor testdoeleinden en door systeembeheerders gebruikt worden (maar merk op dat de triggers niet effectief uitgevoerd worden door B<dpkg-trigger>).
 
 Een syntaxis van een triggernaam die niet herkend wordt, is voor B<dpkg-trigger> een fout.
+
+Dit programma werd geïntroduceerd in dpkg 1.14.17.
 
 =head1 COMMANDO'S
 
@@ -62,7 +64,7 @@ De hoofdmap instellen op I<map>, hetgeen de administratieve map instelt op «I<m
 
 =item B<--by-package=>I<pakket>
 
-De triggerafwachter overschrijven (normaal wordt dit ingesteld door B<dpkg> via de omgevingsvariabele B<DPKG_MAINTSCRIPT_PACKAGE> van de scripts van de pakketonderhouder. Die bevat de naam van het pakket waartoe het script behoort en standaard wordt die waarde gebruikt).
+De triggerafwachter overschrijven (normaal wordt dit ingesteld door B<dpkg> via de omgevingsvariabele B<DPKG_MAINTSCRIPT_PACKAGE> van de scripts van de beheerder. Die bevat de naam van het pakket waartoe het script behoort en standaard wordt die waarde gebruikt).
 
 =item B<--no-await>
 
@@ -120,5 +122,5 @@ Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen
 
 =head1 ZIE OOK
 
-B<dpkg>(1), B<deb-triggers>(5), B<%PKGDOCDIR%/spec/triggers.txt>.
+L<dpkg(1)>, L<deb-triggers(5)>, B<%PKGDOCDIR%/spec/triggers.txt>.
 

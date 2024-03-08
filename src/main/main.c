@@ -229,9 +229,10 @@ static void
 set_debug(const struct cmdinfo *cpi, const char *value)
 {
   long mask;
-  const struct debuginfo *dip;
 
   if (*value == 'h') {
+    const struct debuginfo *dip;
+
     printf(_(
 "%s debugging option, --debug=<octal> or -D<octal>:\n"
 "\n"
@@ -640,10 +641,11 @@ commandfd(const char *const *argv)
   if (in == NULL)
     ohshite(_("couldn't open '%i' for stream"), (int)infd);
 
+  lno = 0;
+
   for (;;) {
     bool mode = false;
     int argc= 1;
-    lno= 0;
 
     push_error_context();
 

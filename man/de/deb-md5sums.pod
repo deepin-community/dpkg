@@ -39,7 +39,7 @@ Falls die Steuerdatei im Binärpaket nicht existiert, wird L<dpkg(1)> die passen
 
 =head1 SIEHE AUCH
 
-B<md5sum>(1), B<dpkg-deb>(1), B<dpkg>(1).
+L<md5sum(1)>, L<dpkg-deb(1)>, L<dpkg(1)>.
 
 
 =head1 ÜBERSETZUNG

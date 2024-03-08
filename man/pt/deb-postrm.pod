@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb-postrm - script de maintainer de pós-remoção do pacote
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<DEBIAN/postrm>
 
@@ -70,7 +70,7 @@ A I<new-version> é passada apenas desde o dpkg 1.18.5.
 
 =head1 VEJA TAMBÉM
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 TRADUÇÃO

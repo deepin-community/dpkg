@@ -105,22 +105,12 @@ Summary:
 #ifndef _OBSTACK_H
 #define _OBSTACK_H 1
 
+# include <stddef.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/* We need the type of a pointer subtraction.  If __PTRDIFF_TYPE__ is
-   defined, as with GNU C, use that; that way we don't pollute the
-   namespace with <stddef.h>'s symbols.  Otherwise, include <stddef.h>
-   and use ptrdiff_t.  */
-
-#ifdef __PTRDIFF_TYPE__
-# define PTR_INT_TYPE __PTRDIFF_TYPE__
-#else
-# include <stddef.h>
-# define PTR_INT_TYPE ptrdiff_t
-#endif
-
 /* If B is the base of an object addressed by P, return the result of
    aligning P to the next multiple of A + 1.  B and P must be of type
    char *.  A + 1 must be a power of 2.  */
@@ -129,13 +119,13 @@ extern "C" {
 
 /* Similar to _BPTR_ALIGN (B, P, A), except optimize the common case
    where pointers can be converted to integers, aligned as integers,
-   and converted back again.  If PTR_INT_TYPE is narrower than a
+   and converted back again.  If ptrdiff_t is narrower than a
    pointer (e.g., the AS/400), play it safe and compute the alignment
    relative to B.  Otherwise, use the faster strategy of computing the
    alignment relative to 0.  */
 
 #define __PTR_ALIGN(B, P, A)						    \
-  __BPTR_ALIGN (sizeof (PTR_INT_TYPE) < sizeof (void *) ? (B) : (char *) 0, \
+  __BPTR_ALIGN (sizeof (ptrdiff_t) < sizeof (void *) ? (B) : (char *) 0, \
 		P, A)
 
 #include <string.h>
@@ -156,7 +146,7 @@ struct obstack		/* control current object in current chunk */
   char	*chunk_limit;		/* address of char after current chunk */
   union
   {
-    PTR_INT_TYPE tempint;
+    ptrdiff_t tempint;
     void *tempptr;
   } temp;			/* Temporary for some macros.  */
   size_t alignment_mask;	/* Mask of alignment for each object. */
@@ -287,7 +277,7 @@ extern int obstack_exit_failure;
 __extension__								\
 ({ struct obstack *__o = (OBSTACK);					\
    size_t __len = (length);						\
-   if (__o->chunk_limit - __o->next_free < __len)			\
+   if ((size_t) (__o->chunk_limit - __o->next_free) < __len)		\
      _obstack_newchunk (__o, __len);					\
    (void) 0; })
 
@@ -364,7 +354,7 @@ __extension__								\
 __extension__								\
 ({ struct obstack *__o = (OBSTACK);					\
    size_t __len = (length);						\
-   if (__o->chunk_limit - __o->next_free < __len)			\
+   if ((size_t) (__o->chunk_limit - __o->next_free) < __len)		\
      _obstack_newchunk (__o, __len);					\
    obstack_blank_fast (__o, __len);					\
    (void) 0; })
@@ -475,7 +465,7 @@ __extension__								\
 
 # define obstack_blank(h,length)					\
 ( (h)->temp.tempint = (length),						\
-  (((h)->chunk_limit - (h)->next_free < (h)->temp.tempint)		\
+  (((size_t) ((h)->chunk_limit - (h)->next_free) < (h)->temp.tempint)	\
    ? (_obstack_newchunk ((h), (h)->temp.tempint), 0) : 0),		\
   obstack_blank_fast (h, (h)->temp.tempint))
 
@@ -497,7 +487,7 @@ __extension__								\
     = __PTR_ALIGN ((h)->object_base, (h)->next_free,			\
 		   (h)->alignment_mask),				\
   (((size_t) ((h)->next_free - (char *) (h)->chunk)			\
-    > (size_t) ((h)->chunk_limit - (char *) (h)->chunk))			\
+    > (size_t) ((h)->chunk_limit - (char *) (h)->chunk))		\
    ? ((h)->next_free = (h)->chunk_limit) : 0),				\
   (h)->object_base = (h)->next_free,					\
   (h)->temp.tempptr)
@@ -505,7 +495,7 @@ __extension__								\
 # define obstack_free(h,obj)						\
 ( (h)->temp.tempint = (char *) (obj) - (char *) (h)->chunk,		\
   ((((h)->temp.tempint > 0						\
-    && (h)->temp.tempint < (h)->chunk_limit - (char *) (h)->chunk))	\
+    && (h)->temp.tempint < (size_t) ((h)->chunk_limit - (char *) (h)->chunk)))	\
    ? (int) ((h)->next_free = (h)->object_base				\
 	    = (h)->temp.tempint + (char *) (h)->chunk)			\
    : (((__obstack_free) ((h), (h)->temp.tempint + (char *) (h)->chunk), 0), 0)))

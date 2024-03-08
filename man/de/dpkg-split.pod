@@ -174,7 +174,7 @@ Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte sind: B
 
 =item B<SOURCE_DATE_EPOCH>
 
-Falls gesetzt, wird sie als Zeitstempel (als Sekunden seit der Epoche) in dem B<ar>(5)-Container von B<deb-split>(5) verwandt.
+Falls gesetzt, wird sie als Zeitstempel (als Sekunden seit der Epoche) in dem L<ar(5)>-Container von L<deb-split(5)> verwandt.
 
 =back
 
@@ -190,6 +190,14 @@ Die in diesem Verzeichnis benutzten Dateinamen liegen in einem intern B<dpkg-spl
 
 =back
 
+=head1 SICHERHEIT
+
+Untersuchen oder zusammensetzen nicht vertrauenswürdiger getrennter Paketarchive sollte als Sicherheitsgrenze betrachtet werden und jede Verletzung dieser Grenze, die aus diesen Aktionen resultiert, sollte als Sicherheitsverwundbarkeit betrachtet werden. Es wird nachdrücklich davon abgeraten, diese Aktionen auf nicht vertrauenswürdigen Daten als Root durchzuführen.
+
+Automatisches Zusammenstellen und Verwerfen von Teilen geteilter Pakete werden als privilegierte Aktionen betrachten, die zu einer Root-Eskalation führen können. Diese Aktionen dürfen niemals an nicht vertrauenswürdige Benutzer delegiert oder durch nicht vertrauenswürdige Pakete durchgeführt werden, da dies Root-Zugriff auf Ihr System ermöglichen könnte.
+
+Das Aufteilen von Paketarchiven sollte nur mit vertrauenswürdigen Daten erfolgen.
+
 =head1 FEHLER
 
 Volle Details über die Pakete in der Warteschlange sind nicht zu erhalten, ohne selbst im Warteschlangenverzeichnis zu wühlen.
@@ -198,7 +206,7 @@ Es gibt keine einfache Art zu testen, ob eine Datei, die ein Teil eines Binärpa
 
 =head1 SIEHE AUCH
 
-B<deb>(5), B<deb-control>(5), B<dpkg-deb>(1), B<dpkg>(1).
+L<deb(5)>, L<deb-control(5)>, L<dpkg-deb(1)>, L<dpkg(1)>.
 
 
 =head1 ÜBERSETZUNG

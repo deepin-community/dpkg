@@ -105,13 +105,13 @@ host_triplet = @host@
 @HAVE_LINKER_VERSION_SCRIPT_TRUE@	-Wl,--version-script=$(srcdir)/libdpkg.map \
 @HAVE_LINKER_VERSION_SCRIPT_TRUE@	# EOL
 
-@BUILD_SHARED_TRUE@am__append_2 = \
-@BUILD_SHARED_TRUE@	$(LIBINTL) \
-@BUILD_SHARED_TRUE@	$(Z_LIBS) \
-@BUILD_SHARED_TRUE@	$(LZMA_LIBS) \
-@BUILD_SHARED_TRUE@	$(ZSTD_LIBS) \
-@BUILD_SHARED_TRUE@	$(BZ2_LIBS) \
-@BUILD_SHARED_TRUE@	# EOL
+@HAVE_LINKER_VERSION_SCRIPT_FALSE@am__append_2 = \
+@HAVE_LINKER_VERSION_SCRIPT_FALSE@	-export-symbols libdpkg.sym \
+@HAVE_LINKER_VERSION_SCRIPT_FALSE@	# EOL
+
+@HAVE_LINKER_VERSION_SCRIPT_FALSE@am__append_3 = \
+@HAVE_LINKER_VERSION_SCRIPT_FALSE@	libdpkg.sym \
+@HAVE_LINKER_VERSION_SCRIPT_FALSE@	# EOL
 
 check_PROGRAMS = $(am__EXEEXT_1) t/b-fsys-hash$(EXEEXT) \
 	t/b-pkg-hash$(EXEEXT) t/c-tarextract$(EXEEXT) \
@@ -122,7 +122,8 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/dpkg-arch.m4 \
 	$(top_srcdir)/m4/dpkg-build.m4 \
 	$(top_srcdir)/m4/dpkg-compiler.m4 \
 	$(top_srcdir)/m4/dpkg-coverage.m4 \
-	$(top_srcdir)/m4/dpkg-funcs.m4 $(top_srcdir)/m4/dpkg-libs.m4 \
+	$(top_srcdir)/m4/dpkg-funcs.m4 \
+	$(top_srcdir)/m4/dpkg-headers.m4 $(top_srcdir)/m4/dpkg-libs.m4 \
 	$(top_srcdir)/m4/dpkg-linker.m4 $(top_srcdir)/m4/dpkg-progs.m4 \
 	$(top_srcdir)/m4/dpkg-types.m4 \
 	$(top_srcdir)/m4/dpkg-unicode.m4 $(top_srcdir)/m4/gettext.m4 \
@@ -187,10 +188,10 @@ am__installdirs = "$(DESTDIR)$(devlibdir)" "$(DESTDIR)$(pkgconfigdir)" \
 	"$(DESTDIR)$(pkgincludedir)"
 LTLIBRARIES = $(devlib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
-@BUILD_SHARED_TRUE@am__DEPENDENCIES_2 = $(am__DEPENDENCIES_1) \
-@BUILD_SHARED_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-@BUILD_SHARED_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
-libdpkg_la_DEPENDENCIES = ../compat/libcompat.la $(am__DEPENDENCIES_2)
+libdpkg_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	../compat/libcompat.la
 am_libdpkg_la_OBJECTS = ar.lo arch.lo atomic-file.lo buffer.lo \
 	c-ctype.lo cleanup.lo color.lo command.lo compress.lo dbdir.lo \
 	dbmodify.lo db-ctrl-access.lo db-ctrl-format.lo \
@@ -198,7 +199,7 @@ am_libdpkg_la_OBJECTS = ar.lo arch.lo atomic-file.lo buffer.lo \
 	db-fsys-files.lo db-fsys-override.lo deb-version.lo debug.lo \
 	depcon.lo dir.lo dump.lo ehandle.lo error.lo fdio.lo file.lo \
 	fields.lo fsys-dir.lo fsys-iter.lo fsys-hash.lo glob.lo \
-	i18n.lo log.lo meminfo.lo mlib.lo namevalue.lo nfmalloc.lo \
+	i18n.lo log.lo meminfo.lo mustlib.lo namevalue.lo nfmalloc.lo \
 	options.lo options-dirs.lo options-parsers.lo pager.lo \
 	parse.lo parsehelp.lo path.lo path-remove.lo pkg.lo \
 	pkg-array.lo pkg-files.lo pkg-format.lo pkg-hash.lo \
@@ -218,13 +219,13 @@ libdpkg_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 t_b_fsys_hash_SOURCES = t/b-fsys-hash.c
 am__dirstamp = $(am__leading_dot)dirstamp
 t_b_fsys_hash_OBJECTS = t/b-fsys-hash.$(OBJEXT)
-am__DEPENDENCIES_3 = libdpkg.la $(am__DEPENDENCIES_1) \
+am__DEPENDENCIES_2 = libdpkg.la $(am__DEPENDENCIES_1) \
 	../compat/libcompat.la
-am__DEPENDENCIES_4 = $(am__DEPENDENCIES_3)
-t_b_fsys_hash_DEPENDENCIES = $(am__DEPENDENCIES_4)
+am__DEPENDENCIES_3 = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_2)
+t_b_fsys_hash_DEPENDENCIES = $(am__DEPENDENCIES_3)
 t_b_pkg_hash_SOURCES = t/b-pkg-hash.c
 t_b_pkg_hash_OBJECTS = t/b-pkg-hash.$(OBJEXT)
-t_b_pkg_hash_DEPENDENCIES = $(am__DEPENDENCIES_4)
+t_b_pkg_hash_DEPENDENCIES = $(am__DEPENDENCIES_3)
 t_c_tarextract_SOURCES = t/c-tarextract.c
 t_c_tarextract_OBJECTS = t/c-tarextract.$(OBJEXT)
 t_c_tarextract_LDADD = $(LDADD)
@@ -437,7 +438,7 @@ am__depfiles_remade = ./$(DEPDIR)/ar.Plo ./$(DEPDIR)/arch.Plo \
 	./$(DEPDIR)/fsys-dir.Plo ./$(DEPDIR)/fsys-hash.Plo \
 	./$(DEPDIR)/fsys-iter.Plo ./$(DEPDIR)/glob.Plo \
 	./$(DEPDIR)/i18n.Plo ./$(DEPDIR)/log.Plo \
-	./$(DEPDIR)/meminfo.Plo ./$(DEPDIR)/mlib.Plo \
+	./$(DEPDIR)/meminfo.Plo ./$(DEPDIR)/mustlib.Plo \
 	./$(DEPDIR)/namevalue.Plo ./$(DEPDIR)/nfmalloc.Plo \
 	./$(DEPDIR)/options-dirs.Plo ./$(DEPDIR)/options-parsers.Plo \
 	./$(DEPDIR)/options.Plo ./$(DEPDIR)/pager.Plo \
@@ -584,10 +585,15 @@ CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
+DEB_DEFAULT_COMPRESSOR = @DEB_DEFAULT_COMPRESSOR@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
 DOXYGEN = @DOXYGEN@
+DPKG_DEFAULT_PAGER = @DPKG_DEFAULT_PAGER@
+DPKG_DEFAULT_SHELL = @DPKG_DEFAULT_SHELL@
+DPKG_PAGER = @DPKG_PAGER@
+DPKG_SHELL = @DPKG_SHELL@
 DSYMUTIL = @DSYMUTIL@
 DUMPBIN = @DUMPBIN@
 ECHO_C = @ECHO_C@
@@ -671,6 +677,7 @@ POD2MAN = @POD2MAN@
 POSUB = @POSUB@
 PS_LIBS = @PS_LIBS@
 RANLIB = @RANLIB@
+RT_LIBS = @RT_LIBS@
 SED = @SED@
 SELINUX_CFLAGS = @SELINUX_CFLAGS@
 SELINUX_LIBS = @SELINUX_LIBS@
@@ -697,6 +704,7 @@ ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
 ac_ct_DUMPBIN = @ac_ct_DUMPBIN@
+aclocaldir = @aclocaldir@
 admindir = @admindir@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
@@ -704,6 +712,7 @@ am__quote = @am__quote@
 am__tar = @am__tar@
 am__untar = @am__untar@
 backupsdir = @backupsdir@
+bashcompletionsdir = @bashcompletionsdir@
 bindir = @bindir@
 build = @build@
 build_alias = @build_alias@
@@ -715,6 +724,7 @@ datadir = @datadir@
 datarootdir = @datarootdir@
 devlibdir = @devlibdir@
 docdir = @docdir@
+docspecdir = @docspecdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
 host = @host@
@@ -732,10 +742,14 @@ localedir = @localedir@
 localstatedir = @localstatedir@
 logdir = @logdir@
 mandir = @mandir@
+methodsdir = @methodsdir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
 pdfdir = @pdfdir@
+perllibdir = @perllibdir@
 pkgconfdir = @pkgconfdir@
+pkgconfigdir = @pkgconfigdir@
+polkitactionsdir = @polkitactionsdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
@@ -767,20 +781,21 @@ LDADD = \
 	../compat/libcompat.la \
 	# EOL
 
-EXTRA_DIST = \
-	$(test_scripts) \
-	$(test_data) \
-	libdpkg.map \
-	libdpkg.pc.in \
-	# EOL
-
-pkgconfigdir = $(devlibdir)/pkgconfig
+EXTRA_DIST = libdpkg.map libdpkg.pc.in $(test_scripts) $(test_data) # \
+	EOL
+DISTCLEANFILES = libdpkg.sym # EOL
 pkgconfig_DATA = libdpkg.pc
 devlib_LTLIBRARIES = libdpkg.la
-libdpkg_la_LDFLAGS = $(am__append_1) $(MD_LIBS)
-libdpkg_la_LIBADD = ../compat/libcompat.la $(am__append_2)
-EXTRA_libdpkg_la_DEPENDENCIES = \
-	libdpkg.map \
+EXTRA_libdpkg_la_DEPENDENCIES = libdpkg.map $(am__append_3)
+libdpkg_la_LDFLAGS = -no-undefined $(am__append_1) $(am__append_2)
+libdpkg_la_LIBADD = \
+	$(Z_LIBS) \
+	$(LZMA_LIBS) \
+	$(ZSTD_LIBS) \
+	$(BZ2_LIBS) \
+	$(MD_LIBS) \
+	$(LIBINTL) \
+	../compat/libcompat.la \
 	# EOL
 
 libdpkg_la_SOURCES = \
@@ -820,7 +835,7 @@ libdpkg_la_SOURCES = \
 	i18n.c i18n.h \
 	log.c \
 	meminfo.c \
-	mlib.c \
+	mustlib.c \
 	namevalue.c \
 	nfmalloc.c \
 	options.c \
@@ -962,6 +977,12 @@ test_scripts = \
 	# EOL
 
 test_data = \
+	t/data/command/path-a/cmd \
+	t/data/command/path-a/cmd-a \
+	t/data/command/path-b/cmd \
+	t/data/command/path-b/cmd-b \
+	t/data/command/path-noexec/cmd \
+	t/data/command/path-noexec/cmd-noexec \
 	t/data/meminfo-no-data \
 	t/data/meminfo-no-info \
 	t/data/meminfo-no-unit \
@@ -969,7 +990,7 @@ test_data = \
 	# EOL
 
 BENCHMARK_LDADD_FLAGS = \
-	-lrt \
+	$(RT_LIBS) \
 	$(LDADD) \
 	# EOL
 
@@ -1307,7 +1328,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/i18n.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/meminfo.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mlib.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mustlib.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/namevalue.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nfmalloc.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/options-dirs.Plo@am__quote@ # am--include-marker
@@ -1608,6 +1629,7 @@ distclean-generic:
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
 	-rm -f t/$(DEPDIR)/$(am__dirstamp)
 	-rm -f t/$(am__dirstamp)
+	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -1653,7 +1675,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/i18n.Plo
 	-rm -f ./$(DEPDIR)/log.Plo
 	-rm -f ./$(DEPDIR)/meminfo.Plo
-	-rm -f ./$(DEPDIR)/mlib.Plo
+	-rm -f ./$(DEPDIR)/mustlib.Plo
 	-rm -f ./$(DEPDIR)/namevalue.Plo
 	-rm -f ./$(DEPDIR)/nfmalloc.Plo
 	-rm -f ./$(DEPDIR)/options-dirs.Plo
@@ -1810,7 +1832,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/i18n.Plo
 	-rm -f ./$(DEPDIR)/log.Plo
 	-rm -f ./$(DEPDIR)/meminfo.Plo
-	-rm -f ./$(DEPDIR)/mlib.Plo
+	-rm -f ./$(DEPDIR)/mustlib.Plo
 	-rm -f ./$(DEPDIR)/namevalue.Plo
 	-rm -f ./$(DEPDIR)/nfmalloc.Plo
 	-rm -f ./$(DEPDIR)/options-dirs.Plo
@@ -1927,6 +1949,15 @@ uninstall-am: uninstall-devlibLTLIBRARIES uninstall-pkgconfigDATA \
 
 .PRECIOUS: Makefile
 
+
+# Generate a simple libtool symbol export list to be used as a fallback if
+# there is no version script support.
+libdpkg.sym: libdpkg.map
+	$(AM_V_GEN) $(SED) -n \
+	  -e 's/#.*$$//g' \
+	  -e 's/^[[:space:]]\{1,\}\([A-Za-z0-9_]\{1,\}\);/\1/p' \
+	  $(srcdir)/libdpkg.map \
+	  >$@
 
 TEST_VERBOSE ?= 0
 TEST_PARALLEL ?= 1

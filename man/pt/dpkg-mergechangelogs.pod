@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-mergechangelogs - fusão de 3 vias de ficheiros debian/changelog
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-mergechangelogs> [I<option>...] I<old> I<new-a> I<new-b> [I<out>]
 
@@ -25,6 +25,8 @@ B<dpkg-mergechangelogs> [I<option>...] I<old> I<new-a> I<new-b> [I<out>]
 Este programa irá usar as 3 versões fornecidas do changelog Debian para gerar um ficheiro changelog resultante de fusão. O changelog resultante é guardado no ficheiro I<out> ou enviado para a saída standard se esse parâmetro não for fornecido.
 
 Cada entrada é identificada pelo seu número de versão e são assumidas como não em conflito, elas são simplesmente fundidas na ordem correcta (ao diminuir o número de versão). Quando B<--merge-prereleases> é usado, a parte do número de versão após o último til é largada de modo que 1.0-1~exp1 e 1.0-1~exp5 são consideradas a mesma entrada. Quando a mesma versão está disponível em ambas I<new-a> e I<new-b>, é tentada uma fusão standard de 3- vias baseada em linhas (desde que o módulo Algorithm::Merge esteja disponível — faz parte do pacote libalgorithm-merge-perl — caso contrário você vai obter um conflito global no conteúdo da entrada.).
+
+Este programa foi introduzido no dpkg 1.15.7.
 
 =head1 OPÇÕES
 
@@ -68,7 +70,7 @@ Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nati
 
 =head1 LIMITAÇÕES
 
-Tudo o que não seja analisado por Dpkg::Changelog é perdido durante a fusão. Isto pode incluir coisas como comentários que não eram suposto estar lá, etc.
+Anything that is not parsed by L<Dpkg::Changelog> is lost during the merge. This might include stuff like comments which were not supposed to be there, etc.
 
 =head1 INTEGRAÇÃO COM GIT
 

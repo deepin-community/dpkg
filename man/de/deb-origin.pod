@@ -64,7 +64,7 @@ Der Wert dieses Feldes bestimmt den Namen des Lieferanten, von dem dieser Liefer
 
 =head1 SIEHE AUCH
 
-B<dpkg-vendor>(1)
+L<dpkg-vendor(1)>.
 
 
 =head1 ÜBERSETZUNG

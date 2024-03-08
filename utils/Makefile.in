@@ -100,18 +100,21 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = $(am__EXEEXT_1)
-@BUILD_UPDATE_ALTERNATIVES_TRUE@am__append_1 = org.dpkg.pkexec.update-alternatives.policy
-@BUILD_UPDATE_ALTERNATIVES_TRUE@am__append_2 = update-alternatives
 sbin_PROGRAMS = $(am__EXEEXT_2)
-@BUILD_START_STOP_DAEMON_TRUE@am__append_3 = start-stop-daemon
+bin_PROGRAMS = $(am__EXEEXT_1)
+@BUILD_UPDATE_ALTERNATIVES_TRUE@am__append_1 = update-alternatives
+@BUILD_UPDATE_ALTERNATIVES_TRUE@am__append_2 = 
+@BUILD_UPDATE_ALTERNATIVES_TRUE@am__append_3 = org.dpkg.pkexec.update-alternatives.policy
+@BUILD_START_STOP_DAEMON_TRUE@am__append_4 = start-stop-daemon
+@BUILD_START_STOP_DAEMON_TRUE@am__append_5 = 
 subdir = utils
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/dpkg-arch.m4 \
 	$(top_srcdir)/m4/dpkg-build.m4 \
 	$(top_srcdir)/m4/dpkg-compiler.m4 \
 	$(top_srcdir)/m4/dpkg-coverage.m4 \
-	$(top_srcdir)/m4/dpkg-funcs.m4 $(top_srcdir)/m4/dpkg-libs.m4 \
+	$(top_srcdir)/m4/dpkg-funcs.m4 \
+	$(top_srcdir)/m4/dpkg-headers.m4 $(top_srcdir)/m4/dpkg-libs.m4 \
 	$(top_srcdir)/m4/dpkg-linker.m4 $(top_srcdir)/m4/dpkg-progs.m4 \
 	$(top_srcdir)/m4/dpkg-types.m4 \
 	$(top_srcdir)/m4/dpkg-unicode.m4 $(top_srcdir)/m4/gettext.m4 \
@@ -125,7 +128,8 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/dpkg-arch.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
+DIST_COMMON = $(srcdir)/Makefile.am $(dist_bashcompletions_DATA) \
+	$(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
@@ -133,7 +137,8 @@ CONFIG_CLEAN_VPATH_FILES =
 @BUILD_UPDATE_ALTERNATIVES_TRUE@am__EXEEXT_1 =  \
 @BUILD_UPDATE_ALTERNATIVES_TRUE@	update-alternatives$(EXEEXT)
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(sbindir)" \
-	"$(DESTDIR)$(pkexecdir)"
+	"$(DESTDIR)$(bashcompletionsdir)" \
+	"$(DESTDIR)$(polkitactionsdir)"
 @BUILD_START_STOP_DAEMON_TRUE@am__EXEEXT_2 =  \
 @BUILD_START_STOP_DAEMON_TRUE@	start-stop-daemon$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS) $(sbin_PROGRAMS)
@@ -151,11 +156,12 @@ AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-am_update_alternatives_OBJECTS =  \
-	update_alternatives-update-alternatives.$(OBJEXT)
+am__update_alternatives_SOURCES_DIST = update-alternatives.c
+@BUILD_UPDATE_ALTERNATIVES_TRUE@am_update_alternatives_OBJECTS = update_alternatives-update-alternatives.$(OBJEXT)
 update_alternatives_OBJECTS = $(am_update_alternatives_OBJECTS)
-update_alternatives_DEPENDENCIES = ../lib/compat/libcompat.la \
-	$(am__DEPENDENCIES_1)
+@BUILD_UPDATE_ALTERNATIVES_TRUE@update_alternatives_DEPENDENCIES =  \
+@BUILD_UPDATE_ALTERNATIVES_TRUE@	../lib/compat/libcompat.la \
+@BUILD_UPDATE_ALTERNATIVES_TRUE@	$(am__DEPENDENCIES_1)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -194,7 +200,7 @@ am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
 SOURCES = $(start_stop_daemon_SOURCES) $(update_alternatives_SOURCES)
 DIST_SOURCES = $(am__start_stop_daemon_SOURCES_DIST) \
-	$(update_alternatives_SOURCES)
+	$(am__update_alternatives_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -227,7 +233,7 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-DATA = $(pkexec_DATA)
+DATA = $(dist_bashcompletions_DATA) $(polkitactions_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
 # and print each of them once, without duplicates.  Input order is
@@ -272,10 +278,15 @@ CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
+DEB_DEFAULT_COMPRESSOR = @DEB_DEFAULT_COMPRESSOR@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
 DOXYGEN = @DOXYGEN@
+DPKG_DEFAULT_PAGER = @DPKG_DEFAULT_PAGER@
+DPKG_DEFAULT_SHELL = @DPKG_DEFAULT_SHELL@
+DPKG_PAGER = @DPKG_PAGER@
+DPKG_SHELL = @DPKG_SHELL@
 DSYMUTIL = @DSYMUTIL@
 DUMPBIN = @DUMPBIN@
 ECHO_C = @ECHO_C@
@@ -359,6 +370,7 @@ POD2MAN = @POD2MAN@
 POSUB = @POSUB@
 PS_LIBS = @PS_LIBS@
 RANLIB = @RANLIB@
+RT_LIBS = @RT_LIBS@
 SED = @SED@
 SELINUX_CFLAGS = @SELINUX_CFLAGS@
 SELINUX_LIBS = @SELINUX_LIBS@
@@ -385,6 +397,7 @@ ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
 ac_ct_DUMPBIN = @ac_ct_DUMPBIN@
+aclocaldir = @aclocaldir@
 admindir = @admindir@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
@@ -392,6 +405,7 @@ am__quote = @am__quote@
 am__tar = @am__tar@
 am__untar = @am__untar@
 backupsdir = @backupsdir@
+bashcompletionsdir = @bashcompletionsdir@
 bindir = @bindir@
 build = @build@
 build_alias = @build_alias@
@@ -403,6 +417,7 @@ datadir = @datadir@
 datarootdir = @datarootdir@
 devlibdir = @devlibdir@
 docdir = @docdir@
+docspecdir = @docspecdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
 host = @host@
@@ -420,10 +435,14 @@ localedir = @localedir@
 localstatedir = @localstatedir@
 logdir = @logdir@
 mandir = @mandir@
+methodsdir = @methodsdir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
 pdfdir = @pdfdir@
+perllibdir = @perllibdir@
 pkgconfdir = @pkgconfdir@
+pkgconfigdir = @pkgconfigdir@
+polkitactionsdir = @polkitactionsdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
@@ -448,36 +467,29 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)/lib \
 	# EOL
 
-CLEANFILES = \
-	org.dpkg.pkexec.update-alternatives.policy \
-	# EOL
+dist_bashcompletions_DATA = $(am__append_2) $(am__append_5)
+polkitactions_DATA = $(am__append_3)
+EXTRA_DIST = README.alternatives update-alternatives.polkit.in \
+	$(test_scripts) # EOL
+CLEANFILES = org.dpkg.pkexec.update-alternatives.policy # EOL
+@BUILD_UPDATE_ALTERNATIVES_TRUE@update_alternatives_CPPFLAGS = \
+@BUILD_UPDATE_ALTERNATIVES_TRUE@	-DALT_TMP_EXT=\".dpkg-tmp\" \
+@BUILD_UPDATE_ALTERNATIVES_TRUE@	-DADMINDIR_ENVVAR=\"DPKG_ADMINDIR\" \
+@BUILD_UPDATE_ALTERNATIVES_TRUE@	-DINSTDIR_ENVVAR=\"DPKG_ROOT\" \
+@BUILD_UPDATE_ALTERNATIVES_TRUE@	$(AM_CPPFLAGS) \
+@BUILD_UPDATE_ALTERNATIVES_TRUE@	# EOL
 
-EXTRA_DIST = \
-	README.alternatives \
-	update-alternatives.polkit.in \
-	$(test_scripts) \
-	# EOL
+@BUILD_UPDATE_ALTERNATIVES_TRUE@update_alternatives_SOURCES = \
+@BUILD_UPDATE_ALTERNATIVES_TRUE@	update-alternatives.c \
+@BUILD_UPDATE_ALTERNATIVES_TRUE@	# EOL
 
-pkexecdir = $(datadir)/polkit-1/actions
-pkexec_DATA = $(am__append_1)
+@BUILD_UPDATE_ALTERNATIVES_TRUE@update_alternatives_LDADD = \
+@BUILD_UPDATE_ALTERNATIVES_TRUE@	../lib/compat/libcompat.la \
+@BUILD_UPDATE_ALTERNATIVES_TRUE@	$(LIBINTL) \
+@BUILD_UPDATE_ALTERNATIVES_TRUE@	# EOL
+
 do_polkit_subst = $(SED) \
 	-e 's,[@]bindir[@],$(bindir),g' \
-	# EOL
-
-update_alternatives_SOURCES = \
-	update-alternatives.c \
-	# EOL
-
-update_alternatives_CPPFLAGS = \
-	-DALT_TMP_EXT=\".dpkg-tmp\" \
-	-DADMINDIR_ENVVAR=\"DPKG_ADMINDIR\" \
-	-DINSTDIR_ENVVAR=\"DPKG_ROOT\" \
-	$(AM_CPPFLAGS) \
-	# EOL
-
-update_alternatives_LDADD = \
-	../lib/compat/libcompat.la \
-	$(LIBINTL) \
 	# EOL
 
 @BUILD_START_STOP_DAEMON_TRUE@start_stop_daemon_SOURCES = \
@@ -702,27 +714,48 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
-install-pkexecDATA: $(pkexec_DATA)
+install-dist_bashcompletionsDATA: $(dist_bashcompletions_DATA)
 	@$(NORMAL_INSTALL)
-	@list='$(pkexec_DATA)'; test -n "$(pkexecdir)" || list=; \
+	@list='$(dist_bashcompletions_DATA)'; test -n "$(bashcompletionsdir)" || list=; \
 	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(pkexecdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(pkexecdir)" || exit 1; \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(bashcompletionsdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(bashcompletionsdir)" || exit 1; \
 	fi; \
 	for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  echo "$$d$$p"; \
 	done | $(am__base_list) | \
 	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(pkexecdir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(pkexecdir)" || exit $$?; \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(bashcompletionsdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(bashcompletionsdir)" || exit $$?; \
 	done
 
-uninstall-pkexecDATA:
+uninstall-dist_bashcompletionsDATA:
 	@$(NORMAL_UNINSTALL)
-	@list='$(pkexec_DATA)'; test -n "$(pkexecdir)" || list=; \
+	@list='$(dist_bashcompletions_DATA)'; test -n "$(bashcompletionsdir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(pkexecdir)'; $(am__uninstall_files_from_dir)
+	dir='$(DESTDIR)$(bashcompletionsdir)'; $(am__uninstall_files_from_dir)
+install-polkitactionsDATA: $(polkitactions_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(polkitactions_DATA)'; test -n "$(polkitactionsdir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(polkitactionsdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(polkitactionsdir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(polkitactionsdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(polkitactionsdir)" || exit $$?; \
+	done
+
+uninstall-polkitactionsDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(polkitactions_DATA)'; test -n "$(polkitactionsdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(polkitactionsdir)'; $(am__uninstall_files_from_dir)
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -813,7 +846,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(PROGRAMS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(pkexecdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(bashcompletionsdir)" "$(DESTDIR)$(polkitactionsdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -871,14 +904,14 @@ info: info-am
 
 info-am:
 
-install-data-am: install-data-local
+install-data-am: install-data-local install-dist_bashcompletionsDATA \
+	install-polkitactionsDATA
 
 install-dvi: install-dvi-am
 
 install-dvi-am:
 
-install-exec-am: install-binPROGRAMS install-pkexecDATA \
-	install-sbinPROGRAMS
+install-exec-am: install-binPROGRAMS install-sbinPROGRAMS
 
 install-html: install-html-am
 
@@ -919,8 +952,9 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-binPROGRAMS uninstall-local \
-	uninstall-pkexecDATA uninstall-sbinPROGRAMS
+uninstall-am: uninstall-binPROGRAMS uninstall-dist_bashcompletionsDATA \
+	uninstall-local uninstall-polkitactionsDATA \
+	uninstall-sbinPROGRAMS
 
 .MAKE: check-am install-am install-strip
 
@@ -930,16 +964,18 @@ uninstall-am: uninstall-binPROGRAMS uninstall-local \
 	ctags ctags-am distclean distclean-compile distclean-generic \
 	distclean-libtool distclean-tags distdir dvi dvi-am html \
 	html-am info info-am install install-am install-binPROGRAMS \
-	install-data install-data-am install-data-local install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-pkexecDATA install-ps \
+	install-data install-data-am install-data-local \
+	install-dist_bashcompletionsDATA install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am install-man install-pdf \
+	install-pdf-am install-polkitactionsDATA install-ps \
 	install-ps-am install-sbinPROGRAMS install-strip installcheck \
 	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags tags-am uninstall uninstall-am uninstall-binPROGRAMS \
-	uninstall-local uninstall-pkexecDATA uninstall-sbinPROGRAMS
+	uninstall-dist_bashcompletionsDATA uninstall-local \
+	uninstall-polkitactionsDATA uninstall-sbinPROGRAMS
 
 .PRECIOUS: Makefile
 

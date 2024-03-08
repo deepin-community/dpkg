@@ -24,7 +24,7 @@ B<dpkg-divert> [I<option>...] I<commande>
 
 B<dpkg-divert> sert à créer et à mettre à jour la liste des détournements.
 
-Le I<détournement> de fichier est un moyen d'obliger B<dpkg>(1) à installer un fichier non pas dans l'emplacement prévu mais dans un autre. Les scripts des paquets Debian se servent du détournement pour déplacer les fichiers qui créent des conflits. Les administrateurs s'en servent, lors de l'installation d'une version plus récente d'un paquet, pour remplacer les fichiers de configuration de certains paquets ou bien à chaque fois que des fichiers (qui ne sont pas des S<« conffiles »)> doivent être préservés par B<dpkg>.
+File I<diversions> are a way of forcing L<dpkg(1)> not to install a file into its location, but to a I<diverted> location.  Diversions can be used through the package maintainer scripts to move a file away when it causes a conflict.  System administrators can also use it to override some package's configuration file, or whenever some files (which aren't marked as “conffiles”) need to be preserved by B<dpkg>, when installing a newer version of a package which contains those files.
 
 =head1 COMMANDES
 
@@ -154,7 +154,7 @@ Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement ac
 
 Ce fichier contient la liste des détournements en œuvre sur le système. Il se trouve dans le répertoire d'administration de B<dpkg>, avec d'autres fichiers importants comme I<status> ou I<available>.
 
-S<B<Note :>> B<dpkg-divert> préserve l'ancienne copie de ce fichier, avec l'extension I<-old>, avant de la remplacer par la nouvelle.
+B<Note>: B<dpkg-divert> preserves the old copy of this file, with extension I<-old>, before replacing it with the new one.
 
 =back
 
@@ -164,7 +164,7 @@ Pour l'ajout, le défaut est B<--local> et B<--divert> I<original>B<.distrib>. P
 
 On ne peut pas détourner des répertoires avec B<dpkg-divert>.
 
-Il faut faire attention quand une bibliothèque partagée est détournée. B<ldconfig>(8) crée un lien symbolique à partir du champ DT_SONAME embarqué dans la bibliothèque. B<ldconfig> ne connaît pas les détournements (seul B<dpkg> le fait), et si une bibliothèque détournée possède le même SONAME que la bibliothèque non détournée, le lien symbolique peut pointer en fin de compte sur la bibliothèque détournée.
+Care should be taken when diverting shared libraries, L<ldconfig(8)> creates a symbolic link based on the DT_SONAME field embedded in the library. Because B<ldconfig> does not honor diverts (only B<dpkg> does), the symlink may end up pointing at the diverted library, if a diverted library has the same SONAME as the undiverted one.
 
 =head1 EXEMPLES
 
@@ -187,7 +187,7 @@ Pour supprimer ce S<détournement :>
 
 =head1 VOIR AUSSI
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 TRADUCTION

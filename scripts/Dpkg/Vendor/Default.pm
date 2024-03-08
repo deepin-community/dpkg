@@ -13,17 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::Vendor::Default;
-
-use strict;
-use warnings;
-
-our $VERSION = '0.01';
-
-# If you use this file as template to create a new vendor class, please
-# uncomment the following lines
-#use parent qw(Dpkg::Vendor::Default);
-
 =encoding utf8
 
 =head1 NAME
@@ -35,7 +24,7 @@ Dpkg::Vendor::Default - default vendor class
 A vendor class is used to provide vendor specific behaviour
 in various places. This is the default class used in case
 there's none for the current vendor or in case the vendor could
-not be identified (see Dpkg::Vendor documentation).
+not be identified (see L<Dpkg::Vendor> documentation).
 
 It provides some hooks that are called by various dpkg-* tools.
 If you need a new hook, please file a bug against dpkg-dev and explain
@@ -43,6 +32,19 @@ your need. Note that the hook API has no guarantee to be stable over an
 extended period of time. If you run an important distribution that makes
 use of vendor hooks, you'd better submit them for integration so that
 we avoid breaking your code.
+
+B<Note>: This is a private module, its API can change at any time.
+
+=cut
+
+package Dpkg::Vendor::Default 0.01;
+
+use strict;
+use warnings;
+
+# If you use this file as template to create a new vendor class, please
+# uncomment the following lines
+#use parent qw(Dpkg::Vendor::Default);
 
 =head1 METHODS
 
@@ -72,7 +74,7 @@ supported hooks are:
 
 =item before-source-build ($srcpkg)
 
-The first parameter is a Dpkg::Source::Package object. The hook is called
+The first parameter is a L<Dpkg::Source::Package> object. The hook is called
 just before the execution of $srcpkg->build().
 
 =item package-keyrings ()
@@ -109,10 +111,10 @@ but returns a (possibly empty) list of vendor-specific B<Build-Conflicts>.
 
 =item register-custom-fields ()
 
-The hook is called in Dpkg::Control::Fields to register custom fields.
+The hook is called in L<Dpkg::Control::Fields> to register custom fields.
 You should return a list of arrays. Each array is an operation to perform.
 The first item is the name of the operation and corresponds
-to a field_* function provided by Dpkg::Control::Fields. The remaining
+to a field_* function provided by L<Dpkg::Control::Fields>. The remaining
 fields are the parameters that are passed unchanged to the corresponding
 function.
 
@@ -120,15 +122,15 @@ Known operations are "register", "insert_after" and "insert_before".
 
 =item post-process-changelog-entry ($fields)
 
-The hook is called in Dpkg::Changelog to post-process a
-Dpkg::Changelog::Entry after it has been created and filled with the
+The hook is called in L<Dpkg::Changelog> to post-process a
+L<Dpkg::Changelog::Entry> after it has been created and filled with the
 appropriate values.
 
 =item update-buildflags ($flags)
 
-The hook is called in Dpkg::BuildFlags to allow the vendor to override
+The hook is called in L<Dpkg::BuildFlags> to allow the vendor to override
 the default values set for the various build flags. $flags is a
-Dpkg::BuildFlags object.
+L<Dpkg::BuildFlags> object.
 
 =item builtin-system-build-paths ()
 
@@ -211,6 +213,19 @@ build flags.
 =cut
 
 sub set_build_features {
+    my ($self, $flags) = @_;
+
+    return;
+}
+
+=item $vendor->add_build_flags($flags)
+
+Adds the vendor build flags to the compiler flag variables based on the
+vendor defaults and previously set build features.
+
+=cut
+
+sub add_build_flags {
     my ($self, $flags) = @_;
 
     return;

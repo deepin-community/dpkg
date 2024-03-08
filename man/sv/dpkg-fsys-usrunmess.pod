@@ -110,6 +110,8 @@ B<Observera>: Vissa kataloger kan dröja kvar efter migreringen i vilket fall de
 
 B<Varning>: Observera att den här åtgärden potentiellt kan göra systemet oanvändbart eller trasigt ifall det uppstår en plötslig krasch eller omstart, systemet är i ett oväntat tillstånd, eller möjliga programfel i skriptet. Var förberedd med återställningsmedia och överväg att säkerhetskopiera systemet i förväg.
 
+Kommandot introducerades i dpkg 1.20.6.
+
 =head1 FLAGGOR
 
 =over 

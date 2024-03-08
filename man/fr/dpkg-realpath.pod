@@ -26,6 +26,8 @@ B<dpkg-realpath> est un outil (depuis S<dpkg 1.20.1)> pour résoudre un nom de c
 
 Cela est destiné à être utilisé par d'autres assistants de B<dpkg> ou par les scripts du responsable à la place de l'utilisation de L<realpath(1)> ou L<readlink(1)> pour des noms de chemins canoniques dans la mesure où ces dernières commandes ne gèrent pas des chemins canoniques relatifs à une racine autre que F</>.
 
+This program was introduced in dpkg 1.20.1.
+
 =head1 OPTIONS
 
 =over 

@@ -14,19 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::BuildFlags;
-
-use strict;
-use warnings;
-
-our $VERSION = '1.06';
-
-use Dpkg ();
-use Dpkg::Gettext;
-use Dpkg::BuildEnv;
-use Dpkg::ErrorHandling;
-use Dpkg::Vendor qw(run_vendor_hook);
-
 =encoding utf8
 
 =head1 NAME
@@ -37,6 +24,19 @@ Dpkg::BuildFlags - query build flags
 
 This class is used by dpkg-buildflags and can be used
 to query the same information.
+
+=cut
+
+package Dpkg::BuildFlags 1.06;
+
+use strict;
+use warnings;
+
+use Dpkg ();
+use Dpkg::Gettext;
+use Dpkg::BuildEnv;
+use Dpkg::ErrorHandling;
+use Dpkg::Vendor qw(run_vendor_hook);
 
 =head1 METHODS
 
@@ -73,48 +73,35 @@ sub new {
 sub _init_vendor_defaults {
     my $self = shift;
 
+    my @flags = qw(
+        ASFLAGS
+        ASFLAGS_FOR_BUILD
+        CPPFLAGS
+        CPPFLAGS_FOR_BUILD
+        CFLAGS
+        CFLAGS_FOR_BUILD
+        CXXFLAGS
+        CXXFLAGS_FOR_BUILD
+        OBJCFLAGS
+        OBJCFLAGS_FOR_BUILD
+        OBJCXXFLAGS
+        OBJCXXFLAGS_FOR_BUILD
+        DFLAGS
+        DFLAGS_FOR_BUILD
+        FFLAGS
+        FFLAGS_FOR_BUILD
+        FCFLAGS
+        FCFLAGS_FOR_BUILD
+        LDFLAGS
+        LDFLAGS_FOR_BUILD
+    );
+
     $self->{features} = {};
     $self->{builtins} = {};
     $self->{optvals} = {};
-    $self->{flags} = {
-	ASFLAGS => '',
-	CPPFLAGS => '',
-	CFLAGS   => '',
-	CXXFLAGS => '',
-	OBJCFLAGS   => '',
-	OBJCXXFLAGS => '',
-	GCJFLAGS => '',
-	DFLAGS   => '',
-	FFLAGS   => '',
-	FCFLAGS  => '',
-	LDFLAGS  => '',
-    };
-    $self->{origin} = {
-	ASFLAGS => 'vendor',
-	CPPFLAGS => 'vendor',
-	CFLAGS   => 'vendor',
-	CXXFLAGS => 'vendor',
-	OBJCFLAGS   => 'vendor',
-	OBJCXXFLAGS => 'vendor',
-	GCJFLAGS => 'vendor',
-	DFLAGS   => 'vendor',
-	FFLAGS   => 'vendor',
-	FCFLAGS  => 'vendor',
-	LDFLAGS  => 'vendor',
-    };
-    $self->{maintainer} = {
-	ASFLAGS => 0,
-	CPPFLAGS => 0,
-	CFLAGS   => 0,
-	CXXFLAGS => 0,
-	OBJCFLAGS   => 0,
-	OBJCXXFLAGS => 0,
-	GCJFLAGS => 0,
-	DFLAGS   => 0,
-	FFLAGS   => 0,
-	FCFLAGS  => 0,
-	LDFLAGS  => 0,
-    };
+    $self->{flags} = { map { $_ => '' } @flags };
+    $self->{origin} = { map { $_ => 'vendor' } @flags };
+    $self->{maintainer} = { map { $_ => 0 } @flags };
 }
 
 =item $bf->load_vendor_defaults()
@@ -163,7 +150,7 @@ sub load_user_config {
 =item $bf->load_environment_config()
 
 Update flags based on user directives stored in the environment. See
-dpkg-buildflags(1) for details.
+L<dpkg-buildflags(1)> for details.
 
 =cut
 
@@ -193,7 +180,7 @@ sub load_environment_config {
 =item $bf->load_maintainer_config()
 
 Update flags based on maintainer directives stored in the environment. See
-dpkg-buildflags(1) for details.
+L<dpkg-buildflags(1)> for details.
 
 =cut
 
@@ -430,7 +417,7 @@ sub prepend {
 =item $bf->update_from_conffile($file, $source)
 
 Update the current build flags based on the configuration directives
-contained in $file. See dpkg-buildflags(1) for the format of the directives.
+contained in $file. See L<dpkg-buildflags(1)> for the format of the directives.
 
 $source is the origin recorded for any build flag set or modified.
 

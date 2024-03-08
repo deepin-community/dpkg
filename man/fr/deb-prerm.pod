@@ -56,7 +56,7 @@ Avant que le paquet soit remplacé du fait d'un conflit.
 
 =head1 VOIR AUSSI
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 TRADUCTION

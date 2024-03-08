@@ -22,7 +22,7 @@ B<dpkg-statoverride> [I<flagga>...] I<åtgärd>
 
 =head1 BESKRIVNING
 
-”B<stat-överstyrningar>” är ett sätt att tala om för B<dpkg>(1) att en annan ägare eller ett annat läge ska användas för en fil är ett paket installeras. (detta gäller alla sorters filsystemsobjekt som hanteras av B<dpkg>, däribland kataloger, enheter osv.). Detta kan användas för att tvinga program som normalt är setuid att installeras utan en setuid-flagga, eller bara exekverbar av en specifik grupp.
+”B<stat-överstyrningar>” är ett sätt att tala om för L<dpkg(1)> att en annan ägare eller ett annat läge ska användas för en fil är ett paket installeras. (detta gäller alla sorters filsystemsobjekt som hanteras av B<dpkg>, däribland kataloger, enheter osv.). Detta kan användas för att tvinga program som normalt är setuid att installeras utan en setuid-flagga, eller bara exekverbar av en specifik grupp.
 
 B<dpkg-statoverride> är ett verktyg för att hantera listan över stat-överstyrningar. Det har tre grundläggande funktioner: lägga till, ta bort och visa överstyrningar.
 
@@ -80,17 +80,31 @@ Sätt rotkatalogen till B<katalog>, vilket sätter installationskatalogen till �
 
 Tvinga eller vägra (B<no-force> och B<refuse> betyder detsamma) att göra vissa saker (sedan dpkg 1.19.5). I<saker> är en kommaavdelad lista med saker som anges nedan. B<--force-help> visar en lista med beskrivningar. Saker som markeras med (*) är tvingade som förval.
 
-I<Varning: Dessa flaggor är huvudsakligen avsedda att endast användas av experter. Om du använder dem utan att fullt ut förstå vad de går ut på kan du förstöra din systeminstallation.>
+B<Varning>: Dessa flaggor är huvudsakligen avsedda att endast användas av experter. Om du använder dem utan att fullt ut förstå vad de går ut på kan du förstöra din systeminstallation.
 
-B<all>: Slår på (eller av) alla tvingande flaggor.
+=over 4
 
-B<statoverride-add>: Skriver över en existerande stat-överstyrning när den läggs till (sedan dpkg 1.19.5).
+=item B<all>:
 
-B<statoverride-remove>: Ignorera en saknad stat-överstyrning när den tas bort (sedan dpkg 1.19.5).
+Slår på (eller av) alla tvingande flaggor.
 
-B<security-mac>(*): Använd platformsspecifik säkerhet baserad på obligatorisk åtkomststyrning (Mandatory Access Controls, MAC) när filer installeras i filsystemet (sedan dpkg 1.19.5). På Linuxsystem använder implementationen SELinux.
+=item B<statoverride-add>
 
-B<not-root>: Försök (av)installera saker även utan att vara root (sedan dpkg 1.21.8).
+Skriver över en existerande stat-överstyrning när den läggs till (sedan dpkg 1.19.5).
+
+=item B<statoverride-remove>:
+
+Ignorera en saknad stat-överstyrning när den tas bort (sedan dpkg 1.19.5).
+
+=item B<security-mac>(*):
+
+Använd platformsspecifik säkerhet baserad på obligatorisk åtkomststyrning (Mandatory Access Controls, MAC) när filer installeras i filsystemet (sedan dpkg 1.19.5). På Linuxsystem använder implementationen SELinux.
+
+=item B<not-root>:
+
+Försök (av)installera saker även utan att vara root (sedan dpkg 1.21.8).
+
+=back
 
 =item B<--force>
 
@@ -158,13 +172,13 @@ Väljer färgläge (sedan dpkg 1.18.5). För närvarande godtas följande värde
 
 Fil som innehåller den aktuella listan över statöverstyrningar på systemet. Den finns i B<dpkg>:s administrationskatalog, tillsammans med andra filer som är viktiga för B<dpkg>, som I<status> och I<available>.
 
-B<Observera:> B<dpkg-statoverride> bevarar den gamla upplagan av filen, med tillägget ”-old” innan den ersätts med den nya.
+B<Observera>: B<dpkg-statoverride> bevarar den gamla upplagan av filen, med tillägget ”-old” innan den ersätts med den nya.
 
 =back
 
 =head1 SE ÄVEN
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 ÖVERSÄTTNING

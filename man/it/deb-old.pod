@@ -22,7 +22,7 @@ I<nomefile>B<.deb>
 
 =head1 DESCRIZIONE
 
-Il formato B<.deb> è il formato del file dei pacchetti binari Debian. Questa pagina di manuale descrive il B<vecchio> formato, usato prima di Debian 0.93. Vedere B<deb>(5) per i dettagli sul nuovo formato.
+The B<.deb> format is the Debian binary package file format.  This manual page describes the B<old> format, used before Debian 0.93.  Please see L<deb(5)> for details of the new format.
 
 =head1 FORMATO
 
@@ -36,11 +36,11 @@ Ciascuna di queste righe termina con un singolo carattere di ritorno a capo.
 
 Il primo file tar contiene le informazioni di controllo, in forma di una serie di file ordinari. Il file B<control> deve essere presente dato che contiene le informazioni principali di controllo.
 
-In some very old archives, the files in the control tarfile may optionally be in a B<DEBIAN> subdirectory. In that case, the B<DEBIAN> subdirectory will be in the control tarfile too, and the control tarfile will have only files in that directory. Optionally the control tarfile may contain an entry for ‘B<.>’, that is, the current directory.
+In some very old archives, the files in the control tarfile may optionally be in a B<DEBIAN> subdirectory.  In that case, the B<DEBIAN> subdirectory will be in the control tarfile too, and the control tarfile will have only files in that directory.  Optionally the control tarfile may contain an entry for ‘B<.>’, that is, the current directory.
 
 Il secondo file tar compresso con gpiz è l'archivio del file system che contiene i nomi di percorso relativi alla directory root del sistema su cui devono essere installati. I nomi di percorso non terminano con sbarre.
 
 =head1 VEDERE ANCHE
 
-B<deb>(5), B<dpkg-deb>(1), B<deb-control>(5).
+L<deb(5)>, L<deb-control(5)>, L<dpkg-deb(1)>.
 

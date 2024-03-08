@@ -283,15 +283,13 @@ print_forceinfo(const struct forceinfo *fi)
 void
 parse_force(const char *value, bool set)
 {
-	const char *comma;
-	size_t l;
 	const struct forceinfo *fip;
 
 	if (strcmp(value, "help") == 0) {
 		char *force_string = get_force_string();
 
 		printf(_(
-"%s forcing options - control behaviour when problems found:\n"
+"%s forcing options - control behavior when problems found:\n"
 "  warn but continue:  --force-<thing>,<thing>,...\n"
 "  stop with error:    --refuse-<thing>,<thing>,... | --no-force-<thing>,...\n"
 " Forcing things:\n"), dpkg_get_progname());
@@ -318,6 +316,9 @@ parse_force(const char *value, bool set)
 	}
 
 	for (;;) {
+		const char *comma;
+		size_t l;
+
 		comma = strchrnul(value, ',');
 		l = (size_t)(comma - value);
 		for (fip = forceinfos; fip->name; fip++)

@@ -52,7 +52,7 @@ Om I<postrm> misslyckas vid uppgradering eller misslyckas vid misslyckad uppgrad
 
 =head1 SE ÄVEN
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 ÖVERSÄTTNING

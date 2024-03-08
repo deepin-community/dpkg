@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-split - ferramenta de divisão/junção de arquivos de pacote Debian
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-split> [I<option>...] I<command>
 
@@ -174,7 +174,7 @@ Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B
 
 =item B<SOURCE_DATE_EPOCH>
 
-Se definido, irá ser usado como marca temporal (como segundos desde a época) no contentor B<ar>(5) de B<deb-split>(5).
+If set, it will be used as the timestamp (as seconds since the epoch) in the L<deb-split(5)>'s L<ar(5)> container.
 
 =back
 
@@ -190,6 +190,14 @@ Os nomes de ficheiros usados neste directório estão num formato interno ao B<d
 
 =back
 
+=head1 SEGURANÇA
+
+Examinar ou juntar arquivos de pacotes divididos não-confiáveis deve ser considerado um limite à segurança, e qualquer violação desse limite derivando dessas operações deve ser considerada uma vulnerabilidade na segurança. Executar essas operações sobre dados não-confiáveis como root é fortemente desaconselhado.
+
+A auto-acumulação e descarte de partes de pacotes divididos são consideradas operações privilegiadas que podem permitir escalada a root. Estas operações nunca devem ser delegadas a um utilizador não-confiável ou serem feitas em pacotes não-confiáveis, pois isso pode permitir acesso de root ao sistema.
+
+A divisão de arquivos de pacotes só deve ser executada sobre dados de confiança.
+
 =head1 BUGS
 
 Os detalhes completos dos pacotes na lista de espera são impossíveis de obter sem que você próprio pesquise dentro do directório de lista de espera.
@@ -198,7 +206,7 @@ Não há maneira fácil de testar se um ficheiro que pode ser uma parte de um pa
 
 =head1 VEJA TAMBÉM
 
-B<deb>(5), B<deb-control>(5), B<dpkg-deb>(1), B<dpkg>(1).
+L<deb(5)>, L<deb-control(5)>, L<dpkg-deb(1)>, L<dpkg(1)>.
 
 
 =head1 TRADUÇÃO

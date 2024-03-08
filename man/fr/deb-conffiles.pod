@@ -40,7 +40,7 @@ Actuellement, il n'y a qu'un drapeau pris en charge, B<remove-on-upgrade>, pour 
 
 =head1 VOIR AUSSI
 
-B<dpkg-deb>(1), B<dpkg>(1).
+L<dpkg-deb(1)>, L<dpkg(1)>.
 
 
 =head1 TRADUCTION

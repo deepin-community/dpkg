@@ -34,7 +34,7 @@ Anger ändringsloggfilen som information ska läsas från. Ett ”-” kan anvä
 
 =item B<-F> I<ändringsloggformat>
 
-Anger format på ändringsloggen. Som standard läses formatet från en speciell rad nära slutet av ändringsloggen, om det misslyckas används formatet B<debian> som standard. Se även B<FORMAT PÅ ÄNDRINGSLOGGEN>.
+Specifies the format of the changelog.  By default the format is read from a special line near the bottom of the changelog or failing that defaults to the B<debian> standard format.  See also L</CHANGELOG FORMATS>.
 
 =item B<-L> I<bibliotekskatalog>
 
@@ -62,15 +62,21 @@ Följande flaggor kan användas för att styra utdata från ändringsloggtolken,
 
 =item B<--format> I<utdataformat>
 
-Välj utdataformat. Stödda format är för närvarande B<dpkg> och B<rfc822>. B<dpkg> är det klassiska utdataformatet (från innan denna flagga var tillgänglig) och förvalet. Det består av ett stycke i Debians control-format (se B<deb-control>(5)). Om mer än en post önskas tas de flesta fält från den första posten (vanligtvis den nyaste posten), förutom om annat anges:
+Välj utdataformat. Stödda format är för närvarande B<dpkg> och B<rfc822>. B<dpkg> är det klassiska utdataformatet (från innan denna flagga var tillgänglig) och förvalet. Det består av ett stycke i Debians control-format (se L<deb-control(5)>). Om mer än en post önskas tas de flesta fält från den första posten (vanligtvis den nyaste posten), förutom om annat anges:
 
 =over 
 
 =item B<Source:> I<paketnamn>
 
+Namnet på källkodspaketet.
+
 =item B<Version:> I<version>
 
+Versionsnummer för källkoden. B<Observera>: För insändningar av endast binärer kan det hända att det inte finns någon motsvarande källkodsutgåva.
+
 =item B<Distribution:> I<målutgåva>
+
+En blankstegsavdelad lista med ett eller flera distributionsnamn där denna version ska installeras när den har sänts in till arkivet.
 
 =item B<Urgency:> I<brådska>
 
@@ -78,9 +84,11 @@ Högsta brådskan av alla de inkluderade posterna används, följt av de sammans
 
 =item B<Maintainer:> I<författare>
 
+Namn och e-postadress till den person som förberett ändringarna, de är B<inte> nödvändigtvis samma som den som sänt in dem eller den vanlige paketansvarige.
+
 =item B<Date:> I<datum>
 
-Postens datum, så som det står skrivet i ändringsloggen. Med ett B<strptime>(3)-format på "B<%a, %d %b %Y %T %z>", men där veckodagen kanske inte nödvändigtvis motsvarar den faktiska dagen som hämtas från resten av datumsträngen. Om du behöver en mer korrekt representation av datumet, använd fältet B<Timestamp>, men tänk på att det kanske inte är möjligt att koppla det tillbaka till det exakta värdet på det här fältet. 
+Postens datum, så som det står skrivet i ändringsloggen. Med ett L<strptime(3)>-format på "B<%a, %d %b %Y %T %z>", men där veckodagen kanske inte nödvändigtvis motsvarar den faktiska dagen som hämtas från resten av datumsträngen. Om du behöver en mer korrekt representation av datumet, använd fältet B<Timestamp>, men tänk på att det kanske inte är möjligt att koppla det tillbaka till det exakta värdet på det här fältet. 
 
 =item B<Timestamp:> I<tidsstämpel>
 
@@ -106,11 +114,11 @@ B<rfc822>-formatet använder samma fält, men ger ett separat stycke för varje 
 
 Inkludera alla ändringar i omvänd ordning (sedan dpkg 1.19.1).
 
-B<Observera:> För B<dpkg>-formatet kommer den första posten vara den äldsta posten.
+B<Observera>: För B<dpkg>-formatet kommer den första posten vara den äldsta posten.
 
 =item B<--all>
 
-Ta med alla ändringar. B<Observera:> övriga flaggor har ingen effekt när denna används.
+Ta med alla ändringar. B<Observera>: övriga flaggor har ingen effekt när denna används.
 
 =item B<-s>, B<--since> I<version>
 
@@ -158,7 +166,7 @@ Namn på ändringsloggformat är icke-tomma strängar med små alfanumeriska tec
 
 Om en sådan rad finns kommer B<dpkg-parsechangelog> att leta efter tolken som en perlmodul B<Dpkg::Changelog::>I<annatformat>; det är ett fel om det inte finns. Standardformatet för ändringsloggar är B<debian> och en tolk för detta format inkluderas som standard.
 
-Tolken ska vara ett dervat av klassen Dpkg::Changelog och implementera de krävda dokumenterade gränssnitten.
+Tolken ska vara ett derivat av klassen L<Dpkg::Changelog> och implementera de krävda dokumenterade gränssnitten.
 
 Om ändringsloggformatet som tolkas alltid eller nästan alltid innehåller en blank rad mellan individuella ändringsposter bör dessa blanka rader tas bort, så att utdataformatet blir mer kompakt.
 
@@ -198,9 +206,13 @@ Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även 
 
 =back
 
+=head1 PROGRAMFEL
+
+Fältet B<Maintainer> har ett förvirrande namn som motsvarar fältet i filen F<debian/control> men inte dess exakta betydelse, där dess betydelse bättre kunde beskrivas av B<Changed-By>-fältnamnet som används i filen F<.changes>.
+
 =head1 SE ÄVEN
 
-B<deb-changelog>(5).
+L<deb-changelog(5)>.
 
 
 =head1 ÖVERSÄTTNING

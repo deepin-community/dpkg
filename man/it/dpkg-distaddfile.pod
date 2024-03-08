@@ -72,5 +72,5 @@ L'elenco dei file generati che fanno parte del caricamento in fase di preparazio
 
 =head1 VEDERE ANCHE
 
-B<deb-src-files>(5).
+L<deb-src-files(5)>.
 

@@ -36,11 +36,14 @@ for its support on the running B<dpkg>.
 
 This can be used by maintainer scripts in complex and conditional
 situations where the file triggers, or the declarative B<activate>
-triggers control file directive, are insufficiently rich. It can also
+triggers control file directive, are insufficiently rich.
+It can also
 be used for testing and by system administrators (but note that the
 triggers won't actually be run by B<dpkg-trigger>).
 
 Unrecognized trigger name syntaxes are an error for B<dpkg-trigger>.
+
+This program was introduced in dpkg 1.14.17.
 
 =head1 COMMANDS
 
@@ -49,8 +52,10 @@ Unrecognized trigger name syntaxes are an error for B<dpkg-trigger>.
 =item B<--check-supported>
 
 Check if the running B<dpkg> supports triggers (usually called from a
-postinst). Will exit B<0> if a triggers-capable B<dpkg> has run,
-or B<1> with an error message to stderr if not. Normally, however,
+postinst).
+Will exit B<0> if a triggers-capable B<dpkg> has run,
+or B<1> with an error message to stderr if not.
+Normally, however,
 it is better just to activate the desired trigger with B<dpkg-trigger>.
 
 =item B<-?>, B<--help>
@@ -156,6 +161,6 @@ B<never>.
 
 =head1 SEE ALSO
 
-B<dpkg>(1),
-B<deb-triggers>(5),
+L<dpkg(1)>,
+L<deb-triggers(5)>,
 B<%PKGDOCDIR%/spec/triggers.txt>.

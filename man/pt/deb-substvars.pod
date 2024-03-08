@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb-substvars - variáveis de substituição de fonte Debian
 
-=head1 SINOPSE
+=head1 RESUMO
 
 Variáveis B<debian/substvars>, B<debian/>I<binary-package>B<.substvars>
 
@@ -69,7 +69,7 @@ A arquitectura da máquina actual (isto é, a arquitectura para a qual o pacote 
 
 =item B<vendor:Name>
 
-O nome do fornecedor actual (desde dpkg 1.20.0). Este valor vem do campo B<Vendor> do ficheiro original do fornecedor actual, como B<dpkg-vendor>(1) o obteria.
+The current vendor name (since dpkg 1.20.0).  This value comes from the B<Vendor> field for the current vendor's origin file, as L<dpkg-vendor(1)> would retrieve it.
 
 =item B<vendor:Id>
 
@@ -103,19 +103,19 @@ A descrição extensa do pacote fonte, extraída do campo B<Description> da estr
 
 O tamanho total aproximado dos ficheiros instalados pelo pacote. Este valor é copiado para o campo do ficheiro de controle correspondente, defini-lo irá modificar o valor desse campo. Se esta variável não for definida, B<dpkg-gencontrol> irá computar o valor predefinido ao acumular o tamanho de cada ficheiro regular e link simbólico arredondando as unidades usadas para egular file and 1 KiB, e uma base de 1 KiB para qualquer outro tipo de objecto de sistema de ficheiros. Com os hardlinks a serem contados apenas uma vez como um ficheiro regular.
 
-B<Nota:> Tenha em conta que isto só pode ser uma aproximação, pois o tamanho real usado no sistema instalado irá depender grandemente do sistema de ficheiros usado e dos seu parâmetros, o que pode acabar a usar mais ou menos espaço que aquele especificado neste campo.
+B<Nota>: Tenha em conta que isto só pode ser uma aproximação, pois o tamanho real usado no sistema instalado irá depender grandemente do sistema de ficheiros usado e dos seu parâmetros, o que pode acabar a usar mais ou menos espaço que aquele especificado neste campo.
 
 =item B<Extra-Size>
 
 Espaço de disco usado adicional quando o pacote é instalado. Se esta variável for definida o seu valor é adicionado àquele da variável B<Installed-Size> variable (quer definido explicitamente ou usando o valor predefinido), antes de ser copiado para p campo de ficheiro de controle B<Installed-Size>.
 
-=item B<S:>I<fieldname>
+=item B<S:>I<field-name>
 
-O valor do campo I<fieldname> da estrofe fonte (o qual deve ser dado em na capitalização canonical, desde dpkg 1.18.11). Definir estas variáveis não tem efeito para além de em lugares onde elas são explicitamente expandidas. Estas variáveis estão apenas disponíveis quando se geram ficheiros de controle binários.
+The value of the source stanza field I<field-name> (which must be given in the canonical capitalization; since dpkg 1.18.11).  Setting these variables has no effect other than on places where they are expanded explicitly. These variables are only available when generating binary control files.
 
-=item B<F:>I<fieldname>
+=item B<F:>I<field-name>
 
-O valor do campo I<fieldname> resultante (o qual deve ser dado em na capitalização canonical ) Definir estas variáveis não tem efeito para além de em lugares onde elas são explicitamente expandidas.
+The value of the output field I<field-name> (which must be given in the canonical capitalization).  Setting these variables has no effect other than on places where they are expanded explicitly.
 
 =item B<Format>
 
@@ -151,7 +151,7 @@ Lista de variáveis e valores de substituição.
 
 =head1 VEJA TAMBÉM
 
-B<dpkg>(1), B<dpkg-vendor>(1), B<dpkg-genchanges>(1), B<dpkg-gencontrol>(1), B<dpkg-shlibdeps>(1), B<dpkg-source>(1).
+L<dpkg(1)>, L<dpkg-vendor(1)>, L<dpkg-genchanges(1)>, L<dpkg-gencontrol(1)>, L<dpkg-shlibdeps(1)>, L<dpkg-source(1)>.
 
 
 =head1 TRADUÇÃO

@@ -42,7 +42,7 @@ De extra override-filer som används för att skapa den officiella listan över 
 
 =head1 SE ÄVEN
 
-B<dpkg-scanpackages>(1), B<dpkg-scansources>(1), B<apt-ftparchive>(1).
+L<dpkg-scanpackages(1)>, L<dpkg-scansources(1)>, L<apt-ftparchive(1)>.
 
 
 =head1 ÖVERSÄTTNING

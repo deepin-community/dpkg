@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 BEZEICHNUNG
 
-deb-src-control - Dateiformat der Hauptsteuerdatei von Debian-Quellpaketen
+deb-src-control - Dateiformat der Vorlagensteuerdatei von Debian-Quellpaketen
 
 =head1 ÜBERSICHT
 
@@ -22,9 +22,9 @@ B<debian/control>
 
 =head1 BESCHREIBUNG
 
-Jedes Debian-Quellpaket enthält eine Hauptdatei „B<debian/control>“. Deren L<deb822(5)>-Format ist eine Obermenge der in Debian-Binärpaketen ausgelieferten B<control>-Datei, siehe B<deb-control>(5).
+Jedes Debian-Quellpaket enthält die Vorlagenquellsteuerdatei „B<debian/control>“. Deren L<deb822(5)>-Format ist eine Obermenge der in Debian-Binärpaketen ausgelieferten B<control>-Datei, siehe L<deb-control(5)>.
 
-Diese Datei enthält mindestens zwei Absätze, die durch eine Leerzeile getrennt werden. Der erste Absatz führt alle allgemeinen Informationen über das Quellpaket auf, während jeder folgende Absatz genau ein Binärpaket beschreibt. Jeder Absatz besteht aus mindestens einem Feld. Ein Feld beginnt mit einem Feldnamen, wie B<Package> oder B<Section> (Groß-/Kleinschreibung egal), gefolgt von einem Doppelpunkt, dem Inhalt des Feldes (Groß-/Kleinschreibung ist relevant, außer anders angegeben) und einem Zeilenumbruch. Mehrzeilige Felder sind auch erlaubt, aber jede ergänzende Zeile ohne Feldnamen sollte mit mindestens einem Leerzeichen beginnen. Der Inhalt des mehrzeiligen Feldes wird durch die Werkzeuge im Allgemeinen zu einer Zeile zusammengeführt (das Feld B<Description> ist eine Ausnahme, siehe unten). Um Leerzeilen in ein mehrzeiliges Feld einzufügen, verwenden Sie einen Satzpunkt nach dem Leerzeichen. Zeilen, die mit ‚B<#>’ beginnen, werden als Kommentare betrachtet.
+Diese Datei enthält mindestens zwei Absätze, die durch eine Leerzeile getrennt werden. Der erste Absatz heißt Quellpaketabsatz und führt alle allgemeinen Informationen über das Quellpaket auf, während alle folgende Absätze Binärpaketabsatz heißen und genau ein Binärpaket pro Absatz beschreiben. Jeder Absatz besteht aus mindestens einem Feld. Ein Feld beginnt mit einem Feldnamen, wie B<Package> oder B<Section> (Groß-/Kleinschreibung egal), gefolgt von einem Doppelpunkt, dem Inhalt des Feldes (Groß-/Kleinschreibung ist relevant, außer anders angegeben) und einem Zeilenumbruch. Mehrzeilige Felder sind auch erlaubt, aber jede ergänzende Zeile ohne Feldnamen sollte mit mindestens einem Leerzeichen beginnen. Der Inhalt des mehrzeiligen Feldes wird durch die Werkzeuge im Allgemeinen zu einer Zeile zusammengeführt (das Feld B<Description> ist eine Ausnahme, siehe unten). Um Leerzeilen in ein mehrzeiliges Feld einzufügen, verwenden Sie einen Satzpunkt nach dem Leerzeichen. Zeilen, die mit ‚B<#>’ beginnen, werden als Kommentare betrachtet.
 
 =head1 QUELLPAKET-FELDER
 
@@ -68,11 +68,11 @@ Dieses Feld wird verwandt, um anzuzeigen, ob die Datei B<debian/rules> (fake)roo
 
 =item B<no>
 
-Die Binärziele werden überhaupt kein (fake)root benötigen.
+Die Binärziele werden überhaupt kein (fake)root benötigen. Dies ist in B<dpkg-build-api> Stufe >=1 die Vorgabe.
 
 =item B<binary-targets>
 
-Die Binärziele müssen immer unter (fake)root ausgeführt werden. Dieser Wert ist die Vorgabe, wenn die Datei fehlt. Die Aufnahme dieses Feldes mit einem expliziten B<binary-targets> ist zwar streng genommen nicht notwendig, markiert aber, dass es darauf untersucht wurde.
+Die Binärziele müssen immer unter (fake)root ausgeführt werden. Dieser Wert ist in B<dpkg-build-api> Stufe 0 die Vorgabe, wenn die Datei fehlt. Die Aufnahme dieses Feldes mit einem expliziten B<binary-targets> ist zwar streng genommen nicht notwendig, markiert aber, dass es darauf untersucht wurde.
 
 =item I<Impl-Schlüsselwörter>
 
@@ -90,7 +90,7 @@ Wenn das Feld auf eines der I<Impl-Schlüsselwörter> gesetzt wird, wird das Bau
 
 =item B<Testsuite-Triggers:> I<Paketliste>
 
-Diese Felder sind in der Handbuchseite B<dsc>(5) beschrieben, da sie aus Informationen, die aus B<debian/tests/control> abgeleitet sind, erstellt oder wörtlich in die B<control>-Datei der Quellen kopiert werden.
+Diese Felder sind in der Handbuchseite L<dsc(5)> beschrieben, da sie aus Informationen, die aus B<debian/tests/control> abgeleitet sind, erstellt oder wörtlich in die B<control>-Datei der Quellen kopiert werden.
 
 =item B<Vcs-Arch*:> I<URL>
 
@@ -154,9 +154,9 @@ Identisch zu B<Build-Conflicts>, wird aber nur zum Bau der architekturunabhängi
 
 =back
 
-Die Syntax der Felder B<Build-Depends>, B<Build-Depends-Arch> und B<Build-Depends-Indep> ist eine Liste von Gruppen von alternativen Paketen. Jede Gruppe ist eine Liste von durch vertikale Striche (oder „Pipe“-Symbole) ‚B<|>’ getrennten Paketen. Die Gruppen werden durch Kommata ‚B<,>’ getrennt. Sie können mit einem abschließenden Komma enden, das beim Erstellen der Felder für B<deb-control>(5) entfernt wird (seit Dpkg 1.10.14). Kommata müssen als „UND“, vertikale Striche als „ODER“ gelesen werden, wobei die vertikalen Striche stärker binden. Jedem Paketnamen folgt optional eine Architekturspezifikation, die nach einem Doppelpunkt ‚B<:>’ angehängt wird, optional gefolgt von einer Versionsnummer-Spezifikation in Klammern ‚B<(>’ und ‚B<)>’, einer Architekturspezifikation in eckigen Klammern ‚B<[>’ und ‚B<]>’ und einer Einschränkungsformel, die aus einer oder mehr Listen von Profilnamen in spitzen Klammern ‚B<E<lt>>’ und ‚B<E<gt>>’ besteht.
+Die Syntax der Felder B<Build-Depends>, B<Build-Depends-Arch> und B<Build-Depends-Indep> ist eine Liste von Gruppen von alternativen Paketen. Jede Gruppe ist eine Liste von durch vertikale Striche (oder „Pipe“-Symbole) ‚B<|>’ getrennten Paketen. Die Gruppen werden durch Kommata ‚B<,>’ getrennt. Sie können mit einem abschließenden Komma enden, das beim Erstellen der Felder für L<deb-control(5)> entfernt wird (seit Dpkg 1.10.14). Kommata müssen als „UND“, vertikale Striche als „ODER“ gelesen werden, wobei die vertikalen Striche stärker binden. Jedem Paketnamen folgt optional eine Architekturspezifikation, die nach einem Doppelpunkt ‚B<:>’ angehängt wird, optional gefolgt von einer Versionsnummer-Spezifikation in Klammern ‚B<(>’ und ‚B<)>’, einer Architekturspezifikation in eckigen Klammern ‚B<[>’ und ‚B<]>’ und einer Einschränkungsformel, die aus einer oder mehr Listen von Profilnamen in spitzen Klammern ‚B<E<lt>>’ und ‚B<E<gt>>’ besteht.
 
-Syntaxtisch werden die Felder B<Build-Conflicts>, B<Build-Conflicts-Arch> und B<Build-Conflicts-Indep> durch eine Kommata-getrennte Liste von Paketnamen dargestellt, wobei das Komma als „UND“ verstanden wird. Die Liste kann mit einem abschließenden Komma enden, das beim Erstellen der Felder für B<deb-control>(5) entfernt wird (seit Dpkg 1.10.14). Die Angabe alternativer Pakete mit dem „Pipe“-Symbol wird nicht unterstützt. Jedem Paketnamen folgt optional eine Versionsnummerangabe in Klammern, eine Architekturspezifikation in eckigen Klammern und einer Einschränkungsformel, die aus einer oder mehr Listen von Profilnamen in spitzen Klammern besteht.
+Syntaxtisch werden die Felder B<Build-Conflicts>, B<Build-Conflicts-Arch> und B<Build-Conflicts-Indep> durch eine Kommata-getrennte Liste von Paketnamen dargestellt, wobei das Komma als „UND“ verstanden wird. Die Liste kann mit einem abschließenden Komma enden, das beim Erstellen der Felder für L<deb-control(5)> entfernt wird (seit Dpkg 1.10.14). Die Angabe alternativer Pakete mit dem „Pipe“-Symbol wird nicht unterstützt. Jedem Paketnamen folgt optional eine Versionsnummerangabe in Klammern, eine Architekturspezifikation in eckigen Klammern und einer Einschränkungsformel, die aus einer oder mehr Listen von Profilnamen in spitzen Klammern besteht.
 
 Eine Architekturspezifikation kann ein echter Debian-Architekturname sein (seit Dpkg 1.16.5), B<any> (seit Dpkg 1.16.2) oder B<native> (seit Dpkg 1.16.5). Falls er fehlt, ist die Vorgabe für das Feld B<Build-Depends> die aktuelle Host-Architektur, die Vorgabe für das Feld B<Build-Conflicts> ist B<any>. Jeder echte Debian-Architekturname passt genau auf diese Architektur für diesen Paketnamen, B<any> passt auf jede Architektur für diesen Paketnamen, falls das Paket mit B<Multi-Arch: allowed> markiert ist, und B<native> passt auf die aktuelle Bau-Architektur, falls das Paket nicht mit B<Multi-Arch: foreign> markiert ist.
 
@@ -184,7 +184,7 @@ Dieses Feld definiert die Art des Pakets. B<udeb> ist für größenbegrenzte Pak
 
 =item B<Architecture:> I<arch>|B<all>|B<any> (verpflichtend)
 
-Die Architektur gibt an, auf welcher Art von Hardware dieses Paket läuft. Bei Paketen, die auf allen Architekturen laufen, verwenden Sie den Wert B<any>. Für Pakete, die architekturunabhängig sind, wie Shell- und Perl-Skripte oder Dokumentation, verwenden Sie den Wert B<all>. Um das Paket für einen bestimmten Satz von Architekturen zu begrenzen, geben Sie die durch Leerzeichen getrennten Namen der Architekturen an. Es ist auch möglich, Platzhalter für Architekturen in dieser Liste anzugeben (lesen Sie B<dpkg-architecture>(1) für weitere Informationen dazu).
+Die Architektur gibt an, auf welcher Art von Hardware dieses Paket läuft. Bei Paketen, die auf allen Architekturen laufen, verwenden Sie den Wert B<any>. Für Pakete, die architekturunabhängig sind, wie Shell- und Perl-Skripte oder Dokumentation, verwenden Sie den Wert B<all>. Um das Paket für einen bestimmten Satz von Architekturen zu begrenzen, geben Sie die durch Leerzeichen getrennten Namen der Architekturen an. Es ist auch möglich, Platzhalter für Architekturen in dieser Liste anzugeben (lesen Sie L<dpkg-architecture(1)> für weitere Informationen dazu).
 
 =item B<Build-Profiles:> I<Einschränkungsformel>
 
@@ -206,7 +206,7 @@ Mit anderen Worten: Falls der Absatz eines Binärpaketes mit einem nicht leeren 
 
 =item B<Description:> I<Kurzbeschreibung> (empfohlen)
 
-Diese Felder sind in der Handbuchseite B<deb-control>(5) beschrieben, da sie wörtlich in die B<control>-Datei des Binärpakets kopiert werden.
+Diese Felder sind in der Handbuchseite L<deb-control(5)> beschrieben, da sie wörtlich in die I<control>-Datei des Binärpakets kopiert werden.
 
 =item B<Depends:>  I<Paketliste>
 
@@ -230,7 +230,7 @@ Diese Felder sind in der Handbuchseite B<deb-control>(5) beschrieben, da sie wö
 
 =item B<Static-Built-Using:> I<Paketliste>
 
-Diese Felder geben Beziehungen zwischen Paketen an. Sie werden in der Handbuchseite B<deb-control>(5) erläutert. In I<debian/control> können diese Felder auch mit einem abschließenden Komma enden (seit Dpkg 1.10.14), Architekturspezifikations- und -einschränkungsformeln enthalten, die alle beim Erstellen von B<deb-control>(5) reduziert werden.
+Diese Felder geben Beziehungen zwischen Paketen an. Sie werden in der Handbuchseite L<deb-control(5)> erläutert. In I<debian/control> können diese Felder auch mit einem abschließenden Komma enden (seit Dpkg 1.10.14), Architekturspezifikations- und -einschränkungsformeln enthalten, die alle beim Erstellen von L<deb-control(5)> reduziert werden.
 
 =item B<Subarchitecture:>  I<Wert>
 
@@ -250,15 +250,15 @@ Es ist erlaubt, zusätzliche benutzerdefinierte Felder zu der Steuerdatei hinzuz
 
 =item B<S>
 
-Das Feld wird in der Steuerdatei des Quellpakets auftauchen, siehe B<dsc>(5).
+Das Feld wird in der Steuerdatei des Quellpakets auftauchen, siehe L<dsc(5)>.
 
 =item B<B>
 
-Das Feld wird in der Steuerdatei des Binärpakets auftauchen, siehe B<deb-control>(5).
+Das Feld wird in der Steuerdatei des Binärpakets auftauchen, siehe L<deb-control(5)>.
 
 =item B<C>
 
-Das Feld wird in der Steuerdatei des Uploads (.changes) auftauchen, siehe B<deb-changes>(5).
+Das Feld wird in der Steuerdatei des Uploads (.changes) auftauchen, siehe L<deb-changes(5)>.
 
 =back
 
@@ -279,7 +279,7 @@ Beachten Sie, dass diese benutzerdefinierten Felder den globalen Namensraum nutz
  Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
  Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git
  Standards-Version: 3.7.3
- Build-Depends: pkg-config, debhelper (>= 4.1.81),
+ Build-Depends: pkgconf, debhelper (>= 4.1.81),
   libselinux1-dev (>= 1.28-4) [!linux-any]
 
  Package: dpkg-dev
@@ -303,7 +303,7 @@ Beachten Sie, dass diese benutzerdefinierten Felder den globalen Namensraum nutz
 
 =head1 SIEHE AUCH
 
-I<%PKGDOCDIR%/spec/rootless-builds.txt>, L<deb822(5)>, B<deb-control>(5), B<deb-version>(7), B<dpkg-source>(1)
+I<%PKGDOCDIR%/spec/rootless-builds.txt>, L<deb822(5)>, L<deb-control(5)>, L<deb-version(7)>, L<dpkg-source(1)>
 
 
 =head1 ÜBERSETZUNG

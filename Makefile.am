@@ -16,14 +16,13 @@ SUBDIRS = \
 
 ACLOCAL_AMFLAGS = -I m4
 
-aclocaldir = $(datadir)/aclocal
-
 dist_aclocal_DATA = \
 	m4/dpkg-arch.m4 \
 	m4/dpkg-build.m4 \
 	m4/dpkg-compiler.m4 \
 	m4/dpkg-coverage.m4 \
 	m4/dpkg-funcs.m4 \
+	m4/dpkg-headers.m4 \
 	m4/dpkg-libs.m4 \
 	m4/dpkg-linker.m4 \
 	m4/dpkg-progs.m4 \
@@ -46,8 +45,6 @@ dist_doc_DATA = \
 	doc/README.api \
 	doc/README.feature-removal-schedule \
 	# EOL
-
-docspecdir = $(docdir)/spec
 
 dist_docspec_DATA = \
 	doc/spec/frontend-api.txt \
@@ -95,8 +92,6 @@ EXTRA_DIST = \
 	debian/dselect.lintian-overrides \
 	debian/dselect.manpages \
 	debian/dselect.postrm \
-	debian/dselect.preinst \
-	debian/dselect.prerm \
 	debian/libdpkg-dev.install \
 	debian/libdpkg-perl.install \
 	debian/source/format \
@@ -112,9 +107,6 @@ EXTRA_DIST = \
 	debian/tests/test-root \
 	po/its/polkit.its \
 	po/its/polkit.loc \
-	tests \
-	$(test_scripts) \
-	$(test_data) \
 	# EOL
 
 .PHONY: doc
@@ -215,6 +207,12 @@ test_data = \
 	t/critic/perlcriticrc \
 	# EOL
 
+EXTRA_DIST += \
+	tests \
+	$(test_scripts) \
+	$(test_data) \
+	# EOL
+
 # We need to use absolute paths here due to strict.t invoking a sub-perl,
 # while changing dir to source dir on out-of-tree builds.
 TEST_ENV_VARS = \
@@ -246,7 +244,7 @@ dist-hook:
 	    echo "$$file is a symlink packed as a file on the dist tar" >&2 ; \
 	    exit 1 ; \
 	  done ; \
-	  for file in `git ls-files | grep -v .gitignore`; do \
+	  for file in `git ls-files | grep -vE '\.git(ignore|-blame)'`; do \
 	    if [ ! -e "$(distdir)/$$file" ]; then \
 	      echo "$$file is missing in $(distdir)" >&2 ; \
 	      exit 1 ; \

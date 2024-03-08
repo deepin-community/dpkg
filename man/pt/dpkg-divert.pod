@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-divert - sobrepõe a versão de pacote de um ficheiro
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-divert> [I<option>...] I<command>
 
@@ -24,7 +24,7 @@ B<dpkg-divert> [I<option>...] I<command>
 
 B<dpkg-divert> é o utilitário usado para definir e actualizar a lista de desvios.
 
-I<diversions> de ficheiros são um modo de forçar o B<dpkg>(1)  a não instalar um ficheiro na sua localização, mas numa localização I<desviada>. Estes desvios podem ser usados através dos scripts de pacote Debian para afastar um ficheiro quando este causa um conflito. Os administradores de sistemas também o podem usar para sobrepor ficheiros de configuração de alguns pacotes, ou sempre que alguns ficheiros (que não sejam marcados como “conffiles”) precisam de ser conservados pelo B<dpkg>, quando instala uma versão mais recente do pacote que contém esses ficheiros.
+File I<diversions> are a way of forcing L<dpkg(1)> not to install a file into its location, but to a I<diverted> location.  Diversions can be used through the package maintainer scripts to move a file away when it causes a conflict.  System administrators can also use it to override some package's configuration file, or whenever some files (which aren't marked as “conffiles”) need to be preserved by B<dpkg>, when installing a newer version of a package which contains those files.
 
 =head1 COMANDOS
 
@@ -154,7 +154,7 @@ Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B
 
 Ficheiro que contém a lista actual das divergências do sistema. Está localizado no directório de administração do B<dpkg>, juntamente com outros ficheiros importantes para o B<dpkg>, tais como <estado> ou I<disponível>.
 
-B<Nota:> O B<dpkg-divert> preserva uma cópia antiga deste ficheiro, com a extensão I<-old>, antes do o substituir pelo novo.
+B<Nota>: O B<dpkg-divert> preserva uma cópia antiga deste ficheiro, com a extensão I<-old>, antes do o substituir pelo novo.
 
 =back
 
@@ -164,7 +164,7 @@ Quando adiciona, a predefinição é B<--local> e B<--divert> I<original>B<.dist
 
 Os directórios não podem ser desviados com B<dpkg-divert>.
 
-Deve tomar-se cuidado ao desviar bibliotecas partilhadas, B<ldconfig>(8) cria um link simbólico baseado no campo DT_SONAME embebido na biblioteca. Devido a B<ldconfig> não honrar desvios (apenas B<dpkg> o faz), o link simbólico pode acabar a apontar para a biblioteca desviada, se uma biblioteca desviada tiver o mesmo SONAME que a não desviada.
+Care should be taken when diverting shared libraries, L<ldconfig(8)> creates a symbolic link based on the DT_SONAME field embedded in the library. Because B<ldconfig> does not honor diverts (only B<dpkg> does), the symlink may end up pointing at the diverted library, if a diverted library has the same SONAME as the undiverted one.
 
 =head1 EXEMPLOS
 
@@ -187,7 +187,7 @@ Para remover esse desvio:
 
 =head1 VEJA TAMBÉM
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 TRADUÇÃO

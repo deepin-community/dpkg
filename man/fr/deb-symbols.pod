@@ -22,7 +22,7 @@ B<DEBIAN/symbols>
 
 =head1 DESCRIPTION
 
-Les fichiers de symboles sont fournis dans les paquets binaires de Debian et leur format est un sous-ensemble des fichiers modèles de symboles utilisés par B<dpkg-gensymbols>(1) dans les paquets source Debian, voir L<deb-src-symbols(5)>.
+The symbol files are shipped in Debian binary packages, and its format is a subset of the template symbol files used by L<dpkg-gensymbols(1)> in Debian source packages, see L<deb-src-symbols(5)>.
 
 Le format pour une entrée d'information sur les dépendances étendues avec bibliothèques partagées dans ces fichiers est le S<suivant :>
 
@@ -34,7 +34,7 @@ Z<>
  [...]
   I<symbole> I<version-minimale> [I<id-du-modèle-de-dépendance>]
 
-La variable I<soname-de-bibliothèque> est exactement la valeur du champ SONAME telle qu'exportée par B<objdump>(1). Un I<modèle-de-dépendance> est une dépendance où I<#MINVER#> est dynamiquement remplacé soit par une version comme S<« (E<gt>=> S<I<version-minimale>) »> soit par rien (si une dépendance quelle que soit sa version est reconnue suffisante).
+The I<library-soname> is exactly the value of the SONAME field as exported by L<objdump(1)>.  A I<dependency-template> is a dependency where I<#MINVER#> is dynamically replaced either by a version check like “(E<gt>= I<minimal-version>)” or by nothing (if an unversioned dependency is deemed sufficient).
 
 Chaque I<symbole> exporté (noté I<nom>@I<version>, avec I<version> réglé à S<« Base »> si la bibliothèque n'a pas de version) est associé à une I<version-minimale> dans son modèle de dépendance (le modèle principal de dépendance est toujours utilisé et se termine combiné avec le modèle de dépendance référencé par l'I<id-du-modèle-de-dépendance> si présent). La première alternative au modèle de dépendance est S<numérotée 1,> la S<seconde 2,> etc. Les colonnes sont séparées par exactement un seul espace.
 
@@ -81,7 +81,7 @@ Un alias obsolète pour B<Allow-Internal-Symbol-Groups> (depuis S<dpkg 1.20.1,> 
 
 =head1 VOIR AUSSI
 
-L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, L<deb-src-symbols(5)>, B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
+L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, L<deb-src-symbols(5)>, L<dpkg-shlibdeps(1)>, L<dpkg-gensymbols(1)>.
 
 
 =head1 TRADUCTION

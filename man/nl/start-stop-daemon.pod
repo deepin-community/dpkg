@@ -24,7 +24,7 @@ B<start-stop-daemon> [I<optie>...] I<commando>
 
 B<start-stop-daemon> wordt gebruikt om het creëren en afsluiten van processen op systeemniveau te regelen. Door een van de overeenkomstige opties te gebruiken kan B<start-stop-daemon> geconfigureerd worden om bestaande exemplaren te vinden van actieve processen.
 
-B<Opmerking:> tenzij B<--pid> of B<--pidfile> opgegeven werden, gedraagt B<start-stop-daemon> zich gelijk B<killall>(1).  B<start-stop-daemon> zal de procestabel overlopen op zoek naar processen die overeenkomen met de procesnaam, het moeder-pid, uid en/of gid (als ze opgegeven werden). Voor elk proces dat een overeenkomst oplevert, zal verhinderd worden dat B<--start> het proces opstart. Aan alle overeenkomende processen zal het TERM-signaal (of het signaal dat met B<--signal> of B<--retry> opgegeven werd) gegeven worden, indien B<--stop> opgegeven werd. Voor achtergronddiensten met langlevende dochterprocessen die bij een B<--stop> moeten blijven bestaan, moet u een pid-bestand opgeven.
+B<Opmerking>: tenzij B<--pid> of B<--pidfile> opgegeven werden, gedraagt B<start-stop-daemon> zich gelijk L<killall(1)>.  B<start-stop-daemon> zal de procestabel overlopen op zoek naar processen die overeenkomen met de procesnaam, het moeder-pid, uid en/of gid (als ze opgegeven werden). Voor elk proces dat een overeenkomst oplevert, zal verhinderd worden dat B<--start> het proces opstart. Aan alle overeenkomende processen zal het TERM-signaal (of het signaal dat met B<--signal> of B<--retry> opgegeven werd) gegeven worden, indien B<--stop> opgegeven werd. Voor achtergronddiensten met langlevende dochterprocessen die bij een B<--stop> moeten blijven bestaan, moet u een pid-bestand opgeven.
 
 =head1 COMMANDO'S
 
@@ -70,27 +70,27 @@ Nagaan of een proces bestaat met het opgegeven moeder-pid I<moeder-pid> (sinds v
 
 Nagaan of een proces het bestand I<pid-bestand> aangemaakt heeft.
 
-B<Opmerking:> deze vergelijkingsoptie alleen gebruiken, kan ertoe leiden dat geageerd wordt op niet-bedoelde processen in het geval het oude proces eindigde zonder dat het in staat was het I<pid-bestand> te verwijderen.
+B<Opmerking>: deze vergelijkingsoptie alleen gebruiken, kan ertoe leiden dat geageerd wordt op niet-bedoelde processen in het geval het oude proces eindigde zonder dat het in staat was het I<pid-bestand> te verwijderen.
 
-B<Waarschuwing:> deze vergelijkingsoptie gebruiken met een pid-bestand dat door iedereen beschreven kan worden, of deze enkel gebruiken met een achtergronddienst die het pid-bestand wegschrijft als gebruiker zonder bijzondere rechten, zal met een foutmelding geweigerd worden (sinds versie 1.19.3) omdat het een veiligheidsrisico inhoudt. Dit is omdat elke gebruiker er naartoe kan schrijven, of omdat de inhoud van het pid-bestand niet vertrouwd kan worden als de achtergronddienst aangetast raakt, met als resultaat dat een programmauitvoerder met bijzondere rechten (zoals een init-script dat als systeembeheerder uitgevoerd wordt) op gelijk welk systeemproces kan inwerken. Het gebruik van I</dev/null> is vrijgesteld van deze controles.
+B<Waarschuwing>: deze vergelijkingsoptie gebruiken met een pid-bestand dat door iedereen beschreven kan worden, of deze enkel gebruiken met een achtergronddienst die het pid-bestand wegschrijft als gebruiker zonder bijzondere rechten, zal met een foutmelding geweigerd worden (sinds versie 1.19.3) omdat het een veiligheidsrisico inhoudt. Dit is omdat elke gebruiker er naartoe kan schrijven, of omdat de inhoud van het pid-bestand niet vertrouwd kan worden als de achtergronddienst aangetast raakt, met als resultaat dat een programmauitvoerder met bijzondere rechten (zoals een init-script dat als systeembeheerder uitgevoerd wordt) op gelijk welk systeemproces kan inwerken. Het gebruik van I</dev/null> is vrijgesteld van deze controles.
 
 =item B<-x>, B<--exec> I<programma>
 
 Op processen controleren welke exemplaren zijn van dit I<programma>. Het argument I<programma> moet een absolute padnaam zijn.
 
-B<Opmerking:> met geïnterpreteerde scripts kan dit anders dan bedoeld werken, aangezien de interpreter aangewezen zal worden als het bedoelde programma. Houd er rekening mee dat ook processen die in een chroot uitgevoerd worden een overeenkomst zullen opleveren. Het kan dus nodig zijn om bijkomende vergelijkingsrestricties op te geven.
+B<Opmerking>: met geïnterpreteerde scripts kan dit anders dan bedoeld werken, aangezien de interpreter aangewezen zal worden als het bedoelde programma. Houd er rekening mee dat ook processen die in een chroot uitgevoerd worden een overeenkomst zullen opleveren. Het kan dus nodig zijn om bijkomende vergelijkingsrestricties op te geven.
 
 =item B<-n>, B<--name> I<procesnaam>
 
 Nagaan of er processen bestaan die de naam I<procesnaam> hebben. De I<procesnaam> is meestal de bestandsnaam van het proces, maar dat kan door het proces zelf gewijzigd zijn.
 
-B<Opmerking:> op de meeste systemen wordt deze informatie gehaald uit de kernel uit de comm-naam van het proces. De limiet voor de lengte ervan heeft de tendens relatief klein te zijn (uitgaan van meer dan 15 tekens is niet-overdraagbaar).
+B<Opmerking>: op de meeste systemen wordt deze informatie gehaald uit de kernel uit de comm-naam van het proces. De limiet voor de lengte ervan heeft de tendens relatief klein te zijn (ervan uitgaande dat meer dan 15 tekens niet-overdraagbaar is).
 
 =item B<-u>, B<--user> I<gebruikersnaam>|I<uid>
 
 Nagaan of er processen zijn die eigendom zijn van de gebruiker die met I<gebruikersnaam> of I<uid> opgegeven werd.
 
-B<Opmerking:> enkel deze vergelijkingsoptie gebruiken zal ertoe leiden dat geageerd wordt op alle processen die met de gebruiker overeenkomen.
+B<Opmerking>: enkel deze vergelijkingsoptie gebruiken zal ertoe leiden dat geageerd wordt op alle processen die met de gebruiker overeenkomen.
 
 =back
 
@@ -134,7 +134,7 @@ Geen informatieve berichten weergeven; enkel foutmeldingen tonen.
 
 =item B<-c>, B<--chuid> I<gebruikersnaam>|I<uid>[B<:>I<groep>|I<gid>]
 
-Naar deze gebruikersnaam/uid veranderen voordat het proces gestart wordt. U kunt ook een groep opgeven door een B<:> toe te voegen en dan de groep of gid op te geven op dezelfde manier als voor het commando B<chown>(1) (I<gebruiker>B<:>I<groep>). Indien een gebruiker opgegeven wordt zonder een groep, dan wordt voor die gebruiker zijn primaire GID gebruikt. Bij het gebruik van deze optie moet u er zich van bewust zijn dat ook de primaire en bijkomende groepen ingesteld worden, ook als de optie B<--group> niet opgegeven werd. De optie B<--group> dient enkel voor groepen waartoe de gebruiker normaal niet behoort (zoals het voor een specifiek proces instellen van een groepslidmaatschap voor algemene gebruikers zoals B<nobody>).
+Naar deze gebruikersnaam/uid veranderen voordat het proces gestart wordt. U kunt ook een groep opgeven door een B<:> toe te voegen en dan de groep of gid op te geven op dezelfde manier als voor het commando L<chown(1)> (I<gebruiker>B<:>I<groep>). Indien een gebruiker opgegeven wordt zonder een groep, dan wordt voor die gebruiker zijn primaire GID gebruikt. Bij het gebruik van deze optie moet u er zich van bewust zijn dat ook de primaire en bijkomende groepen ingesteld worden, ook als de optie B<--group> niet opgegeven werd. De optie B<--group> dient enkel voor groepen waartoe de gebruiker normaal niet behoort (zoals het voor een specifiek proces instellen van een groepslidmaatschap voor algemene gebruikers zoals B<nobody>).
 
 =item B<-r>, B<--chroot> I<hoofdmap>
 
@@ -148,11 +148,11 @@ Chdir naar I<pad> voordat het proces gestart wordt. Dit gebeurt na het chrooten 
 
 Wordt meestal gebruikt bij programma's die zich niet uit zichzelf afsplitsen. Deze optie dwingt B<start-stop-daemon> om een nieuw proces (fork) te beginnen voordat het proces wordt gestart, en dwingt het naar de achtergrond.
 
-B<Waarschuwing: start-stop-daemon> kan de afsluitstatus van het proces niet opvolgen mocht de uitvoering ervan om B<een of andere> reden mislukken. Dit is een laatste toevlucht en is enkel bedoeld voor programma's waarvoor het ofwel geen zin heeft om uit zichzelf een nieuw proces (fork) te beginnen, of waarvoor het ondoenbaar is om code toe te voegen waardoor ze dat uit zichzelf zouden doen.
+B<Waarschuwing>: B<start-stop-daemon> kan de afsluitstatus van het proces niet opvolgen mocht de uitvoering ervan om B<een of andere> reden mislukken. Dit is een laatste toevlucht en is enkel bedoeld voor programma's waarvoor het ofwel geen zin heeft om uit zichzelf een nieuw proces (fork) te beginnen, of waarvoor het ondoenbaar is om code toe te voegen waardoor ze dat uit zichzelf zouden doen.
 
 =item B<--notify-await>
 
-Wachten tot het achtergrondproces een kennisgeving zendt dat het gereed is, vooraleer de dienst als opgestart beschouwd wordt (sinds versie 1.19.3). Dit past elementen van het 'readiness protocol' van systemd toe, zoals dit in de man-pagina B<sd_notify>(3) gespecificeerd wordt. De volgende variabelen worden ondersteund:
+Wachten tot het achtergrondproces een kennisgeving zendt dat het gereed is, vooraleer de dienst als opgestart beschouwd wordt (sinds versie 1.19.3). Dit past elementen van het 'readiness protocol' van systemd toe, zoals dit in de man-pagina L<sd_notify(3)> gespecificeerd wordt. De volgende variabelen worden ondersteund:
 
 =over 
 
@@ -206,7 +206,7 @@ Dit stelt het umask van het proces in voor het gestart wordt (sinds versie 1.13.
 
 Wordt gebruikt bij het starten van een programma dat zijn eigen pid-bestand niet creëert. Deze optie zal B<start-stop-daemon> het bestand waarnaar met B<--pidfile> verwezen wordt, doen aanmaken en er het pid in doen plaatsen juist voor het uitvoeren van het proces. Merk op dat het bestand bij het stoppen van het programma enkel verwijderd zal worden als B<--remove-pidfile> gebruikt wordt.
 
-B<Opmerking:> het is mogelijk dat deze functionaliteit niet in alle gevallen werkt. Dit is in het bijzonder zo als het programma dat uitgevoerd wordt, een nieuw proces (fork) begint vanuit zijn hoofdproces. Daarom is dit gewoonlijk enkel nuttig in combinatie met de optie B<--background>.
+B<Opmerking>: het is mogelijk dat deze functionaliteit niet in alle gevallen werkt. Dit is in het bijzonder zo als het programma dat uitgevoerd wordt, een nieuw proces (fork) begint vanuit zijn hoofdproces. Daarom is dit gewoonlijk enkel nuttig in combinatie met de optie B<--background>.
 
 =item B<--remove-pidfile>
 

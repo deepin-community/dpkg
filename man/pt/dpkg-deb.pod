@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-deb - ferramenta de manipulação de arquivos de pacote Debian (.deb)
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-deb> [I<option>...] I<command>
 
@@ -94,11 +94,11 @@ O arquivo de entrada não é (actualmente) processado sequencialmente, portanto 
 
 =item B<--ctrl-tarfile> I<archive>
 
-Extrai os dados de controlo de um pacote binário e envia-os para a saída standard em formato B<tar> (desde dpkg 1.17.14). Juntamente com B<tar>(1) isto pode ser usado para extrair um ficheiro de controlo particular de um arquivo pacote. O arquivo de entrada será sempre processado sequencialmente.
+Extracts the control data from a binary package and sends it to standard output in B<tar> format (since dpkg 1.17.14).  Together with L<tar(1)> this can be used to extract a particular control file from a package archive. The input archive will always be processed sequentially.
 
 =item B<--fsys-tarfile> I<archive>
 
-Extrai os dados de árvore de sistema de ficheiros de um pacote binário e envia-os para a saída standard em formato B<tar>. Juntamente com B<tar>(1) isto pode ser usado para extrair um ficheiro particular de um arquivo pacote. O arquivo de entrada será sempre processado sequencialmente.
+Extracts the filesystem tree data from a binary package and sends it to standard output in B<tar> format.  Together with L<tar(1)> this can be used to extract a particular file from a package archive.  The input archive will always be processed sequentially.
 
 =item B<-e>, B<--control> I<archive> [I<directory>]
 
@@ -126,7 +126,7 @@ Mostra a versão e termina.
 
 esta opção é usada para especificar o formato dos resultados que B<--show> irá produzir. O formato é uma string que será escrita para cada pacote listado.
 
-A string pode referenciar qualquer campo de estado usado o formato “${I<field-name>}”, uma lista dos campos válidos pode ser produzida facilmente usando B<-I> no mesmo pacote. Uma explicação completa das opções de formatação (incluindo sequências de escape e tabulação de campos) pode ser encontrada na explicação da opção B<--showformat> em B<dpkg-query>(1).
+The string may reference any status field using the “${I<field-name>}” form, a list of the valid fields can be easily produced using B<-I> on the same package.  A complete explanation of the formatting options (including escape sequences and field tabbing) can be found in the explanation of the B<--showformat> option in L<dpkg-query(1)>.
 
 A predefinição para este campo é “${Package}\t${Version}\n”.
 
@@ -140,7 +140,7 @@ Especifica qual a estratégia de compressão usar no backend compressor, quando 
 
 =item B<-Z>I<compress-type>
 
-Especifica qual tipo de compressão usar quando compila um pacote. Valores permitidos são B<gzip>, B<xz> (desde dpkg 1.15.6), B<zstd> (desde dpkg 1.21.18) e B<none> (a predefinição é B<xz>).
+Specify which compression type to use when building a package.  Allowed values are B<gzip>, B<xz> (since dpkg 1.15.6), B<zstd> (since dpkg 1.21.18) and B<none> (default is B<%DEB_DEFAULT_COMPRESSOR%>).
 
 =item B<--[no-]uniform-compression>
 
@@ -222,13 +222,19 @@ Se definido, B<dpkg-deb> irá usa-lo como o directório onde criar ficheiros e d
 
 =item B<SOURCE_DATE_EPOCH>
 
-Se definido, será usado como marca temporal (em segundos desde a época) no contentor B<deb>(5)'s B<ar>(5) e usado para engatar o mtime nas entradas do ficheiro B<tar>(5).
+If set, it will be used as the timestamp (as seconds since the epoch) in the L<deb(5)>'s L<ar(5)> container and used to clamp the mtime in the L<tar(5)> file entries.
 
 =back
 
 =head1 NOTAS
 
 Não tente usar o B<dpkg-deb> para instalar software! Você deve usar o B<dpkg> apropriado para assegurar que todos os ficheiros são colocados correctamente e os scripts do pacote correm e que os seus estados e conteúdos são gravados.
+
+=head1 SEGURANÇA
+
+Examinar arquivos de pacotes não-confiáveis ou extraí-los para directórios estagiários deve ser considerado um limite à segurança, e qualquer violação desse limite derivando dessas operações deve ser considerada uma vulnerabilidade na segurança. Mas manusear arquivos de pacotes não-confiáveis não deve ser feito com facilitismos, pois a área de superfície inclui qualquer biblioteca de compressão suportada, em adição aos formatos de arquivo e aos próprios ficheiros de controle. Executar essas operações sobre dados não-confiáveis como root é fortemente desaconselhado.
+
+A compilação de arquivos de pacotes só deve ser executada sobre dados de confiança.
 
 =head1 BUGS
 
@@ -238,7 +244,7 @@ Não há autenticação nos ficheiros B<.deb>; de facto, nem sequer há um sumá
 
 =head1 VEJA TAMBÉM
 
-F<%PKGDOCDIR%/spec/rootless-builds.txt>, B<deb>(5), B<deb-control>(5), B<dpkg>(1), B<dselect>(1).
+F<%PKGDOCDIR%/spec/rootless-builds.txt>, L<deb(5)>, L<deb-control(5)>, L<dpkg(1)>, L<dselect(1)>.
 
 
 =head1 TRADUÇÃO

@@ -36,7 +36,7 @@ DPKG_BEGIN_DECLS
  * @{
  */
 
-enum treewalk_options {
+enum DPKG_ATTR_ENUM_FLAGS treewalk_options {
 	TREEWALK_NONE = 0,
 	TREEWALK_FORCE_STAT = DPKG_BIT(0),
 	TREEWALK_FOLLOW_LINKS = DPKG_BIT(1),
@@ -53,6 +53,12 @@ struct treewalk_funcs {
 	treenode_sort_func *sort;
 	treenode_skip_func *skip;
 };
+
+#if __STDC_VERSION__ > 201710L
+#define TREEWALK_OBJECT		(struct treewalk_funcs){ }
+#else
+#define TREEWALK_OBJECT		(struct treewalk_funcs){ 0 }
+#endif
 
 struct treeroot *
 treewalk_open(const char *rootdir, enum treewalk_options options,

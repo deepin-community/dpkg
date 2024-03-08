@@ -60,7 +60,7 @@ Si I<prerm> échoue durant B<remove in-favour> pour un remplacement à cause d'u
 
 =head1 VOIR AUSSI
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 TRADUCTION

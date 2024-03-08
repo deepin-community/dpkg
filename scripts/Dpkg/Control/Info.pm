@@ -14,22 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::Control::Info;
-
-use strict;
-use warnings;
-
-our $VERSION = '1.01';
-
-use Dpkg::Control;
-use Dpkg::ErrorHandling;
-use Dpkg::Gettext;
-
-use parent qw(Dpkg::Interface::Storable);
-
-use overload
-    '@{}' => sub { return [ $_[0]->{source}, @{$_[0]->{packages}} ] };
-
 =encoding utf8
 
 =head1 NAME
@@ -40,6 +24,22 @@ Dpkg::Control::Info - parse files like debian/control
 
 It provides a class to access data of files that follow the same
 syntax as F<debian/control>.
+
+=cut
+
+package Dpkg::Control::Info 1.01;
+
+use strict;
+use warnings;
+
+use Dpkg::Control;
+use Dpkg::ErrorHandling;
+use Dpkg::Gettext;
+
+use parent qw(Dpkg::Interface::Storable);
+
+use overload
+    '@{}' => sub { return [ $_[0]->{source}, @{$_[0]->{packages}} ] };
 
 =head1 METHODS
 
@@ -102,7 +102,7 @@ The data in the object is reset before parsing new control files.
 sub parse {
     my ($self, $fh, $desc) = @_;
     $self->reset();
-    my $cdata = Dpkg::Control->new(type => CTRL_INFO_SRC);
+    my $cdata = Dpkg::Control->new(type => CTRL_TMPL_SRC);
     return if not $cdata->parse($fh, $desc);
     $self->{source} = $cdata;
     unless (exists $cdata->{Source}) {
@@ -110,7 +110,7 @@ sub parse {
                             'Source');
     }
     while (1) {
-	$cdata = Dpkg::Control->new(type => CTRL_INFO_PKG);
+	$cdata = Dpkg::Control->new(type => CTRL_TMPL_PKG);
         last if not $cdata->parse($fh, $desc);
 	push @{$self->{packages}}, $cdata;
 	unless (exists $cdata->{Package}) {
@@ -133,7 +133,7 @@ loads from the standard input.
 
 =item $c->get_source()
 
-Returns a Dpkg::Control object containing the fields concerning the
+Returns a L<Dpkg::Control> object containing the fields concerning the
 source package.
 
 =cut
@@ -145,7 +145,7 @@ sub get_source {
 
 =item $c->get_pkg_by_idx($idx)
 
-Returns a Dpkg::Control object containing the fields concerning the binary
+Returns a L<Dpkg::Control> object containing the fields concerning the binary
 package numbered $idx (starting at 1).
 
 =cut
@@ -157,7 +157,7 @@ sub get_pkg_by_idx {
 
 =item $c->get_pkg_by_name($name)
 
-Returns a Dpkg::Control object containing the fields concerning the binary
+Returns a L<Dpkg::Control> object containing the fields concerning the binary
 package named $name.
 
 =cut
@@ -173,7 +173,7 @@ sub get_pkg_by_name {
 
 =item $c->get_packages()
 
-Returns a list containing the Dpkg::Control objects for all binary packages.
+Returns a list containing the L<Dpkg::Control> objects for all binary packages.
 
 =cut
 
@@ -206,7 +206,7 @@ Return a string representation of the content.
 
 =item @{$c}
 
-Return a list of Dpkg::Control objects, the first one is corresponding to
+Return a list of L<Dpkg::Control> objects, the first one is corresponding to
 source information and the following ones are the binary packages
 information.
 

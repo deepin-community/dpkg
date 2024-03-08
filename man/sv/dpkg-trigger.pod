@@ -30,6 +30,8 @@ Det kan användas av utvecklarskript i komplexa och villkorliga situationer där
 
 Okända utlösarnamnsyntaxer är ett fel för B<dpkg-trigger>.
 
+Kommandot introducerades i dpkg 1.14.17.
+
 =head1 KOMMANDON
 
 =over 
@@ -120,7 +122,7 @@ Väljer färgläge (sedan dpkg 1.18.5). För närvarande godtas följande värde
 
 =head1 SE ÄVEN
 
-B<dpkg>(1), B<deb-triggers>(5), B<%PKGDOCDIR%/spec/triggers.txt>.
+L<dpkg(1)>, L<deb-triggers(5)>, B<%PKGDOCDIR%/spec/triggers.txt>.
 
 
 =head1 ÖVERSÄTTNING

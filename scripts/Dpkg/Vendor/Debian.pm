@@ -18,20 +18,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::Vendor::Debian;
-
-use strict;
-use warnings;
-
-our $VERSION = '0.01';
-
-use Dpkg;
-use Dpkg::Gettext;
-use Dpkg::ErrorHandling;
-use Dpkg::Control::Types;
-
-use parent qw(Dpkg::Vendor::Default);
-
 =encoding utf8
 
 =head1 NAME
@@ -40,10 +26,26 @@ Dpkg::Vendor::Debian - Debian vendor class
 
 =head1 DESCRIPTION
 
-This vendor class customizes the behaviour of dpkg scripts for Debian
+This vendor class customizes the behavior of dpkg scripts for Debian
 specific behavior and policies.
 
+B<Note>: This is a private module, its API can change at any time.
+
 =cut
+
+package Dpkg::Vendor::Debian 0.01;
+
+use strict;
+use warnings;
+
+use List::Util qw(any none);
+
+use Dpkg;
+use Dpkg::Gettext;
+use Dpkg::ErrorHandling;
+use Dpkg::Control::Types;
+
+use parent qw(Dpkg::Vendor::Default);
 
 sub run_hook {
     my ($self, $hook, @params) = @_;
@@ -77,7 +79,7 @@ sub run_hook {
 	}
     } elsif ($hook eq 'update-buildflags') {
         $self->set_build_features(@params);
-        $self->_add_build_flags(@params);
+        $self->add_build_flags(@params);
     } elsif ($hook eq 'builtin-system-build-paths') {
         return qw(/build/);
     } elsif ($hook eq 'build-tainted-by') {
@@ -104,10 +106,19 @@ sub set_build_features {
     # Default feature states.
     my %use_feature = (
         future => {
+            # XXX: Should start a deprecation cycle at some point.
             lfs => 0,
+        },
+        abi => {
+            # XXX: This is set to undef so that we can handle the alias from
+            # the future feature area.
+            lfs => undef,
+            # XXX: This is set to undef to handle mask on the default setting.
+            time64 => undef,
         },
         qa => {
             bug => 0,
+            'bug-implicit-func' => undef,
             canary => 0,
         },
         reproducible => {
@@ -130,18 +141,118 @@ sub set_build_features {
             pie => undef,
             stackprotector => 1,
             stackprotectorstrong => 1,
+            stackclash => 1,
             fortify => 1,
             format => 1,
             relro => 1,
             bindnow => 0,
+            branch => 1,
         },
     );
 
     my %builtin_feature = (
+        abi => {
+            lfs => 0,
+            time64 => 0,
+        },
         hardening => {
             pie => 1,
         },
     );
+
+    require Dpkg::Arch;
+
+    my $arch = Dpkg::Arch::get_host_arch();
+    my ($abi, $libc, $os, $cpu) = Dpkg::Arch::debarch_to_debtuple($arch);
+    my ($abi_bits, $abi_endian) = Dpkg::Arch::debarch_to_abiattrs($arch);
+
+    unless (defined $abi and defined $libc and defined $os and defined $cpu) {
+        warning(g_("unknown host architecture '%s'"), $arch);
+        ($abi, $os, $cpu) = ('', '', '');
+    }
+    unless (defined $abi_bits and defined $abi_endian) {
+        warning(g_("unknown abi attributes for architecture '%s'"), $arch);
+        ($abi_bits, $abi_endian) = (0, 'unknown');
+    }
+
+    # Mask builtin features that are not enabled by default in the compiler.
+    my %builtin_pie_arch = map { $_ => 1 } qw(
+        amd64
+        arm64
+        armel
+        armhf
+        hurd-amd64
+        hurd-i386
+        i386
+        kfreebsd-amd64
+        kfreebsd-i386
+        loong64
+        mips
+        mips64
+        mips64el
+        mips64r6
+        mips64r6el
+        mipsel
+        mipsn32
+        mipsn32el
+        mipsn32r6
+        mipsn32r6el
+        mipsr6
+        mipsr6el
+        powerpc
+        ppc64
+        ppc64el
+        riscv64
+        s390x
+        sparc
+        sparc64
+    );
+    if (not exists $builtin_pie_arch{$arch}) {
+        $builtin_feature{hardening}{pie} = 0;
+    }
+
+    if ($abi_bits != 32) {
+        $builtin_feature{abi}{lfs} = 1;
+    }
+
+    # On glibc, new ports default to time64, old ports currently default
+    # to time32, so we track the latter as that is a list that is not
+    # going to grow further, and might shrink.
+    # On musl libc based systems all ports use time64.
+    my %time32_arch = map { $_ => 1 } qw(
+        arm
+        armeb
+        armel
+        armhf
+        hppa
+        i386
+        hurd-i386
+        kfreebsd-i386
+        m68k
+        mips
+        mipsel
+        mipsn32
+        mipsn32el
+        mipsn32r6
+        mipsn32r6el
+        mipsr6
+        mipsr6el
+        nios2
+        powerpc
+        powerpcel
+        powerpcspe
+        s390
+        sh3
+        sh3eb
+        sh4
+        sh4eb
+        sparc
+    );
+    if ($abi_bits != 32 or
+        not exists $time32_arch{$arch} or
+        $libc eq 'musl') {
+        $builtin_feature{abi}{time64} = 1;
+    }
 
     $self->init_build_features(\%use_feature, \%builtin_feature);
 
@@ -158,26 +269,49 @@ sub set_build_features {
         $opts_maint->parse_features($area, $use_feature{$area});
     }
 
-    require Dpkg::Arch;
+    ## Area: abi
 
-    my $arch = Dpkg::Arch::get_host_arch();
-    my ($abi, $libc, $os, $cpu) = Dpkg::Arch::debarch_to_debtuple($arch);
-
-    unless (defined $abi and defined $libc and defined $os and defined $cpu) {
-        warning(g_("unknown host architecture '%s'"), $arch);
-        ($abi, $os, $cpu) = ('', '', '');
-    }
-
-    ## Area: future
-
-    if ($use_feature{future}{lfs}) {
-        my ($abi_bits, $abi_endian) = Dpkg::Arch::debarch_to_abiattrs($arch);
-        my $cpu_bits = Dpkg::Arch::debarch_to_cpubits($arch);
-
-        if ($abi_bits != 32 or $cpu_bits != 32) {
-            $use_feature{future}{lfs} = 0;
+    if (any { $arch eq $_ } qw(hurd-i386 kfreebsd-i386)) {
+        # Mask time64 on hurd-i386 and kfreebsd-i386, as their kernel lacks
+        # support for that arch and it will not be implemented.
+        $use_feature{abi}{time64} = 0;
+    } elsif (not defined $use_feature{abi}{time64}) {
+        # If the user has not requested a specific setting, by default only
+        # enable time64 everywhere except for i386, where we preserve it for
+        # binary backwards compatibility.
+        if ($arch eq 'i386') {
+            $use_feature{abi}{time64} = 0;
+        } else {
+            $use_feature{abi}{time64} = 1;
         }
     }
+
+    # In Debian gcc enables time64 (and lfs) for the following architectures
+    # by injecting pre-processor flags, though the libc ABI has not changed.
+    if (any { $arch eq $_ } qw(armel armhf hppa m68k mips mipsel powerpc sh4)) {
+        $flags->set_option_value('cc-abi-time64', 1);
+    } else {
+        $flags->set_option_value('cc-abi-time64', 0);
+    }
+
+    if ($use_feature{abi}{time64} && ! $builtin_feature{abi}{time64}) {
+        # On glibc 64-bit time_t support requires LFS.
+        $use_feature{abi}{lfs} = 1 if $libc eq 'gnu';
+
+        # Require -Werror=implicit-function-declaration, to avoid linking
+        # against the wrong symbol.
+        $use_feature{qa}{'bug-implicit-func'} = 1;
+    }
+
+    # XXX: Handle lfs alias from future abi feature area.
+    $use_feature{abi}{lfs} //= $use_feature{future}{lfs};
+    # XXX: Once the feature is set in the abi area, we always override the
+    # one in the future area.
+    $use_feature{future}{lfs} = $use_feature{abi}{lfs};
+
+    ## Area: qa
+
+    $use_feature{qa}{'bug-implicit-func'} //= $use_feature{qa}{bug};
 
     ## Area: reproducible
 
@@ -222,56 +356,41 @@ sub set_build_features {
 
     ## Area: hardening
 
-    # Mask builtin features that are not enabled by default in the compiler.
-    my %builtin_pie_arch = map { $_ => 1 } qw(
-        amd64
-        arm64
-        armel
-        armhf
-        hurd-i386
-        i386
-        kfreebsd-amd64
-        kfreebsd-i386
-        mips
-        mipsel
-        mips64el
-        powerpc
-        ppc64
-        ppc64el
-        riscv64
-        s390x
-        sparc
-        sparc64
-    );
-    if (not exists $builtin_pie_arch{$arch}) {
-        $builtin_feature{hardening}{pie} = 0;
-    }
-
     # Mask features that are not available on certain architectures.
-    if ($os !~ /^(?:linux|kfreebsd|knetbsd|hurd)$/ or
-	$cpu =~ /^(?:hppa|avr32)$/) {
-	# Disabled on non-(linux/kfreebsd/knetbsd/hurd).
-	# Disabled on hppa, avr32
-	#  (#574716).
+    if (none { $os eq $_ } qw(linux kfreebsd hurd) or
+        any { $cpu eq $_ } qw(alpha hppa ia64)) {
+	# Disabled on non-(linux/kfreebsd/hurd).
+        # Disabled on alpha, hppa, ia64.
 	$use_feature{hardening}{pie} = 0;
     }
-    if ($cpu =~ /^(?:ia64|alpha|hppa|nios2)$/ or $arch eq 'arm') {
+    if (any { $cpu eq $_ } qw(ia64 alpha hppa nios2) or $arch eq 'arm') {
 	# Stack protector disabled on ia64, alpha, hppa, nios2.
 	#   "warning: -fstack-protector not supported for this target"
 	# Stack protector disabled on arm (ok on armel).
 	#   compiler supports it incorrectly (leads to SEGV)
 	$use_feature{hardening}{stackprotector} = 0;
     }
-    if ($cpu =~ /^(?:ia64|hppa|avr32)$/) {
-	# relro not implemented on ia64, hppa, avr32.
+    if (none { $arch eq $_ } qw(amd64 arm64 armhf armel)) {
+        # Stack clash protector only available on amd64 and arm.
+        $use_feature{hardening}{stackclash} = 0;
+    }
+    if (any { $cpu eq $_ } qw(ia64 hppa)) {
+	# relro not implemented on ia64, hppa.
 	$use_feature{hardening}{relro} = 0;
     }
+    if (none { $cpu eq $_ } qw(amd64 arm64)) {
+        # On amd64 use -fcf-protection.
+        # On arm64 use -mbranch-protection=standard.
+        $use_feature{hardening}{branch} = 0;
+    }
+    $flags->set_option_value('hardening-branch-cpu', $cpu);
 
     # Mask features that might be influenced by other flags.
     if ($flags->get_option_value('optimize-level') == 0) {
       # glibc 2.16 and later warn when using -O0 and _FORTIFY_SOURCE.
       $use_feature{hardening}{fortify} = 0;
     }
+    $flags->set_option_value('fortify-level', 2);
 
     # Handle logical feature interactions.
     if ($use_feature{hardening}{relro} == 0) {
@@ -301,7 +420,7 @@ sub set_build_features {
     }
 }
 
-sub _add_build_flags {
+sub add_build_flags {
     my ($self, $flags) = @_;
 
     ## Global default flags
@@ -313,7 +432,6 @@ sub _add_build_flags {
         OBJCXXFLAGS
         FFLAGS
         FCFLAGS
-        GCJFLAGS
     );
 
     my $default_flags;
@@ -328,27 +446,38 @@ sub _add_build_flags {
     }
 
     $flags->append($_, $default_flags) foreach @compile_flags;
+    $flags->append($_ . '_FOR_BUILD', $default_flags) foreach @compile_flags;
     $flags->append('DFLAGS', $default_d_flags);
+    $flags->append('DFLAGS_FOR_BUILD', $default_d_flags);
 
-    ## Area: future
+    ## Area: abi
 
-    if ($flags->use_feature('future', 'lfs')) {
+    my %abi_builtins = $flags->get_builtins('abi');
+    my $cc_abi_time64 = $flags->get_option_value('cc-abi-time64');
+
+    if ($flags->use_feature('abi', 'lfs') && ! $abi_builtins{lfs}) {
         $flags->append('CPPFLAGS',
                        '-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64');
+    } elsif (! $flags->use_feature('abi', 'lfs') &&
+             ! $abi_builtins{lfs} && $cc_abi_time64) {
+        $flags->append('CPPFLAGS',
+                       '-U_LARGEFILE_SOURCE -U_FILE_OFFSET_BITS');
+    }
+
+    if ($flags->use_feature('abi', 'time64') && ! $abi_builtins{time64}) {
+        $flags->append('CPPFLAGS', '-D_TIME_BITS=64');
+    } elsif (! $flags->use_feature('abi', 'time64') &&
+             ! $abi_builtins{time64} && $cc_abi_time64) {
+        $flags->append('CPPFLAGS', '-U_TIME_BITS');
     }
 
     ## Area: qa
 
     # Warnings that detect actual bugs.
+    if ($flags->use_feature('qa', 'bug-implicit-func')) {
+        $flags->append('CFLAGS', '-Werror=implicit-function-declaration');
+    }
     if ($flags->use_feature('qa', 'bug')) {
-        # C flags
-        my @cflags = qw(
-            implicit-function-declaration
-        );
-        foreach my $warnflag (@cflags) {
-            $flags->append('CFLAGS', "-Werror=$warnflag");
-        }
-
         # C/C++ flags
         my @cfamilyflags = qw(
             array-bounds
@@ -454,9 +583,16 @@ sub _add_build_flags {
         $flags->append($_, $flag) foreach @compile_flags;
     }
 
+    # Stack clash
+    if ($flags->use_feature('hardening', 'stackclash')) {
+        my $flag = '-fstack-clash-protection';
+        $flags->append($_, $flag) foreach @compile_flags;
+    }
+
     # Fortify Source
     if ($flags->use_feature('hardening', 'fortify')) {
-	$flags->append('CPPFLAGS', '-D_FORTIFY_SOURCE=2');
+        my $fortify_level = $flags->get_option_value('fortify-level');
+        $flags->append('CPPFLAGS', "-D_FORTIFY_SOURCE=$fortify_level");
     }
 
     # Format Security
@@ -476,6 +612,22 @@ sub _add_build_flags {
     # Bindnow
     if ($flags->use_feature('hardening', 'bindnow')) {
 	$flags->append('LDFLAGS', '-Wl,-z,now');
+    }
+
+    # Branch protection
+    if ($flags->use_feature('hardening', 'branch')) {
+        my $cpu = $flags->get_option_value('hardening-branch-cpu');
+        my $flag;
+        if ($cpu eq 'arm64') {
+            $flag = '-mbranch-protection=standard';
+        } elsif ($cpu eq 'amd64') {
+            $flag = '-fcf-protection';
+        }
+        # The following should always be true on Debian, but it might not
+        # be on derivatives.
+        if (defined $flag) {
+            $flags->append($_, $flag) foreach @compile_flags;
+        }
     }
 }
 

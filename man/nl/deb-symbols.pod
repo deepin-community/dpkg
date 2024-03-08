@@ -22,7 +22,7 @@ B<DEBIAN/symbols>
 
 =head1 BESCHRIJVING
 
-De symboolbestanden worden meegeleverd met Debian binaire pakketten en de indeling ervan maakt gebruik van deelaspecten van de sjabloonsymboolbestanden die door B<dpkg-gensymbols>(1) in Debian broncodepakketten gebruikt worden. Zie L<deb-src-symbols(5)>.
+De symboolbestanden worden meegeleverd met Debian binaire pakketten en de indeling ervan maakt gebruik van deelaspecten van de sjabloonsymboolbestanden die door L<dpkg-gensymbols(1)> in Debian broncodepakketten gebruikt worden. Zie L<deb-src-symbols(5)>.
 
 In deze bestanden is de indeling van een item met informatie over een afhankelijkheid van de uitgebreide gedeelde bibliotheek als volgt:
 
@@ -34,7 +34,7 @@ Z<>
  [...]
   I<symbool> I<minimale-versie> [I<id-van-vereiste-sjabloon>]
 
-De I<bibliotheeksoname> is exact de waarde van het veld SONAME zoals die door B<objdump>(1) geëxporteerd wordt. Een I<afhankelijkheidssjabloon> is een afhankelijkheid waarbij I<#MINVER#> dynamisch vervangen wordt door ofwel een versietoets zoals “(E<gt>= I<minimale-versie>)” ofwel door niets (indien een versieloze afhankelijkheid voldoende geacht wordt).
+De I<bibliotheeksoname> is exact de waarde van het veld SONAME zoals die door L<objdump(1)> geëxporteerd wordt. Een I<afhankelijkheidssjabloon> is een afhankelijkheid waarbij I<#MINVER#> dynamisch vervangen wordt door ofwel een versietoets zoals “(E<gt>= I<minimale-versie>)” ofwel door niets (indien een versieloze afhankelijkheid voldoende geacht wordt).
 
 Elk geëxporteerd I<symbool> (vermeld als I<naam>@I<versie>, waarbij I<versie> “Base” is als het een versieloze bibliotheek betreft) is geassocieerd met een I<minimale-versie> van zijn afhankelijkheidssjabloon (het hoofdafhankelijkheidssjabloon wordt altijd gebruikt en wordt uiteindelijk gecombineerd met het afhankelijkheidssjabloon waarnaar verwezen wordt door I<id-van-afhankelijkheidssjabloon> als dat voorhanden is). Het eerste alternatieve afhankelijkheidssjabloon krijgt het nummer 1, het tweede 2 enzovoort. Elke kolom wordt door exact één witruimte gescheiden.
 
@@ -81,5 +81,5 @@ Een verouderde alias voor B<Allow-Internal-Symbol-Groups> (sins dpkg 1.20.1, ond
 
 =head1 ZIE OOK
 
-L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, L<deb-src-symbols(5)>, B<dpkg-shlibdeps>(1), B<dpkg-gensymbols>(1).
+L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, L<deb-src-symbols(5)>, L<dpkg-shlibdeps(1)>, L<dpkg-gensymbols(1)>.
 

@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 BEZEICHNUNG
 
-dpkg-genchanges - Format der Debian-Changes-Datei
+dpkg-genchanges - Format der Upload-Changes-Datei von Debian
 
 =head1 ÜBERSICHT
 
@@ -38,7 +38,7 @@ Der Wert dieses Feldes gibt die Formatversion der Datei an. Die Syntax des Feldw
 
 =item B<Date:> I<Veröffentlichungsdatum> (verpflichtend)
 
-Das Datum, an dem das Paket letztmalig gebaut oder bearbeitet wurde. Es muss im gleichen Format wie in einem Eintrag bei B<deb-changelog>(5) sein.
+Das Datum, an dem das Paket letztmalig gebaut oder bearbeitet wurde. Es muss im gleichen Format wie in einem Eintrag bei L<deb-changelog(5)> sein.
 
 Der Wert dieses Feldes wird normalerweise aus der Datei I<debian/changelog> entnommen.
 
@@ -56,7 +56,7 @@ Listet die Architekturen der derzeit hochgeladenen Dateien auf. Geläufige Archi
 
 =item B<Version:> I<Versionszeichenkette> (verpflichtend)
 
-Typischerweise ist das die Original-Paketversionsnummer, in der Form, die der Programmautor verwendet. Es kann auch eine Debian-Revisionsnummer enthalten (für nicht aus Debian stammende Pakete). Das genaue Format und der Sortieralgorithmus sind in B<deb-version>(7) beschrieben.
+Typischerweise ist das die Original-Paketversionsnummer, in der Form, die der Programmautor verwendet. Es kann auch eine Debian-Revisionsnummer enthalten (für nicht aus Debian stammende Pakete). Das genaue Format und der Sortieralgorithmus sind in L<deb-version(7)> beschrieben.
 
 =item B<Distribution:> I<Distribution>en (verpflichtend)
 
@@ -128,7 +128,7 @@ Das Feld B<Files> ist inkonsistent gegenüber den anderen B<Checksums>-Feldern. 
 
 =head1 SIEHE AUCH
 
-L<deb822(5)>, B<deb-src-control>(5), B<deb-version>(7).
+L<deb822(5)>, L<deb-src-control(5)>, L<deb-version(7)>.
 
 
 =head1 ÜBERSETZUNG

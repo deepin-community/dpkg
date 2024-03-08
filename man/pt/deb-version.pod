@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb-version - formato Debian do número de versão do pacote
 
-=head1 SINOPSE
+=head1 RESUMO
 
 [I<epoch>B<:>]I<upstream-version>[B<->I<debian-revision>]
 
@@ -72,7 +72,7 @@ O caractere til e as suas propriedades de organização especiais foi introduzid
 
 =head1 VEJA TAMBÉM
 
-B<deb-control>(5), B<deb>(5), B<dpkg>(1)
+L<deb-control(5)>, L<deb(5)>, L<dpkg(1)>
 
 
 =head1 TRADUÇÃO

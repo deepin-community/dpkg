@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-scansources - cria ficheiros de índices Sources
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-scansources> [I<option>...] I<binary-dir> [I<override-file> [I<path-prefix>]] B<E<gt>> I<Sources>
 
@@ -24,13 +24,13 @@ B<dpkg-scansources> [I<option>...] I<binary-dir> [I<override-file> [I<path-prefi
 
 B<dpkg-scansources> sonda o I<directório-binário> fornecido por ficheiros I<.dsc>. Estes são usados para criar um índice de fonte Debian, o qual é enviado para o stdout.
 
-O I<override-file>, se fornecido, é usado para definir prioridades nas estrofes de índice resultantes e para sobrepor o campo do maintainer dado nos ficheiros I<.dsc>. O ficheiro pode estar comprimido (desde dpkg 1.15.5). Veja B<deb-override>(5) o formato deste ficheiro.
+The I<override-file>, if given, is used to set priorities in the resulting index stanzas and to override the maintainer field given in the I<.dsc> files.  The file can be compressed (since dpkg 1.15.5).  See L<deb-override(5)> for the format of this file.
 
-B<Nota:> Como o ficheiro de sobreposição é indexado por pacotes binário, não pacotes fonte, existe um pequeno problema aqui. A implementação actual usa a prioridade mais alta de todos os pacotes binários produzidos por um ficheiro I<.dsc> para a prioridade do pacote fonte, e para a entrada de sobreposição para o primeiro pacote binário listado no ficheiro I<.dsc> para modificar a informação do maintainer. Isto poderá ser alterado.
+B<Nota>: Como o ficheiro de sobreposição é indexado por pacotes binário, não pacotes fonte, existe um pequeno problema aqui. A implementação actual usa a prioridade mais alta de todos os pacotes binários produzidos por um ficheiro I<.dsc> para a prioridade do pacote fonte, e para a entrada de sobreposição para o primeiro pacote binário listado no ficheiro I<.dsc> para modificar a informação do maintainer. Isto poderá ser alterado.
 
 O I<path-prefix>, se dado, é pré-adicionado ao campo directório no índice fonte gerado. Geralmente você usa isto para fazer com que os campos directório contenham o caminho desde o topo da hierarquia do arquivo Debian.
 
-B<Nota:> Se você deseja aceder ao ficheiros Sources gerado com B<apt>(8) você vai provavelmente precisar de comprimir o ficheiro com B<gzip>(1) (gerando um ficheiro Sources.gz). O B<apt>(8) ignora ficheiros Sources não comprimidos excepto em acesso local (isto é, fontes B<file://>).
+B<Note>: If you want to access the generated Sources file with L<apt(8)> you will probably need to compress the file with L<gzip(1)> (generating a Sources.gz file).  L<apt(8)> ignores uncompressed Sources files except on local access (i.e.  B<file://> sources).
 
 =head1 OPÇÕES
 
@@ -42,7 +42,7 @@ Não ordena as estrofes do índice. Normalmente elas estão ordenadas pelo nome 
 
 =item B<-e>, B<--extra-override> I<file>
 
-Sonda o I<ficheiro> para encontrar sobreposições suplementares (desde dpkg 1.15.4; o ficheiro pode ser comprimido desde 1.15.5). Veja B<deb-extra-override>(5) para mais informação sobre este formato.
+Scan I<file> to find supplementary overrides (since dpkg 1.15.4; the file can be compressed since dpkg 1.15.5).  See L<deb-extra-override(5)> for more information on its format.
 
 =item B<-s>, B<--source-override> I<file>
 
@@ -80,7 +80,7 @@ Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nati
 
 =head1 VEJA TAMBÉM
 
-B<deb-override>(5), B<deb-extra-override>(5), B<dpkg-scanpackages>(1).
+L<deb-override(5)>, L<deb-extra-override(5)>, L<dpkg-scanpackages(1)>.
 
 
 =head1 TRADUÇÃO

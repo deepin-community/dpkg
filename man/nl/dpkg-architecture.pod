@@ -24,9 +24,9 @@ B<dpkg-architecture> [I<optie>...] [I<commando>]
 
 B<dpkg-architecture> biedt een mogelijkheid om de bouw- en host-architectuur voor het bouwen van pakketten vast te stellen en in te stellen.
 
-De bouwarchitectuur wordt steeds bepaald door ofwel de variabele B<DEB_BUILD_ARCH> indien deze ingesteld is (en B<--force> niet werd opgegeven), of door een externe aanroep van B<dpkg>(1) en kan niet ingesteld worden aan de commandoregel.
+De bouwarchitectuur wordt steeds bepaald door ofwel de variabele B<DEB_BUILD_ARCH> indien deze ingesteld is (en B<--force> niet werd opgegeven), of door een externe aanroep van L<dpkg(1)> en kan niet ingesteld worden aan de commandoregel.
 
-U kunt de host-architectuur specificeren door een van of allebei de opties B<--host-arch> en B<--host-type> op te geven, anders wordt de variabele B<DEB_HOST_ARCH> gebruikt als die ingesteld werd (en B<--force> niet opgegeven werd). Wat de standaard is, wordt vastgesteld door een externe aanroep van B<gcc>(1) of, als zowel B<CC> als gcc onbeschikbaar zijn, gelijkgesteld aan de bouwarchitectuur. Een van beide, B<--host-arch> of B<--host-type>, volstaat. De andere waarde zal op een gebruikelijke standaardwaarde ingesteld worden. Het is inderdaad dikwijls beter om slechts één waarde op te geven, vermits B<dpkg-architecture> een waarschuwing zal geven als de keuze die u maakt niet met de standaardwaarde overeenkomt.
+U kunt de host-architectuur specificeren door een van of allebei de opties B<--host-arch> en B<--host-type> op te geven, anders wordt de variabele B<DEB_HOST_ARCH> gebruikt als die ingesteld werd (en B<--force> niet opgegeven werd). Wat de standaard is, wordt vastgesteld door een externe aanroep van L<gcc(1)> of, als zowel B<CC> als gcc onbeschikbaar zijn, gelijkgesteld aan de bouwarchitectuur. Een van beide, B<--host-arch> of B<--host-type>, volstaat. De andere waarde zal op een gebruikelijke standaardwaarde ingesteld worden. Het is inderdaad dikwijls beter om slechts één waarde op te geven, vermits B<dpkg-architecture> een waarschuwing zal geven als de keuze die u maakt niet met de standaardwaarde overeenkomt.
 
 =head1 COMMANDO'S
 
@@ -59,6 +59,8 @@ Een commando tonen dat vergelijkbaar is met B<--print-set>, maar om alle variabe
 =item B<-c>, B<--command> I<commando-tekenreeks>
 
 Een I<commando-tekenreeks> uitvoeren in een omgeving waarin alle variabelen ingesteld zijn op de vastgelegde waarde.
+
+Als de I<commando-tekenreeks> shell-metatekens bevat, dan wordt het aangeroepen via de bourne-shell van het systeem.
 
 =item B<-L>, B<--list-known>
 
@@ -112,7 +114,7 @@ Stelt de indeling van de uitvoer van B<--print-set> en B<--print-unset> (sinds d
 
 =item B<-f>, B<--force>
 
-Waarden die door bestaande omgevingsvariabelen ingesteld zijn en die dezelfde naam hebben als die welke door de scripts gebruikt worden, worden gehonoreerd (d.w.z. gebruikt door B<dpkg-architecture>), behalve wanneer deze forceer-vlag gebruikt wordt. Dit laat de gebruiker toe om een waarde te vervangen, zelfs als het aanroepen van B<dpkg-architecture> ingebed zit in een ander script (bijvoorbeeld B<dpkg-buildpackage>(1)).
+Waarden die door bestaande omgevingsvariabelen ingesteld zijn en die dezelfde naam hebben als die welke door de scripts gebruikt worden, worden gehonoreerd (d.w.z. gebruikt door B<dpkg-architecture>), behalve wanneer deze forceer-vlag gebruikt wordt. Dit laat de gebruiker toe om een waarde te vervangen, zelfs als het aanroepen van B<dpkg-architecture> ingebed zit in een ander script (bijvoorbeeld L<dpkg-buildpackage(1)>).
 
 =back
 
@@ -448,5 +450,5 @@ Alle lange commando- en optienamen kunnen slechts sinds dpkg 1.17.17 gebruikt wo
 
 =head1 ZIE OOK
 
-B<dpkg-buildpackage>(1).
+L<dpkg-buildpackage(1)>.
 

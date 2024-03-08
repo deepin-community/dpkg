@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb-split - formato Debian de pacotes binários de múltiplas partes
 
-=head1 SINOPSE
+=head1 RESUMO
 
 I<filename>B<.deb>
 
@@ -76,7 +76,7 @@ Estes membros têm de ocorrer nesta ordem exacta. As implementações actuais de
 
 =head1 VEJA TAMBÉM
 
-B<deb>(5), B<dpkg-split>(1).
+L<deb(5)>, L<dpkg-split(1)>.
 
 
 =head1 TRADUÇÃO

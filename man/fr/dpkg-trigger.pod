@@ -30,6 +30,8 @@ Utilisable par les scripts du responsable dans certaines situations complexes o�
 
 Les syntaxes non reconnues pour le nom des actions différées constituent une erreur pour B<dpkg-trigger>.
 
+This program was introduced in dpkg 1.14.17.
+
 =head1 COMMANDES
 
 =over 
@@ -120,7 +122,7 @@ Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement ac
 
 =head1 VOIR AUSSI
 
-B<dpkg>(1), B<deb-triggers>(5), B<%PKGDOCDIR%/spec/triggers.txt>.
+L<dpkg(1)>, L<deb-triggers(5)>, B<%PKGDOCDIR%/spec/triggers.txt>.
 
 
 =head1 TRADUCTION

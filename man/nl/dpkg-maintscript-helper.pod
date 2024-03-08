@@ -14,11 +14,11 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAAM
 
-dpkg-maintscript-helper - omzeilt in de scripts van de onderhouder gekende beperkingen van dpkg
+dpkg-maintscript-helper - omzeilt in de scripts van de beheerder gekende beperkingen van dpkg
 
 =head1 OVERZICHT
 
-B<dpkg-maintscript-helper> I<commando> [I<parameter>...] B<--> I<onderhouderscriptparameter>...
+B<dpkg-maintscript-helper> I<commando> [I<parameter>...] B<--> I<beheerderscriptparameter>...
 
 =head1 COMMANDO'S EN PARAMETERS
 
@@ -39,9 +39,11 @@ B<dpkg-maintscript-helper> I<commando> [I<parameter>...] B<--> I<onderhouderscri
 
 =head1 BESCHRIJVING
 
-Dit programma is ontwikkeld om uitgevoerd te worden binnenin onderhouderscripts om sommige taken te verrichten die B<dpkg> (nog) niet alleen kan uitvoeren, ofwel omwille van gemaakte keuzes inzake design ofwel ten gevolge van actuele beperkingen.
+Dit programma is ontwikkeld om uitgevoerd te worden binnenin beheerderscripts om sommige taken te verrichten die B<dpkg> (nog) niet alleen kan uitvoeren, ofwel omwille van gemaakte keuzes inzake design ofwel ten gevolge van actuele beperkingen.
 
-Veel van deze taken vereisen gecoördineerde actie van verschillende onderhouderscripts (B<preinst>, B<postinst>, B<prerm>, B<postrm>). Om fouten te vermijden moet gewoon dezelfde aanroep in alle scripts geplaatst worden en het programma zal zijn gedrag automatisch aan passen op basis van de omgevingsvariabele B<DPKG_MAINTSCRIPT_NAME> en de argumenten van de onderhouderscripts die na een dubbel koppelteken opgegeven moeten worden.
+Veel van deze taken vereisen gecoördineerde actie van verschillende scripts van de beheerder (B<preinst>, B<postinst>, B<prerm>, B<postrm>). Om fouten te vermijden moet gewoon dezelfde aanroep in alle scripts geplaatst worden en het programma zal zijn gedrag automatisch aan passen op basis van de omgevingsvariabele B<DPKG_MAINTSCRIPT_NAME> en de argumenten van de scripts van de beheerder die na een dubbel koppelteken opgegeven moeten worden.
+
+Dit programma werd geïntroduceerd in dpkg 1.15.7.
 
 =head1 GEMEENSCHAPPELIJKE PARAMETERS
 
@@ -51,33 +53,33 @@ Veel van deze taken vereisen gecoördineerde actie van verschillende onderhouder
 
 Definieert de laatste versie van het pakket waarvan de opwaardering de operatie moet uitlokken. Het is belangrijk om I<vorige-versie> correct te berekenen, zodat de operaties correct uitgevoerd worden zelfs in het geval de gebruiker het pakket met een lokaal versienummer herbouwde. Indien I<vorige-versie> leeg of weggelaten is, dan wordt geprobeerd om bij elke opwaardering de operatie uit te voeren (merk op dat het veiliger is om de versie op te geven zodat slechts eenmaal geprobeerd wordt om de operatie uit te voeren).
 
-Indien sinds verschillende versies geen configuratiebestand meer meegeleverd werd en u nu de scripts van de pakketonderhouder aan het wijzigen bent om het verouderde bestand op te ruimen, moet I<vorige-versie> ingesteld worden op de versie van het pakket dat u nu aan het voorbereiden bent, niet op de eerste versie van het pakket zonder het configuratiebestand. Dit geldt op dezelfde wijze voor alle andere acties.
+Indien sinds verschillende versies geen configuratiebestand meer meegeleverd werd en u nu de scripts van de beheerder aan het wijzigen bent om het verouderde bestand op te ruimen, moet I<vorige-versie> ingesteld worden op de versie van het pakket dat u nu aan het voorbereiden bent, niet op de eerste versie van het pakket zonder het configuratiebestand. Dit geldt op dezelfde wijze voor alle andere acties.
 
-Voor een configuratiebestand dat in de versie B<2.0-1> van een pakket verwijderd werd, moet I<vorige-versie> ingesteld worden op B<2.0-1~>. Dit heeft tot effect dat het configuratiebestand verwijderd wordt, zelfs als de gebruiker de vorige versie B<1.0-1> herbouwde als B<1.0-1lokaal1>. En in het geval waarin in een pakket een pad eerst een symbolische koppeling was (bij versie B<1.0-1>) en later een map werd (bij versie B<2.0-1>), maar u pas in versie B<3.0-1> de eigenlijke omschakeling doorvoert in de scripts van de pakketonderhouder, moet I<vorige-versie> ingesteld worden op B<3.0-1~>.
+Voor een configuratiebestand dat in de versie B<2.0-1> van een pakket verwijderd werd, moet I<vorige-versie> ingesteld worden op B<2.0-1~>. Dit heeft tot effect dat het configuratiebestand verwijderd wordt, zelfs als de gebruiker de vorige versie B<1.0-1> herbouwde als B<1.0-1lokaal1>. En in het geval waarin in een pakket een pad eerst een symbolische koppeling was (bij versie B<1.0-1>) en later een map werd (bij versie B<2.0-1>), maar u pas in versie B<3.0-1> de eigenlijke omschakeling doorvoert in de scripts van de beheerder, moet I<vorige-versie> ingesteld worden op B<3.0-1~>.
 
 =item I<pakket>
 
-De pakketnaam met die padnaam/namen. Als het pakket “Multi-Arch: same” is, moet deze parameter de architectuurkwalificatie bevatten, anders zou er gewoonlijk B<geen> architectuurkwalificatie in moeten voorkomen (aangezien dit geen cross-grades zou toelaten, of de omschakeling van architectuurspecifiek naar architectuur B<all> en vice versa). Indien de parameter leeg is of weggelaten werd, zullen de omgevingsvariabelen B<DPKG_MAINTSCRIPT_PACKAGE> en B<DPKG_MAINTSCRIPT_ARCH> (zoals die door B<dpkg> ingesteld werden bij het uitvoeren van de scripts van de onderhouder) gebruikt worden om een pakketnaam met architectuurkwalificatie te genereren.
+De pakketnaam met die padnaam/namen. Als het pakket “Multi-Arch: same” is, moet deze parameter de architectuurkwalificatie bevatten, anders zou er gewoonlijk B<geen> architectuurkwalificatie in moeten voorkomen (aangezien dit geen cross-grades zou toelaten, of de omschakeling van architectuurspecifiek naar architectuur B<all> en vice versa). Indien de parameter leeg is of weggelaten werd, zullen de omgevingsvariabelen B<DPKG_MAINTSCRIPT_PACKAGE> en B<DPKG_MAINTSCRIPT_ARCH> (zoals die door B<dpkg> ingesteld werden bij het uitvoeren van de scripts van de beheerder) gebruikt worden om een pakketnaam met architectuurkwalificatie te genereren.
 
 =item B<-->
 
-Alle parameters van de scripts van de pakketonderhouder moeten doorgegeven worden aan het programma na B<-->.
+Alle parameters van de scripts van de beheerder moeten doorgegeven worden aan het programma na B<-->.
 
 =back
 
 =head1 TAKEN IN VERBAND MET CONFIGURATIEBESTANDEN
 
-Bij het opwaarderen van een pakket zal B<dpkg> niet automatisch een configuratiebestand van het type conffile (conffile = een configuratiebestand waarin B<dpkg> door de gebruiker gemaakte aanpassingen moet behouden) verwijderen indien dat niet in de nieuwe versie voorkomt. Daarvoor zijn twee belangrijke redenen. De eerste is dat het configuratiebestand per ongeluk weggevallen kan zijn en dat de volgende versie dit zou kunnen herstellen en dat gebruikers hun aanpassingen niet graag verloren zouden zien gaan. De tweede is om pakketten de mogelijkheid te bieden om over te gaan van een door dpkg onderhouden configuratiebestand naar een bestand dat onderhouden wordt door de scripts van de pakketonderhouder, meestal met behulp van gereedschap zoals debconf of ucf.
+Bij het opwaarderen van een pakket zal B<dpkg> niet automatisch een configuratiebestand van het type conffile (conffile = een configuratiebestand waarin B<dpkg> door de gebruiker gemaakte aanpassingen moet behouden) verwijderen indien dat niet in de nieuwe versie voorkomt. Daarvoor zijn twee belangrijke redenen. De eerste is dat het configuratiebestand per ongeluk weggevallen kan zijn en dat de volgende versie dit zou kunnen herstellen en dat gebruikers hun aanpassingen niet graag verloren zouden zien gaan. De tweede is om pakketten de mogelijkheid te bieden om over te gaan van een door dpkg onderhouden configuratiebestand naar een bestand dat onderhouden wordt door de scripts van de pakketbeheerder, meestal met behulp van gereedschap zoals debconf of ucf.
 
-Dit houdt in dat indien een pakket de bedoeling heeft om een configuratiebestand te hernoemen of te verwijderen, het dit expliciet moet doen en dat B<dpkg-maintscript-helper> kan gebruikt worden in scripts van de pakketonderhouder om het verwijderen en verplaatsen van configuratiebestanden op een elegante manier uit te voeren.
+Dit houdt in dat indien een pakket de bedoeling heeft om een configuratiebestand te hernoemen of te verwijderen, het dit expliciet moet doen en dat B<dpkg-maintscript-helper> kan gebruikt worden in scripts van de beheerder om het verwijderen en verplaatsen van configuratiebestanden op een elegante manier uit te voeren.
 
 =head2 Een configuratiebestand verwijderen
 
-Opmerking: In de meeste gevallen kan dit vervangen worden door de vlag C<remove-on-upgrade> in F<DEBIAN/conffiles> (sinds dpkg 1.20.6), zie L<deb-conffiles(5)>.
+B<Opmerking>: In de meeste gevallen kan dit vervangen worden door de vlag C<remove-on-upgrade> in F<DEBIAN/conffiles> (sinds dpkg 1.20.6), zie L<deb-conffiles(5)>.
 
-Indien een configuratiebestand volledig verwijderd wordt, moet het van schijf verwijderd worden, tenzij de gebruiker het aangepast heeft. Indien er lokale aanpassingen aangebracht werden, moeten die behouden blijven. Indien het opwaarderen van het pakket afbreekt, mag het pas in onbruik geraakte configuratiebestand niet verdwijnen.
+If a conffile is completely removed, it should be removed from disk, unless the user has modified it.  If there are local modifications, they should be preserved.  If the package upgrade aborts, the newly obsolete conffile should not disappear.
 
-Dit alles wordt toegepast door het volgende shell-fragment te plaatsen in de scripts B<preinst>, B<postinst> en B<postrm> van de pakketonderhouder:
+Dit alles wordt toegepast door het volgende shell-fragment te plaatsen in de scripts B<preinst>, B<postinst> en B<postrm> van de beheerder:
 
 =over 
 
@@ -95,7 +97,7 @@ Huidige toepassing: in het script B<preinst> controleert het of het configuratie
 
 Indien een configuratiebestand verplaatst wordt van de ene locatie naar een andere, moet u er voor zorgen dat eventuele wijzigingen die de gebruiker maakte mee gaan. Op het eerste gezicht kan dit lijken op een eenvoudige aanpassing aan het script B<preinst>. Dat zal evenwel als resultaat hebben dat de gebruiker door B<dpkg> gevraagd wordt om de aanpassingen aan het configuratiebestand goed te keuren, al is hij er in dit geval niet voor verantwoordelijk.
 
-Een vlotte manier van hernoemen kan gerealiseerd worden door het volgende shell-fragment te plaatsen in de scripts B<preinst>, B<postinst> en B<postrm> van de pakketonderhouder:
+Een vlotte manier van hernoemen kan gerealiseerd worden door het volgende shell-fragment te plaatsen in de scripts B<preinst>, B<postinst> en B<postrm> van de beheerder:
 
 =over 
 
@@ -113,13 +115,13 @@ Huidige toepassing: het script B<preinst> controleert of het configuratiebestand
 
 Bij het opwaarderen van een pakket zal B<dpkg> niet automatisch een symbolische koppeling omzetten naar een map of vice versa. Degradaties worden niet ondersteund en het pad wordt onveranderd gelaten.
 
-Opmerking: de symbolische koppelingen en mappen die tijdens deze omzettingen worden gemaakt, moeten mee opgenomen worden in de nieuwe pakketten, anders kan B<dpkg> ze niet verwijderen bij het wissen van het pakket.
+B<Opmerking>: de symbolische koppelingen en mappen die tijdens deze omzettingen worden gemaakt, moeten mee opgenomen worden in de nieuwe pakketten, anders kan B<dpkg> ze niet verwijderen bij het wissen van het pakket.
 
 =head2 Een symbolische koppeling omzetten naar een map
 
 Indien een symbolische koppeling veranderd wordt naar een echte map, moet u er voor zorgen dat de symbolische koppeling verwijderd wordt voor het uitpakken. Op het eerste gezicht kan dit een eenvoudige wijziging in het script B<preinst> lijken. Nochtans kan dit enige problemen opleveren in het geval de systeembeheerder de symbolische koppeling lokaal aanpaste of bij een degradatie van het pakket.
 
-Een vlotte manier van hernoemen kan gerealiseerd worden door het volgende shell-fragment te plaatsen in de scripts B<preinst>, B<postinst> en B<postrm> van de pakketonderhouder:
+Een vlotte manier van hernoemen kan gerealiseerd worden door het volgende shell-fragment te plaatsen in de scripts B<preinst>, B<postinst> en B<postrm> van de beheerder:
 
 =over 
 
@@ -137,7 +139,7 @@ Huidige toepassing: het script B<preinst> gaat na of de symbolische koppeling be
 
 Indien een echte map omgezet wordt naar een symbolische koppeling, moet u ervoor zorgen dat de map verwijderd wordt voor het uitpakken. Dit kan op het eerste gezicht een eenvoudige aanpassing aan het script B<preinst> lijken. Nochtans kan dit enige problemen opleveren in het geval de map configuratiebestanden bevat, padnamen die eigendom zijn van andere pakketten of lokaal aangemaakte padnamen, of in het geval het pakket gedegradeerd wordt.
 
-Een elegante omschakeling kan gerealiseerd worden door het volgende shell-fragment op te nemen in de scripts B<preinst>, B<postinst> en B<postrm> van de pakketonderhouder:
+Een elegante omschakeling kan gerealiseerd worden door het volgende shell-fragment op te nemen in de scripts B<preinst>, B<postinst> en B<postrm> van de beheerder:
 
 =over 
 
@@ -153,7 +155,7 @@ Huidige toepassing: het script B<preinst> controleert of de map bestaat en geen 
 
 =head1 DE INTEGRATIE IN PAKKETTEN
 
-Gelieve bij het gebruiken van een hulpmiddel voor het verpakken na te gaan of er geen systeemeigen integratie in B<dpkg-maintscript-helper> van bestaat, wat het leven voor u makkelijker zou maken. Zie bijvoorbeeld B<dh_installdeb>(1).
+Gelieve bij het gebruiken van een hulpmiddel voor het verpakken na te gaan of er geen systeemeigen integratie in B<dpkg-maintscript-helper> van bestaat, wat het leven voor u makkelijker zou maken. Zie bijvoorbeeld L<dh_installdeb(1)>.
 
 Gegeven het feit dat B<dpkg-maintscript-helper> gebruikt wordt in het script B<preinst>, houdt een onvoorwaardelijk gebruik ervan een voorafgaande vereiste in om te kunnen garanderen dat de benodigde versie van B<dpkg> voordien uitgepakt werd. De benodigde versie hangt af van het gebruikte commando. Voor B<rm_conffile> en B<mv_conffile> is dat 1.15.7.2. Voor B<symlink_to_dir> en B<dir_to_symlink> is dat 1.17.14:
 
@@ -196,5 +198,5 @@ Stelt de kleurmodus in (sinds dpkg 1.19.1). Waarden die momenteel gebruikt mogen
 
 =head1 ZIE OOK
 
-B<dh_installdeb>(1).
+L<dh_installdeb(1)>.
 

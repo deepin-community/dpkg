@@ -174,7 +174,7 @@ Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement ac
 
 =item B<SOURCE_DATE_EPOCH>
 
-Si cette option est utilisée, elle sera utilisée comme horodatage (en seconde à partir de S<« l'epoch »)> dans le conteneur B<ar>(5) de B<deb-split>(5).
+If set, it will be used as the timestamp (as seconds since the epoch) in the L<deb-split(5)>'s L<ar(5)> container.
 
 =back
 
@@ -190,6 +190,14 @@ Les noms de fichiers utilisés dans ce répertoire sont dans un format particuli
 
 =back
 
+=head1 SECURITY
+
+Examining or joining untrusted split package archives should be considered a security boundary, and any breakage of that boundary stemming from these operations should be considered a security vulnerability.  Performing these operations over untrusted data as root is strongly discouraged.
+
+Auto-accumulating and discarding split package parts are considered privileged operations that might allow root escalation.  These operations must never be delegated to an untrusted user or be done on untrusted packages, as that might allow root access to the system.
+
+Splitting package archives should only be performed over trusted data.
+
 =head1 BOGUES
 
 On ne peut pas obtenir tous les détails voulus sur les paquets présents dans la file à moins d'aller voir soi-même dans le répertoire de la file.
@@ -198,7 +206,7 @@ On ne peut pas facilement savoir si un fichier est vraiment la partie d'un paque
 
 =head1 VOIR AUSSI
 
-B<deb>(5), B<deb-control>(5), B<dpkg-deb>(1), B<dpkg>(1).
+L<deb(5)>, L<deb-control(5)>, L<dpkg-deb(1)>, L<dpkg(1)>.
 
 
 =head1 TRADUCTION

@@ -22,7 +22,7 @@ I<nom-du-fichier>B<.deb>
 
 =head1 DESCRIPTION
 
-Le format de fichier B<.deb> correspond aux paquets binaires Debian. Cette page de manuel décrit l'B<ancien> format, utilisé avant la version 0.93 de Debian. Veuillez consulter B<deb>(5) pour les informations sur le nouveau format.
+The B<.deb> format is the Debian binary package file format.  This manual page describes the B<old> format, used before Debian 0.93.  Please see L<deb(5)> for details of the new format.
 
 =head1 FORMAT
 
@@ -42,7 +42,7 @@ La seconde archive compressée avec gzip correspond à l'archive du système de 
 
 =head1 VOIR AUSSI
 
-B<deb>(5), B<dpkg-deb>(1), B<deb-control>(5).
+L<deb(5)>, L<deb-control(5)>, L<dpkg-deb(1)>.
 
 
 =head1 TRADUCTION

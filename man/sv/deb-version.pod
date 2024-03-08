@@ -72,7 +72,7 @@ Tildetecknets och dess speciella sorteringsegenskaper introducerades i dpkg 1.10
 
 =head1 SE ÄVEN
 
-B<deb-control>(5), B<deb>(5), B<dpkg>(1)
+L<deb-control(5)>, L<deb(5)>, L<dpkg(1)>
 
 
 =head1 ÖVERSÄTTNING

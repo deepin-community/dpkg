@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb-src-files - Formato Debian de distribuição de ficheiros
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<debian/files>
 
@@ -44,7 +44,7 @@ Este ficheiro não se destina a ser modificado directamente, por favor use um de
 
 =head1 VEJA TAMBÉM
 
-B<dpkg-genchanges>(1), B<dpkg-distaddfile>(1).
+L<dpkg-genchanges(1)>, L<dpkg-distaddfile(1)>.
 
 
 =head1 TRADUÇÃO

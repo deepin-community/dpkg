@@ -30,7 +30,7 @@ I<~/.dpkg.cfg>
 
 =head1 VEJA TAMBÉM
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 TRADUÇÃO

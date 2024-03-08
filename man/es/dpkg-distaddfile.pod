@@ -72,7 +72,7 @@ La lista de ficheros generados que son parte de los datos subidos en proceso. Pu
 
 =head1 VÉASE TAMBIÉN
 
-B<deb-src-files>(5).
+L<deb-src-files(5)>.
 
 
 =head1 TRADUCTOR

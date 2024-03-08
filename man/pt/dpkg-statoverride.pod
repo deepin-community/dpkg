@@ -16,13 +16,13 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-statoverride - sobrepõe a propriedade e o modo dos ficheiros
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-statoverride> [I<option>...] I<command>
 
 =head1 DESCRIÇÃO
 
-“B<stat overrides>” são um modo de dizer B<dpkg>(1) para usar um dono ou modo diferente para um caminho quando um pacote é instalado (isto aplica-se a qualquer objecto de sistema de ficheiros com que o B<dpkg> lide, incluindo directórios, dispositivos, etc.). Isto pode ser usado para forçar programas que são normalmente definidos a um uid a serem instalados sem uma bandeira setuid, ou apenas executável por um determinado grupo.
+“B<stat overrides>” are a way to tell L<dpkg(1)> to use a different owner or mode for a path when a package is installed (this applies to any filesystem object that B<dpkg> handles, including directories, devices, etc.).  This can be used to force programs that are normally setuid to be install without a setuid flag, or only executable by a certain group.
 
 B<dpkg-statoverride> é um utilitário para gerir sobreposições de estatísticas. Tem três funções básicas: adicionar, remover e listar sobreposições.
 
@@ -80,17 +80,31 @@ Define o directório raiz para B<directory>, o que define o directório de insta
 
 Força ou recusa (B<no-force> e B<refuse> significam o mesmo) a fazer algumas coisas (desde dpkg 1.19.5).  I<things> é uma lista separada por vírgulas de coisas especificadas em baixo. B<--force-help> mostra uma mensagem a descreve-las. A coisas marcadas com (*) já são forçadas por predefinição.
 
-I<Aviso: Estas opções são maioritariamente destinadas a serem usadas apenas por experts. Usa-las sem total conhecimento dos seus efeitos pode danificar todo o seu sistema.>
+I<Aviso>: Estas opções são maioritariamente destinadas a serem usadas apenas por experts. Usa-las sem total conhecimento dos seus efeitos pode danificar todo o seu sistema.
 
-B<all>: Liga (ou desliga) todas as opções de forçar.
+=over 4
 
-B<statoverride-add>: Sobrescreve uma sobreposição de estatística existente quando a adiciona (desde dpkg 1.19.5).
+=item B<all>:
 
-B<statoverride-remove>: Ignora uma sobreposição de estatística em falta quando a remove (desde dpkg 1.19.5).
+Liga (ou desliga) todas as opções de forçar.
 
-B<security-mac>(*): Usa segurança baseada em Mandatory Access Controls (MAC) específica da plataforma quando instala ficheiros no sistema de ficheiros (desde dpkg 1.19.5). Em sistemas Linux a implementação usa SELinux.
+=item B<statoverride-add>:
 
-B<not-root>: Tenta (des)instalar coisas mesmo não sendo root (desde dpkg 1.21.8).
+Sobrescreve uma sobreposição de estatística existente quando a adiciona (desde dpkg 1.19.5).
+
+=item B<statoverride-remove>:
+
+Ignora uma sobreposição de estatística em falta quando a remove (desde dpkg 1.19.5).
+
+=item B<security-mac>(*):
+
+Usa segurança baseada em Mandatory Access Controls (MAC) específica da plataforma quando instala ficheiros no sistema de ficheiros (desde dpkg 1.19.5). Em sistemas Linux a implementação usa SELinux.
+
+=item B<not-root>:
+
+Tenta (des)instalar coisas mesmo não sendo root (desde dpkg 1.21.8).
+
+=back
 
 =item B<--force>
 
@@ -158,13 +172,13 @@ Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B
 
 Ficheiro que contém a lista actual de sobreposições de estados do sistema. Está localizado no directório de administração do <dpkg>, juntamente com outros ficheiros importantes para o B<dpkg>, como I<status> ou I<available>.
 
-B<Nota:> O B<dpkg-statoverride> preserva uma copia antiga deste ficheiro, com a extensão "-old", antes de o substituir pelo novo.
+B<Nota>: O B<dpkg-statoverride> preserva uma copia antiga deste ficheiro, com a extensão "-old", antes de o substituir pelo novo.
 
 =back
 
 =head1 VEJA TAMBÉM
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 TRADUÇÃO

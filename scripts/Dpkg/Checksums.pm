@@ -15,24 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::Checksums;
-
-use strict;
-use warnings;
-
-our $VERSION = '1.04';
-our @EXPORT = qw(
-    checksums_is_supported
-    checksums_get_list
-    checksums_get_property
-);
-
-use Exporter qw(import);
-use Digest;
-
-use Dpkg::Gettext;
-use Dpkg::ErrorHandling;
-
 =encoding utf8
 
 =head1 NAME
@@ -44,6 +26,25 @@ Dpkg::Checksums - generate and manipulate file checksums
 This module provides a class that can generate and manipulate
 various file checksums as well as some methods to query information
 about supported checksums.
+
+=cut
+
+package Dpkg::Checksums 1.04;
+
+use strict;
+use warnings;
+
+our @EXPORT = qw(
+    checksums_is_supported
+    checksums_get_list
+    checksums_get_property
+);
+
+use Exporter qw(import);
+use Digest;
+
+use Dpkg::Gettext;
+use Dpkg::ErrorHandling;
 
 =head1 FUNCTIONS
 
@@ -227,6 +228,7 @@ sub add_from_string {
 	    error(g_('invalid line in %s checksums string: %s'),
 		  $alg, $checksum);
 	}
+        ## no critic (RegularExpressions::ProhibitCaptureWithoutTest)
 	my ($sum, $size, $file) = ($1, $2, $3);
 	if (not $opts{update} and exists($checksums->{$file}{$alg})
 	    and $checksums->{$file}{$alg} ne $sum) {
@@ -246,7 +248,7 @@ sub add_from_string {
 
 =item $ck->add_from_control($control, %opts)
 
-Read checksums from Checksums-* fields stored in the Dpkg::Control object
+Read checksums from Checksums-* fields stored in the L<Dpkg::Control> object
 $control. It uses $self->add_from_string() on the field values to do the
 actual work.
 
@@ -358,7 +360,7 @@ sub has_strong_checksums {
 =item $ck->export_to_string($alg, %opts)
 
 Return a multi-line string containing the checksums of type $alg. The
-string can be stored as-is in a Checksum-* field of a Dpkg::Control
+string can be stored as-is in a Checksum-* field of a L<Dpkg::Control>
 object.
 
 =cut
@@ -377,7 +379,7 @@ sub export_to_string {
 
 =item $ck->export_to_control($control, %opts)
 
-Export the checksums in the Checksums-* fields of the Dpkg::Control
+Export the checksums in the Checksums-* fields of the L<Dpkg::Control>
 $control object.
 
 =cut

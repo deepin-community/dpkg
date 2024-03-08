@@ -76,7 +76,7 @@ Ces membres doivent apparaître dans cet ordre exact. Les implémentations actue
 
 =head1 VOIR AUSSI
 
-B<deb>(5), B<dpkg-split>(1).
+L<deb(5)>, L<dpkg-split(1)>.
 
 
 =head1 TRADUCTION

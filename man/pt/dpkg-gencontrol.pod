@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-gencontrol - gera ficheiros de controle Debian
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-gencontrol> [I<option>...]
 
@@ -40,7 +40,7 @@ Define o número de versão do pacote binário que será gerado.
 
 =item B<-V>I<name>B<=>I<value>
 
-Define uma variável de substituição de resultado. Veja B<deb-substvars>(5) para discussão sobre substituição de resultado.
+Set an output substitution variable.  See L<deb-substvars(5)> for discussion of output substitution.
 
 =item B<-T>I<substvars-file>
 
@@ -68,7 +68,7 @@ Lê ou escreve a lista de ficheiros a ser enviada para aqui, em vez de usar B<de
 
 =item B<-F>I<changelog-format>
 
-Especifica o formato do registo de alterações. Veja B<dpkg-parsechangelog>(1) para informação acerca dos formatos alternativos.
+Specifies the format of the changelog.  See L<dpkg-parsechangelog(1)> for information about alternative formats.
 
 =item B<-p>I<package>
 
@@ -130,7 +130,7 @@ A lista de ficheiros gerados que fazem parte do envio a ser preparado. B<dpkg-ge
 
 =head1 VEJA TAMBÉM
 
-B<deb-substvars>(5), B<deb-src-control>(5), B<deb-changelog>(5), B<deb-control>(5).
+L<deb-substvars(5)>, L<deb-src-control(5)>, L<deb-changelog(5)>, L<deb-control(5)>.
 
 
 =head1 TRADUÇÃO

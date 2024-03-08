@@ -76,5 +76,5 @@ Deze elementen moeten exact in die volgorde voorkomen. De huidige implementaties
 
 =head1 ZIE OOK
 
-B<deb>(5), B<dpkg-split>(1).
+L<deb(5)>, L<dpkg-split(1)>.
 

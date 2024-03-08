@@ -69,7 +69,7 @@ L'architecture de l'hôte actuel (c'est-à-dire l'architecture pour laquelle le 
 
 =item B<vendor:Nom>
 
-Le nom du fabriquant actuel (depuis S<dpkg 1.20.0).> Cette valeur vient du champ B<Vendor> du fichier d'origine du fabricant actuel, comme B<dpkg-vendor>(1) pourrait le récupérer.
+The current vendor name (since dpkg 1.20.0).  This value comes from the B<Vendor> field for the current vendor's origin file, as L<dpkg-vendor(1)> would retrieve it.
 
 =item B<vendor:Id>
 
@@ -103,19 +103,19 @@ La description étendue du paquet source, extraite du champ B<Description> du pa
 
 La taille approximative de tous les fichiers installés du paquet. Cette valeur est copiée dans le champ adéquat du fichier S<« control »> ; quand on fixe cette variable, cela modifie la valeur de ce champ. Quand elle est indéterminée, B<dpkg-gencontrol> calcule la valeur par défaut en additionnant la taille de chaque fichier ordinaire et lien symbolique arrondie en unité d'un kio utilisée et sur la base d'un kio pour n'importe quel type d'objet du système de fichiers, les liens physiques étant comptés une seule fois comme des fichiers ordinaires.
 
-S<B<Remarque> :> Il faut tenir compte que cela ne peut jamais être qu'une approximation dans la mesure où la taille véritablement occupée sur un système installé dépend largement du système de fichiers utilisé et de ses paramètres, ce qui pourrait finir par l'utilisation de plus ou moins d'espace que ce qui est spécifié dans ce champ.
+B<Note>: Take into account that this can only ever be an approximation, as the actual size used on the installed system will depend greatly on the filesystem used and its parameters, which might end up using either more or less space than the specified in this field.
 
 =item B<Extra-Size>
 
 L'espace disque supplémentaire utilisé pour l'installation du paquet. Quand on fixe cette variable, on ajoute sa valeur à la valeur de la variable B<Installed-Size> (qu'elle soit définie explicitement ou calculée par défaut) avant qu'elle soit copiée dans le champ B<Installed-Size> du fichier S<« control ».>
 
-=item B<S:>I<nom-de-champ>
+=item B<S:>I<field-name>
 
-La valeur du champ I<nom-de-champ> du paragraphe source (qui doit être classiquement en majuscules, depuis S<dpkg 1.18.11).> Quand on fixe ces variables, cela ne prend effet que là où elles sont explicitement développées. Ces variables ne sont disponibles que lors de la création des fichiers de contrôle binaires.
+The value of the source stanza field I<field-name> (which must be given in the canonical capitalization; since dpkg 1.18.11).  Setting these variables has no effect other than on places where they are expanded explicitly. These variables are only available when generating binary control files.
 
-=item B<F:>I<nom-de-champ>
+=item B<F:>I<field-name>
 
-La valeur du champ I<nom-de-champ> affichée en sortie (qui doit être classiquement en majuscules). Quand on fixe ces variables, cela ne prend effet que là où elles sont explicitement développées.
+The value of the output field I<field-name> (which must be given in the canonical capitalization).  Setting these variables has no effect other than on places where they are expanded explicitly.
 
 =item B<Format>
 
@@ -151,7 +151,7 @@ La liste des variables de substitution et leurs valeurs.
 
 =head1 VOIR AUSSI
 
-B<dpkg>(1), B<dpkg-vendor>(1), B<dpkg-genchanges>(1), B<dpkg-gencontrol>(1), B<dpkg-shlibdeps>(1), B<dpkg-source>(1).
+L<dpkg(1)>, L<dpkg-vendor(1)>, L<dpkg-genchanges(1)>, L<dpkg-gencontrol(1)>, L<dpkg-shlibdeps(1)>, L<dpkg-source(1)>.
 
 
 =head1 TRADUCTION

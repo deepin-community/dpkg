@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 deb-postinst - script de maintainer pós-instalação do pacote
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<DEBIAN/postinst>
 
@@ -58,7 +58,7 @@ Se I<prerm> falhar durante B<remove in-favour> para substituição devido a conf
 
 =head1 VEJA TAMBÉM
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 TRADUÇÃO

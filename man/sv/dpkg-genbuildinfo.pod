@@ -24,7 +24,7 @@ B<dpkg-genbuildinfo> [I<flagga>...]
 
 B<dpkg-genbuildinfo> läser information från ett uppackat och byggt Debiankällkodsträd och från de filer det har genererat, och genererar en styrfil som beskriver byggmiljön och byggartifakterna (B<.buildinfo>-filen).
 
-Kommandot introducerades i dpkg 1.18.11.
+Programmet introducerades i dpkg 1.18.11.
 
 =head1 FLAGGOR
 
@@ -74,7 +74,7 @@ Anger var  listan över filer som har producerats av bygget är, istället för 
 
 =item B<-F>I<ändringsloggformat>
 
-Anger format på ändringsloggen. Se B<dpkg-parsechangelog>(1) för information om alternativa format.
+Anger format på ändringsloggen. Se L<dpkg-parsechangelog(1)> för information om alternativa format.
 
 =item B<-O>[I<filnamn>]
 
@@ -146,7 +146,7 @@ Listan över genererade filer. B<dpkg-genbuildinfo> läser data här när B<.bui
 
 =head1 SE ÄVEN
 
-B<deb-buildinfo>(5).
+L<deb-buildinfo(5)>.
 
 
 =head1 ÖVERSÄTTNING

@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NAMN
 
-deb-control - huvudstyrfilsformat för Debians binärpaket
+deb-control - styrfilsformat för Debians binärpaket
 
 =head1 SYNOPS
 
@@ -22,7 +22,7 @@ I<DEBIAN/control>
 
 =head1 BESKRIVNING
 
-Varje Debianbinärpaket innehåller en fil B<control> i posten B<control>, och dess L<deb822(5)>-format är en delmängd av huvud-B<debian/control>-filen från Debiankällkodspaketen, se B<deb-src-control>(5).
+Varje Debianbinärpaket innehåller en fil B<control> i posten B<control>, och dess L<deb822(5)>-format är en delmängd av B<debian/control>-filen från Debiankällkodspaketen, se B<deb-src-control>(5).
 
 Filen innehåller ett antal fält. Varje fält börjar med en etikett, såsom B<Package> eller B<Version> (skiftlägesoberoende), följt av ett kolontecken och fältets kropp (skiftlägesberoende såvida inte annat anges). Fält avdelas endast av fältetiketter. Med andra ord kan texten i fälten spänna över flera rader, men installationsverktygen kommer oftast att slå samman rader när kroppen tolkas (förutom när det gäller fältet B<Description>, se nedan).
 
@@ -40,7 +40,7 @@ Detta fält anger paketets typ. B<udeb> används för storleksbegränsade paket 
 
 =item B<Version:> I<versionssträng> (krävs)
 
-Vanligtvis är detta det ursprungliga paketets versionsnummer på den form programmets författare använder. Den kan även innehålla ett Debianuppdateringsnummer (för paket vars källa är utanför Debian). Exakt format och sorteringsalgoritm beskrivs i B<deb-version>(7).
+Vanligtvis är detta det ursprungliga paketets versionsnummer på den form programmets författare använder. Den kan även innehålla ett Debianuppdateringsnummer (för paket vars källa är utanför Debian). Exakt format och sorteringsalgoritm beskrivs i L<deb-version(7)>.
 
 =item B<Maintainer:> I<fullt-namn-epost> (rekommenderas)
 
@@ -214,7 +214,7 @@ Det här fältet används för att ange en blankstegsavdelad lista med byggprofi
 
 =item B<Auto-Built-Package:> I<orsakslista>
 
-Det här fältet innehåller en blankstegsavdelad lista med orsaker till varför det här paketet autogenererades. Binärpaket som markerats med det här fältet kommer inta dyka upp i huvud-källkodsstyrfilen I<debian/control>. Den enda orsak som används är för närvarande B<debug-symbols> (felsökningssymboler).
+Det här fältet innehåller en blankstegsavdelad lista med orsaker till varför det här paketet autogenererades. Binärpaket som markerats med det här fältet kommer inta dyka upp i mall-källkodsstyrfilen I<debian/control>. Den enda orsak som används är för närvarande B<debug-symbols> (felsökningssymboler).
 
 =item B<Build-Ids:> I<elf-bygg-id-lista>
 
@@ -252,7 +252,7 @@ Fältet B<Build-Ids> använder ett ganska allmänt namn utanför sitt ursprungli
 
 =head1 SE ÄVEN
 
-L<deb822(5)>, B<deb-src-control>(5), B<deb>(5), B<deb-version>(7), B<debtags>(1), B<dpkg>(1), B<dpkg-deb>(1).
+L<deb822(5)>, L<deb-src-control(5)>, L<deb(5)>, L<deb-version(7)>, L<debtags(1)>, L<dpkg(1)>, L<dpkg-deb(1)>.
 
 
 =head1 ÖVERSÄTTNING

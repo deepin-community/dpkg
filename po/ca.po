@@ -1,5 +1,7 @@
-# Catalan translation of Dpkg.
+# Translation of dpkg to Catalan
 # Copyright © 2001-2006, 2008-2010, 2012, 2014-2015 Software in the Public Interest, Inc.
+# This file is distributed under the same license as the dpkg package.
+#
 # Antoni Bella <bella5@teleline.es>, 2001-2002.
 # Jordi Mallach <jordi@debian.org>, 2002-2006, 2008-2010, 2015.
 # Jordà Polo <jorda@ettin.org>, 2006.
@@ -9,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.21.18\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
-"PO-Revision-Date: 2023-01-11 23:20+0100\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
+"PO-Revision-Date: 2023-12-17 20:02+0100\n"
 "Last-Translator: Guillem Jover <guillem@debian.org>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
 "Language: ca\n"
@@ -184,6 +186,10 @@ msgstr "no s'ha pogut reposicionar"
 #, c-format
 msgid "unable to execute %s (%s)"
 msgstr "no es pot executar %s (%s)"
+
+#: lib/dpkg/command.c
+msgid "PATH is not set"
+msgstr "PATH no està establert"
 
 #: lib/dpkg/compress.c
 #, c-format
@@ -1160,36 +1166,36 @@ msgstr "<estat del paquet i descriptor de fitxer de progrés>"
 msgid "unable to write to status fd %d"
 msgstr "no es pot escriure al descriptor de fitxer d'estat %d"
 
-#: lib/dpkg/mlib.c utils/update-alternatives.c
+#: lib/dpkg/mustlib.c utils/update-alternatives.c
 msgid "failed to allocate memory"
 msgstr "no s'ha pogut assignar memòria"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "failed to dup for fd %d"
 msgstr "no s'ha pogut fer «dup» per al fd %d"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "failed to dup for std%s"
 msgstr "no s'ha pogut fer «dup» per a std%s"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 msgid "failed to create pipe"
 msgstr "no s'ha pogut crear un conducte"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "error writing to '%s'"
 msgstr "s'ha produït un error en escriure a «%s»"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "unable to read filedescriptor flags for %.250s"
 msgstr ""
 "no es poden llegir las propietats del descriptor de fitxers per a %.250s"
 
-#: lib/dpkg/mlib.c
+#: lib/dpkg/mustlib.c
 #, c-format
 msgid "unable to set close-on-exec flag for %.250s"
 msgstr "no es pot establir l'atribut close-on-exec per a «%.250s»"
@@ -1615,6 +1621,13 @@ msgstr "el nom del paquet en l'especificador «%s%s%s» és il·legal: %s"
 msgid "illegal architecture name in specifier '%s:%s': %s"
 msgstr "el nom de l'arquitectura en l'especificador «%s:%s» és il·legal: %s"
 
+#. TRANSLATORS: This is part of the progress output, it is a decimal
+#. * percentage.
+#: lib/dpkg/progress.c
+#, c-format
+msgid "%d%%"
+msgstr "%d%%"
+
 #: lib/dpkg/report.c utils/update-alternatives.c
 msgid "warning"
 msgstr "avís"
@@ -1924,14 +1937,14 @@ msgid "unexpected end of file reading '%.250s'"
 msgstr "s'ha trobat un final del fitxer inesperat en llegir «%.250s»"
 
 #: lib/dpkg/varbuf.c
-msgid "error formatting string into varbuf variable"
-msgstr "s'ha produït un error en formatar la cadena a una variable varbuf"
-
-#: lib/dpkg/varbuf.c
 #, c-format
 msgid "cannot grow varbuf to size %zu; it would overflow"
 msgstr ""
 "no es pot augmentar la mida del “varbuf” a %zu; es produiria desbordament"
+
+#: lib/dpkg/varbuf.c
+msgid "error formatting string into varbuf variable"
+msgstr "s'ha produït un error en formatar la cadena a una variable varbuf"
 
 #: src/common/force.c
 msgid "Set all force options"
@@ -2060,7 +2073,7 @@ msgstr "Desinstal·la un paquet essencial"
 #: src/common/force.c
 #, c-format
 msgid ""
-"%s forcing options - control behaviour when problems found:\n"
+"%s forcing options - control behavior when problems found:\n"
 "  warn but continue:  --force-<thing>,<thing>,...\n"
 "  stop with error:    --refuse-<thing>,<thing>,... | --no-force-<thing>,...\n"
 " Forcing things:\n"
@@ -2609,6 +2622,11 @@ msgstr " %7jd octets, %5d línies %c  %-20.127s %.127s\n"
 
 #: src/deb/info.c
 #, c-format
+msgid " %7jd bytes, %5d lines   %c  %.127s\n"
+msgstr " %7jd octets, %5d línies %c  %.127s\n"
+
+#: src/deb/info.c
+#, c-format
 msgid "     not a plain file          %.255s\n"
 msgstr "     no és un fitxer normal    %.255s\n"
 
@@ -2847,6 +2865,11 @@ msgstr "es necessita una opció d'acció"
 #, c-format
 msgid "invalid compressor parameters: %s"
 msgstr "paràmetres de compressió invàlids: %s"
+
+#: src/deb/main.c
+#, c-format
+msgid "unsupported deb format '%d.%d' with non-uniform compression"
+msgstr "el format deb «%d.%d» no està admès amb compressió no uniforme"
 
 #: src/deb/main.c
 #, c-format
@@ -3269,6 +3292,7 @@ msgid "--%s takes no arguments"
 msgstr "--%s no accepta cap argument"
 
 #: src/split/queue.c
+#, c-format
 msgid "Junk files left around in the depot directory:\n"
 msgstr "Queden fitxers de brutícia al directori de dipòsit:\n"
 
@@ -3288,6 +3312,7 @@ msgid " %s (not a plain file)\n"
 msgstr " %s (no és un fitxer normal)\n"
 
 #: src/split/queue.c
+#, c-format
 msgid "Packages not yet reassembled:\n"
 msgstr "Paquets encara sense reensamblar:\n"
 
@@ -3372,7 +3397,7 @@ msgstr "--split pren com molt un nom de fitxer origen i un prefix de destí"
 msgid "Use --help for help about diverting files."
 msgstr "Empreu --help per a obtenir ajuda sobre la desviació de fitxers."
 
-#: src/divert/main.c src/statoverride/main.c utils/update-alternatives.c
+#: src/divert/main.c src/statoverride/main.c
 #, c-format
 msgid "Debian %s version %s.\n"
 msgstr "Debian %s versió %s.\n"
@@ -3934,7 +3959,7 @@ msgstr ""
 msgid "package '%s' is not available"
 msgstr "el paquet «%s» no està disponible"
 
-#: src/query/main.c src/main/packages.c
+#: src/query/main.c
 #, c-format
 msgid "--%s needs at least one package name argument"
 msgstr "--%s almenys necessita un nom de paquet com a argument"
@@ -5281,10 +5306,6 @@ msgid "installed"
 msgstr "instal·lat"
 
 #: src/main/help.c
-msgid "PATH is not set"
-msgstr "PATH no està establert"
-
-#: src/main/help.c
 #, c-format
 msgid "'%s' not found in PATH or not executable"
 msgstr "no s'ha trobat «%s» en el PATH o no és executable"
@@ -5742,6 +5763,12 @@ msgstr ""
 #, c-format
 msgid "--%s --pending does not take any non-option arguments"
 msgstr "--%s --pending no pren cap argument que no sigui una opció"
+
+#: src/main/packages.c
+#, c-format
+msgid "--%s (without --pending) needs at least one package name argument"
+msgstr ""
+"--%s (sense --pending) almenys necessita un nom de paquet com a argument"
 
 #: src/main/packages.c
 #, c-format
@@ -6457,6 +6484,11 @@ msgid ""
 msgstr ""
 "l'opció «--%s» és obsoleta; els paquets no disponibles es netegen "
 "automàticament"
+
+#: utils/update-alternatives.c
+#, c-format
+msgid "%s version %s.\n"
+msgstr "%s versió %s.\n"
 
 #: utils/update-alternatives.c
 #, c-format

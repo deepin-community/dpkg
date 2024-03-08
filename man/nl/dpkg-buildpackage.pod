@@ -28,7 +28,7 @@ B<dpkg-buildpackage> is een programma dat het proces van het bouwen van een Debi
 
 =item B<1.>
 
-Het bereidt de bouwomgeving voor door verschillende omgevingsvariabelen in te stellen(zie B<OMGEVING>), voert de uitbreiding (hook) B<init> uit en roept B<dpkg-source --before-build> aan (tenzij B<-T> of B<--target> gebruikt werd).
+Het voert de uitbreiding (hook) B<preinit> uit voordat een bronbestand wordt gelezen. Het bereidt de bouwomgeving voor door verschillende omgevingsvariabelen in te stellen(zie B<OMGEVING>), voert de uitbreiding B<init> uit en roept B<dpkg-source --before-build> aan (tenzij B<-T> of B<--target> gebruikt werd).
 
 =item B<2.>
 
@@ -52,7 +52,25 @@ Het voert de uitbreiding (hook) B<buildinfo> uit en roept B<dpkg-genbuildinfo> a
 
 =item B<7.>
 
-Het voert de uitbreiding (hook) B<changes> uit en roept B<dpkg-genchanges> aan om een bestand B<.changes> aan te maken. De naam van het B<.changes>-bestand is afhankelijk van het bouwtype en zal zo specifiek als nodig zijn, maar niet meer dan dat. Voor een bouw die B<any> bevat, zal de naam I<broncode-naam>B<_>I<binaire-versie>B<_>I<arch>B<.changes> zijn. Voor een bouw die B<all> bevat, zal de naam I<broncode-naam>B<_>I<binaire-versie>B<_>B<all.changes> zijn. En voor een bouw die B<source> bevat, zal de naam I<broncode-naam>B<_>I<broncode-versie>B<_>B<source.changes> zijn. Veel opties van B<dpkg-buildpackage> worden aan B<dpkg-genchanges> overgemaakt.
+Het voert de uitbreiding (hook) B<changes> uit en roept B<dpkg-genchanges> aan om een B<.changes>-bestand te genereren. De naam van het bestand B<.changes> zal afhangen van het type bouw en zal zo specifiek zijn als nodig, maar niet meer dan dat; de naam zal als volgt zijn:
+
+=over 
+
+=item I<broncode-naam>B<_>I<binaire-versie>B<_>I<arch>B<.changes>
+
+voor een bouw die B<any> bevat
+
+=item I<broncode-naam>B<_>I<binaire-versie>B<_>B<all.changes>
+
+voor een bouw die daarentegen B<all> bevat
+
+=item I<broncode-naam>B<_>I<broncode-versie>B<_>B<source.changes>.
+
+voor een bouw die daarentegen B<source> bevat
+
+=back
+
+Veel B<dpkg-buildpackage>-opties worden doorgestuurd naar B<dpkg-genchanges>.
 
 =item B<8.>
 
@@ -164,21 +182,21 @@ Enkel zinvol in samenhang met B<--target> (sinds dpkg 1.15.0). Vereist dat het d
 
 =item B<-C>I<beschrijving-van-de-wijzigingen>
 
-=item B<-m>I<adres-van-de-onderhouder>
+=item B<-m>I<adres-van-de-beheerder>
 
-=item B<-e>I<adres-van-de-onderhouder>
+=item B<-e>I<adres-van-de-beheerder>
 
 Wordt ongewijzigd doorgegeven aan B<dpkg-genchanges>. Zie de man-pagina ervan.
 
-=item B<--build-by=>I<adres-van-de-pakketonderhouder>
+=item B<--build-by=>I<adres-van-de-beheerder>
 
-=item B<--source--by=>I<adres-van-de-pakketonderhouder> (sinds dpkg 1.21.10)
+=item B<--source--by=>I<adres-van-de-beheerder> (sinds dpkg 1.21.10)
 
 Doorgeven als B<-m> aan B<dpkg-genchanges>. Zie de man-pagina ervan.
 
-=item B<--release-by=>I<adres-van-de-pakketonderhouder>
+=item B<--release-by=>I<adres-van-de-beheerder>
 
-=item B<--changed-by=>I<adres-van-de-pakketonderhouder> (sinds dpkg 1.21.10)
+=item B<--changed-by=>I<adres-van-de-beheerder> (sinds dpkg 1.21.10)
 
 Doorgeven als B<-e> aan B<dpkg-genchanges>. Zie de man-pagina ervan.
 
@@ -278,11 +296,51 @@ Optie I<optie> doorgeven aan het I<controlecommando> dat gespecificeerd werd met
 
 Stelt de opgegeven shell-code I<hook-commando> in als de uitbreiding (hook) I<hook-naam>, die zal uitgevoerd worden op de momenten die in de uitvoeringsstappen gepreciseerd worden (sinds dpkg 1.17.6). De uitbreidingen (hooks) zullen steeds uitgevoerd worden, zelfs als de volgende actie niet uitgevoerd wordt (met uitzondering voor de uitbreiding (hook) B<binary>). Alle uitbreidingen (hooks) zullen uitgevoerd worden in de map van de uitgepakte broncode.
 
+Sommige uitbreidingen (hooks) kunnen aanvullende informatie ontvangen via omgevingsvariabelen (sinds dpkg 1.22.0). Alle hooks krijgen hun hooknaam in de omgevingsvariabele B<DPKG_BUILDPACKAGE_HOOK_NAME> (sinds dpkg 1.22.0).
+
 B<Opmerking:> uitbreidingen (hooks) kunnen het bouwproces beïnvloeden en leiden tot het mislukken van de bouw als hun commando's falen. Wees dus alert voor onbedoelde consequenties.
 
 Momenteel worden de volgende I<hook-namen> ondersteund:
 
-B<init preclean source build binary buildinfo changes postclean check sign done>
+=over 
+
+=item B<preinit>
+
+=item B<init>
+
+=item B<preclean>
+
+=item B<source>
+
+Haalt B<DPKG_BUILDPACKAGE_HOOK_SOURCE_OPTIONS> op met de door spaties gescheiden lijsten met opties die worden doorgegeven aan de B<dpkg-source>-aanroep.
+
+=item B<build>
+
+Haalt B<DPKG_BUILDPACKAGE_HOOK_BUILD_TARGET> op met de naam van het aangeroepen bouwdoel uit B<debian/rules>, maar alleen als het wordt aangeroepen.
+
+=item B<binary>
+
+Haalt B<DPKG_BUILDPACKAGE_HOOK_BINARY_TARGET> op met de naam van het aangeroepen binaire doel uit B<debian/rules>, maar alleen als het wordt aangeroepen.
+
+=item B<buildinfo>
+
+Haalt B<DPKG_BUILDPACKAGE_HOOK_BUILDINFO_OPTIONS> op met de door spaties gescheiden lijsten met opties die worden doorgegeven aan de B<dpkg-genbuildinfo>-aanroep.
+
+=item B<changes>
+
+Haalt B<DPKG_BUILDPACKAGE_HOOK_CHANGES_OPTIONS> op met de door spaties gescheiden lijsten met opties die worden doorgegeven aan de B<dpkg-genchanges>-aanroep.
+
+=item B<postclean>
+
+=item B<check>
+
+Haalt B<DPKG_BUILDPACKAGE_HOOK_CHECK_OPTIONS> op met de door spaties gescheiden lijsten met opties die worden doorgegeven aan het aangeroepen controlecommando.
+
+=item B<sign>
+
+=item B<done>
+
+=back
 
 Het I<hook-commando> ondersteunt de volgende substitutie-indelingstekenreeksen, die er voorafgaand aan de uitvoering op toegepast zullen worden:
 
@@ -328,19 +386,25 @@ Een OpenPGP-backendinterface opgeven welke gebruikt moet worden bij het aanroepe
 
 De standaardinstelling is B<auto>, waarbij de beste beschikbare backend wordt gebruikt. De specifieke ondersteunde OpenPGP-backends in volgorde van voorkeur zijn:
 
-=over 2
+=over 4
 
-=item B<sop> (elke conforme Stateless OpenPGP-implementatie)
+=item B<sop>
 
-=item B<sq> (van Sequoia-PGP)
+(elke conforme Stateless OpenPGP-implementatie)
 
-=item B<gpg> (van GnuPG)
+=item B<sq>
+
+(van Sequoia-PGP)
+
+=item B<gpg>
+
+(van GnuPG)
 
 =back
 
 =item B<-p>, B<--sign-command=>I<ondertekeningscommando>
 
-Als B<dpkg-buildpackage> een OpenPGP backend-commando moet uitvoeren om een controlebestand (B<.dsc>) van de broncode of een bestand B<.changes> te ondertekenen, zal het I<ondertekeningscommando> uitvoeren (en indien nodig daarbij het B<PATH> doorzoeken) in plaats van het standaard of automatisch gedetecteerde backend-commando (de lange optie sinds dpkg 1.18.8). Aan I<ondertekeningscommando> zullen alle argumenten meegegeven worden die door B<--sign-backend> gedefinieerd zijn. I<ondertekeningscommando> mag geen spaties bevatten en geen andere shell-metatekens.
+Als B<dpkg-buildpackage> een OpenPGP backend-commando moet uitvoeren om een controlebestand (B<.dsc>) van de broncode, een B<.buildinfo>-bestand of een B<.changes>-bestand te ondertekenen, zal het I<ondertekeningscommando> uitvoeren (en indien nodig daarbij het B<PATH> doorzoeken) in plaats van het standaard of automatisch gedetecteerde backend-commando (de lange optie sinds dpkg 1.18.8). Aan I<ondertekeningscommando> zullen alle backend-specifieke argumenten meegegeven worden volgens de geselecteerde B<--sign-backend>. I<ondertekeningscommando> mag geen spaties bevatten en geen andere shell-metatekens.
 
 =item B<-k>, B<--sign-keyid=>I<sleutel-id>
 
@@ -352,7 +416,7 @@ Een OpenPGP sleutel-ID (hetzij een vingerafdruk of een gebruikers-ID) opgeven vo
 
 Een OpenPGP I<sleutel-bestand> opgeven dat de geheime sleutel bevat die moet worden gebruikt bij het ondertekenen van pakketten (sinds dpkg 1.21.10).
 
-Opmerking: uit veiligheidsoverwegingen kan het I<sleutel-bestand> best met een wachtwoord vergrendeld worden gehouden.
+B<Opmerking>: uit veiligheidsoverwegingen kan het I<sleutel-bestand> best met een wachtwoord vergrendeld worden gehouden.
 
 =item B<-us>, B<--unsigned-source>
 
@@ -450,9 +514,49 @@ Indien dit ingesteld werd, zal het gebruikt worden om de bestanden B<.changes>, 
 
 =item B<DEB_BUILD_OPTIONS>
 
-Indien dit ingesteld werd, bevat het een lijst van door spaties van elkaar gescheiden opties die het bouwproces kunnen beïnvloeden in I<debian/rules> en het gedrag van sommige dpkg-commando's.
+If set, it will contain a space-separated list of options that affect the behavior of some dpkg tools involved in package building, and might affect the package build process if the code in F<debian/rules> honors them.  These options can have parameters specified immediately after an equal sign (‘B<=>‘).  For options that support multiple parameters, these will not be separated by spaces, as these are reserved to separate options.
 
-Bij B<nocheck> zal de variabele B<DEB_CHECK_COMMAND> genegeerd worden. Bij B<parallel=>I<N> zal het aantal parallelle taken op I<N> ingesteld worden, maar de optie B<--jobs-try> heeft hierop voorrang.
+Hieronder volgen de opties die bekend zijn en worden ondersteund door dpkg-gereedschappen; andere opties die worden erkend door F<debian/rules> kunnen worden gedefinieerd door distributiespecifiek beleid.
+
+=over 
+
+=item B<parallel=>I<N>
+
+In het verpakkingsproces kan men in het bestand F<debian/rules> deze optie gebruiken om het bouwproces zo in te stellen dat I<N> parallelle taken worden gebruikt. Deze optie wordt overschreven door de opties B<--jobs> en B<--jobs-force>.
+
+=item B<nocheck>
+
+B<dpkg-buildpackage> negeert de variabele B<DEB_CHECK_COMMAND>. In het verpakkingsproces wordt van F<debian/rules> niet verwacht dat het testsuites uitvoert tijdens het bouwen.
+
+=item B<noopt>
+
+Als F<debian/rules> B<dpkg-buildflags> aanroept om de bouwvlaggen in te stellen, dan zullen deze zo worden ingesteld dat er geen optimalisaties mogelijk zijn.
+
+=item B<nostrip>
+
+In het verpakkingsproces moet F<debian/rules> ervoor zorgen dat geen foutopsporingsinformatie wordt verwijderd van objecten. Als F<debian/rules> het make-fragment B<mk/buildtools.mk> bevat, zal de make-variabele B<STRIP> deze optie respecteren.
+
+=item B<terse>
+
+B<dpkg-buildpackage> zal de L<make(1)>-vlag B<--no-print-directory> toevoegen aan de omgevingsvariabele B<MAKEFLAGS>. In het verpakkingsproces moet F<debian/rules> de breedsprakigheid beperken, maar niet helemaal stil zijn.
+
+=item B<hardening=>I<feature-spec>
+
+=item B<reproducible=>I<feature-spec>
+
+=item B<abi=>I<feature-spec>
+
+=item B<future=>I<feature-spec>
+
+=item B<qa=>I<feature-spec>
+
+=item B<optimize=>I<feature-spec>
+
+=item B<sanitize=>I<feature-spec>
+
+These are feature areas that control build flag features.  See L<dpkg-buildflags(1)> for further details.
+
+=back
 
 =item B<DEB_BUILD_PROFILES>
 
@@ -484,7 +588,7 @@ B<dpkg-architecture> wordt aangeroepen met de doorgegeven parameters B<-a> en B<
 
 =item B<DEB_RULES_REQUIRES_ROOT>
 
-Deze variabele wordt ingesteld op de waarde die verkregen wordt uit het veld B<Rules-Requires-Root> of vanuit de commandoregel. Indien ze ingesteld is, zal ze een geldige waarde zijn voor het veld B<Rules-Requires-Root>. Ze wordt gebruikt om B<debian/rules> te informeren of de specificatie B<rootless-builds.txt> ondersteund wordt.
+Deze variabele wordt ingesteld op de waarde die verkregen wordt uit het veld B<Rules-Requires-Root>, het niveau van dpkg-build-api of vanuit de commandoregel. Indien ze ingesteld is, zal ze een geldige waarde zijn voor het veld B<Rules-Requires-Root>. Ze wordt gebruikt om B<debian/rules> te informeren of de specificatie B<rootless-builds.txt> ondersteund wordt.
 
 =item B<DEB_GAIN_ROOT_CMD>
 
@@ -522,11 +626,15 @@ Tussen dpkg 1.14.17 en 1.16.1 exporteerde B<dpkg-buildpackage> compileervlaggen 
 
 B<dpkg-buildpackage> gebruikt sinds dpkg 1.16.2 de targets B<build-arch> en B<build-indep>. Deze targets zijn dus verplicht. Maar om te vermijden dat bestaande pakketten defect raken en om de overgang te vergemakkelijken, zal het, indien het broncodepakket niet zowel architectuuronafhankelijke als architectuurspecifieke binaire pakketten bouwt (sinds dpkg 1.18.8), terugvallen op het gebruik van het target B<build> indien B<make -f debian/rules -qn> I<bouwtarget> 2 teruggeeft als afsluitwaarde.
 
+=head1 BEVEILIGING
+
+Het bouwen van binaire of bronpakketten mag alleen worden uitgevoerd op basis van vertrouwde brongegevens.
+
 =head1 BUGS
 
 Het zou mogelijk moeten zijn om spaties en shell-metatekens en initiële argumenten op te geven voor I<commando-om-root-te-worden> en I<ondertekeningscommando>.
 
 =head1 ZIE OOK
 
-I<%PKGDOCDIR%/spec/rootless-builds.txt>, B<dpkg-source>(1), B<dpkg-architecture>(1), B<dpkg-buildflags>(1), B<dpkg-genbuildinfo>(1), B<dpkg-genchanges>(1), B<fakeroot>(1), B<lintian>(1), L<https://datatracker.ietf.org/doc/draft-dkg-openpgp-stateless-cli/>, B<sq>(1), B<gpg>(1).
+I<%PKGDOCDIR%/spec/rootless-builds.txt>, L<dpkg-source(1)>, L<dpkg-architecture(1)>, L<dpkg-buildflags(1)>, L<dpkg-genbuildinfo(1)>, L<dpkg-genchanges(1)>, L<fakeroot(1)>, L<lintian(1)>, L<https://datatracker.ietf.org/doc/draft-dkg-openpgp-stateless-cli/>, L<sq(1)>, L<gpg(1)>.
 

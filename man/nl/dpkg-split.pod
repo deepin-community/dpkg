@@ -174,7 +174,7 @@ Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen
 
 =item B<SOURCE_DATE_EPOCH>
 
-Indien dit ingesteld werd, zal het gebruikt worden als de tijdsaanduiding (timestamp) (in seconden sinds de epoch) in de B<ar>(5)-container van B<deb-split>(5).
+Indien dit ingesteld werd, zal het gebruikt worden als de tijdsaanduiding (timestamp) (in seconden sinds de epoch) in de L<ar(5)>-container van L<deb-split(5)>.
 
 =back
 
@@ -190,6 +190,14 @@ De bestandsnamen die in deze map gebruikt worden, gebruiken een indeling die eig
 
 =back
 
+=head1 BEVEILIGING
+
+Het onderzoeken of samenvoegen van niet-vertrouwde gesplitste pakketarchieven moet worden beschouwd als een grens van veiligheid en elke doorbreking van die grens als gevolg van deze handelingen moet worden beschouwd als een veiligheidslek. Het uitvoeren van deze operaties op basis van niet-vertrouwde gegevens als root wordt sterk afgeraden.
+
+Het automatisch verenigen of weggooien van onderdelen van gesplitste pakketten worden beschouwd als bevoorrechte bewerkingen die uitbreiding naar root-rechten mogelijk maken. Deze handelingen mogen nooit gedelegeerd worden naar een niet-vertrouwde gebruiker of uitgevoerd worden op niet-vertrouwde pakketten, omdat dit root-toegang tot het systeem mogelijk maakt.
+
+Het splitsen van pakketarchieven mag alleen worden uitgevoerd op basis van vertrouwde gegevens.
+
 =head1 BUGS
 
 Alle details over de pakketten die zich in de wachtrij bevinden, kunnen onmogelijk bekomen worden zonder zichzelf te verdiepen in de wachtrijmap.
@@ -198,5 +206,5 @@ Er bestaat geen eenvoudige manier om na te gaan of een bestand dat een onderdeel
 
 =head1 ZIE OOK
 
-B<deb>(5), B<deb-control>(5), B<dpkg-deb>(1), B<dpkg>(1).
+L<deb(5)>, L<deb-control(5)>, L<dpkg-deb(1)>, L<dpkg(1)>.
 

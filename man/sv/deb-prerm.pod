@@ -56,7 +56,7 @@ Innan paketet ersätts på grund av konflikt.
 
 =head1 SE ÄVEN
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 ÖVERSÄTTNING

@@ -26,6 +26,8 @@ B<dpkg-realpath> är ett verktyg (sedan dpkg 1.20.1) för att analysera ett sök
 
 Detta är avsett att användas av andra B<dpkg>-hjälpprogram, eller av utvecklarskript istället för att använda L<realpath(1)> eller L<readlink(1)> för att göra om sökvägsnamn till normalform, eftersom de sistnämnda kommandon inte stöder omvandling till normalform relativt till en annan rot än F</>.
 
+Programmet introducerades i dpkg 1.20.1.
+
 =head1 FLAGGOR
 
 =over 

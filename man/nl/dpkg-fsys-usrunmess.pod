@@ -64,7 +64,7 @@ De dpkg-databank vergrendelen.
 
 =item *
 
-Alle pakketten als half-geconfigureerd markeren om het uitvoeren af te dwingen van scripts van de onderhouder welke mogelijk bepaalde bestanden opnieuw moeten aanmaken.
+Alle pakketten als half-geconfigureerd markeren om het uitvoeren af te dwingen van scripts van de beheerder welke mogelijk bepaalde bestanden opnieuw moeten aanmaken.
 
 =item *
 
@@ -104,11 +104,13 @@ De registratie van B<policy-rc.d> ongedaan maken en de toestand van alternatives
 
 =back
 
-B<Opmerking>: Als je het programma uitvoert vanuit bepaalde shells, zoals L <bash (1)> of L <zsh (1)>, moet u na het uitvoeren van het programma mogelijk de shell vragen om alle herinnerde uitvoerbare locaties te vergeten met bijvoorbeeld C<hash -r>.
+B<Opmerking>: Als u het programma uitvoert vanuit bepaalde shells, zoals L<bash(1)> of L<zsh(1)>, moet u na het uitvoeren van het programma mogelijk de shell vragen om alle herinnerde uitvoerbare locaties te vergeten met bijvoorbeeld C<hash -r>.
 
 B<Opmerking>: Sommige mappen kunnen na de migratie achterblijven omdat ze niet-gevolgde bestanden bevatten. Zodra het script klaar is wordt een lijst afgedrukt voor verder onderzoek.
 
 B<Waarschuwing>: Merk op dat er een kans bestaat dat deze bewerking het systeem onbruikbaar of kapot maakt in geval van een plotselinge crash of een herstart, een onverwachte toestand van het systeem of mogelijke bugs in het script. Wees voorbereid met herstelmedia en overweeg om van tevoren back-ups te maken.
+
+Dit programma werd geïntroduceerd in dpkg 1.20.6.
 
 =head1 OPTIES
 

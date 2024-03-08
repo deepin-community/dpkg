@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-fsys-usrunmess - desfaz a confusão merged-/usr-via-aliased-dirs
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-fsys-usrunmess> [B<option>...]
 
@@ -109,6 +109,8 @@ B<Nota>: Quando se corre o programa a partir de alguma shells tais como L<bash(1
 B<Nota>: Alguns directórios podem demorar após a migração no caso de conterem ficheiros não acompanhados. É escrita uma lista assim que o script terminar para investigação posterior.
 
 B<Aviso>: Note que esta operação tem o potencial de tornar o sistema não utilizável ou quebrado em caso de uma pagarem súbita ou reinicio do sistema. estado inesperado do sistema, ou possíveis bugs no script. Esteja preparado com meio de recuperação e considere fazer cópias de salvaguarda antes.
+
+Este programa foi introduzido no dpkg 1.20.6.
 
 =head1 OPÇÕES
 

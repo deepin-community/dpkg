@@ -22,7 +22,7 @@ I<filename>B<.deb>
 
 =head1 説明
 
-B<.deb> 形式は Debian バイナリパッケージのファイル形式である。このマニュアルでは、Debian 0.93 以前に使用されていた B<旧>形式について説明する。新しい形式の詳細については B<deb>(5) を参照のこと。
+The B<.deb> format is the Debian binary package file format.  This manual page describes the B<old> format, used before Debian 0.93.  Please see L<deb(5)> for details of the new format.
 
 =head1 フォーマット
 
@@ -36,13 +36,13 @@ B<.deb> 形式は Debian バイナリパッケージのファイル形式であ�
 
 1 番目の tar ファイルは、制御情報を含む幾つかの平文ファイルからなる。中核となる制御情報を含む B<control> ファイルは必須である。
 
-In some very old archives, the files in the control tarfile may optionally be in a B<DEBIAN> subdirectory. In that case, the B<DEBIAN> subdirectory will be in the control tarfile too, and the control tarfile will have only files in that directory. Optionally the control tarfile may contain an entry for ‘B<.>’, that is, the current directory.
+In some very old archives, the files in the control tarfile may optionally be in a B<DEBIAN> subdirectory.  In that case, the B<DEBIAN> subdirectory will be in the control tarfile too, and the control tarfile will have only files in that directory.  Optionally the control tarfile may contain an entry for ‘B<.>’, that is, the current directory.
 
 2 番目の gzip 圧縮 tar ファイルはインストールされるファイルのアーカイブであり、インストールされるシステムのルートディレクトリからの相対パス名が格納されている。パス名の先頭にスラッシュ(/)はない。
 
 =head1 関連項目
 
-B<deb>(5), B<dpkg-deb>(1), B<deb-control>(5).
+L<deb(5)>, L<deb-control(5)>, L<dpkg-deb(1)>.
 
 
 =head1 翻訳者

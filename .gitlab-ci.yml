@@ -14,15 +14,24 @@ dist-check:
   stage: test
   script:
     - ./configure
-    - make distcheck
+    - make -j$(nproc) distcheck
 
-# Test whether the unit tests pass.
-unit-tests:
+# Test whether the author checks pass.
+author-check:
   stage: test
   script:
     - eatmydata apt -P pkg.dpkg.author-testing build-dep -qq -y .
     - ./configure
-    - make authorcheck TESTSUITEFLAGS=--verbose TEST_PARALLEL=$(nproc)
+    - make -j$(nproc) authorcheck
+           TESTSUITEFLAGS=--verbose TEST_PARALLEL=$(nproc)
+
+# Test whether the sanitized unit tests pass.
+unit-tests:
+  stage: test
+  script:
+    - ./configure --enable-compiler-sanitizer
+    - make -j$(nproc) -C lib check
+           TESTSUITEFLAGS=--verbose TEST_PARALLEL=$(nproc)
 
 # Test whether the unit tests pass on a VPATH build.
 vpath-tests:
@@ -31,14 +40,16 @@ vpath-tests:
     - mkdir -p build-tree
     - cd build-tree
     - ../configure
-    - make check TESTSUITEFLAGS=--verbose TEST_PARALLEL=$(nproc)
+    - make -j$(nproc) check
+           TESTSUITEFLAGS=--verbose TEST_PARALLEL=$(nproc)
 
 # Test whether we can build the shared library.
-shared-tests:
+shlib-tests:
   stage: test
   script:
     - AUTHOR_TESTING=1 ./configure --enable-shared
-    - make check TESTSUITEFLAGS=--verbose TEST_PARALLEL=$(nproc)
+    - make -j$(nproc) check
+           TESTSUITEFLAGS=--verbose TEST_PARALLEL=$(nproc)
 
 # Test whether the functional tests pass.
 func-tests:
@@ -46,6 +57,4 @@ func-tests:
   script:
     - ./configure
     - make
-    - cd tests
-    - echo "DPKG_BUILDTREE = $(realpath ..)" >>.pkg-tests.conf
-    - eatmydata make test
+    - eatmydata make -C tests test

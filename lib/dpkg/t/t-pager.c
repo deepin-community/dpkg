@@ -45,11 +45,13 @@ test_dup_file(int fd, const char *filename, int flags)
 static void
 test_pager_get_exec(void)
 {
-	const char *pager, *default_pager;
+	const char *pager;
 	int origfd = dup(STDOUT_FILENO);
 
 	/* Test stdout being a tty. */
 	test_todo_block("environment might not expose controlling terminal") {
+		const char *default_pager;
+
 		test_dup_file(STDOUT_FILENO, "/dev/tty", O_WRONLY);
 		setenv("PAGER", "test-pager", 1);
 		pager = pager_get_exec();
@@ -57,7 +59,7 @@ test_pager_get_exec(void)
 		default_pager = pager_get_exec();
 		dup2(origfd, STDOUT_FILENO);
 		test_str(pager, ==, "test-pager");
-		test_str(default_pager, ==, DEFAULTPAGER);
+		test_str(default_pager, ==, DPKG_DEFAULT_PAGER);
 	}
 
 	/* Test stdout not being a tty. */

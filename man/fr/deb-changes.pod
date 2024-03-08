@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NOM
 
-deb-changes - Format des fichiers S<« .changes »> Debian
+deb-changes - Debian upload changes control file format
 
 =head1 SYNOPSIS
 
@@ -38,7 +38,7 @@ La valeur de ce champ déclare la version du format du fichier. La syntaxe de la
 
 =item B<Date:> I<date-publication> (requis)
 
-La date à laquelle le paquet a été construit ou modifié pour la dernière fois. Elle doit avoir le même format que la date dans l'entrée de B<deb-changelog>(5).
+The date the package was built or last edited.  It must be in the same format as the date in a L<deb-changelog(5)> entry.
 
 La valeur de ce champ est habituellement extraite du fichier I<debian/changelog>.
 
@@ -56,7 +56,7 @@ Liste des architectures des fichiers actuellement envoyés. Voici quelques archi
 
 =item B<Version:> I<chaîne-de-la-version> (requis)
 
-C'est classiquement le numéro de version du paquet d'origine dans la forme choisie par l'auteur du programme. Il peut y avoir aussi un numéro de révision Debian (pour les paquets non natifs). Le format exact et l'algorithme de tri sont décrits dans B<deb-version>(7).
+Typically, this is the original package's version number in whatever form the program's author uses.  It may also include a Debian revision number (for non-native packages).  The exact format and sorting algorithm are described in L<deb-version(7)>.
 
 =item B<Distribution:> I<distribution>s (requis)
 
@@ -128,7 +128,7 @@ Le champ B<Files> n'est pas cohérent avec des autres champs B<Checksums>. Les c
 
 =head1 VOIR AUSSI
 
-L<deb822(5)>, B<deb-src-control>(5), B<deb-version>(7).
+L<deb822(5)>, L<deb-src-control(5)>, L<deb-version(7)>.
 
 
 =head1 TRADUCTION

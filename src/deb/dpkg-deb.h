@@ -39,11 +39,13 @@ action_func do_fsystarfile;
 extern int opt_verbose;
 extern int opt_root_owner_group;
 extern int opt_uniform_compression;
-extern int debugflag, nocheckflag;
+extern int opt_debug;
+extern int opt_nocheck;
+extern const char *opt_showformat;
 
 extern struct deb_version deb_format;
 
-enum dpkg_tar_options {
+enum DPKG_ATTR_ENUM_FLAGS dpkg_tar_options {
 	/** Output the tar file directly, without any processing. */
 	DPKG_TAR_PASSTHROUGH = 0,
 	/** List tar files. */
@@ -61,7 +63,7 @@ enum dpkg_tar_options {
 void extracthalf(const char *debar, const char *dir,
                  enum dpkg_tar_options taroption, int admininfo);
 
-extern const char *showformat;
+extern struct compress_params compress_params_deb0;
 extern struct compress_params compress_params;
 
 #define ARCHIVEVERSION		"2.0"

@@ -72,5 +72,5 @@ De lijst van aangemaakte bestanden die deel uitmaken van de upload die voorberei
 
 =head1 ZIE OOK
 
-B<deb-src-files>(5).
+L<deb-src-files(5)>.
 

@@ -22,17 +22,17 @@ B<update-alternatives> [I<Option> …] I<Befehl>
 
 =head1 BESCHREIBUNG
 
-B<update-alternatives> erzeugt, entfernt, verwaltet und zeigt die Informationen über die symbolischen Links, die das „Debian Alternativ-System“ bilden, an.
+B<update-alternatives> erzeugt, entfernt, verwaltet und zeigt die Informationen über die symbolischen Links, die das „Alternativ-System“ bilden, an.
 
 Es ist möglich, mehrere Programme, die die gleiche oder ähnliche Funktionalität bereitstellen, gleichzeitig auf einem System zu installieren. Beispielsweise sind auf vielen Systemen mehrere Texteditoren gleichzeitig installiert. Dies gibt den Benutzern eines Systems die Möglichkeit, falls gewünscht, jeweils einen anderen Editor zu verwenden, allerdings wird es damit für ein Programm schwierig, eine gute Wahl für einen Editor zum Starten zu treffen, falls der Benutzer keine spezielle Wahl getroffen hat.
 
-Debians Alternativ-System hat das Ziel, dieses Problem zu lösen. Ein generischer Name im Dateisystem wird von allen Dateien, die austauschbare Funktionalität bereitstellen, verwendet. Das Alternativ-System bestimmt zusammen mit dem Systemadministrator, welche Datei tatsächlich durch diesen generischen Namen referenziert wird. Falls beispielsweise sowohl der Texteditor B<ed>(1) als auch B<nvi>(1) im System installiert sind, wird das Alternativ-System dafür sorgen, dass der generische Name I</usr/bin/editor> standardmäßig auf I</usr/bin/nvi> zeigt. Der Systemadministrator kann dies ändern und dafür sorgen, dass er stattdessen auf I</usr/bin/ed> zeigt, und das Alternativ-System wird diese Einstellung nicht verändern, bis es explizit dazu aufgefordert wird.
+Das Alternativ-System hat das Ziel, dieses Problem zu lösen. Ein generischer Name im Dateisystem wird von allen Dateien, die austauschbare Funktionalität bereitstellen, verwendet. Das Alternativ-System bestimmt zusammen mit dem Systemadministrator, welche Datei tatsächlich durch diesen generischen Namen referenziert wird. Falls beispielsweise sowohl der Texteditor L<ed(1)> als auch L<nvi(1)> im System installiert sind, wird das Alternativ-System dafür sorgen, dass der generische Name I</usr/bin/editor> standardmäßig auf I</usr/bin/nvi> zeigt. Der Systemadministrator kann dies ändern und dafür sorgen, dass er stattdessen auf I</usr/bin/ed> zeigt, und das Alternativ-System wird diese Einstellung nicht verändern, bis es explizit dazu aufgefordert wird.
 
 Der generische Name ist kein direkter symbolischer Link auf die ausgewählte Alternative. Stattdessen ist es ein symbolischer Link auf einen Namen im I<Alternativ-Verzeichnis>, welches wiederum ein symbolischer Link auf die tatsächlich referenzierte Datei ist. Dies ist so realisiert, damit die Änderungen des Systemadministrators auf das I<%CONFDIR%>-Verzeichnis beschränkt bleiben: der FHS (siehe dort) erklärt, warum dies eine gute Idee ist.
 
-Wenn ein Paket, das eine Datei mit einer bestimmten Funktionalität bereitstellt, installiert, geändert oder entfernt wird, wird B<update-alternatives> aufgerufen, um die Informationen über diese Datei im Alternatives-System zu aktualisieren. B<update-alternatives> wird normalerweise in den folgenden Debian-Paketbetreuerskripten aufgerufen: B<postinst> (configure), um die Alternative zu installieren und von B<prerm> und B<postrm> (remove), um die Alternative zu entfernen. B<Hinweis:> In den meisten (wenn nicht allen) Fällen sollte keine weitere Betreuerskriptaktion B<update-alternatives> aufrufen, insbesondere weder B<upgrade> noch B<disappear>, da jede dieser anderen Aktionen zum Verlust des manuellen Zustands einer Alternative, oder zum Hin-und Herspringen oder zum kompletten Umspringen, wenn mehrere von ihnen die gleiche Priorität haben, führen kann.
+Wenn ein Paket, das eine Datei mit einer bestimmten Funktionalität bereitstellt, installiert, geändert oder entfernt wird, wird B<update-alternatives> aufgerufen, um die Informationen über diese Datei im Alternatives-System zu aktualisieren. B<update-alternatives> wird normalerweise in den folgenden Debian-Paketbetreuerskripten aufgerufen: B<postinst> (configure), um die Alternative zu installieren und von B<prerm> und B<postrm> (remove), um die Alternative zu entfernen. B<Hinweis>: In den meisten (wenn nicht allen) Fällen sollte keine weitere Betreuerskriptaktion B<update-alternatives> aufrufen, insbesondere weder B<upgrade> noch B<disappear>, da jede dieser anderen Aktionen zum Verlust des manuellen Zustands einer Alternative, oder zum Hin-und Herspringen oder zum kompletten Umspringen, wenn mehrere von ihnen die gleiche Priorität haben, führen kann.
 
-Es ist oft sinnvoll, dass eine Reihe von Alternativen synchronisiert werden, so dass sie als Gruppe geändert werden; wenn beispielsweise mehrere Versionen des B<vi>(1) Editors installiert sind, sollte die Handbuchseite, die durch I</usr/share/man/man1/vi.1> referenziert wird, zu dem ausführbaren Programm, dass durch I</usr/bin/vi> referenziert wird, gehören. B<update-alternatives> erledigt dies mit Hilfe von I<Master-> und I<Slave-Links>; wird der Master-Link geändert, wird auch jeder zugehörige Slave-Link geändert. Ein Master-Link und seine zugehörigen Slave-Links bilden zusammen eine I<Link-Gruppe>.
+Es ist oft sinnvoll, dass eine Reihe von Alternativen synchronisiert werden, so dass sie als Gruppe geändert werden; wenn beispielsweise mehrere Versionen des L<vi(1)>-Editors installiert sind, sollte die Handbuchseite, die durch I</usr/share/man/man1/vi.1> referenziert wird, zu dem ausführbaren Programm, dass durch I</usr/bin/vi> referenziert wird, gehören. B<update-alternatives> erledigt dies mit Hilfe von I<Master-> und I<Slave-Links>; wird der Master-Link geändert, wird auch jeder zugehörige Slave-Link geändert. Ein Master-Link und seine zugehörigen Slave-Links bilden zusammen eine I<Link-Gruppe>.
 
 Eine Linkgruppe ist zu jeder Zeit in einem der beiden Modi: automatisch oder manuell. Ist eine Gruppe im automatischen Modus, dann wird das Alternativ-System bei der Paketinstallation und -entfernung automatisch entscheiden, ob und wie die Links aktualisiert werden. Im manuellen Modus wird das Alternativ-System die Wahl des Administrators beibehalten und Änderungen der Links vermeiden (außer irgendetwas ist defekt).
 
@@ -138,7 +138,7 @@ Liest eine Konfiguration von Alternativen über die Standardeingabe im von „B<
 
 =item B<--query> I<Name>
 
-Zeigt alle Informationen über die Linkgruppe an, wie dies auch von B<--display> erfolgt, allerdings in einem maschinenlesbaren Format (seit Version 1.15.0, siehe nachfolgenden Abschnitt B<ABFRAGE-FORMAT>).
+Zeigt alle Informationen über die Linkgruppe an, wie dies auch von B<--display> erfolgt, allerdings in einem maschinenlesbaren Format (seit Version 1.15.0, siehe nachfolgenden Abschnitt L</ABFRAGE-FORMAT>).
 
 =item B<--list> I<Name>
 
@@ -359,7 +359,7 @@ Um zur automatischen Auswahl der B<vi>-Implementation zurückzukehren, führen S
 
 =head1 SIEHE AUCH
 
-B<ln>(1), FHS (der Dateisystem-Hierarchie-Standard, Filesystem Hierarchy Standard).
+L<ln(1)>, FHS (der Dateisystem-Hierarchie-Standard, Filesystem Hierarchy Standard).
 
 
 =head1 ÜBERSETZUNG

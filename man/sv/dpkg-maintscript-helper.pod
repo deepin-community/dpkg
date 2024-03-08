@@ -43,6 +43,8 @@ Programmet skrevs för att köras i paketskript för att utföra en del åtgärd
 
 Många av dessa åtgärder kräver samordnade åtgärder från flera paketskript (B<preint>, B<postinst>, B<prerm>, B<postrm>). För att undvika misstag räcker det att lägga in ett och samma anrop i alla skript, varpå programmet anpassar sitt beteende beroende på miljövariabeln B<DPKG_MAINTSCRIPT_NAME> och på paketskriptets parametrar, vilka du måste vidaresända efter dubbla bindestreck.
 
+Kommandot introducerades i dpkg 1.15.7..
+
 =head1 DELADE PARAMETRAR
 
 =over 
@@ -73,9 +75,9 @@ Det innebär att, om paketet menar att byta namn eller ta bort en konfigurations
 
 =head2 Ta bort en konffil
 
-Observera: Det här kan i de flesta fall ersättas av flaggan C<remove-on-upgrade> i F<DEBIAN/conffiles> (sedan dpkg 1.20.6), se L<deb-conffiles(5)>.
+B<Observera>: Det här kan i de flesta fall ersättas av flaggan C<remove-on-upgrade> i F<DEBIAN/conffiles> (sedan dpkg 1.20.6), se L<deb-conffiles(5)>.
 
-Om en konffil helt tas bort bör den tas bort från disk, såvida inte användaren har modifierat den. Om det finns lokala ändringar bör de bibehållas. Om paketuppgraderingen avbryts bör inte konffilen som just blev föråldrad försvinna.
+If a conffile is completely removed, it should be removed from disk, unless the user has modified it.  If there are local modifications, they should be preserved.  If the package upgrade aborts, the newly obsolete conffile should not disappear.
 
 Allt detta implementeras genom att lägga in följande skalkod i paketskripten B<preinst>, B<postinst> och B<postrm>:
 
@@ -113,7 +115,7 @@ Aktuell implementation: I B<preinst> kontrolleras om konffilen har ändrats, om 
 
 Vid uppgradering av ett paket kommer B<dpkg> inte att automatiskt byta ut en symbolisk länk mot en katalog, eller omvänt. Nedgraderingar stöds inte och sökvägen kommer lämnas som den var.
 
-Observera: De symboliska länkar och kataloger som skapas vid dessa växlingar måste sändas med i de nya paketen, om inte kommer B<dpkg> inte att kunna ta bort dem vid en rensning.
+B<Observera>: De symboliska länkar och kataloger som skapas vid dessa växlingar måste sändas med i de nya paketen, om inte kommer B<dpkg> inte att kunna ta bort dem vid en rensning.
 
 =head2 Byta en symbolisk länk mot en katalog
 
@@ -153,7 +155,7 @@ Aktuell implementation: I B<preinst> kontrolleras om katalogen finns, inte inneh
 
 =head1 INTEGRERA I PAKET
 
-När ett paketeringshjälpprogram används, kontrollera att det har direkt integrering med B<dpkg-maintscript-helper>, något som kan göra ditt liv enklare. Se till exempel B<dh_installdeb>(1).
+När ett paketeringshjälpprogram används, kontrollera att det har direkt integrering med B<dpkg-maintscript-helper>, något som kan göra ditt liv enklare. Se till exempel L<dh_installdeb(1)>.
 
 Givet att B<dpkg-maintscript-helper> används i B<preinst> så innebär detta villkorslöst att ett förhandsberoende (”pre-dependency”) krävs för att försäkra att den nödvändiga versionen av B<dpkg> redan har packats upp. Den version som krävs beror på vilket kommando som används, för B<rm_conffile> och B<mv_conffile> är det 1.15.7.2, för B<symlink_to_dir> och B<dir_to_symlnk> är det 1.17.14:
 
@@ -196,7 +198,7 @@ Väljer färgläge (sedan dpkg 1.19.1). För närvarande godtas följande värde
 
 =head1 SE ÄVEN
 
-B<dh_installdeb>(1).
+L<dh_installdeb(1)>.
 
 
 =head1 ÖVERSÄTTNING

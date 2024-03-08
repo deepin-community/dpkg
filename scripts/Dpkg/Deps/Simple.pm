@@ -19,8 +19,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::Deps::Simple;
-
 =encoding utf8
 
 =head1 NAME
@@ -68,16 +66,12 @@ is no restriction formula. Otherwise it is an array ref.
 
 =back
 
-=head1 METHODS
-
-=over 4
-
 =cut
+
+package Dpkg::Deps::Simple 1.02;
 
 use strict;
 use warnings;
-
-our $VERSION = '1.02';
 
 use Carp;
 
@@ -88,6 +82,10 @@ use Dpkg::ErrorHandling;
 use Dpkg::Gettext;
 
 use parent qw(Dpkg::Interface::Storable);
+
+=head1 METHODS
+
+=over 4
 
 =item $dep = Dpkg::Deps::Simple->new([$dep[, %opts]]);
 
@@ -113,6 +111,9 @@ Defaults to 0.
 Specifies whether the parser should consider it a tests dependency.
 Defaults to 0.
 
+This option implicitly (and forcibly) enables C<build_dep> because test
+dependencies are based on build dependencies (since dpkg 1.22.1).
+
 =back
 
 =cut
@@ -128,6 +129,10 @@ sub new {
     $self->{build_arch} = $opts{build_arch};
     $self->{build_dep} = $opts{build_dep} // 0;
     $self->{tests_dep} = $opts{tests_dep} // 0;
+    if ($self->{tests_dep}) {
+        $self->{build_dep} = 1;
+    }
+
     $self->parse_string($arg) if defined $arg;
     return $self;
 }
@@ -167,6 +172,7 @@ sub parse_string {
         $pkgname_re = qr/[a-zA-Z0-9][a-zA-Z0-9+.-]*/;
     }
 
+    ## no critic (RegularExpressions::ProhibitCaptureWithoutTest)
     return if not $dep =~
            m{^\s*                           # skip leading whitespace
               ($pkgname_re)                 # package name
@@ -432,12 +438,10 @@ sub implies {
             if (defined $implication) {
                 if (not defined $res) {
                     $res = $implication;
+                } elsif ($implication) {
+                    $res = 1;
                 } else {
-                    if ($implication) {
-                        $res = 1;
-                    } else {
-                        $res = 0;
-                    }
+                    $res = 0;
                 }
                 last if defined $res and $res == 1;
             }
@@ -557,8 +561,8 @@ sub reduce_profiles {
 =item $dep->get_evaluation($facts)
 
 Evaluates the dependency given a list of installed packages and a list of
-virtual packages provided. These lists are part of the Dpkg::Deps::KnownFacts
-object given as parameters.
+virtual packages provided. These lists are part of the
+L<Dpkg::Deps::KnownFacts> object given as parameters.
 
 Returns 1 when it's true, 0 when it's false, undef when some information
 is lacking to conclude.
@@ -575,7 +579,7 @@ sub get_evaluation {
 =item $dep->simplify_deps($facts, @assumed_deps)
 
 Simplifies the dependency as much as possible given the list of facts (see
-class Dpkg::Deps::KnownFacts) and a list of other dependencies that are
+class L<Dpkg::Deps::KnownFacts>) and a list of other dependencies that are
 known to be true.
 
 =cut

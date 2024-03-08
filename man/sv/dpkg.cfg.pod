@@ -30,7 +30,7 @@ I<~/.dpkg.cfg>
 
 =head1 SE ÄVEN
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 ÖVERSÄTTNING

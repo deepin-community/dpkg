@@ -44,13 +44,13 @@ Remplace des fichiers existants s'ils ont le même nom que le fichier de destina
 
 Met les fichiers dans un sous-répertoire. Si le répertoire donné en paramètre existe, les fichiers sont déplacés dans ce répertoire ; sinon le répertoire cible, extrait du champ S<« section »> que contient la partie contrôle du paquet, sera S<« unstable/binary-I<architecture>/I<section> ».> Quand aucune information sur la section n'est trouvée dans le fichier S<« control »,> la section est supposée être B<no-section>. Dans ce cas, ainsi que si la section est B<non-free> ou B<contrib>, le répertoire cible est S<« I<section>/binary-I<architecture> ».> Le champ S<« section »> est facultatif ; aussi beaucoup de paquets sont dans la zone S<« no-section ».>
 
-S<B<Attention> :> I<Utilisez cette option avec S<précaution :> elle est compliquée.>
+B<Warning>: Use this option with care, it is messy.
 
 =item B<-c>, B<--create-dir>
 
 On peut utiliser cette option avec l'option B<-s>. Quand un répertoire cible n'est pas trouvé, il est créé automatiquement.
 
-S<B<Attention> :> I<Utilisez cette option avec précaution.>
+B<Warning>: Use this option with care.
 
 =item B<-?>, B<--help>
 
@@ -78,7 +78,7 @@ Si cette variable est définie, elle sera utilisée pour décider l'activation d
 
 =head1 BOGUES
 
-Certains paquets ne respectent pas l'organisation I<paquet>B<_>I<version>B<_>I<architecture>B<.deb>. Les paquets traités par B<dpkg-name> la respectent. Cela n'a pas de conséquence sur la façon dont B<dselect>(1) ou B<dpkg>(1) installent les paquets, mais il se peut que d'autres systèmes d'installation aient besoin de cette organisation.
+Some packages don't follow the name structure I<package>B<_>I<version>B<_>I<architecture>B<.deb>.  Packages renamed by B<dpkg-name> will follow this structure.  Generally this will have no impact on how packages are installed by L<dselect(1)>/L<dpkg(1)>, but other installation tools might depend on this naming structure.
 
 =head1 EXEMPLES
 
@@ -104,7 +104,7 @@ On peut se servir de cette commande lors de la construction d'un nouveau paquet.
 
 =head1 VOIR AUSSI
 
-B<deb>(5), B<deb-control>(5), B<dpkg>(1), B<dpkg-deb>(1), B<find>(1), B<xargs>(1).
+L<deb(5)>, L<deb-control(5)>, L<dpkg(1)>, L<dpkg-deb(1)>, L<find(1)>, L<xargs(1)>.
 
 
 =head1 TRADUCTION

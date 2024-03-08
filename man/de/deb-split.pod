@@ -76,7 +76,7 @@ Diese Elemente müssen in genau dieser Reihenfolge erscheinen. Aktuelle Implemen
 
 =head1 SIEHE AUCH
 
-B<deb>(5), B<dpkg-split>(1).
+L<deb(5)>, L<dpkg-split(1)>.
 
 
 =head1 ÜBERSETZUNG

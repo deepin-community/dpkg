@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NOM
 
-dsc - Format du fichier de contrôle dans les paquets source Debian
+dsc - Debian source package control file format
 
 =head1 SYNOPSIS
 
@@ -36,7 +36,7 @@ Les données de contrôle pourraient être incluses dans une signature OpenPGP S
 
 La valeur de ce champ déclare la version du format du paquet source. La valeur du champ est utilisée par les programmes qui agissent sur un paquet source pour interpréter la liste des fichiers du paquet source et déterminer comment le dépaqueter. La syntaxe de la valeur du champ est un numéro de révision majeure S<(« 0-9 »),> un point S<(« . »),> un numéro de révision mineure, puis un sous-type facultatif après une espace («   ») qui, lorsqu'il est présent, est un mot en caractères alphanumériques S<(« a-z0-9 »),> en minuscules entre parenthèses S<(« () ».> Le sous-type est facultatif dans la syntaxe, mais peut être obligatoire pour certaines révisions particulières du format source.
 
-Les formats source actuellement pris en charge par B<dpkg> sont B<1.0>, B<2.0>, B<3.0 (native)>, B<3.0 (quilt)>, B<3.0 (git)>, B<3.0 (bzr)> et B<3.0 (custom)>. Voir B<dpkg-source>(1) pour leur description.
+The source formats currently supported by B<dpkg> are B<1.0>, B<2.0>, B<3.0 (native)>, B<3.0 (quilt)>, B<3.0 (git)>, B<3.0 (bzr)> and B<3.0 (custom)>. See L<dpkg-source(1)> for their description.
 
 =item B<Source:> I<nom-source> (requis)
 
@@ -58,7 +58,7 @@ La valeur du champ est en général générée par les champs B<Architecture> du
 
 =item B<Version:> I<chaîne-de-la-version> (requis)
 
-C'est classiquement le numéro de version du paquet d'origine dans la forme choisie par l'auteur du programme. Il peut y avoir aussi un numéro de révision Debian (pour les paquets non natifs). Le format exact et l'algorithme de tri sont décrits dans B<deb-version>(7).
+Typically, this is the original package's version number in whatever form the program's author uses.  It may also include a Debian revision number (for non-native packages).  The exact format and sorting algorithm are described in L<deb-version(7)>.
 
 =item B<Origin:> I<nom>
 
@@ -106,7 +106,7 @@ Indique l'I<URL> de l'interface web permettant de parcourir le dépôt du systè
 
 =item B<Vcs-Svn:> I<URL>
 
-Ces champs indiquent l'I<URL> du dépôt du système de gestion de versions utilisé pour la gestion du paquet. Voir B<deb-src-control>(5) pour plus de détails.
+These fields declare the I<url> of the Version Control System repository used to maintain this package.  See L<deb-src-control(5)> for more details.
 
 =item B<Testsuite:> I<liste-de-noms>
 
@@ -116,7 +116,7 @@ Ce champ indique que le paquet source contient les suites de tests spécifiées.
 
 Ce champ indique l'union de toutes les dépendances de test, séparées par des virgules (champs B<Depends> du fichier I<debian/tests/control>), toutes restrictions supprimées, et les dépendances OR mises à plat (c'est-à-dire converties en relations AND distinctes), sauf pour les binaires générés par ce paquet source et son équivalent de méta-dépendance B<@>.
 
-S<Raison :> ce champ est nécessaire parce qu'autrement chaque paquet source devrait être dépaqueté pour pouvoir obtenir les dépendances de test.
+B<Rationale>: this field is needed because otherwise to be able to get the test dependencies, each source package would need to be unpacked.
 
 =item B<Build-Depends:> I<liste-de-paquets>
 
@@ -130,7 +130,7 @@ S<Raison :> ce champ est nécessaire parce qu'autrement chaque paquet source dev
 
 =item B<Build-Conflicts-Indep:> I<liste-de-paquets>
 
-Ces champs indiquent les relations entre le paquet source et les paquets utilisés pour le construire. Ils sont détaillés dans la page de manuel B<deb-src-control>(5).
+These fields declare relationships between the source package and packages used to build it.  They are discussed in the L<deb-src-control(5)> manual page.
 
 =item B<Package-List:>
 
@@ -190,7 +190,7 @@ Le champ B<Format> combine le format pour le fichier B<.dsc> lui-même et le for
 
 =head1 VOIR AUSSI
 
-L<deb822(5)>, B<deb-src-control>(5), B<deb-version>(7), B<dpkg-source>(1).
+L<deb822(5)>, L<deb-src-control(5)>, L<deb-version(7)>, L<dpkg-source(1)>.
 
 
 =head1 TRADUCTION

@@ -17,21 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Dpkg::Vendor::Ubuntu;
-
-use strict;
-use warnings;
-
-our $VERSION = '0.01';
-
-use List::Util qw(any);
-
-use Dpkg::ErrorHandling;
-use Dpkg::Gettext;
-use Dpkg::Control::Types;
-
-use parent qw(Dpkg::Vendor::Debian);
-
 =encoding utf8
 
 =head1 NAME
@@ -40,10 +25,25 @@ Dpkg::Vendor::Ubuntu - Ubuntu vendor class
 
 =head1 DESCRIPTION
 
-This vendor class customizes the behaviour of dpkg scripts for Ubuntu
+This vendor class customizes the behavior of dpkg scripts for Ubuntu
 specific behavior and policies.
 
+B<Note>: This is a private module, its API can change at any time.
+
 =cut
+
+package Dpkg::Vendor::Ubuntu 0.01;
+
+use strict;
+use warnings;
+
+use List::Util qw(any);
+
+use Dpkg::ErrorHandling;
+use Dpkg::Gettext;
+use Dpkg::Control::Types;
+
+use parent qw(Dpkg::Vendor::Debian);
 
 sub run_hook {
     my ($self, $hook, @params) = @_;
@@ -95,14 +95,6 @@ sub run_hook {
         if (scalar(@$bugs)) {
             $fields->{'Launchpad-Bugs-Fixed'} = join(' ', @$bugs);
         }
-    } elsif ($hook eq 'update-buildflags') {
-	my $flags = shift @params;
-
-        # Run the Debian hook to add hardening flags
-        $self->SUPER::run_hook($hook, $flags);
-
-	# Per https://wiki.ubuntu.com/DistCompilerFlags
-        $flags->prepend('LDFLAGS', '-Wl,-Bsymbolic-functions');
     } else {
         return $self->SUPER::run_hook($hook, @params);
     }
@@ -133,6 +125,66 @@ sub set_build_features {
     if ($arch eq 'ppc64el' && $flags->get_option_value('optimize-level') != 0) {
         $flags->set_option_value('optimize-level', 3);
     }
+
+    $flags->set_option_value('fortify-level', 3);
+}
+
+sub add_build_flags {
+    my ($self, $flags) = @_;
+
+    my @compile_flags = qw(
+        CFLAGS
+        CXXFLAGS
+        OBJCFLAGS
+        OBJCXXFLAGS
+        FFLAGS
+        FCFLAGS
+    );
+
+    $self->SUPER::add_build_flags($flags);
+
+    # Per https://wiki.ubuntu.com/DistCompilerFlags
+    $flags->prepend('LDFLAGS', '-Wl,-Bsymbolic-functions');
+
+    # In Ubuntu these flags are set by the compiler, so when disabling the
+    # features we need to pass appropriate flags to disable them.
+    if (!$flags->use_feature('hardening', 'stackprotectorstrong') &&
+        !$flags->use_feature('hardening', 'stackprotector')) {
+        my $flag = '-fno-stack-protector';
+        $flags->append($_, $flag) foreach @compile_flags;
+    }
+
+    if (!$flags->use_feature('hardening', 'stackclash')) {
+        my $flag = '-fno-stack-clash-protection';
+        $flags->append($_, $flag) foreach @compile_flags;
+    }
+
+    if (!$flags->use_feature('hardening', 'fortify')) {
+        $flags->append('CPPFLAGS', '-D_FORTIFY_SOURCE=0');
+    }
+
+    if (!$flags->use_feature('hardening', 'format')) {
+        my $flag = '-Wno-format -Wno-error=format-security';
+        $flags->append('CFLAGS', $flag);
+        $flags->append('CXXFLAGS', $flag);
+        $flags->append('OBJCFLAGS', $flag);
+        $flags->append('OBJCXXFLAGS', $flag);
+     }
+
+     if (!$flags->use_feature('hardening', 'branch')) {
+        my $cpu = $flags->get_option_value('hardening-branch-cpu');
+        my $flag;
+        if ($cpu eq 'arm64') {
+            $flag = '-mbranch-protection=none';
+        } elsif ($cpu eq 'amd64') {
+            $flag = '-fno-cf-protection';
+        }
+        if (defined $flag) {
+            $flags->append($_, $flag) foreach @compile_flags;
+        }
+    }
+
+    return;
 }
 
 =head1 PUBLIC FUNCTIONS

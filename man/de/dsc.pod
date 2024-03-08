@@ -36,7 +36,7 @@ Die Steuerdaten können in eine Signatur mit einer wie in RFC4880 spezifizierten
 
 Der Wert des Feldes gibt die Formatversion des Quellpaketes an. Der Feldwert wird von Programmen, die mit Quellpaketen arbeiten, verwandt, um die Liste der Dateien in dem Quellpaket zu interpretieren und zu bestimmen, wie es entpackt wird. Die Syntax des Feldwertes ist eine numerische Hauptrevision („0-9“), ein Satzpunkt („.“), eine numerische Unterrevision („0-9“) und dann ein optionaler Untertyp nach Leerraum („ \t“). Falls dieser angegeben wird, ist er ein klein geschriebenes alphanumerisches („a-z0-9“) Wort in Klammern („()“). Der Untertyp ist in der Syntax optional, kann aber für eine bestimmte Quellformatrevision verpflichtend sein.
 
-Die von B<dpkg> derzeit unterstützten Quellformate sind B<1.0>, B<2.0>, B<3.0 (native)>, B<3.0 (quilt)>, B<3.0 (git)>, B<3.0 (bzr)> und B<3.0 (custom)>. Siehe B<dpkg-source>(1) für ihre Beschreibung.
+Die von B<dpkg> derzeit unterstützten Quellformate sind B<1.0>, B<2.0>, B<3.0 (native)>, B<3.0 (quilt)>, B<3.0 (git)>, B<3.0 (bzr)> und B<3.0 (custom)>. Siehe L<dpkg-source(1)> für ihre Beschreibung.
 
 =item B<Source:> I<Quellname> (verpflichtend)
 
@@ -58,7 +58,7 @@ Der Feldwert wird im Allgemeinen aus den B<Architecture>-Feldern aus der I<debia
 
 =item B<Version:> I<Versionszeichenkette> (verpflichtend)
 
-Typischerweise ist das die Original-Paketversionsnummer, in der Form, die der Programmautor verwendet. Es kann auch eine Debian-Revisionsnummer enthalten (für nicht aus Debian stammende Pakete). Das genaue Format und der Sortieralgorithmus sind in B<deb-version>(7) beschrieben.
+Typischerweise ist das die Original-Paketversionsnummer, in der Form, die der Programmautor verwendet. Es kann auch eine Debian-Revisionsnummer enthalten (für nicht aus Debian stammende Pakete). Das genaue Format und der Sortieralgorithmus sind in L<deb-version(7)> beschrieben.
 
 =item B<Origin:> I<Name>
 
@@ -106,7 +106,7 @@ Die I<URL> der Webschnittstelle, um das Versionskontrollsystem-Depot anzuschauen
 
 =item B<Vcs-Svn:> I<URL>
 
-Diese Felder geben die I<URL> des Versionskontrollsystem-Depots, das für die Betreuung des Pakets verwandt wird, an. Siehe B<deb-src-control>(5) für weitere Details.
+Diese Felder geben die I<URL> des Versionskontrollsystem-Depots, das für die Betreuung des Pakets verwandt wird, an. Siehe L<deb-src-control(5)> für weitere Details.
 
 =item B<Testsuite:> I<Namenliste>
 
@@ -116,7 +116,7 @@ Dieses Feld gibt an, dass das Quellpaket die angegebene Testsammlung enthält. D
 
 Dieses Feld gibt die Vereinigung aller Testabhängigkeiten (Felder B<Depends> in der Datei I<debian/tests/control>) an, wobei alle Einschränkungen entfernt und ODER-Abhängigkeiten verflacht (d.h. in separate UND-Beziehungen umgewandelt) sind. Das betrifft keine Programme, die vom Quellpaket und dessen Meta-Abhängigkeiten wie B<@> oder B<@builddeps@> erstellt wurden.
 
-Hintergrund: Dieses Feld wird benötigt, da andernfalls jedes Quellpaket entpackt werden müsste, um die Testabhängigkeiten zu ermitteln.
+B<Hintergrund>: Dieses Feld wird benötigt, da andernfalls jedes Quellpaket entpackt werden müsste, um die Testabhängigkeiten zu ermitteln.
 
 =item B<Build-Depends:> I<Paketliste>
 
@@ -130,7 +130,7 @@ Hintergrund: Dieses Feld wird benötigt, da andernfalls jedes Quellpaket entpack
 
 =item B<Build-Conflicts-Indep:> I<Paketliste>
 
-Diese Felder geben die Beziehungen zwischen dem Quellpaket und Paketen, die daraus gebaut werden, an. Sie werden in der Handbuchseite B<deb-control>(5) beschrieben.
+Diese Felder geben die Beziehungen zwischen dem Quellpaket und Paketen, die daraus gebaut werden, an. Sie werden in der Handbuchseite L<deb-src-control(5)> beschrieben.
 
 =item B<Package-List:>
 
@@ -190,7 +190,7 @@ Das Feld B<Format> fügt das Format für die Datei B<.dsc> und das Format des en
 
 =head1 SIEHE AUCH
 
-L<deb822(5)>, B<deb-src-control>(5), B<deb-version>(7), B<dpkg-source>(1).
+L<deb822(5)>, L<deb-src-control(5)>, L<deb-version(7)>, L<dpkg-source(1)>.
 
 
 =head1 ÜBERSETZUNG

@@ -1,5 +1,7 @@
-# Catalan translation of Dselect.
+# Translation of dselect to Catalan
 # Copyright © 2001, 2002, 2003, 2004, 2005, 2006, 2010 Software in the Public Interest, Inc.
+# This file is distributed under the same license as the dpkg package.
+#
 # Antoni Bella <bella5@teleline.es>, 2001, 2002.
 # Jordi Mallach <jordi@debian.org>, 2002, 2003, 2004, 2005, 2006, 2010.
 # Guillem Jover <guillem@debian.org>, 2010-2022.
@@ -8,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dselect 1.21.10\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
-"PO-Revision-Date: 2022-12-01 12:08+0100\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
+"PO-Revision-Date: 2023-12-17 19:34+0100\n"
 "Last-Translator: Guillem Jover <guillem@debian.org>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
 "Language: ca\n"
@@ -55,8 +57,8 @@ msgid "cannot update screen after window resize"
 msgstr "no es pot actualitzar la pantalla després del canvi de mida"
 
 #: dselect/baselist.cc
-msgid "failed to allocate colour pair"
-msgstr "no s'ha pogut assignar una parella de colors"
+msgid "cannot allocate color pair"
+msgstr "no es pot assignar una parella de colors"
 
 #: dselect/baselist.cc
 msgid "failed to create title window"
@@ -905,15 +907,15 @@ msgid "screen part"
 msgstr "part de la pantalla"
 
 #: dselect/main.cc
-msgid "null colour specification"
-msgstr "especificació de color nul·la"
+msgid "missing color specification"
+msgstr "falta l'especificació de color"
 
 #: dselect/main.cc
-msgid "colour"
+msgid "color"
 msgstr "color"
 
 #: dselect/main.cc
-msgid "colour attribute"
+msgid "color attribute"
 msgstr "atribut del color"
 
 #: dselect/main.cc

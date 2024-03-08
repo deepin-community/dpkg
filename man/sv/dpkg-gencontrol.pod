@@ -40,7 +40,7 @@ Sätter versionsnumret på binärpaketet som ska skapas.
 
 =item B<-V>I<namn>B<=>I<värde>
 
-Ställer in en utdatasubstitueringsvariabel. Se B<deb-substvars>(5) för en beskrivning av utdatasubstituering.
+Ställer in en utdatasubstitueringsvariabel. Se L<deb-substvars(5)> för en beskrivning av utdatasubstituering.
 
 =item B<-T>I<substvars-fil>
 
@@ -68,7 +68,7 @@ Läs eller skriv listan över filer som ska sändas in här, istället för att 
 
 =item B<-F>I<ändringsloggformat>
 
-Anger format på ändringsloggen. Se B<dpkg-parsechangelog>(1) för information om alternativa format.
+Anger format på ändringsloggen. Se L<dpkg-parsechangelog(1)> för information om alternativa format.
 
 =item B<-p>I<paket>
 
@@ -130,7 +130,7 @@ Listan över genererade filer som ingår i insändningen som skapas. B<dpkg-genc
 
 =head1 SE ÄVEN
 
-B<deb-substvars>(5), B<deb-src-control>(5), B<deb-changelog>(5), B<deb-control>(5).
+L<deb-substvars(5)>, L<deb-src-control(5)>, L<deb-changelog(5)>, L<deb-control(5)>.
 
 
 =head1 ÖVERSÄTTNING

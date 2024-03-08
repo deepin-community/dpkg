@@ -116,7 +116,7 @@ static int opt_force = 0;
 static void
 version(void)
 {
-	printf(_("Debian %s version %s.\n"), PROGNAME, VERSION);
+	printf(_("%s version %s.\n"), PROGNAME, VERSION);
 	printf("\n");
 
 	printf(_(
@@ -501,8 +501,6 @@ make_path(const char *pathname, mode_t mode)
 static void LIBCOMPAT_ATTR_PRINTF(1)
 log_msg(const char *fmt, ...)
 {
-	va_list args;
-
 	if (fh_log == NULL) {
 		fh_log = fopen(log_file, "a");
 		if (fh_log == NULL && errno == ENOENT) {
@@ -520,6 +518,7 @@ log_msg(const char *fmt, ...)
 	}
 
 	if (fh_log) {
+		va_list args;
 		char timestamp[64];
 		time_t now;
 		struct tm tm;
@@ -538,7 +537,7 @@ log_msg(const char *fmt, ...)
 }
 
 /*
- * Filesystem access for alernative handling.
+ * Filesystem access for alternative handling.
  */
 
 static char *
@@ -1255,7 +1254,7 @@ alternative_remove_choice(struct alternative *a, const char *file)
  * Alternatives Database Load/Store functions.
  */
 
-enum altdb_flags {
+enum LIBCOMPAT_ATTR_ENUM_FLAGS altdb_flags {
 	ALTDB_LAX_PARSER = 1 << 0,
 	ALTDB_WARN_PARSER = 1 << 1,
 };
@@ -1265,8 +1264,8 @@ struct altdb_context {
 	char *filename;
 	enum altdb_flags flags;
 	bool modified;
-	void LIBCOMPAT_ATTR_NORET LIBCOMPAT_ATTR_PRINTF(2)
-	     (*bad_format)(struct altdb_context *, const char *format, ...);
+	void LIBCOMPAT_ATTR_NORET
+	     (*bad_format)(struct altdb_context *, const char *msg);
 	jmp_buf on_error;
 };
 
@@ -1276,6 +1275,23 @@ altdb_context_free(struct altdb_context *ctx)
 	if (ctx->fh)
 		fclose(ctx->fh);
 	free(ctx->filename);
+}
+
+static void LIBCOMPAT_ATTR_NORET LIBCOMPAT_ATTR_PRINTF(2)
+altdb_bad_format(struct altdb_context *ctx, const char *format, ...)
+{
+	va_list args;
+	char *msg;
+
+	va_start(args, format);
+	msg = xvasprintf(format, args);
+	va_end(args);
+
+	ctx->bad_format(ctx, msg);
+
+	/* This cannot happen, but just to make sure the bad_format() function
+	 * pointer is well implemented. */
+	error("(internal) non returning bad-format function returned");
 }
 
 static int
@@ -1338,37 +1354,30 @@ altdb_get_line(struct altdb_context *ctx, const char *name)
 			continue;
 		}
 		if (feof(ctx->fh))
-			ctx->bad_format(ctx, _("unexpected end of file while trying "
-			                       "to read %s"), name);
-		ctx->bad_format(ctx, _("while reading %s: %s"),
-		                name, strerror(errno));
+			altdb_bad_format(ctx, _("unexpected end of file while trying "
+			                        "to read %s"), name);
+		altdb_bad_format(ctx, _("while reading %s: %s"),
+		                 name, strerror(errno));
 	}
 
 	len = strlen(buf);
 	if (len == 0 || buf[len - 1] != '\n') {
-		ctx->bad_format(ctx, _("line not terminated while trying "
-		                       "to read %s"), name);
+		altdb_bad_format(ctx, _("line not terminated while trying "
+		                        "to read %s"), name);
 	}
 	line[len - 1] = '\0';
 
 	return buf;
 }
 
-static void LIBCOMPAT_ATTR_NORET LIBCOMPAT_ATTR_PRINTF(2)
-altdb_parse_error(struct altdb_context *ctx, const char *format, ...)
+static void LIBCOMPAT_ATTR_NORET
+altdb_parse_error(struct altdb_context *ctx, const char *msg)
 {
-	char *msg;
-	va_list args;
-
-	va_start(args, format);
-	msg = xvasprintf(format, args);
-	va_end(args);
-
 	error(_("%s corrupt: %s"), ctx->filename, msg);
 }
 
-static void LIBCOMPAT_ATTR_NORET LIBCOMPAT_ATTR_PRINTF(2)
-altdb_parse_stop(struct altdb_context *ctx, const char *format, ...)
+static void LIBCOMPAT_ATTR_NORET
+altdb_parse_stop(struct altdb_context *ctx, const char *msg)
 {
 	longjmp(ctx->on_error, 1);
 }
@@ -1398,22 +1407,22 @@ alternative_parse_slave(struct alternative *a, struct altdb_context *ctx)
 	sl = alternative_get_slave(a, name);
 	if (sl) {
 		free(name);
-		ctx->bad_format(ctx, _("duplicate slave name %s"), sl->name);
+		altdb_bad_format(ctx, _("duplicate slave name %s"), sl->name);
 	}
 
 	linkname = altdb_get_line(ctx, _("slave link"));
 	if (strcmp(linkname, a->master_link) == 0) {
 		free(linkname);
 		free(name);
-		ctx->bad_format(ctx, _("slave link same as main link %s"),
-		                a->master_link);
+		altdb_bad_format(ctx, _("slave link same as main link %s"),
+		                 a->master_link);
 	}
 	for (sl = a->slaves; sl; sl = sl->next) {
 		if (strcmp(linkname, sl->link) == 0) {
 			free(linkname);
 			free(name);
-			ctx->bad_format(ctx, _("duplicate slave link %s"),
-			                sl->link);
+			altdb_bad_format(ctx, _("duplicate slave link %s"),
+			                 sl->link);
 		}
 	}
 
@@ -1439,7 +1448,7 @@ alternative_parse_fileset(struct alternative *a, struct altdb_context *ctx)
 
 	fs = alternative_get_fileset(a, master_file);
 	if (fs)
-		ctx->bad_format(ctx, _("duplicate path %s"), master_file);
+		altdb_bad_format(ctx, _("duplicate path %s"), master_file);
 
 	if (fsys_pathname_is_missing(master_file)) {
 		char *junk;
@@ -1465,12 +1474,12 @@ alternative_parse_fileset(struct alternative *a, struct altdb_context *ctx)
 		prio = strtol(prio_str, &prio_end, 10);
 		/* XXX: Leak master_file/prio_str on non-fatal error */
 		if (prio_str == prio_end || *prio_end != '\0')
-			ctx->bad_format(ctx, _("priority of %s: %s"),
-			                master_file, prio_str);
+			altdb_bad_format(ctx, _("priority of %s: %s"),
+			                 master_file, prio_str);
 		if (prio < INT_MIN || prio > INT_MAX || errno == ERANGE)
-			ctx->bad_format(ctx,
-			                _("priority of %s is out of range: %s"),
-			                master_file, prio_str);
+			altdb_bad_format(ctx,
+			                 _("priority of %s is out of range: %s"),
+			                 master_file, prio_str);
 		free(prio_str);
 
 		fs = fileset_new(master_file, prio);
@@ -1533,7 +1542,7 @@ alternative_load(struct alternative *a, enum altdb_flags flags)
 	alternative_reset(a);
 	status = altdb_get_line(&ctx, _("status"));
 	if (strcmp(status, "auto") != 0 && strcmp(status, "manual") != 0)
-		ctx.bad_format(&ctx, _("invalid status"));
+		altdb_bad_format(&ctx, _("invalid status"));
 	alternative_set_status(a, (strcmp(status, "auto") == 0) ?
 	                       ALT_ST_AUTO : ALT_ST_MANUAL);
 	free(status);
@@ -1812,7 +1821,7 @@ alternative_select_choice(struct alternative *a)
 	char *ret, selection[_POSIX_PATH_MAX];
 	struct fileset *best, *fs;
 	int n_choices;
-	int len, idx;
+	int len;
 
 	n_choices = alternative_choices_count(a);
 	current = alternative_get_current(a);
@@ -1824,6 +1833,8 @@ alternative_select_choice(struct alternative *a)
 		len = max(len, (int)strlen(fs->master_file) + 1);
 
 	for (;;) {
+		int idx;
+
 		pr(P_("There is %d choice for the alternative %s (providing %s).",
 		      "There are %d choices for the alternative %s (providing %s).",
 		      n_choices), n_choices, a->master_name, a->master_link);

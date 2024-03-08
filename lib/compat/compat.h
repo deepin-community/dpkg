@@ -47,6 +47,10 @@
 #define __has_attribute(x)	0
 #endif
 
+#ifndef __has_include
+#define __has_include(x)	0
+#endif
+
 #ifdef __GNUC__
 #define LIBCOMPAT_GCC_VERSION (__GNUC__ << 8 | __GNUC_MINOR__)
 #else
@@ -73,6 +77,13 @@
 #define LIBCOMPAT_ATTR_SENTINEL		__attribute__((__sentinel__))
 #else
 #define LIBCOMPAT_ATTR_SENTINEL
+#endif
+
+#if __has_attribute(__enum_extensibility__)
+#define LIBCOMPAT_ATTR_ENUM_FLAGS \
+	__attribute__((__enum_extensibility__(closed),__flag_enum__))
+#else
+#define LIBCOMPAT_ATTR_ENUM_FLAGS
 #endif
 
 /* For C++, define a __func__ fallback in case it's not natively supported. */
@@ -145,6 +156,10 @@ extern "C" {
 #define alphasort test_alphasort
 #undef unsetenv
 #define unsetenv test_unsetenv
+#endif
+
+#if !HAVE_DECL_SYS_SIGLIST
+extern const char *const sys_siglist[];
 #endif
 
 #if TEST_LIBCOMPAT || !defined(HAVE_C99_SNPRINTF)

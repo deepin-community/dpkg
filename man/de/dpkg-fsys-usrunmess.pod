@@ -110,6 +110,8 @@ B<Hinweis>: Einige Verzeichnisse könnten nach der Migration fortbestehen, falls
 
 B<Warnung>: Beachten Sie, dass diese Aktion die Möglichkeit eröffnet, dass Ihr System unbrauchbar oder defekt wird, falls das System unerwartet abstürzt oder neustartet, es sich in einem unerwarteten Zustand befindet oder sich möglicherweise Fehler in dem Skript befinden. Halten Sie Medien zur Systemwiederherstellung bereit und erstellen Sie vor der Ausführung Sicherungskopien.
 
+Dieses Programm wurde in Dpkg 1.20.6 hinzugefügt.
+
 =head1 OPTIONEN
 
 =over 

@@ -26,6 +26,8 @@ Dieses Programm wird die drei bereitgestellten Versionen des Debian-Changelogs v
 
 Jeder Eintrag wird durch seine Versionsnummer identifiziert und es wird angenommen, dass sie nicht im Konflikt stehen, sie werden einfach in der richtigen Reihenfolge eingemischt (in absteigender Reihenfolge). Wenn B<--merge-prereleases> verwandt wird, wird der Anteil der Versionsnummer nach der letzten Tilde entfernt, so dass 1.0-1~exp1 und 1.0-1~exp5 als gleicher Eintrag angenommen werden. Wenn die gleiche Version sowohl in I<neu-a> als auch in I<neu-b> verfügbar ist, wird eine normale, zeilenbasierte 3-Wege-Zusammenführung versucht (vorausgesetzt, dass das Modul Algorithm::Merge verfügbar ist — es ist Teil des Pakets libalgorithm-merge-perl — andernfalls erhalten Sie einen globalen Konflikt im Inhalt des Eintrags).
 
+Dieses Programm wurde in Dpkg 1.15.7 hinzugefügt.
+
 =head1 OPTIONEN
 
 =over 
@@ -68,7 +70,7 @@ Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language Support, au
 
 =head1 EINSCHRÄNKUNGEN
 
-Alles, was nicht von Dpkg::Changelog ausgewertet werden kann, geht beim Zusammenführen verloren. Dies betrifft Dinge wie Kommentare, die eigentlich nicht da sein sollten, usw.
+Alles, was nicht von L<Dpkg::Changelog> ausgewertet werden kann, geht beim Zusammenführen verloren. Dies betrifft Dinge wie Kommentare, die eigentlich nicht da sein sollten, usw.
 
 =head1 INTEGRATION IN GIT
 
@@ -78,7 +80,7 @@ Falls Sie dieses Programm dazu verwenden möchten, Debian-Changelog-Dateien in e
     name = debian/changelog merge driver
     driver = dpkg-mergechangelogs -m %O %A %B %A
 
-Dann müssen Sie entweder in B<.gitattributes> im Depot selbst oder in B<.git/info/attributes> das Merge-Attribut für die Datei B<debian/changelog> einrichten:
+Dann müssen Sie entweder in B<.gitattributes> im Depot selbst oder in B<.git/info/attributes> das Merge-Attribut für die Datei I<debian/changelog> einrichten:
 
  debian/changelog merge=dpkg-mergechangelogs
 

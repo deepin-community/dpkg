@@ -70,7 +70,7 @@ Veldnamen zijn niet hoofdlettergevoelig, maar het is gebruikelijk om in veldname
 
 Onderdeelscheidingstekens (lege regels) en regels die enkel bestaan uit U+0020 B<SPATIE> en U+0009 B<TAB>, mogen in veldwaarden en tussen velden niet gebruikt worden. Lege regels in veldwaarden worden meestal gemaskeerd door ze voor te stellen als een U+0020 B<SPATIE> gevolgd door een punt (U+002E ‘B<.>’).
 
-Regels die beginnen met U+0023 ‘B<#>’ zonder dat daar witruimte aan vooraf gaat, zijn commentaarregels. Zij zijn enkel toegelaten in controlebestanden van broncodepakketten (I<debian/control>) en in B<deb-origin>(5)-bestanden. Deze commentaarregels worden genegeerd, zelfs tussen twee vervolgregels in. Ze sluiten geen logische regels af.
+Regels die beginnen met U+0023 ‘B<#>’ zonder dat daar witruimte aan vooraf gaat, zijn commentaarregels. Zij zijn enkel toegelaten in controlebestanden van broncodepakketten (I<debian/control>) en in L<deb-origin(5)>-bestanden. Deze commentaarregels worden genegeerd, zelfs tussen twee vervolgregels in. Ze sluiten geen logische regels af.
 
 Alle controlebestanden moeten in UTF-8 opgesteld worden.
 

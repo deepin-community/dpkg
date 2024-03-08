@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-query - uma ferramenta para questionar a base de dados do dpkg
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-query> [I<option>...] I<command>
 
@@ -88,7 +88,7 @@ Flags de erro:
 
 =back
 
-Um estado em letra maiúscula ou letra de erro indica que o pacote é provável de causar severos problemas. Por favor consulte B<dpkg>(1) para informação sobre os estados e bandeiras em cima.
+An uppercase status or error letter indicates the package is likely to cause severe problems.  Please refer to L<dpkg(1)> for information about the above states and flags.
 
 O formato de saída desta opção não é configurável, mas varia automaticamente para caber na largura do terminal. Destina-se a ser lido por humanos e não é facilmente lido por máquinas. Veja B<-W> (B<--show>)  e B<--showformat> para um modo de configurar o formato do resultado.
 
@@ -113,7 +113,7 @@ Z<>
   package diverts others to: I<diverted-to>
   diverted by I<pkg> to: I<diverted-to>
 
-Dica: Quando se faz análise máquina a uma saída,é costume definir o locale para B<C.UTF-8> para obter resultados reproduzíveis.
+B<Dica>: Quando se faz análise máquina a uma saída, é costume definir o locale para B<C.UTF-8> para obter resultados reproduzíveis. Em alguns sistemas isto pode também requerer adaptar a variável de ambiente B<LANGUAGE> apropriadamente se já estiver definida (veja L<locale(7)>).
 
 Este comando não irá listar ficheiros extra criados pelos scripts do maintainer, nem irá listar alternativas.
 
@@ -156,7 +156,7 @@ Z<>
   local diversion from: I<diverted-from>
   local diversion to: I<diverted-to>
 
-Dica: Quando se faz análise máquina a uma saída,é costume definir o locale para B<C.UTF-8> para obter resultados reproduzíveis.
+B<Dica>: Quando se faz análise máquina a uma saída,é costume definir o locale para B<C.UTF-8> para obter resultados reproduzíveis.
 
 =item B<-p>, B<--print-avail> [I<package-name>...]
 
@@ -383,7 +383,7 @@ Define o programa a executar quando multiplica um comando via shell (desde dpkg 
 
 =item B<DPKG_PAGER>
 
-Define o comando paginador a usar (desde dpkg 1.19.1), o qual ir+a ser executado com «B<$SHELL -c>».  Se B<SHELL> não estiver definido, «B<sh>» irá ser usado em vez dele. O B<DPKG_PAGER> sobrepõe a variável de ambiente B<PAGER> (desde dpkg 1.19.2).
+Sets the pager command to use (since dpkg 1.19.1), which will be executed with «B<$SHELL -c>».  If B<SHELL> is not set, «B<%DPKG_DEFAULT_SHELL%>» will be used instead.  The B<DPKG_PAGER> overrides the B<PAGER> environment variable (since dpkg 1.19.2).
 
 =item B<DPKG_ROOT>
 
@@ -413,9 +413,13 @@ Definido pelo B<dpkg-query> para “B<-FRSXMQ>”, se não já definido, quando 
 
 =back
 
+=head1 SEGURANÇA
+
+Operações de consulta nunca devem requerer root, e delegar a sua execução para utilizadores sem privilégios via algum comando de ganhar-root pode ter implicações de segurança (tais como escalada de privilégios), por exemplo quando um paginador é invocado automaticamente pela ferramenta.
+
 =head1 VEJA TAMBÉM
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 TRADUÇÃO

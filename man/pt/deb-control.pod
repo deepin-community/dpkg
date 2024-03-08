@@ -14,15 +14,15 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NOME
 
-deb-control - formato Debian de ficheiro de controle mestre de pacotes binários
+deb-control - Debian binary package control file format
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<DEBIAN/control>
 
 =head1 DESCRIÇÃO
 
-Cada pacote binário Debian contem um ficheiro B<control> no seu membro B<control>, e o seu formato L<deb822(5)> é um subconjunto do ficheiro B<debian/control> mestre em pacotes fonte Debian, veja B<deb-src-control>(5).
+Each Debian binary package contains a B<control> file in its B<control> member, and its L<deb822(5)> format is a subset of the B<debian/control> template source control file in Debian source packages, see L<deb-src-control(5)>.
 
 Este ficheiro contém um número de campos. Cada campo começa com uma etiqueta, tal como B<Package> ou B<Version> (insensitivo a maiúsculas/minúsculas) seguido por dois pontos (:), e o corpo do campo (sensível a maiúsculas/minúsculas a menos que declarado o contrário). Os campos são delimitados apenas pelas etiquetas de campo, por outras palavras, o texto do campo pode ter múltiplas linhas de comprimento, mas as ferramentas de instalação irão geralmente juntar as linhas quando processam o corpo do campo (excepto no caso do campo B<Description>, veja em baixo).
 
@@ -40,7 +40,7 @@ Este campo define o tipo de pacote. B<udeb> é para pacotes de tamanho reduzido 
 
 =item B<Version:>I< string-de-versão> (obrigatório)
 
-Tipicamente, isto é o número de versão do pacote original seja em que formato o autor do programa usa. Pode também incluir um número de revisão Debian (para pacotes não-nativos). O formato exacto e algoritmo de ordenação estão descritos em B<deb-version>(7).
+Typically, this is the original package's version number in whatever form the program's author uses.  It may also include a Debian revision number (for non-native packages).  The exact format and sorting algorithm are described in L<deb-version(7)>.
 
 =item B<Maintainer:> I<fullname-email> (recomendado)
 
@@ -214,7 +214,7 @@ Este campo era usado para especificar uma lista de perfis de compilação separa
 
 =item B<Auto-Built-Package:> I<reason-list>
 
-Esta campo especifica uma lista de razões separadas por espaços de porquê este pacote foi auto-gerado. OS pacotes binários marcados com este campo não irão aparecer no ficheiro de controle fonte mestre I<debian/control>. A única razão usada actualmente é B<debug-symbols>.
+This field specifies a whitespace separated list of reasons why this package was auto-generated.  Binary packages marked with this field will not appear in the I<debian/control> template source control file.  The only currently used reason is B<debug-symbols>.
 
 =item B<Build-Ids:> I<elf-build-id-list>
 
@@ -252,7 +252,7 @@ O campo B<Build-Ids> usa um nome um pouco genérico fora do seu contexto origina
 
 =head1 VEJA TAMBÉM
 
-L<deb822(5)>, B<deb-src-control>(5), B<deb>(5), B<deb-version>(7), B<debtags>(1), B<dpkg>(1), B<dpkg-deb>(1).
+L<deb822(5)>, L<deb-src-control(5)>, L<deb(5)>, L<deb-version(7)>, L<debtags(1)>, L<dpkg(1)>, L<dpkg-deb(1)>.
 
 
 =head1 TRADUÇÃO

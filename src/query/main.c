@@ -59,7 +59,7 @@
 
 #include "actions.h"
 
-static const char *showformat = "${binary:Package}\t${Version}\n";
+static const char *opt_showformat = "${binary:Package}\t${Version}\n";
 
 static int opt_loadavail = 0;
 
@@ -69,7 +69,7 @@ pkg_array_match_patterns(struct pkg_array *array,
                          const char *const *argv)
 {
   int argc, i, ip, *found;
-  int rc = 0;
+  int misses = 0;
   struct pkg_spec *ps;
 
   for (argc = 0; argv[argc]; argc++);
@@ -101,7 +101,7 @@ pkg_array_match_patterns(struct pkg_array *array,
   for (ip = 0; ip < argc; ip++) {
     if (!found[ip]) {
       notice(_("no packages found matching %s"), argv[ip]);
-      rc++;
+      misses++;
     }
     pkg_spec_destroy(&ps[ip]);
   }
@@ -109,7 +109,7 @@ pkg_array_match_patterns(struct pkg_array *array,
   free(ps);
   free(found);
 
-  return rc;
+  return misses;
 }
 
 struct list_format {
@@ -250,9 +250,7 @@ static int
 listpackages(const char *const *argv)
 {
   struct pkg_array array;
-  struct pkginfo *pkg;
-  int i;
-  int rc = 0;
+  int misses = 0;
   struct list_format fmt;
   struct pager *pager;
 
@@ -269,7 +267,11 @@ listpackages(const char *const *argv)
   pager = pager_spawn(_("showing package list on pager"));
 
   if (!*argv) {
+    int i;
+
     for (i = 0; i < array.n_pkgs; i++) {
+      struct pkginfo *pkg;
+
       pkg = array.pkgs[i];
       if (pkg->status == PKG_STAT_NOTINSTALLED)
         array.pkgs[i] = NULL;
@@ -277,7 +279,7 @@ listpackages(const char *const *argv)
 
     pkg_array_foreach(&array, pkg_array_list_item, &fmt);
   } else {
-    rc = pkg_array_match_patterns(&array, pkg_array_list_item, &fmt, argv);
+    misses = pkg_array_match_patterns(&array, pkg_array_list_item, &fmt, argv);
   }
 
   m_output(stdout, _("<standard output>"));
@@ -288,7 +290,7 @@ listpackages(const char *const *argv)
   pkg_array_destroy(&array);
   modstatdb_shutdown();
 
-  return rc;
+  return !!misses;
 }
 
 static int
@@ -332,11 +334,8 @@ searchoutput(struct fsys_namenode *namenode)
 static int
 searchfiles(const char *const *argv)
 {
-  struct fsys_namenode *namenode;
-  struct fsys_hash_iter *iter;
   const char *thisarg;
-  int found;
-  int failures = 0;
+  int misses = 0;
   struct varbuf path = VARBUF_INIT;
   static struct varbuf vb;
 
@@ -348,7 +347,8 @@ searchfiles(const char *const *argv)
   ensure_diversions();
 
   while ((thisarg = *argv++) != NULL) {
-    found= 0;
+    struct fsys_namenode *namenode;
+    int found = 0;
 
     if (!strchr("*[?/",*thisarg)) {
       varbuf_reset(&vb);
@@ -361,14 +361,14 @@ searchfiles(const char *const *argv)
     if (!strpbrk(thisarg, "*[?\\")) {
       /* Trim trailing ‘/’ and ‘/.’ from the argument if it is not
        * a pattern, just a pathname. */
-      varbuf_reset(&path);
-      varbuf_add_str(&path, thisarg);
-      varbuf_end_str(&path);
+      varbuf_set_str(&path, thisarg);
       varbuf_trunc(&path, path_trim_slash_slashdot(path.buf));
 
-      namenode = fsys_hash_find_node(path.buf, 0);
+      namenode = fsys_hash_find_node(path.buf, FHFF_NONE);
       found += searchoutput(namenode);
     } else {
+      struct fsys_hash_iter *iter;
+
       iter = fsys_hash_iter_new();
       while ((namenode = fsys_hash_iter_next(iter)) != NULL) {
         if (fnmatch(thisarg,namenode->name,0)) continue;
@@ -378,7 +378,7 @@ searchfiles(const char *const *argv)
     }
     if (!found) {
       notice(_("no path found matching pattern %s"), thisarg);
-      failures++;
+      misses++;
       m_output(stderr, _("<standard error>"));
     } else {
       m_output(stdout, _("<standard output>"));
@@ -388,22 +388,24 @@ searchfiles(const char *const *argv)
 
   varbuf_destroy(&path);
 
-  return failures;
+  return !!misses;
 }
 
 static int
 print_status(const char *const *argv)
 {
-  const char *thisarg;
-  struct pkginfo *pkg;
-  int failures = 0;
+  int misses = 0;
 
   modstatdb_open(msdbrw_readonly);
 
   if (!*argv) {
     writedb_stanzas(stdout, _("<standard output>"), 0);
   } else {
+    const char *thisarg;
+
     while ((thisarg = *argv++) != NULL) {
+      struct pkginfo *pkg;
+
       pkg = dpkg_options_parse_pkgname(cipaction, thisarg);
 
       if (pkg->status == PKG_STAT_NOTINSTALLED &&
@@ -414,7 +416,7 @@ print_status(const char *const *argv)
           !pkg_is_informative(pkg, &pkg->installed)) {
         notice(_("package '%s' is not installed and no information is available"),
                pkg_name(pkg, pnaw_nonambig));
-        failures++;
+        misses++;
       } else {
         write_stanza(stdout, _("<standard output>"), pkg, &pkg->installed);
       }
@@ -425,7 +427,7 @@ print_status(const char *const *argv)
   }
 
   m_output(stdout, _("<standard output>"));
-  if (failures) {
+  if (misses) {
     fputs(_("Use dpkg --info (= dpkg-deb --info) to examine archive files.\n"),
           stderr);
     m_output(stderr, _("<standard error>"));
@@ -433,28 +435,30 @@ print_status(const char *const *argv)
 
   modstatdb_shutdown();
 
-  return failures;
+  return !!misses;
 }
 
 static int
 print_avail(const char *const *argv)
 {
-  const char *thisarg;
-  struct pkginfo *pkg;
-  int failures = 0;
+  int misses = 0;
 
   modstatdb_open(msdbrw_readonly | msdbrw_available_readonly);
 
   if (!*argv) {
     writedb_stanzas(stdout, _("<standard output>"), wdb_dump_available);
   } else {
+    const char *thisarg;
+
     while ((thisarg = *argv++) != NULL) {
+      struct pkginfo *pkg;
+
       pkg = dpkg_options_parse_pkgname(cipaction, thisarg);
 
       if (!pkg_is_informative(pkg, &pkg->available)) {
         notice(_("package '%s' is not available"),
                pkgbin_name(pkg, &pkg->available, pnaw_nonambig));
-        failures++;
+        misses++;
       } else {
         write_stanza(stdout, _("<standard output>"), pkg, &pkg->available);
       }
@@ -465,12 +469,12 @@ print_avail(const char *const *argv)
   }
 
   m_output(stdout, _("<standard output>"));
-  if (failures)
+  if (misses)
     m_output(stderr, _("<standard error>"));
 
   modstatdb_shutdown();
 
-  return failures;
+  return !!misses;
 }
 
 static int
@@ -480,7 +484,7 @@ list_files(const char *const *argv)
   struct fsys_namenode_list *file;
   struct pkginfo *pkg;
   struct fsys_namenode *namenode;
-  int failures = 0;
+  int misses = 0;
 
   if (!*argv)
     badusage(_("--%s needs at least one package name argument"), cipaction->olong);
@@ -494,7 +498,7 @@ list_files(const char *const *argv)
     case PKG_STAT_NOTINSTALLED:
       notice(_("package '%s' is not installed"),
              pkg_name(pkg, pnaw_nonambig));
-      failures++;
+      misses++;
       break;
     default:
       ensure_packagefiles_available(pkg);
@@ -530,7 +534,7 @@ list_files(const char *const *argv)
   }
 
   m_output(stdout, _("<standard output>"));
-  if (failures) {
+  if (misses) {
     fputs(_("Use dpkg --contents (= dpkg-deb --contents) to list archive files contents.\n"),
              stderr);
     m_output(stderr, _("<standard error>"));
@@ -538,7 +542,7 @@ list_files(const char *const *argv)
 
   modstatdb_shutdown();
 
-  return failures;
+  return !!misses;
 }
 
 static void
@@ -560,18 +564,15 @@ showpackages(const char *const *argv)
 {
   struct dpkg_error err;
   struct pkg_array array;
-  struct pkginfo *pkg;
   struct pkg_format_node *fmt;
   bool fmt_needs_db_fsys;
-  int i;
-  int rc = 0;
+  int misses = 0;
 
-  fmt = pkg_format_parse(showformat, &err);
+  fmt = pkg_format_parse(opt_showformat, &err);
   if (!fmt) {
     notice(_("error in show format: %s"), err.str);
     dpkg_error_destroy(&err);
-    rc++;
-    return rc;
+    return 2;
   }
 
   fmt_needs_db_fsys = pkg_format_needs_db_fsys(fmt);
@@ -585,9 +586,13 @@ showpackages(const char *const *argv)
   pkg_array_sort(&array, pkg_sorter_by_nonambig_name_arch);
 
   if (!*argv) {
+    int i;
+
     if (fmt_needs_db_fsys)
       ensure_allinstfiles_available_quiet();
     for (i = 0; i < array.n_pkgs; i++) {
+      struct pkginfo *pkg;
+
       pkg = array.pkgs[i];
       if (pkg->status == PKG_STAT_NOTINSTALLED)
         continue;
@@ -596,7 +601,7 @@ showpackages(const char *const *argv)
   } else {
     if (fmt_needs_db_fsys)
       pkg_array_foreach(&array, pkg_array_load_db_fsys, NULL);
-    rc = pkg_array_match_patterns(&array, pkg_array_show_item, fmt, argv);
+    misses = pkg_array_match_patterns(&array, pkg_array_show_item, fmt, argv);
   }
 
   m_output(stdout, _("<standard output>"));
@@ -606,7 +611,7 @@ showpackages(const char *const *argv)
   pkg_format_free(fmt);
   modstatdb_shutdown();
 
-  return rc;
+  return !!misses;
 }
 
 static bool
@@ -855,7 +860,7 @@ static const struct cmdinfo cmdinfos[]= {
   { "admindir",   0,   1, NULL, NULL,        set_admindir, 0 },
   { "root",       0,   1, NULL, NULL,        set_root, 0   },
   { "load-avail", 0,   0, &opt_loadavail, NULL, NULL, 1    },
-  { "showformat", 'f', 1, NULL, &showformat, NULL          },
+  { "showformat", 'f', 1, NULL, &opt_showformat, NULL      },
   { "no-pager",   0,   0, NULL, NULL,        set_no_pager  },
   {  NULL,        0,   0, NULL, NULL,        NULL          }
 };
@@ -877,5 +882,5 @@ int main(int argc, const char *const *argv) {
   dpkg_program_done();
   dpkg_locales_done();
 
-  return !!ret;
+  return ret;
 }

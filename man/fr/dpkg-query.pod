@@ -88,7 +88,7 @@ Drapeaux S<d'erreur :>
 
 =back
 
-Un état en majuscules ou une lettre d'erreur indiquent que le paquet peut provoquer des problèmes graves. Veuillez consulter B<dpkg>(1) à propos des états et drapeaux ci-dessus.
+An uppercase status or error letter indicates the package is likely to cause severe problems.  Please refer to L<dpkg(1)> for information about the above states and flags.
 
 On ne peut pas configurer le format de sortie de cette option. Il s'adapte automatiquement à la largeur du terminal. Ce format est destiné aux humains et la machine le lit mal. Voyez B<-W> (B<--show>) et B<--showformat> pour une possible configuration de ce format.
 
@@ -113,7 +113,7 @@ Z<>
   paquet détournant les autres S<vers :> I<diverted-to>
   détourné par I<paquet> S<vers :> I<diverted-to>
 
-S<Astuce :> lorsque la machine analyse la sortie, il est habituel de régler la localisation à B<C.UTF-8> pour obtenir des résultats reproductibles.
+B<Hint>: When machine parsing the output, it is customary to set the locale to B<C.UTF-8> to get reproducible results.  On some systems this might also require adapting the B<LANGUAGE> environment variable appropriately if it is already set (see L<locale(7)>).
 
 Cette commande ne donne pas les fichiers supplémentaires créés par les scripts du responsable de paquet, ni les alternatives.
 
@@ -156,7 +156,7 @@ Z<>
   détournement local S<depuis :> I<diverted-from>
   détournement localement S<en :> I<diverted-to>
 
-S<Astuce :> lorsque la machine analyse la sortie, il est habituel de régler la localisation à B<C.UTF-8> pour obtenir des résultats reproductibles.
+B<Hint>: When machine parsing the output, it is customary to set the locale to B<C.UTF-8> to get reproducible results.
 
 =item B<-p>, B<--print-avail> [I<nom-du-paquet>...]
 
@@ -383,7 +383,7 @@ Définit le programme à exécuter lors du lancement d'une commande avec un shel
 
 =item B<DPKG_PAGER>
 
-Définit la commande d'afficheur à utiliser (depuis S<dpkg 1.19.1)> qui sera exécutée avec S<« B<$SHELL> S<-c> ».> Si B<SHELL> n'est pas défini, S<« B<sh> »> sera utilisé à la place. B<DPKG_PAGER> remplace la variable d'environnement B<PAGER> (depuis S<dpkg 1.19.2).>
+Sets the pager command to use (since dpkg 1.19.1), which will be executed with «B<$SHELL -c>».  If B<SHELL> is not set, «B<%DPKG_DEFAULT_SHELL%>» will be used instead.  The B<DPKG_PAGER> overrides the B<PAGER> environment variable (since dpkg 1.19.2).
 
 =item B<DPKG_ROOT>
 
@@ -413,9 +413,13 @@ Définie à S<« B<-FRSXMQ> »> par B<dpkg-query>, si elle n'est pas déjà fix�
 
 =back
 
+=head1 SECURITY
+
+Query operations should never require root, and delegating their execution to unprivileged users via some gain-root command can have security implications (such as privilege escalation), for example when a pager is automatically invoked by the tool.
+
 =head1 VOIR AUSSI
 
-B<dpkg>(1).
+L<dpkg(1)>.
 
 
 =head1 TRADUCTION

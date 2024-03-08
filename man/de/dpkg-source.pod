@@ -44,7 +44,7 @@ Falls das Quellpaket ein nicht-Standard-Format verwendet (derzeit bedeutet dies 
 
 Baut ein Quellpaket (B<--build> seit Dpkg 1.17.14). Das erste nicht-Options-Argument wird als Name des Verzeichnisses verwandt, das den debianisierten (d.h. mit einem Unterverzeichnis „debian“ und ggf. Änderungen an den Originaldateien versehenen) Quellbaum enthält. Abhängig vom dem zum Bau verwandten Quellpaketformat könnten zusätzliche Parameter akzeptiert werden.
 
-B<dpkg-source> wird das Quellpaket mit dem ersten gefundenen Format aus der folgenden geordneten Liste bauen: dem mit der Befehlszeilenoption(en) I<--format> angegebenen Format, dem in B<debian/source/format> angegebenen Format, „1.0“. Die Rückfalloption „1.0“ ist veraltet und wird irgendwann in der Zukunft entfernt werden, Sie sollten das gewünschte Quellformat immer in B<debian/source/format> dokumentieren. Die verschiedenen Quellpaketformate werden im Abschnitt B<QUELLPAKET-FORMATE> ausführlich beschrieben.
+B<dpkg-source> wird das Quellpaket mit dem ersten gefundenen Format aus der folgenden geordneten Liste bauen: dem mit der Befehlszeilenoption(en) I<--format> angegebenen Format, dem in B<debian/source/format> angegebenen Format, „1.0“. Die Rückfalloption „1.0“ ist veraltet und wird irgendwann in der Zukunft entfernt werden, Sie sollten das gewünschte Quellformat immer in B<debian/source/format> dokumentieren. Die verschiedenen Quellpaketformate werden im Abschnitt L</QUELLPAKET-FORMATE> ausführlich beschrieben.
 
 =item B<--print-format> I<Verzeichnis>
 
@@ -88,7 +88,7 @@ Bestimmt die Changelog-Datei, aus der Informationen ausgelesen werden sollen. De
 
 =item B<-F>I<Changelog-Format>
 
-Spezifiziert das Format des Changelogs. Lesen Sie B<dpkg-parsechangelog>(1) für Informationen über alternative Formate.
+Spezifiziert das Format des Changelogs. Lesen Sie L<dpkg-parsechangelog(1)> für Informationen über alternative Formate.
 
 =item B<--format=>I<Wert>
 
@@ -96,7 +96,7 @@ Verwendet das angegebene Format zum Bau des Quellpakets (seit Dpkg 1.14.17). Es 
 
 =item B<-V>I<Name>B<=>I<Wert>
 
-Setzt eine Ausgabeersetzungsvariable. Lesen Sie B<deb-substvars>(5) für eine Besprechung der Ausgabeersetzung.
+Setzt eine Ausgabeersetzungsvariable. Lesen Sie L<deb-substvars(5)> für eine Besprechung der Ausgabeersetzung.
 
 =item B<-T>I<Substvars-Datei>
 
@@ -132,7 +132,7 @@ Der angegebene reguläre Ausdruck (Perl-Format) wird den standardmäßigen von B
 
 =item B<-I>[I<Dateimuster>], B<--tar-ignore>[=I<Dateimuster>]
 
-Falls diese Option angegeben wird, wird der Dateiname an die Option B<--exclude> von B<tar>(1) weitergegeben, wenn es zur Erstellung der Datei .orig.tar oder .tar aufgerufen wird (B<--tar-ignore> seit Dpkg 1.15.6). Zum Beispiel führt B<-I>CVS dazu, dass Tar CVS-Verzeichnisse überspringt, wenn es eine .tar-Datei erstellt. Diese Option kann mehrfach wiederholt werden, um mehrere Muster aufzuführen, die ausgeschlossen werden sollen.
+Falls diese Option angegeben wird, wird der Dateiname an die Option B<--exclude> von L<tar(1)> weitergegeben, wenn es zur Erstellung der Datei .orig.tar oder .tar aufgerufen wird (B<--tar-ignore> seit Dpkg 1.15.6). Zum Beispiel führt B<-I>CVS dazu, dass Tar CVS-Verzeichnisse überspringt, wenn es eine .tar-Datei erstellt. Diese Option kann mehrfach wiederholt werden, um mehrere Muster aufzuführen, die ausgeschlossen werden sollen.
 
 B<-I> fügt standardmäßig von selbst B<--exclude>-Optionen hinzu, die die Steuerdateien und -verzeichnisse der häufigsten Revisionskontrollsysteme, Sicherungs- und Swap-Dateien sowie Bau-Ausgabeverzeichnisse von Libtool herausfiltern.
 
@@ -296,7 +296,7 @@ Der Haupt-Originaltarball wird zuerst entpackt, dann werden alle zusätzlichen O
 
 Dann werden alle in B<debian/patches/>I<Lieferant>B<.series> oder B<debian/patches/series> aufgeführten Patches angewandt, wobei I<Lieferant> der Name des aktuellen Lieferanten in Kleinbuchstaben ist oder B<debian>, falls kein Lieferant definiert ist. Falls die erstere Datei verwandt wird und die Letztere nicht existiert (oder ein Symlink ist), dann wird die Letztere durch einen Symlink zu Ersterer ersetzt. Dies ist zur Vereinfachung der Verwendung von B<quilt> gedacht, um die Gruppe von Patches zu verwalten. Lieferantenspezifische Seriendateien sind dazu gedacht, es zu ermöglichen, mehrere Entwicklungszweige basierend auf dem Lieferanten auf eine deklarative Art zu serialisieren, und diese gegenüber der offenen Codierung dieser Handhabung in B<debian/rules> zu bevorzugen. Dies ist insbesondere nützlich, wenn die Quellen mit Bedingungen gepacht werden müssten, da die betroffenen Dateien keine eingebaute abhängige Okklusionsunterstützung haben. Beachten Sie allerdings, dass B<dpkg-source> zwar Seriendateien auswertet, in denen explizite Optionen für die Anwendung der Patches verwandt werden (diese werden auf jede Zeile nach dem Patch-Dateinamen und einem oder mehreren Leerzeichen gespeichert), diese Optionen dann aber ignoriert und immer erwartet, dass die Patches mit der Option B<-p1> von B<patch> angewandt werden können. Es wird daher eine Warnung ausgegeben, wenn es auf solche Optionen trifft, und der Bau wird wahrscheinlich fehlschlagen.
 
-Beachten Sie, dass B<lintian>(1) aufgrund Debian-spezifischer Regularien bedingungslos Warnungen ausgeben wird, wenn Lieferantenserien verwandt werden. Dies sollte die Verwendung außerhalb von Debian nicht betreffen. Um diese Warnungen auszublenden, kann das Dpkg-Lintian-Profil mittels Übergabe von „B<--profile dpkg>“ an B<lintian>(1) verwandt werden.
+Beachten Sie, dass L<lintian(1)> aufgrund Debian-spezifischer Regularien bedingungslos Warnungen ausgeben wird, wenn Lieferantenserien verwandt werden. Dies sollte die Verwendung außerhalb von Debian nicht betreffen. Um diese Warnungen auszublenden, kann das Dpkg-Lintian-Profil mittels Übergabe von „B<--profile dpkg>“ an L<lintian(1)> verwandt werden.
 
 Der Zeitstempel aller gepatchten Dateien wird auf die Entpackzeit des Quellpakets zurückgesetzt. Damit werden Zeitstempelversätze vermieden, die zu Problemen führen, wenn automatisch erzeugte Dateien gepatcht werden.
 
@@ -324,7 +324,7 @@ B<Änderungen aufzeichnen>
 
 =item B<--commit> [I<Verzeichnis>] [I<Patch-Name>] [I<Patch-Datei>]
 
-Erstellt einen Patch, der den lokalen Änderungen entspricht, die nicht vom B<quilt>-Patch-System verwaltet werden und integriert ihn unter dem Namen I<Patch-Name> in das Patch-System. Falls der Name fehlt, wird er interaktiv erfragt. Falls I<Patch-Datei> angegeben ist, wird er als Patch, der zu den lokalen Änderungen, die integriert werden sollen, gehört, verwandt. Sobald der Patch integriert wurde, wird ein Editor gestartet, so dass Sie die Metainformationen in den Kopfzeilen des Patches einfügen können.
+Erstellt einen Patch, der den lokalen Änderungen entspricht, die nicht vom B<quilt>-Patch-System verwaltet werden und integriert ihn unter dem Namen I<Patch-Name> in das Patch-System. Falls der Name fehlt, wird er interaktiv erfragt. Falls I<Patch-Datei> angegeben ist, wird er als Patch, der zu den lokalen Änderungen, die integriert werden sollen, gehört, verwandt. Sobald der Patch integriert wurde, wird ein Editor (der erste aus B<sensible-editor>, C<$VISUAL>, C<$EDITOR>, B<vi>) gestartet, so dass Sie die Metainformationen in den Kopfzeilen des Patches einfügen können.
 
 Die Verwendung von I<patch-Datei> ist primär nach einem Baufehler nützlich, der diese Datei vorgenerierte und daher wird die übergebene Datei nach der Integration entfernt. Beachten Sie auch, dass die Änderungen, die in der Patch-Datei angegeben sind, bereits im Baum angewandt worden sein müssen und dass die Dateien, die von diesem Patch geändert werden, keine zusätzlichen, nicht aufgezeichneten Änderungen enthalten dürfen.
 
@@ -424,7 +424,7 @@ B<Bauen>
 
 Bevor fortgefahren wird, werden einige Überprüfungen ausgeführt, um sicherzustellen, dass keine nicht-ignorierten, nicht-übertragenen („uncommitted“) Änderungen vorliegen.
 
-B<git-bundle>(1) wird zur Erstellung des Bündels des Git-Depots verwandt. Standardmäßig werden alle Zweige und Markierungen im Depot im Bündel einbezogen.
+L<git-bundle(1)> wird zur Erstellung des Bündels des Git-Depots verwandt. Standardmäßig werden alle Zweige und Markierungen im Depot im Bündel einbezogen.
 
 B<Bau-Optionen>
 
@@ -432,7 +432,7 @@ B<Bau-Optionen>
 
 =item B<--git-ref=>I<Referenz>
 
-Erlaubt die Angabe einer Git-Referenz zur Aufnahme in dem Git-Bündel. Die Verwendung deaktiviert das standardmäßige Verhalten, alle Zweige und Markierungen aufzunehmen. Kann mehrfach angegeben werden. I<Referenz> kann der Name eines Zweiges oder einer Markierung, der/die aufgenommen werden soll, sein. Es kann auch ein Parameter sein, der an B<git-rev-list>(1) übergeben werden kann. Verwenden Sie beispielsweise B<--git-ref=>main, um nur den Main-Zweig aufzunehmen. Um alle Markierungen und Zweige außer dem Zweig „private“ aufzunehmen, verwenden Sie B<--git-ref=>--all B<--git-ref=>^private.
+Erlaubt die Angabe einer Git-Referenz zur Aufnahme in dem Git-Bündel. Die Verwendung deaktiviert das standardmäßige Verhalten, alle Zweige und Markierungen aufzunehmen. Kann mehrfach angegeben werden. I<Referenz> kann der Name eines Zweiges oder einer Markierung, der/die aufgenommen werden soll, sein. Es kann auch ein Parameter sein, der an L<git-rev-list(1)> übergeben werden kann. Verwenden Sie beispielsweise B<--git-ref=>main, um nur den Main-Zweig aufzunehmen. Um alle Markierungen und Zweige außer dem Zweig „private“ aufzunehmen, verwenden Sie B<--git-ref=>--all B<--git-ref=>^private.
 
 =item B<--git-depth=>I<Zahl>
 
@@ -498,7 +498,7 @@ Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language Support, au
 
 =item B<SOURCE_DATE_EPOCH>
 
-Falls gesetzt, wird sie als Zeitstempel (als Sekunden seit der Epoche) zum Festlegen der Mtime in den Dateieinträgen von B<tar>(5) verwandt.
+Falls gesetzt, wird sie als Zeitstempel (als Sekunden seit der Epoche) zum Festlegen der Mtime in den Dateieinträgen von L<tar(5)> verwandt.
 
 =item B<VISUAL>
 
@@ -563,13 +563,19 @@ Formloser Text, der an den Anfang des in den Formaten „2.0“ und „3.0 (quil
 
 Diese Datei führt alle Patches auf, die (in der angegebenen Reihenfolge) auf das Quellpaket der Originalautoren angewandt werden müssen. Leerzeichen am Anfang und Ende werden entfernt. I<Lieferant> ist der Name des aktuellen Lieferanten in Kleinschreibung oder B<debian>, falls kein Lieferant definiert ist. Falls die lieferantenspezifische Seriendatei nicht existiert, wird eine lieferantenfreie Seriendatei verwandt. Zeilen, die mit ‚B<#>’ anfangen, sind Kommentare und werden übersprungen. Leere Zeilen werden ignoriert. Die verbleibenden Zeilen beginnen mit dem Dateinamen eines Patches (relativ zum Verzeichnis B<debian/patches/>) bis zum ersten Leerzeichen oder bis zum Zeilenende. Bis zum Ende der Zeile oder bis zum ersten ‚B<#>’ gefolgt von einem oder mehreren Leerzeichen (dies markiert den Beginn eines Kommentars, der bis zum Zeilenende geht) können optionale B<quilt>-Befehle folgen.
 
+=head1 SICHERHEIT
+
+Untersuchen nicht vertrauenswürdiger Quellpakete oder ihr Entpacken in ein Arbeitsverzeichnis sollte als Sicherheitsgrenze betrachtet werden und jede Verletzung dieser Grenze, die aus diesen Aktionen resultiert, sollte als Sicherheitsverwundbarkeit betrachtet werden. Allerdings sollte der Umgang mit nicht vertrauenswürdigen Quellpaketen nicht leichtherzig erfolgen, da die Oberfläche alle unterstützten Komprimierungsbefehle und Befehle zum Umgang mit bestimmten Datenformaten (wie L<tar(1)> oder L<patch(1)>) umfasst, zusätzliche zu den Quellpaketformaten und Steuerdateien selbst. Es wird nachdrücklich davon abgeraten, diese Aktionen auf nicht vertrauenswürdigen Daten als Root durchzuführen.
+
+Das Bauen von Quellpaketen sollte nur mit vertrauenswürdigen Daten erfolgen.
+
 =head1 FEHLER
 
 Die Stelle, an der das Überschreiben von Feldern passiert, verglichen mit bestimmten Standard-Ausgabe-Feldeinstellungen, ist eher verwirrend.
 
 =head1 SIEHE AUCH
 
-B<deb-src-control>(5), B<deb-changelog>(5), B<deb-substvars>(5), B<dsc>(5).
+L<deb-src-control(5)>, L<deb-changelog(5)>, L<deb-substvars(5)>, L<dsc(5)>.
 
 
 =head1 ÜBERSETZUNG

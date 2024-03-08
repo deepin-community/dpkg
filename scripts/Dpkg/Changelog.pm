@@ -23,18 +23,16 @@ Dpkg::Changelog - base class to implement a changelog parser
 =head1 DESCRIPTION
 
 Dpkg::Changelog is a class representing a changelog file
-as an array of changelog entries (Dpkg::Changelog::Entry).
-By deriving this class and implementing its parse method, you
+as an array of changelog entries (L<Dpkg::Changelog::Entry>).
+By deriving this class and implementing its parse() method, you
 add the ability to fill this object with changelog entries.
 
 =cut
 
-package Dpkg::Changelog;
+package Dpkg::Changelog 2.00;
 
 use strict;
 use warnings;
-
-our $VERSION = '2.00';
 
 use Carp;
 
@@ -109,7 +107,7 @@ Returns the number of changelog entries that have been parsed with success.
 =item $c->reset_parse_errors()
 
 Can be used to delete all information about errors occurred during
-previous L<parse> runs.
+previous parse() runs.
 
 =cut
 
@@ -141,7 +139,7 @@ sub parse_error {
 
 =item $c->get_parse_errors()
 
-Returns all error messages from the last L<parse> run.
+Returns all error messages from the last parse() run.
 If called in scalar context returns a human readable
 string representation. If called in list context returns
 an array of arrays. Each of these arrays contains
@@ -211,15 +209,15 @@ sub get_unparsed_tail {
 
 =item @{$c}
 
-Returns all the Dpkg::Changelog::Entry objects contained in this changelog
+Returns all the L<Dpkg::Changelog::Entry> objects contained in this changelog
 in the order in which they have been parsed.
 
 =item $c->get_range($range)
 
 Returns an array (if called in list context) or a reference to an array of
-Dpkg::Changelog::Entry objects which each represent one entry of the
+L<Dpkg::Changelog::Entry> objects which each represent one entry of the
 changelog. $range is a hash reference describing the range of entries
-to return. See section L<"RANGE SELECTION">.
+to return. See section L</RANGE SELECTION>.
 
 =cut
 
@@ -440,7 +438,7 @@ sub abort_early {
 	}
 	my $start = my $end = $offset;
 	$end += $count-1 if $count > 0;
-	return ($start < @$data and $end < @$data);
+        return $start < @{$data} > $end;
     }
 
     return unless defined($r->{since}) or defined($r->{from});
@@ -507,53 +505,55 @@ sub _format_dpkg {
     my @data = $self->get_range($range) or return;
     my $src = shift @data;
 
-    my $f = Dpkg::Control::Changelog->new();
-    $f->{Urgency} = $src->get_urgency() || 'unknown';
-    $f->{Source} = $src->get_source() || 'unknown';
-    $f->{Version} = $src->get_version() // 'unknown';
-    $f->{Distribution} = join(' ', $src->get_distributions());
-    $f->{Maintainer} = $src->get_maintainer() // '';
-    $f->{Date} = $src->get_timestamp() // '';
-    $f->{Timestamp} = $src->get_timepiece && $src->get_timepiece->epoch // '';
-    $f->{Changes} = $src->get_dpkg_changes();
+    my $c = Dpkg::Control::Changelog->new();
+    $c->{Urgency} = $src->get_urgency() || 'unknown';
+    $c->{Source} = $src->get_source() || 'unknown';
+    $c->{Version} = $src->get_version() // 'unknown';
+    $c->{Distribution} = join ' ', $src->get_distributions();
+    $c->{Maintainer} = $src->get_maintainer() // '';
+    $c->{Date} = $src->get_timestamp() // '';
+    $c->{Timestamp} = $src->get_timepiece && $src->get_timepiece->epoch // '';
+    $c->{Changes} = $src->get_dpkg_changes();
 
     # handle optional fields
     my $opts = $src->get_optional_fields();
     my %closes;
-    foreach (keys %$opts) {
-	if (/^Urgency$/i) { # Already dealt
-	} elsif (/^Closes$/i) {
+    foreach my $f (keys %{$opts}) {
+        if ($f eq 'Urgency') {
+            # Already handled.
+        } elsif ($f eq 'Closes') {
 	    $closes{$_} = 1 foreach (split(/\s+/, $opts->{Closes}));
 	} else {
-	    field_transfer_single($opts, $f);
+            field_transfer_single($opts, $c, $f);
 	}
     }
 
     foreach my $bin (@data) {
-	my $oldurg = $f->{Urgency} // '';
-	my $oldurgn = $URGENCIES{$f->{Urgency}} // -1;
+        my $oldurg = $c->{Urgency} // '';
+        my $oldurgn = $URGENCIES{$c->{Urgency}} // -1;
 	my $newurg = $bin->get_urgency() // '';
 	my $newurgn = $URGENCIES{$newurg} // -1;
-	$f->{Urgency} = ($newurgn > $oldurgn) ? $newurg : $oldurg;
-	$f->{Changes} .= "\n" . $bin->get_dpkg_changes();
+        $c->{Urgency} = ($newurgn > $oldurgn) ? $newurg : $oldurg;
+        $c->{Changes} .= "\n" . $bin->get_dpkg_changes();
 
 	# handle optional fields
 	$opts = $bin->get_optional_fields();
-	foreach (keys %$opts) {
-	    if (/^Closes$/i) {
+        foreach my $f (keys %{$opts}) {
+            if ($f eq 'Closes') {
 		$closes{$_} = 1 foreach (split(/\s+/, $opts->{Closes}));
-	    } elsif (not exists $f->{$_}) { # Don't overwrite an existing field
-		field_transfer_single($opts, $f);
+            } elsif (not exists $c->{$f}) {
+                # Don't overwrite an existing field
+                field_transfer_single($opts, $c, $f);
 	    }
 	}
     }
 
     if (scalar keys %closes) {
-	$f->{Closes} = join ' ', sort { $a <=> $b } keys %closes;
+        $c->{Closes} = join ' ', sort { $a <=> $b } keys %closes;
     }
-    run_vendor_hook('post-process-changelog-entry', $f);
+    run_vendor_hook('post-process-changelog-entry', $c);
 
-    return $f;
+    return $c;
 }
 
 sub _format_rfc822 {
@@ -563,25 +563,25 @@ sub _format_rfc822 {
     my @ctrl;
 
     foreach my $entry (@data) {
-	my $f = Dpkg::Control::Changelog->new();
-	$f->{Urgency} = $entry->get_urgency() || 'unknown';
-	$f->{Source} = $entry->get_source() || 'unknown';
-	$f->{Version} = $entry->get_version() // 'unknown';
-	$f->{Distribution} = join(' ', $entry->get_distributions());
-	$f->{Maintainer} = $entry->get_maintainer() // '';
-	$f->{Date} = $entry->get_timestamp() // '';
-	$f->{Timestamp} = $entry->get_timepiece && $entry->get_timepiece->epoch // '';
-	$f->{Changes} = $entry->get_dpkg_changes();
+        my $c = Dpkg::Control::Changelog->new();
+        $c->{Urgency} = $entry->get_urgency() || 'unknown';
+        $c->{Source} = $entry->get_source() || 'unknown';
+        $c->{Version} = $entry->get_version() // 'unknown';
+        $c->{Distribution} = join ' ', $entry->get_distributions();
+        $c->{Maintainer} = $entry->get_maintainer() // '';
+        $c->{Date} = $entry->get_timestamp() // '';
+        $c->{Timestamp} = $entry->get_timepiece && $entry->get_timepiece->epoch // '';
+        $c->{Changes} = $entry->get_dpkg_changes();
 
 	# handle optional fields
 	my $opts = $entry->get_optional_fields();
-	foreach (keys %$opts) {
-	    field_transfer_single($opts, $f) unless exists $f->{$_};
+        foreach my $f (keys %{$opts}) {
+            field_transfer_single($opts, $c, $f) unless exists $c->{$f};
 	}
 
-        run_vendor_hook('post-process-changelog-entry', $f);
+        run_vendor_hook('post-process-changelog-entry', $c);
 
-        push @ctrl, $f;
+        push @ctrl, $c;
     }
 
     return @ctrl;
@@ -589,18 +589,18 @@ sub _format_rfc822 {
 
 =item $control = $c->format_range($format, $range)
 
-Formats the changelog into Dpkg::Control::Changelog objects representing the
-entries selected by the optional range specifier (see L<"RANGE SELECTION">
-for details). In scalar context returns a Dpkg::Index object containing the
-selected entries, in list context returns an array of Dpkg::Control::Changelog
-objects.
+Formats the changelog into L<Dpkg::Control::Changelog> objects representing
+the entries selected by the optional range specifier (see L</RANGE SELECTION>
+for details). In scalar context returns a L<Dpkg::Index> object containing
+the selected entries, in list context returns an array of
+L<Dpkg::Control::Changelog> objects.
 
-With format B<dpkg> the returned Dpkg::Control::Changelog object is coalesced
-from the entries in the changelog that are part of the range requested,
-with the fields described below, but considering that "selected entry"
-means the first entry of the selected range.
+With format B<dpkg> the returned L<Dpkg::Control::Changelog> object is
+coalesced from the entries in the changelog that are part of the range
+requested, with the fields described below, but considering that
+"selected entry" means the first entry of the selected range.
 
-With format B<rfc822> each returned Dpkg::Control::Changelog objects
+With format B<rfc822> each returned L<Dpkg::Control::Changelog> objects
 represents one entry in the changelog that is part of the range requested,
 with the fields described below, but considering that "selected entry"
 means for each entry.
@@ -668,8 +668,8 @@ sub format_range {
     } else {
         my $index = Dpkg::Index->new(type => CTRL_CHANGELOG);
 
-        foreach my $f (@ctrl) {
-            $index->add($f);
+        foreach my $c (@ctrl) {
+            $index->add($c);
         }
 
         return $index;

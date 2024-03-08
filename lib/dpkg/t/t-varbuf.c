@@ -155,6 +155,62 @@ test_varbuf_trunc(void)
 }
 
 static void
+test_varbuf_set(void)
+{
+	struct varbuf vb, cb;
+
+	varbuf_init(&vb, 10);
+	varbuf_init(&cb, 10);
+
+	varbuf_set_buf(&vb, "1234567890", 5);
+	test_pass(vb.used == 5);
+	test_mem(vb.buf, ==, "12345", 5);
+
+	varbuf_set_buf(&vb, "abcd", 4);
+	test_pass(vb.used == 4);
+	test_mem(vb.buf, ==, "abcd", 4);
+
+	varbuf_set_varbuf(&cb, &vb);
+	test_pass(cb.used == 4);
+	test_mem(cb.buf, ==, "abcd", 4);
+
+	varbuf_set_str(&vb, "12345");
+	test_pass(vb.used == 5);
+	test_str(vb.buf, ==, "12345");
+
+	varbuf_set_strn(&vb, "1234567890", 8);
+	test_pass(vb.used == 8);
+	test_str(vb.buf, ==, "12345678");
+
+	varbuf_destroy(&cb);
+	varbuf_destroy(&vb);
+}
+
+static void
+test_varbuf_add_varbuf(void)
+{
+	struct varbuf vb, cb;
+
+	varbuf_init(&vb, 5);
+	varbuf_init(&cb, 0);
+
+	varbuf_set_str(&vb, "1234567890");
+	varbuf_add_varbuf(&cb, &vb);
+	test_pass(cb.used == 10);
+	test_pass(cb.size >= cb.used);
+	test_mem(cb.buf, ==, "1234567890", 10);
+
+	varbuf_set_str(&vb, "abcde");
+	varbuf_add_varbuf(&cb, &vb);
+	test_pass(cb.used == 15);
+	test_pass(cb.size >= cb.used);
+	test_mem(cb.buf, ==, "1234567890abcde", 15);
+
+	varbuf_destroy(&cb);
+	varbuf_destroy(&vb);
+}
+
+static void
 test_varbuf_add_buf(void)
 {
 	struct varbuf vb;
@@ -170,6 +226,32 @@ test_varbuf_add_buf(void)
 	test_pass(vb.used == 15);
 	test_pass(vb.size >= vb.used);
 	test_mem(vb.buf, ==, "1234567890abcde", 15);
+
+	varbuf_destroy(&vb);
+}
+
+static void
+test_varbuf_add_str(void)
+{
+	struct varbuf vb;
+
+	varbuf_init(&vb, 5);
+
+	varbuf_add_str(&vb, "1234567890");
+	varbuf_end_str(&vb);
+	test_str(vb.buf, ==, "1234567890");
+
+	varbuf_add_str(&vb, "abcd");
+	varbuf_end_str(&vb);
+	test_str(vb.buf, ==, "1234567890abcd");
+
+	varbuf_add_strn(&vb, "1234567890", 5);
+	varbuf_end_str(&vb);
+	test_str(vb.buf, ==, "1234567890abcd12345");
+
+	varbuf_add_strn(&vb, "abcd", 0);
+	varbuf_end_str(&vb);
+	test_str(vb.buf, ==, "1234567890abcd12345");
 
 	varbuf_destroy(&vb);
 }
@@ -452,14 +534,17 @@ test_varbuf_detach(void)
 
 TEST_ENTRY(test)
 {
-	test_plan(152);
+	test_plan(172);
 
 	test_varbuf_init();
 	test_varbuf_prealloc();
 	test_varbuf_new();
 	test_varbuf_grow();
 	test_varbuf_trunc();
+	test_varbuf_set();
+	test_varbuf_add_varbuf();
 	test_varbuf_add_buf();
+	test_varbuf_add_str();
 	test_varbuf_add_char();
 	test_varbuf_dup_char();
 	test_varbuf_map_char();

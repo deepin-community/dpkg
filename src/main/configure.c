@@ -58,7 +58,7 @@
 
 #include "main.h"
 
-enum conffopt {
+enum DPKG_ATTR_ENUM_FLAGS conffopt {
 	CFOF_PROMPT		= DPKG_BIT(0),
 	CFOF_KEEP		= DPKG_BIT(1),
 	CFOF_INSTALL		= DPKG_BIT(2),
@@ -383,7 +383,7 @@ deferred_configure_conffile(struct pkginfo *pkg, struct conffile *conff)
 	char *cdr2rest;
 	int rc;
 
-	usenode = namenodetouse(fsys_hash_find_node(conff->name, FHFF_NOCOPY),
+	usenode = namenodetouse(fsys_hash_find_node(conff->name, FHFF_NO_COPY),
                                 pkg, &pkg->installed);
 
 	rc = conffderef(pkg, &cdr, usenode->name);
@@ -393,9 +393,7 @@ deferred_configure_conffile(struct pkginfo *pkg, struct conffile *conff)
 	}
 	md5hash(pkg, currenthash, cdr.buf);
 
-	varbuf_reset(&cdr2);
-	varbuf_add_str(&cdr2, cdr.buf);
-	varbuf_end_str(&cdr2);
+	varbuf_set_varbuf(&cdr2, &cdr);
 	/* XXX: Make sure there's enough room for extensions. */
 	varbuf_grow(&cdr2, 50);
 	cdr2rest = cdr2.buf + strlen(cdr.buf);
@@ -701,11 +699,9 @@ conffderef(struct pkginfo *pkg, struct varbuf *result, const char *in)
 {
 	static struct varbuf target = VARBUF_INIT;
 	struct stat stab;
-	ssize_t r;
 	int loopprotect;
 
-	varbuf_reset(result);
-	varbuf_add_str(result, dpkg_fsys_get_dir());
+	varbuf_set_str(result, dpkg_fsys_get_dir());
 	varbuf_add_str(result, in);
 	varbuf_end_str(result);
 
@@ -727,6 +723,8 @@ conffderef(struct pkginfo *pkg, struct varbuf *result, const char *in)
 			      in, result->buf);
 			return 0;
 		} else if (S_ISLNK(stab.st_mode)) {
+			ssize_t linksize;
+
 			debug(dbg_conffdetail, "conffderef symlink loopprotect=%d",
 			      loopprotect);
 			if (loopprotect++ >= 25) {
@@ -737,37 +735,35 @@ conffderef(struct pkginfo *pkg, struct varbuf *result, const char *in)
 				return -1;
 			}
 
-			varbuf_reset(&target);
-			varbuf_grow(&target, stab.st_size + 1);
-			r = readlink(result->buf, target.buf, target.size);
-			if (r < 0) {
+			linksize = file_readlink(result->buf, &target, stab.st_size);
+			if (linksize < 0) {
 				warning(_("%s: unable to readlink conffile '%s'\n"
 				          " (= '%s'): %s"),
 				        pkg_name(pkg, pnaw_nonambig), in,
 				        result->buf, strerror(errno));
 				return -1;
-			} else if (r != stab.st_size) {
+			} else if (linksize != stab.st_size) {
 				warning(_("symbolic link '%.250s' size has "
 				          "changed from %jd to %zd"),
-				        result->buf, (intmax_t)stab.st_size, r);
+				        result->buf, (intmax_t)stab.st_size,
+				        linksize);
 				/* If the returned size is smaller, let's
 				 * proceed, otherwise error out. */
-				if (r > stab.st_size)
+				if (linksize > stab.st_size)
 					return -1;
 			}
-			varbuf_trunc(&target, r);
-			varbuf_end_str(&target);
 
 			debug(dbg_conffdetail,
 			      "conffderef readlink gave %zd, '%s'",
-			      r, target.buf);
+			      linksize, target.buf);
 
 			if (target.buf[0] == '/') {
-				varbuf_reset(result);
-				varbuf_add_str(result, dpkg_fsys_get_dir());
+				varbuf_set_str(result, dpkg_fsys_get_dir());
 				debug(dbg_conffdetail,
 				      "conffderef readlink absolute");
 			} else {
+				ssize_t r;
+
 				for (r = result->used - 1; r > 0 && result->buf[r] != '/'; r--)
 					;
 				if (r < 0) {
@@ -784,7 +780,7 @@ conffderef(struct pkginfo *pkg, struct varbuf *result, const char *in)
 				      "conffderef readlink relative to '%.*s'",
 				      (int)result->used, result->buf);
 			}
-			varbuf_add_buf(result, target.buf, target.used);
+			varbuf_add_varbuf(result, &target);
 			varbuf_end_str(result);
 		} else {
 			warning(_("%s: conffile '%.250s' is not a plain file or symlink (= '%s')"),

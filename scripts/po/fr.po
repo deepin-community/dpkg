@@ -1,4 +1,4 @@
-# Translation of dpkg scripts messages templates to French
+# Translation of dpkg-dev to French
 # Copyright (C) 2007-2009 Debian French l10n team <debian-l10n-french@lists.debian.org>
 # This file is distributed under the same license as the dpkg package.
 #
@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg-dev 1.21.20\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
 "PO-Revision-Date: 2023-02-10 02:16+0100\n"
 "Last-Translator: Sébastien Poher <sebastien@volted.net>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -22,8 +22,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: scripts/dpkg-architecture.pl scripts/dpkg-buildflags.pl
-#: scripts/dpkg-buildpackage.pl scripts/dpkg-checkbuilddeps.pl
+#: scripts/dpkg-architecture.pl scripts/dpkg-buildapi.pl
+#: scripts/dpkg-buildflags.pl scripts/dpkg-buildpackage.pl
+#: scripts/dpkg-buildtree.pl scripts/dpkg-checkbuilddeps.pl
 #: scripts/dpkg-distaddfile.pl scripts/dpkg-genbuildinfo.pl
 #: scripts/dpkg-genchanges.pl scripts/dpkg-gencontrol.pl
 #: scripts/dpkg-gensymbols.pl scripts/dpkg-mergechangelogs.pl
@@ -35,11 +36,11 @@ msgid "Debian %s version %s.\n"
 msgstr "Debian %s version %s.\n"
 
 #: scripts/dpkg-architecture.pl scripts/dpkg-buildflags.pl
-#: scripts/dpkg-buildpackage.pl scripts/dpkg-distaddfile.pl
-#: scripts/dpkg-genbuildinfo.pl scripts/dpkg-genchanges.pl
-#: scripts/dpkg-gencontrol.pl scripts/dpkg-gensymbols.pl
-#: scripts/dpkg-parsechangelog.pl scripts/dpkg-shlibdeps.pl
-#: scripts/dpkg-source.pl scripts/dpkg-vendor.pl
+#: scripts/dpkg-buildpackage.pl scripts/dpkg-buildtree.pl
+#: scripts/dpkg-distaddfile.pl scripts/dpkg-genbuildinfo.pl
+#: scripts/dpkg-genchanges.pl scripts/dpkg-gencontrol.pl
+#: scripts/dpkg-gensymbols.pl scripts/dpkg-parsechangelog.pl
+#: scripts/dpkg-shlibdeps.pl scripts/dpkg-source.pl scripts/dpkg-vendor.pl
 msgid ""
 "\n"
 "This is free software; see the GNU General Public License version 2 or\n"
@@ -51,7 +52,7 @@ msgstr ""
 "dans la version 2 ou une version supérieure pour les conditions de copie. Il "
 "n'y a PAS de garantie.\n"
 
-#: scripts/dpkg-architecture.pl scripts/dpkg-vendor.pl
+#: scripts/dpkg-architecture.pl scripts/dpkg-buildapi.pl scripts/dpkg-vendor.pl
 #, perl-format
 msgid "Usage: %s [<option>...] [<command>]"
 msgstr "Usage: %s [<option>...] [<commande>]"
@@ -172,7 +173,8 @@ msgstr "%s n'est pas un format d’affichage pris en charge"
 msgid "%s is not a supported variable name"
 msgstr "%s n'est pas le nom d'une variable pris en charge"
 
-#: scripts/dpkg-architecture.pl scripts/dpkg-buildflags.pl
+#: scripts/dpkg-architecture.pl scripts/dpkg-buildapi.pl
+#: scripts/dpkg-buildflags.pl scripts/dpkg-buildtree.pl
 #: scripts/dpkg-distaddfile.pl scripts/dpkg-genbuildinfo.pl
 #: scripts/dpkg-genchanges.pl scripts/dpkg-gencontrol.pl
 #: scripts/dpkg-gensymbols.pl scripts/dpkg-name.pl
@@ -191,25 +193,81 @@ msgstr ""
 "le type de système GNU spécifié %s ne correspond pas au type de système CC "
 "%s, essayez de définir une variable d'environnement CC correcte"
 
-#: scripts/dpkg-architecture.pl scripts/dpkg-shlibdeps.pl scripts/Dpkg/IPC.pm
+#: scripts/dpkg-architecture.pl scripts/Dpkg/IPC.pm
 #: scripts/Dpkg/Shlibs/Cppfilt.pm
 #, perl-format
 msgid "unable to execute %s"
 msgstr "impossible d'exécuter %s"
 
-#: scripts/dpkg-buildflags.pl
+#: scripts/dpkg-buildapi.pl
+#, fuzzy
+#| msgid ""
+#| "Usage: %s [<option>...] <filename> <section> <priority>\n"
+#| "\n"
+#| "Options:\n"
+#| "  -f<files-list-file>      write files here instead of debian/files.\n"
+#| "  -?, --help               show this help message.\n"
+#| "      --version            show the version.\n"
+msgid ""
+"Commands:\n"
+"  -?, --help               show this help message.\n"
+"      --version            show the version."
+msgstr ""
+"Syntaxe : %s [<option>...] <fichier> <section> <priorité>\n"
+"\n"
+"Options :\n"
+"  -f <fichier_des_fichiers>    lister les fichiers dans ce fichier plutôt\n"
+"                                 que debian/files.\n"
+"  -?, --help                   afficher ce message d'aide.\n"
+"      --version                afficher la version.\n"
+
+#: scripts/dpkg-buildapi.pl
+msgid ""
+"Options:\n"
+"  -c<control-file>         get control info from this file.\n"
+msgstr ""
+
+#: scripts/dpkg-buildapi.pl
+#, fuzzy
+#| msgid "one to three arguments expected"
+msgid "no arguments accepted"
+msgstr "de un à trois paramètres sont attendus"
+
+#: scripts/dpkg-buildflags.pl scripts/dpkg-buildtree.pl
 #, perl-format
 msgid "Usage: %s [<command>]"
 msgstr "Utilisation : %s [<commande>]"
 
 #: scripts/dpkg-buildflags.pl
+#, fuzzy
+#| msgid ""
+#| "Commands:\n"
+#| "  --get <flag>       output the requested flag to stdout.\n"
+#| "  --origin <flag>    output the origin of the flag to stdout:\n"
+#| "                     value is one of vendor, system, user, env.\n"
+#| "  --status           output a synopsis with all parameters affecting the\n"
+#| "                     program behaviour, the resulting flags and their "
+#| "origin.\n"
+#| "  --query            like --status, but in deb822 format.\n"
+#| "  --query-features <area>\n"
+#| "                     output the status of features for the given area.\n"
+#| "  --list             output a list of the flags supported by the current "
+#| "vendor.\n"
+#| "  --export=(sh|make|cmdline|configure)\n"
+#| "                     output something convenient to import the "
+#| "compilation\n"
+#| "                     flags in a shell script, in make, or in a command "
+#| "line.\n"
+#| "  --dump             output all compilation flags with their values.\n"
+#| "  --help             show this help message.\n"
+#| "  --version          show the version.\n"
 msgid ""
 "Commands:\n"
 "  --get <flag>       output the requested flag to stdout.\n"
 "  --origin <flag>    output the origin of the flag to stdout:\n"
 "                     value is one of vendor, system, user, env.\n"
 "  --status           output a synopsis with all parameters affecting the\n"
-"                     program behaviour, the resulting flags and their "
+"                     program behavior, the resulting flags and their "
 "origin.\n"
 "  --query            like --status, but in deb822 format.\n"
 "  --query-features <area>\n"
@@ -266,6 +324,85 @@ msgid "Usage: %s [<option>...]"
 msgstr "Utilisation : %s [<option>...]"
 
 #: scripts/dpkg-buildpackage.pl
+#, fuzzy
+#| msgid ""
+#| "Options:\n"
+#| "      --build=<type>[,...]    specify the build <type>: full, source, "
+#| "binary,\n"
+#| "                                any, all (default is 'full').\n"
+#| "  -F, --build=full            normal full build (source and binary; "
+#| "default).\n"
+#| "  -g, --build=source,all      source and arch-indep build.\n"
+#| "  -G, --build=source,any      source and arch-specific build.\n"
+#| "  -b, --build=binary          binary-only, no source files.\n"
+#| "  -B, --build=any             binary-only, only arch-specific files.\n"
+#| "  -A, --build=all             binary-only, only arch-indep files.\n"
+#| "  -S, --build=source          source-only, no binary files.\n"
+#| "  -nc, --no-pre-clean         do not pre clean source tree (implies -b).\n"
+#| "      --pre-clean             pre clean source tree (default).\n"
+#| "      --no-post-clean         do not post clean source tree (default).\n"
+#| "  -tc, --post-clean           post clean source tree.\n"
+#| "      --sanitize-env          sanitize the build environment.\n"
+#| "  -D, --check-builddeps       check build dependencies and conflicts "
+#| "(default).\n"
+#| "  -d, --no-check-builddeps    do not check build dependencies and "
+#| "conflicts.\n"
+#| "      --ignore-builtin-builddeps\n"
+#| "                              do not check builtin build dependencies.\n"
+#| "  -P, --build-profiles=<profiles>\n"
+#| "                              assume comma-separated build <profiles> as "
+#| "active.\n"
+#| "      --rules-requires-root   assume legacy Rules-Requires-Root field "
+#| "value.\n"
+#| "  -R, --rules-file=<rules>    rules file to execute (default is debian/"
+#| "rules).\n"
+#| "  -T, --rules-target=<target> call debian/rules <target>.\n"
+#| "      --as-root               ensure -T calls the target with root "
+#| "rights.\n"
+#| "  -j, --jobs[=<jobs>|auto]    jobs to run simultaneously (passed to "
+#| "<rules>),\n"
+#| "                                (default; default is auto, opt-in mode).\n"
+#| "  -J, --jobs-try[=<jobs>|auto]\n"
+#| "                              alias for -j, --jobs.\n"
+#| "      --jobs-force[=<jobs>|auto]\n"
+#| "                              jobs to run simultaneously (passed to "
+#| "<rules>),\n"
+#| "                                (default is auto, forced mode).\n"
+#| "  -r, --root-command=<command>\n"
+#| "                              command to gain root rights (default is "
+#| "fakeroot).\n"
+#| "      --check-command=<command>\n"
+#| "                              command to check the .changes file (no "
+#| "default).\n"
+#| "      --check-option=<opt>    pass <opt> to check <command>.\n"
+#| "      --hook-<name>=<command> set <command> as the hook <name>, known "
+#| "hooks:\n"
+#| "                                init preclean source build binary "
+#| "buildinfo\n"
+#| "                                changes postclean check sign done\n"
+#| "      --buildinfo-file=<file> set the .buildinfo filename to generate.\n"
+#| "      --buildinfo-option=<opt>\n"
+#| "                              pass option <opt> to dpkg-genbuildinfo.\n"
+#| "      --changes-file=<file>   set the .changes filename to generate.\n"
+#| "      --sign-backend=<backend>\n"
+#| "                              OpenPGP backend to use to sign\n"
+#| "                                (default is auto).\n"
+#| "  -p, --sign-command=<command>\n"
+#| "                              command to sign .dsc and/or .changes files\n"
+#| "                                (default is gpg).\n"
+#| "      --sign-keyfile=<file>   the key file to use for signing.\n"
+#| "  -k, --sign-keyid=<keyid>    the key id to use for signing.\n"
+#| "      --sign-key=<keyid>      alias for -k, --sign-keyid.\n"
+#| "  -ap, --sign-pause           add pause before starting signature "
+#| "process.\n"
+#| "  -us, --unsigned-source      unsigned source package.\n"
+#| "  -ui, --unsigned-buildinfo   unsigned .buildinfo file.\n"
+#| "  -uc, --unsigned-changes     unsigned .buildinfo and .changes file.\n"
+#| "      --no-sign               do not sign any file.\n"
+#| "      --force-sign            force signing the resulting files.\n"
+#| "      --admindir=<directory>  change the administrative directory.\n"
+#| "  -?, --help                  show this help message.\n"
+#| "      --version               show the version."
 msgid ""
 "Options:\n"
 "      --build=<type>[,...]    specify the build <type>: full, source, "
@@ -317,8 +454,8 @@ msgid ""
 "      --check-option=<opt>    pass <opt> to check <command>.\n"
 "      --hook-<name>=<command> set <command> as the hook <name>, known "
 "hooks:\n"
-"                                init preclean source build binary buildinfo\n"
-"                                changes postclean check sign done\n"
+"                                preinit init preclean source build binary\n"
+"                                buildinfo changes postclean check sign done\n"
 "      --buildinfo-file=<file> set the .buildinfo filename to generate.\n"
 "      --buildinfo-option=<opt>\n"
 "                              pass option <opt> to dpkg-genbuildinfo.\n"
@@ -780,6 +917,41 @@ msgid ""
 msgstr ""
 "%s doit être mis à jour pour gérer les cibles « build-arch » et « build-"
 "indep » (au moins « %s » semble manquer)"
+
+#: scripts/dpkg-buildtree.pl
+#, fuzzy
+#| msgid ""
+#| "Usage: %s [<option>...] <filename> <section> <priority>\n"
+#| "\n"
+#| "Options:\n"
+#| "  -f<files-list-file>      write files here instead of debian/files.\n"
+#| "  -?, --help               show this help message.\n"
+#| "      --version            show the version.\n"
+msgid ""
+"Commands:\n"
+"  clean              clean dpkg generated artifacts from the build tree.\n"
+"  --help             show this help message.\n"
+"  --version          show the version.\n"
+msgstr ""
+"Syntaxe : %s [<option>...] <fichier> <section> <priorité>\n"
+"\n"
+"Options :\n"
+"  -f <fichier_des_fichiers>    lister les fichiers dans ce fichier plutôt\n"
+"                                 que debian/files.\n"
+"  -?, --help                   afficher ce message d'aide.\n"
+"      --version                afficher la version.\n"
+
+#: scripts/dpkg-buildtree.pl
+#, fuzzy, perl-format
+#| msgid "two commands specified: --%s and --%s"
+msgid "two commands specified: %s and %s"
+msgstr "deux commandes indiquées : --%s et --%s"
+
+#: scripts/dpkg-buildtree.pl
+#, fuzzy
+#| msgid "missing library directory"
+msgid "missing action"
+msgstr "répertoire des bibliothèques manquant"
 
 #: scripts/dpkg-checkbuilddeps.pl
 #, perl-format
@@ -1655,8 +1827,8 @@ msgstr "  %s (le paquet dit %s, pas %s)"
 msgid "unconditional maintainer override for %s"
 msgstr "annulation inconditionnelle du responsable pour %s"
 
-#: scripts/dpkg-scanpackages.pl scripts/dpkg-shlibdeps.pl scripts/Dpkg/IPC.pm
-#: scripts/Dpkg/Shlibs/Objdump.pm
+#: scripts/dpkg-scanpackages.pl scripts/Dpkg/IPC.pm
+#: scripts/Dpkg/Shlibs/Objdump/Object.pm
 #, perl-format
 msgid "cannot fork for %s"
 msgstr "fork impossible pour %s"
@@ -2416,6 +2588,25 @@ msgstr ""
 msgid "'%s' is not a legal architecture in list '%s'"
 msgstr "« %s » n'est pas une architecture autorisée dans la liste « %s »"
 
+#: scripts/Dpkg/BuildAPI.pm
+msgid "dpkg build API level needs an exact version"
+msgstr ""
+
+#: scripts/Dpkg/BuildAPI.pm
+#, perl-format
+msgid "dpkg build API level with conflicting versions: %s vs %s"
+msgstr ""
+
+#: scripts/Dpkg/BuildAPI.pm
+#, perl-format
+msgid "invalid dpkg build API level '%s'"
+msgstr ""
+
+#: scripts/Dpkg/BuildAPI.pm
+#, perl-format
+msgid "dpkg build API level '%s' greater than max '%s'"
+msgstr ""
+
 #: scripts/Dpkg/BuildFlags.pm scripts/Dpkg/Compression/FileHandle.pm
 #: scripts/Dpkg/File.pm scripts/Dpkg/Interface/Storable.pm
 #: scripts/Dpkg/Shlibs/Objdump.pm scripts/Dpkg/Source/BinaryFiles.pm
@@ -2727,12 +2918,18 @@ msgid "invalid syntax for option in %s, line %d"
 msgstr "erreur de syntaxe pour l'option %s à la ligne %d"
 
 #: scripts/Dpkg/Control.pm
-msgid "general section of control info file"
-msgstr "section générale dans le fichier info"
+#, fuzzy
+#| msgid "no package stanza found in control info"
+msgid "source package stanza of template control file"
+msgstr ""
+"aucune instance de paquet n'a été trouvée dans les informations de contrôle"
 
 #: scripts/Dpkg/Control.pm
-msgid "package's section of control info file"
-msgstr "section du paquet dans le fichier info"
+#, fuzzy
+#| msgid "no package stanza found in control info"
+msgid "binary package stanza of template control file"
+msgstr ""
+"aucune instance de paquet n'a été trouvée dans les informations de contrôle"
 
 #: scripts/Dpkg/Control.pm
 msgid "parsed version of changelog"
@@ -2751,7 +2948,9 @@ msgid "license stanza of copyright file"
 msgstr "paragraphe de licence du fichier de copyright"
 
 #: scripts/Dpkg/Control.pm
-msgid "package's tests control file"
+#, fuzzy
+#| msgid "package's tests control file"
+msgid "source package tests control file"
 msgstr "le fichier de contrôle des tests du paquet"
 
 #: scripts/Dpkg/Control.pm
@@ -2765,17 +2964,26 @@ msgid "stanza in repository's %s file"
 msgstr "paragraphe dans le fichier %s de dépôt"
 
 #: scripts/Dpkg/Control.pm
-#, perl-format
-msgid "%s file"
-msgstr "fichier %s"
+#, fuzzy
+#| msgid "source control file %s"
+msgid "source package control file"
+msgstr "fichier de contrôle des sources %s"
 
 #: scripts/Dpkg/Control.pm
-msgid "control info of a .deb package"
-msgstr "information de contrôle d'un paquet .deb"
+#, fuzzy
+#| msgid "binary control file %s"
+msgid "binary package control file"
+msgstr "fichier de contrôle binaire %s"
 
 #: scripts/Dpkg/Control.pm
 msgid "build information file"
 msgstr "fichier d'information sur la construction"
+
+#: scripts/Dpkg/Control.pm
+#, fuzzy
+#| msgid "package's tests control file"
+msgid "upload changes control file"
+msgstr "le fichier de contrôle des tests du paquet"
 
 #: scripts/Dpkg/Control.pm
 msgid "vendor file"
@@ -3054,6 +3262,10 @@ msgid "specified key needs a keystore"
 msgstr "la clé spécifiée a besoin d'un trousseau de clés"
 
 #: scripts/Dpkg/OpenPGP/ErrorCodes.pm
+msgid "OpenPGP backend command cannot sign"
+msgstr ""
+
+#: scripts/Dpkg/OpenPGP/ErrorCodes.pm
 #, perl-format
 msgid "error code %d"
 msgstr "code d'erreur %d"
@@ -3071,6 +3283,16 @@ msgstr "caractère « %s » non autorisé"
 msgid "must start with an alphanumeric character"
 msgstr "doit commencer par un caractère alphanumérique"
 
+#: scripts/Dpkg/Package.pm
+#, perl-format
+msgid "source package name '%s' is illegal: %s"
+msgstr "le nom du paquet source « %s » n'est pas autorisé : %s"
+
+#: scripts/Dpkg/Package.pm
+#, perl-format
+msgid "source package has two conflicting values - %s and %s"
+msgstr "le paquet source a deux valeurs en conflit : %s et %s"
+
 #: scripts/Dpkg/Path.pm scripts/Dpkg/Source/Archive.pm
 #, perl-format
 msgid "pathname '%s' cannot be canonicalized"
@@ -3084,6 +3306,10 @@ msgstr ""
 "« %s »)"
 
 #: scripts/Dpkg/Shlibs.pm
+msgid "use -l option instead of LD_LIBRARY_PATH"
+msgstr ""
+
+#: scripts/Dpkg/Shlibs.pm
 msgid ""
 "deprecated use of LD_LIBRARY_PATH with private library directory which "
 "interferes with cross-building, please use -l option instead"
@@ -3092,17 +3318,17 @@ msgstr ""
 "privé qui interfère avec la construction croisée, veuillez utiliser l'option "
 "-l à la place"
 
-#: scripts/Dpkg/Shlibs.pm scripts/Dpkg/Shlibs/Objdump.pm
+#: scripts/Dpkg/Shlibs.pm scripts/Dpkg/Shlibs/Objdump/Object.pm
 #, perl-format
 msgid "unknown executable format in file '%s'"
 msgstr "format d'exécutable inconnu dans le fichier « %s »"
 
-#: scripts/Dpkg/Shlibs/Objdump.pm
+#: scripts/Dpkg/Shlibs/Objdump/Object.pm
 #, perl-format
 msgid "couldn't parse dynamic relocation record: %s"
 msgstr "impossible d'analyser l'enregistrement d'allocation dynamique : %s"
 
-#: scripts/Dpkg/Shlibs/Objdump.pm
+#: scripts/Dpkg/Shlibs/Objdump/Object.pm
 #, perl-format
 msgid "couldn't parse dynamic symbol definition: %s"
 msgstr "impossible d'analyser la définition de symboles dynamique : %s"
@@ -4166,6 +4392,12 @@ msgid "diff '%s' patches something which is not a plain file"
 msgstr "diff « %s » modifie un objet qui n'est pas un fichier texte"
 
 #: scripts/Dpkg/Source/Patch.pm
+#, fuzzy, perl-format
+#| msgid "diff `%s' patches file with name ending .dpkg-orig"
+msgid "diff '%s' patches hard link %s which can have unintended consequences"
+msgstr "diff « %s » modifie un fichier dont le nom de termine par .dpkg-orig"
+
+#: scripts/Dpkg/Source/Patch.pm
 #, perl-format
 msgid ""
 "diff '%s' patches files multiple times; split the diff in multiple files or "
@@ -4296,8 +4528,9 @@ msgid "invalid source version %s"
 msgstr "version source non autorisée dans %s"
 
 #: scripts/Dpkg/Substvars.pm
-#, perl-format
-msgid "too many substitutions - recursive ? - in '%s'"
+#, fuzzy, perl-format
+#| msgid "too many substitutions - recursive ? - in '%s'"
+msgid "too many ${%s} substitutions (recursive?) in '%s'"
 msgstr "trop de substitutions - mode récursif ? - dans « %s »"
 
 #: scripts/Dpkg/Substvars.pm
@@ -4314,16 +4547,6 @@ msgstr "la variable de substitution ${%s} est utilisée mais n'est pas définie"
 #, perl-format
 msgid "substitution variable ${%s} unused, but is defined"
 msgstr "la variable de substitution ${%s} est définie mais n’est pas utilisée"
-
-#: scripts/Dpkg/Vars.pm
-#, perl-format
-msgid "source package name '%s' is illegal: %s"
-msgstr "le nom du paquet source « %s » n'est pas autorisé : %s"
-
-#: scripts/Dpkg/Vars.pm
-#, perl-format
-msgid "source package has two conflicting values - %s and %s"
-msgstr "le paquet source a deux valeurs en conflit : %s et %s"
 
 #: scripts/Dpkg/Vendor.pm
 #, perl-format
@@ -4346,6 +4569,12 @@ msgstr ""
 #: scripts/Dpkg/Vendor/Debian.pm
 #, perl-format
 msgid "unknown host architecture '%s'"
+msgstr "architecture hôte « %s » inconnue"
+
+#: scripts/Dpkg/Vendor/Debian.pm
+#, fuzzy, perl-format
+#| msgid "unknown host architecture '%s'"
+msgid "unknown abi attributes for architecture '%s'"
 msgstr "architecture hôte « %s » inconnue"
 
 #: scripts/Dpkg/Vendor/Ubuntu.pm
@@ -4399,6 +4628,24 @@ msgstr "le numéro de version contient un caractère « %s » non autorisé"
 msgid "epoch part of the version number is not a number: '%s'"
 msgstr ""
 "la partie d'ère (« epoch ») du numéro de version n'est pas un nombre : « %s »"
+
+#, fuzzy, perl-format
+#~| msgid "Usage: %s [<option>...]"
+#~ msgid "Usage: %s [<option>...]\n"
+#~ msgstr "Utilisation : %s [<option>...]"
+
+#~ msgid "general section of control info file"
+#~ msgstr "section générale dans le fichier info"
+
+#~ msgid "package's section of control info file"
+#~ msgstr "section du paquet dans le fichier info"
+
+#, perl-format
+#~ msgid "%s file"
+#~ msgstr "fichier %s"
+
+#~ msgid "control info of a .deb package"
+#~ msgstr "information de contrôle d'un paquet .deb"
 
 #, fuzzy, perl-format
 #~| msgid "cannot exec dpkg"
@@ -4503,9 +4750,6 @@ msgstr ""
 
 #~ msgid "deprecated substitution variable ${%s}"
 #~ msgstr "variable de substitution obsolète ${%s}"
-
-#~ msgid "missing library directory"
-#~ msgstr "répertoire des bibliothèques manquant"
 
 #~ msgid "Usage: %s [<option>...] [<changelog-file>]"
 #~ msgstr "Syntaxe : %s [<option>...] [<fichier de changements>]"
@@ -4742,12 +4986,6 @@ msgstr ""
 
 #~ msgid "binary-only upload - not including any source code"
 #~ msgstr "envoi d'un binaire - aucune inclusion de code source"
-
-#, fuzzy
-#~| msgid "diff `%s' patches file with name ending .dpkg-orig"
-#~ msgid "diff %s patches file with unknown escape sequence \\%s"
-#~ msgstr ""
-#~ "diff « %s » modifie un fichier dont le nom de termine par .dpkg-orig"
 
 #~ msgid "open new files list file"
 #~ msgstr "ouverture du nouveau fichier de liste des fichiers"
@@ -5089,9 +5327,6 @@ msgstr ""
 
 #~ msgid "cannot open .dsc file %s"
 #~ msgstr "impossible d'ouvrir le fichier .dsc %s"
-
-#~ msgid "source control file %s"
-#~ msgstr "fichier de contrôle des sources %s"
 
 #~ msgid "Conflicting sizes `%u' and `%u' for file `%s'"
 #~ msgstr "Tailles en conflit : « %u » et « %u » pour le fichier « %s »"

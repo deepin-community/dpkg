@@ -16,7 +16,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 21;
+use Test::More tests => 19;
 
 BEGIN {
     use_ok('Dpkg::BuildFlags');
@@ -26,7 +26,7 @@ sub test_optflag
 {
     my ($bf, $optflag) = @_;
 
-    foreach my $flag (qw(CFLAGS CXXFLAGS OBJCFLAGS OBJCXXFLAGS GCJFLAGS
+    foreach my $flag (qw(CFLAGS CXXFLAGS OBJCFLAGS OBJCXXFLAGS
                          FFLAGS FCFLAGS)) {
         my $value = $bf->get($flag);
         ok($value =~ m/$optflag/, "$flag contains $optflag: $value");
@@ -90,5 +90,3 @@ $ENV{DEB_HOST_ARCH} = 'amd64';
 $ENV{DEB_BUILD_MAINT_OPTIONS} = 'optimize=-lto';
 $bf = Dpkg::BuildFlags->new();
 test_no_ltoflag($bf);
-
-1;

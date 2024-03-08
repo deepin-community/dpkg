@@ -16,7 +16,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 dpkg-checkbuilddeps - verifica dependências e conflitos de compilação
 
-=head1 SINOPSE
+=head1 RESUMO
 
 B<dpkg-checkbuilddeps> [I<option>...] [I<control-file>]
 

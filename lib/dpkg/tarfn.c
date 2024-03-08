@@ -120,9 +120,6 @@ tar_atol8(const char *s, size_t size)
 		s++;
 	}
 
-	if (s < end)
-		return tar_ret_errno(EINVAL, 0);
-
 	return tar_ret_errno(0, n);
 }
 
@@ -207,8 +204,14 @@ tar_atosl(const char *s, size_t size, intmax_t min, intmax_t max)
 static char *
 tar_header_get_prefix_name(struct tar_header *h)
 {
-	return str_fmt("%.*s/%.*s", (int)sizeof(h->prefix), h->prefix,
-	               (int)sizeof(h->name), h->name);
+	struct varbuf path = VARBUF_INIT;
+
+	varbuf_add_strn(&path, h->prefix, sizeof(h->prefix));
+	varbuf_add_char(&path, '/');
+	varbuf_add_strn(&path, h->name, sizeof(h->name));
+	varbuf_end_str(&path);
+
+	return path.buf;
 }
 
 static mode_t
@@ -245,7 +248,7 @@ tar_header_get_unix_mode(struct tar_header *h)
 		break;
 	}
 
-	mode |= TAR_ATOUL(h->mode, mode_t);
+	mode |= TAR_ATOUL(h->mode, mode_t) & 07777;
 
 	return mode;
 }
@@ -345,10 +348,15 @@ tar_header_decode(struct tar_header *h, struct tar_entry *d, struct dpkg_error *
  * The way the GNU long{link,name} stuff works is like this:
  *
  * - The first header is a “dummy” header that contains the size of the
- *   filename.
- * - The next N headers contain the filename.
+ *   filename (GNU tar includes the terminating NUL character in the size,
+ *   but other implementations do not).
+ * - The next N headers contain the filename (GNU tar terminates the string
+ *   with a NUL character, but other implementations do not).
  * - After the headers with the filename comes the “real” header with a
  *   bogus name or link.
+ *
+ * To be robust against any input, we need to always terminate the filename
+ * with a NUL character.
  */
 static int
 tar_gnu_long(struct tar_archive *tar, struct tar_entry *te, char **longp)
@@ -359,7 +367,7 @@ tar_gnu_long(struct tar_archive *tar, struct tar_entry *te, char **longp)
 	int long_read;
 
 	free(*longp);
-	*longp = bp = m_malloc(te->size);
+	*longp = bp = m_malloc(te->size + 1);
 
 	for (long_read = te->size; long_read > 0; long_read -= TARBLKSZ) {
 		int copysize;
@@ -383,6 +391,7 @@ tar_gnu_long(struct tar_archive *tar, struct tar_entry *te, char **longp)
 		memcpy(bp, buf, copysize);
 		bp += copysize;
 	}
+	*bp = '\0';
 
 	return status;
 }

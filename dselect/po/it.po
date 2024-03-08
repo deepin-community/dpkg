@@ -1,11 +1,10 @@
-# Messaggi in Italiano per `dpkg'.
+# Translation of dselect to Italian
 # Copyright (C) 2000, 2001, 2002, 2003, 2004 Free Software Foundation, Inc.
+# This file is distributed under the same license as the dpkg package.
+#
 # Lele Gaifax <lele@seldati.it>, 2000, 2001, 2002, 2003, 2004.
+# Stefano Canepa <sc@linux.it>, 2004, 2005.
 #
-# Stefano Canepa <sc@linux.it>, 2004 only for an update because Lele was
-# unreachable and translation needed to be updated
-#
-# Stefano Canepa <sc@linux.it>, 2005.
 # Convenzioni usate, per rendere più semplice la loro individuazione ed
 # eventuale sostituzione:
 #
@@ -43,7 +42,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dselect 1.10.22\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2023-05-11 02:03+0000\n"
+"POT-Creation-Date: 2024-02-27 04:27+0100\n"
 "PO-Revision-Date: 2006-10-06 22:01+0200\n"
 "Last-Translator: Stefano Canepa <sc@linux.it>\n"
 "Language-Team: Italian <debian-l10n-italian@lists.debian.org>\n"
@@ -89,7 +88,9 @@ msgid "cannot update screen after window resize"
 msgstr ""
 
 #: dselect/baselist.cc
-msgid "failed to allocate colour pair"
+#, fuzzy
+#| msgid "failed to allocate colour pair"
+msgid "cannot allocate color pair"
 msgstr "impossibile allocare le coppie di colori"
 
 #: dselect/baselist.cc
@@ -1015,15 +1016,19 @@ msgstr "settore schermata"
 #: dselect/main.cc
 #, fuzzy
 #| msgid "Null colour specification\n"
-msgid "null colour specification"
+msgid "missing color specification"
 msgstr "Specificato un colore nullo\n"
 
 #: dselect/main.cc
-msgid "colour"
+#, fuzzy
+#| msgid "colour"
+msgid "color"
 msgstr "colore"
 
 #: dselect/main.cc
-msgid "colour attribute"
+#, fuzzy
+#| msgid "colour attribute"
+msgid "color attribute"
 msgstr "attributo colore"
 
 #: dselect/main.cc

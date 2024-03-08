@@ -34,7 +34,7 @@ Geeft het changelog-bestand op waaruit gelezen moet worden. Een ‘-’ kan gebr
 
 =item B<-F> I<changelog-indeling>
 
-Geeft de indeling van het changelog-bestand aan. Standaard wordt die indeling gelezen van een bijzondere regel dicht bij het einde van het changelog-bestand en als dat mislukt, wordt er teruggevallen op de standaardindeling van B<debian>. Zie ook B<CHANGELOG FORMATS>.
+Specifies the format of the changelog.  By default the format is read from a special line near the bottom of the changelog or failing that defaults to the B<debian> standard format.  See also L</CHANGELOG FORMATS>.
 
 =item B<-L> I<bibliotheekmap>
 
@@ -62,15 +62,21 @@ De volgende opties kunnen gebruikt worden om de uitvoer van de changelog-ontlede
 
 =item B<--format> I<uitvoerindeling>
 
-Stel de indeling van de uitvoer in. Momenteel ondersteunde waarden zijn B<dpkg> en B<rfc822>. B<dpkg> is de klassieke indeling van de uitvoer (van voor het bestaan van deze optie) en ook de standaard. Het bestaat uit één onderdeel volgens het indelingssysteem van Debian control (zie B<deb-control>(5)). Indien meer dan één item opgevraagd wordt, dan worden de meeste velden genomen uit het eerste item (gewoonlijk het meest recente item), tenzij anders vermeld:
+De indeling van de uitvoer instellen. Momenteel ondersteunde waarden zijn B<dpkg> en B<rfc822>. B<dpkg> is de klassieke indeling van de uitvoer (van voor het bestaan van deze optie) en ook de standaard. Het bestaat uit één onderdeel volgens het indelingssysteem van Debian control (zie L<deb-control(5)>). Indien meer dan één item opgevraagd wordt, dan worden de meeste velden genomen uit het eerste item (gewoonlijk het meest recente item), tenzij anders vermeld:
 
 =over 
 
 =item B<Source:> I<pakketnaam>
 
+De naam van het broncodepakket.
+
 =item B<Version:> I<versie>
 
+Het versienummer van de broncode. B<Opmerking>: Voor releases die uitsluitend binair zijn, is er mogelijk geen overeenkomstige broncoderelease.
+
 =item B<Distribution:> I<doeldistributie>
+
+Een door spaties gescheiden lijst van een of meer namen van distributies waarin deze versie ondergebracht moet worden als ze geüpload wordt.
 
 =item B<Urgency:> I<urgentie>
 
@@ -78,9 +84,11 @@ Van alle opgenomen items wordt de hoogste urgentie gebruikt, gevolgd door de sam
 
 =item B<Maintainer:> I<auteur>
 
+De naam en het e-mailadres van de persoon die deze wijzigingen heeft voorbereid, dit zijn B<niet> noodzakelijkerwijs die van de uploader of de gebruikelijke pakketbeheerder.
+
 =item B<Date:> I<datum>
 
-De datum van het item als een tekenreeks, zoals die voorkomt in het changelog-bestand. Met een B<strptime>(3)-indeling "B<%a, %d %b %Y %T %z>", maar waarbij het kan zijn dat de dag van de week niet echt overeenkomt met de werkelijke dag die bekomen wordt uit de rest van de datumtekenreeks. Indien u een meer accurate representatie van de datum nodig heeft, moet u gebruik maken van het B<Timestamp>-veld, maar u moet er rekening mee houden dat het mogelijk is dat het niet meer exact terug omgezet kan worden naar de waarde van dat veld.
+De datum van het item als een tekenreeks, zoals die voorkomt in het changelog-bestand. Met een L<strptime(3)>-opmaak "B<%a, %d %b %Y %T %z>", maar waarbij het kan zijn dat de dag van de week niet echt overeenkomt met de werkelijke dag die bekomen wordt uit de rest van de datumtekenreeks. Indien u een meer accurate representatie van de datum nodig heeft, moet u gebruik maken van het B<Timestamp>-veld, maar u moet er rekening mee houden dat het mogelijk is dat het niet meer exact terug omgezet kan worden naar de waarde van dat veld.
 
 =item B<Timestamp:> I<tijdsaanduiding>
 
@@ -106,11 +114,11 @@ De indeling volgens B<rfc822> maakt gebruik van dezelfde velden, maar gebruikt i
 
 Alle wijzigingen in omgekeerde volgorde opnemen (sinds dpkg 1.19.1).
 
-B<Opmerking:> voor de indeling B<dpkg> zal het eerste item het oudste item zijn.
+B<Opmerking>: voor de indeling B<dpkg> zal het eerste item het oudste item zijn.
 
 =item B<--all>
 
-Alle wijzigingen opnemen. B<Opmerking:> andere opties hebben geen effect als deze optie gebruikt wordt.
+Alle wijzigingen opnemen. B<Opmerking>: andere opties hebben geen effect als deze optie gebruikt wordt.
 
 =item B<-s>, B<--since> I<versie>
 
@@ -158,7 +166,7 @@ Een naam voor een changelog-indelingen moet een niet-lege alfanumerieke tekenree
 
 Indien een dergelijke regel bestaat, zal B<dpkg-parsechangelog> naar het ontleedprogramma zoeken als een B<Dpkg::Changelog::>I<andere-indeling> perl module. Het is een fout als die niet voorhanden is. De parsernaam in de perlmodule zal automatisch in hoofdletters gezet worden. De standaard changelog-indeling is B<debian> en standaard is er voorzien in een programma om ze te ontleden.
 
-Het ontleedprogramma moet ontleend worden aan de Dpkg::Changelog-klasse en moet de vereiste vastgelegde interface implementeren.
+Het ontleedprogramma moet ontleend worden aan de L<Dpkg::Changelog>-klasse en moet de vereiste vastgelegde interface implementeren.
 
 Indien de changelog-indeling die ontleed wordt altijd of bijna altijd een witregel heeft tussen aparte notities in verband met wijzigingen, moeten die lege regels weggenomen worden om als resultaat een compacte uitvoer te bekomen.
 
@@ -198,7 +206,11 @@ Het changelog-bestand dat gebruikt wordt om versieafhankelijke informatie over h
 
 =back
 
+=head1 BUGS
+
+Het veld B<Maintainer> heeft een verwarrende naam die overeenkomt met het veld in het bestand F<debian/control>, maar niet met zijn exacte semantiek, waarbij de betekenis beter zou worden weergegeven door de veldnaam B<Changed-By> die wordt gebruikt in het bestand F<.changes>.
+
 =head1 ZIE OOK
 
-B<deb-changelog>(5).
+L<deb-changelog(5)>.
 

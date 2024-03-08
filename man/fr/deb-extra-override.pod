@@ -42,7 +42,7 @@ Les fichiers de dérogation S<(« override »)> supplémentaires utilisés pour 
 
 =head1 VOIR AUSSI
 
-B<dpkg-scanpackages>(1), B<dpkg-scansources>(1), B<apt-ftparchive>(1).
+L<dpkg-scanpackages(1)>, L<dpkg-scansources(1)>, L<apt-ftparchive(1)>.
 
 
 =head1 TRADUCTION
