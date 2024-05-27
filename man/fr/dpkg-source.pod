@@ -502,6 +502,8 @@ Si cette variable est définie, elle sera utilisée pour décider l'activation d
 
 If set, it will be used as the timestamp (as seconds since the epoch) to clamp the mtime in the L<tar(5)> file entries.
 
+Since dpkg 1.18.11.
+
 =item B<VISUAL>
 
 =item B<EDITOR>

@@ -28,9 +28,9 @@ I<Não> deverá ser usado por maintainers de pacotes que desejem compreender com
 
 =head1 DESCRIÇÃO
 
-B<dpkg> is a medium-level tool to install, build, remove and manage Debian packages.  The primary and more user-friendly front-end for B<dpkg> as a CLI (command-line interface) is L<apt(8)> and as a TUI (terminal user interface) is L<aptitude(8)>.  B<dpkg> itself is controlled entirely via command line parameters, which consist of exactly one action and zero or more options. The action-parameter tells B<dpkg> what to do and options control the behavior of the action in some way.
+B<dpkg> é uma ferramenta de nível médio para instalar, compilar, remover e gerir pacotes Debian. O front-end principal e mais amigo-do-utilizador para o B<dpkg> como CLI é o (interface de linha de comandos) é o L<apt(8)> e como TUI (interface de terminal de utilizador) é o L<aptitude(8)>. O próprio B<dpkg> é controlado inteiramente via parâmetros de linha de comandos, o que consiste de exactamente uma acção e zero ou mais opções. O parâmetro-acção diz ao B<dpkg> o que fazer e as opções controlam o comportamento da acção em algum modo.
 
-B<dpkg> can also be used as a front-end to L<dpkg-deb(1)> and L<dpkg-query(1)>.  The list of supported actions can be found later on in the B<ACTIONS> section.  If any such action is encountered B<dpkg> just runs B<dpkg-deb> or B<dpkg-query> with the parameters given to it, but no specific options are currently passed to them, to use any such option the back-ends need to be called directly.
+O B<dpkg> pode também ser usado como front-end para L<dpkg-deb(1)> e L<dpkg-query(1)>. A lista de acções suportadas pode ser encontrada mais tarde na secção B<ACÇÕES>. Se qualquer tal acção for encontrada, o B<dpkg> apenas corre B<dpkg-deb> ou B<dpkg-query> com os parâmetros dados a ele, mas nenhuma opção especifica é presentemente passada para eles, para se qualquer tal opção, os back-ends precisam de ser chamados directamente.
 
 =head1 INFORMAÇÃO ACERCA DE PACOTES
 
@@ -162,7 +162,7 @@ Irá processar os gatilhos para B<Pre-Depends> a menos que B<--no-triggers> este
 
 Configura um pacote que foi desempacotado mas ainda não configurado. Se for fornecido B<-a> ou B<--pending> em vez de I<package>, todos os pacotes desempacotados mas não configurados são configurados.
 
-To reconfigure a package which has already been configured, try the L<dpkg-reconfigure(8)> command instead (which is part of the B<debconf> project).
+Para reconfigurar um pacote que já foi configurado, tente usar o comando L<dpkg-reconfigure(8)> em vez deste (o qual faz parte do projeto B<debconf>).
 
 A configuração consiste dos seguintes passos:
 
@@ -328,7 +328,7 @@ Suporta épocas em strings de versão (desde dpkg 1.4.0.7).
 
 =item B<long-filenames>
 
-Supports long filenames in L<deb(5)> archives (since dpkg 1.4.1.17).
+Suporta nomes de ficheiros longos em arquivos L<deb(5)> (desde dpkg 1.4.1.17).
 
 =item B<multi-conrep>
 
@@ -406,7 +406,7 @@ Quando usado com B<--robot>, o resultado será o número de versão de programa 
 
 =item B<dpkg-deb actions>
 
-See L<dpkg-deb(1)> for more information about the following actions, and other actions and options not exposed by the B<dpkg> front-end.
+Veja L<dpkg-deb(1)> para mais informações acerca das seguintes acções, e outras acções e opções não expostas pelo front-end do B<dpkg>.
 
 =over 
 
@@ -450,7 +450,7 @@ Mostra informação acerca de um pacote.
 
 =item B<dpkg-query actions>
 
-See L<dpkg-query(1)> for more information about the following actions, and other actions and options not exposed by the B<dpkg> front-end.
+Veja L<dpkg-query(1)> para mais informações acerca das seguintes acções, e outras acções e opções não expostas pelo front-end do B<dpkg>.
 
 =over 
 
@@ -581,7 +581,7 @@ Se um ficheiro de configuração foi modificado e a versão do pacote mudou, man
 
 =item B<confdef>:
 
-If a conffile has been modified and the version in the package did change, always choose the default action without prompting.  If there is no default action it will stop to ask the user unless B<--force-confnew> or B<--force-confold> is also given, in which case it will use that to decide the final action.
+Se um conffile foi modificado e a versão no pacote alterou, escolhe sempre a acção predefinida sem perguntar. Se não existir acção predefinida irá parar para pedir ao utilizador a menos que B<--force-confnew> ou B<--force-confold> sejam também fornecidos, nesse caso irá usar isso para decidir a acção final.
 
 =item B<confask>:
 
@@ -621,7 +621,7 @@ I<Aviso>: Usar esta opção pode melhorar a performance a custo de perda de dado
 
 =item B<script-chrootless>:
 
-Run maintainer scripts without L<chroot(2)>ing into B<instdir> even if the package does not support this mode of operation (since dpkg 1.18.5).
+Corre os scripts de maintainer sem fazer L<chroot(2)> em B<instdir> mesmo que o pacote não suporte este modo de operação (desde dpkg 1.18.5).
 
 I<Aviso>: Isto pode destruir o seu sistema, use com extremo cuidado.
 
@@ -655,7 +655,7 @@ Ignora verificação de dependências para pacotes específicos (na verdade, a v
 
 Faz tudo o que é suposto ser feito, mas não escreve quaisquer alterações. Isto é usado para se ver o que acontecia com uma acção específica, sem modificar nada na realidade.
 
-Be sure to give B<--no-act> before the action-parameter, or you might end up with undesirable results (e.g. B<dpkg --purge foo --no-act> will first purge package “foo” and then try to purge package ”--no-act”, even though you probably expected it to actually do nothing).
+Certifique-se de fornecer B<--no-act> antes do parâmetro da acção, ou poderá acabar com resultados não desejáveis (ex. B<dpkg --purge foo --no-act> irá primeiro purgar o pacote "foo" e depois tentará purgar o pacote "--no-act", mesmo pensando que provavelmente não vai fazer nada).
 
 =item B<-R>, B<--recursive>
 
@@ -671,7 +671,7 @@ Define o directório administrativo para I<directory>. Este directório contem m
 
 =item B<--instdir=>I<dir>
 
-Set the installation directory, which refers to the directory where packages are to be installed.  B<instdir> is also the directory passed to L<chroot(2)> before running package's installation scripts, which means that the scripts see B<instdir> as a root directory.  Defaults to «I</>».
+Define o directório de instalação, o que se refere ao directório onde os pacotes vão ser instalados. B<instdir> é também o directório passado ao L<chroot(2)> antes de correr scripts de instalação dos pacotes, o que significa que os vêm B<instdir> como o directório raiz. A predefinição é «I</>».
 
 =item B<--root=>I<dir>
 
@@ -691,7 +691,7 @@ Desde dpkg 1.21.10, a arquitectura é também tida em conta, o que torna possív
 
 =item B<--post-invoke=>I<command>
 
-Set an invoke hook I<command> to be run via “%DPKG_DEFAULT_SHELL% -c” before or after the B<dpkg> run for the I<unpack>, I<configure>, I<install>, I<triggers-only>, I<remove> and I<purge> actions (since dpkg 1.15.4), and I<add-architecture> and I<remove-architecture> actions (since dpkg 1.17.19).  This option can be specified multiple times.  The order the options are specified is preserved, with the ones from the configuration files taking precedence.  The environment variable B<DPKG_HOOK_ACTION> is set for the hooks to the current B<dpkg> action.
+Define um I<command> hook de invocação para ser corrido via “%DPKG_DEFAULT_SHELL% -c” antes ou depois de o B<dpkg> correr para as acções I<unpack>, I<configure>, I<install>, I<triggers-only>, I<remove>, e I<purge> (desde dpkg 1.15.4), e as acções I<add-architecture> e I<remove-architecture> (desde dpkg 1.17.19). Esta opção pode ser especificada várias vezes. A ordem que as opções são especificadas é preservada, com aquelas dos ficheiros de configuração a tomar precedência. A variável de ambiente B<DPKG_HOOK_ACTION> é definida para os hooks para a acção actual do B<dpkg>.
 
 B<Nota>: Front-ends podem chamar B<dpkg> várias vezes por invocação, o que pode fazer correr os hooks mais vezes do que o esperado.
 
@@ -703,7 +703,7 @@ Define I<glob-pattern> como um filtro de caminho, seja por excluir ou re-incluir
 
 I<Aviso>: Tenha em conta que ao depender de caminhos excluídos você pode danificar completamente o seu sistema, use com cuidado.
 
-The glob patterns use the same wildcards used in the shell, were ‘*’ matches any sequence of characters, including the empty string and also ‘/’.  For example, «I</usr/*/READ*>» matches «I</usr/share/doc/package/README>».  As usual, ‘?’ matches any single character (again, including ‘/’).  And ‘[’ starts a character class, which can contain a list of characters, ranges and complementations.  See L<glob(7)> for detailed information about globbing. B<Note>: The current implementation might re-include more directories and symlinks than needed, in particular when there is a more specific re-inclusion, to be on the safe side and avoid possible unpack failures; future work might fix this.
+Os padrões glob usam as mesmas wildcards usadas na shell, onde ‘*’ corresponde a qualquer sequência de caracteres, incluindo a string vazia e também ‘/’. Por exemplo, «I</usr/*/READ*>» corresponde a «I</usr/share/doc/package/README>».  Como normal, ‘?’ corresponde a qualquer caractere único (mais uma vez, incluindo ‘/’). E ‘[’ começa uma classe de caractere, o qual pode conter uma lista de caracteres, gamas e complementações. Veja L<glob(7)> para informação detalhada acerca de globbing. B<Nota>: A implementação actual pode re-incluir mais directivas e links simbólicos do que necessário, em particular quando existe uma re-inclusão mais específica. para estar no lado seguro e evitar possíveis falhas de desempacotamento, trabalho futuro poderá corrigir isto.
 
 Isto pode ser usado para remover todos os caminhos excepto alguns particulares; um caso típico é:
 
@@ -714,7 +714,7 @@ para remover todos os ficheiros de documentação excepto os ficheiros de copyri
 
 Estas duas opções pode ser especificadas várias vezes, e intercaladas entre elas. Ambas são processadas na ordem fornecida, com a última regra corresponde a um nome de ficheiro a marcar a decisão.
 
-The filters are applied when unpacking the binary packages, and as such only have knowledge of the type of object currently being filtered (e.g. a normal file or a directory) and have not visibility of what objects will come next.  Because these filters have side effects (in contrast to L<find(1)> filters), excluding an exact pathname that happens to be a directory object like I</usr/share/doc> will not have the desired result, and only that pathname will be excluded (which could be automatically reincluded if the code sees the need).  Any subsequent files contained within that directory will fail to unpack.
+Os filtros são aplicados quando se desempacota os pacotes binários, e como tal apenas têm conhecimento do tipo de objecto actualmente a ser filtrado (ex. um ficheiro normal num directório) e não têm visibilidade dos outros objetos que virão a seguir. Porque estes filtros têm efeitos secundários (em contraste aos filtros L<find(1)>), excluir um nome de caminho exacto que acontece ser um objecto directório como I</usr/share/doc> não irá ter o resultado desejado, e apenas esse nome de caminho será excluído (que poderá ser automaticamente re-incluído se o código vir a necessidade). Quaisquer ficheiros subsequentes contidos dentro desse directório irão falhar ao desempacotar.
 
 B<Dica>: certifique-se que os globs não são expandidos pela sua shell.
 
@@ -807,7 +807,7 @@ Enviado apenas antes de um estado de processamento começar. I<stage> é um de B
 
 =item B<--status-logger>=I<command>
 
-Send machine-readable package status and progress information to the shell I<command>'s standard input, to be run via “%DPKG_DEFAULT_SHELL% -c” (since dpkg 1.16.0).  This option can be specified multiple times.  The output format used is the same as in B<--status-fd>.
+Envia o estado do pacote em linguagem de máquina e informação de progresso para a entrada standard de I<command> de shell, para ser corrido via “%DPKG_DEFAULT_SHELL% -c” (desde dpkg 1.16.0). Esta opção pode ser especificada várias vezes. O formato de resultados usado é o mesmo que em B<--status-fd>.
 
 =item B<--log=>I<filename>
 
@@ -902,7 +902,7 @@ O programa que o B<dpkg> irá executar quando iniciar uma nova shell interactiva
 
 =item B<DPKG_PAGER>
 
-The program B<dpkg> will execute when running a pager, which will be executed with «B<$SHELL -c>», for example when displaying the conffile differences.  If B<SHELL> is not set, «B<%DPKG_DEFAULT_SHELL%>» will be used instead.  The B<DPKG_PAGER> overrides the B<PAGER> environment variable (since dpkg 1.19.2).
+O programa que o B<dpkg> irá executar quando correr um paginador, o qual será executado com «B<$SHELL -c>», por exemplo quando mostrar as diferenças do conffile. Se B<SHELL> não estiver definida, será usado «B<%DPKG_DEFAULT_SHELL%>» em vez deste. O B<DPKG_PAGER> sobrepõe a variável de ambiente B<PAGER> (desde dpkg 1.19.2).
 
 =item B<DPKG_COLORS>
 
@@ -936,7 +936,7 @@ Definido pelo B<dpkg> para “B<-FRSXMQ>”, Se não já definido, quando cria u
 
 =item B<DPKG_ROOT>
 
-Defined by B<dpkg> on the maintainer script environment to indicate which installation to act on (since dpkg 1.18.5).  The value is intended to be prepended to any path maintainer scripts operate on.  During normal operation, this variable is empty.  When installing packages into a different B<instdir>, B<dpkg> normally invokes maintainer scripts using L<chroot(2)> and leaves this variable empty, but if B<--force-script-chrootless> is specified then the L<chroot(2)> call is skipped and B<instdir> is non-empty.
+Definido pelo B<dpkg> no ambiente de scripts do maintainer para indicar em qual instalação devem actuar (desde 1.18.5). O valor destina-se a ser adicionado ao inicio de qualquer caminho em que os scripts de maintainer operam. Durante uma operação normal, esta variável está vazia. Ao instalar pacotes numa B<instdir> diferente, o B<dpkg> normalmente invoca scripts do maintainer usando L<chroot(2)> e deixa esta variável vazia, mas se B<--force-script-chrootless> for especificado então a chamada L<chroot(2)> é saltada e B<instdir> fica não-vazia.
 
 =item B<DPKG_ADMINDIR>
 
@@ -1016,37 +1016,37 @@ Lista dos pacotes disponíveis.
 
 =item I<%ADMINDIR%/status>
 
-Statuses of available packages.  This file contains information about whether a package is marked for removing or not, whether it is installed or not, etc.  See section L</INFORMATION ABOUT PACKAGES> for more info.
+Estados dos pacotes disponíveis. Este ficheiro contem informação acerca de se um pacote está marcado para remoção ou não, se está instalado ou não, etc. Veja a secção L</INFORMAÇÃO ACERCA DE PACOTES> para mais informação.
 
 O ficheiro status é salvaguardado diariamente em I<%BACKUPSDIR%>. Pode ser útil se for perdido ou corrompido devido a problemas com o sistema de ficheiros.
 
 =back
 
-The format and contents of a binary package are described in L<deb(5)>.
+O formato e conteúdo de um pacote binário está descrito em L<deb(5)>.
 
-=head2 Filesystem filenames
+=head2 Nomes de ficheiros do sistema de ficheiros
 
-During unpacking and configuration B<dpkg> uses various filenames for backup and rollback purposes.  The following is a simplified explanation of how these filenames get used during package installation.
+Durante o desempacotar e configurar o B<dpkg> usa vários nomes de ficheiros para objectivos de salvaguarda e reposição. O seguinte é uma explicação simplificada de como estes nomes de ficheiros são usados durante a instalação de um pacote.
 
 =over 
 
 =item F<*.dpkg-new>
 
-During unpack, B<dpkg> extracts new filesystem objects into I<pathname>B<.dpkg-new> (except for existing directories or symlinks to directories which get skipped), once that is done and after having performed backups of the old objects, the objects get renamed to I<pathname>.
+Durante o desempacotar. o B<dpkg> extrai os novos objectos do sistema de ficheiros em I<pathname>B<.dpkg-new> (excepto para directórios existentes ou links simbólicos a directórios que são saltados), após isso estar feito e após ter feito salvaguardas dos objectos antigos, os objectos são renomeados para I<pathname>.
 
 =item F<*.dpkg-tmp>
 
-During unpack, B<dpkg> makes backups of the old filesystem objects into I<pathname>B<.dpkg-tmp> after extracting the new objects.  These backups are performed as either a rename for directories (but only if they switch file type), a new symlink copy for symlinks, or a hard link for any other filesystem object, except for conffiles which get no backups because they are processed at a later stage.
+Durante o desempacotar. o B<dpkg> cria salvaguardas dos antigos objectos do sistema de ficheiros em I<pathname>B<.dpkg-tmp> após extrair os novos objectos. Estas salvaguardas são executadas seja ou ao renomear os directórios (mas apenas se mudarem de tipo de ficheiro), uma nova cópia de link simbólico para os links simbólicos, ou um hard link para qualquer outro objecto de sistema de ficheiros, excepto para ficheiros de configuração os quais não têm salvaguardas porque serão processados num estágio posterior.
 
-In case of needing to rollback, these backups get used to restore the previous contents of the objects.  These get removed automatically after the installation is complete.
+No caso de necessidade de reposição, estas salvaguardas são usadas para restaurar os conteúdos anteriores dos objectos. Estas são removidas automaticamente após a instalação estar completa.
 
 =item F<*.dpkg-old>
 
-During configuration, when installing a new version, B<dpkg> can make a backup of the previous modified conffile into I<pathname>B<.dpkg-old>.
+Durante a configuração, quando instala a nova versão, o B<dpkg> consegue fazer uma salvaguarda do ficheiro de configuração modificado anteriormente em I<pathname>B<.dpkg-old>.
 
 =item F<*.dpkg-dist>
 
-During configuration, when keeping the old version, B<dpkg> can make a backup of the new unmodified conffile into I<pathname>B<.dpkg-dist>.
+Durante a configuração, e ao manter a versão antiga, o B<dpkg> consegue fazer uma salvaguarda do novo ficheiro de configuração não modificado em I<pathname>B<.dpkg-dist>.
 
 =back
 
@@ -1066,7 +1066,7 @@ B<--no-act> geralmente dá menos informação do que poderia ser útil.
 
 =head1 EXEMPLOS
 
-To list installed packages related to the editor L<vi(1)> (note that B<dpkg-query> does not load the I<available> file anymore by default, and the B<dpkg-query> B<--load-avail> option should be used instead for that):
+Para listar pacotes instalados relacionados com o editor L<vi(1)> (note que B<dpkg-query> já não carrega o ficheiro I<available> por predefinição, e para isso deve ser usada a opção B<dpkg-query> B<--load-avail>):
 
 =over 
 
@@ -1090,7 +1090,7 @@ Para procurar você próprio na listagem de pacotes:
 
 =back
 
-To remove an installed neovim package:
+Para remover um pacote neovim instalado:
 
 =over 
 
@@ -1098,7 +1098,7 @@ To remove an installed neovim package:
 
 =back
 
-To install a package, you first need to find it in an archive or media disc.  When using an archive based on a pool structure, knowing the archive area and the name of the package is enough to infer the pathname:
+Para instalar um pacote, primeiro você precisa de encontra-lo num arquivo ou disco de media. Quando se usa um arquivo baseado numa estrutura pool, conhecer a área do arquivo e o nome do pacote é suficiente para inferir o nome de de caminho:
 
 =over 
 
@@ -1133,15 +1133,15 @@ você pode instala-lo com:
 
 Note que isto não irá realmente instalar ou remover nada, mas apenas definir o estado de selecção nos pacotes requeridos. Você irá precisar de alguma outra aplicação para realmente descarregar e instalar os pacotes requeridos. Por exemplo, correr B<apt-get dselect-upgrade>.
 
-Ordinarily, you will find that L<dselect(1)> provides a more convenient way to modify the package selection states.
+Normalmente, você irá descobrir que o L<dselect(1)> fornece um método mais conveniente de modificar os estados de selecção de pacotes.
 
 =head1 FUNCIONALIDADES ADICIONAIS
 
-Additional functionality can be gained by installing any of the following packages: B<apt>, B<aptitude> and B<debsig-verify>.
+Podem ser ganhas funcionalidades adicionais ao instalar qualquer um dos seguintes pacotes: B<apt>, B<aptitude> e B<debsig-verify>.
 
 =head1 VEJA TAMBÉM
 
-L<aptitude(8)>, L<apt(8)>, L<dselect(1)>, L<dpkg-deb(1)>, L<dpkg-query(1)>, L<deb(5)>, L<deb-control(5)>, L<dpkg.cfg(5)>, and L<dpkg-reconfigure(8)>.
+L<aptitude(8)>, L<apt(8)>, L<dselect(1)>, L<dpkg-deb(1)>, L<dpkg-query(1)>, L<deb(5)>, L<deb-control(5)>, L<dpkg.cfg(5)>, e L<dpkg-reconfigure(8)>.
 
 =head1 AUTORES
 

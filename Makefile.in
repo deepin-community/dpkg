@@ -524,14 +524,14 @@ dist_docspec_DATA = \
 	# EOL
 
 EXTRA_DIST = .gitlab-ci.yml .mailmap ChangeLog.old README.l10n autogen \
-	build-aux/gen-changelog build-aux/get-version \
-	build-aux/lcov-inject build-aux/run-script \
-	build-aux/test-runner doc/coding-style.txt \
-	debian/README.bug-usertags debian/bug-script debian/changelog \
-	debian/control debian/copyright debian/dpkg-dev.docs \
-	debian/dpkg-dev.install debian/dpkg-dev.manpages \
-	debian/dpkg.alternatives.logrotate debian/dpkg.cfg \
-	debian/dpkg.cron.daily debian/dpkg.docs \
+	build-aux/gen-changelog build-aux/gen-release \
+	build-aux/get-version build-aux/lcov-inject \
+	build-aux/run-script build-aux/test-runner \
+	doc/coding-style.txt debian/README.bug-usertags \
+	debian/bug-script debian/changelog debian/control \
+	debian/copyright debian/dpkg-dev.docs debian/dpkg-dev.install \
+	debian/dpkg-dev.manpages debian/dpkg.alternatives.logrotate \
+	debian/dpkg.cfg debian/dpkg.cron.daily debian/dpkg.docs \
 	debian/dpkg.dpkg-db-backup.service \
 	debian/dpkg.dpkg-db-backup.timer debian/dpkg.install \
 	debian/dpkg.manpages debian/dpkg.postinst debian/dpkg.postrm \

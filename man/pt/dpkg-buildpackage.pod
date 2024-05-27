@@ -514,7 +514,7 @@ Se definido, será usado para assinar os ficheiros B<.changes>, B<.buildinfo> e 
 
 =item B<DEB_BUILD_OPTIONS>
 
-If set, it will contain a space-separated list of options that affect the behavior of some dpkg tools involved in package building, and might affect the package build process if the code in F<debian/rules> honors them.  These options can have parameters specified immediately after an equal sign (‘B<=>‘).  For options that support multiple parameters, these will not be separated by spaces, as these are reserved to separate options.
+Se definido, irá conter uma lista de opções separadas por espaços que afectam o comportamento de algumas ferramentas do dpkg envolvidas na compilação de pacote, e pode afectar o processo de compilação se o código em I<debian/rules> as honrar. Estas opções podem ter parâmetros especificados imediatamente após um sinal de igual (‘B<=>‘).  Para opções que suportem múltiplos parâmetros, estes não serão separadas por espaços, pois estes estão reservados para opções separadas.
 
 O seguinte são opções conhecidas e suportadas pelas ferramentas do dpkg, outras opções honradas por F<debian/rules> podem ser definidas por políticas específicas da distribuição.
 
@@ -554,7 +554,7 @@ B<dpkg-buildpackage> irá acrescentar a bandeira B<--no-print-directory> L<make(
 
 =item B<sanitize=>I<feature-spec>
 
-These are feature areas that control build flag features.  See L<dpkg-buildflags(1)> for further details.
+Estas são áreas de característica que controlam as características da bandeira de compilação. Veja L<dpkg-buildflags(1)> para mais detalhes.
 
 =back
 
@@ -588,7 +588,7 @@ B<dpkg-architecture> é chamado com os parâmetros B<-a> e B<-t> reencaminhados.
 
 =item B<DEB_RULES_REQUIRES_ROOT>
 
-This variable is set to the value obtained from the B<Rules-Requires-Root> field, the dpkg-build-api level or from the command-line.  When set, it will be a valid value for the B<Rules-Requires-Root> field.  It is used to notify B<debian/rules> whether the B<rootless-builds.txt> specification is supported.
+Esta variável é definida para o valor obtido a partir do campo B<Rules-Requires-Root>, o nível dpkg-build-api ou a partir da linha de comandos. Quando definida, será um valor válido para o campo B<Rules-Requires-Root>. É usada para notificar B<debian/rules> se a especificação B<rootless-builds.txt> é suportada.
 
 =item B<DEB_GAIN_ROOT_CMD>
 

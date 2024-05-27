@@ -34,7 +34,7 @@ Gibt die Changelog-Datei an, aus der Informationen gelesen werden sollen. Ein �
 
 =item B<-F> I<Changelog-Format>
 
-Specifies the format of the changelog.  By default the format is read from a special line near the bottom of the changelog or failing that defaults to the B<debian> standard format.  See also L</CHANGELOG FORMATS>.
+Gibt das Format der Changelog-Datei an. Standardmäßig wird das Format aus einer speziellen Zeile in der Nähe des Endes der Changelogs gelesen oder, falls dies fehlschlägt, wird das B<debian>-Standardformat angenommen. Siehe auch L</CHANGELOG-FORMATE>.
 
 =item B<-L> I<libverzeichnis>
 

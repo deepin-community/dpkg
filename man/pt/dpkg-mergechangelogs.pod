@@ -70,7 +70,7 @@ Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nati
 
 =head1 LIMITAÇÕES
 
-Anything that is not parsed by L<Dpkg::Changelog> is lost during the merge. This might include stuff like comments which were not supposed to be there, etc.
+Tudo o que não seja analisado por L<Dpkg::Changelog> é perdido durante a fusão. Isto pode incluir coisas como comentários que não eram suposto estar lá, etc.
 
 =head1 INTEGRAÇÃO COM GIT
 

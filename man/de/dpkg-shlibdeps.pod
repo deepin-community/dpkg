@@ -50,7 +50,7 @@ Vom Paket bereitgestellte Abhängigkeitsinformationen für Laufzeitbibliotheken.
 
 Während des Durchsuchens aller vom Programm verwendeten Symbole erinnert sich B<dpkg-shlibdeps> an die (höchste) Minimalversion, die von jeder Bibliothek benötigt wird. Am Ende des Prozesses ist es in der Lage, die minimale Abhängigkeit für jede eingesetzte Bibliothek zu schreiben (vorausgesetzt, die Informationen in den I<Symbol>-Dateien sind korrekt).
 
-As a safe-guard measure, a symbols file can provide a B<Build-Depends-Package> or B<Build-Depends-Packages> meta-information field and B<dpkg-shlibdeps> will extract the minimal version required by the corresponding package in the B<Build-Depends> field and use this version if it's higher than the minimal version computed by scanning symbols.
+Als Sicherheitsmaßnahme kann eine Symbols-Datei ein Meta-Informationsfeld B<Build-Depends-Package> oder B<Build-Depends-Packages> enthalten. B<dpkg-shlibdeps> entnimmt dann die minimale Version, die von dem korrespondierenden Paket im Feld B<Build-Depends> benötigt wird, und verwendet diese Version, falls sie höher ist als die minimale Version, die beim Durchsuchen der Symbole ermittelt wurde.
 
 =head2 Shlibs-Dateien
 

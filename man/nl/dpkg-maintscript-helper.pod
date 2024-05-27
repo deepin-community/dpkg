@@ -77,7 +77,7 @@ Dit houdt in dat indien een pakket de bedoeling heeft om een configuratiebestand
 
 B<Opmerking>: In de meeste gevallen kan dit vervangen worden door de vlag C<remove-on-upgrade> in F<DEBIAN/conffiles> (sinds dpkg 1.20.6), zie L<deb-conffiles(5)>.
 
-If a conffile is completely removed, it should be removed from disk, unless the user has modified it.  If there are local modifications, they should be preserved.  If the package upgrade aborts, the newly obsolete conffile should not disappear.
+Indien een configuratiebestand volledig verwijderd wordt, moet het van schijf verwijderd worden, tenzij de gebruiker het aangepast heeft. Indien er lokale aanpassingen aangebracht werden, moeten die behouden blijven. Indien het opwaarderen van het pakket afbreekt, mag het pas in onbruik geraakte configuratiebestand niet verdwijnen.
 
 Dit alles wordt toegepast door het volgende shell-fragment te plaatsen in de scripts B<preinst>, B<postinst> en B<postrm> van de beheerder:
 

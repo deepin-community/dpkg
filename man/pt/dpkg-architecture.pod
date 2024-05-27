@@ -24,9 +24,9 @@ B<dpkg-architecture> [I<option>...] [I<command>]
 
 B<dpkg-architecture> disponibiliza uma habilidade para determinar e definir a arquitectura de compilação e da máquina para compilação de pacotes.
 
-The build architecture is always determined by either the B<DEB_BUILD_ARCH> variable if set (and B<--force> not being specified) or by an external call to L<dpkg(1)>, and cannot be set at the command line.
+A arquitectura de compilação é sempre determinada seja ou pela variável B<DEB_BUILD_ARCH> se definida (e se B<--force> não for especificada) ou por uma chamada externa ao L<dpkg(1)>, e não pode ser definida na linha de comandos.
 
-You can specify the host architecture by providing one or both of the options B<--host-arch> and B<--host-type>, otherwise the B<DEB_HOST_ARCH> variable is used if set (and B<--force> not being specified).  The default is determined by an external call to L<gcc(1)>, or the same as the build architecture if B<CC> or gcc are both not available.  One out of B<--host-arch> and B<--host-type> is sufficient, the value of the other will be set to a usable default.  Indeed, it is often better to only specify one, because B<dpkg-architecture> will warn you if your choice does not match the default.
+Você pode especificar a arquitectura da máquina ao fornecer uma ou ambas as opções B<--host-arch> e B<--host-type>, caso contrário é usada a variável B<DEB_HOST_ARCH> se definida (e não sendo especificado B<--force>). A predefinição é determinada por uma chamada externa ao L<gcc(1)>, ou o mesmo como a arquitectura de compilação se B<CC> ou gcc estiverem ambos não disponíveis. Um de B<--host-arch> e B<--host-type> é suficiente, o valor do outro será definido para uma predefinição utilizável. De facto, é muitas vezes melhor apenas especificar um, porque B<dpkg-architecture> vai avisa-lo se a sua escolha não corresponder ao predefinido.
 
 =head1 COMANDOS
 
@@ -114,7 +114,7 @@ Define o formato de resultados para B<--print-set> e B<--print-unset> (desde dpk
 
 =item B<-f>, B<--force>
 
-Values set by existing environment variables with the same name as used by the scripts are honored (i.e. used by B<dpkg-architecture>), except if this force flag is present.  This allows the user to override a value even when the call to B<dpkg-architecture> is buried in some other script (for example L<dpkg-buildpackage(1)>).
+Os valores definidos pelas variáveis de ambiente existentes com os mesmos nomes usados como usados pelos scripts são respeitados (isto é, usados por B<dpkg-architecture>), excepto se esta bandeira de forçar estiver presente. Isto permite ao utilizador sobrepor um valor mesmo quando a chamada a B<dpkg-architecture> está enterrada em algum outro script (por exemplo L<dpkg-buildpackage(1)>).
 
 =back
 

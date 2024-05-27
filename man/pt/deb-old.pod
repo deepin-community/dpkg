@@ -22,7 +22,7 @@ I<filename>B<.deb>
 
 =head1 DESCRIÇÃO
 
-The B<.deb> format is the Debian binary package file format.  This manual page describes the B<old> format, used before Debian 0.93.  Please see L<deb(5)> for details of the new format.
+O formato B<.deb> é o formato de ficheiro de pacote binário Debian. Este manual descreve o formato B<antigo>, usando antes de Debian 0.93. Por favor veja L<deb(5)> para detalhes sobre o novo formato.
 
 =head1 FORMATO
 

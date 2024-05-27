@@ -501,6 +501,8 @@ Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het active
 
 Indien dit ingesteld werd, zal het gebruikt worden als de tijdsaanduiding (timestamp) (in seconden sinds de epoch) om de mtime vast te zetten op de items uit het L<tar(5)>-bestand.
 
+Since dpkg 1.18.11.
+
 =item B<VISUAL>
 
 =item B<EDITOR>

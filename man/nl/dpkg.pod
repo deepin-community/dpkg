@@ -655,7 +655,7 @@ Voor de opgegeven pakketten het toetsen van afhankelijkheden negeren (eigenlijk 
 
 Alles wat gedaan moet worden, uitvoeren, maar geen veranderingen wegschrijven. Dit wordt gebruikt om te zien wat er bij de opgegeven actie zou gebeuren, zonder dat er effectief iets gewijzigd wordt.
 
-Be sure to give B<--no-act> before the action-parameter, or you might end up with undesirable results (e.g. B<dpkg --purge foo --no-act> will first purge package “foo” and then try to purge package ”--no-act”, even though you probably expected it to actually do nothing).
+Zorg ervoor om B<--no-act> voor de actie-parameter op te geven, anders zou u ongewenste resultaten kunnen bekomen (bijvoorbeeld zal B<dpkg --purge foo --no-act> eerst pakket "foo" wissen en dan proberen pakket "--no-act" te wissen, ook al verwachtte u wellicht dat er niets gedaan zou worden).
 
 =item B<-R>, B<--recursive>
 

@@ -22,13 +22,13 @@ B<dpkg-scanpackages> [I<option>...] I<binary-path> [I<override-file> [I<path-pre
 
 =head1 DESCRIÇÃO
 
-B<dpkg-scanpackages> sorts through a tree of Debian binary packages and creates a Packages file, used by L<apt(8)>, L<dselect(1)>, etc, to tell the user what packages are available for installation.  These Packages files are the same as those found on Debian archive sites and media discs.  You might use B<dpkg-scanpackages> yourself if making a directory of local packages to install on a cluster of machines.
+B<dpkg-scanpackages> ordena entre uma árvore de pacotes binários Debian e caria um ficheiro Packages, usado por L<apt(8)>, L<dselect(1)>, etc, para dizer ao utilizador que pacotes estão disponíveis para instalação. Estes ficheiros Packages são os mesmo que aqueles encontrados em sites de arquivos Debian e discos de media. Você próprio pode usar B<dpkg-scanpackages> se pretender criar um directório local de pacotes para instalar num grupo de máquinas.
 
-B<Note>: If you want to access the generated Packages file with L<apt(8)> you will probably need to compress the file with L<xz(1)> (generating a Packages.xz file), L<bzip2(1)> (generating a Packages.bz2 file) or L<gzip(1)> (generating a Packages.gz file).  L<apt(8)> ignores uncompressed Packages files except on local access (i.e.  B<file://> sources).
+B<Nota>: Se você pretende aceder ao ficheiro Packages gerado com o L<apt(8)> vai provavelmente precisar de comprimir o ficheiro com L<xz(1)> (gerando um ficheiro Packages.xz), L<bzip2(1)> (gerando um ficheiro Packages.bz2) ou L<gzip(1)> (gerando um ficheiro Packages.gz ). O L<apt(8)> ignora ficheiros Packages não comprimidos excepto em acesso local (isto é, fontes B<file://>).
 
 I<binary-path> é o nome da árvore dos pacotes binários a processar (por exemplo, B<contrib/binary-i386>).  É melhor tornar isto relativo à raiz do arquivo Debian, porque cada campo Filename no novo ficheiro Packages irá começar com esta string.
 
-I<override-file> is the name of a file to read which contains information about how the package fits into the distribution (the file can be compressed since dpkg 1.15.5); see L<deb-override(5)>.
+I<override-file> é o nome de um ficheiro a ler o qual contem informação acerca de como o pacote encaixa na distribuição (o ficheiro pode estar comprimido desde dpkg 1.15.5); veja L<deb-override(5)>.
 
 I<prefixo-caminho> é um string opcional a ser precedida aos campos Filename.
 
@@ -44,7 +44,7 @@ Sonda por pacotes *.I<tipo>, em vez de *.deb.
 
 =item B<-e>, B<--extra-override> I<file>
 
-Scan I<file> to find supplementary overrides (the file can be compressed since dpkg 1.15.5).  See L<deb-extra-override(5)> for more information on its format.
+Sonda o I<file> para encontrar sobreposições suplementares (o ficheiro pode ser comprimido desde o dpkg 1.15.5). Veja L<deb-extra-override(5)> para mais informações sobre este formato.
 
 =item B<-a>, B<--arch> I<arch>
 

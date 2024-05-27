@@ -69,7 +69,7 @@ A arquitectura da máquina actual (isto é, a arquitectura para a qual o pacote 
 
 =item B<vendor:Name>
 
-The current vendor name (since dpkg 1.20.0).  This value comes from the B<Vendor> field for the current vendor's origin file, as L<dpkg-vendor(1)> would retrieve it.
+O nome do fornecedor actual (desde dpkg 1.20.0). Este valor vem do campo B<Vendor> do ficheiro original do fornecedor actual, como L<dpkg-vendor(1)> o obteria.
 
 =item B<vendor:Id>
 
@@ -111,11 +111,11 @@ Espaço de disco usado adicional quando o pacote é instalado. Se esta variável
 
 =item B<S:>I<field-name>
 
-The value of the source stanza field I<field-name> (which must be given in the canonical capitalization; since dpkg 1.18.11).  Setting these variables has no effect other than on places where they are expanded explicitly. These variables are only available when generating binary control files.
+O valor do campo I<field-name> da estrofe fonte (o qual deve ser dado em na capitalização canonical, desde dpkg 1.18.11). Definir estas variáveis não tem efeito para além de em lugares onde elas são explicitamente expandidas. Estas variáveis estão apenas disponíveis quando se geram ficheiros de controle binários.
 
 =item B<F:>I<field-name>
 
-The value of the output field I<field-name> (which must be given in the canonical capitalization).  Setting these variables has no effect other than on places where they are expanded explicitly.
+O valor do campo I<field-name> resultante (o qual deve ser dado em na capitalização canonical). Definir estas variáveis não tem efeito para além de em lugares onde elas são explicitamente expandidas.
 
 =item B<Format>
 

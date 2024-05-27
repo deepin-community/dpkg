@@ -32,7 +32,7 @@ Ficheiros B<shlibs> mapeiam nomes de bibliotecas partilhadas e versões (I<SONAM
 
 Os campos I<library> e I<version> são delimitados por espaços em branco, mas o campo I<dependencies> estende-se até ao fim da linha. O campo I<type> é opcional e normalmente não necessário.
 
-The I<dependencies> field has the same syntax as the B<Depends> field in a binary control file, see L<deb-control(5)>.
+O campo I<dependencies> tem a mesma sintaxe que o campo B<Depends> num ficheiro de control binário, veja L<deb-control(5)>.
 
 =head1 FORMATOS DE SONAME
 

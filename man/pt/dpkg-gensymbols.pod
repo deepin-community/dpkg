@@ -54,7 +54,7 @@ Este programa foi introduzido no dpkg 1.14.8.
 
 =head1 MANTENDO FICHEIROS DE SÍMBOLOS
 
-The base interchange format of the symbols file is described in L<deb-symbols(5)>, which is used by the symbols files included in binary packages.  These are generated from template symbols files with a format based on the former, described in L<deb-src-symbols(5)> and included in source packages.
+O formato de intercâmbio base do ficheiro de símbolos é descrito em L<deb-symbols(5)>, o qual é usado pelos ficheiros symbols incluídos em pacotes binários. Estes são gerados a partir de ficheiros se símbolos modelo com um formato baseado no anterior, descrito em L<deb-src-symbols(5)> e incluído em pacotes fonte.
 
 Os ficheiros de símbolos são apenas úteis se refletirem a evolução do pacote entre vários lançamentos. Assim o maintainer tem de os actualizar todas as vezes que é adicionado um novo símbolo para que a sua versão mínima associada corresponda à realidade.
 
@@ -108,7 +108,7 @@ Define a versão do pacote. Usa por predefinição a versão extraída de debian
 
 =item B<-e>I<library-file>
 
-Only analyze libraries explicitly listed instead of finding all public libraries.  You can use shell patterns used for pathname expansions (see the L<File::Glob> manual page for details) in I<library-file> to match multiple libraries with a single argument (otherwise you need multiple B<-e>).
+Apenas analisa bibliotecas explicitas em vez de procurar todas as bibliotecas públicas. Você pode usar padrões de shell usadas para expansões de nome de caminho (veja o manual L<File::Glob> para detalhes) em I<library-file> para corresponder a múltiplas bibliotecas com um único argumento (caso contrário você precisa de múltiplos B<-e>).
 
 =item B<-l>I<directory>
 
@@ -126,7 +126,7 @@ Escreve o ficheiro de símbolos gerado na saída standard ou em I<filename> se e
 
 =item B<-t>
 
-Write the symbol file in template mode rather than the format compatible with L<deb-symbols(5)>.  The main difference is that in the template mode symbol names and tags are written in their original form contrary to the post-processed symbol names with tags stripped in the compatibility mode. Moreover, some symbols might be omitted when writing a standard L<deb-symbols(5)> file (according to the tag processing rules) while all symbols are always written to the symbol file template.
+Escreve o ficheiro de símbolos em modo de modelo em vez do formato compatível com L<deb-symbols(5)>. A principal diferença é que em modo de modelo os nomes dos símbolos e as etiquetas são escritos na sua forma original ao contrário dos nomes de símbolos pós-processados com as etiquetas despidas do modo de compatibilidade. Mais ainda, alguns símbolos podem ser omitidos quando se escreve um ficheiro L<deb-symbols(5)> standard (de acordo com as regras de processamento de etiquetas) enquanto que todos os símbolos são sempre escritos no ficheiro modelo de símbolos.
 
 =item B<-c>I<[0-4]>
 

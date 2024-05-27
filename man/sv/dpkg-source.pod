@@ -134,7 +134,7 @@ Det reguljära uttrycket i perlformat som angavs utökar standardvärdet som anv
 
 Om flaggan anges kommer filnamnet att sändas vidare till L<tar(1)>:s B<--exclude>-flagga när det anropas för att skapa en .orig.tar.gz eller .tar.gz-fil (B<--tar-ignore> sedan dpkg 1.15.6). Till exempel kommer B<-I>CVS att hoppa över CVS-kataloger när tar.gz-filen skapas. Flaggan kan upprepas flera gånger för att lista flera filnamn som ska uteslutas.
 
-B<-I> ensamt lägger till satandard B<--exclude>-flaggor som filtrerar ut styrfiler och kataloger från de flesta vanliga versionshanteringssystem, säkerhetskopior, växlingsfiler och Libtool-byggutdatakataloger.
+B<-I> ensamt lägger till standard B<--exclude>-flaggor som filtrerar ut styrfiler och kataloger från de flesta vanliga versionshanteringssystemen, säkerhetskopior, växlingsfiler och Libtool-byggutdatakataloger.
 
 =back
 
@@ -497,6 +497,8 @@ Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även 
 =item B<SOURCE_DATE_EPOCH>
 
 Om satt kommer det användas som tidsstämpel (som sekunder sedan epoken) för att tvinga mtime i L<tar(5)>-filposterna.
+
+Since dpkg 1.18.11.
 
 =item B<VISUAL>
 

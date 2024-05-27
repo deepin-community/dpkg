@@ -74,7 +74,7 @@ Especifica onde está a lista de ficheiros que foram produzidos pela compilaçã
 
 =item B<-F>I<changelog-format>
 
-Specifies the format of the changelog.  See L<dpkg-parsechangelog(1)> for information about alternative formats.
+Especifica o formato do registo de alterações. Veja L<dpkg-parsechangelog(1)> para informação acerca dos formatos alternativos.
 
 =item B<-O>[I<filename>]
 

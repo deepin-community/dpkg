@@ -42,7 +42,7 @@ I<package> e I<version> são o nome do pacote fonte e o número da versão. I<ve
 
 I<distributions> lista uma ou mais distribuições separadas por espaços onde esta versão deve ser instalada quando é enviada; é copiado para o campo B<Distribution> no ficheiro I<.changes>. I<distributions> tem de ser terminada com um caractere ponto e vírgula (U+003B ‘B<;>’).
 
-I<metadata> lists zero or more comma-separated I<keyword>=I<value> items. Each keyword can contain only minus and case insensitive alphanumeric characters, as they need to be mapped to L<deb822(5)> field names.  The only I<keyword>s currently supported by B<dpkg> are:
+I<metadata> lista zero ou mais itens I<keyword>=I<value> separados por espaços. Cada palavra-chave pode conter apenas os caracteres menos e alfanuméricos insensíveis a maiúsculas/minúsculas, pois precisam de ser mapeadas para nomes de campos L<deb822(5)>. As únicas I<keyword>s presentemente suportadas pelo B<dpkg> são:
 
 =over 
 

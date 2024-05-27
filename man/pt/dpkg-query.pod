@@ -88,7 +88,7 @@ Flags de erro:
 
 =back
 
-An uppercase status or error letter indicates the package is likely to cause severe problems.  Please refer to L<dpkg(1)> for information about the above states and flags.
+Um estado em letra maiúscula ou letra de erro indica que o pacote é provável de causar severos problemas. Por favor consulte L<dpkg(1)> para informação sobre os estados e bandeiras em cima.
 
 O formato de saída desta opção não é configurável, mas varia automaticamente para caber na largura do terminal. Destina-se a ser lido por humanos e não é facilmente lido por máquinas. Veja B<-W> (B<--show>)  e B<--showformat> para um modo de configurar o formato do resultado.
 
@@ -383,7 +383,7 @@ Define o programa a executar quando multiplica um comando via shell (desde dpkg 
 
 =item B<DPKG_PAGER>
 
-Sets the pager command to use (since dpkg 1.19.1), which will be executed with «B<$SHELL -c>».  If B<SHELL> is not set, «B<%DPKG_DEFAULT_SHELL%>» will be used instead.  The B<DPKG_PAGER> overrides the B<PAGER> environment variable (since dpkg 1.19.2).
+Define o comando paginador a usar (desde dpkg 1.19.1), o qual ir+a ser executado com «B<$SHELL -c>».  Se B<SHELL> não estiver definido, irá ser usado «B<%DPKG_DEFAULT_SHELL%>» em vez dele. O B<DPKG_PAGER> sobrepõe a variável de ambiente B<PAGER> (desde dpkg 1.19.2).
 
 =item B<DPKG_ROOT>
 
