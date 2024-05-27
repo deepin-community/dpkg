@@ -224,6 +224,8 @@ Indien dit ingesteld werd, zal B<dpkg-deb> het gebruiken als de map waarin tijde
 
 Indien dit ingesteld werd, zal het gebruikt worden als de tijdsaanduiding (timestamp) (in seconden sinds de epoch) in de L<ar(5)>-container van het L<deb(5)>-bestand en zal het ook gebruikt worden om de mtime vast te zetten op de items uit het L<tar(5)>-bestand.
 
+Since dpkg 1.18.8.
+
 =back
 
 =head1 OPMERKINGEN

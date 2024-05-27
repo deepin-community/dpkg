@@ -78,7 +78,7 @@ Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nati
 
 =head1 BUGS
 
-Some packages don't follow the name structure I<package>B<_>I<version>B<_>I<architecture>B<.deb>.  Packages renamed by B<dpkg-name> will follow this structure.  Generally this will have no impact on how packages are installed by L<dselect(1)>/L<dpkg(1)>, but other installation tools might depend on this naming structure.
+Alguns pacotes não seguem a estrutura de nome I<pacote>B<_>I<versão>B<_>I<arquitectura>B<.deb>. Os pacotes renomeados pelo B<dpkg-name> irá seguir estas estrutura. Geralmente isto não terá impacto sobre como os pacotes serão instalados pelos L<dselect(1)>/L<dpkg(1)>, mas outras ferramentas de instalação podem depender desta estrutura de nomes.
 
 =head1 EXEMPLOS
 

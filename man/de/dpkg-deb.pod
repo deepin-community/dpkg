@@ -224,6 +224,8 @@ Falls gesetzt, wird B<dpkg-deb> es als das Verzeichnis verwenden, in dem tempor√
 
 Falls gesetzt, wird es als Zeitstempel (als Sekunden seit der Epoche) in dem L<ar(5)>-Container von L<deb(5)> und zum Festlegen der Mtime in den Dateieintr√§gen von L<tar(5)> verwandt.
 
+Seit Dpkg 1.18.8.
+
 =back
 
 =head1 BEMERKUNGEN

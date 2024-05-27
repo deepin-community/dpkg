@@ -422,11 +422,11 @@ Lista innehållet i ett deb-paket.
 
 Extraherar styrfilsinformation från ett paket.
 
-=item B<-x>|B<--extract> I<arkiv> I<katalog>
+=item B<-x>, B<--extract> I<arkiv> I<katalog>
 
 Extrahera filerna som finns i paketet.
 
-=item B<-C>|B<--vextract> I<arkiv> I<katalog>
+=item B<-X>, B<--vextract> I<arkiv> I<katalog>
 
 Extrahera och visa filnamnen som finns i paketet.
 

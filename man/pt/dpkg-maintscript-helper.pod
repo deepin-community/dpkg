@@ -77,7 +77,7 @@ Isto significa que se um pacote se destina a renomear ou remover um conffile, de
 
 B<Nota>: Isto pode ser substituído na maioria dos casos pela bandeira C<remove-on-upgrade> em F<DEBIAN/conffiles> (desde dpkg 1.20.6), veja L<deb-conffiles(5)>.
 
-If a conffile is completely removed, it should be removed from disk, unless the user has modified it.  If there are local modifications, they should be preserved.  If the package upgrade aborts, the newly obsolete conffile should not disappear.
+Se um conffile for completamente removido, deve ser removido do disco, a menos que o utilizador o tenha modificado. Se existirem modificações locais, estas devem ser preservadas. Se a actualização do pacote abortar, o conffile obsoleto mais recente não deve desaparecer.
 
 tudo isto é implementado ao colocar o seguinte fragmento de shell nos scripts de maintainer B<preinst>, B<postinst> e B<postrm>:
 
@@ -155,7 +155,7 @@ Implementação actual: o B<preinst> verifica se o directório existe, não cont
 
 =head1 INTEGRAÇÃO EM PACOTES
 
-When using a packaging helper, please check if it has native B<dpkg-maintscript-helper> integration, which might make your life easier. See for example L<dh_installdeb(1)>.
+Quando usar um ajudante de empacotamento, por favor verifique se ele tem integração com B<dpkg-maintscript-helper> nativa, o que pode tornar a sua vida mais fácil. Veja por exemplo L<dh_installdeb(1)>.
 
 Dado que B<dpkg-maintscript-helper> é usado no B<preinst>, usa-lo incondicionalmente requer uma pré-dependência para assegurar que a versão requerida do B<dpkg> já foi desempacotada antes. A versão requerida depende do comando usado, para B<rm_conffile> e B<mv_conffile> é 1.15.7.2, para B<symlink_to_dir> e B<dir_to_symlink> é 1.17.14:
 

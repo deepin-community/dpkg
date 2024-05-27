@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NOME
 
-dsc - Debian source package control file format
+dsc - formato Debian de ficheiro de controle de pacotes fonte
 
 =head1 RESUMO
 
@@ -36,7 +36,7 @@ Os dados de controle podem estar inclusos numa assinatura OpenPGP ASCII Armored,
 
 O valor deste campo declara a versão de formato do pacote fonte. O valor do campo é usado por programas que actuam no pacote fonte para interpretar a lista de ficheiros no pacote fonte e determinar como desempacota-los. A sintaxe do valor do campo é uma revisão maior numérica (“0-9”), um ponto (“.”), uma revisão menor numérica (“0-9”), e depois um subtipo opcional após um espaço em branco (“ \t”), o qual é especificado numa palavra alfanumérica em minúsculas (“a-z0-9”) em parêntesis (“()”).  O subtipo é opcional na sintaxe mas pode ser obrigatória para revisões particulares de formato fonte.
 
-The source formats currently supported by B<dpkg> are B<1.0>, B<2.0>, B<3.0 (native)>, B<3.0 (quilt)>, B<3.0 (git)>, B<3.0 (bzr)> and B<3.0 (custom)>. See L<dpkg-source(1)> for their description.
+Os formatos fonte actualmente suportados pelo B<dpkg> são B<1.0>, B<2.0>, B<3.0 (native)>, B<3.0 (quilt)>, B<3.0 (git)>, B<3.0 (bzr)> e B<3.0 (custom)>. Veja L<dpkg-source(1)> para as suas descrições.
 
 =item B<Source:> I<source-name> (necessário)
 
@@ -58,7 +58,7 @@ O valor do campo é geralmente gerado a partir de campos B<Architecture> a parti
 
 =item B<Version:>I< string-de-versão> (obrigatório)
 
-Typically, this is the original package's version number in whatever form the program's author uses.  It may also include a Debian revision number (for non-native packages).  The exact format and sorting algorithm are described in L<deb-version(7)>.
+Tipicamente, isto é o número de versão do pacote original seja em que formato o autor do programa usa. Pode também incluir um número de revisão Debian (para pacotes não-nativos). O formato exacto e algoritmo de ordenação estão descritos em L<deb-version(7)>.
 
 =item B<Origin:> I<name>
 
@@ -106,7 +106,7 @@ O I<url> da uma interface web para explorar o repositório do Sistema de Control
 
 =item B<Vcs-Svn:> I<url>
 
-These fields declare the I<url> of the Version Control System repository used to maintain this package.  See L<deb-src-control(5)> for more details.
+Estes campos declaram o I<url> do repositório do Sistema de Controle de Versão usado para manter este pacote. Veja L<deb-src-control(5)> para mais detalhes.
 
 =item B<Testsuite:> I<name-list>
 
@@ -130,7 +130,7 @@ B<Fundamento>: este campo é necessário porque caso contrário, para puderem ob
 
 =item B<Build-Conflicts-Indep:> I<package-list>
 
-These fields declare relationships between the source package and packages used to build it.  They are discussed in the L<deb-src-control(5)> manual page.
+Estes campos declaram relacionamentos entre o pacote fonte e pacotes usados para o construir. Eles são discutidos no manual L<deb-src-control(5)>.
 
 =item B<Package-List:>
 

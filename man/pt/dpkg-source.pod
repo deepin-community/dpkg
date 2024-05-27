@@ -44,7 +44,7 @@ Se o pacote fonte usar um formato não-standard (actualmente isto significa todo
 
 Compila um pacote fonte (B<--build> desde dpkg 1.17.14). O primeiro argumento não-opção é tomado como o nome do directório que contém a árvore fonte debianizada (isto é, com um sub-directório debian e talvez alterações aos ficheiro originais). Dependendo do formato do pacote fonte usado para compilar o pacote, podem ser aceites parâmetros adicionais.
 
-B<dpkg-source> will build the source package with the first format found in this ordered list: the format indicated with the I<--format> command line option, the format indicated in B<debian/source/format>, “1.0”.  The fallback to “1.0” is deprecated and will be removed at some point in the future, you should always document the desired source format in B<debian/source/format>.  See section L</SOURCE PACKAGE FORMATS> for an extensive description of the various source package formats.
+B<dpkg-source> irá compilado o pacote fonte com o primeiro formato encontrado nesta lista por esta ordem: o formato indicado com a opção de linha de comando I<--format>, o formato indicado em B<debian/source/format>, “1.0”. O cair para “1.0” está descontinuado e será removido em algum ponto no futuro, você deve sempre documentar o formato de fonte desejado em B<debian/source/format>.Veja a secção L</SOURCE PACKAGE FORMATS> para uma descrição extensiva dos vários formatos de pacote fonte.
 
 =item B<--print-format> I<directory>
 
@@ -88,7 +88,7 @@ Especifica o ficheiro changelog de onde ler informação. A predefinição é B<
 
 =item B<-F>I<changelog-format>
 
-Specifies the format of the changelog.  See L<dpkg-parsechangelog(1)> for information about alternative formats.
+Especifica o formato do registo de alterações. Veja L<dpkg-parsechangelog(1)> para informação acerca dos formatos alternativos.
 
 =item B<--format=>I<value>
 
@@ -96,7 +96,7 @@ Usa o formato fornecido para compilar o pacote fonte (desde dpkg 1.14.17). Sobre
 
 =item B<-V>I<name>B<=>I<value>
 
-Set an output substitution variable.  See L<deb-substvars(5)> for a discussion of output substitution.
+Define uma variável de substituição de saída. Veja L<deb-substvars(5)> para uma discussão sobre substituição da saída.
 
 =item B<-T>I<substvars-file>
 
@@ -132,7 +132,7 @@ A expressão regular perl especificada irá estender o valor predefinido usado p
 
 =item B<-I>[I<file-pattern>], B<--tar-ignore>[=I<file-pattern>]
 
-If this option is specified, the pattern will be passed to L<tar(1)>'s B<--exclude> option when it is called to generate a .orig.tar or .tar file (B<--tar-ignore> since dpkg 1.15.6).  For example, B<-I>CVS will make tar skip over CVS directories when generating a .tar.gz file.  The option may be repeated multiple times to list multiple patterns to exclude.
+Se esta opção for especificada, o padrão será passado à opção B<--exclude> do L<tar(1)> quando este é chamado para gerar um ficheiro .orig.tar ou .tar (B<--tar-ignore> desde dpkg 1.15.6). Por exemplo, B<-I>CVS irá fazer o tar saltar os directórios CVS ao gerar um ficheiro .tar.gz. A opção pode ser repetida várias vezes para listar vários padrões de exclusão.
 
 B<-I> por si próprio adiciona opções B<--exclude> predefinidas que irão filtrar ficheiros de controle e directórios dos sistemas de controlo de revisão mais comuns, ol systems, salvaguarda e permutar ficheiros e directórios de saída de compilação de Libtool.
 
@@ -296,7 +296,7 @@ O tarball original principal é extraído primeiro, depois todos os tarballs ori
 
 Todas as patches listadas em B<debian/patches/>I<vendor>B<.series> ou B<debian/patches/series> são então aplicadas, onde I<vendor> será o nome em minúsculas do fornecedor actual, ou B<debian> se não existir um fornecedor definido. Se o ficheiro anterior for usado e o posterior não existir (ou for um link simbólico), então o posterior é substituído por um link simbólico para o antigo. Isto destina-se a simplificar a utilização de B<quilt> para gerir o conjunto de patches. Ficheiros de séries especificas-de-fornecedor destinam-se a tornar possível a criação de séries de múltiplos ramos de desenvolvimento baseados no fornecedor, num modo declarativo, dando preferência a codificação-aberta deste manuseamento em B<debian/rules>. Isto é particularmente útil quando a fonte precisa de receber uma patch condicionalmente porque os ficheiros afectados não possuem suporte a oclusão condicional embutido. Note no entanto que enquanto B<dpkg-source> analisa correctamente ficheiros de séries com opções explícitas usadas para aplicar patch a aplicação (armazenada em cada linha antes do nome de ficheiro de patch e um ou mais espaços), ele ignora essas opções e espera sempre que as patches possam ser aplicadas com a opção B<-p1> ou B<patch>. Irá portanto emitir um aviso quando encontra tais opções, e é provável que a compilação falhe.
 
-Note that L<lintian(1)> will emit unconditional warnings when using vendor series due to a controversial Debian specific ruling, which should not affect any external usage; to silence these, the dpkg lintian profile can be used by passing «B<--profile dpkg>» to L<lintian(1)>.
+Note que L<lintian(1)> irá emitir avisos incondicionais quando usa séries de fornecedor devido a regulamento controverso específico de Debian, o qual não deve afectar nenhuma utilização externa; para silenciar isto, o perfil lintian do dpkg pode ser usado ao passar «B<--profile dpkg>» a L<lintian(1)>.
 
 O carimbo temporal de todos os ficheiros com patch é reposto para a hora da extração do pacote fonte (isto evita inclinações do carimbo temporal que levam a problemas quando aplica patch a ficheiros auto-gerados).
 
@@ -324,7 +324,7 @@ B<Gravar alterações>
 
 =item B<--commit> [I<directory>] [I<patch-name>] [I<patch-file>]
 
-Generates a patch corresponding to the local changes that are not managed by the B<quilt> patch system and integrates it in the patch system under the name I<patch-name>.  If the name is missing, it will be asked interactively.  If I<patch-file> is given, it is used as the patch corresponding to the local changes to integrate.  Once integrated, an editor (the first one found from B<sensible-editor>, C<$VISUAL>, C<$EDITOR>, B<vi>) is launched so that you can edit the meta-information in the patch header.
+Gera uma patch correspondente às alterações locais que não são geridas pelo sistema de patch B<quilt> e integra-a no sistema de patch sob o nome I<patch-name>. se o nome está em falta, será perguntado interactivamente. Se I<patch-file> for fornecido, é usado como uma patch correspondente às alterações locais a integrar. Uma vez integrada, é lançado um editor (o primeiro encontrado de B<sensible-editor>, C<$VISUAL>, C<$EDITOR>, B<vi>) para que você possa editar a meta-informação no cabeçalho da patch.
 
 Passar I<patch-file> é principalmente útil após uma falha de compilação que pré-gerou este ficheiro, e por esse motivo o ficheiro fornecido é removido após integração. Note também que as alterações contidas no ficheiro patch têm de já estar aplicadas na árvore e que os ficheiros modificados pela patch não podem ter alterações suplementares por gravar.
 
@@ -424,7 +424,7 @@ B<Building>
 
 Antes de avançar-mos, são feitas algumas verificações para assegurar que não temos nenhumas alterações não ignoradas por submeter.
 
-L<git-bundle(1)> is used to generate a bundle of the git repository.  By default, all branches and tags in the repository are included in the bundle.
+L<git-bundle(1)> é usado para gerar um bolo do repositório git. Por predefinição, todos os ramos e etiquetas no repositório são incluídos no bolo.
 
 B<Opções de compilação>
 
@@ -432,7 +432,7 @@ B<Opções de compilação>
 
 =item B<--git-ref=>I<ref>
 
-Allows specifying a git ref to include in the git bundle.  Use disables the default behavior of including all branches and tags.  May be specified multiple times.  The I<ref> can be the name of a branch or tag to include. It may also be any parameter that can be passed to L<git-rev-list(1)>.  For example, to include only the main branch, use B<--git-ref=>main.  To include all tags and branches, except for the private branch, use B<--git-ref=>--all B<--git-ref=>^private
+Permite especificar um ref de git para incluir no bolo do git. O uso desactiva o comportamento predefinido de incluir todos os ramos e etiquetas. Pode ser especificado várias vezes. O I<ref> pode ser o nome de um ramo ou etiqueta a incluir. Também pode ser qualquer parâmetro que possa ser passado ao L<git-rev-list(1)>. Por exemplo, para incluir apenas o ramo main, use B<--git-ref=>main. Para incluir todos as etiquetas e ramos, excepto para o ramo privado, use B<--git-ref=>--all B<--git-ref=>^private
 
 =item B<--git-depth=>I<number>
 
@@ -496,7 +496,9 @@ Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nati
 
 =item B<SOURCE_DATE_EPOCH>
 
-If set, it will be used as the timestamp (as seconds since the epoch) to clamp the mtime in the L<tar(5)> file entries.
+Se definido, será usado como marca temporal (em segundos desde a época) para engatar o mtime nas entradas do ficheiro L<tar(5)>.
+
+Since dpkg 1.18.11.
 
 =item B<VISUAL>
 

@@ -24,7 +24,7 @@ B<dpkg-divert> [I<option>...] I<command>
 
 B<dpkg-divert> é o utilitário usado para definir e actualizar a lista de desvios.
 
-File I<diversions> are a way of forcing L<dpkg(1)> not to install a file into its location, but to a I<diverted> location.  Diversions can be used through the package maintainer scripts to move a file away when it causes a conflict.  System administrators can also use it to override some package's configuration file, or whenever some files (which aren't marked as “conffiles”) need to be preserved by B<dpkg>, when installing a newer version of a package which contains those files.
+I<diversions> de ficheiros são um modo de forçar o L<dpkg(1)> a não instalar um ficheiro na sua localização, mas numa localização I<desviada>. Estes desvios podem ser usados através dos scripts de maintainer de pacote para afastar um ficheiro quando este causa um conflito. Os administradores de sistemas também o podem usar para sobrepor ficheiros de configuração de alguns pacotes, ou sempre que alguns ficheiros (que não sejam marcados como “conffiles”) precisam de ser conservados pelo B<dpkg>, quando instala uma versão mais recente do pacote que contém esses ficheiros.
 
 =head1 COMANDOS
 
@@ -164,7 +164,7 @@ Quando adiciona, a predefinição é B<--local> e B<--divert> I<original>B<.dist
 
 Os directórios não podem ser desviados com B<dpkg-divert>.
 
-Care should be taken when diverting shared libraries, L<ldconfig(8)> creates a symbolic link based on the DT_SONAME field embedded in the library. Because B<ldconfig> does not honor diverts (only B<dpkg> does), the symlink may end up pointing at the diverted library, if a diverted library has the same SONAME as the undiverted one.
+Deve tomar-se cuidado ao desviar bibliotecas partilhadas, L<ldconfig(8)> cria um link simbólico baseado no campo DT_SONAME embebido na biblioteca. Devido a B<ldconfig> não honrar desvios (apenas B<dpkg> o faz), o link simbólico pode acabar a apontar para a biblioteca desviada, se uma biblioteca desviada tiver o mesmo SONAME que a não desviada.
 
 =head1 EXEMPLOS
 

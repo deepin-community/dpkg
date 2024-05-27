@@ -70,7 +70,7 @@ Os nomes dos campos não são sensíveis a maiúsculas/minúsculas, mas é usual
 
 Separadores de estrofes (linhas vazias) e linhas consistindo apenas de U+0020 B<SPACE> e U+0009 B<TAB>, não são permitidos dentro de valores de campo ou entre campos. Linhas vazias em valores de campo são normalmente escapadas ao representa-las por um U+0020 B<SPACE> seguido de um ponto (U+002E ‘B<.>’).
 
-Lines starting with U+0023 ‘B<#>’, without any preceding whitespace are comments lines that are only permitted in source package control files (I<debian/control>) and in L<deb-origin(5)> files.  These comment lines are ignored, even between two continuation lines.  They do not end logical lines.
+Linhas começadas com U+0023 ‘B<#>’, sem nenhum espaço em branco a preceder são linhas de comentários que são apenas permitidos em ficheiros de controle dos pacotes fonte (I<debian/control>) e em ficheiros L<deb-origin(5)>. Estas linhas de comentários são ignoradas, mesmo entre duas linhas de continuação. Elas não terminam linhas lógicas.
 
 Todos os ficheiros de controle têm de estar codificados em UTF-8.
 

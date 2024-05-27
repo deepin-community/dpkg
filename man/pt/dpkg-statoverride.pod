@@ -22,7 +22,7 @@ B<dpkg-statoverride> [I<option>...] I<command>
 
 =head1 DESCRIÇÃO
 
-“B<stat overrides>” are a way to tell L<dpkg(1)> to use a different owner or mode for a path when a package is installed (this applies to any filesystem object that B<dpkg> handles, including directories, devices, etc.).  This can be used to force programs that are normally setuid to be install without a setuid flag, or only executable by a certain group.
+“B<stat overrides>” são um modo de dizer L<dpkg(1)> para usar um dono ou modo diferente para um caminho quando um pacote é instalado (isto aplica-se a qualquer objecto de sistema de ficheiros com que o B<dpkg> lide, incluindo directórios, dispositivos, etc.). Isto pode ser usado para forçar programas que são normalmente definidos a um uid a serem instalados sem uma bandeira setuid, ou apenas executável por um determinado grupo.
 
 B<dpkg-statoverride> é um utilitário para gerir sobreposições de estatísticas. Tem três funções básicas: adicionar, remover e listar sobreposições.
 

@@ -72,7 +72,7 @@ Inga felmeddelande rapporteras för fält som efterfrågas men inte hittas.
 
 Visar innehåller i filsystemsträdsarkivsdelen av paketarkivet. Det visas för närvarande i det format som genereras av B<tar>s pratsamma visning.
 
-=item B<-x>|B<--extract> I<arkiv> I<katalog>
+=item B<-x>, B<--extract> I<arkiv> I<katalog>
 
 Extraherar filsystemsträdet från ett paketarkiv till den angivna katalogen.
 
@@ -80,7 +80,7 @@ Observera att en extrahering av ett paket till rotkatalogen I<inte> resulterar i
 
 I<katalog> (men inte dess föräldrar) kommer skapas om nödvändigt, och dess behörighet kommer att ändras till att motsvara innehållet i paketet.
 
-=item B<-C>|B<--vextract> I<arkiv> I<katalog>
+=item B<-X>, B<--vextract> I<arkiv> I<katalog>
 
 Är som B<--extract> (B<-x>) med B<--verbose> (B<-v>) som visar en lista över filer som extraheras under tiden.
 
@@ -223,6 +223,8 @@ Om satt kommer B<dpkg-deb> att använda det som katalogen där temporära filer 
 =item B<SOURCE_DATE_EPOCH>
 
 Om satt kommer det användas som tidsstämpel (som sekunder sedan epoken) i L<deb(5)>:s L<ar(5)>-behållare och användas för att tvinga mtime i L<tar(5)>-filposterna.
+
+Since dpkg 1.18.8.
 
 =back
 

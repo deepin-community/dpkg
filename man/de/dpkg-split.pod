@@ -176,6 +176,8 @@ Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte sind: B
 
 Falls gesetzt, wird sie als Zeitstempel (als Sekunden seit der Epoche) in dem L<ar(5)>-Container von L<deb-split(5)> verwandt.
 
+Seit Dpkg 1.18.11.
+
 =back
 
 =head1 DATEIEN

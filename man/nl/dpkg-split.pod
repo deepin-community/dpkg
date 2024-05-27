@@ -176,6 +176,8 @@ Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen
 
 Indien dit ingesteld werd, zal het gebruikt worden als de tijdsaanduiding (timestamp) (in seconden sinds de epoch) in de L<ar(5)>-container van L<deb-split(5)>.
 
+Since dpkg 1.18.11.
+
 =back
 
 =head1 BESTANDEN

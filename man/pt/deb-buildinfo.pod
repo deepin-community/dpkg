@@ -68,7 +68,7 @@ Este campo separado por espaços lista as arquitecturas de todos os ficheiros ac
 
 =item B<Version:>I< string-de-versão> (obrigatório)
 
-Typically, this is the original package's version number in whatever form the program's author uses.  It may also include a Debian revision number (for non-native packages).  The exact format and sorting algorithm are described in L<deb-version(7)>.
+Tipicamente, isto é o número de versão do pacote original seja em que formato o autor do programa usa. Pode também incluir um número de revisão Debian (para pacotes não-nativos). O formato exacto e algoritmo de ordenação estão descritos em L<deb-version(7)>.
 
 =item B<Binary-Only-Changes:>
 
@@ -100,7 +100,7 @@ A arquitectura Debian para a instalação dos pacotes que estão a ser compilado
 
 =item B<Build-Date:> I<build-date>
 
-The date the package was built.  It must be in the same format as the date in a L<deb-changelog(5)> entry.
+A data em que o pacote foi compilado. Tem de estar no mesmo formato que a data duma entrada L<deb-changelog(5)>.
 
 =item B<Build-Kernel-Version:> I<build-kernel-version>
 

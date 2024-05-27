@@ -176,6 +176,8 @@ Väljer färgläge (sedan dpkg 1.18.5). För närvarande godtas följande värde
 
 Om satt kommer det användas som tidsstämpel (som sekunder sedan epoken) i L<deb-split(5)>:s L<ar(5)>-behållare.
 
+Since dpkg 1.18.11.
+
 =back
 
 =head1 FILER

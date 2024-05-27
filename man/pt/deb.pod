@@ -24,7 +24,7 @@ I<filename>B<.deb>
 
 O formato B<.deb> é o formato de ficheiro de pacote binários Debian. É compreendido deste o dpkg 0.93.76, e é gerado por predefinição desde o dpkg 1.2.0 e 1.1.1elf (i386/compilações ELF).
 
-The format described here is used since Debian 0.93; details of the old format are described in L<deb-old(5)>.
+O formato descrito aqui é usado desde Debian 0.93; detalhes do formato antigo estão descritos em L<deb-old(5)>.
 
 =head1 FORMATO
 

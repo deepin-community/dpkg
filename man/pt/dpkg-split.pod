@@ -174,7 +174,9 @@ Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B
 
 =item B<SOURCE_DATE_EPOCH>
 
-If set, it will be used as the timestamp (as seconds since the epoch) in the L<deb-split(5)>'s L<ar(5)> container.
+Se definido, irá ser usado como marca temporal (como segundos desde a época) no contentor L<ar(5)> de L<deb-split(5)>.
+
+Since dpkg 1.18.11.
 
 =back
 
