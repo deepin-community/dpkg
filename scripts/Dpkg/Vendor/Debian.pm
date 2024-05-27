@@ -117,7 +117,7 @@ sub set_build_features {
             time64 => undef,
         },
         qa => {
-            bug => undef,
+            bug => 0,
             'bug-implicit-func' => undef,
             canary => 0,
         },
@@ -297,6 +297,10 @@ sub set_build_features {
     if ($use_feature{abi}{time64} && ! $builtin_feature{abi}{time64}) {
         # On glibc 64-bit time_t support requires LFS.
         $use_feature{abi}{lfs} = 1 if $libc eq 'gnu';
+
+        # Require -Werror=implicit-function-declaration, to avoid linking
+        # against the wrong symbol.
+        $use_feature{qa}{'bug-implicit-func'} = 1;
     }
 
     # XXX: Handle lfs alias from future abi feature area.
@@ -307,14 +311,7 @@ sub set_build_features {
 
     ## Area: qa
 
-    # For time64 we require -Werror=implicit-function-declaration, to avoid
-    # linking against the wrong symbol. Instead of enabling this conditionally
-    # on time64 being enabled, do it unconditionally so that the effects are
-    # uniform and visible on all architectures. Unless it has been set
-    # explicitly.
-    $use_feature{qa}{'bug-implicit-func'} //= $use_feature{qa}{bug} // 1;
-
-    $use_feature{qa}{bug} //= 0;
+    $use_feature{qa}{'bug-implicit-func'} //= $use_feature{qa}{bug};
 
     ## Area: reproducible
 

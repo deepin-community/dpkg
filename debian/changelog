@@ -1,3 +1,12 @@
+dpkg (1.22.6deepin2) unstable; urgency=medium
+
+  * Revert qa bug-implicit-func changes in 1.22.6.
+   * Perl modules:
+    - Dpkg::Vendor::Debian: Make it possible to disable qa=-bug-implicit-func.
+    - Dpkg::Vendor::Debian: Unconditionally set qa bug-implicit-func.
+
+ -- Tianyu Chen <sweetyfish@deepin.org>  Mon, 27 May 2024 11:28:48 +0800
+
 dpkg (1.22.6deepin1) unstable; urgency=medium
 
   * Add Dpkg::Vendor::Deepin.
