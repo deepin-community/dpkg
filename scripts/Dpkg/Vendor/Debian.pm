@@ -443,6 +443,19 @@ sub add_build_flags {
         $default_d_flags = '-fdebug';
     } else {
         $default_d_flags = '-frelease';
+        # loong64: Enable 128-bit vector extension.
+        # As noted in Loongson's "Software Development and Build Convention
+        # for LoongArch Architectures," section 7.3:
+        #
+        # "Vector instruction support: Desktop and server chips default to
+        # supporting 128-bit vector instructions."
+        #
+        # Ref: https://github.com/loongson/la-softdev-convention/blob/master/la-softdev-convention.adoc#vector-instruction-support
+        require Dpkg::Arch;
+        my $arch = Dpkg::Arch::get_host_arch();
+        if ($arch eq 'loong64') {
+            $default_flags = "$default_flags -mlsx";
+        }
     }
 
     $flags->append($_, $default_flags) foreach @compile_flags;
