@@ -1,3 +1,9 @@
+dpkg (1.22.6deepin3) unstable; urgency=medium
+
+  * Enable LSX (128-bit vector extension) optimisation for loong64.
+
+ -- Mingcong Bai <baimingcong@uniontech.com>  Tue, 28 May 2024 10:30:26 +0800
+
 dpkg (1.22.6deepin2) unstable; urgency=medium
 
   * Revert qa bug-implicit-func changes in 1.22.6.
