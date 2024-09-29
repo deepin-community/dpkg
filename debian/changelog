@@ -1,3 +1,9 @@
+dpkg (1.22.6deepin4) unstable; urgency=medium
+
+  * support immutable.
+
+ -- xinpeng.wang <wangxinpeng@uniontech.com>  Sun, 29 Sep 2024 16:26:37 +0800
+
 dpkg (1.22.6deepin3) unstable; urgency=medium
 
   * Enable LSX (128-bit vector extension) optimisation for loong64.

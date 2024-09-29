@@ -1,7 +1,9 @@
 debian/dpkg.cfg etc/dpkg
+debian/dpkg-immutable.cfg usr/share/dpkg/
 
 etc/dpkg/dpkg.cfg.d
 etc/alternatives
+usr/bin/dpkg.real
 usr/bin/dpkg
 usr/bin/dpkg-deb
 usr/bin/dpkg-divert

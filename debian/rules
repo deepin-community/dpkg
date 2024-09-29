@@ -60,6 +60,11 @@ override_dh_auto_configure:
 		--with-libbz2 \
 		# EOL
 
+override_dh_install:
+	mv $(D)/usr/bin/dpkg $(D)/usr/bin/dpkg.real
+	install -m 755 debian/dpkg-immutable.sh $(D)/usr/bin/dpkg
+	dh_install
+
 execute_after_dh_auto_install:
 	# Special-case the lintian profile, as dh cannot rename on install.
 	mkdir -p $(D)/usr/share/lintian/profiles/dpkg
