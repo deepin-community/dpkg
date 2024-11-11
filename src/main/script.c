@@ -47,6 +47,10 @@
 
 #include "main.h"
 
+#define MAX_LINE_LENGTH 1024
+#define SKIP_CONFIG_FILE "/etc/dpkg/skip-postinst.conf"
+
+
 void
 post_postinst_tasks(struct pkginfo *pkg, enum pkgstatus new_status)
 {
@@ -271,12 +275,50 @@ maintscript_installed(struct pkginfo *pkg, const char *scriptname,
 	return rc;
 }
 
+static bool
+should_skip_postinst(const char *pkgname)
+{
+        FILE *fp;
+        char line[MAX_LINE_LENGTH];
+        bool should_skip = false;
+
+        fp = fopen(SKIP_CONFIG_FILE, "r");
+        if (fp == NULL) {
+                debug(dbg_scripts, "skip config file not found: %s", SKIP_CONFIG_FILE);
+                return false;
+        }
+
+        while (fgets(line, sizeof(line), fp)) {
+                // Remove trailing newline
+                char *newline = strchr(line, '\n');
+                if (newline)
+                        *newline = '\0';
+
+                // Skip empty lines and comments
+                if (line[0] == '\0' || line[0] == '#')
+                        continue;
+
+                if (strcmp(line, pkgname) == 0) {
+                        should_skip = true;
+                        break;
+                }
+        }
+
+        fclose(fp);
+        return should_skip;
+}
+
+
 int
 maintscript_postinst(struct pkginfo *pkg, ...)
 {
 	va_list args;
 	int rc;
-
+	if (should_skip_postinst(pkg->set->name)) {
+			debug(dbg_scripts, "skipping post-installation script for %s (configured in %s)",
+				pkg->set->name, SKIP_CONFIG_FILE);
+			return 0;
+	}
 	va_start(args, pkg);
 	rc = vmaintscript_installed(pkg, POSTINSTFILE, "post-installation", args);
 	va_end(args);

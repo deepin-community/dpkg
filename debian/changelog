@@ -1,3 +1,10 @@
+dpkg (1.22.6deepin4) unstable; urgency=medium
+
+  * Supports specifying software packages to skip postinst script
+    installation.
+
+ -- lichenggang <lichenggang@deepin.org>  Mon, 11 Nov 2024 19:52:16 +0800
+
 dpkg (1.22.6deepin3) unstable; urgency=medium
 
   * Enable LSX (128-bit vector extension) optimisation for loong64.
