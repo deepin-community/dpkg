@@ -8,6 +8,7 @@ WFLAGS := \
 	-Wno-missing-field-initializers \
 	-Wno-nonnull-compare \
 	-Wno-unused-parameter \
+	-fPIC \
 	# EOL
 
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
