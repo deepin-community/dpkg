@@ -1,3 +1,9 @@
+dpkg (1.22.6deepin4) unstable; urgency=medium
+
+  * fix: add -fPIC cflags.
+
+ -- lichenggang <lichenggang@deepin.org>  Mon, 17 Feb 2025 16:08:36 +0800
+
 dpkg (1.22.6deepin3) unstable; urgency=medium
 
   * Enable LSX (128-bit vector extension) optimisation for loong64.
