@@ -1,3 +1,9 @@
+dpkg (1.22.6deepin5) unstable; urgency=medium
+
+  * feat: add sw64 support.
+
+ -- hudeng <hudeng@deepin.org>  Thu, 29 May 2025 13:48:38 +0800
+
 dpkg (1.22.6deepin4) unstable; urgency=medium
 
   * fix: add -fPIC cflags.
