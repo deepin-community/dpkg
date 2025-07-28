@@ -146,6 +146,8 @@ dpkg_arch_find(const char *name)
 	for (arch = arch_head; arch; arch = arch->next) {
 		if (strcmp(arch->name, name) == 0)
 			return arch;
+		if (strcmp(arch->name, "loong64") == 0 && strcmp(name, "loongarch64") == 0)
+			return arch;
 		last_arch = arch;
 	}
 
