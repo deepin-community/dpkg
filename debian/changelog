@@ -1,3 +1,10 @@
+dpkg (1.22.6deepin7) unstable; urgency=medium
+
+  * fix openbuildservice scripts/t/Dpkg_Arch.t test failed.
+  * KNOWN_ARCHES_TOTAL 206 > 211.
+
+ -- lichenggang <lichenggang@deepin.org>  Mon, 28 Jul 2025 17:13:53 +0800
+
 dpkg (1.22.6deepin6) unstable; urgency=medium
 
   * Revert 'fix: add -fPIC cflags.'

@@ -358,13 +358,13 @@ sub set_build_features {
 
     # Mask features that are not available on certain architectures.
     if (none { $os eq $_ } qw(linux kfreebsd hurd) or
-        any { $cpu eq $_ } qw(alpha hppa ia64)) {
+        any { $cpu eq $_ } qw(alpha hppa ia64 sw64)) {
 	# Disabled on non-(linux/kfreebsd/hurd).
-        # Disabled on alpha, hppa, ia64.
+        # Disabled on alpha, hppa, ia64 sw64.
 	$use_feature{hardening}{pie} = 0;
     }
-    if (any { $cpu eq $_ } qw(ia64 alpha hppa nios2) or $arch eq 'arm') {
-	# Stack protector disabled on ia64, alpha, hppa, nios2.
+    if (any { $cpu eq $_ } qw(ia64 alpha hppa nios2 sw64) or $arch eq 'arm') {
+	# Stack protector disabled on ia64, alpha, hppa, nios2 sw64.
 	#   "warning: -fstack-protector not supported for this target"
 	# Stack protector disabled on arm (ok on armel).
 	#   compiler supports it incorrectly (leads to SEGV)
