@@ -1,3 +1,9 @@
+dpkg (1.22.6deepin6) unstable; urgency=medium
+
+  * Revert 'fix: add -fPIC cflags.'
+
+ -- Tianyu Chen <sweetyfish@deepin.org>  Mon, 28 Jul 2025 16:48:01 +0800
+
 dpkg (1.22.6deepin5) unstable; urgency=medium
 
   * feat: add sw64 support.
