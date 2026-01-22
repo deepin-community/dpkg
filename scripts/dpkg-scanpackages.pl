@@ -17,8 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use warnings;
-use strict;
+use v5.36;
 
 use Getopt::Long qw(:config posix_default bundling_values no_ignorecase);
 use List::Util qw(none);
@@ -34,7 +33,7 @@ use Dpkg::Compression::FileHandle;
 
 textdomain('dpkg-dev');
 
-# Do not pollute STDOUT with info messages
+# Do not pollute STDOUT with info messages.
 report_options(info_fh => \*STDERR);
 
 my (@samemaint, @changedmaint);
@@ -45,8 +44,14 @@ my %overridden;
 my @checksums;
 
 my %options = (
-    help            => sub { usage(); exit 0; },
-    version         => sub { version(); exit 0; },
+    help            => sub {
+        usage();
+        exit 0;
+    },
+    version         => sub {
+        version();
+        exit 0;
+    },
     type            => undef,
     arch            => undef,
     hash            => undef,
@@ -90,44 +95,46 @@ Options:
 sub load_override
 {
     my $override = shift;
-    my $comp_file = Dpkg::Compression::FileHandle->new(filename => $override);
+    my $comp_file = Dpkg::Compression::FileHandle->new(
+        filename => $override,
+    );
 
     while (<$comp_file>) {
-	s/\#.*//;
-	s/\s+$//;
-	next unless $_;
+        s/\#.*//;
+        s/\s+$//;
+        next unless $_;
 
-	my ($p, $priority, $section, $maintainer) = split(/\s+/, $_, 4);
+        my ($p, $priority, $section, $maintainer) = split(/\s+/, $_, 4);
 
-	if (not defined($packages{$p})) {
-	    push(@spuriousover, $p);
-	    next;
-	}
+        if (not defined($packages{$p})) {
+            push(@spuriousover, $p);
+            next;
+        }
 
-	for my $package (@{$packages{$p}}) {
-	    if ($maintainer) {
-		if ($maintainer =~ m/(.+?)\s*=\>\s*(.+)/) {
-		    my $oldmaint = $1;
-		    my $newmaint = $2;
-		    my $debmaint = $$package{Maintainer};
-		    if (none { $debmaint eq $_ } split m{\s*//\s*}, $oldmaint) {
-			push(@changedmaint,
-			     sprintf(g_('  %s (package says %s, not %s)'),
-			             $p, $$package{Maintainer}, $oldmaint));
-		    } else {
-			$$package{Maintainer} = $newmaint;
-		    }
-		} elsif ($$package{Maintainer} eq $maintainer) {
-		    push(@samemaint, "  $p ($maintainer)");
-		} else {
-		    warning(g_('unconditional maintainer override for %s'), $p);
-		    $$package{Maintainer} = $maintainer;
-		}
-	    }
-	    $$package{Priority} = $priority;
-	    $$package{Section} = $section;
-	}
-	$overridden{$p} = 1;
+        for my $package (@{$packages{$p}}) {
+            if ($maintainer) {
+                if ($maintainer =~ m/(.+?)\s*=\>\s*(.+)/) {
+                    my $oldmaint = $1;
+                    my $newmaint = $2;
+                    my $debmaint = $$package{Maintainer};
+                    if (none { $debmaint eq $_ } split m{\s*//\s*}, $oldmaint) {
+                        push(@changedmaint,
+                             sprintf(g_('  %s (package says %s, not %s)'),
+                                     $p, $$package{Maintainer}, $oldmaint));
+                    } else {
+                        $$package{Maintainer} = $newmaint;
+                    }
+                } elsif ($$package{Maintainer} eq $maintainer) {
+                    push(@samemaint, "  $p ($maintainer)");
+                } else {
+                    warning(g_('unconditional maintainer override for %s'), $p);
+                    $$package{Maintainer} = $maintainer;
+                }
+            }
+            $$package{Priority} = $priority;
+            $$package{Section} = $section;
+        }
+        $overridden{$p} = 1;
     }
 
     close($comp_file);
@@ -136,20 +143,22 @@ sub load_override
 sub load_override_extra
 {
     my $extra_override = shift;
-    my $comp_file = Dpkg::Compression::FileHandle->new(filename => $extra_override);
+    my $comp_file = Dpkg::Compression::FileHandle->new(
+        filename => $extra_override,
+    );
 
     while (<$comp_file>) {
-	s/\#.*//;
-	s/\s+$//;
-	next unless $_;
+        s/\#.*//;
+        s/\s+$//;
+        next unless $_;
 
-	my ($p, $field, $value) = split(/\s+/, $_, 3);
+        my ($p, $field, $value) = split(/\s+/, $_, 3);
 
-	next unless defined($packages{$p});
+        next unless defined($packages{$p});
 
-	for my $package (@{$packages{$p}}) {
-	    $$package{$field} = $value;
-	}
+        for my $package (@{$packages{$p}}) {
+            $$package{$field} = $value;
+        }
     }
 
     close($comp_file);
@@ -163,7 +172,7 @@ sub process_deb {
     open my $output_fh, '-|', 'dpkg-deb', '-I', $fn, 'control'
         or syserr(g_('cannot fork for %s'), 'dpkg-deb');
     $fields->parse($output_fh, $fn)
-        or error(g_("couldn't parse control information from %s"), $fn);
+        or error(g_('cannot parse control information from %s'), $fn);
     close $output_fh;
     if ($?) {
         warning(g_("'dpkg-deb -I %s control' exited with %d, skipping package"),
@@ -253,11 +262,14 @@ if ($options{arch}) {
     $find_filter = qr/\.$type$/;
 }
 my @archives;
-my $scan_archives = sub {
-    push @archives, $File::Find::name if m/$find_filter/;
+my $scan_archives = {
+    wanted => sub {
+        push @archives, $File::Find::name if m/$find_filter/;
+    },
+    follow => 1,
+    follow_skip => 2,
 };
-
-find({ follow => 1, follow_skip => 2, wanted => $scan_archives}, $binarypath);
+find($scan_archives, $binarypath);
 foreach my $fn (@archives) {
     process_deb($pathprefix, $fn);
 }
@@ -273,11 +285,11 @@ for my $p (sort keys %packages) {
         push @missingover, $p;
     }
     for my $package (sort { $a->{Version} cmp $b->{Version} } @{$packages{$p}}) {
-         print("$package\n") or syserr(g_('failed when writing stdout'));
-         $records_written++;
+        print("$package\n") or syserr(g_('failed when writing stdout'));
+        $records_written++;
     }
 }
-close(STDOUT) or syserr(g_("couldn't close stdout"));
+close(STDOUT) or syserr(g_('cannot close stdout'));
 
 if (@multi_instances) {
     warning(g_('Packages with multiple instances but no --multiversion specified:'));

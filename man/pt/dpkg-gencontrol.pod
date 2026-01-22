@@ -104,6 +104,10 @@ Mostra a versão e termina.
 
 =over 
 
+=item B<DEB_HOST_ARCH>
+
+Define a arquitectura da máquina anfitriã.
+
 =item B<DPKG_COLORS>
 
 Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B<auto> (predefinido), B<always> e B<never>.
@@ -120,7 +124,7 @@ Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nati
 
 =item B<debian/control>
 
-O ficheiro de informação de controle de fonte principal, que fornece informação independente da versão acerca do pacote fonte e dos pacotes binários que pode gerar.
+The source package template control file, giving version-independent information about the source package and the binary packages it can produce.
 
 =item B<debian/files>
 

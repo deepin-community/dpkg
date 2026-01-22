@@ -13,30 +13,40 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use strict;
-use warnings;
+use v5.36;
 
 use Test::More;
 use Test::Dpkg qw(:needs);
 
+use Config;
+
 test_needs_command('c++filt');
 
-plan tests => 124;
+if (! defined $Config{bin_ELF} || $Config{bin_ELF} ne 'define') {
+    plan skip_all => 'only ELF is currently supported';
+}
+plan tests => 154;
 
 use_ok('Dpkg::Shlibs::Cppfilt');
 
-# Simple C++ demangling tests
-is ( cppfilt_demangle_cpp('_ZNSt10istrstreamC1EPKcl'),
-                  'std::istrstream::istrstream(char const*, long)',
-    'demangle symbol' );
-is ( cppfilt_demangle_cpp('_ZNSt10istrstreamC1EPKcl@Base'),
-                  'std::istrstream::istrstream(char const*, long)@Base',
-    'demangle symbol with extra postfix' );
-is ( cppfilt_demangle_cpp('foobar _ZNSt10istrstreamC1EPKcl@Base'),
-                  'foobar std::istrstream::istrstream(char const*, long)@Base',
-    'demangle symbol with garbage around it' );
-is ( cppfilt_demangle_cpp('FoobarInvalidSymbol'), undef,
-    'non-demanglable string' );
+# Simple C++ demangling tests.
+is(cppfilt_demangle_cpp('_ZNSt10istrstreamC1EPKcl'),
+    'std::istrstream::istrstream(char const*, long)',
+    'demangle symbol');
+is(cppfilt_demangle_cpp('_ZNSt10istrstreamC1EPKcl@Base'),
+    'std::istrstream::istrstream(char const*, long)@Base',
+    'demangle symbol with extra postfix');
+is(cppfilt_demangle_cpp('foobar _ZNSt10istrstreamC1EPKcl@Base'),
+    'foobar std::istrstream::istrstream(char const*, long)@Base',
+    'demangle symbol with garbage around it');
+is(cppfilt_demangle_cpp('_ZN13AngleBracketsrSEi'),
+    'AngleBrackets::operator>>=(int)',
+    'demangle symbol exempt from normalized angle brackets');
+is(cppfilt_demangle_cpp('_ZN13AngleBracketsrSIfEEvT_'),
+    'void AngleBrackets::operator>>=<float>(float)',
+    'demangle template symbol exempt from normalized angle brackets');
+is(cppfilt_demangle_cpp('FoobarInvalidSymbol'), undef,
+    'non-demanglable string');
 
 # Mass C++ demangling. Checking if c++filt does not hang and cppfilt_demangle()
 # immediately provides a correct answer to the caller (i.e. no buffering).
@@ -59,6 +69,11 @@ my @mangledtext = split(/\n+/s, <<'END');
 00000000000bff30 g    DF .text  0000000000000019  _ZNSt18condition_variable10notify_oneEv@GLIBCXX_3.4.11
 00000000000666a0 g    DF .text  000000000000003f  _ZNKSt3tr14hashIRKSbIwSt11char_traitsIwESaIwEEEclES6_@GLIBCXX_3.4.10
 00000000002f6160  w   DO .data.rel.ro   0000000000000050  _ZTTSt18basic_stringstreamIcSt11char_traitsIcESaIcEE@GLIBCXX_3.4
+
+0000000000001170 g    DF .text  0000000000000001  _ZN13AngleBracketsrSEi
+0000000000001190 g    DF .text  0000000000000001  _ZN13AngleBracketsrSIfEEvT_
+0000000000001180 g    DF .text  0000000000000001  _ZN13AngleBracketsrsIfEEvT_
+0000000000001160 g    DF .text  0000000000000001  _ZN13AngleBracketsrsEi
 END
 
 my @demangledtext = split(/\n+/s, <<'END');
@@ -80,11 +95,16 @@ my @demangledtext = split(/\n+/s, <<'END');
 00000000000bff30 g    DF .text  0000000000000019  std::condition_variable::notify_one()@GLIBCXX_3.4.11
 00000000000666a0 g    DF .text  000000000000003f  std::tr1::hash<std::basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > const&>::operator()(std::basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > const&) const@GLIBCXX_3.4.10
 00000000002f6160  w   DO .data.rel.ro   0000000000000050  VTT for std::basic_stringstream<char, std::char_traits<char>, std::allocator<char> >@GLIBCXX_3.4
+
+0000000000001170 g    DF .text  0000000000000001  AngleBrackets::operator>>=(int)
+0000000000001190 g    DF .text  0000000000000001  void AngleBrackets::operator>>=<float>(float)
+0000000000001180 g    DF .text  0000000000000001  void AngleBrackets::operator>><float>(float)
+0000000000001160 g    DF .text  0000000000000001  AngleBrackets::operator>>(int)
 END
 
 for my $try (1 .. 7) {
     for my $i (0 .. $#mangledtext) {
-	my $demangled = cppfilt_demangle_cpp($mangledtext[$i]) || $mangledtext[$i];
-	is($demangled, $demangledtext[$i], "mass c++ demangling (${try}x" . (${i} + 1) . ')');
+        my $demangled = cppfilt_demangle_cpp($mangledtext[$i]) || $mangledtext[$i];
+        is($demangled, $demangledtext[$i], "mass c++ demangling (${try}x" . (${i} + 1) . ')');
     }
 }

@@ -1,6 +1,8 @@
 # dpkg manual page - deb-control(5)
 #
-# Copyright © 1995 Raul Miller, Ian Jackson, Ian Murdock
+# Copyright © 1995 Raul Miller
+# Copyright © 1995 Ian Jackson
+# Copyright © 1995 Ian Murdock
 # Copyright © 1999 Ben Collins <bcollins@debian.org>
 # Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
 # Copyright © 2007-2011, 2013-2015 Guillem Jover <guillem@debian.org>
@@ -76,6 +78,11 @@ The exact format and sorting algorithm
 are described in
 L<deb-version(7)>.
 
+B<Note>: On some vendors,
+dpkg has been made to permit native sources with non-native versions,
+making this incoherent and adding to the confusion of the concept,
+where in addition this tends to be a trap for accidental mistakes.
+
 =item B<Maintainer:> I<fullname-email> (recommended)
 
 Should be in the format “Joe Bloggs E<lt>jbloggs@foo.comE<gt>”, and is typically
@@ -100,22 +107,15 @@ software that it installs.
 Some common sections are B<utils>, B<net>, B<mail>, B<text>,
 B<x11>, etc.
 
+The accepted values are based on the specific distribution policy.
+
 =item B<Priority:> I<priority>
 
 Sets the importance of this package in relation to the system as a whole.
-Common priorities are B<required>, B<standard>, B<optional>,
-B<extra>, etc.
+The known priorities are B<required>, B<important>, B<standard>, B<optional>,
+B<extra>, and B<unknown>, but other values can be used as well.
 
-=back
-
-The
-B<Section>
-and
-B<Priority>
-fields usually have a defined set of accepted values based on the specific
-distribution policy.
-
-=over
+How to apply these values depends on the specific distribution policy.
 
 =item B<Installed-Size:> I<size>
 
@@ -147,16 +147,19 @@ This field is usually only needed when the answer is B<yes>, and is
 commonly injected by the archive software.
 It denotes a package that is required when building other packages.
 
-=item B<Architecture:> I<arch>|B<all> (required)
+=item B<Architecture:> B<all>|I<arch> (required)
 
-The architecture specifies which type of hardware this package was compiled
-for.
+The architecture specifies on which type of machine this package runs.
+
 Common architectures are B<amd64>, B<armel>, B<i386>, B<powerpc>,
 etc.
-Note that the
-B<all>
-value is meant for packages that are architecture independent.
-Some examples of this are shell and Perl scripts, and documentation.
+Note that the special B<all> value is meant for packages that are
+architecture independent (such as shell and Perl scripts or documentation).
+
+B<Note:> Architecture wildcards are not allowed in this context.
+
+An architecture name must start with an alphanumeric character (“0-9a-zA-Z”),
+and then gets followed by alphanumeric and dash (‘-’) characters.
 
 =item B<Origin:> I<name>
 
@@ -449,16 +452,19 @@ The format or the way to compute each build-id is not defined by design.
 =head1 EXAMPLE
 
  Package: grep
+ Version: 3.11-3
  Essential: yes
  Priority: required
- Section: base
- Maintainer: Wichert Akkerman <wakkerma@debian.org>
+ Section: utils
+ Maintainer: Anibal Monsalve Salazar <anibal@debian.org>
  Architecture: sparc
- Version: 2.4-1
- Pre-Depends: libc6 (>= 2.0.105)
+ Multi-Arch: foreign
+ Pre-Depends: libc6 (>= 2.34), libpcre2-8-0 (>= 10.32)
  Provides: rgrep
  Conflicts: rgrep
- Description: GNU grep, egrep and fgrep.
+ Installed-Size. 1267
+ Homepage: https://www.gnu.org/software/grep/
+ Description: GNU grep, egrep and fgrep
   The GNU family of grep utilities may be the "fastest grep in the west".
   GNU grep is based on a fast lazy-state deterministic matcher (about
   twice as fast as stock Unix egrep) hybridized with a Boyer-Moore-Gosper

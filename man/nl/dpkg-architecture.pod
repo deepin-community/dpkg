@@ -132,19 +132,31 @@ De machine waarvoor het pakket gebouwd wordt.
 
 =item doelmachine
 
-De machine waarvoor de compiler bouwt of waar de emulator code voor zal uitvoeren. Dit is enkel nodig bij het bouwen van een kruisgereedschapsketen (cross-toolchain) (of emulator), een die gebouwd zal worden op de bouwarchitectuur om uitgevoerd te worden op de hostarchitectuur en code moet bouwen (of geëmuleerd moet uitvoeren) voor de doelarchitectuur.
+De machine waarvoor de compiler bouwt of waar de emulator code voor zal uitvoeren. Dit is enkel nodig bij het bouwen van een kruisgereedschapsketen (cross-toolchain) (of emulator), een die gebouwd zal worden op de bouwarchitectuur om uitgevoerd te worden op de hostarchitectuur en die zelf code zal bouwen (of geëmuleerd zal uitvoeren) voor de doelarchitectuur.
 
 =item Debian-architectuur
 
-De tekenreeks waarmee de Debian-architectuur aangeduid wordt en die ook de boomstructuur met de binaire pakketten in het FTP-archief specificeert. Voorbeelden: i386, sparc, hurd-i386.
+A Debian architecture describes a “machine” (considering it as an abstraction not necessarily tied to an actual physical device)  representing a specific execution environment, including its CPU and attributes (such as endianness and bits), an operating system (usually a kernel, but other paradigms using userland services are possible) and its interfaces towards userland including the executable format and their ABI, and a libc library and its ABI.
+
+The special architecture B<all> denotes an architecture independent execution environment, used for things such as shell and Perl scripts or documentation.
+
+A Debian architecture is used in binary package metadata and filenames (which specifies the binary tree in a package repository), and can appear in package relationships.
+
+An architecture must start with an alphanumeric character (“0-9a-zA-Z”), and then gets followed by alphanumeric or dash (“-”) characters.
+
+Examples: amd64, i386, sparc64, hurd-amd64, musl-linux-riscv64.
 
 =item Debian-architectuurtupel
 
-Een Debian-architectuurtupel is de volledige unieke architectuurnaam met de expliciete  vermelding van alle componenten. Dit verschilt minstens daarin van een Debian architectuur dat de component I<cpu> niet de I<abi> impliceert. Het huidige tupel heeft als vorm I<abi>-I<libc>-I<os>-I<cpu>. Voorbeelden: base-gnu-linux-amd64, eabihf-musl-linux-arm.
+Een Debian-architectuurtupel is de volledige unieke architectuurnaam met de expliciete  vermelding van alle componenten. Dit verschilt minstens daarin van een Debian architectuur dat de component I<cpu> niet de I<abi> impliceert. Het huidige tupel heeft als vorm I<abi>-I<libc>-I<os>-I<cpu>.
+
+ Voorbeelden: base-gnu-linux-amd64, eabihf-musl-linux-arm.
 
 =item Debian-architectuurjokerteken
 
-Een Debian-architectuurjokerteken is een speciale architectuurtekenreeks die een overeenkomst oplevert met elke echte architectuur die er onder hoort. De algemene vorm is een Debian-architectuurtupel met vier of minder elementen en waarvan er minstens een B<any> is. Ontbrekende elementen van de tupel worden impliciet als B<any> voorgevoegd, en dus zijn de volgende koppels equivalent:
+A Debian architecture wildcard is a special architecture that acts as a pattern and will match any ”machine” architecture being part of it (except for B<all>).
+
+The general form is a Debian architecture tuple with four or less elements, and with at least one of them being B<any>.  Missing elements of the tuple are prefixed implicitly as B<any>, and thus the following pairs are equivalent:
 
 =over 
 
@@ -160,11 +172,17 @@ Voorbeelden: linux-any, any-i386, hurd-any, eabi-any-any-arm, musl-any-any.
 
 =item GNU-systeemtype
 
-Een tekenreeks die een architectuurspecificatie inhoudt en bestaat uit twee delen met daartussen een koppelteken: cpu en systeem. Voorbeelden: i586-linux-gnu, sparc-linux-gnu, i686-gnu, x86_64-netbsd.
+A GNU architecture specification string consisting of two parts separated by a hyphen: CPU and system.
+
+Het CPU gedeelte bevat nooit een koppelteken, terwijl het systeemgedeelte zelf een koppelteken kan bevatten om een kernel te scheiden van de algemene ABI, waarbij de algemene ABI zowel runtime (zoals libc) als uitvoerbare ABI-specificaties kan bevatten die zonder koppelteken zijn samengevoegd.
+
+Examples: i586-linux-gnu, sparc64-linux-gnu, i686-gnu, x86_64-netbsd.
 
 =item multiarch-triplet
 
-Het uitgezuiverde GNU-systeemtype dat voor bestandssysteempaden gebruikt wordt. Dit triplet verandert zelfs niet wanneer het referentie-ISA verhoogd wordt, waardoor de resulterende paden stabiel blijven door de tijd. Het enige verschil met het GNU-systeemtype is momenteel dat voor op i386 gebaseerde systemen het CPU-gedeelte steeds i386 is. Voorbeelden: i386-linux-gnu, x86_64-linux-gnu. Voorbeelden van paden: /lib/powerpc64le-linux-gnu/, /usr/lib/i386-kfreebsd-gnu/.
+Het uitgezuiverde GNU-systeemtype dat voor bestandssysteempaden gebruikt wordt. Dit triplet verandert zelfs niet wanneer het referentie-ISA verhoogd wordt, waardoor de resulterende paden stabiel blijven door de tijd. Het enige verschil met het GNU-systeemtype is momenteel dat voor op i386 gebaseerde systemen het CPU-gedeelte steeds i386 is.
+
+Examples: i386-linux-gnu, x86_64-linux-gnu.  Example paths: /lib/powerpc64le-linux-gnu/, /usr/lib/i386-gnu/.
 
 =back
 
@@ -177,6 +195,8 @@ De volgende variabelen worden gelezen uit de omgeving (tenzij B<--force> werd op
 =item B<DEB_BUILD_ARCH>
 
 De Debian architectuur van de bouwmachine.
+
+B<Opmerking>: Als u geen gereedschappen bouwt die tijdens de bouw moeten worden uitgevoerd, zijn dit waarschijnlijk niet de variabelen die u zoekt. Zie sectie L</TERMS> voor de betekenis van deze termen.
 
 =item B<DEB_BUILD_ARCH_ABI>
 
@@ -265,6 +285,8 @@ Het uitgezuiverde GNU-systeemtype van de hostmachine, dat gebruikt wordt voor be
 =item B<DEB_TARGET_ARCH>
 
 De Debian architectuur van de doelmachine (sinds dpkg 1.17.14).
+
+B<Opmerking>: Als u geen cross-gereedschapssets bouwt (of emulators), zijn dit waarschijnlijk niet de variabelen die u zoekt. Zie sectie L</TERMS> voor de betekenissen van deze termen.
 
 =item B<DEB_TARGET_ARCH_ABI>
 
@@ -360,9 +382,9 @@ Verifiëren of de huidige of opgegeven hostarchitectuur gelijk is aan een archit
 
 =over 
 
- dpkg-architecture -elinux-alpha
+ dpkg-architecture -elinux-arm64
 
- dpkg-architecture -amips -elinux-mips
+ dpkg-architecture -ariscv64 -elinux-riscv64
 
 =back
 
@@ -372,7 +394,7 @@ Verifiëren of de huidige of opgegeven hostarchitectuur een Linux-systeem is:
 
  dpkg-architecture -ilinux-any
 
- dpkg-architecture -ai386 -ilinux-any
+ dpkg-architecture -aamd64 -ilinux-any
 
 =back
 
@@ -404,7 +426,7 @@ Iets enkel voor een specifieke architectuur doen:
 
  DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 
- ifeq ($(DEB_HOST_ARCH),alpha)
+ ifeq ($(DEB_HOST_ARCH),arm64)
    [...]
  endif
 
@@ -418,7 +440,7 @@ Merk op dat u ook kunt betrouwen op een extern Makefile-fragment om al de variab
 
  include %PKGDATADIR%/architecture.mk
 
- ifeq ($(DEB_HOST_ARCH),alpha)
+ ifeq ($(DEB_HOST_ARCH),arm64)
    [...]
  endif
 

@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use strict;
-use warnings;
+use v5.36;
 
 use Dpkg ();
 use Dpkg::Gettext;
@@ -79,12 +78,12 @@ while (@ARGV) {
 
 usageerr(g_('need an action option')) unless defined($action);
 
-# Uses $ENV{DEB_VENDOR} if set
+# Uses $ENV{DEB_VENDOR} if set.
 $vendor //= get_current_vendor();
 
 my $info = get_vendor_info($vendor);
 unless (defined($info)) {
-    error(g_("vendor %s doesn't exist in %s"), $vendor || 'default',
+    error(g_('vendor %s does not exist in %s'), $vendor || 'default',
           get_vendor_dir());
 }
 

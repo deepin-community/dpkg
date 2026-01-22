@@ -24,7 +24,7 @@ B<debian/control>
 
 Varje Debiankällkodspaket innehåller mallstyrfilen ”B<debian/control>”, och dess L<deb822(5)>-format är en övermängd av B<control>-filen som medföljer Debianbinärpaket, se B<deb-control>(5).
 
-Filen innehåller åtminstone två stycken, avdelade med en tomrad. Det första stycket kallas källkodspaketstycket och innehåller all generell information om källkodspaketet, medan de följande styckena kallas binärpaketstycken och beskriver exakt ett binärpaket per stycke. Varje stycke består av åtminstone ett fält. Ett fält inleds med ett fältnamn, till exempel B<Package> eller B<Section> (skiftlägesokänsligt), följt av ett kolon, fältinnehållet (skiftlägekänsligt om inte annat anges) och ett nyradstecken. Flerradiga fält är också tillåtna, men varje ytterligare rad som inte innehåller ett fältnamn, bör starta med minst ett blanksteg. Innehållet i flerradsfält slås normalt samman till en enda rad av verktygen (förutom i fallet fältet B<Description>, se nedan). För att sätta in tomma rader i ett flerradsfält, skriver du en punkt efter blanksteget. Rader som börjar med ett ”B<#>” tolkas som kommentarer.
+Filen innehåller åtminstone två stycken, avdelade med en tomrad. Det första stycket kallas källkodspaketstycket och innehåller all generell information om källkodspaketet, medan de följande styckena kallas binärpaketstycken och beskriver exakt ett binärpaket per stycke. Varje stycke består av åtminstone ett fält. Ett fält inleds med ett fältnamn, till exempel B<Package> eller B<Section> (skiftlägesokänsligt), följt av ett kolon, fältinnehållet (skiftlägekänsligt om inte annat anges) och ett nyradstecken. Flerradiga fält är också tillåtna, men varje ytterligare rad som inte innehåller ett fältnamn, måste starta med minst ett blanksteg. Innehållet i flerradsfält slås normalt samman till en enda rad av verktygen (förutom i fallet fältet B<Description>, se nedan). För att sätta in tomma rader i ett flerradsfält, skriver du en punkt efter blanksteget. Rader som börjar med ett ”B<#>” tolkas som kommentarer.
 
 =head1 KÄLLKODSFÄLT
 
@@ -60,6 +60,12 @@ URL till uppströmsprojektets hemsida.
 
 I<Url>:en till felrapporteringssystemet för detta paket. Det nuvarande formatet är I<systemtyp>://I<address>, till exempel B<debbugs://bugs.debian.org>. Det här fältet är normalt sett inte nödvändigt.
 
+=item B<Build-Driver:> I<drivrutinsnamn>
+
+Det här experimentella fältet anger namnet på byggdrivrutinen som används för att bygga paketet. Om det inte anges är standardvärdet för I<driver-name> B<debian-rules>.
+
+Fältet stöds sedan dpkg 1.22.7.
+
 =item B<Rules-Requires-Root:> B<no>|B<binary-targets>|I<impl-nyckelord>
 
 Det här fältet används för att ange om filen B<debian/rules> kräver (fake)root-privilegier för att köra några av sina mål, och i så fall när.
@@ -68,11 +74,11 @@ Det här fältet används för att ange om filen B<debian/rules> kräver (fake)r
 
 =item B<no> (nej)
 
-Binärmålen kommer inte kräva (fake)root överhuvudtaget. Detta är förval om B<dpkg-build-api>-nivån är ≥ 1.
+Binärmålen kommer inte kräva (fake)root överhuvudtaget. Detta är förval om B<dpkg-build-api>-nivån är ≥ 1, eller sedan dpkg 1.22.13.
 
 =item B<binary-targets>
 
-Binärmålen måste alltid köras under (fake)root. Detta är förvalet i B<dpkg-build-api>-nivå 0, om fältet inte anges; även om det inte är strikt nödvändigt att lägga till fältet med värdet B<binary-targets> så anger det att paketet har analyserats för det här kravet.
+Binärmålen måste alltid köras under (fake)root. Detta är förvalet i B<dpkg-build-api>-nivå 0 till och med dpkg 1.22.13, om fältet inte anges; även om det inte är strikt nödvändigt att lägga till fältet med värdet B<binary-targets> så anger det att paketet har analyserats för det här kravet.
 
 =item I<impl-nyckelord>
 
@@ -122,11 +128,17 @@ Namnet på den distribution paketet härstammar från. Det här fältet är norm
 
 Detta är ett generellt fält som ger paketet en kategori baserat på programvara som det installerar. Några vanliga sektioner är B<utils>, B<net>, B<mail>, B<text>, B<x11>, osv.
 
+Om det utelämnas sätts I<section> till förvalet B<unknown> (sedan dpkg 1.22.13).
+
+Godtagna värden baseras på den specifika distributionens policy.
+
 =item B<Priority:> I<prioritet>
 
-Ställer in hur viktigt paketet är jämfört med systemet som helhet. Vanliga prioriteter är B<required> (nödvändig), B<standard> (normal), B<optional> (valfritt), B<extra> (extra), osv.
+Ställer in hur viktigt paketet är jämfört med systemet som helhet. Kända prioriteter är B<required> (nödvändig), B<important> (viktig), B<standard> (normal), B<optional> (valfritt), B<extra> (extra), och B<unknown> (okänd), men andra värden kan också användas.
 
-Gälten B<Section> och B<Priority> har vanligtvis en definierad uppsättning accepterade värden baserade på den specifika distributionens policy.
+Om det utelämnas sätts I<priority> till förvalet B<optional> (sedan dpkg 1.22.13).
+
+Hur dessa värden ska användas beror på den specifika distributionens policy.
 
 =item B<Build-Depends:> I<paketlista>
 
@@ -162,15 +174,13 @@ Ett arkitekturkvalificeringsnamn kan vara ett existerande Debianarkitekturnamn (
 
 Ett versionsnummer kan börja med ”B<E<gt>E<gt>>”, vilket betyder att vilken som helst senare version matchar, där det är valfritt att ange Debianuppdateringen (avdelad med bindestreck).  Tillåtna versionrelationer är ”B<E<gt>E<gt>>” för större än, ”B<E<lt>E<lt>>” för mindre än, ”B<E<gt>=>” för större än eller lika med, ”B<E<lt>=>” för mindre än eller lika med, och ”B<=>” för lika med.
 
-En arkitekturangivelse består av ett eller flera arkitekturnamn, avdelade med blanktecken. Varje namn kan föregås av ett utropstecken, vilket betyder ”ICKE”.
+An architecture specification consists of one or more architecture names, separated by whitespace.  Exclamation marks (B<!>) may be prepended to each of the names, meaning “NOT”.
 
-En begränsningsformel består av en eller flera begränsningslistor, avdelade med blanksteg. Varje begränsningslista skrivs inom vinkelparenteser. Poster i begränsningslistan är namn på byggprofiler, avdelade av blanksteg och kan föregås av ett utropstecken, vilket betyder ”ICKE”. En begränsningsformel representerar ett uttryck i disjunktiv normalform.
+A restriction formula consists of one or more restriction lists, separated by whitespace.  Each restriction list is enclosed in angle brackets (B<E<lt>> and B<E<gt>>).  Items in the restriction list are build profile names, separated by whitespace and can be prefixed with an exclamation mark (B<!>), meaning “NOT”.  A restriction formula represents a disjunctive normal form expression, that is whitespace inside enclosed angle brackets is read as “AND”, and whitespace between enclosing angle brackets is read as “OR“, such as “B<E<lt>>foo AND barB<E<gt>> OR B<E<lt>>quux AND bazB<E<gt>>”.
 
 Observera att beroenden på paket i B<build-essential>-uppsättningen kan utelämnas och att det är omöjligt att deklarera byggkonflikter mot dem. En lista över dessa paket finns i paketet build-essential.
 
 =head1 BINÄRFÄLT
-
-Observera att fälten B<Priority>, B<Section> och B<Homepage> även kan användas i de stycken som beskriver binärpaket för att överstyra de globala värdena för källkodspaketet.
 
 =over 
 
@@ -182,9 +192,15 @@ Detta fält används för att namnge det binära paketet. Samma begränsningar g
 
 Detta fält anger paketets typ. B<udeb> används för storleksbegränsade paket som används av debians installationsprogram. B<deb> är standardvärdet, och antas om fältet saknas. Fler typer kan komma att läggas till i framtiden.
 
-=item B<Architecture:> I<ark>|B<all>|B<any> (krävs)
+=item B<Architecture:> I<ark-lista> (krävs)
 
-Arkitekturen anger på vilken typ av maskinvara paketet körs. För paket som körs på alla arkitekturer används värdet B<any> (någon). För paket som är arkitekturoberoende, som skal- och Perlskript eller dokumentation, används värdet B<all> (alla). För att begränsa paket till en specifik uppsättning arkitekturer, anger du namnen på arkitekturerna avdelade med blanksteg. Det är även möjligt att ange arkitekturer med jokertecken i listan (se L<dpkg-architecture(1)> för mer information om dessa).
+The architecture list specifies on which type of machine this package runs. The value should be a list of architecture names and/or wildcards separated by spaces.
+
+The special B<all> value, by itself, is meant for packages that are architecture independent (such as shell and Perl scripts or documentation), the special B<any> wildcard value, by itself, is meant for packages that are architecture dependent but run on all architectures (which matches on all specific architecture names, excluding B<all>).  Most packages will use either B<all> or B<any>.  To restrict the packages to a certain set of architectures, specify one or more architecture names and/or architecture wildcards, separated by spaces.
+
+An architecture name or wildcard must start with an alphanumeric character (“0-9a-zA-Z”), and then gets followed by alphanumeric and dash (”-”) characters.
+
+For more information about architecture names and wildcards, see L<dpkg-architecture(1)>.
 
 =item B<Build-Profiles:> I<begränsningsformel>
 
@@ -207,6 +223,22 @@ Med andra ord, om ett stycke för ett binärpaket är försett med ett icke-tomt
 =item B<Description:> I<kort-beskrivning> (rekommenderas)
 
 Dessa fält beskrivs i manualsidan L<deb-control(5)>, eftersom de kopieras ordagrant till binärpaketets styrfil.
+
+=item B<Section:> I<sektion>
+
+Overrides the value from the same field in the source package stanza.
+
+If there is no field in the binary or source stanza, then the it defaults to B<unknown> (since dpkg 1.22.13).
+
+=item B<Priority:> I<prioritet>
+
+Overrides the value from the same field in the source package stanza.
+
+If there is no field in the binary or source stanza, then the it defaults to B<optional> (since dpkg 1.22.13).
+
+=item B<Homepage:> I<url>
+
+Overrides the value from the same field in the source package stanza.
 
 =item B<Depends:> I<paketlista>
 
@@ -252,13 +284,19 @@ Det är tillåtet att lägga till ytterligare användardefinierade fält till st
 
 Fältet kommer tas med i styrfilen för källkodspaket, se L<dsc(5)>.
 
+Only expected in the source package stanza.
+
 =item B<B>
 
 Fältet kommer tas med i styrfilen för binärpaketet, se L<deb-control(5)>.
 
+Allowed in the source package stanza or any binary package stanza.
+
 =item B<C>
 
 Fältet kommer tas med i styrfilen för insändningen (.changes), se L<deb-changes(5)>.
+
+Only expected in the source package stanza.
 
 =back
 
@@ -268,32 +306,53 @@ Tänk på att dess användardefinierade fält använder den globala namnrymden, 
 
 =head1 EXEMPEL
 
- # Kommentar
+ # Comment.
  Source: dpkg
  Section: admin
  Priority: required
  Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
- # det här fältet kopieras till binär- och källkodspaketen
+ # This field is copied to the binary and source packages.
  XBS-Upstream-Release-Status: stable
  Homepage: https://wiki.debian.org/Teams/Dpkg
  Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
  Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git
- Standards-Version: 3.7.3
- Build-Depends: pkgconf, debhelper (>= 4.1.81),
-  libselinux1-dev (>= 1.28-4) [!linux-any]
+ Standards-Version: 4.7.2
+ Build-Depends:
+  dpkg-build-api (= 1),
+  debhelper-compat (= 13),
+  debhelper (>= 13.10~),
+  pkgconf,
+  libselinux1-dev (>= 1.28-4) [!linux-any],
 
  Package: dpkg-dev
  Section: utils
  Priority: optional
  Architecture: all
- # det här är ett skräddarsytt fält i binärpaketet
+ # This is a custom field in the binary package.
  XB-Mentoring-Contact: Raphael Hertzog <hertzog@debian.org>
- Depends: dpkg (>= 1.14.6), perl5, perl-modules, cpio (>= 2.4.2-2),
-  bzip2, lzma, patch (>= 2.2-1), make, binutils, libtimedate-perl
- Recommends: gcc | c-compiler, build-essential
- Suggests: gnupg, debian-keyring
- Conflicts: dpkg-cross (<< 2.0.0), devscripts (<< 2.10.26)
- Replaces: manpages-pl (<= 20051117-1)
+ Depends:
+  libdpkg-perl (= ${source:Version}),
+  dpkg (>= 1.14.6),
+  binutils,
+  bzip2,
+  xz-utils,
+ # This is a comment in the middle of a field value.
+  make,
+  patch (>= 2.2-1),
+  perl-modules,
+  perl5,
+ Recommends:
+  build-essential,
+  gcc | c-compiler,
+ Suggests:
+  debian-keyring,
+ Conflicts:
+  devscripts (<< 2.10.26),
+ Replaces:
+  manpages-pl (<= 20051117-1),
+ Provides:
+  dpkg-build-api (= 0),
+  dpkg-build-api (= 1),
  Description: Debian package development tools
   This package provides the development tools (including dpkg-source)
   required to unpack, build and upload Debian source packages.

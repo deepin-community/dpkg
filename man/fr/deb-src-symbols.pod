@@ -42,7 +42,7 @@ L'indication de l'étiquette vient juste avant le nom du symbole (sans espace). 
   espaces"@Base 1.0 (optional) symbole_non_protégé@Base 1.0 1
   symbole_non_étiqueté@Base 1.0
 
-Le premier symbole de cet exemple est appelé I<symbole comportant des espaces> et utilise deux S<étiquettes :> I<étiq1> avec la valeur I<je suis marqué> et I<étiquette avec espace> sans valeur. Le deuxième symbole, appelé I<symbole_non_protégé> ne comporte que l'étiquette I<optional>. Le dernier symbole est un exemple de symbole normal sans étiquette.
+Le premier symbole de cet exemple est appelé I<symbole comportant des espaces> et utilise deux étiquettes : I<étiq1> avec la valeur I<je suis marqué> et I<étiquette avec espace> sans valeur. Le deuxième symbole, appelé I<symbole_non_protégé> ne comporte que l'étiquette I<optional>. Le dernier symbole est un exemple de symbole normal sans étiquette.
 
 Since symbol tags are an extension of the L<deb-symbols(5)> format, they can only be part of the symbols files used in source packages (those files should then be seen as templates used to build the symbols files that are embedded in binary packages).  When B<dpkg-gensymbols> is called without the B<-t> option, it will output symbols files compatible to the L<deb-symbols(5)> format: it fully processes symbols according to the requirements of their standard tags and strips all tags from the output.  On the contrary, in template mode (B<-t>) all symbols and their tags (both standard and unknown ones)  are kept in the output and are written in their original form as they were loaded.
 
@@ -62,15 +62,15 @@ Cette étiquette est utile pour les symboles qui sont privés, car leur disparit
 
 =item B<arch-endian=>I<boutisme-d'architecture>
 
-Ces étiquettes permettent de restreindre la liste des architectures avec lesquelles le symbole est censé exister. Les étiquettes B<arch-bits> et B<arch-endian> sont prises en charge depuis S<dpkg 1.18.0.> Lorsque la liste des symboles est mise à jour avec ceux découverts dans la bibliothèque, tous les symboles spécifiques d'architectures qui ne concernent pas l'architecture en cours sont ignorés. Si un symbole propre à l'architecture en cours n'existe pas dans la bibliothèque, les processus normaux pour des symboles manquants s'appliquent jusqu'à éventuellement provoquer l'échec de B<dpkg-gensymbols>. D'un autre côté, si le symbole propre à une architecture est trouvé alors qu'il n'est pas censé exister (parce que l'architecture courante n'est pas mentionnée dans l'étiquette ou ne correspond pas au boutisme et aux octets), il est rendu indépendant de l'architecture (c'est-à-dire que les étiquettes d'architecture, d'octets de l'architecture et de boutisme d'architecture sont abandonnées et le symbole apparaît dans le fichier de différences) mais non considéré comme nouveau. S<(NdT :> une aspirine peut être nécessaire après la lecture de ce paragraphe)
+Ces étiquettes permettent de restreindre la liste des architectures avec lesquelles le symbole est censé exister. Les étiquettes B<arch-bits> et B<arch-endian> sont prises en charge depuis dpkg 1.18.0. Lorsque la liste des symboles est mise à jour avec ceux découverts dans la bibliothèque, tous les symboles spécifiques d'architectures qui ne concernent pas l'architecture en cours sont ignorés. Si un symbole propre à l'architecture en cours n'existe pas dans la bibliothèque, les processus normaux pour des symboles manquants s'appliquent jusqu'à éventuellement provoquer l'échec de B<dpkg-gensymbols>. D'un autre côté, si le symbole propre à une architecture est trouvé alors qu'il n'est pas censé exister (parce que l'architecture courante n'est pas mentionnée dans l'étiquette ou ne correspond pas au boutisme et aux octets), il est rendu indépendant de l'architecture (c'est-à-dire que les étiquettes d'architecture, d'octets de l'architecture et de boutisme d'architecture sont abandonnées et le symbole apparaît dans le fichier de différences) mais non considéré comme nouveau. (NdT : une aspirine peut être nécessaire après la lecture de ce paragraphe)
 
-Dans le mode de fonctionnement par défaut (pas en mode S<« modèle »),> seuls les symboles spécifiques de certaines architectures qui correspondent à l'architecture courante sont écrits dans le fichier de symboles. Au contraire, tous les symboles spécifiques d'architectures (y compris ceux des architectures différentes) seront écrits dans le fichier de symboles, dans le mode S<« modèle ».>
+Dans le mode de fonctionnement par défaut (pas en mode « modèle »), seuls les symboles spécifiques de certaines architectures qui correspondent à l'architecture courante sont écrits dans le fichier de symboles. Au contraire, tous les symboles spécifiques d'architectures (y compris ceux des architectures différentes) seront écrits dans le fichier de symboles, dans le mode « modèle ».
 
-Le format de I<liste-d'architectures> est le même que le format utilisé dans les champs B<Build-Depends> des fichiers I<debian/control> (à l'exception des crochets d'inclusion []). Par exemple, le premier symbole de la liste qui suit sera pris en compte sur les architectures alpha, n'importe quelle amd64 et ia64, le second uniquement sur les architectures linux et le troisième partout sauf sur armel.
+The format of I<architecture-list> is the same as the one used in the B<Build-Depends> field of I<debian/control> (except the enclosing square brackets []).  For example, the first symbol from the list below will be considered only on arm64, any-amd64 and riscv64 architectures, the second only on linux architectures, while the third one anywhere except on armel.
 
-  (arch=alpha any-amd64 ia64)un_symbole_spécifique_64bit@Base 1.0
-  (arch=linux-any)un_symbole_spécifique_linux@Base 1.0
-  (arch=!armel)un_symbole_inexistant_sur_armel@Base 1.0
+  (arch=arm64 any-amd64 riscv64)arch_specific_symbol@Base 1.0
+  (arch=linux-any)linux_specific_symbol@Base 1.0
+  (arch=!armel)symbol_armel_does_not_have@Base 1.0
 
 Les I<octets-architecture> sont soit B<32> soit B<64>.
 
@@ -88,11 +88,7 @@ Plusieurs restrictions peuvent être chaînées.
 
 =item B<allow-internal>
 
-B<dpkg-gensymbols> comporte une liste de symboles internes qui ne devraient pas apparaître dans les fichiers de symboles, car ils sont en général uniquement des effets de bord de détails de mise en œuvre de la chaîne d'outils de construction (depuis S<dpkg 1.20.1).> Si, pour une raison précise, vous voulez vraiment inclure un de ces symboles dans le fichier, vous pouvez imposer qu'il soit ignoré, avec B<allow-internal>. Cela peut être utile pour certaines bibliothèques de bas niveau telles que B<libgcc>.
-
-=item B<ignore-blacklist>
-
-Un alias obsolète pour B<allow-internal> (depuis S<dpkg 1.20.1,> pris en charge depuis S<dpkg 1.15.3).>
+B<dpkg-gensymbols> comporte une liste de symboles internes qui ne devraient pas apparaître dans les fichiers de symboles, car ils sont en général uniquement des effets de bord de détails de mise en œuvre de la chaîne d'outils de construction (depuis dpkg 1.20.1). Si, pour une raison précise, vous voulez vraiment inclure un de ces symboles dans le fichier, vous pouvez imposer qu'il soit ignoré, avec B<allow-internal>. Cela peut être utile pour certaines bibliothèques de bas niveau telles que B<libgcc>.
 
 =item B<c++>
 
@@ -116,7 +112,7 @@ A pattern is considered lost if it does not match any symbol in the library.  By
 
 Patterns are an extension of the L<deb-symbols(5)> format hence they are only valid in symbol file templates.  Pattern specification syntax is not any different from the one of a specific symbol.  However, symbol name part of the specification serves as an expression to be matched against I<name@version> of the real symbol.  In order to distinguish among different pattern types, a pattern will typically be tagged with a special tag.
 
-Actuellement, B<dpkg-gensymbols> gère trois types de base de S<motifs :>
+Actuellement, B<dpkg-gensymbols> gère trois types de base de motifs :
 
 =over 
 
@@ -129,15 +125,15 @@ This pattern is denoted by the I<c++> tag.  It matches only C++ symbols by their
   (c++)"non-virtual thunk to NSB::ClassD::~ClassD()@Base" 1.0
   [...]
 
-Le nom non décoré ci-dessus peut être obtenu avec la commande S<suivante :>
+Le nom non décoré ci-dessus peut être obtenu avec la commande suivante :
 
   $ echo '_ZThn8_N3NSB6ClassDD1Ev@Base' | c++filt
 
-Veuillez noter que, bien que le nom décoré soit unique dans la bibliothèque par définition, cela n'est pas forcément vrai pour le nom non décoré. Deux symboles réels différents peuvent avoir le même nom non décoré. C'est par exemple le cas avec les symboles S<« thunk »> non virtuels dans des configurations d'héritage complexes ou avec la plupart des constructeurs et destructeurs (puisque g++ crée usuellement deux symboles réels pour eux). Cependant, comme ces collisions se produisent au niveau de l'interface applicative binaire (ABI), elles ne devraient pas dégrader la qualité du fichier de symboles.
+Veuillez noter que, bien que le nom décoré soit unique dans la bibliothèque par définition, cela n'est pas forcément vrai pour le nom non décoré. Deux symboles réels différents peuvent avoir le même nom non décoré. C'est par exemple le cas avec les symboles « thunk » non virtuels dans des configurations d'héritage complexes ou avec la plupart des constructeurs et destructeurs (puisque g++ crée usuellement deux symboles réels pour eux). Cependant, comme ces collisions se produisent au niveau de l'interface applicative binaire (ABI), elles ne devraient pas dégrader la qualité du fichier de symboles.
 
 =item B<symver>
 
-Ce motif est indiqué par l'étiquette I<symver>. Les bibliothèques bien gérées utilisent des symboles versionnés où chaque version correspond à la version amont à laquelle le symbole a été ajouté. Si c'est le cas, il est possible d'utiliser un motif I<symver> pour faire correspondre chaque symbole associé à la version spécifique. Par S<exemple :>
+Ce motif est indiqué par l'étiquette I<symver>. Les bibliothèques bien gérées utilisent des symboles versionnés où chaque version correspond à la version amont à laquelle le symbole a été ajouté. Si c'est le cas, il est possible d'utiliser un motif I<symver> pour faire correspondre chaque symbole associé à la version spécifique. Par exemple :
 
  libc.so.6 libc6 #MINVER#
   (symver)GLIBC_2.0 2.0
@@ -145,61 +141,61 @@ Ce motif est indiqué par l'étiquette I<symver>. Les bibliothèques bien géré
   (symver)GLIBC_2.7 2.7
   access@GLIBC_2.0 2.2
 
-Tous les symboles associés avec les versions GLIBC_2.0 et GLIBC_2.7 conduiront respectivement à des versions minimales de 2.0 et 2.7, à l'exception du symbole access@GLIBC_2.0. Ce dernier amène à une dépendance minimale sur la S<version 2.2> de libc6 bien qu'il soit dans le scope de S<« (symvar)GLIBC_2.0 ».> Cela est dû au fait que les symboles spécifiques prennent le pas sur les motifs.
+Tous les symboles associés avec les versions GLIBC_2.0 et GLIBC_2.7 conduiront respectivement à des versions minimales de 2.0 et 2.7, à l'exception du symbole access@GLIBC_2.0. Ce dernier amène à une dépendance minimale sur la version 2.2 de libc6 bien qu'il soit dans le scope de « (symvar)GLIBC_2.0 ». Cela est dû au fait que les symboles spécifiques prennent le pas sur les motifs.
 
 Please note that while old style wildcard patterns (denoted by "*@version" in the symbol name field) are still supported, they have been deprecated by new style syntax "(symver|optional)version".  For example, "*@GLIBC_2.0 2.0" should be written as "(symver|optional)GLIBC_2.0 2.0" if the same behavior is needed.
 
 =item B<regex>
 
-Les motifs d'expressions rationnelles sont indiqués par l'étiquette I<expression-rationnelle>. La correspondance se fait avec une expression rationnelle Perl sur le champ de nom de symbole. La correspondance est faite telle quelle et il ne faut donc pas oublier le caractère I<^>, sinon la correspondance est faite sur n'importe quelle partie du symbole réel I<name@version>. Par S<exemple :>
+Les motifs d'expressions rationnelles sont indiqués par l'étiquette I<expression-rationnelle>. La correspondance se fait avec une expression rationnelle Perl sur le champ de nom de symbole. La correspondance est faite telle quelle et il ne faut donc pas oublier le caractère I<^>, sinon la correspondance est faite sur n'importe quelle partie du symbole réel I<name@version>. Par exemple :
 
  libdummy.so.1 libdummy1 #MINVER#
   (regex)"^mystack_.*@Base$" 1.0
   (regex|optional)"private" 1.0
 
-Les symboles tels que S<« mystack_new@Base »,> S<« mystack_push@Base »,> S<« mystack_pop@Base »,> etc., seront en correspondance avec le premier motif alors que S<« ng_mystack_new@Base »> ne le sera pas. Le deuxième motif correspondra pour tous les symboles qui comportent la chaîne S<« private »> dans leur nom et les correspondances hériteront de l'étiquette I<optional> depuis le motif.
+Les symboles tels que « mystack_new@Base », « mystack_push@Base », « mystack_pop@Base », etc., seront en correspondance avec le premier motif alors que « ng_mystack_new@Base » ne le sera pas. Le deuxième motif correspondra pour tous les symboles qui comportent la chaîne « private » dans leur nom et les correspondances hériteront de l'étiquette I<optional> depuis le motif.
 
 =back
 
-Les motifs de base indiqués précédemment peuvent être combinés au besoin. Dans ce cas, ils sont traités dans l'ordre où les étiquettes sont indiquées. Par exemple, les deux S<motifs :>
+Les motifs de base indiqués précédemment peuvent être combinés au besoin. Dans ce cas, ils sont traités dans l'ordre où les étiquettes sont indiquées. Par exemple, les deux motifs :
 
   (c++|regex)"^NSA::ClassA::Private::privmethod\d\(int\)@Base" 1.0
   (regex|c++)N3NSA6ClassA7Private11privmethod\dEi@Base 1.0
 
-seront en correspondance avec les symboles S<« _ZN3NSA6ClassA7Private11privmethod1Ei@Base" »> et S<« _ZN3NSA6ClassA7Private11privmethod2Ei@Base ».> Lors de la correspondance avec le premier motif, le symbole brut est d'abord rétabli d’origine en tant que symbole C++, puis comparé à l'expression rationnelle. D'un autre côté, lors de la correspondance avec le deuxième motif, l'expression rationnelle est comparée au nom de symbole brut, puis le symbole est testé en tant que symbole C++ en tentant de le rétablir d’origine. L'échec de n'importe quel motif basique provoquera l'échec de l'ensemble du motif. Ainsi, par exemple, S<« __N3NSA6ClassA7Private11privmethod\dEi@Base »> ne correspondra à aucun des motifs, car ce n'est pas un symbole C++ valable S<(NdT :> j'ai l'impression de traduire du Klingon !).
+seront en correspondance avec les symboles « _ZN3NSA6ClassA7Private11privmethod1Ei@Base" » et « _ZN3NSA6ClassA7Private11privmethod2Ei@Base ». Lors de la correspondance avec le premier motif, le symbole brut est d'abord rétabli d’origine en tant que symbole C++, puis comparé à l'expression rationnelle. D'un autre côté, lors de la correspondance avec le deuxième motif, l'expression rationnelle est comparée au nom de symbole brut, puis le symbole est testé en tant que symbole C++ en tentant de le rétablir d’origine. L'échec de n'importe quel motif basique provoquera l'échec de l'ensemble du motif. Ainsi, par exemple, « __N3NSA6ClassA7Private11privmethod\dEi@Base » ne correspondra à aucun des motifs, car ce n'est pas un symbole C++ valable (NdT : j'ai l'impression de traduire du Klingon !).
 
-En général, les motifs sont divisés en deux S<groupes :> les alias (I<c++> et I<symver> basique) et les motifs génériques (I<expression-rationnelle> et toutes les combinaisons de motifs basiques multiples). La correspondance de motifs basés sur des alias est rapide (O(1)) alors que les motifs génériques sont O(N) (N étant le nombre de motifs génériques) pour chaque symbole. En conséquence, il est déconseillé d'abuser des motifs génériques.
+En général, les motifs sont divisés en deux groupes : les alias (I<c++> et I<symver> basique) et les motifs génériques (I<expression-rationnelle> et toutes les combinaisons de motifs basiques multiples). La correspondance de motifs basés sur des alias est rapide (O(1)) alors que les motifs génériques sont O(N) (N étant le nombre de motifs génériques) pour chaque symbole. En conséquence, il est déconseillé d'abuser des motifs génériques.
 
 Lorsque plusieurs motifs correspondent pour le même symbole réel, les alias (d'abord I<c++>, puis I<symver>) sont privilégiés par rapport aux motifs génériques. Ceux-ci sont essayés dans l'ordre où ils apparaissent dans le modèle de fichier de symboles, en s'arrêtant à la première correspondance. Veuillez noter, cependant, que la modification manuelle de l'ordre des entrées de fichiers n'est pas recommandée, car B<dpkg-gensymbols> crée des fichiers de différences d'après l'ordre alphanumérique de leur nom.
 
 =head2 Utilisation des inclusions
 
-Lorsqu'un jeu de symboles exportés varie selon les architectures, il est souvent peu efficace d'utiliser un seul fichier de symboles. Pour couvrir ces cas, une directive d'inclusion peut devenir utile dans certains S<cas :>
+Lorsqu'un jeu de symboles exportés varie selon les architectures, il est souvent peu efficace d'utiliser un seul fichier de symboles. Pour couvrir ces cas, une directive d'inclusion peut devenir utile dans certains cas :
 
 =over 
 
 =item *
 
-Il est possible de factoriser la partie commune dans un fichier externe donné et l'inclure dans le fichier I<paquet>.symbols.I<arch> avec une directive S<« include »> utilisée de la manière S<suivante :>
+Il est possible de factoriser la partie commune dans un fichier externe donné et l'inclure dans le fichier I<paquet>.symbols.I<arch> avec une directive « include » utilisée de la manière suivante :
 
  #include "I<paquets>.symbols.common"
 =item *
 
-La directive d'inclusion peut également être étiquetée comme tout autre S<symbole :>
+La directive d'inclusion peut également être étiquetée comme tout autre symbole :
 
  (étiquette|...|étiquetteN)#include "fichier_à_inclure"
-Le résultat sera que tous les symboles inclus depuis I<fichier_à_inclure> seront considérés comme étiquetés par défaut avec I<etiq> ... I<etiqN>. Cela permet de créer un fichier I<paquet>.symbols commun qui inclut les fichiers de symboles spécifiques des S<architectures :>
+Le résultat sera que tous les symboles inclus depuis I<fichier_à_inclure> seront considérés comme étiquetés par défaut avec I<etiq> ... I<etiqN>. Cela permet de créer un fichier I<paquet>.symbols commun qui inclut les fichiers de symboles spécifiques des architectures :
 
   common_symbol1@Base 1.0
- (arch=amd64 ia64 alpha)#include "package.symbols.64-bit"
- (arch=!amd64 !ia64 !alpha)#include "package.symbols.32-bit"
+ (arch-bits=64)#include "package.symbols.64-bit"
+ (arch-bits=32)#include "package.symbols.32-bit"
   common_symbol2@Base 1.0
 
 =back
 
 Les fichiers de symboles sont lus ligne par ligne et les directives d'inclusion sont traitées dès qu'elles sont trouvées. En conséquence, le contenu du fichier d'inclusion peut remplacer une définition qui précède l'inclusion et ce qui suit l'inclusion peut remplacer une définition qu'elle ajoutait. Tout symbole (ou même une autre directive d'inclusion) dans le fichier inclus peut définir des étiquettes supplémentaires ou remplacer les valeurs d'étiquettes héritées, dans sa définition d'étiquettes. Cependant, pour un symbole donné, il n'existe pas de méthode permettant de remplacer une de ses étiquettes héritées.
 
-Un fichier inclus peut reprendre la ligne d'en-tête qui contient le S<« SONAME »> de la bibliothèque. Dans ce cas, cela remplace toute ligne d'en-tête précédente. Il est cependant déconseillé de dupliquer les lignes d'en-tête. Une façon de le faire est la méthode S<suivante :>
+Un fichier inclus peut reprendre la ligne d'en-tête qui contient le « SONAME » de la bibliothèque. Dans ce cas, cela remplace toute ligne d'en-tête précédente. Il est cependant déconseillé de dupliquer les lignes d'en-tête. Une façon de le faire est la méthode suivante :
 
  #include "libmachin1.symbols.common"
   symboles_specifique_architecture@Base 1.0

@@ -26,7 +26,7 @@
 #include <sys/stat.h>
 
 #include <errno.h>
-#if HAVE_LOCALE_H
+#ifdef HAVE_LOCALE_H
 #include <locale.h>
 #endif
 #include <string.h>
@@ -45,6 +45,7 @@
 #include <dpkg/path.h>
 #include <dpkg/dir.h>
 #include <dpkg/glob.h>
+#include <dpkg/sysuser.h>
 #include <dpkg/db-fsys.h>
 #include <dpkg/options.h>
 
@@ -175,10 +176,10 @@ statdb_node_apply(const char *filename, struct file_stat *filestat)
 
 	rc = chown(filename, filestat->uid, filestat->gid);
 	if (forcible_nonroot_error(rc) < 0)
-		ohshite(_("error setting ownership of '%.255s'"), filename);
+		ohshite(_("error setting ownership of '%s'"), filename);
 	rc = chmod(filename, filestat->mode & ~S_IFMT);
 	if (forcible_nonroot_error(rc) < 0)
-		ohshite(_("error setting permissions of '%.255s'"), filename);
+		ohshite(_("error setting permissions of '%s'"), filename);
 
 	dpkg_selabel_load();
 	dpkg_selabel_set_context(filename, filename, filestat->mode);
@@ -195,7 +196,7 @@ statdb_node_print(FILE *out, struct fsys_namenode *file)
 	if (!filestat)
 		return;
 
-	pw = getpwuid(filestat->uid);
+	pw = dpkg_sysuser_from_uid(filestat->uid);
 	if (pw)
 		fprintf(out, "%s ", pw->pw_name);
 	else if (filestat->uname)
@@ -203,7 +204,7 @@ statdb_node_print(FILE *out, struct fsys_namenode *file)
 	else
 		fprintf(out, "#%d ", filestat->uid);
 
-	gr = getgrgid(filestat->gid);
+	gr = dpkg_sysgroup_from_gid(filestat->gid);
 	if (gr)
 		fprintf(out, "%s ", gr->gr_name);
 	else if (filestat->gname)
@@ -280,14 +281,13 @@ statoverride_add(const char *const *argv)
 
 		varbuf_add_str(&realfilename, dpkg_fsys_get_dir());
 		varbuf_add_str(&realfilename, filename);
-		varbuf_end_str(&realfilename);
 
-		if (stat(realfilename.buf, &st) == 0) {
+		if (stat(varbuf_str(&realfilename), &st) == 0) {
 			(*filestat)->mode |= st.st_mode & S_IFMT;
-			statdb_node_apply(realfilename.buf, *filestat);
+			statdb_node_apply(varbuf_str(&realfilename), *filestat);
 		} else if (opt_verbose) {
 			warning(_("--update given but %s does not exist"),
-			        realfilename.buf);
+			        varbuf_str(&realfilename));
 		}
 
 		varbuf_destroy(&realfilename);
@@ -407,7 +407,8 @@ main(int argc, const char *const *argv)
 	set_force_default(FORCE_STATCMD_MASK);
 	dpkg_options_parse(&argv, cmdinfos, printforhelp);
 
-	debug(dbg_general, "root=%s admindir=%s", dpkg_fsys_get_dir(), dpkg_db_get_dir());
+	debug(dbg_general, "root=%s admindir=%s",
+	      dpkg_fsys_get_dir(), dpkg_db_get_dir());
 
 	if (!cipaction)
 		badusage(_("need an action option"));

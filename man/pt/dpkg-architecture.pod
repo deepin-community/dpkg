@@ -132,19 +132,31 @@ A máquina para onde o pacote é compilado.
 
 =item máquina destino (alvo)
 
-A maquina para a qual o compilador foi construído, ou o que emulador que irá correr código para. Isto é apenas necessário quando se compila ferramenta-corrente-cruzada (ou emulador), uma que será compilada sobre a arquitectura de compilação, para ser corrida na arquitectura anfitriã, e para compilar código (ou correr emulado) para a arquitectura alvo.
+A maquina para a qual o compilador foi construído, ou o que emulador que irá correr código para. Isto é apenas necessário quando se compila ferramenta-corrente-cruzada (ou emulador), uma que será compilada sobre a arquitectura de compilação, para ser corrida na arquitectura anfitriã, e que ela própria irá compilar código (ou correr emulado) para a arquitectura alvo.
 
 =item Arquitectura Debian
 
-A string de arquitectura Debian, a qual especifica a árvore binária no arquivo FTP. Exemplos: i386, sparc, hurd-i386.
+A Debian architecture describes a “machine” (considering it as an abstraction not necessarily tied to an actual physical device)  representing a specific execution environment, including its CPU and attributes (such as endianness and bits), an operating system (usually a kernel, but other paradigms using userland services are possible) and its interfaces towards userland including the executable format and their ABI, and a libc library and its ABI.
+
+The special architecture B<all> denotes an architecture independent execution environment, used for things such as shell and Perl scripts or documentation.
+
+A Debian architecture is used in binary package metadata and filenames (which specifies the binary tree in a package repository), and can appear in package relationships.
+
+An architecture must start with an alphanumeric character (“0-9a-zA-Z”), and then gets followed by alphanumeric or dash (“-”) characters.
+
+Examples: amd64, i386, sparc64, hurd-amd64, musl-linux-riscv64.
 
 =item Tuple de arquitectura Debian
 
-Um tuple de arquitectura Debian é a arquitectura totalmente qualificada com todos os seus componentes soletrados. Isto difere das arquitecturas Debian em que pelo menos o componente I<cpu> não trás embutido o I<abi>. O tuple actual tem o formato I<abi>-I<libc>-I<os>-I<cpu>. Exemplos: base-gnu-linux-amd64, eabihf-musl-linux-arm.
+Um tuple de arquitectura Debian é a arquitectura totalmente qualificada com todos os seus componentes soletrados. Isto difere das arquitecturas Debian em que pelo menos o componente I<cpu> não trás embutido o I<abi>. O tuple actual tem o formato I<abi>-I<libc>-I<os>-I<cpu>.
+
+Exemplos: base-gnu-linux-amd64, eabihf-musl-linux-arm.
 
 =item Wildcard de arquitectura Debian
 
-Um wildcard de arquitectura Debian é uma string especial de arquitectura que irá corresponder a qualquer arquitectura real que faça parte dela. O formato geral é um tuple de arquitectura Debian com quatro ou menos elementos, e com pelo menos um deles a ser B<any>. Elementos em falta no tuple são prefixados implicitamente como B<any>, e assim os seguintes pares são equivalentes:
+A Debian architecture wildcard is a special architecture that acts as a pattern and will match any ”machine” architecture being part of it (except for B<all>).
+
+The general form is a Debian architecture tuple with four or less elements, and with at least one of them being B<any>.  Missing elements of the tuple are prefixed implicitly as B<any>, and thus the following pairs are equivalent:
 
 =over 
 
@@ -160,23 +172,31 @@ Exemplos: linux-any, any-i386, hurd-any, eabi-any-any-arm, musl-any-any.
 
 =item Tipo de sistema GNU
 
-Uma string de especificação de arquitectura consiste de duas partes separadas por um hífen: cpu e sistema. Exemplos: i586-linux-gnu, sparc-linux-gnu, i686-gnu, x86_64-netbsd.
+A GNU architecture specification string consisting of two parts separated by a hyphen: CPU and system.
+
+A parte da CPU nunca contém um hífen, enquanto a parte do sistema pode ela própria conter um hífen para separar um kernel da sua ABI geral, onde a ABI geral pode conter ambos especificadores de tempo-de-execução (como a libc) e ABI executável juntos sem um hífen.
+
+Examples: i586-linux-gnu, sparc64-linux-gnu, i686-gnu, x86_64-netbsd.
 
 =item multiarch triplet
 
-O tipo de sistema GNU clarificado, usado para caminhos do sistema de ficheiros. Este triplet não altera mesmo quando a linha base ISA entra em colisão, para que os caminhos resultantes fiquem estáveis com o tempo. A única diferença actual com o tipo de sistema GNU é que a parte de CPU para os sistemas baseados em i386 é sempre i386. Exemplos:  i386-linux-gnu, x86_64-linux-gnu.  Exemplos de caminhos: /lib/powerpc64le-linux-gnu/, /usr/lib/i386-kfreebsd-gnu/.
+O tipo de sistema GNU clarificado, usado para caminhos do sistema de ficheiros. Este triplet não altera mesmo quando a linha base ISA entra em colisão, para que os caminhos resultantes fiquem estáveis com o tempo. A única diferença actual com o tipo de sistema GNU é que a parte de CPU para os sistemas baseados em i386 é sempre i386.
+
+Examples: i386-linux-gnu, x86_64-linux-gnu.  Example paths: /lib/powerpc64le-linux-gnu/, /usr/lib/i386-gnu/.
 
 =back
 
 =head1 VARIÁVEIS
 
-As seguintes variáveis são lidas a partir do ambiente (a menos que B<--force> seja especificado) e definidas por B<dpkg-architecture> (veja a secção B<TERMS> para uma descrição do esquema de nomeação):
+As seguintes variáveis são lidas a partir do ambiente (a menos que B<--force> seja especificado) e definidas por B<dpkg-architecture> (veja a secção B<TERMOS> para uma descrição do esquema de nomeação):
 
 =over 
 
 =item B<DEB_BUILD_ARCH>
 
 A arquitectura Debian da máquina de compilação.
+
+B<Nota>: Se você não está a compilar ferramentas que precisam correr durante a compilação, estas não são provavelmente as variáveis que você procura. Por favor veja a secção L</TERMOS> para o significado destes termos.
 
 =item B<DEB_BUILD_ARCH_ABI>
 
@@ -265,6 +285,8 @@ O tipo de sistema GNU clarificado da máquina anfitriã, usado para caminhos do 
 =item B<DEB_TARGET_ARCH>
 
 A arquitectura Debian da máquina de destino (desde dpkg 1.17.14).
+
+B<Nota>: Se você não está a compilar ferramentas-corrente-cruzada (ou emuladores), estas não são provavelmente as variáveis que você procura. Por favor veja a secção L</TERMOS> para o significado destes termos.
 
 =item B<DEB_TARGET_ARCH_ABI>
 
@@ -360,9 +382,9 @@ Verifica se a arquitectura actual ou da máquina especificada é igual a uma arq
 
 =over 
 
- dpkg-architecture -elinux-alpha
+ dpkg-architecture -elinux-arm64
 
- dpkg-architecture -amips -elinux-mips
+ dpkg-architecture -ariscv64 -elinux-riscv64
 
 =back
 
@@ -372,7 +394,7 @@ Verifica se a arquitectura actual ou da máquina especificada é um sistema Linu
 
  dpkg-architecture -ilinux-any
 
- dpkg-architecture -ai386 -ilinux-any
+ dpkg-architecture -aamd64 -ilinux-any
 
 =back
 
@@ -404,7 +426,7 @@ Fazer algo apenas para uma arquitectura específica:
 
  DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 
- ifeq ($(DEB_HOST_ARCH),alpha)
+ ifeq ($(DEB_HOST_ARCH),arm64)
    [...]
  endif
 
@@ -418,7 +440,7 @@ Note que você também pode confiar num retalho externo do Makefile para definir
 
  include %PKGDATADIR%/architecture.mk
 
- ifeq ($(DEB_HOST_ARCH),alpha)
+ ifeq ($(DEB_HOST_ARCH),arm64)
    [...]
  endif
 

@@ -1,8 +1,8 @@
 # This Makefile fragment (since dpkg 1.16.1) defines the following
 # vendor-related variables:
 #
-#   DEB_VENDOR: output of «dpkg-vendor --query Vendor».
-#   DEB_PARENT_VENDOR: output of «dpkg-vendor --query Parent» (can be empty).
+#   DEB_VENDOR: Output of «dpkg-vendor --query Vendor».
+#   DEB_PARENT_VENDOR: Output of «dpkg-vendor --query Parent» (can be empty).
 #
 # This Makefile fragment also defines a set of "dpkg_vendor_derives_from"
 # macros that can be used to verify if the current vendor derives from
@@ -32,11 +32,20 @@
 #   ifeq ($(call dpkg_vendor_derives_from_v1,ubuntu),yes)
 #     ...
 #   endif
+#
+# Note:
+# - Only documented variables are considered public interfaces.
+# - Expects to be included from the source tree root directory.
 
-dpkg_datadir = $(srcdir)/mk
+ifndef dpkg_vendor_mk_included
+dpkg_vendor_mk_included = yes
+
+ifndef dpkg_datadir
+  dpkg_datadir := $(dir $(lastword $(MAKEFILE_LIST)))
+endif
 include $(dpkg_datadir)/buildapi.mk
 
-dpkg_late_eval ?= $(or $(value DPKG_CACHE_$(1)),$(eval DPKG_CACHE_$(1) := $(shell $(2)))$(value DPKG_CACHE_$(1)))
+dpkg_late_eval ?= $(if $(filter undefined,$(flavor DPKG_CACHE_$(1))),$(eval DPKG_CACHE_$(1) := $(shell $(2)))$(value DPKG_CACHE_$(1)),$(value DPKG_CACHE_$(1)))
 
 DEB_VENDOR = $(call dpkg_late_eval,DEB_VENDOR,dpkg-vendor --query Vendor)
 DEB_PARENT_VENDOR = $(call dpkg_late_eval,DEB_PARENT_VENDOR,dpkg-vendor --query Parent)
@@ -49,3 +58,5 @@ dpkg_vendor_derives_from ?= $(dpkg_vendor_derives_from_v1)
 else
 dpkg_vendor_derives_from ?= $(dpkg_vendor_derives_from_v0)
 endif
+
+endif # dpkg_vendor_mk_included

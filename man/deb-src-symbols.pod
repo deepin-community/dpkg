@@ -168,11 +168,11 @@ The format of I<architecture-list> is the same as the one used in the
 B<Build-Depends> field of I<debian/control> (except the enclosing
 square brackets []).
 For example, the first symbol from the list below
-will be considered only on alpha, any-amd64 and ia64 architectures,
+will be considered only on arm64, any-amd64 and riscv64 architectures,
 the second only on linux architectures, while the third one anywhere
 except on armel.
 
-  (arch=alpha any-amd64 ia64)64bit_specific_symbol@Base 1.0
+  (arch=arm64 any-amd64 riscv64)arch_specific_symbol@Base 1.0
   (arch=linux-any)linux_specific_symbol@Base 1.0
   (arch=!armel)symbol_armel_does_not_have@Base 1.0
 
@@ -198,11 +198,6 @@ implementation details of the toolchain (since dpkg 1.20.1).
 If for some reason, you really want one of those symbols to be included in
 the symbols file, you should tag the symbol with B<allow-internal>.
 It can be necessary for some low level toolchain libraries like “libgcc”.
-
-=item B<ignore-blacklist>
-
-A deprecated alias for B<allow-internal> (since dpkg 1.20.1,
-supported since dpkg 1.15.3).
 
 =item B<c++>
 
@@ -417,8 +412,8 @@ to create a common I<package>.symbols file which includes architecture
 specific symbol files:
 
   common_symbol1@Base 1.0
- (arch=amd64 ia64 alpha)#include "package.symbols.64-bit"
- (arch=!amd64 !ia64 !alpha)#include "package.symbols.32-bit"
+ (arch-bits=64)#include "package.symbols.64-bit"
+ (arch-bits=32)#include "package.symbols.32-bit"
   common_symbol2@Base 1.0
 
 =back

@@ -29,8 +29,7 @@ syntax as F<debian/control>.
 
 package Dpkg::Control::Info 1.01;
 
-use strict;
-use warnings;
+use v5.36;
 
 use Dpkg::Control;
 use Dpkg::ErrorHandling;
@@ -47,11 +46,20 @@ use overload
 
 =item $c = Dpkg::Control::Info->new(%opts)
 
-Create a new Dpkg::Control::Info object. Loads the file from the filename
-option, if no option is specified filename defaults to F<debian/control>.
-If a scalar is passed instead, it will be used as the filename. If filename
-is "-", it parses the standard input. If filename is undef no loading will
-be performed.
+Create a new Dpkg::Control::Info object. Loads F<debian/control> by default.
+If a single scalar is passed, it will be used as the filename to load
+instead of the default. If filename is "-", it parses the standard input.
+If filename is undef no loading will be performed.
+
+Options:
+
+=over
+
+=item B<filename>
+
+Loads the file from the filename, instead of F<debian/control>.
+
+=back
 
 =cut
 
@@ -59,8 +67,8 @@ sub new {
     my ($this, @args) = @_;
     my $class = ref($this) || $this;
     my $self = {
-	source => undef,
-	packages => [],
+        source => undef,
+        packages => [],
     };
     bless $self, $class;
 
@@ -110,17 +118,17 @@ sub parse {
                             'Source');
     }
     while (1) {
-	$cdata = Dpkg::Control->new(type => CTRL_TMPL_PKG);
+        $cdata = Dpkg::Control->new(type => CTRL_TMPL_PKG);
         last if not $cdata->parse($fh, $desc);
-	push @{$self->{packages}}, $cdata;
-	unless (exists $cdata->{Package}) {
-	    $cdata->parse_error($desc, g_("stanza lacks the '%s' field"),
-	                        'Package');
-	}
-	unless (exists $cdata->{Architecture}) {
-	    $cdata->parse_error($desc, g_("stanza lacks the '%s' field"),
-	                        'Architecture');
-	}
+        push @{$self->{packages}}, $cdata;
+        unless (exists $cdata->{Package}) {
+            $cdata->parse_error($desc, g_("stanza lacks the '%s' field"),
+                                'Package');
+        }
+        unless (exists $cdata->{Architecture}) {
+            $cdata->parse_error($desc, g_("stanza lacks the '%s' field"),
+                                'Architecture');
+        }
     }
 }
 
@@ -165,7 +173,7 @@ package named $name.
 sub get_pkg_by_name {
     my ($self, $name) = @_;
     foreach my $pkg (@{$self->{packages}}) {
-	return $pkg if ($pkg->{Package} eq $name);
+        return $pkg if ($pkg->{Package} eq $name);
     }
     return;
 }
@@ -194,8 +202,8 @@ sub output {
     my $str;
     $str .= $self->{source}->output($fh);
     foreach my $pkg (@{$self->{packages}}) {
-	print { $fh } "\n" if defined $fh;
-	$str .= "\n" . $pkg->output($fh);
+        print { $fh } "\n" if defined $fh;
+        $str .= "\n" . $pkg->output($fh);
     }
     return $str;
 }

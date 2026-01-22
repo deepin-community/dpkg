@@ -36,15 +36,15 @@ De meeste commando's die als argument een invoerarchief verwachten, kunnen dit a
 
 =item B<-b>, B<--build> I<map-binair-pakket> [I<archief>|I<map>]
 
-Maakt een debian-archief van de bestandssysteemboom die in I<map-binair-pakket> staat. I<map-binair-pakket> moet een onderliggende map B<DEBIAN> hebben waarin de bestanden met controle-informatie opgeslagen zijn, zoals het bestand control zelf. Deze map zal I<niet> voorkomen in het bestandssysteemarchief van het binaire pakket, maar in de plaats daarvan zullen de bestanden daaruit in het conrole-informatiegebied van het binaire pakket geplaatst worden.
+Creates a debian archive from the filesystem tree stored in I<binary-directory>.  I<binary-directory> must have a B<DEBIAN> subdirectory, which contains the package metadata files such as the binary package control file.  This directory will I<not> appear in the binary package's filesystem archive, but instead the files in it will be put in the binary package's control information area.
 
-Tenzij u B<--nocheck> opgeeft, zal B<dpkg-deb> B<DEBIAN/control> lezen en het ontleden. Het zal het bestand controleren op syntaxisfouten en op andere problemen en de naam tonen van het binaire pakket dat gebouwd wordt. B<dpkg-deb> zal ook de toegangsrechten van de scripts van de beheerder nazien en van andere bestanden die te vinden zijn in de map B<DEBIAN> met controle-informatie.
+Unless you specify B<--no-check>, B<dpkg-deb> will read B<DEBIAN/control> and parse it.  It will check the file for syntax errors and other problems, and display the name of the binary package being built.  B<dpkg-deb> will also check the permissions of the maintainer scripts and other files found in the B<DEBIAN> package metadata directory.
 
 Indien geen I<archief> opgegeven werd, zal B<dpkg-deb> het pakket wegschrijven in het bestand I<map-binair-pakket>B<.deb>.
 
 Indien het te maken archief reeds bestaat, zal het overschreven worden.
 
-Indien het tweede argument een map is, zal B<dpkg-deb> schrijven in het bestand I<map>B</>I<pakket>B<_>I<versie>B<_>I<arch>B<.deb>. Indien een doelmap opgegeven werd, eerder dan een bestand, kan de optie B<--nocheck> niet gebruikt worden (aangezien B<dpkg-deb> het control-bestand van het pakket moet lezen en ontleden om te kunnen uitmaken welke bestandsnaam gebruikt moet worden).
+Indien het tweede argument een map is, zal B<dpkg-deb> schrijven in het bestand I<map>B</>I<pakket>B<_>I<versie>B<_>I<arch>B<.deb>. Indien een doelmap opgegeven werd, eerder dan een bestand, kan de optie B<--no-check> niet gebruikt worden (aangezien B<dpkg-deb> het control-bestand van het pakket moet lezen en ontleden om te kunnen uitmaken welke bestandsnaam gebruikt moet worden).
 
 =item B<-I>, B<--info> I<archief> [I<naam-controlebestand>...]
 
@@ -86,7 +86,7 @@ Is zoals B<--extract> (B<-x>) met B<--verbose> (B<-v>), hetgeen een lijst van de
 
 =item B<-R>, B<--raw-extract> I<archief> I<map>
 
-Extraheert de boom met het bestandssysteem uit een pakketarchief en plaatst die in de opgegeven map en de bestanden met de controle-informatie in een daaronder liggende map B<DEBIAN> (sinds dpkg 1.16.1).
+Extracts the filesystem tree from a package archive into a specified directory, and the package metadata files into a B<DEBIAN> subdirectory of the specified directory (since dpkg 1.16.1).
 
 Indien nodig zal de doelmap (maar niet de erboven liggende mappen) aangemaakt worden.
 
@@ -102,7 +102,7 @@ Extraheert de gegevens van de bestandssysteemboom uit een binair pakket en stuur
 
 =item B<-e>, B<--control> I<archief> [I<map>]
 
-Extraheert de bestanden met controle-informatie uit een pakketarchief en plaatst ze in de opgegeven map.
+Extracts the package metadata files from a package archive into the specified directory.
 
 Indien geen map opgegeven werd, wordt een onder de huidige map liggende map B<DEBIAN> gebruikt.
 
@@ -130,17 +130,17 @@ De tekenreeks mag in de vorm “${I<veldnaam>}” verwijzen naar elk statusveld.
 
 De standaard voor dit veld is “${Package}\t${Version}\n”.
 
-=item B<-z>I<compressieniveau>
+=item B<-z>, B<--compression-level=>I<compressieniveau>
 
-Specificeren welk compressieniveau gebruikt moet worden door het compressieprogramma bij het bouwen van het pakket (standaard is dat 9 voor gzip, 6 voor xz, 3 voor zstd). Toegestane waarden zijn compressorafhankelijk. Voor gzip is dat 0-9, waarbij 0 vertaald wordt als geen compressie. Voor xz is dat 0-9. Voor zstd is dat 0-22, waarbij de niveaus 20 tot 22 de ultra-modus activeren. Voor dpkg 1.16.2 was niveau 0 het equivalent van geen compressie voor alle compressieprogramma's.
+Specificeren welk compressieniveau gebruikt moet worden door het compressieprogramma bij het bouwen van het pakket (standaard is dat 9 voor gzip, 6 voor xz, 3 voor zstd; lange optie sinds dpkg 1.22.9). Toegestane waarden zijn compressorafhankelijk. Voor gzip is dat 0-9, waarbij 0 vertaald wordt als geen compressie. Voor xz is dat 0-9. Voor zstd is dat 0-22, waarbij de niveaus 20 tot 22 de ultra-modus activeren. Voor dpkg 1.16.2 was niveau 0 het equivalent van geen compressie voor alle compressieprogramma's.
 
-=item B<-S>I<compressiestrategie>
+=item B<-S>, B<--compression-strategy=>I<compressiestrategie>
 
-Specificeren welke compressiestrategie gebruikt moet worden door het compressieprogramma bij het bouwen van een pakket (sinds dpkg 1.16.2). Toegestane waarden zijn B<none> (sinds dpkg 1.16.4), B<filtered>, B<huffman>, B<rle> en B<fixed> voor gzip (sinds dpkg 1.17.0) en B<extreme> voor xz.
+Specificeren welke compressiestrategie gebruikt moet worden door het compressieprogramma bij het bouwen van een pakket (sinds dpkg 1.16.2, lange optie sinds dpkg 1.22.9). Toegestane waarden zijn B<none> (sinds dpkg 1.16.4), B<filtered>, B<huffman>, B<rle> en B<fixed> voor gzip (sinds dpkg 1.17.0) en B<extreme> voor xz.
 
-=item B<-Z>I<compressietype>
+=item B<-Z>, B<--compression=>I<compressietype>
 
-Specificeren welk compressietype bij het bouwen van een pakket gebruikt moet worden. Toegestane waarden zijn B<gzip>, B<xz> (sinds dpkg 1.15.6), B<zstd> (sinds dpkg 1.21.18) en B<none> (standaard is B<%DEB_DEFAULT_COMPRESSOR%>).
+Specificeren welk compressietype bij het bouwen van een pakket gebruikt moet worden (lange optie sinds dpkg 1.22.9). Toegestane waarden zijn B<gzip>, B<xz> (sinds dpkg 1.15.6), B<zstd> (sinds dpkg 1.21.18) en B<none> (standaard is B<%DEB_DEFAULT_COMPRESSOR%>).
 
 =item B<--[no-]uniform-compression>
 
@@ -162,9 +162,15 @@ Instellen welke versie van archiefindeling bij het bouwen gebruikt moet worden (
 
 De oude archiefindeling wordt door niet-Debian gereedschap minder gemakkelijk ontleed en wordt nu als verouderd beschouwd. Het enige nut ervan is nog als pakketten gebouwd worden die moeten ontleed worden door versies van dpkg die ouder zijn dan versie 0.93.76 (september 1995), die enkel uitgegeven werd als een i386 a.out.
 
-=item B<--nocheck>
+=item B<--no-check>
 
 Dit onderdrukt de gebruikelijke controles die door B<dpkg-deb --build> uitgevoerd worden op de voorgestelde inhoud van een archief. Op die manier kunt u gelijk welk archief bouwen, hoe onklaar het ook is.
+
+Optie ondersteund sinds dpkg 1.22.12.
+
+=item B<--nocheck>
+
+Dit is een alias voor B<--no-check>.
 
 =item B<-v>, B<--verbose>
 
@@ -216,6 +222,22 @@ De optie B<-z> heeft voorrang op deze waarde.
 
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen worden zijn: B<auto> (standaard), B<always> en B<never>.
 
+=item B<DPKG_NLS>
+
+Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het activeren van moedertaalondersteuning, ook gekend als internationaliseringsondersteuning (of i18n) (sinds dpkg 1.22.7). Geldige waarden zijn: B<0> and B<1> (standaard).
+
+=item B<DPKG_PATH_PASSWD>
+
+Stelt de padnaam in voor het systeembestand F<passwd>. Dit pad is relatief ten opzichte van de map B<--root>. De standaardwaarde is F</etc/passwd>.
+
+Sinds dpkg 1.22.16.
+
+=item B<DPKG_PATH_GROUP>
+
+Stelt de padnaam in voor het systeembestand F<group>. Dit pad is relatief ten opzichte van de map B<--root>. De standaardwaarde is F</etc/group>.
+
+Sinds dpkg 1.22.16.
+
 =item B<TMPDIR>
 
 Indien dit ingesteld werd, zal B<dpkg-deb> het gebruiken als de map waarin tijdelijke bestanden en mappen aangemaakt worden.
@@ -224,7 +246,7 @@ Indien dit ingesteld werd, zal B<dpkg-deb> het gebruiken als de map waarin tijde
 
 Indien dit ingesteld werd, zal het gebruikt worden als de tijdsaanduiding (timestamp) (in seconden sinds de epoch) in de L<ar(5)>-container van het L<deb(5)>-bestand en zal het ook gebruikt worden om de mtime vast te zetten op de items uit het L<tar(5)>-bestand.
 
-Since dpkg 1.18.8.
+Sinds dpkg 1.18.8.
 
 =back
 
@@ -242,7 +264,7 @@ Het bouwen van pakketarchieven mag alleen worden uitgevoerd op basis van vertrou
 
 B<dpkg-deb -I> I<pakket1>B<.deb> I<pakket2>B<.deb> doet de dingen fout.
 
-Er gebeurt geen authenticatie van de B<.deb>-bestanden. Er gebeurt inderdaad zelfs geen simpele toets van de controlesom. (Hoogwaardig gereedschap, zoals APT, ondersteunt het authenticeren van pakketten die van een opgegeven pakketbron opgehaald werden. En tegenwoordig hebben de meeste pakketten een md5sum-controlebestand dat door debian/rules gegenereerd werd. Dit wordt echter niet rechtstreeks ondersteund door basaal gereedschap.)
+Er gebeurt geen authenticatie van de B<.deb>-bestanden. Er gebeurt inderdaad zelfs geen simpele toets van het controlegetal. (Hoogwaardig gereedschap, zoals APT, ondersteunt het authenticeren van pakketten die van een opgegeven pakketbron opgehaald werden. En tegenwoordig hebben de meeste pakketten een md5sum-controlebestand dat door debian/rules gegenereerd werd. Dit wordt echter niet rechtstreeks ondersteund door basaal gereedschap.)
 
 =head1 ZIE OOK
 

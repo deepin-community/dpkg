@@ -28,8 +28,7 @@ file. It can export an array that can then be parsed exactly like @ARGV.
 
 package Dpkg::Conf 1.04;
 
-use strict;
-use warnings;
+use v5.36;
 
 use Carp;
 
@@ -48,10 +47,18 @@ use overload
 
 =item $conf = Dpkg::Conf->new(%opts)
 
-Create a new Dpkg::Conf object. Some options can be set through %opts:
-if allow_short evaluates to true (it defaults to false), then short
-options are allowed in the configuration file, they should be prepended
-with a single hyphen.
+Create a new Dpkg::Conf object.
+
+Options:
+
+=over
+
+=item B<allow_short>
+
+If set to true (it defaults to false), then short options are allowed in
+the configuration file, they should be prepended with a single hyphen.
+
+=back
 
 =cut
 
@@ -60,11 +67,11 @@ sub new {
     my $class = ref($this) || $this;
 
     my $self = {
-	options => [],
-	allow_short => 0,
+        options => [],
+        allow_short => 0,
     };
     foreach my $opt (keys %opts) {
-	$self->{$opt} = $opts{$opt};
+        $self->{$opt} = $opts{$opt};
     }
     bless $self, $class;
 
@@ -159,38 +166,59 @@ sub parse {
     local $_;
 
     while (<$fh>) {
-	chomp;
-	s/^\s+//;             # Strip leading spaces
-	s/\s+$//;             # Strip trailing spaces
-	s/\s+=\s+/=/;         # Remove spaces around the first =
-	s/\s+/=/ unless m/=/; # First spaces becomes = if no =
-	# Skip empty lines and comments
-	next if /^#/ or length == 0;
-	if (/^-[^-]/ and not $self->{allow_short}) {
-	    warning(g_('short option not allowed in %s, line %d'), $desc, $.);
-	    next;
-	}
-	if (/^([^=]+)(?:=(.*))?$/) {
-	    my ($name, $value) = ($1, $2);
-	    $name = "--$name" unless $name =~ /^-/;
-	    if (defined $value) {
-		$value =~ s/^"(.*)"$/$1/ or $value =~ s/^'(.*)'$/$1/;
-		push @{$self->{options}}, "$name=$value";
-	    } else {
-		push @{$self->{options}}, $name;
-	    }
-	    $count++;
-	} else {
-	    warning(g_('invalid syntax for option in %s, line %d'), $desc, $.);
-	}
+        chomp;
+        # Strip leading spaces.
+        s/^\s+//;
+        # Strip trailing spaces.
+        s/\s+$//;
+        # Remove spaces around the first =.
+        s/\s+=\s+/=/;
+        # First spaces becomes = if no =.
+        s/\s+/=/ unless m/=/;
+        # Skip empty lines and comments.
+        next if /^#/ or length == 0;
+        if (/^-[^-]/ and not $self->{allow_short}) {
+            warning(g_('short option not allowed in %s, line %d'), $desc, $.);
+            next;
+        }
+        if (/^([^=]+)(?:=(.*))?$/) {
+            my ($name, $value) = ($1, $2);
+            $name = "--$name" unless $name =~ /^-/;
+            if (defined $value) {
+                $value =~ s/^"(.*)"$/$1/ or $value =~ s/^'(.*)'$/$1/;
+                push @{$self->{options}}, "$name=$value";
+            } else {
+                push @{$self->{options}}, $name;
+            }
+            $count++;
+        } else {
+            warning(g_('invalid syntax for option in %s, line %d'), $desc, $.);
+        }
     }
     return $count;
 }
 
 =item $conf->filter(%opts)
 
-Filter the list of options, either removing or keeping all those that
-return true when $opts{remove}->($option) or $opts{keep}->($option) is called.
+Filter the list of configuration options.
+
+Options:
+
+=over
+
+=item B<remove>
+
+A function returning a boolean,
+used to decide whether to remove the configuration option,
+executed as $opts{remove}->($option).
+
+=item B<keep>
+
+A function returning a boolean,
+used to decide whether to keep the configuration option,
+executed as $opts{keep}->($option).
+
+=back
 
 =cut
 
@@ -218,11 +246,11 @@ sub output {
     my ($self, $fh) = @_;
     my $ret = '';
     foreach my $opt ($self->get_options()) {
-	$opt =~ s/^--//;
-	$opt =~ s/^([^=]+)=(.*)$/$1 = "$2"/;
-	$opt .= "\n";
-	print { $fh } $opt if defined $fh;
-	$ret .= $opt;
+        $opt =~ s/^--//;
+        $opt =~ s/^([^=]+)=(.*)$/$1 = "$2"/;
+        $opt .= "\n";
+        print { $fh } $opt if defined $fh;
+        $ret .= $opt;
     }
     return $ret;
 }

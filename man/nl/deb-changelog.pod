@@ -128,7 +128,7 @@ De afwijking is van de tijdzone ten opzichte van de gecoördineerde wereldtijd (
 
 De eerste “titel”-regel met de naam van het pakket moet beginnen aan de linkermarge. De “volgende” regel met de gegevens over de beheerder en de datum moet door exact één spatie voorafgegaan worden (U+0020 B<SPACE>). Tussen de informatie over de beheerder en de datum moeten exact twee spaties staan (U+0020 B<SPACE>). Elk onderdeel van de I<datum> kan gescheiden worden door één of meer spaties (U+0020 B<SPACE>), behalve na de komma waar het gescheiden kan worden door nul of meer spaties (U+0020 B<SPACE>).
 
-Elke regel die volledig (d.w.z. zonder voorafgaande witruimte) bestaat uit commentaar in de vorm van B<#>- of B</* */> of RCS-trefwoorden.
+Any line that consists entirely (i.e., no leading whitespace) of B<#> or B</* */> style comments or RCS keywords should be ignored.
 
 Modusregels van Vim of lokale variabelen van Emacs en oudere changelog-elementen met een andere indeling aan het einde van het bestand, moeten aanvaard worden en in de uitvoer behouden blijven, maar de inhoud ervan kan verder genegeerd worden en het ontleden kan op dat punt gestopt worden.
 

@@ -34,11 +34,11 @@ La deuxième ligne fournit un nombre décimal (sans zéros en tête), qui indiqu
 
 Chacune de ces lignes se termine par un unique caractère de nouvelle ligne.
 
-La première archive tar contient les informations de contrôle, sous forme d'une série de fichiers ordinaires. Le fichier B<control> doit être présent, puisqu'il contient les informations principales de contrôle.
+The first tarfile contains the package metadata, as a series of ordinary files.  The file B<control> must be present, as it contains the package control information.
 
-Dans certaines archives vraiment anciennes, les fichiers de l'archive de contrôle peuvent se trouver dans un sous-répertoire B<DEBIAN>. Dans ce cas, le sous-répertoire B<DEBIAN> se trouve également dans l'archive de contrôle, qui ne contiendra que des fichiers de ce répertoire. En option, l'archive de contrôle peut contenir une entrée pour S<« B<.> »,> le répertoire courant.
+Dans certaines archives vraiment anciennes, les fichiers de l'archive de contrôle peuvent se trouver dans un sous-répertoire B<DEBIAN>. Dans ce cas, le sous-répertoire B<DEBIAN> se trouve également dans l'archive de contrôle, qui ne contiendra que des fichiers de ce répertoire. En option, l'archive de contrôle peut contenir une entrée pour « B<.> », le répertoire courant.
 
-La seconde archive compressée avec gzip correspond à l'archive du système de fichiers. Elle contient des chemins relatifs à la racine du système dans lequel se fera l'installation. Les noms de fichiers ne débutent pas par des barres obliques S<(« / »).>
+La seconde archive compressée avec gzip correspond à l'archive du système de fichiers. Elle contient des chemins relatifs à la racine du système dans lequel se fera l'installation. Les noms de fichiers ne débutent pas par des barres obliques (« / »).
 
 =head1 VOIR AUSSI
 

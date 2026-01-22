@@ -31,8 +31,7 @@ about supported checksums.
 
 package Dpkg::Checksums 1.04;
 
-use strict;
-use warnings;
+use v5.36;
 
 our @EXPORT = qw(
     checksums_is_supported
@@ -54,19 +53,19 @@ use Dpkg::ErrorHandling;
 
 my $CHECKSUMS = {
     md5 => {
-	name => 'MD5',
-	regex => qr/[0-9a-f]{32}/,
-	strong => 0,
+        name => 'MD5',
+        regex => qr/[0-9a-f]{32}/,
+        strong => 0,
     },
     sha1 => {
-	name => 'SHA-1',
-	regex => qr/[0-9a-f]{40}/,
-	strong => 0,
+        name => 'SHA-1',
+        regex => qr/[0-9a-f]{40}/,
+        strong => 0,
     },
     sha256 => {
-	name => 'SHA-256',
-	regex => qr/[0-9a-f]{64}/,
-	strong => 1,
+        name => 'SHA-256',
+        regex => qr/[0-9a-f]{64}/,
+        strong => 1,
     },
 };
 
@@ -76,7 +75,7 @@ Returns the list of supported checksums algorithms.
 
 =cut
 
-sub checksums_get_list() {
+sub checksums_get_list {
     my @list = sort keys %{$CHECKSUMS};
     return @list;
 }
@@ -88,7 +87,7 @@ supported. The checksum algorithm is case-insensitive.
 
 =cut
 
-sub checksums_is_supported($) {
+sub checksums_is_supported {
     my $alg = shift;
     return exists $CHECKSUMS->{lc($alg)};
 }
@@ -104,7 +103,7 @@ whether the checksum algorithm is considered cryptographically strong.
 
 =cut
 
-sub checksums_get_property($$) {
+sub checksums_get_property {
     my ($alg, $property) = @_;
 
     return unless checksums_is_supported($alg);
@@ -153,16 +152,30 @@ sub reset {
 =item $ck->add_from_file($filename, %opts)
 
 Add or verify checksums information for the file $filename. The file must
-exists for the call to succeed. If you don't want the given filename to
-appear when you later export the checksums you might want to set the "key"
-option with the public name that you want to use. Also if you don't want
-to generate all the checksums, you can pass an array reference of the
-wanted checksums in the "checksums" option.
+exists for the call to succeed. By default if the $filename is known and
+the checksums do not match, the function will error out.
 
-It the object already contains checksums information associated the
-filename (or key), it will error out if the newly computed information
-does not match what's stored, and the caller did not request that it be
-updated with the boolean "update" option.
+Options:
+
+=over
+
+=item B<key>
+
+Set to the public name to use when exporting the checksums,
+instead of using $filename.
+
+=item B<checksums>
+
+Set an array reference with the list of wanted checksums to generate instead
+of generating all of them.
+
+=item B<update>
+
+Set a boolean on whether the object should update the checksums information
+associated with the $filename (or key), instead of emitting an error if
+it does not match.
+
+=back
 
 =cut
 
@@ -171,17 +184,17 @@ sub add_from_file {
     my $key = exists $opts{key} ? $opts{key} : $file;
     my @alg;
     if (exists $opts{checksums}) {
-	push @alg, map { lc } @{$opts{checksums}};
+        push @alg, map { lc } @{$opts{checksums}};
     } else {
-	push @alg, checksums_get_list();
+        push @alg, checksums_get_list();
     }
 
     push @{$self->{files}}, $key unless exists $self->{size}{$key};
     (my @s = stat($file)) or syserr(g_('cannot fstat file %s'), $file);
     if (not $opts{update} and exists $self->{size}{$key} and
         $self->{size}{$key} != $s[7]) {
-	error(g_('file %s has size %u instead of expected %u'),
-	      $file, $s[7], $self->{size}{$key});
+        error(g_('file %s has size %u instead of expected %u'),
+              $file, $s[7], $self->{size}{$key});
     }
     $self->{size}{$key} = $s[7];
 
@@ -208,10 +221,17 @@ $value can be multi-lines, each line should be a space separated list
 of checksum, file size and filename. Leading or trailing spaces are
 not allowed.
 
-It the object already contains checksums information associated to the
-filenames, it will error out if the newly read information does not match
-what's stored, and the caller did not request that it be updated with
-the boolean "update" option.
+Options:
+
+=over
+
+=item B<update>
+
+Set a boolean on whether the object should update the checksums information
+associated with the $filename (or key), instead of emitting an error if
+it does not match.
+
+=back
 
 =cut
 
@@ -223,26 +243,26 @@ sub add_from_string {
     my $checksums = $self->{checksums};
 
     for my $checksum (split /\n */, $fieldtext) {
-	next if $checksum eq '';
-	unless ($checksum =~ m/^($regex)\s+(\d+)\s+($rx_fname)$/) {
-	    error(g_('invalid line in %s checksums string: %s'),
-		  $alg, $checksum);
-	}
+        next if $checksum eq '';
+        unless ($checksum =~ m/^($regex)\s+(\d+)\s+($rx_fname)$/) {
+            error(g_('invalid line in %s checksums string: %s'),
+                  $alg, $checksum);
+        }
         ## no critic (RegularExpressions::ProhibitCaptureWithoutTest)
-	my ($sum, $size, $file) = ($1, $2, $3);
-	if (not $opts{update} and exists($checksums->{$file}{$alg})
-	    and $checksums->{$file}{$alg} ne $sum) {
-	    error(g_("conflicting checksums '%s' and '%s' for file '%s'"),
-		  $checksums->{$file}{$alg}, $sum, $file);
-	}
-	if (not $opts{update} and exists $self->{size}{$file}
-	    and $self->{size}{$file} != $size) {
-	    error(g_("conflicting file sizes '%u' and '%u' for file '%s'"),
-		  $self->{size}{$file}, $size, $file);
-	}
-	push @{$self->{files}}, $file unless exists $self->{size}{$file};
-	$checksums->{$file}{$alg} = $sum;
-	$self->{size}{$file} = $size;
+        my ($sum, $size, $file) = ($1, $2, $3);
+        if (not $opts{update} and exists($checksums->{$file}{$alg})
+            and $checksums->{$file}{$alg} ne $sum) {
+            error(g_("conflicting checksums '%s' and '%s' for file '%s'"),
+                  $checksums->{$file}{$alg}, $sum, $file);
+        }
+        if (not $opts{update} and exists $self->{size}{$file}
+            and $self->{size}{$file} != $size) {
+            error(g_("conflicting file sizes '%u' and '%u' for file '%s'"),
+                  $self->{size}{$file}, $size, $file);
+        }
+        push @{$self->{files}}, $file unless exists $self->{size}{$file};
+        $checksums->{$file}{$alg} = $sum;
+        $self->{size}{$file} = $size;
     }
 }
 
@@ -250,11 +270,19 @@ sub add_from_string {
 
 Read checksums from Checksums-* fields stored in the L<Dpkg::Control> object
 $control. It uses $self->add_from_string() on the field values to do the
-actual work.
+actual work. The default field used is B<Checksums-Md5>.
 
-If the option "use_files_for_md5" evaluates to true, then the "Files"
-field is used in place of the "Checksums-Md5" field. By default the option
-is false.
+Options:
+
+=over
+
+=item B<use_files_for_md5>
+
+Set to true to use the B<Files> field instead of B<Checksums-Md5>.
+
+Defaults to false.
+
+=back
 
 =cut
 
@@ -262,11 +290,11 @@ sub add_from_control {
     my ($self, $control, %opts) = @_;
     $opts{use_files_for_md5} //= 0;
     foreach my $alg (checksums_get_list()) {
-	my $key = "Checksums-$alg";
-	$key = 'Files' if ($opts{use_files_for_md5} and $alg eq 'md5');
-	if (exists $control->{$key}) {
-	    $self->add_from_string($alg, $control->{$key}, %opts);
-	}
+        my $key = "Checksums-$alg";
+        $key = 'Files' if ($opts{use_files_for_md5} and $alg eq 'md5');
+        if (exists $control->{$key}) {
+            $self->add_from_string($alg, $control->{$key}, %opts);
+        }
     }
 }
 
@@ -323,8 +351,8 @@ sub get_checksum {
     my ($self, $file, $alg) = @_;
     $alg = lc($alg) if defined $alg;
     if (exists $self->{checksums}{$file}) {
-	return $self->{checksums}{$file} unless defined $alg;
-	return $self->{checksums}{$file}{$alg};
+        return $self->{checksums}{$file} unless defined $alg;
+        return $self->{checksums}{$file}{$alg};
     }
     return;
 }
@@ -369,10 +397,10 @@ sub export_to_string {
     my ($self, $alg, %opts) = @_;
     my $res = '';
     foreach my $file ($self->get_files()) {
-	my $sum = $self->get_checksum($file, $alg);
-	my $size = $self->get_size($file);
-	next unless defined $sum and defined $size;
-	$res .= "\n$sum $size $file";
+        my $sum = $self->get_checksum($file, $alg);
+        my $size = $self->get_size($file);
+        next unless defined $sum and defined $size;
+        $res .= "\n$sum $size $file";
     }
     return $res;
 }
@@ -382,15 +410,27 @@ sub export_to_string {
 Export the checksums in the Checksums-* fields of the L<Dpkg::Control>
 $control object.
 
+Options:
+
+=over
+
+=item B<use_files_for_md5>
+
+Set to true to use the B<Files> field instead of B<Checksums-Md5>.
+
+Defaults to false.
+
+=back
+
 =cut
 
 sub export_to_control {
     my ($self, $control, %opts) = @_;
     $opts{use_files_for_md5} //= 0;
     foreach my $alg (checksums_get_list()) {
-	my $key = "Checksums-$alg";
-	$key = 'Files' if ($opts{use_files_for_md5} and $alg eq 'md5');
-	$control->{$key} = $self->export_to_string($alg, %opts);
+        my $key = "Checksums-$alg";
+        $key = 'Files' if ($opts{use_files_for_md5} and $alg eq 'md5');
+        $control->{$key} = $self->export_to_string($alg, %opts);
     }
 }
 

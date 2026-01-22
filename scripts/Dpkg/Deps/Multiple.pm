@@ -34,8 +34,7 @@ of dependencies. It is the base class for Dpkg::Deps::{AND,OR,Union}.
 
 package Dpkg::Deps::Multiple 1.02;
 
-use strict;
-use warnings;
+use v5.36;
 
 use Carp;
 
@@ -47,9 +46,9 @@ use parent qw(Dpkg::Interface::Storable);
 
 =over 4
 
-=item $dep = Dpkg::Deps::Multiple->new(%opts);
+=item $dep = Dpkg::Deps::Multiple->new(@deps);
 
-Creates a new object.
+Creates a new object, with the list of dependencies in @deps.
 
 =cut
 

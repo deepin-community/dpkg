@@ -49,7 +49,7 @@ pkg_infodb_parse_format(const char *file)
 		/* A missing format file means legacy format (0). */
 		if (errno == ENOENT)
 			return PKG_INFODB_FORMAT_LEGACY;
-		ohshite(_("error trying to open %.250s"), file);
+		ohshite(_("error trying to open %s"), file);
 	}
 
 	if (fscanf(fp, "%u", &format) != 1)
@@ -142,7 +142,6 @@ pkg_infodb_get_file(const struct pkginfo *pkg, const struct pkgbin *pkgbin,
 		varbuf_add_archqual(&vb, pkgbin->arch);
 	varbuf_add_char(&vb, '.');
 	varbuf_add_str(&vb, filetype);
-	varbuf_end_str(&vb);
 
 	return vb.buf;
 }

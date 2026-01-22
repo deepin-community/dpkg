@@ -30,15 +30,111 @@ Das hier beschriebene Format wird seit Debian 0.93 verwendet; Details über das 
 
 Die Datei ist ein B<ar>-Archiv mit dem magischen Wert B<!E<lt>archE<gt>>. Nur das allgemeine B<ar>-Archivformat wird unterstützt, ohne Unterstützung von Dateinamenerweiterungen, aber mit Dateinamen, die einen optionalen abschließenden Schrägstrich enthalten dürfen, deren Länge damit auf 15 Zeichen (von den erlaubten 16) begrenzt ist. Dateigrößen sind auf 10 dezimale ASCII-Ziffern begrenzt, wodurch bis zu ungefähr 9536,74 MiB Dateien in einem solchen Archiv erlaubt sind.
 
-Derzeit werden die folgenden B<tar>-Archive erlaubt: alter Stil (V7-)Format, prä-POSIX-ustar-Format, eine Teilmenge des GNU-Formats (der neue Stil mit langen Pfadnamen und langen Linknamen, unterstützt seit Dpkg 1.4.1.17; große Datei-Metadaten seit Dpkg 1.18.24) und das POSIX-ustar-Format (lange Namen seit Dpkg 1.15.0 unterstützt). Unbekannte Tar-Typeinstellungen werden als Fehler betrachtet. Jede Tar-Eintraggröße innerhalb eines Tar-Archivs ist auf 11 ASCII-Oktalziffern begrenzt; damit sind bis zu 8 GiB-Tar-Einträge möglich. Die Unterstützung der großen Dateimetadaten im GNU-Format ermöglicht 95-Bit-Tar-Eintragsgrößen und negative Zeitstempel und 63-Bit-UID, -GID und -Gerätenummern.
+Die derzeit erlaubten B<tar>-Archive sind:
 
-Das erste Element heißt B<debian-binary> und enthält eine Reihe von Zeilen, die durch Zeilenumbrüche getrennt sind. Derzeit ist nur eine Zeile vorhanden, die Versionsnummer, B<2.0> zum Zeitpunkt, zu dem diese Handbuchseite geschrieben wurde. Programme, die Archive im neuen Format lesen, sollten darauf vorbereitet sein, dass sich die Nachkommazahl erhöht und neue Zeilen vorhanden sein können, und sollten diese ignorieren, falls dies der Fall ist.
+=over 
+
+=item * alter Stil (V7-)Format
+
+=item * prä-POSIX-ustar-Format
+
+=item * eine Teilmenge des GNU-Formats
+
+Der neue Stil mit langen Pfadnamen und langen Linknamen, unterstützt seit Dpkg 1.4.1.17; große Datei-Metadaten seit Dpkg 1.18.24.
+
+=item * POSIX-ustar-Format
+
+Lange Namen werden seit Dpkg 1.15.0 unterstützt.
+
+=back
+
+Unbekannte Tar-Typeinstellungen werden als Fehler betrachtet. Standardmäßig ist jede Tar-Eintraggröße innerhalb eines Tar-Archivs auf 11 ASCII-Oktalziffern begrenzt; damit sind bis zu 8 GiB-Tar-Einträge möglich. Die Unterstützung der großen Dateimetadaten im GNU-Format ermöglicht 95-Bit-Tar-Eintragsgrößen und negative Zeitstempel und 63-Bit-UID, -GID und -Gerätenummern, womit praktisch unbegrenzte Werte möglich sind.
+
+Das B<ar>-Archiv besteht aus einer Reihe von Elementen in einer bestimmten Reihenfolge:
+
+=over 
+
+=item B<debian-binary>
+
+Das erste benötigte Element enthält eine Reihe von Zeilen, die durch Zeilenumbrüche getrennt sind. Derzeit ist nur eine Zeile vorhanden, die Versionsnummer, B<2.0> zum Zeitpunkt, zu dem diese Handbuchseite geschrieben wurde. Programme, die Archive im neuen Format lesen, sollten darauf vorbereitet sein, dass sich die Nachkommazahl erhöht und neue Zeilen vorhanden sein können, und sollten diese ignorieren, falls dies der Fall ist.
 
 Falls sich die Vorkommazahl geändert hat, wurde eine inkompatible Änderung durchgeführt und das Programm sollte sich beenden. Falls dies nicht der Fall ist, dann sollte das Programm sicher fortfahren können, es sei denn, ein unerwartetes Element ist im Archiv (abgesehen vom Ende) gefunden worden, wie nachfolgend beschrieben.
 
-Das zweite erforderliche Element heißt B<control.tar>. Es ist ein Tar-Archiv (entweder nicht komprimiert (wird seit Dpkg 1.17.6 unterstützt) oder mit Gzip (mit der Endung B<.gz>) bzw. Xz (mit der Endung B<.xz>, seit Dpkg 1.17.6 unterstützt) komprimiert) oder Zstd (mit der Endung B<.zst>, seit Dpkg 1.21.18 unterstützt), das die Steuerinformationen als eine Reihe von normalen Dateien enthält, von denen die Datei B<control> zwingend erforderlich ist und die Kern-Steuerinformationen enthält. Die Dateien B<md5sums>, B<conffiles>, B<triggers>, B<shlibs> und B<symbols> enthalten bestimmte optionale Steuerinformationen und die Dateien B<preinst>, B<postinst>, B<prerm> und B<postrm> sind optionale Betreuerskripte. Der Steuer-Tarball kann optional einen Eintrag für ‚B<.>’, das aktuelle Verzeichnis, enthalten.
+=item B<control.tar>
 
-Das dritte, letzte zwingend benötigte Element heißt B<data.tar>. Es enthält das Dateisystem als Tar-Archiv, entweder unkomprimiert (seit Dpkg 1.10.24 unterstützt) oder mit gzip (Dateiendung B<.gz>), xz (Dateiendung B<.xz>, seit Dpkg 1.15.6 unterstützt), zstd (Dateiendung B<.zst>, seit Dpkg 1.21.18 unterstützt), bzip2 (Dateiendung B<.bz2>, seit Dpkg 1.10.24 unterstützt) oder lzma (Dateiendung B<.lzma>, seit Dpkg 1.13.25 unterstützt) komprimiert.
+The second required member is a tar archive containing the package metadata.
+
+Es kann die folgenden Komprimierungen verwenden:
+
+=over 
+
+=item * none (kein, unterstützt seit Dpkg 1.17.6)
+
+=item * gzip (mit Erweiterung B<.gz>)
+
+=item * xz (mit Erweiterung B<.xz>, unterstützt seit Dpkg 1.17.6)
+
+=item * zstd (mit Erweiterung B<.zst>, unterstützt seit Dpkg 1.21.18)
+
+=back
+
+Es enthält eine Reihe von einfachen Dateien:
+
+=over 
+
+=item B<control>
+
+Mandatory control information, in L<deb822(5)> format.
+
+=item B<md5sums>
+
+=item B<conffiles>
+
+=item B<triggers>
+
+=item B<shlibs>
+
+=item B<symbols>
+
+Optional package metadata.
+
+=item B<preinst>
+
+=item B<postinst>
+
+=item B<prerm>
+
+=item B<postrm>
+
+Optionale Betreuer-Skripte.
+
+=back
+
+Der Control-Tarball darf optional einen Eintrag für ‚B<.>’, das aktuelle Verzeichnis, enthalten.
+
+=item B<data.tar>
+
+Das dritte, letzte benötigte Element enthält das Dateisystemarchiv als Tar-Archiv.
+
+Es kann die folgenden Komprimierungen verwenden:
+
+=over 
+
+=item * none (unterstützt seit Dpkg 1.10.24)
+
+=item * gzip (mit Erweiterung B<.gz>)
+
+=item * xz (mit Erweiterung B<.xz>, unterstützt seit Dpkg 1.15.6)
+
+=item * zstd (mit Erweiterung B<.zst>, unterstützt seit Dpkg 1.21.18)
+
+=item * bzip2 (mit Erweiterung B<.bz2>, unterstützt seit Dpkg 1.10.24)
+
+=item * lzma (mit Erweiterung B<.lzma>, unterstützt seit Dpkg 1.13.25)
+
+=back
+
+=back
 
 Diese Elemente müssen in genau dieser Reihenfolge erscheinen. Aktuelle Implementierungen sollten zusätzliche Elemente nach B<data.tar> ignorieren. Weitere Elemente könnten in der Zukunft definiert werden und werden (falls möglich) nach diesen drei platziert. Alle zusätzlichen Elemente, die nach B<debian-binary> und vor B<control.tar> oder B<data.tar> eingefügt werden könnten und die problemlos von älteren Programmen ignoriert werden sollten, werden Namen haben, die mit einem Unterstrich ‚B<_>’ anfangen.
 
@@ -63,7 +159,7 @@ L<deb-old(5)>, L<dpkg-deb(1)>, L<deb-control(5)>, L<deb-conffiles(5)>, L<deb-md5
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

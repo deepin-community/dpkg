@@ -74,6 +74,10 @@ Visar version och avslutar.
 
 =over 
 
+=item B<DEB_HOST_ARCH>
+
+Anger målarkitekturen. Detta påverkar logiken för beroendelösning, vilken då kanske inte motsvarar var systemets dpkg anser vara tillräckligt.
+
 =item B<DEB_BUILD_PROFILES>
 
 Om satt, används som aktiv(a) byggprofil(er) för paketet som byggs. Det är en blankstegsavdelad lista med profilnamn. Överstyrs av flaggan B<-P>.

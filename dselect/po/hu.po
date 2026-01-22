@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dselect 1.17.0\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2024-03-10 20:21+0100\n"
+"POT-Creation-Date: 2025-12-20 02:18+0100\n"
 "PO-Revision-Date: 2006-10-06 03:48+0100\n"
 "Last-Translator: SZERVÁC Attila <sas@321.hu>\n"
 "Language-Team: Hungarian <debian-l10n-hungarian@lists.debian.org>\n"
@@ -107,11 +107,13 @@ msgid "%s to go back"
 msgstr ""
 
 #: dselect/bindings.cc
+msgctxt "keybinding"
 msgid "[not bound]"
 msgstr ""
 
 #: dselect/bindings.cc
 #, c-format
+msgctxt "keybinding"
 msgid "[unk: %d]"
 msgstr ""
 
@@ -399,7 +401,7 @@ msgid ""
 "of\n"
 "the display shows relevant conflicts and dependencies; use 'i' to cycle "
 "between\n"
-"that, the package descriptions and the internal control information.\n"
+"that, the package descriptions and the internal package metadata.\n"
 "\n"
 "A set of 'suggested' packages has been calculated, and the initial markings "
 "in\n"
@@ -679,8 +681,8 @@ msgstr ""
 #| "  --expert                   Turn on expert mode.\n"
 #| "  --debug <file> | -D<file>  Turn on debugging, sending output to "
 #| "<file>.\n"
-#| "  --colour | --color screenpart:[foreground],[background][:"
-#| "attr[+attr+..]]\n"
+#| "  --colour | --color screenpart:[foreground],[background]"
+#| "[:attr[+attr+..]]\n"
 #| "                             Configure screen colours.\n"
 #| "\n"
 msgid ""
@@ -733,9 +735,10 @@ msgid "<attr> is:"
 msgstr ""
 
 #: dselect/main.cc
-#, c-format
-msgid "couldn't open debug file '%.255s'\n"
-msgstr "sikertelen `%.255s' hibajavító fájl megnyitás\n"
+#, fuzzy, c-format
+#| msgid "couldn't open debug file '%s'\n"
+msgid "cannot open debug file '%s'\n"
+msgstr "sikertelen `%s' hibajavító fájl megnyitás\n"
 
 #: dselect/main.cc
 #, fuzzy, c-format
@@ -787,11 +790,19 @@ msgid "terminal lacks necessary features, giving up"
 msgstr "a terminál nem bír a szükséges képességekkel, feladom"
 
 #: dselect/main.cc
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "\n"
+#| "Move around with ^P and ^N, cursor keys, initial letters, or digits;\n"
+#| "Press <enter> to confirm selection.   ^L redraws screen.\n"
+#| "\n"
 msgid ""
 "\n"
 "\n"
-"Move around with ^P and ^N, cursor keys, initial letters, or digits;\n"
-"Press <enter> to confirm selection.   ^L redraws screen.\n"
+"Move around with Ctrl+P and Ctrl+N, cursor keys, initial letters, or "
+"digits;\n"
+"Press <enter> to confirm selection. Ctrl+L redraws screen.\n"
 "\n"
 msgstr ""
 "\n"
@@ -824,8 +835,8 @@ msgstr "a főmenü elérése meghiúsult"
 
 #: dselect/main.cc
 #, c-format
-msgid "unknown action string '%.50s'"
-msgstr "ismeretlen `%.50s' művelet sztring"
+msgid "unknown action string '%s'"
+msgstr "ismeretlen `%s' művelet sztring"
 
 #: dselect/methlist.cc
 msgid "Abbrev."
@@ -934,32 +945,32 @@ msgstr "lekérdező/beállító parancsfájl"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "syntax error in method options file '%.250s' -- %s"
+msgid "syntax error in method options file '%s' -- %s"
 msgstr ""
 
 #: dselect/methparse.cc
 #, c-format
-msgid "error reading options file '%.250s'"
+msgid "error reading options file '%s'"
 msgstr ""
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to read '%.250s' directory for reading methods"
+msgid "unable to read '%s' directory for reading methods"
 msgstr ""
 
 #: dselect/methparse.cc
 #, c-format
-msgid "method '%.250s' has name that is too long (%d > %d characters)"
+msgid "method '%s' has name that is too long (%d > %d characters)"
 msgstr ""
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to access method script '%.250s'"
+msgid "unable to access method script '%s'"
 msgstr ""
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to read method options file '%.250s'"
+msgid "unable to read method options file '%s'"
 msgstr ""
 
 #: dselect/methparse.cc
@@ -1008,37 +1019,22 @@ msgstr ""
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to open option description file '%.250s'"
+msgid "cannot load option description file '%s'"
 msgstr ""
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to stat option description file '%.250s'"
+msgid "error during read of method options file '%s'"
 msgstr ""
 
 #: dselect/methparse.cc
 #, c-format
-msgid "failed to read option description file '%.250s'"
+msgid "unable to open current option file '%s'"
 msgstr ""
 
 #: dselect/methparse.cc
 #, c-format
-msgid "error during read of option description file '%.250s'"
-msgstr ""
-
-#: dselect/methparse.cc
-#, c-format
-msgid "error during read of method options file '%.250s'"
-msgstr ""
-
-#: dselect/methparse.cc
-#, c-format
-msgid "unable to open current option file '%.250s'"
-msgstr ""
-
-#: dselect/methparse.cc
-#, c-format
-msgid "unable to write new option to '%.250s'"
+msgid "unable to write new option to '%s'"
 msgstr ""
 
 #: dselect/pkgdisplay.cc
@@ -1061,10 +1057,6 @@ msgstr "eltávolítás"
 msgid "purge"
 msgstr "törlés"
 
-#. TRANSLATORS: The space is a trick to work around gettext which uses
-#. * the empty string to store information about the translation. DO NOT
-#. * CHANGE THAT IN A TRANSLATION! The code really relies on that being
-#. * a single space.
 #: dselect/pkgdisplay.cc
 msgid " "
 msgstr " "

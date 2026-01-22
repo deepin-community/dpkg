@@ -28,7 +28,13 @@ Das mehrteilige B<.deb>-Format wird zum Aufteilen von großen Paketen in kleiner
 
 Die Datei ist ein B<ar>-Archiv mit einer magischen Zahl von B<!E<lt>archE<gt>>. Der Dateiname kann (seit Dpkg 1.15.6) mit einem Schrägstrich abschließen.
 
-Das erste Element heißt B<debian-split> und enthält eine Reihe von Zeilen, getrennt durch Leerzeilen. Derzeit sind acht Zeilen vorhanden:
+Das B<ar>-Archiv besteht aus einer Reihe von Elementen in einer bestimmten Reihenfolge:
+
+=over 
+
+=item B<debian-split>
+
+Das erste benötigte Element enthält eine Reihe von Zeilen, getrennt durch Leerzeilen. Derzeit sind acht Zeilen vorhanden:
 
 =over 
 
@@ -70,7 +76,11 @@ Programme, die mehrteilige Archive lesen, sollten darauf vorbereitet sein, dass 
 
 Falls sich die Hauptversionsnummer geändert hat, wurde eine inkompatible Änderung durchgeführt und das Programm sollte sich beenden. Falls dies nicht der Fall ist, dann sollte das Programm sicher fortfahren können, es sei denn, ein unerwartetes Element ist im Archiv (abgesehen vom Ende) gefunden worden, wie nachfolgend beschrieben.
 
-Das zweite, letzte benötigte Element heißt B<data.>I<N>, wobei I<N> die Teilnummer angibt. Es enthält die rohen Daten des Teils.
+=item B<data.>I<N>
+
+Das zweite, letzte benötigte Element, wobei I<N> die Teilnummer angibt. Es enthält die rohen Daten des Teils.
+
+=back
 
 Diese Elemente müssen in genau dieser Reihenfolge erscheinen. Aktuelle Implementierungen sollten zusätzliche Elemente nach B<data.>I<N> ignorieren. Weitere Elemente könnten in der Zukunft definiert werden und werden (falls möglich) nach diesen drei platziert.
 
@@ -81,7 +91,7 @@ L<deb(5)>, L<dpkg-split(1)>.
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

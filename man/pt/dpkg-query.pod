@@ -129,7 +129,7 @@ Escreve o I<ficheiro-controle> instalado no seu sistema a partir de I<nome-pacot
 
 Lista caminhos para ficheiros de controle instalados no seu sistema a partir de I<package-name> (desde dpkg 1.15.4).  Se for especificado I<control-file> então apenas lista o caminho para esse ficheiro de controle se estiver presente.
 
-B<Aviso>: este comando está descontinuado pois da acesso direto à base de dados interna do  dpkg, por favor use B<--control-list> e B<--control-show> em vez deste para todos os casos onde esses comandos possam dar os mesmos resultados finais. esult. Apesar disto, enquanto ainda existir pelo menos um caso onde este comando é necessário (isto é, quando é preciso de remover um script de maintainer postrm prejudicial), e enquanto não existir boa solução para isso, este comando não será removido.
+B<Aviso>: Este comando está descontinuado pois dá acesso direto à base de dados interna do dpkg, por favor passe a usar B<--control-list> e B<--control-show> em vez deste para todos os casos onde esses comandos possam dar os mesmos resultados finais. Apesar disto, enquanto ainda existir pelo menos um caso onde este comando é necessário (isto é, quando é preciso de remover um script de maintainer postrm prejudicial), e enquanto não existir uma boa solução para isso, este comando não será removido.
 
 =item B<-S>, B<--search> I<filename-search-pattern>...
 
@@ -156,7 +156,7 @@ Z<>
   local diversion from: I<diverted-from>
   local diversion to: I<diverted-to>
 
-B<Dica>: Quando se faz análise máquina a uma saída,é costume definir o locale para B<C.UTF-8> para obter resultados reproduzíveis.
+B<Dica>: Quando se faz análise máquina a uma saída, é costume definir o locale para B<C.UTF-8> para obter resultados reproduzíveis.
 
 =item B<-p>, B<--print-avail> [I<package-name>...]
 
@@ -188,7 +188,7 @@ Define o directório raiz para I<directory>, o que define o directório administ
 
 =item B<--load-avail>
 
-Também carrega o ficheiro disponível quando se usa os comandos B<--show> e B<--list>, que agora por predefinição apenas consultam o ficheiro de status (desde dpkg 1.16.2).
+Também carrega o ficheiro disponível quando se usa os comandos B<--show> e B<--list>, que agora por predefinição apenas consulta o ficheiro de status (desde dpkg 1.16.2).
 
 =item B<--no-pager>
 
@@ -232,6 +232,8 @@ Informação do pacote pode ser incluída ao inserir referencias variáveis a ca
 
 =item B<Description>
 
+=item B<Description-md5> (interno, relacionado com front-end)
+
 =item B<Enhances>
 
 =item B<Protected>
@@ -246,9 +248,9 @@ Informação do pacote pode ser incluída ao inserir referencias variáveis a ca
 
 =item B<MD5sum> (interno, relacionado com front-end)
 
-=item B<MSDOS-Filename> (interno, relacionado com front-end)
-
 =item B<Maintainer>
+
+=item B<Multi-Arch>
 
 =item B<Origin>
 
@@ -267,6 +269,12 @@ Informação do pacote pode ser incluída ao inserir referencias variáveis a ca
 =item B<Revision> (obsoleto)
 
 =item B<Section>
+
+=item B<SHA1> (interno, relacionado com front-end)
+
+=item B<SHA256> (interno, relacionado com front-end)
+
+=item B<SHA512> (interno, relacionado com front-end)
 
 =item B<Size> (interno, relacionado com front-end)
 
@@ -383,7 +391,9 @@ Define o programa a executar quando multiplica um comando via shell (desde dpkg 
 
 =item B<DPKG_PAGER>
 
-Define o comando paginador a usar (desde dpkg 1.19.1), o qual ir+a ser executado com «B<$SHELL -c>».  Se B<SHELL> não estiver definido, irá ser usado «B<%DPKG_DEFAULT_SHELL%>» em vez dele. O B<DPKG_PAGER> sobrepõe a variável de ambiente B<PAGER> (desde dpkg 1.19.2).
+Define o comando paginador a usar (desde dpkg 1.19.1), o qual ir+a ser executado com «B<$SHELL -c>».  Se B<SHELL> não estiver definido, irá ser usado «B<%DPKG_DEFAULT_SHELL%>» em vez dele.
+
+The B<DPKG_PAGER> overrides the B<PAGER> environment variable (since dpkg 1.19.2).  If none of the programs pointed by B<DPKG_PAGER> or B<PAGER> are present, the following programs will be tried in order (since dpkg 1.22.12): the default pager B<%DPKG_DEFAULT_PAGER%>, then L<less(1)>, L<more(1)>, and finally L<cat(1)>.
 
 =item B<DPKG_ROOT>
 
@@ -400,6 +410,10 @@ Define a máscara de depuração (desde dpkg 1.21.10) a partir dum valor octal. 
 =item B<DPKG_COLORS>
 
 Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B<auto> (predefinido), B<always> e B<never>.
+
+=item B<DPKG_NLS>
+
+Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nativa. Também como conhecido como suporte de internacionalização (ou i18n) (desde dpkg 1.22.7). Os valores aceites são B<0> e B<1> (predefinição).
 
 =back
 

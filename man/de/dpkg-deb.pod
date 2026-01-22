@@ -36,15 +36,15 @@ Bei den meisten Befehlen, die ein Archiv als Eingabeargument erwarten, kann der 
 
 =item B<-b>, B<--build> I<Programmverzeichnis> [I<Archiv>|I<Verzeichnis>]
 
-Legt ein Debian-Archiv aus dem Dateisystembaum, der in I<Programmverzeichnis> gespeichert ist, an. I<Programmverzeichnis> muss ein B<DEBIAN>-Unterverzeichnis aufweisen, das die Dateien mit Steuerinformation wie die B<control>-Datei selbst enthält. Dieses Verzeichnis wird I<nicht> in dem Dateisystemarchiv des Binärpakets auftauchen, sondern die Dateien selbst werden in den Steuer-Informationsbereich des Binärpakets gepackt.
+Creates a debian archive from the filesystem tree stored in I<binary-directory>.  I<binary-directory> must have a B<DEBIAN> subdirectory, which contains the package metadata files such as the binary package control file.  This directory will I<not> appear in the binary package's filesystem archive, but instead the files in it will be put in the binary package's control information area.
 
-Falls Sie nicht B<--nocheck> angeben, wird B<dpkg-deb> B<DEBIAN/control> lesen und es auswerten. Es prüft die Datei auf Syntax-Fehler und andere Probleme und zeigt den Namen des zu bauenden Binärpakets an. B<dpkg-deb> wird auch die Rechte der Betreuer-Skripte und anderer Dateien im B<DEBIAN>-Steuer-Informationsverzeichnis prüfen.
+Unless you specify B<--no-check>, B<dpkg-deb> will read B<DEBIAN/control> and parse it.  It will check the file for syntax errors and other problems, and display the name of the binary package being built.  B<dpkg-deb> will also check the permissions of the maintainer scripts and other files found in the B<DEBIAN> package metadata directory.
 
 Falls kein I<Archiv> angegeben ist, wird B<dpkg-deb> das Paket in die Datei I<Programmverzeichnis>B<.deb> schreiben.
 
 Falls das anzulegende Archiv bereits existiert, wird es überschrieben.
 
-Falls das zweite Argument ein Verzeichnis ist, wird B<dpkg-deb> in die Datei I<Verzeichnis>B</>I<Paket>B<_>I<Version>B<_>I<Arch>B<.deb.> schreiben. Wenn ein Zielverzeichnis statt einer Datei angegeben ist, darf die Option B<--nocheck> nicht verwendet werden (da B<dpkg-deb> die Paketsteuerdatei lesen und auswerten muss, um den zu verwendenden Dateinamen zu bestimmen).
+Falls das zweite Argument ein Verzeichnis ist, wird B<dpkg-deb> in die Datei I<Verzeichnis>B</>I<Paket>B<_>I<Version>B<_>I<Arch>B<.deb.> schreiben. Wenn ein Zielverzeichnis statt einer Datei angegeben ist, darf die Option B<--no-check> nicht verwendet werden (da B<dpkg-deb> die Paketsteuerdatei lesen und auswerten muss, um den zu verwendenden Dateinamen zu bestimmen).
 
 =item B<-I>, B<--info> I<Archiv> [I<Steuer-Dateiname> …]
 
@@ -86,7 +86,7 @@ Ist wie B<--extract> (B<-x>) mit B<--verbose> (B<-v>), das beim Arbeiten eine Li
 
 =item B<-R>, B<--raw-extract> I<Archiv> I<Verzeichnis>
 
-Entpackt den Dateisystembaum aus einem Paketarchiv in ein angegebenes Verzeichnis und die Steuerinformationsdateien in das B<DEBIAN>-Unterverzeichnis des angegebenen Verzeichnisses (seit Dpkg 1.16.1).
+Extracts the filesystem tree from a package archive into a specified directory, and the package metadata files into a B<DEBIAN> subdirectory of the specified directory (since dpkg 1.16.1).
 
 Das Zielverzeichnis (aber nicht übergeordnete) wird, falls notwendig, angelegt.
 
@@ -102,7 +102,7 @@ Entnimmt die Dateisystembaumdaten aus einem Binärpaket und schickt sie zur Stan
 
 =item B<-e>, B<--control> I<Archiv> [I<Verzeichnis>]
 
-Entpackt die Steuer-Informationsdateien aus einem Paketarchiv in das angegebene Verzeichnis.
+Extracts the package metadata files from a package archive into the specified directory.
 
 Falls kein Verzeichnis angegeben ist, wird das Unterverzeichnis B<DEBIAN> im aktuellen Verzeichnis verwendet.
 
@@ -130,17 +130,17 @@ Die Zeichenkette darf jedes Statusfeld in der Form „${I<Feldname>}“ referenz
 
 Die Voreinstellung für dieses Feld ist „${Package}\t${Version}\n“.
 
-=item B<-z>I<Komprimierstufe>
+=item B<-z>, B<--compression-level=>I<Komprimierungsstufe>
 
-Gibt die Komprimierstufe an, die im Komprimier-Backendprogramm beim Bau eines Pakets verwendet werden soll. Standardmäßig ist dies 9 für Gzip, 6 für Xz, 3 für Zstd). Die akzeptierten Werte hängen vom Komprimierer ab. Für Gzip von 0-9, wobei 0 auf den Komprimierer „none“ abgebildet wird. Für Xz von 0-9. Für Zstd von 0-22, wobei die Stufen von 20-22 den Ultramodus aktivieren. Vor Dpkg 1.16.2 war die Stufe 0 äquivalent zu dem Komprimierer „none“ für alle Komprimierer.
+Gibt die Komprimierstufe an, die im Komprimier-Backendprogramm beim Bau eines Pakets verwendet werden soll. Standardmäßig ist dies 9 für Gzip, 6 für Xz, 3 für Zstd, lange Option seit Dpkg 1.22.9. Die akzeptierten Werte hängen vom Komprimierer ab. Für Gzip von 0-9, wobei 0 auf den Komprimierer „none“ abgebildet wird. Für Xz von 0-9. Für Zstd von 0-22, wobei die Stufen von 20-22 den Ultramodus aktivieren. Vor Dpkg 1.16.2 war die Stufe 0 äquivalent zu dem Komprimierer „none“ für alle Komprimierer.
 
-=item B<-S>I<Komprimierstrategie>
+=item B<-S>, B<--compression-strategy=>I<Komprimierungsstrategie>
 
-Gibt die zu verwendende Komprimierstrategie an, die für den Komprimierer-Backend beim Bau eines Pakets verwandt werden soll (seit Dpkg 1.16.2). Erlaubte Werte sind B<none> (seit Dpkg 1.16.4), B<filtered>, B<huffman>, B<rle> und B<fixed> für Gzip (seit Dpkg 1.17.0) und B<extreme> für Xz.
+Gibt die zu verwendende Komprimierstrategie an, die für den Komprimierer-Backend beim Bau eines Pakets verwandt werden soll (seit Dpkg 1.16.2, lange Option seit Dpkg 1.22.9). Erlaubte Werte sind B<none> (seit Dpkg 1.16.4), B<filtered>, B<huffman>, B<rle> und B<fixed> für Gzip (seit Dpkg 1.17.0) und B<extreme> für Xz.
 
-=item B<-Z>I<Komprimierart>
+=item B<-Z>, B<--compression=>I<Komprimierungstyp>
 
-Gibt die Art der Komprimierung beim Bau eines Pakets an. Erlaubte Werte sind B<gzip>, B<xz> (seit Dpkg 1.15.6), B<zstd> (seit Dpkg 1.21.18) und B<none> (voreingestellt ist B<%DEB_DEFAULT_COMPRESSOR%>).
+Gibt die Art der Komprimierung beim Bau eines Pakets an (lange Option seit Dpkg 1.22.9). Erlaubte Werte sind B<gzip>, B<xz> (seit Dpkg 1.15.6), B<zstd> (seit Dpkg 1.21.18) und B<none> (voreingestellt ist B<%DEB_DEFAULT_COMPRESSOR%>).
 
 =item B<--[no-]uniform-compression>
 
@@ -162,9 +162,15 @@ Setzt das beim Bau verwandte Archivformat (seit Dpkg 1.17.0). Erlaubte Werte sin
 
 Das alte Format wird nicht so leicht von nicht-Debian-Werkzeugen eingelesen und ist jetzt veraltet; der einzige Zweck ist zum Bau von Paketen, die von Dpkg-Versionen kleiner 0.93.76 (September 1995) eingelesen werden sollen. Diese Dpkg-Version wurde nur als i386 a.out-Programm veröffentlicht.
 
-=item B<--nocheck>
+=item B<--no-check>
 
 Unterdrückt die normalen Überprüfungen von B<dpkg-deb --build> über die vorgeschlagenen Inhalte eines Archivs. Damit können Sie jedes Archiv bauen, das Sie möchten, egal wie defekt es ist.
+
+Option unterstützt seit Dpkg 1.22.12.
+
+=item B<--nocheck>
+
+Dies ist ein Alias für B<--no-check>.
 
 =item B<-v>, B<--verbose>
 
@@ -216,6 +222,22 @@ Die Option B<-z> erlaubt das Hinwegsetzen über diesen Wert.
 
 Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte sind: B<auto> (Vorgabe), B<always> und B<never>.
 
+=item B<DPKG_NLS>
+
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language Support, auch als Unterstützung für Internationalisierung (oder i18n) bekannt, aktiviert wird (seit Dpkg 1.22.7). Die akzeptierten Werte sind: B<0> und B<1> (Vorgabe).
+
+=item B<DPKG_PATH_PASSWD>
+
+Setzt den Pfadnamen für die F<passwd>-Datei des Systems. Dieser Pfad ist relativ zum Verzeichnis B<--root>. Die Vorgabe ist F</etc/passwd>.
+
+Seit Dpkg 1.22.16.
+
+=item B<DPKG_PATH_GROUP>
+
+Setzt den Pfadnamen für die F<group>-Datei des Systems. Dieser Pfad ist relativ zum Verzeichnis B<--root>. Die Vorgabe ist F</etc/group>.
+
+Seit Dpkg 1.22.16.
+
 =item B<TMPDIR>
 
 Falls gesetzt, wird B<dpkg-deb> es als das Verzeichnis verwenden, in dem temporäre Dateien und Verzeichnisse erstellt werden.
@@ -251,7 +273,7 @@ F<%PKGDOCDIR%/spec/rootless-builds.txt>, L<deb(5)>, L<deb-control(5)>, L<dpkg(1)
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

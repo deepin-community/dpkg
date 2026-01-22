@@ -27,6 +27,7 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 #include <dpkg/dpkg.h>
@@ -34,7 +35,86 @@
 #include <dpkg/pager.h>
 #include <dpkg/fdio.h>
 #include <dpkg/buffer.h>
+#include <dpkg/path.h>
 #include <dpkg/file.h>
+#include <dpkg/execname.h>
+
+/**
+ * Get the current working directory.
+ *
+ */
+void
+file_getcwd(struct varbuf *cwd)
+{
+	varbuf_reset(cwd);
+	varbuf_grow(cwd, 64);
+	while (getcwd(cwd->buf, cwd->size) == NULL)
+		varbuf_grow(cwd, cwd->size * 2);
+	varbuf_trunc(cwd, strlen(cwd->buf));
+}
+
+/*
+ * Handle pre-POSIX-1.2008 realpath() semantics, by using a fixed size buffer
+ * based on PATH_MAX, which we expect to be defined on the systems that have
+ * no proper behavior for this function.
+ */
+#ifdef PATH_MAX
+static char *
+file_realpath_legacy(const char *pathname)
+{
+	char resolved_path_buf[PATH_MAX];
+	char *resolved_path;
+
+	resolved_path = realpath(pathname, resolved_path_buf);
+	if (resolved_path == NULL && errno != ENOENT)
+		ohshite(_("cannot canonicalize pathname %s"), pathname);
+
+	if (resolved_path)
+		return m_strdup(resolved_path);
+
+	return NULL;
+}
+#endif
+
+char *
+file_realpath(const char *pathname)
+{
+	char *resolved_path;
+
+	resolved_path = realpath(pathname, NULL);
+	if (resolved_path == NULL && errno != ENOENT) {
+#ifdef PATH_MAX
+		if (errno == EINVAL)
+			return file_realpath_legacy(pathname);
+#endif
+		ohshite(_("cannot canonicalize pathname %s"), pathname);
+	}
+
+	return resolved_path;
+}
+
+/**
+ * Canonicalize a pathname (physically or lexically).
+ *
+ * Try to canonicalize a pathname based on what is on the filesystem. If
+ * the pathname does not exist, then try a lexical canonicalization.
+ *
+ * @param pathname The pathname to canonicalize.
+ *
+ * @return The allocated canonicalized pathname.
+ */
+char *
+file_canonicalize(const char *pathname)
+{
+	char *canon_path;
+
+	errno = 0;
+	canon_path = file_realpath(pathname);
+	if (canon_path == NULL)
+		canon_path = path_canonicalize(pathname);
+
+	return canon_path;
+}
 
 /**
  * Read the symlink content into a varbuf.
@@ -49,8 +129,10 @@ file_readlink(const char *slink, struct varbuf *content, size_t content_len)
 	varbuf_grow(content, content_len + 1);
 
 	linksize = readlink(slink, content->buf, content->size);
+	if (linksize < 0)
+		return linksize;
+
 	varbuf_trunc(content, linksize);
-	varbuf_end_str(content);
 
 	return linksize;
 }
@@ -85,18 +167,18 @@ file_copy_perms(const char *src, const char *dst)
 {
 	struct stat stab;
 
-	if (stat(src, &stab) == -1) {
+	if (stat(src, &stab) < 0) {
 		if (errno == ENOENT)
 			return;
-		ohshite(_("unable to stat source file '%.250s'"), src);
+		ohshite(_("unable to stat source file '%s'"), src);
 	}
 
-	if (chown(dst, stab.st_uid, stab.st_gid) == -1)
-		ohshite(_("unable to change ownership of target file '%.250s'"),
+	if (chown(dst, stab.st_uid, stab.st_gid) < 0)
+		ohshite(_("unable to change ownership of target file '%s'"),
 		        dst);
 
-	if (chmod(dst, (stab.st_mode & ~S_IFMT)) == -1)
-		ohshite(_("unable to set mode of target file '%.250s'"), dst);
+	if (chmod(dst, (stab.st_mode & ~S_IFMT)) < 0)
+		ohshite(_("unable to set mode of target file '%s'"), dst);
 }
 
 static int
@@ -115,10 +197,10 @@ file_slurp_fd(int fd, const char *filename, struct varbuf *vb,
 	if (st.st_size == 0)
 		return 0;
 
-	varbuf_init(vb, st.st_size);
+	varbuf_init(vb, st.st_size + 1);
 	if (fd_read(fd, vb->buf, st.st_size) < 0)
 		return dpkg_put_errno(err, _("cannot read %s"), filename);
-	vb->used = st.st_size;
+	varbuf_trunc(vb, st.st_size);
 
 	return 0;
 }
@@ -165,7 +247,7 @@ file_unlock(int lockfd, const char *lockfile, const char *lockdesc)
 
 	file_lock_setup(&fl, F_UNLCK);
 
-	if (fcntl(lockfd, F_SETLK, &fl) == -1)
+	if (fcntl(lockfd, F_SETLK, &fl) < 0)
 		ohshite(_("unable to unlock %s"), lockdesc);
 }
 
@@ -192,7 +274,7 @@ file_is_locked(int lockfd, const char *filename)
 
 	file_lock_setup(&fl, F_WRLCK);
 
-	if (fcntl(lockfd, F_GETLK, &fl) == -1)
+	if (fcntl(lockfd, F_GETLK, &fl) < 0)
 		ohshit(_("unable to check file '%s' lock status"), filename);
 
 	if (fl.l_type == F_WRLCK && fl.l_pid != getpid())
@@ -226,8 +308,9 @@ file_lock(int *lockfd, enum file_lock_flags flags, const char *filename,
 	else
 		lock_cmd = F_SETLK;
 
-	if (fcntl(*lockfd, lock_cmd, &fl) == -1) {
+	if (fcntl(*lockfd, lock_cmd, &fl) < 0) {
 		const char *warnmsg;
+		char *execname;
 
 		if (errno != EACCES && errno != EAGAIN)
 			ohshite(_("unable to lock %s"), desc);
@@ -238,12 +321,15 @@ file_lock(int *lockfd, enum file_lock_flags flags, const char *filename,
 		            "See <https://wiki.debian.org/Teams/Dpkg/FAQ#db-lock>.");
 
 		file_lock_setup(&fl, F_WRLCK);
-		if (fcntl(*lockfd, F_GETLK, &fl) == -1)
+		if (fcntl(*lockfd, F_GETLK, &fl) < 0)
 			ohshit(_("%s was locked by another process\n%s"),
 			       desc, warnmsg);
 
-		ohshit(_("%s was locked by another process with pid %d\n%s"),
-		       desc, fl.l_pid, warnmsg);
+		execname = dpkg_get_pid_execname(fl.l_pid);
+
+		ohshit(_("%s was locked by %s process with pid %d\n%s"),
+		       desc, execname ? execname : C_("process", "<unknown>"),
+		       fl.l_pid, warnmsg);
 	}
 
 	push_cleanup(file_unlock_cleanup, ~0, 3, lockfd, filename, desc);

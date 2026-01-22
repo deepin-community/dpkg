@@ -28,7 +28,13 @@ I<filename>B<.deb>
 
 O ficheiro é um arquivo B<ar> com um valor mágico de B<!E<lt>archE<gt>>. Os nomes dos ficheiros podem conter uma barra à direita (desde o dpkg 1.15.6).
 
-O primeiro membro é chamado  B<debian-split> e contém uma série de linhas, separadas por caracteres de nova-linha. Actualmente estão presentes oito linhas:
+The B<ar> archive is composed of multiple members in a specific order:
+
+=over 
+
+=item B<debian-split>
+
+The first required member contains a series of lines, separated by newlines.  Currently eight lines are present:
 
 =over 
 
@@ -70,7 +76,11 @@ Os programas que leem arquivos de múltiplas-partes devem estar preparados para 
 
 Se o maior número de versão de formato tiver alterado, foi criada uma mudança incompatível e o programa deverá parar, se não o fizer, então o programa deverá ser capaz de continuar em segurança, a menos que encontre um membro inesperado no arquivo (excepto no final), como descrito abaixo.
 
-O segundo, último membro requerido é chamado B<data.>I<N>, onde I<N> denota o número de parte. Contém a parte crua dos dados.
+=item B<data.>I<N>
+
+The second, last required member, where I<N> denotes the part number.  It contains the raw part data.
+
+=back
 
 Estes membros têm de ocorrer nesta ordem exacta. As implementações actuais deverão ignorar quaisquer membros adicionais após B<data.>I<N>. Podem ser definidos mais membros no futuro, e (se possível) serão colocados após estes dois.
 

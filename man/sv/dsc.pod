@@ -26,7 +26,7 @@ Alla Debian-källkodspaket består av en .dsc-styrfil, vilken består av ett ant
 
 Varje fält börjar med en etikett, såsom B<Source> eller B<Binary> (skiftlägesoberoende), följt av ett kolontecken och fältets kropp (skiftlägesberoende såvida inte annat anges). Fält avdelas endast av fältetiketter. Med andra ord kan texten i fälten spänna över flera rader, men installationsverktygen kommer oftast att slå samman rader när kroppen tolkas (förutom när det gäller flerradsfälten B<Package-List>, B<Files>, B<Checksums-Sha1> and B<Checksums-Sha256>, se nedan).
 
-Styrinformationen kan omges av en OpenPGP-signatur i ASCII-skal, såsom beskrivs i RFC4880.
+Styrinformationen kan omges av en OpenPGP-signatur i ASCII-skal, såsom beskrivs i RFC9580.
 
 =head1 FÄLT
 
@@ -50,15 +50,17 @@ Fältet har nu ersatts av fältet B<Package-List>, som ger tillräcklig informat
 
 =item B<Architecture:> I<arkitekturlista> (rekommenderas)
 
-En lista över arkitekturer och arkitekturmönster avdelade med blanksteg som anger vilken typ av maskinvara paketet kan kompileras för. Vanliga arkitekturnamn och arkitekturmönster är B<amd64>, B<armel>, B<i386>, B<linux-any>, B<any-amd64>, osv.
+The architecture list specifies on which type of machine this package runs. The value should be a list of architecture names and/or wildcards separated by spaces.
 
-Observar att värdet B<all> är tänkt för paket som är plattformsoberoende, och B<any> för paket som är arkitekturberoende. Listan kan innehålla (eller enbart bestå av) specialvärdet B<all>. När listan innehåller arkitekturmönstret B<any> är det enda andra tillåtna värdet i listan B<all>.
+Common architecture names and architecture wildcards are B<amd64>, B<armel>, B<i386>, B<linux-any>, B<any-amd64>, etc.  Note that the B<all> value is meant for packages that are architecture independent, and B<any> for packages that are architecture dependent.  The list may include (or consist solely of) the special value B<all>.  When the list contains the architecture wildcard B<any>, the only other value allowed in the list is B<all>.
 
 Fältvärdet genereras normalt från fälten B<Architecture> i filen I<debian/control> i källkodspaketet.
 
 =item B<Version:> I<versionssträng> (krävs)
 
 Vanligtvis är detta det ursprungliga paketets versionsnummer på den form programmets författare använder. Den kan även innehålla ett Debianuppdateringsnummer (för paket vars källa är utanför Debian). Exakt format och sorteringsalgoritm beskrivs i L<deb-version(7)>.
+
+B<Note>: On some vendors, dpkg has been made to permit native sources with non-native versions, making this incoherent and adding to the confusion of the concept, where in addition this tends to be a trap for accidental mistakes.
 
 =item B<Origin:> I<namn>
 
@@ -142,7 +144,7 @@ I<paket> är namnet på binärpaketet.
 
 I<pakettyp> är typen på det binära paketet, vanligtvis B<deb>, ett annat vanligt värde är B<udeb>.
 
-I<sektion> och I<prioritet> motsvarar fälten med samma namn i binärpaketet.
+I<sektion> och I<prioritet> motsvarar fälten med samma namn i binärpaketet, eller sätts till förvaren B<unknown> respektive B<optional> om de utelämnas (sedan dpkg 1.22.13).
 
 I<nyckel-värde-lista> är en blankstegsavdelad lista på formen I<nyckel>B<=>I<värde>, och de för närvarande kända valfria nycklarna är:
 
@@ -154,7 +156,15 @@ Arkitekturbegränsning från binärpaketets fält B<Architecture>, med blanksteg
 
 =item B<profile>
 
-Den normaliserade byggprofil-begränsningsformeln från binärpaketets fält B<Build-Profile>, med OR (eller) ersatt med ”+” och AND (och) med ”,”.
+The normalized build-profile restriction formula from the binary package B<Build-Profile> field, with ANDs (whitespace inside enclosed angle brackets) converted to ‘,’, and ORs (whitespace between enclosing angle brackets) to ‘+’.  All angle brackets get removed during normalization.
+
+Deprecated since dpkg 1.23.0, superseded by B<profile:v1>.
+
+=item B<profile:v1>
+
+The normalized build-profile restriction formula from the binary package B<Build-Profile> field, with ANDs (whitespace inside enclosed angle brackets) converted to ‘&’, and ORs (whitespace between enclosing angle brackets) to ‘|’.  All angle brackets get removed during normalization.
+
+Supported since dpkg 1.23.0.
 
 =item B<protected>
 
@@ -168,11 +178,11 @@ Om binärpaketet är systemkritiskt kommer den här nyckeln innehålla värdet p
 
 =back
 
-=item B<Files:> (krävs)
+=item B<Files:> (krävs, svagt)
 
-=item B<Checksums-Sha1:> (krävs)
+=item B<Checksums-Sha1:> (krävs, svag)
 
-=item B<Checksums-Sha256:> (krävs)
+=item B<Checksums-Sha256:> (krävs, stark)
 
 =item S< >I<kontrollsumma> I<storlek> I<filnamn>
 
@@ -181,6 +191,8 @@ De här flerradsfälteten innehåller en lista med filer med en kontrollsumma oc
 Första raden i fältvärdet (delen av på samma rad som fältnamnet följt av kolon) är alltid tom. Innehållet i fältet anges som fortsättningsrader, en rad per fil. Varje rad består av kontrollsumman, ett blanksteg, filstorleken, ett blanksteg och filnamnet.
 
 De här fälten visar alla filer källkodspaketet består av. Listan över filer i dessa fält måste motsvara listan över filer i de andra relaterade fälten.
+
+B<Observera>: MD5- och SHA1-kontrollsummorna anses vara svaga och bör aldrig anses vara tillräckliga för en säker bekräftelse.
 
 =back
 

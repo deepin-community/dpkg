@@ -72,9 +72,8 @@ log_message(const char *fmt, ...)
 	va_start(args, fmt);
 	varbuf_set_str(&log, time_str);
 	varbuf_add_char(&log, ' ');
-	varbuf_vprintf(&log, fmt, args);
+	varbuf_add_vfmt(&log, fmt, args);
 	varbuf_add_char(&log, '\n');
-	varbuf_end_str(&log);
 	va_end(args);
 
 	if (fd_write(logfd, log.buf, log.used) < 0)
@@ -113,8 +112,7 @@ statusfd_send(const char *fmt, ...)
 		return;
 
 	va_start(args, fmt);
-	varbuf_reset(&vb);
-	varbuf_vprintf(&vb, fmt, args);
+	varbuf_set_vfmt(&vb, fmt, args);
 	/* Sanitize string to not include new lines, as front-ends should be
 	 * doing their own word-wrapping. */
 	varbuf_map_char(&vb, '\n', ' ');

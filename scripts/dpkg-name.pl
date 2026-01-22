@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use warnings;
-use strict;
+use v5.36;
 
 use List::Util qw(none);
 use File::Basename;
@@ -43,12 +42,12 @@ my %options = (
     architecture => 1,
 );
 
-sub version()
+sub version
 {
     printf(g_("Debian %s version %s.\n"), $Dpkg::PROGNAME, $Dpkg::PROGVERSION);
 }
 
-sub usage()
+sub usage
 {
     printf(g_("Usage: %s [<option>...] <file>...\n"), $Dpkg::PROGNAME);
 
@@ -56,7 +55,7 @@ sub usage()
 Options:
   -a, --no-architecture    no architecture part in filename.
   -o, --overwrite          overwrite if file exists.
-  -k, --symlink            don't create a new file, but a symlink.
+  -k, --symlink            do not create a new file, but a symlink.
   -s, --subdir [dir]       move file into subdirectory (use with care).
   -c, --create-dir         create target directory if not there (use with care).
   -?, --help               show this help message.
@@ -67,7 +66,7 @@ according to the 'underscores convention'.
 "));
 }
 
-sub fileexists($)
+sub fileexists
 {
     my $filename = shift;
 
@@ -79,7 +78,7 @@ sub fileexists($)
     }
 }
 
-sub filesame($$)
+sub filesame
 {
     my ($a, $b) = @_;
     my @sta = stat($a);
@@ -89,11 +88,11 @@ sub filesame($$)
     return (@sta and @stb and $sta[0] == $stb[0] and $sta[1] == $stb[1]);
 }
 
-sub getfields($)
+sub getfields
 {
     my $filename = shift;
 
-    # Read the fields
+    # Read the fields.
     open(my $cdata_fh, '-|', 'dpkg-deb', '-f', '--', $filename)
         or syserr(g_('cannot open %s'), $filename);
     my $fields = Dpkg::Control->new(type => CTRL_DEB);
@@ -103,7 +102,7 @@ sub getfields($)
     return $fields;
 }
 
-sub getarch($$)
+sub getarch
 {
     my ($filename, $fields) = @_;
 
@@ -116,13 +115,15 @@ sub getarch($$)
     return $arch;
 }
 
-sub getname($$$)
+sub getname
 {
     my ($filename, $fields, $arch) = @_;
 
     my $pkg = $fields->{Package};
     my $v = Dpkg::Version->new($fields->{Version});
-    my $version = $v->as_string(omit_epoch => 1);
+    my $version = $v->as_string(
+        omit_epoch => 1,
+    );
     my $type = $fields->{'Package-Type'} || 'deb';
 
     my $tname;
@@ -132,22 +133,23 @@ sub getname($$$)
         $tname = "$pkg\_$version.$type";
     }
     (my $name = $tname) =~ s/ //g;
-    if ($tname ne $name) { # control fields have spaces
+    if ($tname ne $name) {
+        # Control fields have spaces.
         warning(g_("bad package control information for '%s'"), $filename);
     }
     return $name;
 }
 
-sub getdir($$$)
+sub getdir
 {
     my ($filename, $fields, $arch) = @_;
     my $dir;
 
-    if (!$options{destdir}) {
+    if (! $options{destdir}) {
         $dir = dirname($filename);
         if ($options{subdir}) {
             my $section = $fields->{Section};
-            if (!$section) {
+            if (! $section) {
                 $section = 'no-section';
                 warning(g_("assuming section '%s' for '%s'"), $section,
                         $filename);
@@ -165,7 +167,7 @@ sub getdir($$$)
     return $dir;
 }
 
-sub move($)
+sub move
 {
     my $filename = shift;
 
@@ -255,5 +257,3 @@ while (@ARGV) {
 foreach my $file (@files) {
     move($file);
 }
-
-0;

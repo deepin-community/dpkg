@@ -42,6 +42,8 @@ Detta fält anger paketets typ. B<udeb> används för storleksbegränsade paket 
 
 Vanligtvis är detta det ursprungliga paketets versionsnummer på den form programmets författare använder. Den kan även innehålla ett Debianuppdateringsnummer (för paket vars källa är utanför Debian). Exakt format och sorteringsalgoritm beskrivs i L<deb-version(7)>.
 
+B<Note>: On some vendors, dpkg has been made to permit native sources with non-native versions, making this incoherent and adding to the confusion of the concept, where in addition this tends to be a trap for accidental mistakes.
+
 =item B<Maintainer:> I<fullt-namn-epost> (rekommenderas)
 
 Ska vara på formatet ”Joe Bloggs E<lt>jbloggs@foo.comE<gt>” och är normalt sett den person som skapat paketet, till skillnad från författaren av den programvara som paketerades.
@@ -56,15 +58,13 @@ Formatet för paketbeskrivningen är en kortfattad sammanfattning på den först
 
 Detta är ett generellt fält som ger paketet en kategori baserat på programvara som det installerar. Några vanliga sektioner är B<utils>, B<net>, B<mail>, B<text>, B<x11>, osv.
 
+Godtagna värden baseras på den specifika distributionens policy.
+
 =item B<Priority:> I<prioritet>
 
-Ställer in hur viktigt paketet är jämfört med systemet som helhet. Vanliga prioriteter är B<required> (nödvändig), B<standard> (normal), B<optional> (valfritt), B<extra> (extra), osv.
+Ställer in hur viktigt paketet är jämfört med systemet som helhet. Kända prioriteter är B<required> (nödvändig), B<important> (viktig), B<standard> (normal), B<optional> (valfritt), B<extra> (extra), och B<unknown> (okänd), men andra värden kan också användas.
 
-=back
-
-Gälten B<Section> och B<Priority> har vanligtvis en definierad uppsättning accepterade värden baserade på den specifika distributionens policy.
-
-=over 
+Hur dessa värden ska användas beror på den specifika distributionens policy.
 
 =item B<Installed-Size:> I<storlek>
 
@@ -84,9 +84,15 @@ Fältet krävs normalt sett endast om svaret är B<yes> (ja), och betecknar att 
 
 Fältet krävs normalt sett endast om svaret är B<yes> (ja), och sätts vanligtvis in av arkivprogramvaran. Det betecknar ett paket som krävs för att bygga andra paket.
 
-=item B<Architecture:> I<ark>|B<all>> (krävs)
+=item B<Architecture:> B<all>|I<arch> (required)
 
-Arkitekturen anger vilken sorts maskinvara paketet kompilerades för. Vanliga arkitekturer är B<amd64>, B<armel>, B<i386>, B<powerpc>, osv. Observera att värdet B<all> är avsett för paket som är oberoende av arkitektur. Exempel på detta är skal- eller Perlskript och dokumentation.
+The architecture specifies on which type of machine this package runs.
+
+Common architectures are B<amd64>, B<armel>, B<i386>, B<powerpc>, etc.  Note that the special B<all> value is meant for packages that are architecture independent (such as shell and Perl scripts or documentation).
+
+B<Note:> Architecture wildcards are not allowed in this context.
+
+An architecture name must start with an alphanumeric character (“0-9a-zA-Z”), and then gets followed by alphanumeric and dash (‘-’) characters.
 
 =item B<Origin:> I<namn>
 
@@ -227,16 +233,19 @@ Formatet och sättet på vilket varje bygg-id beräknas är medvetet inte defini
 =head1 EXEMPEL
 
  Package: grep
+ Version: 3.11-3
  Essential: yes
  Priority: required
- Section: base
- Maintainer: Wichert Akkerman <wakkerma@debian.org>
+ Section: utils
+ Maintainer: Anibal Monsalve Salazar <anibal@debian.org>
  Architecture: sparc
- Version: 2.4-1
- Pre-Depends: libc6 (>= 2.0.105)
+ Multi-Arch: foreign
+ Pre-Depends: libc6 (>= 2.34), libpcre2-8-0 (>= 10.32)
  Provides: rgrep
  Conflicts: rgrep
- Description: GNU grep, egrep and fgrep.
+ Installed-Size. 1267
+ Homepage: https://www.gnu.org/software/grep/
+ Description: GNU grep, egrep and fgrep
   The GNU family of grep utilities may be the "fastest grep in the west".
   GNU grep is based on a fast lazy-state deterministic matcher (about
   twice as fast as stock Unix egrep) hybridized with a Boyer-Moore-Gosper

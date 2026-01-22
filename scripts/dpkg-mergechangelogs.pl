@@ -16,8 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use warnings;
-use strict;
+use v5.36;
 
 use Scalar::Util qw(blessed);
 use Getopt::Long qw(:config posix_default bundling_values no_ignorecase);
@@ -30,13 +29,6 @@ use Dpkg::Version;
 use Dpkg::Vendor qw(run_vendor_hook);
 
 textdomain('dpkg-dev');
-
-sub merge_entries($$$);
-sub merge_block($$$;&);
-sub merge_entry_item($$$$);
-sub merge_conflict($$);
-sub get_conflict_block($$);
-sub join_lines($);
 
 BEGIN {
     eval q{
@@ -113,8 +105,10 @@ my @o = reverse @$cho;
 my @a = reverse @$cha;
 my @b = reverse @$chb;
 
-my @result; # Lines to output
-my $exitcode = 0; # 1 if conflict encountered
+# Lines to output.
+my @result;
+# Exit code 1 if conflict encountered.
+my $exitcode = 0;
 
 sub merge_tail {
     my $changes = shift;
@@ -131,13 +125,13 @@ while (1) {
     my ($o, $a, $b) = get_items_to_merge();
     last unless defined $o or defined $a or defined $b;
     next if merge_block($o, $a, $b);
-    # We only have the usually conflicting cases left
+    # We only have the usually conflicting cases left.
     if (defined $a and defined $b) {
-	# Same entry, merge sub-items separately for a nicer result
-	merge_entries($o, $a, $b);
+        # Same entry, merge sub-items separately for a nicer result.
+        merge_entries($o, $a, $b);
     } else {
-	# Non-existing on one side, changed on the other side
-	merge_conflict($a, $b);
+        # Non-existing on one side, changed on the other side.
+        merge_conflict($a, $b);
     }
 }
 
@@ -154,27 +148,27 @@ exit $exitcode;
 
 # Returns the next items to merge, all items returned correspond to the
 # same minimal version among the 3 possible next items (undef is returned
-# if the next item on the given changelog is skipped)
+# if the next item on the given changelog is skipped).
 sub get_items_to_merge {
     my @items = (shift @o, shift @a, shift @b);
     my @arrays = (\@o, \@a, \@b);
     my $minitem;
     foreach my $i (0 .. 2) {
-	if (defined $minitem and defined $items[$i]) {
-	    my $cmp = compare_versions($minitem, $items[$i]);
-	    if ($cmp > 0) {
-		$minitem = $items[$i];
-		foreach my $j (0 .. $i - 1) {
-		    unshift @{$arrays[$j]}, $items[$j];
-		    $items[$j] = undef;
-		}
-	    } elsif ($cmp < 0) {
-		unshift @{$arrays[$i]}, $items[$i];
-		$items[$i] = undef;
-	    }
-	} else {
-	    $minitem = $items[$i] if defined $items[$i];
-	}
+        if (defined $minitem and defined $items[$i]) {
+            my $cmp = compare_versions($minitem, $items[$i]);
+            if ($cmp > 0) {
+                $minitem = $items[$i];
+                foreach my $j (0 .. $i - 1) {
+                    unshift @{$arrays[$j]}, $items[$j];
+                    $items[$j] = undef;
+                }
+            } elsif ($cmp < 0) {
+                unshift @{$arrays[$i]}, $items[$i];
+                $items[$i] = undef;
+            }
+        } else {
+            $minitem = $items[$i] if defined $items[$i];
+        }
     }
     return @items;
 }
@@ -213,57 +207,62 @@ sub compare_versions {
 }
 
 # Merge changelog entries smartly by merging individually the different
-# parts constituting an entry
-sub merge_entries($$$) {
+# parts constituting an entry.
+sub merge_entries {
     my ($o, $a, $b) = @_;
-    # NOTE: Only $o can be undef
+    # Note: Only $o can be undef.
 
-    # Merge the trailer line
+    # Merge the trailer line.
     unless (merge_entry_item('blank_after_trailer', $o, $a, $b)) {
-	unshift @result, '';
+        unshift @result, '';
     }
     unless (merge_entry_item('trailer', $o, $a, $b)) {
-	merge_conflict($a->get_part('trailer'), $b->get_part('trailer'));
+        merge_conflict($a->get_part('trailer'), $b->get_part('trailer'));
     }
 
-    # Merge the changes
+    # Merge the changes.
     unless (merge_entry_item('blank_after_changes', $o, $a, $b)) {
-	unshift @result, '';
+        unshift @result, '';
     }
-    my @merged = merge(defined $o ? $o->get_part('changes') : [],
-		       $a->get_part('changes'), $b->get_part('changes'),
-		       {
-			   CONFLICT => sub {
-				my ($ca, $cb) = @_;
-				$exitcode = 1;
-				return get_conflict_block($ca, $cb);
-			   }
-		       });
+    my @merged = merge(
+        defined $o ? $o->get_part('changes') : [],
+        $a->get_part('changes'),
+        $b->get_part('changes'),
+        {
+            CONFLICT => sub {
+                my ($ca, $cb) = @_;
+                $exitcode = 1;
+                return get_conflict_block($ca, $cb);
+            },
+        },
+    );
     unshift @result, @merged;
 
-    # Merge the header line
+    # Merge the header line.
     unless (merge_entry_item('blank_after_header', $o, $a, $b)) {
-	unshift @result, '';
+        unshift @result, '';
     }
     unless (merge_entry_item('header', $o, $a, $b)) {
-	merge_conflict($a->get_part('header'), $b->get_part('header'));
+        merge_conflict($a->get_part('header'), $b->get_part('header'));
     }
 }
 
-sub join_lines($) {
+sub join_lines {
     my $array = shift;
     return join("\n", @$array) if ref($array) eq 'ARRAY';
     return $array;
 }
 
-# Try to merge the obvious cases, return 1 on success and 0 on failure
-# O A B
+# Try to merge the obvious cases, return 1 on success and 0 on failure.
+#
+# O A B => ?
+# ==========
 # - x x => x
 # o o b => b
 # - - b => b
 # o a o => a
 # - a - => a
-sub merge_block($$$;&) {
+sub merge_block {
     my ($o, $a, $b, $preprocess) = @_;
     $preprocess //= \&join_lines;
     $o = $preprocess->($o) if defined $o;
@@ -271,46 +270,46 @@ sub merge_block($$$;&) {
     $b = $preprocess->($b) if defined $b;
     return 1 if not defined($a) and not defined($b);
     if (defined($a) and defined($b) and ($a eq $b)) {
-	unshift @result, $a;
+        unshift @result, $a;
     } elsif ((defined($a) and defined($o) and ($a eq $o)) or
-	     (not defined($a) and not defined($o))) {
-	unshift @result, $b if defined $b;
+             (not defined($a) and not defined($o))) {
+        unshift @result, $b if defined $b;
     } elsif ((defined($b) and defined($o) and ($b eq $o)) or
-	     (not defined($b) and not defined($o))) {
-	unshift @result, $a if defined $a;
+             (not defined($b) and not defined($o))) {
+        unshift @result, $a if defined $a;
     } else {
-	return 0;
+        return 0;
     }
     return 1;
 }
 
-sub merge_entry_item($$$$) {
+sub merge_entry_item {
     my ($item, $o, $a, $b) = @_;
     if (blessed($o) and $o->isa('Dpkg::Changelog::Entry')) {
-	$o = $o->get_part($item);
+        $o = $o->get_part($item);
     } elsif (ref $o) {
-	$o = $o->{$item};
+        $o = $o->{$item};
     }
     if (blessed($a) and $a->isa('Dpkg::Changelog::Entry')) {
-	$a = $a->get_part($item);
+        $a = $a->get_part($item);
     } elsif (ref $a) {
-	$a = $a->{$item};
+        $a = $a->{$item};
     }
     if (blessed($b) and $b->isa('Dpkg::Changelog::Entry')) {
-	$b = $b->get_part($item);
+        $b = $b->get_part($item);
     } elsif (ref $b) {
-	$b = $b->{$item};
+        $b = $b->{$item};
     }
     return merge_block($o, $a, $b);
 }
 
-sub merge_conflict($$) {
+sub merge_conflict {
     my ($a, $b) = @_;
     unshift @result, get_conflict_block($a, $b);
     $exitcode = 1;
 }
 
-sub get_conflict_block($$) {
+sub get_conflict_block {
     my ($a, $b) = @_;
     my (@a, @b);
     push @a, $a if defined $a;

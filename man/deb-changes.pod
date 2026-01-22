@@ -48,7 +48,7 @@ B<Checksums-Sha256>,
 see below).
 
 The control data might be enclosed in an OpenPGP ASCII Armored signature,
-as specified in RFC4880.
+as specified in RFC9580.
 
 =head1 FIELDS
 
@@ -88,12 +88,14 @@ If the upload is source-only, then the field is omitted (since dpkg 1.19.3).
 =item B<Architecture:> I<arch-list>
 
 Lists the architectures of the files currently being uploaded.
+
 Common architectures are B<amd64>, B<armel>, B<i386>, etc.
-Note that the B<all> value is meant for packages that are architecture
-independent.
+Note that the special B<all> value is meant for packages that are
+architecture independent (such as shell and Perl scripts or documentation).
 If the source for the package is also being uploaded, the special entry
 B<source> is also present.
-Architecture wildcards must never be present in the list.
+
+B<Note:> Architecture wildcards are not allowed in this context.
 
 =item B<Version:> I<version-string> (required)
 
@@ -102,6 +104,11 @@ the program's author uses.
 It may also include a Debian revision number (for non-native packages).
 The exact format and sorting algorithm are described in
 L<deb-version(7)>.
+
+B<Note>: On some vendors,
+dpkg has been made to permit native sources with non-native versions,
+making this incoherent and adding to the confusion of the concept,
+where in addition this tends to be a trap for accidental mistakes.
 
 =item B<Distribution:> I<distribution>s (required)
 
@@ -177,13 +184,26 @@ Each line consists of space-separated entries describing the file:
 the md5sum, the file size, the file section, the file priority, and
 the file name.
 
+If the section is omitted in the source package template control file,
+it defaults to B<unknown>
+(since dpkg 1.22.13).
+
+If the priority is omitted in the source package template control file,
+it defaults to B<optional>
+(since dpkg 1.22.13).
+
 This field lists all files that make up the upload.
 The list of files in this field must match the list of files in the
 other related B<Checksums> fields.
 
-=item B<Checksums-Sha1:> (required)
+B<Note>: The MD5 checksum is considered weak,
+and should never be assumed to be sufficient for secure verification,
+but this field cannot be omitted as it provides metadata not available
+anywhere else.
 
-=item B<Checksums-Sha256:> (required)
+=item B<Checksums-Sha1:> (required, weak)
+
+=item B<Checksums-Sha256:> (required, strong)
 
 =item S< >I<checksum> I<size> I<filename>
 
@@ -201,6 +221,9 @@ the checksum, the file size, and the file name.
 These fields list all files that make up the upload.
 The list of files in these fields must match the list of files in the
 B<Files> field and the other related B<Checksums> fields.
+
+B<Note>: The SHA-1 checksum is considered weak,
+and should never be assumed to be sufficient for secure verification.
 
 =back
 

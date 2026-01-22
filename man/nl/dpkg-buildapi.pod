@@ -58,6 +58,14 @@ Geeft aan wat het hoofdcontrolebestand van de broncode is waaruit informatie geh
 
 Het te gebruiken bouw-API-niveau. Dit is bedoeld om intern gebruikt te worden door de gereedschappen die uitgevoerd worden vanuit F<debian/rules> om te voorkomen dat F<debian/control> meerdere keren doorzocht moet worden, en niet om het globale bouw-API-niveau in te stellen vanuit F<debian/rules>, anders hebben bouwstuurprogramma's (zoals L<dpkg-buildpackage(1)>) er geen toegang toe.
 
+=item B<DPKG_COLORS>
+
+Stelt de kleurmodus in. Waarden die momenteel gebruikt mogen worden zijn: B<auto> (standaard), B<always> en B<never>.
+
+=item B<DPKG_NLS>
+
+Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het activeren van moedertaalondersteuning, ook gekend als internationaliseringsondersteuning (of i18n). Geldige waarden zijn: B<0> and B<1> (standaard).
+
 =back
 
 =head1 BESTANDEN
@@ -68,7 +76,7 @@ Het te gebruiken bouw-API-niveau. Dit is bedoeld om intern gebruikt te worden do
 
 =item B<%PKGDATADIR%/buildapi.mk>
 
-Makefile-fragment dat het bouw-API-niveau ontleedt.
+Makefile-fragment dat het bouw-API-niveau ontleedt en in een variabele plaatst.
 
 =back
 

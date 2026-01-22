@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dselect 1.15.4\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2024-03-10 20:21+0100\n"
+"POT-Creation-Date: 2025-12-20 02:18+0100\n"
 "PO-Revision-Date: 2014-12-21 20:58+0100\n"
 "Last-Translator: Łukasz Dulny <bartekchom@poczta.onet.pl>\n"
 "Language-Team: Polish <debian-l10n-polish@lists.debian.org>\n"
@@ -118,11 +118,16 @@ msgid "%s to go back"
 msgstr "%s - powrót"
 
 #: dselect/bindings.cc
+#, fuzzy
+#| msgid "[not bound]"
+msgctxt "keybinding"
 msgid "[not bound]"
 msgstr "[nie skojarzone]"
 
 #: dselect/bindings.cc
-#, c-format
+#, fuzzy, c-format
+#| msgid "[unk: %d]"
+msgctxt "keybinding"
 msgid "[unk: %d]"
 msgstr "[nieznane: %d]"
 
@@ -509,7 +514,7 @@ msgid ""
 "of\n"
 "the display shows relevant conflicts and dependencies; use 'i' to cycle "
 "between\n"
-"that, the package descriptions and the internal control information.\n"
+"that, the package descriptions and the internal package metadata.\n"
 "\n"
 "A set of 'suggested' packages has been calculated, and the initial markings "
 "in\n"
@@ -949,8 +954,8 @@ msgstr ""
 #| "  --expert                   Turn on expert mode.\n"
 #| "  --debug <file> | -D<file>  Turn on debugging, sending output to "
 #| "<file>.\n"
-#| "  --colour | --color screenpart:[foreground],[background][:"
-#| "attr[+attr+...]]\n"
+#| "  --colour | --color screenpart:[foreground],[background]"
+#| "[:attr[+attr+...]]\n"
 #| "                             Configure screen colours.\n"
 #| "\n"
 msgid ""
@@ -968,8 +973,8 @@ msgstr ""
 "  --admindir <katalog>       Używa <katalogu> zamiast %s.\n"
 "  --expert                   Włącza tryb eksperta.\n"
 "  --debug <plik> | -D<plik>  Włącza debugowanie, wysyła wyjście do <pliku>.\n"
-"  --colour | --color część_widoku:[kolor_tekstu],[kolor_tła][:"
-"atr[+atr+...]]\n"
+"  --colour | --color część_widoku:[kolor_tekstu],[kolor_tła]"
+"[:atr[+atr+...]]\n"
 "                             Konfiguruje kolory ekranu.\n"
 "\n"
 
@@ -1012,9 +1017,10 @@ msgid "<attr> is:"
 msgstr ""
 
 #: dselect/main.cc
-#, c-format
-msgid "couldn't open debug file '%.255s'\n"
-msgstr "nie można otworzyć pliku debuggera \"%.255s\"\n"
+#, fuzzy, c-format
+#| msgid "couldn't open debug file '%s'\n"
+msgid "cannot open debug file '%s'\n"
+msgstr "nie można otworzyć pliku debuggera \"%s\"\n"
 
 #: dselect/main.cc
 #, c-format
@@ -1065,11 +1071,19 @@ msgid "terminal lacks necessary features, giving up"
 msgstr "brak potrzebnych funkcji terminala, przerywanie"
 
 #: dselect/main.cc
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "\n"
+#| "Move around with ^P and ^N, cursor keys, initial letters, or digits;\n"
+#| "Press <enter> to confirm selection.   ^L redraws screen.\n"
+#| "\n"
 msgid ""
 "\n"
 "\n"
-"Move around with ^P and ^N, cursor keys, initial letters, or digits;\n"
-"Press <enter> to confirm selection.   ^L redraws screen.\n"
+"Move around with Ctrl+P and Ctrl+N, cursor keys, initial letters, or "
+"digits;\n"
+"Press <enter> to confirm selection. Ctrl+L redraws screen.\n"
 "\n"
 msgstr ""
 "\n"
@@ -1102,8 +1116,8 @@ msgstr "nie można wywołać \"getch\" w głównym menu"
 
 #: dselect/main.cc
 #, c-format
-msgid "unknown action string '%.50s'"
-msgstr "nieznane działanie \"%.50s\""
+msgid "unknown action string '%s'"
+msgstr "nieznane działanie \"%s\""
 
 #: dselect/methlist.cc
 msgid "Abbrev."
@@ -1206,33 +1220,33 @@ msgstr "skrypt zapytania/ustawiania"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "syntax error in method options file '%.250s' -- %s"
-msgstr "błąd składni w pliku opcji metody \"%.250s\" -- %s"
+msgid "syntax error in method options file '%s' -- %s"
+msgstr "błąd składni w pliku opcji metody \"%s\" -- %s"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "error reading options file '%.250s'"
-msgstr "nie można odczytać pliku opcji \"%.250s\""
+msgid "error reading options file '%s'"
+msgstr "nie można odczytać pliku opcji \"%s\""
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to read '%.250s' directory for reading methods"
-msgstr "nie można odczytać katalogu \"%.250s\" do odczytu metod"
+msgid "unable to read '%s' directory for reading methods"
+msgstr "nie można odczytać katalogu \"%s\" do odczytu metod"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "method '%.250s' has name that is too long (%d > %d characters)"
-msgstr "metoda \"%.250s\" ma za długą nazwę (%d > %d znaków)"
+msgid "method '%s' has name that is too long (%d > %d characters)"
+msgstr "metoda \"%s\" ma za długą nazwę (%d > %d znaków)"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to access method script '%.250s'"
-msgstr "nie można odczytać skryptu opcji metody \"%.250s\""
+msgid "unable to access method script '%s'"
+msgstr "nie można odczytać skryptu opcji metody \"%s\""
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to read method options file '%.250s'"
-msgstr "nie można odczytać pliku opcji metody \"%.250s\""
+msgid "unable to read method options file '%s'"
+msgstr "nie można odczytać pliku opcji metody \"%s\""
 
 #: dselect/methparse.cc
 msgid "non-digit where digit wanted"
@@ -1289,39 +1303,25 @@ msgid "end of file in summary - missing newline"
 msgstr "EOF w podsumowaniu - brak znaku nowej linii"
 
 #: dselect/methparse.cc
-#, c-format
-msgid "unable to open option description file '%.250s'"
-msgstr "nie można otworzyć pliku opisu opcji \"%.250s\""
+#, fuzzy, c-format
+#| msgid "failed to read option description file '%s'"
+msgid "cannot load option description file '%s'"
+msgstr "nie można odczytać pliku opisu opcji %s"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to stat option description file '%.250s'"
-msgstr "nie można ustalić stanu pliku opisu opcji %.250s"
+msgid "error during read of method options file '%s'"
+msgstr "nie można odczytać pliku opcji metody %s"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "failed to read option description file '%.250s'"
-msgstr "nie można odczytać pliku opisu opcji %.250s"
+msgid "unable to open current option file '%s'"
+msgstr "nie można otworzyć pliku bieżącej opcji \"%s\""
 
 #: dselect/methparse.cc
 #, c-format
-msgid "error during read of option description file '%.250s'"
-msgstr "nie można odczytać pliku opisu opcji %.250s"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "error during read of method options file '%.250s'"
-msgstr "nie można odczytać pliku opcji metody %.250s"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "unable to open current option file '%.250s'"
-msgstr "nie można otworzyć pliku bieżącej opcji \"%.250s\""
-
-#: dselect/methparse.cc
-#, c-format
-msgid "unable to write new option to '%.250s'"
-msgstr "nie można zapisać nowej opcji w \"%.250s\""
+msgid "unable to write new option to '%s'"
+msgstr "nie można zapisać nowej opcji w \"%s\""
 
 #: dselect/pkgdisplay.cc
 msgid "new package"
@@ -1343,10 +1343,6 @@ msgstr "usuwanie"
 msgid "purge"
 msgstr "wyczyszczony"
 
-#. TRANSLATORS: The space is a trick to work around gettext which uses
-#. * the empty string to store information about the translation. DO NOT
-#. * CHANGE THAT IN A TRANSLATION! The code really relies on that being
-#. * a single space.
 #: dselect/pkgdisplay.cc
 msgid " "
 msgstr " "
@@ -1755,6 +1751,18 @@ msgstr "%s %s pakiety w sekcji %s"
 msgid "%-*s %s%s%s;  %s (was: %s).  %s"
 msgstr "%-*s %s%s%s;  %s (był: %s).  %s"
 
+#, c-format
+#~ msgid "unable to open option description file '%s'"
+#~ msgstr "nie można otworzyć pliku opisu opcji \"%s\""
+
+#, c-format
+#~ msgid "unable to stat option description file '%s'"
+#~ msgstr "nie można ustalić stanu pliku opisu opcji %s"
+
+#, c-format
+#~ msgid "error during read of option description file '%s'"
+#~ msgstr "nie można odczytać pliku opisu opcji %s"
+
 #~ msgid "ioctl(TIOCGWINSZ) failed"
 #~ msgstr "nie powiodło się wywołanie ioctl(TIOCGWINSZ)"
 
@@ -1838,14 +1846,14 @@ msgstr "%-*s %s%s%s;  %s (był: %s).  %s"
 #~ "  access update select install config remove quit\n"
 #~ "\n"
 
-#~ msgid "unable to open new option file `%.250s'"
-#~ msgstr "nie można otworzyć pliku nowej opcji \"%.250s\""
+#~ msgid "unable to open new option file `%s'"
+#~ msgstr "nie można otworzyć pliku nowej opcji \"%s\""
 
-#~ msgid "unable to close new option file `%.250s'"
-#~ msgstr "nie można zamknąć pliku nowej opcji \"%.250s\""
+#~ msgid "unable to close new option file `%s'"
+#~ msgstr "nie można zamknąć pliku nowej opcji \"%s\""
 
-#~ msgid "unable to install new option as `%.250s'"
-#~ msgstr "nie można zainstalować nowej opcji jako \"%.250s\""
+#~ msgid "unable to install new option as `%s'"
+#~ msgstr "nie można zainstalować nowej opcji jako \"%s\""
 
 #~ msgid "returned error exit status %d.\n"
 #~ msgstr "otrzymano kod powrotu %d.\n"
@@ -1862,14 +1870,14 @@ msgstr "%-*s %s%s%s;  %s (był: %s).  %s"
 #~ msgid "failed with an unknown wait return code %d.\n"
 #~ msgstr "funkcja \"wait\" zwróciła nierozpoznany kod błędu %d.\n"
 
-#~ msgid "unable to run %.250s process `%.250s'"
-#~ msgstr "nie można uruchomić procesu %.250s \"%.250s\""
+#~ msgid "unable to run %s process `%s'"
+#~ msgstr "nie można uruchomić procesu %s \"%s\""
 
 #~ msgid "failed config"
 #~ msgstr "błędna konfiguracja"
 
-#~ msgid "unable to wait for %.250s"
-#~ msgstr "nie można wykonać funkcji \"wait\" dla \"%.250s\""
+#~ msgid "unable to wait for %s"
+#~ msgstr "nie można wykonać funkcji \"wait\" dla \"%s\""
 
 #~ msgid "got wrong child's status - asked for %ld, got %ld"
 #~ msgstr ""
@@ -1917,8 +1925,8 @@ msgstr "%-*s %s%s%s;  %s (był: %s).  %s"
 #~ msgid "error un-catching signal %d: %s\n"
 #~ msgstr "nie można odzyskać sygnału %d: %s\n"
 
-#~ msgid "unable to ignore signal %d before running %.250s"
-#~ msgstr "nie można zignorować sygnału %d przed wykonaniem %.250s"
+#~ msgid "unable to ignore signal %d before running %s"
+#~ msgstr "nie można zignorować sygnału %d przed wykonaniem %s"
 
 #~ msgid "(no clientdata)"
 #~ msgstr "(brak danych)"

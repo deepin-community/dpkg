@@ -138,7 +138,9 @@ diversion into the database (since dpkg 1.19.1).
 This is intended for diversions of files from the B<Essential> package set,
 where the temporary disappearance of the original file is not acceptable, as
 it can render the system non-functional.
-This is the default behavior, but that will change in the dpkg 1.20.x cycle.
+This is the default behavior,
+which will change once there are no known users,
+but not before the dpkg 1.23.x release cycle.
 
 =item B<--test>
 
@@ -201,6 +203,12 @@ but not all these flags might have an effect on this program.
 Sets the color mode (since dpkg 1.18.5).
 The currently accepted values are: B<auto> (default), B<always> and
 B<never>.
+
+=item B<DPKG_NLS>
+
+If set, it will be used to decide whether to activate Native Language Support,
+also known as internationalization (or i18n) support (since dpkg 1.22.7).
+The accepted values are: B<0> and B<1> (default).
 
 =back
 

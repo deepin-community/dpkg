@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dselect 1.13\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2024-03-10 20:21+0100\n"
+"POT-Creation-Date: 2025-12-20 02:18+0100\n"
 "PO-Revision-Date: 2006-10-06 20:20+0700\n"
 "Last-Translator: Arief S Fitrianto <arief@gurame.fisika.ui.ac.id>\n"
 "Language-Team: Indonesian <debian-l10n-indonesian@lists.debian.org>\n"
@@ -115,11 +115,16 @@ msgid "%s to go back"
 msgstr "%s untuk kembali "
 
 #: dselect/bindings.cc
+#, fuzzy
+#| msgid "[not bound]"
+msgctxt "keybinding"
 msgid "[not bound]"
 msgstr "[tidak direlasikan]"
 
 #: dselect/bindings.cc
-#, c-format
+#, fuzzy, c-format
+#| msgid "[unk: %d]"
+msgctxt "keybinding"
 msgid "[unk: %d]"
 msgstr "[unk: %d]"
 
@@ -491,7 +496,7 @@ msgid ""
 "of\n"
 "the display shows relevant conflicts and dependencies; use 'i' to cycle "
 "between\n"
-"that, the package descriptions and the internal control information.\n"
+"that, the package descriptions and the internal package metadata.\n"
 "\n"
 "A set of 'suggested' packages has been calculated, and the initial markings "
 "in\n"
@@ -924,8 +929,8 @@ msgstr ""
 #| "  --expert                   Turn on expert mode.\n"
 #| "  --debug <file> | -D<file>  Turn on debugging, sending output to "
 #| "<file>.\n"
-#| "  --colour | --color screenpart:[foreground],[background][:"
-#| "attr[+attr+..]]\n"
+#| "  --colour | --color screenpart:[foreground],[background]"
+#| "[:attr[+attr+..]]\n"
 #| "                             Configure screen colours.\n"
 #| "\n"
 msgid ""
@@ -944,8 +949,8 @@ msgstr ""
 "  --expert                  Hidupkan modus untuk yang ahli.\n"
 "  --debug <berkas> | -D <berkas>   Hidupkan proses debug, kirim hasilnya ke "
 "<berkas>.\n"
-"  --colour | --color screenpart:[latar-depan],[latar-belakang][:"
-"atribut[+atribut+...]].\n"
+"  --colour | --color screenpart:[latar-depan],[latar-belakang]"
+"[:atribut[+atribut+...]].\n"
 "                              Konfigurasi warna layar.\n"
 "\n"
 
@@ -985,9 +990,10 @@ msgid "<attr> is:"
 msgstr ""
 
 #: dselect/main.cc
-#, c-format
-msgid "couldn't open debug file '%.255s'\n"
-msgstr "tidak dapat membuka berkas debug `%.250s'\n"
+#, fuzzy, c-format
+#| msgid "couldn't open debug file '%s'\n"
+msgid "cannot open debug file '%s'\n"
+msgstr "tidak dapat membuka berkas debug `%s'\n"
 
 #: dselect/main.cc
 #, fuzzy, c-format
@@ -1039,11 +1045,19 @@ msgid "terminal lacks necessary features, giving up"
 msgstr "terminal tak memiliki fitur yang diperlukan, menyerah"
 
 #: dselect/main.cc
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "\n"
+#| "Move around with ^P and ^N, cursor keys, initial letters, or digits;\n"
+#| "Press <enter> to confirm selection.   ^L redraws screen.\n"
+#| "\n"
 msgid ""
 "\n"
 "\n"
-"Move around with ^P and ^N, cursor keys, initial letters, or digits;\n"
-"Press <enter> to confirm selection.   ^L redraws screen.\n"
+"Move around with Ctrl+P and Ctrl+N, cursor keys, initial letters, or "
+"digits;\n"
+"Press <enter> to confirm selection. Ctrl+L redraws screen.\n"
 "\n"
 msgstr ""
 "\n"
@@ -1076,8 +1090,8 @@ msgstr "gagal melakukan 'getch' dalam menu utama"
 
 #: dselect/main.cc
 #, c-format
-msgid "unknown action string '%.50s'"
-msgstr "string aksi `%.50s' tidak dikenal"
+msgid "unknown action string '%s'"
+msgstr "string aksi `%s' tidak dikenal"
 
 #: dselect/methlist.cc
 msgid "Abbrev."
@@ -1188,33 +1202,33 @@ msgstr "script query/setup"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "syntax error in method options file '%.250s' -- %s"
-msgstr "ada kesalahan sintaks dalam berkas pilihan metode `%.250s' -- %s"
+msgid "syntax error in method options file '%s' -- %s"
+msgstr "ada kesalahan sintaks dalam berkas pilihan metode `%s' -- %s"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "error reading options file '%.250s'"
-msgstr "ada kesalahan saat membaca berkas pilihan `%.250s'"
+msgid "error reading options file '%s'"
+msgstr "ada kesalahan saat membaca berkas pilihan `%s'"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to read '%.250s' directory for reading methods"
-msgstr "tidak bisa membaca direktori `%.250s' untuk membaca metode"
+msgid "unable to read '%s' directory for reading methods"
+msgstr "tidak bisa membaca direktori `%s' untuk membaca metode"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "method '%.250s' has name that is too long (%d > %d characters)"
-msgstr "metode `%.250s' memiliki nama terlalu panjang (%d > %d karakter)"
+msgid "method '%s' has name that is too long (%d > %d characters)"
+msgstr "metode `%s' memiliki nama terlalu panjang (%d > %d karakter)"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to access method script '%.250s'"
-msgstr "tidak bisa mengakses berkas skrip metode `%.250s'"
+msgid "unable to access method script '%s'"
+msgstr "tidak bisa mengakses berkas skrip metode `%s'"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to read method options file '%.250s'"
-msgstr "tidak bisa membaca berkas pilihan metode `%.250s'"
+msgid "unable to read method options file '%s'"
+msgstr "tidak bisa membaca berkas pilihan metode `%s'"
 
 #: dselect/methparse.cc
 msgid "non-digit where digit wanted"
@@ -1271,39 +1285,25 @@ msgid "end of file in summary - missing newline"
 msgstr "Ada EOF dalam ikhtisar - baris-baru hilang"
 
 #: dselect/methparse.cc
-#, c-format
-msgid "unable to open option description file '%.250s'"
-msgstr "tidak bisa membuka berkas penjelasan pilihan `%.250s'"
+#, fuzzy, c-format
+#| msgid "failed to read option description file '%s'"
+msgid "cannot load option description file '%s'"
+msgstr "gagal membaca berkas penjelasan pilihan `%s'"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to stat option description file '%.250s'"
-msgstr "tidak bisa melakukan 'stat' pada berkas penjelasan pilihan `%.250s'"
+msgid "error during read of method options file '%s'"
+msgstr "ada kesalahan selama membaca berkas pilihan metode `%s'"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "failed to read option description file '%.250s'"
-msgstr "gagal membaca berkas penjelasan pilihan `%.250s'"
+msgid "unable to open current option file '%s'"
+msgstr "tidak bisa membuka berkas pilihan saat ini `%s'"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "error during read of option description file '%.250s'"
-msgstr "ada kesalahan selama membaca berkas penjelasan pilihan `%.250s'"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "error during read of method options file '%.250s'"
-msgstr "ada kesalahan selama membaca berkas pilihan metode `%.250s'"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "unable to open current option file '%.250s'"
-msgstr "tidak bisa membuka berkas pilihan saat ini `%.250s'"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "unable to write new option to '%.250s'"
-msgstr "tidak bisa menulis pilihan baru ke `%.250s'"
+msgid "unable to write new option to '%s'"
+msgstr "tidak bisa menulis pilihan baru ke `%s'"
 
 #: dselect/pkgdisplay.cc
 msgid "new package"
@@ -1325,10 +1325,6 @@ msgstr "buang"
 msgid "purge"
 msgstr "musnahkan"
 
-#. TRANSLATORS: The space is a trick to work around gettext which uses
-#. * the empty string to store information about the translation. DO NOT
-#. * CHANGE THAT IN A TRANSLATION! The code really relies on that being
-#. * a single space.
 #: dselect/pkgdisplay.cc
 msgid " "
 msgstr " "
@@ -1747,6 +1743,18 @@ msgstr "%s %s paket di bagian %s"
 msgid "%-*s %s%s%s;  %s (was: %s).  %s"
 msgstr "%-*s %s%s%s; %s (tadinya: %s). %s"
 
+#, c-format
+#~ msgid "unable to open option description file '%s'"
+#~ msgstr "tidak bisa membuka berkas penjelasan pilihan `%s'"
+
+#, c-format
+#~ msgid "unable to stat option description file '%s'"
+#~ msgstr "tidak bisa melakukan 'stat' pada berkas penjelasan pilihan `%s'"
+
+#, c-format
+#~ msgid "error during read of option description file '%s'"
+#~ msgstr "ada kesalahan selama membaca berkas penjelasan pilihan `%s'"
+
 #~ msgid "ioctl(TIOCGWINSZ) failed"
 #~ msgstr "ioctl(TIOCGWINSZ) gagal"
 
@@ -1827,14 +1835,14 @@ msgstr "%-*s %s%s%s; %s (tadinya: %s). %s"
 #~ "   access update select install config remove quit\n"
 #~ "\n"
 
-#~ msgid "unable to open new option file `%.250s'"
-#~ msgstr "tidak bisa membuka berkas pilihan `%.250s' yang baru"
+#~ msgid "unable to open new option file `%s'"
+#~ msgstr "tidak bisa membuka berkas pilihan `%s' yang baru"
 
-#~ msgid "unable to close new option file `%.250s'"
-#~ msgstr "tidak bisa menutup berkas pilihan `%.250s' yang baru"
+#~ msgid "unable to close new option file `%s'"
+#~ msgstr "tidak bisa menutup berkas pilihan `%s' yang baru"
 
-#~ msgid "unable to install new option as `%.250s'"
-#~ msgstr "tidak bisa memasang pilihan yang baru sebagai `%.250s'"
+#~ msgid "unable to install new option as `%s'"
+#~ msgstr "tidak bisa memasang pilihan yang baru sebagai `%s'"
 
 #~ msgid "returned error exit status %d.\n"
 #~ msgstr "status 'error exit' yang dihasilkan %d. \n"
@@ -1851,14 +1859,14 @@ msgstr "%-*s %s%s%s; %s (tadinya: %s). %s"
 #~ msgid "failed with an unknown wait return code %d.\n"
 #~ msgstr "gagal dengan kode 'wait' %d yang tak dikenal.\n"
 
-#~ msgid "unable to run %.250s process `%.250s'"
-#~ msgstr "tidak bisa menjalankan proses %.250s `%.250s'"
+#~ msgid "unable to run %s process `%s'"
+#~ msgstr "tidak bisa menjalankan proses %s `%s'"
 
 #~ msgid "failed config"
 #~ msgstr "konfig gagal"
 
-#~ msgid "unable to wait for %.250s"
-#~ msgstr "tidak bisa menunggu %.250s"
+#~ msgid "unable to wait for %s"
+#~ msgstr "tidak bisa menunggu %s"
 
 #~ msgid "got wrong child's status - asked for %ld, got %ld"
 #~ msgstr "status anak proses salah - ingin %ld, dapat %ld"
@@ -1904,8 +1912,8 @@ msgstr "%-*s %s%s%s; %s (tadinya: %s). %s"
 #~ msgid "error un-catching signal %d: %s\n"
 #~ msgstr "Ada kesalahan saat melepaskan sinyal %d: %s\n"
 
-#~ msgid "unable to ignore signal %d before running %.250s"
-#~ msgstr "tidak bisa mengabaikan sinyal %d sebelum menjalankan %.250s"
+#~ msgid "unable to ignore signal %d before running %s"
+#~ msgstr "tidak bisa mengabaikan sinyal %d sebelum menjalankan %s"
 
 #~ msgid "(no clientdata)"
 #~ msgstr "(tidak ada clientdata)"

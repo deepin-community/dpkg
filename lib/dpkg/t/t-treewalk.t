@@ -15,14 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use strict;
-use warnings;
+use v5.36;
 use version;
 
 use Test::More tests => 6;
 use Cwd;
 use File::Path qw(make_path remove_tree);
-use File::Temp qw(tempdir);
 use File::Basename;
 use File::Find;
 
@@ -116,11 +114,14 @@ sub test_treewalker {
 
         make_tree($dirtree);
 
-        find({ no_chdir => 1, wanted => sub {
-                   return if $type eq 'skip' and m{^\Q$dirtree\E/cccc};
-                   push @paths, s{\./}{}r;
-               },
-             }, $dirtree);
+        my $scan_tree = {
+            wanted => sub {
+                return if $type eq 'skip' and m{^\Q$dirtree\E/cccc};
+                push @paths, s{\./}{}r;
+            },
+            no_chdir => 1,
+        };
+        find($scan_tree, $dirtree);
 
         my $expected;
 
@@ -143,8 +144,12 @@ sub test_treewalker {
 
         $ENV{TREEWALK_SKIP} = $type eq 'skip' ? "$dirtree/cccc" : undef;
 
-        spawn(exec => [ "$builddir/t/c-treewalk", $dirtree ],
-              nocheck => 1, to_string => \$stdout, to_error => \$stderr);
+        spawn(
+            exec => [ "$builddir/t/c-treewalk", $dirtree ],
+            no_check => 1,
+            to_string => \$stdout,
+            to_error => \$stderr,
+        );
         ok($? == 0, "tree walker $type should succeed");
         is($stderr, undef, "tree walker $type stderr is empty");
         is($stdout, $expected, "tree walker $type is ok");
