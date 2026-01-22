@@ -315,15 +315,28 @@ Do not check signatures and checksums before unpacking (since dpkg 1.14.17).
 Do not overwrite the extraction directory if it already exists
 (since dpkg 1.18.8).
 
+=item B<--no-vendor-certs>
+
+Do not use the vendor specific certificate keyrings.
+
+Supported since dpkg 1.23.0.
+
+=item B<--signer-certs=>I<keyring>
+
+Use this I<keyring> containing signer certificates during signature
+verification of source packages.
+
+The option may be repeated multiple times to add multiple keyrings.
+
+Supported since dpkg 1.23.0.
+
 =item B<--require-valid-signature>
 
 Refuse to unpack the source package if it doesn't contain an OpenPGP
-signature that can be verified (since dpkg 1.15.0) either with the user's
-I<trustedkeys.gpg> keyring, one of the vendor-specific keyrings, or one
-of the official Debian keyrings
-(I</usr/share/keyrings/debian-keyring.gpg>,
-I</usr/share/keyrings/debian-nonupload.gpg> and
-I</usr/share/keyrings/debian-maintainers.gpg>).
+signature that can be verified (since dpkg 1.15.0) either with
+the user supplied B<--signer-certs> keyrings, or
+one of the vendor-specific keyrings,
+including any parent vendor keyrings if relevant.
 
 =item B<--require-strong-checksums>
 
@@ -370,6 +383,11 @@ the package is said to be I<native>).
 Optionally the original tarball might be accompanied by a detached
 upstream signature B<.orig.tar.gz.asc>, extraction
 supported since dpkg 1.18.5.
+
+B<Note>: On some vendors,
+dpkg has been made to permit native sources with non-native versions,
+making this incoherent and adding to the confusion of the concept,
+where in addition this tends to be a trap for accidental mistakes.
 
 B<Extracting>
 
@@ -574,6 +592,11 @@ will ignore by default any VCS specific files and directories
 as well as many temporary files (see default value associated to
 B<-I> option in the B<--help> output).
 
+B<Note>: On some vendors,
+dpkg has been made to permit native sources with non-native versions,
+making this incoherent and adding to the confusion of the concept,
+where in addition this tends to be a trap for accidental mistakes.
+
 =head2 Format: 3.0 (quilt)
 
 Supported since dpkg 1.14.17.
@@ -582,18 +605,18 @@ an original tarball (B<.orig.tar.>I<ext> where I<ext> can be
 B<gz>, B<bz2>, B<lzma> and B<xz>) and a debian tarball
 (B<.debian.tar.>I<ext>).
 It can also contain additional original
-tarballs (B<.orig->I<component>B<.tar.>I<ext>).
-I<component> can only contain alphanumeric (‘a-zA-Z0-9’) characters
+tarballs (B<.orig->I<addon>B<.tar.>I<ext>).
+I<addon> can only contain alphanumeric (‘a-zA-Z0-9’) characters
 and hyphens (‘-’).
 Optionally each original tarball can be accompanied by a detached
 upstream signature (B<.orig.tar.>I<ext>B<.asc> and
-B<.orig->I<component>B<.tar.>I<ext>B<.asc>), extraction
+B<.orig->I<addon>B<.tar.>I<ext>B<.asc>), extraction
 supported since dpkg 1.17.20, building supported since dpkg 1.18.5.
 
 B<Extracting>
 
 The main original tarball is extracted first, then all additional original
-tarballs are extracted in subdirectories named after the I<component>
+tarballs are extracted in subdirectories named after the I<addon>
 part of their filename (any pre-existing directory is replaced).
 The
 debian tarball is extracted on top of the source directory after prior

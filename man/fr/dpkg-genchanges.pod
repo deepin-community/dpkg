@@ -14,7 +14,7 @@ If the PO get lost, keeping this translation up-to-date will be harder.
 
 =head1 NOM
 
-dpkg-genchanges - Créer des fichiers S<« .changes ».>
+dpkg-genchanges - Créer des fichiers « .changes ».
 
 =head1 SYNOPSIS
 
@@ -30,9 +30,9 @@ B<dpkg-genchanges> lit les informations à la fois dans une arborescence debian 
 
 =item B<--build=>I<type>
 
-Indique le I<type> de construction à partir d'une liste, séparée par des virgules, de composants (depuis S<dpkg 1.18.5).>
+Indique le I<type> de construction à partir d'une liste, séparée par des virgules, de composants (depuis dpkg 1.18.5).
 
-Les valeurs autorisées S<sont :>
+Les valeurs autorisées sont :
 
 =over 
 
@@ -60,11 +60,11 @@ Envoyer tout. C'est un alias de B<source,any,all> et identique au cas par défau
 
 =item B<-g>
 
-Équivalent de B<--build=source,all> (depuis S<dpkg 1.17.11).>
+Équivalent de B<--build=source,all> (depuis dpkg 1.17.11).
 
 =item B<-G>
 
-Équivalent de B<--build=source,any> (depuis S<dpkg 1.17.11).>
+Équivalent de B<--build=source,any> (depuis dpkg 1.17.11).
 
 =item B<-b>
 
@@ -90,7 +90,7 @@ Les options B<-s>I<x> contrôlent si l'archive source d'origine est incluse dans
 
 =item B<-si>
 
-Par défaut, ou quand l'option est indiquée, les sources d'origine sont incluses uniquement si le numéro de version majeur (c'est-à-dire la version sans les parties epoch et S<« révision> S<Debian »)> diffère de la version précédente indiquée dans le fichier de changelog.
+Par défaut, ou quand l'option est indiquée, les sources d'origine sont incluses uniquement si le numéro de version majeur (c'est-à-dire la version sans les parties epoch et « révision Debian ») diffère de la version précédente indiquée dans le fichier de changelog.
 
 =item B<-sa>
 
@@ -98,23 +98,23 @@ Force l'inclusion des sources d'origine.
 
 =item B<-sd>
 
-Force l'exclusion des sources d'origine et inclut seulement le S<« diff ».>
+Force l'exclusion des sources d'origine et inclut seulement le « diff ».
 
 =item B<-v>I<version>
 
-Force l'utilisation des informations contenues dans le fichier S<« changelog »> et qui concernent toutes les versions strictement plus récentes que I<version>.
+Force l'utilisation des informations contenues dans le fichier « changelog » et qui concernent toutes les versions strictement plus récentes que I<version>.
 
 =item B<-C>I<description-des-changements>
 
-Lit la description des changements dans le fichier I<description-des-changements> plutôt que dans le fichier S<« changelog »> de l'arborescence source.
+Lit la description des changements dans le fichier I<description-des-changements> plutôt que dans le fichier « changelog » de l'arborescence source.
 
 =item B<-m>I<adresse-du-responsable>
 
-Utilise I<adresse-du-responsable> comme nom et adresse électronique du responsable de paquet plutôt que d'utiliser les informations contenues dans le fichier S<« control »> de l'arborescence source.
+Utilise I<adresse-du-responsable> comme nom et adresse électronique du responsable de paquet plutôt que d'utiliser les informations contenues dans le fichier « control » de l'arborescence source.
 
 =item B<-e>I<adresse-du-responsable>
 
-Utilise I<adresse-du-responsable> comme nom et adresse électronique du responsable de paquet pour cette mise en place, plutôt que d'utiliser les informations contenues dans le fichier S<« changelog »> de l'arborescence source.
+Utilise I<adresse-du-responsable> comme nom et adresse électronique du responsable de paquet pour cette mise en place, plutôt que d'utiliser les informations contenues dans le fichier « changelog » de l'arborescence source.
 
 =item B<-V>I<nom>B<=>I<valeur>
 
@@ -122,7 +122,7 @@ Set an output substitution variable.  See L<deb-substvars(5)> for a discussion o
 
 =item B<-T>I<fichier-substvars>
 
-Lecture des variables de substitution depuis I<fichier-substvars> ; la valeur par défaut est B<debian/substvars>. Aucune substitution de variable n'est faite sur les champs de sortie, sauf pour les contenus extraits de chaque champ B<Description> du paquet binaire (depuis S<dpkg 1.19.0),> cependant la variable spéciale I<Format> remplacera le champ qui porte le même nom. Cette option peut être utilisée plusieurs fois pour lire les variables de substitution depuis plusieurs fichiers (depuis S<dpkg 1.15.6).>
+Lecture des variables de substitution depuis I<fichier-substvars> ; la valeur par défaut est B<debian/substvars>. Aucune substitution de variable n'est faite sur les champs de sortie, sauf pour les contenus extraits de chaque champ B<Description> du paquet binaire (depuis dpkg 1.19.0), cependant la variable spéciale I<Format> remplacera le champ qui porte le même nom. Cette option peut être utilisée plusieurs fois pour lire les variables de substitution depuis plusieurs fichiers (depuis dpkg 1.15.6).
 
 =item B<-D>I<champ>B<=>I<valeur>
 
@@ -158,7 +158,7 @@ B<dpkg-genchanges> affiche habituellement des messages d'information sur la sort
 
 =item B<-O>[I<nom-de-fichier>]
 
-Affiche le fichier des modifications sur la sortie standard (par défaut) ou dans I<nom-de-fichier> s'il est indiqué (depuis S<dpkg 1.18.5).>
+Affiche le fichier des modifications sur la sortie standard (par défaut) ou dans I<nom-de-fichier> s'il est indiqué (depuis dpkg 1.18.5).
 
 =item B<-?>, B<--help>
 
@@ -174,13 +174,21 @@ Afficher le numéro de version puis quitter.
 
 =over 
 
+=item B<DEB_HOST_ARCH>
+
+Sets the host architecture.
+
+=item B<DEB_BUILD_PROFILES>
+
+If set, it will be used as the active build profile(s) to use when generating the .changes file.  It is a space separated list of profile names.
+
 =item B<DPKG_COLORS>
 
-Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
+Définit le mode de couleur (depuis dpkg 1.18.5). Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis dpkg 1.19.0). Les valeurs permises sont : B<0> et B<1> (par défaut).
 
 =back
 

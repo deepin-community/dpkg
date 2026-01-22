@@ -126,11 +126,7 @@ Bij het uitvoeren van een automatische hersamenstelling of in-de-wachtrij-plaats
 
 =item B<--msdos>
 
-Dwingt B<--split> ertoe om de bestandsnamen van de uitvoer die het genereert MSDOS-compatibel te maken.
-
-Dit verhaspelt het prefix - ofwel het standaardprefix dat afgeleid wordt van de bestandsnaam van de invoer of het prefix dat als argument opgegeven werd: alfanumerieke tekens worden naar kleine letters omgezet, een plus-teken wordt vervangen door een B<x> en alle andere tekens worden verwijderd.
-
-Het resultaat wordt dan zoveel als nodig afgekapt en er worden bestandsnamen gegenereerd in de vorm van I<prefixN>B<of>I<M>B<.deb>.
+Obsolete option without effect (since dpkg 1.23.0).
 
 =back
 
@@ -172,11 +168,15 @@ Stelt het foutopsporingsmasker in (sinds dpkg 1.21.10) vanaf een octale waarde. 
 
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen worden zijn: B<auto> (standaard), B<always> en B<never>.
 
+=item B<DPKG_NLS>
+
+Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het activeren van moedertaalondersteuning, ook gekend als internationaliseringsondersteuning (of i18n) (sinds dpkg 1.22.7). Geldige waarden zijn: B<0> and B<1> (standaard).
+
 =item B<SOURCE_DATE_EPOCH>
 
 Indien dit ingesteld werd, zal het gebruikt worden als de tijdsaanduiding (timestamp) (in seconden sinds de epoch) in de L<ar(5)>-container van L<deb-split(5)>.
 
-Since dpkg 1.18.11.
+Sinds dpkg 1.18.11.
 
 =back
 

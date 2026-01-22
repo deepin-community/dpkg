@@ -34,7 +34,7 @@ This program was introduced in dpkg 1.18.11.
 
 Indique un I<type> de construction à partir d'une liste séparée par des virgules de composants.
 
-Les valeurs autorisées S<sont :>
+Les valeurs autorisées sont :
 
 =over 
 
@@ -48,7 +48,7 @@ Génère les informations de construction comprenant les dépendances de constru
 
 =item B<source>
 
-Effectivement S<ignoré :> génère les informations de construction avec seulement les dépendances de construction non qualifiées (B<Build-Depends>).
+Effectivement ignoré : génère les informations de construction avec seulement les dépendances de construction non qualifiées (B<Build-Depends>).
 
 =item B<binary>
 
@@ -88,7 +88,7 @@ Cherche les fichiers à installer dans I<répertoire-des-fichiers-à-installer> 
 
 Par défaut le champ B<Build-Kernel-Version> ne sera pas écrit.
 
-Il faut préciser cette option (depuis S<dpkg 1.19.0)> pour toujours remplir un champ B<Build-Kernel-Version> lors de la création de B<.buildinfo>.
+Il faut préciser cette option (depuis dpkg 1.19.0) pour toujours remplir un champ B<Build-Kernel-Version> lors de la création de B<.buildinfo>.
 
 =item B<--always-include-path>
 
@@ -122,15 +122,27 @@ Afficher le numéro de version puis quitter.
 
 =item B<DEB_BUILD_OPTIONS>
 
-Cette variable peut être utilisée pour activer ou désactiver diverses fonctions qui affectent les informations comprises dans le fichier .buildinfo au moyen de l'option B<buildinfo> (depuis S<dpkg 1.18.19).> Cette option fournit une liste, séparée par des virgules, de fonctionnalités, préfixées par les modificateurs S<« B<+> »> ou S<« B<-> »> pour indiquer s'il faut les activer ou les désactiver. La fonction spéciale S<« B<all> »> peut être utilisée pour activer ou désactiver toutes les autres fonctions. La fonction S<« B<path> »> contrôle l'inclusion sans condition du champ B<Build-Path>.
+Cette variable peut être utilisée pour activer ou désactiver diverses fonctions qui affectent les informations comprises dans le fichier .buildinfo au moyen de l'option B<buildinfo> (depuis dpkg 1.18.19). Cette option fournit une liste, séparée par des virgules, de fonctionnalités, préfixées par les modificateurs « B<+> » ou « B<-> » pour indiquer s'il faut les activer ou les désactiver. La fonction spéciale « B<all> » peut être utilisée pour activer ou désactiver toutes les autres fonctions. La fonction « B<path> » contrôle l'inclusion sans condition du champ B<Build-Path>.
+
+=item B<DEB_BUILD_PROFILES>
+
+If set, it will be used as the active build profile(s) to use when generating the .buildinfo file.  It is a space separated list of profile names.
+
+=item B<DEB_BUILD_ARCH>
+
+Sets the build architecture.  This affects the value for the B<Build-Architecture> field, and the check for the cross-compilation mode.
+
+=item B<DEB_HOST_ARCH>
+
+Sets the host architecture.  This affects the filename used for the .buildinfo file, and the check for the cross-compilation mode.
 
 =item B<DPKG_COLORS>
 
-Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
+Définit le mode de couleur (depuis dpkg 1.18.5). Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis dpkg 1.19.0). Les valeurs permises sont : B<0> et B<1> (par défaut).
 
 =back
 

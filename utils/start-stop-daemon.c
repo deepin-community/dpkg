@@ -2,32 +2,43 @@
  * A rewrite of the original Debian's start-stop-daemon Perl script
  * in C (faster - it is executed many times during system startup).
  *
- * Written by Marek Michalkiewicz <marekm@i17linuxb.ists.pwr.wroc.pl>,
- * public domain.  Based conceptually on start-stop-daemon.pl, by Ian
- * Jackson <ijackson@gnu.ai.mit.edu>.  May be used and distributed
- * freely for any purpose.  Changes by Christian Schwarz
- * <schwarz@monet.m.isar.de>, to make output conform to the Debian
- * Console Message Standard, also placed in public domain.  Minor
- * changes by Klee Dienes <klee@debian.org>, also placed in the Public
- * Domain.
- *
- * Changes by Ben Collins <bcollins@debian.org>, added --chuid, --background
- * and --make-pidfile options, placed in public domain as well.
- *
- * Port to OpenBSD by Sontri Tomo Huynh <huynh.29@osu.edu>
- *                 and Andreas Schuldei <andreas@schuldei.org>
- *
- * Changes by Ian Jackson: added --retry (and associated rearrangements).
+ * Based conceptually on start-stop-daemon.pl, by
+ *   Ian Jackson <ijackson@chiark.greenend.org.uk>.
+ * Written by:
+ *   1999 Marek Michalkiewicz <marekm@i17linuxb.ists.pwr.wroc.pl>
+ *     Public Domain. May be used and distributed freely for any purpose.
+ * Changes by:
+ *   1999 Christian Schwarz <schwarz@monet.m.isar.de>,
+ *     Make output conform to the Debian Console Message Standard,
+ *     also placed in Public Domain.
+ *   1999 Klee Dienes <klee@debian.org>
+ *     Minor changes, also placed in the Public Domain.
+ *   1999 Ben Collins <bcollins@debian.org>
+ *     Added --chuid, --background and --make-pidfile options,
+ *     placed in Public Domain as well.
+ *   1999-2002 Wichert Akkerman <wakkerma@debian.org>
+ *   2000 Marcus Brinkmann <brinkmd@debian.org>
+ *   2000-2003 Adam Heath <doogie@debian.org>
+ *   2001 Sontri Tomo Huynh <huynh.29@osu.edu>
+ *     Port to OpenBSD.
+ *   2001 Andreas Schuldei <andreas@schuldei.org>
+ *     Port to OpenBSD.
+ *   2001 Ian Jackson
+ *     Added --retry (and associated rearrangements).
+ *   2004-2005 Scott James Remnant <keybuk@debian.org>
+ *   2006-2025 Guillem Jover <guillem@debian.org>
+ *   2008 Samuel Thibault <samuel.thibault@ens-lyon.org> (tiny change)
+ *   2008 Andreas Påhlsson <andreas.pahlsson@xcerion.com>
+ *   2008 Justin Pryzby <jpryzby+d@quoininc.com> (tiny change)
+ *   2008 Erast Benson <erast@gnusolaris.org> (tiny change)
+ *   2009 Chris Coulson <chrisccoulson@googlemail.com>
+ *   2009 Raphaël Hertzog <hertzog@debian.org>
+ *   2012 Carsten Hey <carsten@debian.org> (tiny change)
+ *   2015 Christos Trochalakis <yatiohi@ideopolis.gr> (tiny change)
+ *   2015 Sven Joachim <svenjoac@gmx.de> (tiny change)
  */
 
 #include <config.h>
-/* On at least Solaris <= 11.3 procfs is not compatible with LFS. */
-#if !DPKG_STRUCTURED_PROCFS_SUPPORTS_LFS
-#undef _FILE_OFFSET_BITS
-#endif
-#include <compat.h>
-
-#include <dpkg/macros.h>
 
 #if defined(__linux__)
 #  define OS_Linux
@@ -60,6 +71,15 @@
 /* Solaris needs this to expose the new structured procfs API. */
 #define _STRUCTURED_PROC 1
 #endif
+
+/* On at least Solaris <= 11.3 procfs is not compatible with LFS. */
+#if !DPKG_STRUCTURED_PROCFS_SUPPORTS_LFS
+#undef _FILE_OFFSET_BITS
+#endif
+
+#include <compat.h>
+
+#include <dpkg/macros.h>
 
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
@@ -103,9 +123,7 @@
 #include <signal.h>
 #include <termios.h>
 #include <unistd.h>
-#ifdef HAVE_STDDEF_H
 #include <stddef.h>
-#endif
 #include <stdbool.h>
 #include <stdarg.h>
 #include <stdlib.h>
@@ -400,14 +418,14 @@ bug(const char *file, int line, const char *func, const char *format, ...)
 }
 
 static void *
-xmalloc(int size)
+xmalloc(size_t size)
 {
 	void *ptr;
 
 	ptr = malloc(size);
 	if (ptr)
 		return ptr;
-	fatale("malloc(%d) failed", size);
+	fatale("malloc(%zu) failed", size);
 }
 
 static char *
@@ -498,6 +516,7 @@ parse_unsigned(const char *string, int base, int *value_r)
 	return 0;
 }
 
+#ifndef HAVE_CLOSEFROM
 static long
 get_open_fd_max(void)
 {
@@ -507,6 +526,22 @@ get_open_fd_max(void)
 	return sysconf(_SC_OPEN_MAX);
 #endif
 }
+
+static void
+closefrom(int lowfd)
+{
+	long maxfd = get_open_fd_max();
+	int i;
+
+#ifdef HAVE_CLOSE_RANGE
+	if (close_range(lowfd, maxfd, 0) == 0)
+		return;
+#endif
+
+	for (i = maxfd - 1; i >= lowfd; --i)
+		close(i);
+}
+#endif
 
 #ifndef HAVE_SETSID
 static void
@@ -548,7 +583,7 @@ wait_for_child(pid_t pid)
 
 	do {
 		child = waitpid(pid, &status, 0);
-	} while (child == -1 && errno == EINTR);
+	} while (child < 0 && errno == EINTR);
 
 	if (child != pid)
 		fatal("error waiting for child");
@@ -664,6 +699,7 @@ create_notify_socket(void)
 	return fd;
 }
 
+/* TODO: Refactor to reduce nesting levels. */
 static void
 wait_for_notify(int fd)
 {
@@ -800,7 +836,7 @@ daemonize(void)
 	 * performing actions, such as creating a pidfile. */
 	sigemptyset(&mask);
 	sigaddset(&mask, SIGCHLD);
-	if (sigprocmask(SIG_BLOCK, &mask, &oldmask) == -1)
+	if (sigprocmask(SIG_BLOCK, &mask, &oldmask) < 0)
 		fatale("cannot block SIGCHLD");
 
 	if (notify_await)
@@ -851,7 +887,7 @@ daemonize(void)
 		_exit(0);
 	}
 
-	if (sigprocmask(SIG_SETMASK, &oldmask, NULL) == -1)
+	if (sigprocmask(SIG_SETMASK, &oldmask, NULL) < 0)
 		fatale("cannot restore signal mask");
 
 	debug("Detaching complete...\n");
@@ -932,7 +968,7 @@ usage(void)
 "  -m, --make-pidfile            create the pidfile before starting\n"
 "      --remove-pidfile          delete the pidfile after stopping\n"
 "  -R, --retry <schedule>        check whether processes die, and retry\n"
-"  -t, --test                    test mode, don't do anything\n"
+"  -t, --test                    test mode, do not do anything\n"
 "  -o, --oknodo                  exit status 0 (not 1) if nothing done\n"
 "  -q, --quiet                   be more quiet\n"
 "  -v, --verbose                 be more verbose\n"
@@ -1042,6 +1078,7 @@ parse_signal(const char *sig_str, int *sig_num)
 			return 0;
 		}
 	}
+
 	return -1;
 }
 
@@ -1142,7 +1179,7 @@ set_proc_schedule(struct res_schedule *sched)
 
 	param.sched_priority = sched->priority;
 
-	if (sched_setscheduler(getpid(), sched->policy, &param) == -1)
+	if (sched_setscheduler(getpid(), sched->policy, &param) < 0)
 		fatale("unable to set process scheduler");
 #endif
 }
@@ -1162,7 +1199,7 @@ set_io_schedule(struct res_schedule *sched)
 	int io_sched_mask;
 
 	io_sched_mask = IOPRIO_PRIO_VALUE(sched->policy, sched->priority);
-	if (ioprio_set(IOPRIO_WHO_PROCESS, getpid(), io_sched_mask) == -1)
+	if (ioprio_set(IOPRIO_WHO_PROCESS, getpid(), io_sched_mask) < 0)
 		warning("unable to alter IO priority to mask %i (%s)\n",
 		        io_sched_mask, strerror(errno));
 #endif
@@ -1175,7 +1212,7 @@ parse_schedule_item(const char *string, struct schedule_item *item)
 
 	if (strcmp(string, "forever") == 0) {
 		item->type = sched_forever;
-	} else if (isdigit(string[0])) {
+	} else if (isdigit((unsigned char)string[0])) {
 		item->type = sched_timeout;
 		if (parse_unsigned(string, 10, &item->value) != 0)
 			badusage("invalid timeout value in schedule");
@@ -1492,8 +1529,12 @@ parse_options(int argc, char * const *argv)
 		badusage("need one of --start or --stop or --status");
 
 	if (match_mode == MATCH_NONE ||
-	    (!execname && !cmdname && !userspec &&
-	     !pid_str && !ppid_str && !pidfile))
+	    (!execname &&
+	     !cmdname &&
+	     !userspec &&
+	     !pid_str &&
+	     !ppid_str &&
+	     !pidfile))
 		badusage("need at least one of --exec, --pid, --ppid, --pidfile, --user or --name");
 
 #ifdef PROCESS_NAME_SIZE
@@ -1605,7 +1646,7 @@ proc_status_field(pid_t pid, const char *field)
 	ssize_t line_len;
 	size_t field_len = strlen(field);
 
-	sprintf(filename, "/proc/%d/status", pid);
+	snprintf(filename, sizeof(filename), "/proc/%d/status", pid);
 	fp = fopen(filename, "r");
 	if (!fp)
 		return NULL;
@@ -1614,7 +1655,7 @@ proc_status_field(pid_t pid, const char *field)
 			line[line_len - 1] = '\0';
 
 			value = line + field_len;
-			while (isspace(*value))
+			while (isspace((unsigned char)*value))
 				value++;
 
 			break;
@@ -1624,14 +1665,14 @@ proc_status_field(pid_t pid, const char *field)
 
 	return value;
 }
-#elif (defined(OS_Solaris) || defined(OS_AIX)) && HAVE_STRUCT_PSINFO
+#elif (defined(OS_Solaris) || defined(OS_AIX)) && defined(HAVE_STRUCT_PSINFO)
 static bool
 proc_get_psinfo(pid_t pid, struct psinfo *psinfo)
 {
 	char filename[64];
 	FILE *fp;
 
-	sprintf(filename, "/proc/%d/psinfo", pid);
+	snprintf(filename, sizeof(filename), "/proc/%d/psinfo", pid);
 	fp = fopen(filename, "r");
 	if (!fp)
 		return false;
@@ -1734,9 +1775,9 @@ pid_is_exec(pid_t pid, const struct stat *esb)
 	int nread;
 	struct stat sb;
 
-	sprintf(lname, "/proc/%d/exe", pid);
+	snprintf(lname, sizeof(lname), "/proc/%d/exe", pid);
 	nread = readlink(lname, lcontents, sizeof(lcontents) - 1);
-	if (nread == -1)
+	if (nread < 0)
 		return false;
 
 	filename = lcontents;
@@ -1755,14 +1796,14 @@ pid_is_exec(pid_t pid, const struct stat *esb)
 
 	return (sb.st_dev == esb->st_dev && sb.st_ino == esb->st_ino);
 }
-#elif (defined(OS_Solaris) || defined(OS_AIX)) && HAVE_STRUCT_PSINFO
+#elif (defined(OS_Solaris) || defined(OS_AIX)) && defined(HAVE_STRUCT_PSINFO)
 static bool
 pid_is_exec(pid_t pid, const struct stat *esb)
 {
 	struct stat sb;
 	char filename[64];
 
-	sprintf(filename, "/proc/%d/object/a.out", pid);
+	snprintf(filename, sizeof(filename), "/proc/%d/object/a.out", pid);
 
 	if (stat(filename, &sb) != 0)
 		return false;
@@ -1823,6 +1864,7 @@ pid_is_exec(pid_t pid, const struct stat *esb)
 
 	if (pstat_getproc(&pst, sizeof(pst), (size_t)0, (int)pid) < 0)
 		return false;
+
 	return ((dev_t)pst.pst_text.psf_fsid.psfs_id == esb->st_dev &&
 	        (ino_t)pst.pst_text.psf_fileid == esb->st_ino);
 }
@@ -1877,7 +1919,7 @@ pid_is_exec(pid_t pid, const struct stat *esb)
 	/* Find and compare string. */
 	start_argv_0_p = *pid_argv_p;
 
-	/* Find end of argv[0] then copy and cut of str there. */
+	/* Find end of argv[0] then copy and cut off str there. */
 	end_argv_0_p = strchr(*pid_argv_p, ' ');
 	if (end_argv_0_p == NULL)
 		/* There seems to be no space, so we have the command
@@ -1885,7 +1927,7 @@ pid_is_exec(pid_t pid, const struct stat *esb)
 		start_argv_0_p = *pid_argv_p;
 	else {
 		/* Tests indicate that this never happens, since
-		 * kvm_getargv itself cuts of tailing stuff. This is
+		 * kvm_getargv itself cuts off tailing stuff. This is
 		 * not what the manual page says, however. */
 		strncpy(buf, *pid_argv_p, (end_argv_0_p - start_argv_0_p));
 		buf[(end_argv_0_p - start_argv_0_p) + 1] = '\0';
@@ -1948,7 +1990,7 @@ pid_is_child(pid_t pid, pid_t ppid)
 
 	return (pid_t)pbi.pbi_ppid == ppid;
 }
-#elif (defined(OS_Solaris) || defined(OS_AIX)) && HAVE_STRUCT_PSINFO
+#elif (defined(OS_Solaris) || defined(OS_AIX)) && defined(HAVE_STRUCT_PSINFO)
 static bool
 pid_is_child(pid_t pid, pid_t ppid)
 {
@@ -2032,9 +2074,10 @@ pid_is_user(pid_t pid, uid_t uid)
 	struct stat sb;
 	char buf[32];
 
-	sprintf(buf, "/proc/%d", pid);
+	snprintf(buf, sizeof(buf), "/proc/%d", pid);
 	if (stat(buf, &sb) != 0)
 		return false;
+
 	return (sb.st_uid == uid);
 }
 #elif defined(OS_Hurd)
@@ -2044,6 +2087,7 @@ pid_is_user(pid_t pid, uid_t uid)
 	struct proc_stat *ps;
 
 	ps = get_proc_stat(pid, PSTAT_OWNER_UID);
+
 	return ps && (uid_t)proc_stat_owner_uid(ps) == uid;
 }
 #elif defined(OS_Darwin)
@@ -2057,7 +2101,7 @@ pid_is_user(pid_t pid, uid_t uid)
 
 	return pbi.pbi_ruid == uid;
 }
-#elif (defined(OS_Solaris) || defined(OS_AIX)) && HAVE_STRUCT_PSINFO
+#elif (defined(OS_Solaris) || defined(OS_AIX)) && defined(HAVE_STRUCT_PSINFO)
 static bool
 pid_is_user(pid_t pid, uid_t uid)
 {
@@ -2076,6 +2120,7 @@ pid_is_user(pid_t pid, uid_t uid)
 
 	if (pstat_getproc(&pst, sizeof(pst), (size_t)0, (int)pid) < 0)
 		return false;
+
 	return ((uid_t)pst.pst_uid == uid);
 }
 #elif defined(OS_FreeBSD)
@@ -2182,7 +2227,7 @@ pid_is_cmd(pid_t pid, const char *name)
 
 	return false;
 }
-#elif (defined(OS_Solaris) || defined(OS_AIX)) && HAVE_STRUCT_PSINFO
+#elif (defined(OS_Solaris) || defined(OS_AIX)) && defined(HAVE_STRUCT_PSINFO)
 static bool
 pid_is_cmd(pid_t pid, const char *name)
 {
@@ -2201,6 +2246,7 @@ pid_is_cmd(pid_t pid, const char *name)
 
 	if (pstat_getproc(&pst, sizeof(pst), (size_t)0, (int)pid) < 0)
 		return false;
+
 	return (strcmp(pst.pst_ucomm, name) == 0);
 }
 #elif defined(OS_Darwin)
@@ -2307,6 +2353,7 @@ pid_check(pid_t pid)
 	return STATUS_OK;
 }
 
+/* TODO: Refactor to reduce nesting levels. */
 static enum status_code
 do_pidfile(const char *name)
 {
@@ -2398,6 +2445,7 @@ static int
 check_proc_stat(struct proc_stat *ps)
 {
 	pid_check(proc_stat_pid(ps));
+
 	return 0;
 }
 
@@ -2559,6 +2607,7 @@ do_findprocs(void)
 		return do_procinit();
 }
 
+/* TODO: Refactor to reduce nesting levels. */
 static int
 do_start(int argc, char **argv)
 {
@@ -2573,6 +2622,7 @@ do_start(int argc, char **argv)
 		info("%s already running.\n", execname ? execname : "process");
 		return exitnodo;
 	}
+
 	if (testmode && quietmode <= 0) {
 		printf("Would start %s ", startas);
 		while (argc-- > 0)
@@ -2598,6 +2648,7 @@ do_start(int argc, char **argv)
 	}
 	if (testmode)
 		return 0;
+
 	debug("Starting %s...\n", startas);
 	*--argv = startas;
 	if (umask_value >= 0)
@@ -2662,27 +2713,31 @@ do_start(int argc, char **argv)
 		dup2(output_fd, 2); /* stderr */
 	}
 	if (background && close_io) {
-		int i;
-
 		dup2(devnull_fd, 0); /* stdin */
 
-		 /* Now close all extra fds. */
-		for (i = get_open_fd_max() - 1; i >= 3; --i)
-			close(i);
+		/* Now close all extra fds. */
+		closefrom(3);
 	}
 	execv(startas, argv);
 	fatale("unable to start %s", startas);
 }
 
+struct stop_context {
+	int retry_nr;
+	int n_killed;
+	int n_notkilled;
+	bool anykilled;
+};
+
 static void
-do_stop(int sig_num, int *n_killed, int *n_notkilled)
+do_stop(struct stop_context *ctx, int sig_num)
 {
 	struct pid_list *p;
 
 	do_findprocs();
 
-	*n_killed = 0;
-	*n_notkilled = 0;
+	ctx->n_killed = 0;
+	ctx->n_notkilled = 0;
 
 	if (!found)
 		return;
@@ -2692,21 +2747,21 @@ do_stop(int sig_num, int *n_killed, int *n_notkilled)
 	for (p = found; p; p = p->next) {
 		if (testmode) {
 			info("Would send signal %d to %d.\n", sig_num, p->pid);
-			(*n_killed)++;
+			ctx->n_killed++;
 		} else if (kill(p->pid, sig_num) == 0) {
 			pid_list_push(&killed, p->pid);
-			(*n_killed)++;
+			ctx->n_killed++;
 		} else {
 			if (sig_num)
 				warning("failed to kill %d: %s\n",
 				        p->pid, strerror(errno));
-			(*n_notkilled)++;
+			ctx->n_notkilled++;
 		}
 	}
 }
 
 static void
-do_stop_summary(int retry_nr)
+do_stop_summary(struct stop_context *ctx)
 {
 	struct pid_list *p;
 
@@ -2717,8 +2772,8 @@ do_stop_summary(int retry_nr)
 	for (p = killed; p; p = p->next)
 		printf(" %d", p->pid);
 	putchar(')');
-	if (retry_nr > 0)
-		printf(", retry #%d", retry_nr);
+	if (ctx->retry_nr > 0)
+		printf(", retry #%d", ctx->retry_nr);
 	printf(".\n");
 }
 
@@ -2757,7 +2812,7 @@ set_what_stop(const char *format, ...)
  * about system performance).
  */
 static bool
-do_stop_timeout(int timeout, int *n_killed, int *n_notkilled)
+do_stop_timeout(struct stop_context *ctx, int timeout)
 {
 	struct timespec stopat, before, after, interval, maxinterval;
 	int ratio;
@@ -2772,8 +2827,8 @@ do_stop_timeout(int timeout, int *n_killed, int *n_notkilled)
 		if (timespec_cmp(&before, &stopat, >))
 			return false;
 
-		do_stop(0, n_killed, n_notkilled);
-		if (!*n_killed)
+		do_stop(ctx, 0);
+		if (ctx->n_killed == 0)
 			return true;
 
 		timespec_gettime(&after);
@@ -2805,12 +2860,12 @@ do_stop_timeout(int timeout, int *n_killed, int *n_notkilled)
 }
 
 static int
-finish_stop_schedule(bool anykilled)
+finish_stop_schedule(struct stop_context *ctx)
 {
 	if (rpidfile && pidfile && !testmode)
 		remove_pidfile(pidfile);
 
-	if (anykilled)
+	if (ctx->anykilled)
 		return 0;
 
 	info("No %s found running; none killed.\n", what_stop);
@@ -2821,8 +2876,8 @@ finish_stop_schedule(bool anykilled)
 static int
 run_stop_schedule(void)
 {
-	int position, n_killed, n_notkilled, value, retry_nr;
-	bool anykilled;
+	struct stop_context ctx = { 0 };
+	int position, value;
 
 	if (testmode) {
 		if (schedule != NULL) {
@@ -2846,41 +2901,38 @@ run_stop_schedule(void)
 	else
 		BUG("no match option, please report");
 
-	anykilled = false;
-	retry_nr = 0;
-	n_killed = 0;
-	n_notkilled = 0;
-
 	if (schedule == NULL) {
-		do_stop(signal_nr, &n_killed, &n_notkilled);
-		do_stop_summary(0);
-		if (n_notkilled > 0)
-			info("%d pids were not killed\n", n_notkilled);
-		if (n_killed)
-			anykilled = true;
-		return finish_stop_schedule(anykilled);
+		do_stop(&ctx, signal_nr);
+		do_stop_summary(&ctx);
+		if (ctx.n_notkilled > 0)
+			info("%d pids were not killed\n", ctx.n_notkilled);
+		if (ctx.n_killed)
+			ctx.anykilled = true;
+
+		return finish_stop_schedule(&ctx);
 	}
 
 	for (position = 0; position < schedule_length; position++) {
 	reposition:
 		value = schedule[position].value;
-		n_notkilled = 0;
+		ctx.n_notkilled = 0;
 
 		switch (schedule[position].type) {
 		case sched_goto:
 			position = value;
 			goto reposition;
 		case sched_signal:
-			do_stop(value, &n_killed, &n_notkilled);
-			do_stop_summary(retry_nr++);
-			if (!n_killed)
-				return finish_stop_schedule(anykilled);
+			do_stop(&ctx, value);
+			do_stop_summary(&ctx);
+			ctx.retry_nr++;
+			if (ctx.n_killed == 0)
+				return finish_stop_schedule(&ctx);
 			else
-				anykilled = true;
+				ctx.anykilled = true;
 			continue;
 		case sched_timeout:
-			if (do_stop_timeout(value, &n_killed, &n_notkilled))
-				return finish_stop_schedule(anykilled);
+			if (do_stop_timeout(&ctx, value))
+				return finish_stop_schedule(&ctx);
 			else
 				continue;
 		default:
@@ -2890,7 +2942,7 @@ run_stop_schedule(void)
 	}
 
 	info("Program %s, %d process(es), refused to die.\n",
-	     what_stop, n_killed);
+	     what_stop, ctx.n_killed);
 
 	return 2;
 }

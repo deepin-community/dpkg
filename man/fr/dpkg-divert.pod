@@ -44,7 +44,7 @@ Liste tous les détournements, ou ceux qui correspondent à I<motif-global>.
 
 =item B<--listpackage> I<fichier>
 
-Affiche le nom du paquet qui détourne I<fichier> (depuis S<dpkg 1.15.0).> Affiche LOCAL si I<fichier> est détourné localement et n'affiche rien si I<fichier> n'est pas détourné.
+Affiche le nom du paquet qui détourne I<fichier> (depuis dpkg 1.15.0). Affiche LOCAL si I<fichier> est détourné localement et n'affiche rien si I<fichier> n'est pas détourné.
 
 =item B<--truename> I<fichier>
 
@@ -58,15 +58,15 @@ Affiche le vrai nom d'un fichier détourné.
 
 =item B<--admindir> I<répertoire>
 
-Définit le répertoire d'administration comme I<répertoire>. Par défaut c'est S<« I<%ADMINDIR%> »> si B<DPKG_ADMINDIR> n'a pas été défini.
+Définit le répertoire d'administration comme I<répertoire>. Par défaut c'est « I<%ADMINDIR%> » si B<DPKG_ADMINDIR> n'a pas été défini.
 
 =item B<--instdir> I<répertoire>
 
-Définit le répertoire d'installation qui désigne le répertoire où les paquets sont installés (depuis S<dpkg 1.19.2).> Par défaut c'est S<« I</> »> si B<DPKG_ROOT> n'a pas été défini.
+Définit le répertoire d'installation qui désigne le répertoire où les paquets sont installés (depuis dpkg 1.19.2). Par défaut c'est « I</> » si B<DPKG_ROOT> n'a pas été défini.
 
 =item B<--root> I<répertoire>
 
-Définit le répertoire root à B<directory>, ce qui définit le répertoire d'installation à S<« I<répertoire> »> et le répertoire d'administration à S<« I<répertoire>B<%ADMINDIR%> »> (depuis S<dpkg 1.19.2)> si B<DPKG_ROOT> n'a pas été défini.
+Définit le répertoire root à B<directory>, ce qui définit le répertoire d'installation à « I<répertoire> » et le répertoire d'administration à « I<répertoire>B<%ADMINDIR%> » (depuis dpkg 1.19.2) si B<DPKG_ROOT> n'a pas été défini.
 
 =item B<--divert> I<détourner-dans>
 
@@ -90,7 +90,7 @@ Met en fait le fichier de côté. Quand le fichier de destination existe, B<dpkg
 
 =item B<--no-rename>
 
-Indique que le fichier ne doit pas être renommé lors de l'ajout ou du retrait d'un détournement de la base de données (depuis S<dpkg 1.19.1).> Cela est destiné au détournement de fichiers de l'ensemble de paquets B<essential>, où la disparition temporaire du fichier original n'est pas acceptable, car il rend non fonctionnel le système. C'est le comportement par défaut, mais cela changera durant le cycle de dpkg 1.20.x.
+Specifies that the file should not be renamed while adding or removing the diversion into the database (since dpkg 1.19.1).  This is intended for diversions of files from the B<Essential> package set, where the temporary disappearance of the original file is not acceptable, as it can render the system non-functional.  This is the default behavior, which will change once there are no known users, but not before the dpkg 1.23.x release cycle.
 
 =item B<--test>
 
@@ -126,7 +126,7 @@ Erreur fatale ou irrécupérable due à l'utilisation d'une ligne de commande no
 
 =item B<DPKG_ROOT>
 
-Si cette variable est positionnée et que les options B<--admindir> ou B<--root> ne sont pas précisées, ce répertoire sera utilisé comme répertoire racine du système de fichiers (depuis S<dpkg 1.19.2).>
+Si cette variable est positionnée et que les options B<--admindir> ou B<--root> ne sont pas précisées, ce répertoire sera utilisé comme répertoire racine du système de fichiers (depuis dpkg 1.19.2).
 
 =item B<DPKG_ADMINDIR>
 
@@ -138,11 +138,15 @@ Si cette variable est positionnée et que les options B<--local> et B<--package>
 
 =item B<DPKG_DEBUG>
 
-Définit le masque de débogage (depuis S<dpkg 1.21.10)> à partir d'une valeur octale. Actuellement, les drapeaux acceptés sont décrits dans l'option B<dpkg --debug>, mais ces drapeaux n'auront pas tous un effet sur ce programme.
+Définit le masque de débogage (depuis dpkg 1.21.10) à partir d'une valeur octale. Actuellement, les drapeaux acceptés sont décrits dans l'option B<dpkg --debug>, mais ces drapeaux n'auront pas tous un effet sur ce programme.
 
 =item B<DPKG_COLORS>
 
-Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
+Définit le mode de couleur (depuis dpkg 1.18.5). Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
+
+=item B<DPKG_NLS>
+
+If set, it will be used to decide whether to activate Native Language Support, also known as internationalization (or i18n) support (since dpkg 1.22.7).  The accepted values are: B<0> and B<1> (default).
 
 =back
 
@@ -168,20 +172,20 @@ Care should be taken when diverting shared libraries, L<ldconfig(8)> creates a s
 
 =head1 EXEMPLES
 
-Pour détourner toutes les copies de I</usr/bin/example> vers I</usr/bin/example.toto>, c'est-à-dire demander aux paquets qui fournissent I</usr/bin/example> de l'installer dans I</usr/bin/example.toto>, en effectuant le changement de nom si S<nécessaire :>
+Pour détourner toutes les copies de I</usr/bin/example> vers I</usr/bin/example.toto>, c'est-à-dire demander aux paquets qui fournissent I</usr/bin/example> de l'installer dans I</usr/bin/example.toto>, en effectuant le changement de nom si nécessaire :
 
  dpkg-divert --divert /usr/bin/example.toto --rename /usr/bin/example
 
-Pour supprimer ce S<détournement :>
+Pour supprimer ce détournement :
 
  dpkg-divert --rename --remove /usr/bin/example
 
-Pour détourner n'importe quel paquet qui veut installer I</usr/bin/example> dans I</usr/bin/example.toto>, sauf votre propre paquet S<I<wibble> :>
+Pour détourner n'importe quel paquet qui veut installer I</usr/bin/example> dans I</usr/bin/example.toto>, sauf votre propre paquet I<wibble> :
 
  dpkg-divert --package wibble --divert /usr/bin/example.toto \
     --rename /usr/bin/example
 
-Pour supprimer ce S<détournement :>
+Pour supprimer ce détournement :
 
  dpkg-divert --package wibble --rename --remove /usr/bin/example
 

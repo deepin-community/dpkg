@@ -34,7 +34,7 @@ De tweede regel is een decimale tekenreeks (zonder voorafgaande nullen) die de l
 
 Elk van deze regels wordt afgesloten met één enkel regeleinde-teken.
 
-Het eerste tar-bestand bevat de controle-informatie in de vorm van een reeks gewone bestanden. Er moet een bestand B<control> aanwezig zijn, omdat het de kern van de controle-informatie bevat.
+The first tarfile contains the package metadata, as a series of ordinary files.  The file B<control> must be present, as it contains the package control information.
 
 In sommige zeer oude archieven kunnen de bestanden uit het controle-tar-bestand zich facultatief in een onderliggende map B<DEBIAN> bevinden. In dat geval zal ook deze onderliggende map B<DEBIAN> zich in het controle-tar-bestand bevinden en zal het controle-tar-bestand enkel in die map bestanden hebben. Facultatief mag het controle-tar-bestand de vermelding ‘B<.>’ bevatten, wat staat voor de huidige map.
 

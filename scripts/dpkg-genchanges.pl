@@ -19,8 +19,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use strict;
-use warnings;
+use v5.36;
 
 use List::Util qw(any all none);
 use POSIX qw(:errno_h :locale_h);
@@ -61,17 +60,16 @@ my $changes_format = '1.8';
 
 # Package to file map, has entries for "packagename".
 my %pkg2file;
-# Package to section map, from control file.
-my %file2ctrlsec;
-# Package to priority map, from control file.
-my %file2ctrlpri;
+# Package to section/priority field map, from control file.
+my %file2ctrlfield;
 # Default values taken from source (used for Section, Priority and Maintainer).
 my %sourcedefault;
 
 my @descriptions;
 
 my $checksums = Dpkg::Checksums->new();
-my %remove;        # - fields to remove
+# Fields to remove.
+my %remove;
 my %override;
 my %archadded;
 my @archvalues;
@@ -151,56 +149,56 @@ while (@ARGV) {
     if (m/^--build=(.*)$/) {
         set_build_type_from_options($1, $_);
     } elsif (m/^-b$/) {
-	set_build_type(BUILD_BINARY, $_);
+        set_build_type(BUILD_BINARY, $_);
     } elsif (m/^-B$/) {
-	set_build_type(BUILD_ARCH_DEP, $_);
+        set_build_type(BUILD_ARCH_DEP, $_);
     } elsif (m/^-A$/) {
-	set_build_type(BUILD_ARCH_INDEP, $_);
+        set_build_type(BUILD_ARCH_INDEP, $_);
     } elsif (m/^-S$/) {
-	set_build_type(BUILD_SOURCE, $_);
+        set_build_type(BUILD_SOURCE, $_);
     } elsif (m/^-G$/) {
-	set_build_type(BUILD_SOURCE | BUILD_ARCH_DEP, $_);
+        set_build_type(BUILD_SOURCE | BUILD_ARCH_DEP, $_);
     } elsif (m/^-g$/) {
-	set_build_type(BUILD_SOURCE | BUILD_ARCH_INDEP, $_);
+        set_build_type(BUILD_SOURCE | BUILD_ARCH_INDEP, $_);
     } elsif (m/^-s([iad])$/) {
         $sourcestyle = $1;
     } elsif (m/^-q$/) {
         $quiet = 1;
     } elsif (m/^-c(.*)$/) {
-	$controlfile = $1;
+        $controlfile = $1;
     } elsif (m/^-l(.*)$/) {
-	$changelogfile = $1;
+        $changelogfile = $1;
     } elsif (m/^-C(.*)$/) {
-	$changesdescription = $1;
+        $changesdescription = $1;
     } elsif (m/^-f(.*)$/) {
-	$fileslistfile = $1;
+        $fileslistfile = $1;
     } elsif (m/^-v(.*)$/) {
-	$since = $1;
+        $since = $1;
     } elsif (m/^-T(.*)$/) {
-	$substvars->load($1) if -e $1;
-	$substvars_loaded = 1;
+        $substvars->load($1) if -e $1;
+        $substvars_loaded = 1;
     } elsif (m/^-m(.*)$/s) {
-	$forcemaint = $1;
+        $forcemaint = $1;
     } elsif (m/^-e(.*)$/s) {
-	$forcechangedby = $1;
+        $forcechangedby = $1;
     } elsif (m/^-F([0-9a-z]+)$/) {
         $changelogformat = $1;
     } elsif (m/^-D([^\=:]+)[=:](.*)$/s) {
-	$override{$1} = $2;
+        $override{$1} = $2;
     } elsif (m/^-u(.*)$/) {
-	$uploadfilesdir = $1;
+        $uploadfilesdir = $1;
     } elsif (m/^-U([^\=:]+)$/) {
         $remove{$1} = 1;
     } elsif (m/^-V(\w[-:0-9A-Za-z]*)[=:](.*)$/s) {
-	$substvars->set($1, $2);
+        $substvars->set($1, $2);
     } elsif (m/^-O(.*)$/) {
         $outputfile = $1;
     } elsif (m/^-(?:\?|-help)$/) {
-	usage();
-	exit(0);
+        usage();
+        exit(0);
     } elsif (m/^--version$/) {
-	version();
-	exit(0);
+        version();
+        exit(0);
     } else {
         usageerr(g_("unknown option '%s'"), $_);
     }
@@ -212,17 +210,19 @@ if (not defined $outputfile) {
     $outputfile = '-';
 }
 
-# Retrieve info from the current changelog entry
-my %options = (file => $changelogfile);
-$options{changelogformat} = $changelogformat if $changelogformat;
-$options{since} = $since if defined($since);
-my $changelog = changelog_parse(%options);
-# Change options to retrieve info of the former changelog entry
-delete $options{since};
-$options{count} = 1;
-$options{offset} = 1;
-my $prev_changelog = changelog_parse(%options);
-# Other initializations
+# Retrieve info from the current changelog entry.
+my %changelog_opts = (
+    filename => $changelogfile,
+);
+$changelog_opts{changelogformat} = $changelogformat if $changelogformat;
+$changelog_opts{since} = $since if defined($since);
+my $changelog = changelog_parse(%changelog_opts);
+# Change options to retrieve info of the former changelog entry.
+delete $changelog_opts{since};
+$changelog_opts{count} = 1;
+$changelog_opts{offset} = 1;
+my $prev_changelog = changelog_parse(%changelog_opts);
+# Other initializations.
 my $control = Dpkg::Control::Info->new($controlfile);
 my $fields = Dpkg::Control->new(type => CTRL_FILE_CHANGES);
 
@@ -247,7 +247,7 @@ if (! $is_backport && defined $prev_changelog &&
             $changelog->{'Version'}, $prev_changelog->{'Version'});
 }
 
-# Scan control info of source package
+# Scan control info of source package.
 my $src_fields = $control->get_source();
 foreach my $f (keys %{$src_fields}) {
     my $v = $src_fields->{$f};
@@ -264,15 +264,14 @@ foreach my $f (keys %{$src_fields}) {
     }
 }
 
+foreach my $f (qw(Section Priority)) {
+    $sourcedefault{$f} //= field_get_default_value($f);
+}
+
 my $dist = Dpkg::Dist::Files->new();
 my $origsrcmsg;
 
 if (build_has_any(BUILD_SOURCE)) {
-    my $sec = $sourcedefault{'Section'} // '-';
-    my $pri = $sourcedefault{'Priority'} // '-';
-    warning(g_('missing Section for source files')) if $sec eq '-';
-    warning(g_('missing Priority for source files')) if $pri eq '-';
-
     my $spackage = get_source_name();
     (my $sversion = $substvars->get('source:Version')) =~ s/^\d+://;
 
@@ -284,7 +283,7 @@ if (build_has_any(BUILD_SOURCE)) {
     $checksums->add_from_control($dsc_fields, use_files_for_md5 => 1);
 
     # Compare upstream version to previous upstream version to decide if
-    # the .orig tarballs must be included
+    # the .orig tarballs must be included.
     my $include_tarball;
     if (defined($prev_changelog)) {
         my $cur = Dpkg::Version->new($changelog->{'Version'});
@@ -297,12 +296,12 @@ if (build_has_any(BUILD_SOURCE)) {
             $include_tarball = 0;
         }
     } else {
-        # No previous entry means first upload, tarball required
+        # No previous entry means first upload, tarball required.
         $include_tarball = 1;
     }
 
     my $ext = compression_get_file_extension_regex();
-    if ((($sourcestyle =~ m/i/ && !$include_tarball) ||
+    if ((($sourcestyle =~ m/i/ && ! $include_tarball) ||
          $sourcestyle =~ m/d/) &&
         any { m/\.(?:debian\.tar|diff)\.$ext$/ } $checksums->get_files())
     {
@@ -323,7 +322,7 @@ if (build_has_any(BUILD_SOURCE)) {
 
     # Only add attributes for files being distributed.
     for my $fn ($checksums->get_files()) {
-        $dist->add_file($fn, $sec, $pri);
+        $dist->add_file($fn, @sourcedefault{qw(Section Priority)});
     }
 } elsif (build_is(BUILD_ARCH_DEP)) {
     $origsrcmsg = g_('binary-only arch-specific upload ' .
@@ -373,7 +372,7 @@ foreach my $file ($dist->get_files()) {
 error(g_('binary build with no binary artifacts found; cannot distribute'))
     if build_has_any(BUILD_BINARY) && $dist_binaries == 0;
 
-# Scan control info of all binary packages
+# Scan control info of all binary packages.
 foreach my $pkg ($control->get_packages()) {
     my $p = $pkg->{'Package'};
     my $a = $pkg->{'Architecture'};
@@ -387,20 +386,21 @@ foreach my $pkg ($control->get_packages()) {
     @restrictions = parse_build_profiles($bp) if defined $bp;
 
     if (not defined $pkg2file{$p}) {
-	# No files for this package... warn if it's unexpected
-	if (((build_has_any(BUILD_ARCH_INDEP) and debarch_eq('all', $a)) or
-	     (build_has_any(BUILD_ARCH_DEP) and
-	      (any { debarch_is($host_arch, $_) } debarch_list_parse($a, positive => 1)))) and
-	    (@restrictions == 0 or
-	     evaluate_restriction_formula(\@restrictions, \@profiles)))
-	{
-	    warning(g_('package %s in control file but not in files list'),
-		    $p);
-	}
-	next; # and skip it
+        # No files for this package... warn if it is unexpected.
+        if (((build_has_any(BUILD_ARCH_INDEP) and debarch_eq('all', $a)) or
+             (build_has_any(BUILD_ARCH_DEP) and
+              (any { debarch_is($host_arch, $_) } debarch_list_parse($a, positive => 1)))) and
+            (@restrictions == 0 or
+             evaluate_restriction_formula(\@restrictions, \@profiles)))
+        {
+            warning(g_('package %s in control file but not in files list'),
+                    $p);
+        }
+        # And skip it.
+        next;
     }
 
-    # Add description of all binary packages
+    # Add description of all binary packages.
     $d = $substvars->substvars($d);
     push @descriptions, format_desc($p, $pkg_type, $d);
 
@@ -411,32 +411,32 @@ foreach my $pkg ($control->get_packages()) {
         my $v = $pkg->{$f};
 
         if ($f eq 'Section') {
-            $file2ctrlsec{$_} = $v foreach @files;
+            $file2ctrlfield{$_}{$f} = $v foreach @files;
         } elsif ($f eq 'Priority') {
-            $file2ctrlpri{$_} = $v foreach @files;
+            $file2ctrlfield{$_}{$f} = $v foreach @files;
         } elsif ($f eq 'Architecture') {
-	    if (build_has_any(BUILD_ARCH_DEP) and
-	        (any { debarch_is($host_arch, $_) } debarch_list_parse($v, positive => 1))) {
-		$v = $host_arch;
-	    } elsif (!debarch_eq('all', $v)) {
-		$v = '';
-	    }
-	    push(@archvalues, $v) if $v and not $archadded{$v}++;
+            if (build_has_any(BUILD_ARCH_DEP) and
+                (any { debarch_is($host_arch, $_) } debarch_list_parse($v, positive => 1))) {
+                $v = $host_arch;
+            } elsif (! debarch_eq('all', $v)) {
+                $v = '';
+            }
+            push(@archvalues, $v) if $v and not $archadded{$v}++;
         } elsif ($f eq 'Description') {
-            # Description in changes is computed, do not copy this field
-	} else {
+            # Description in changes is computed, do not copy this field.
+        } else {
             field_transfer_single($pkg, $fields, $f);
-	}
+        }
     }
 }
 
-# Scan fields of dpkg-parsechangelog
+# Scan fields of dpkg-parsechangelog.
 foreach my $f (keys %{$changelog}) {
     my $v = $changelog->{$f};
     if ($f eq 'Source') {
         set_source_name($v);
     } elsif ($f eq 'Maintainer') {
-	$fields->{'Changed-By'} = $v;
+        $fields->{'Changed-By'} = $v;
     } else {
         field_transfer_single($changelog, $fields, $f);
     }
@@ -463,23 +463,14 @@ for my $p (keys %pkg2file) {
     foreach my $fn (@{$pkg2file{$p}}) {
         my $file = $dist->get_file($fn);
 
-        my $sec = $file2ctrlsec{$fn} || $sourcedefault{'Section'} // '-';
-	if ($sec eq '-') {
-	    warning(g_("missing Section for binary package %s; using '-'"), $p);
-	}
-	if ($sec ne $file->{section}) {
-	    error(g_('package %s has section %s in control file but %s in ' .
-	             'files list'), $p, $sec, $file->{section});
-	}
+        foreach my $f (qw(Section Priority)) {
+            my $v = $file2ctrlfield{$fn}{$f} || $sourcedefault{$f};
 
-        my $pri = $file2ctrlpri{$fn} || $sourcedefault{'Priority'} // '-';
-	if ($pri eq '-') {
-	    warning(g_("missing Priority for binary package %s; using '-'"), $p);
-	}
-	if ($pri ne $file->{priority}) {
-	    error(g_('package %s has priority %s in control file but %s in ' .
-	             'files list'), $p, $pri, $file->{priority});
-	}
+            if ($v ne $file->{lc $f}) {
+                error(g_("package %s has value '%s' in %s field in control file " .
+                         "but '%s' in files list"), $p, $v, $f, $file->{lc $f});
+            }
+        }
     }
 }
 
@@ -494,7 +485,7 @@ if (length $fields->{'Date'} == 0) {
 }
 
 $fields->{'Binary'} = join ' ', sort keys %pkg2file;
-# Avoid overly long line by splitting over multiple lines
+# Avoid overly long line by splitting over multiple lines.
 if (length($fields->{'Binary'}) > 980) {
     $fields->{'Binary'} =~ s/(.{0,980}) /$1\n/g;
 }
@@ -515,7 +506,7 @@ foreach my $fn ($checksums->get_files()) {
                           " $file->{section} $file->{priority} $fn";
 }
 $checksums->export_to_control($fields);
-# redundant with the Files field
+# Redundant with the Files field.
 delete $fields->{'Checksums-Md5'};
 
 $fields->{'Source'} = get_source_name();
@@ -543,6 +534,6 @@ for my $f (keys %remove) {
     delete $fields->{$f};
 }
 
-# Note: do not perform substitution of variables, one of the reasons is that
+# Note: Do not perform substitution of variables, one of the reasons is that
 # they could interfere with field values, for example the Changes field.
 $fields->save($outputfile);

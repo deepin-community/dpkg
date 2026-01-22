@@ -126,11 +126,7 @@ Falls Sie ein automatisches Einreihen oder Wiederzusammenbauen durchführen, gib
 
 =item B<--msdos>
 
-Erzwingt, dass die von B<--split> erzeugten Ausgabe-Dateinamen MSDOS-kompatibel sind.
-
-Dies verstümmelt das Präfix - entweder das voreingestellten aus dem Eingabe-Dateinamen abgeleitete oder das als Argument übergebene: alphanumerische Zeichen werden klein geschrieben, Pluszeichen werden durch B<x> ersetzt und alle anderen Zeichen werden entfernt.
-
-Das Ergebnis wird dann soweit wie nötig abgeschnitten, und Dateinamen der Form I<PräfixN>B<of>I<M>B<.deb> werden generiert.
+Obsolete option without effect (since dpkg 1.23.0).
 
 =back
 
@@ -171,6 +167,10 @@ Setzt die Fehlersuchmaske (seit Dpkg 1.21.10) aus einem oktalen Wert. Die derzei
 =item B<DPKG_COLORS>
 
 Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte sind: B<auto> (Vorgabe), B<always> und B<never>.
+
+=item B<DPKG_NLS>
+
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language Support, auch als Unterstützung für Internationalisierung (oder i18n) bekannt, aktiviert wird (seit Dpkg 1.22.7). Die akzeptierten Werte sind: B<0> und B<1> (Vorgabe).
 
 =item B<SOURCE_DATE_EPOCH>
 
@@ -213,7 +213,7 @@ L<deb(5)>, L<deb-control(5)>, L<dpkg-deb(1)>, L<dpkg(1)>.
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

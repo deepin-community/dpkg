@@ -18,7 +18,7 @@ dpkg - Paketverwalter für Debian
 
 =head1 ÜBERSICHT
 
-B<dpkg> [I<Option> …] I<Aktionen>
+B<dpkg> [I<option>...] I<command>
 
 =head1 WARNUNG
 
@@ -28,9 +28,9 @@ Es sollte I<nicht> von Paketbetreuern verwendet werden, die verstehen wollen, wi
 
 =head1 BESCHREIBUNG
 
-B<dpkg> ist ein Werkzeug mittlerer Stufe, um Debian-Pakete zu installieren, zu bauen, zu entfernen und zu verwalten. Die primäre und benutzerfreundlichere Oberfläche für B<dpkg> als CLI (Befehlszeilenwerkzeug) ist L<apt(8)> und als TUI (Terminal-Benutzeroberfläche) ist L<aptitude(8)>. B<dpkg> selbst wird komplett über Befehlszeilenoptionen gesteuert, die aus genau einer Aktion und Null oder mehreren Optionen bestehen. Der Aktionsparameter teilt B<dpkg> mit, was zu tun ist, und die Optionen steuern die Aktionen in irgendeiner Weise.
+B<dpkg> is a medium-level tool to install, build, remove and manage Debian packages.  The primary and more user-friendly front-end for B<dpkg> as a CLI (command-line interface) is L<apt(8)> and as a TUI (terminal user interface) is L<aptitude(8)>.  B<dpkg> itself is controlled entirely via command line parameters, which consist of exactly one command and zero or more options. The command-parameter tells B<dpkg> what to do and options control the behavior of the command in some way.
 
-B<dpkg> kann auch als Oberfläche für L<dpkg-deb(1)> und L<dpkg-query(1)> verwendet werden. Die Liste der unterstützten Aktionen kann im Abschnitt B<AKTIONEN> gefunden werden. Falls so eine Aktion angetroffen wird, führt B<dpkg> einfach B<dpkg-deb> oder B<dpkg-query> mit den übergebenen Parametern aus, allerdings werden derzeit keine spezifischen Optionen an diese übergeben. Um solche Optionen zu verwenden, müssen die Backends direkt aufgerufen werden.
+B<dpkg> can also be used as a front-end to L<dpkg-deb(1)> and L<dpkg-query(1)>.  The list of supported commands can be found later on in the B<COMMANDS> section.  If any such command is encountered B<dpkg> just runs B<dpkg-deb> or B<dpkg-query> with the parameters given to it, but no specific options are currently passed to them, to use any such option the back-ends need to be called directly.
 
 =head1 INFORMATIONEN ÜBER PAKETE
 
@@ -114,7 +114,7 @@ Ein mit B<Neuinstnotwendig> markiertes Paket ist defekt und muss erneut installi
 
 =back
 
-=head1 AKTIONEN
+=head1 BEFEHLE
 
 =over 
 
@@ -246,7 +246,7 @@ Führt Plausibilitäts- und Konsistenzprüfungen der Datenbank für I<Paketname>
 
 =item B<--merge-avail> [I<Packages-Datei>]
 
-Aktualisiert B<dpkg>s und B<dselect>s Verständnis darüber, welche Pakete verfügbar sind. Mit der Aktion B<--merge-avail> wird alte Information mit der Information aus der I<Packages-Datei> zusammengeführt. Mit der Aktion B<--update-avail> wird die alte Information durch die Information aus der I<Packages-Datei> ersetzt. Die mit Debian vertriebene I<Packages-Datei> heißt einfach „I<Packages>“. Falls das Argument I<Packages-file> fehlt oder „B<->“ benannt ist, wird es aus der Standardeingabe lesen (seit Dpkg 1.17.7). B<dpkg> hält seine Aufzeichnungen über die verfügbaren Pakete in I<%ADMINDIR%/available>.
+Update B<dpkg>'s and B<dselect>'s idea of which packages are available. With the B<--merge-avail> command, old information is combined with information from I<Packages-file>.  With the B<--update-avail> command, old information is replaced with the information in the I<Packages-file>.  The I<Packages-file> distributed with Debian is simply named «I<Packages>».  If the I<Packages-file> argument is missing or named «B<->» then it will be read from standard input (since dpkg 1.17.7).  B<dpkg> keeps its record of available packages in I<%ADMINDIR%/available>.
 
 Ein einfacher Befehl, um die Datei I<available> in einem Rutsch zu holen und zu aktualisieren, ist B<dselect update>. Beachten Sie, dass diese Datei nahezu nutzlos ist, falls Sie nicht B<dselect> sondern eine APT-basierte Oberfläche verwenden: APT verfügt über sein eigenes System, die verfügbaren Pakete zu überwachen.
 
@@ -404,9 +404,9 @@ Zeigt B<dpkg> Versionsinformationen an.
 
 Bei der Verwendung mit B<--robot> wird die Ausgabe der Programmversionsnummer in einem numerischen, durch Punkte getrennten Format erfolgen, ohne Zeilenumbrüche.
 
-=item B<dpkg-deb-Aktionen>
+=item B<dpkg-deb commands>
 
-Lesen Sie L<dpkg-deb(1)> für weitere Informationen über die folgenden Aktionen und andere Aktionen, die durch die Oberfläche B<dpkg> nicht offengelegt werden.
+See L<dpkg-deb(1)> for more information about the following commands, and other commands and options not exposed by the B<dpkg> front-end.
 
 =over 
 
@@ -448,9 +448,9 @@ Zeigt Informationen über ein Paket an.
 
 =back
 
-=item B<dpkg-query-Aktionen>
+=item B<dpkg-query commands>
 
-Lesen Sie L<dpkg-query(1)> für weitere Informationen über die folgenden Aktionen und andere Aktionen, die durch die Oberfläche B<dpkg> nicht offengelegt werden.
+See L<dpkg-query(1)> for more information about the following commands, and other commands and options not exposed by the B<dpkg> front-end.
 
 =over 
 
@@ -653,29 +653,29 @@ Ignoriert Abhängigkeitsüberprüfungen für bestimmte Pakete (tatsächlich wird
 
 =item B<--no-act>, B<--dry-run>, B<--simulate>
 
-Erledigt alles, was gemacht werden soll, aber schreibt keine Änderungen. Dies wird verwendet, um zu sehen, was mit der spezifizierten Änderung passieren würde, ohne tatsächlich etwas zu modifizieren.
+Do everything which is supposed to be done, but don't write any changes. This is used to see what would happen with the specified command, without actually modifying anything.
 
-Stellen Sie sicher, dass B<--no-act> vor dem Aktions-Parameter steht, andernfalls könnte dies zu unerwünschten Ergebnissen führen (beispielsweise wird B<dpkg --purge foo --no-act> zuerst das Paket „foo“ endgültig löschen und dann versuchen, das Paket „--no-act“ endgültig zu löschen, obwohl Sie wahrscheinlich davon ausgingen, dass tatsächlich gar nichts passieren sollte).
+Be sure to give B<--no-act> before the command-parameter, or you might end up with undesirable results (e.g. B<dpkg --purge foo --no-act> will first purge package “foo” and then try to purge package ”--no-act”, even though you probably expected it to actually do nothing).
 
 =item B<-R>, B<--recursive>
 
-Behandelt rekursiv alle regulären Dateien, die auf das Muster B<*.deb> passen und im angegeben Verzeichnis sowie allen Unterverzeichnissen liegen. Dies kann mit den Aktionen B<-i>, B<-A>, B<--install>, B<--unpack> und B<--record-avail> verwendet werden.
+Recursively handle all regular files matching pattern B<*.deb> found at specified directories and all of its subdirectories.  This can be used with B<-i>, B<-A>, B<--install>, B<--unpack> and B<--record-avail> commands.
 
 =item B<-G>
 
 Installiert ein Paket nicht, falls bereits eine neuere Version des gleichen Paketes installiert ist. Dies ist ein Alias für B<--refuse-downgrade>.
 
-=item B<--admindir=>I<Verz>
+=item B<--admindir=>I<Verzeichnis>
 
 Setzt das Standardadministrationsverzeichnis auf I<Verzeichnis>. Dieses Verzeichnis enthält viele Dateien, die Informationen über den Status von installierten und deinstallierten Paketen usw. enthalten. Standardmäßig „I<%ADMINDIR%>“, falls B<DPKG_ADMINDIR> nicht gesetzt wurde.
 
-=item B<--instdir=>I<Verz>
+=item B<--instdir=>I<Verzeichnis>
 
-Setzt das voreingestellte Installationsverzeichnis. Dieses Verzeichnis gibt an, wo Pakete installiert werden. B<instdir> ist auch das Verzeichnis, das an L<chroot(2)> vor dem Aufruf der Installationsskripte des Paketes übergeben wird, was bedeutet, dass die Skripte B<instdir> als ein Wurzelverzeichnis sehen. Standardmäßig „I</>“.
+Setzt das voreingestellte Installationsverzeichnis. Dieses Verzeichnis gibt an, wo Pakete installiert werden. B<instdir> ist auch das Verzeichnis, das an L<chroot(2)> vor dem Aufruf der Installationsskripte des Paketes übergeben wird, was bedeutet, dass die Skripte B<instdir> als ein Wurzelverzeichnis sehen. Standardmäßig „I</>“, falls B<DPKG_ROOT> nicht gesetzt wurde (seit Dpkg 1.21.10).
 
-=item B<-root=>I<Verz>
+=item B<--root=>I<Verzeichnis>
 
-Setzt das Wurzelverzeichnis auf I<Verzeichnis>, wodurch das Installationsverzeichnis auf „I<Verz>“ und das administrative Verzeichnis auf „I<Verz>B<%ADMINDIR%>“ gesetzt wird.
+Setzt das Wurzelverzeichnis auf I<Verzeichnis>, wodurch das Installationsverzeichnis auf „I<Verzeichnis>“ und das administrative Verzeichnis auf „I<Verz>B<%ADMINDIR%>“ gesetzt wird, falls B<DPKG_ROOT> nicht gesetzt wurde (seit Dpkg 1.21.10).
 
 =item B<-O>, B<--selected-only>
 
@@ -692,6 +692,8 @@ Seit Dpkg 1.21.10 wird auch die Architektur berücksichtigt. Dadurch ist es mög
 =item B<--post-invoke=>I<Befehl>
 
 Setzt einen Aufruf-Hook I<Befehl>, der via „%DPKG_DEFAULT_SHELL% -c“ vor oder nach dem B<dpkg>-Aufruf der B<dpkg>-Aktionen I<unpack>, I<configure>, I<install>, I<triggers-only>, I<remove> und I<purge> (seit Dpkg 1.15.4;) und Aktionen I<add-architecture> Und I<remove-architecture> (seit Dpkg 1.17.19). Diese Option kann mehrfach angegeben werden. Die Reihenfolge der Optionen bleibt erhalten, wobei Einträge aus den Konfigurationsdateien Vorrang haben. Die Umgebungsvariable B<DPKG_HOOK_ACTION> wird für die Hooks auf die aktuelle B<dpkg>-Aktion gesetzt.
+
+Die Aufruf-Hooks werden nicht ausgeführt, wenn B<--no-act> angegeben ist oder als Benutzer, der nicht Root ist, ohne B<--force-not-root> ausgeführt wird.
 
 B<Hinweis>: Oberflächen könnten B<dpkg> mehrere Male pro Ausführung aufrufen, wodurch die Hooks öfter als erwartet ausgeführt werden könnten.
 
@@ -726,7 +728,7 @@ Derzeit wird nur das Ausgabeformat B<rpm> unterstützt. Es besteht aus einer Zei
 
 Z<>
  B<missing  > [B<c>] I<Pfadname> [B<(>I<Fehlermeldung>B<)>]
- B<??5??????> [B<c>] I<Pfadname>
+ B<?M5??????> [B<c>] I<Pfadname>
 
 Die ersten 9 Zeichen werden zum Berichten des Überprüfungsergebnisses verwandt, entweder ein wörtliches B<missing>, wenn die Datei nicht vorhanden ist oder seine Metadaten nicht abgerufen werden können, oder eines der folgenden besonderen Zeichen, das das Ergebnis für jede Überprüfung berichtet:
 
@@ -809,6 +811,8 @@ Wird genau bevor eine Verarbeitungsstufe beginnt versandt. I<Stufe> ist eine der
 
 Schickt maschinenlesbare Paketstatus- und Fortschrittsinformationen an die Standardeingabe des I<Befehl>s der Shell, was dann mittels „DPKG_DEFAULT_SHELL% -c“ ausgeführt wird (seit Dpkg 1.16.0). Diese Option kann mehrfach angegeben werden. Das verwandte Ausgabeformat ist identisch zu dem in B<--status-fd>.
 
+Die Statusprotokollierer werden nicht ausgeführt, wenn B<--no-act> angegeben ist oder als Benutzer, der nicht Root ist, ohne B<--force-not-root> ausgeführt wird.
+
 =item B<--log=>I<Dateiname>
 
 Protokolliert Statusänderungen und -aktionen in I<Dateiname> statt in das standardmäßigen I<%LOGDIR%/dpkg.log>. Falls diese Option mehrfach angegeben ist, wird der letzte Dateiname verwandt. Protokollnachrichten haben die Form:
@@ -864,7 +868,7 @@ Annulliert ein vorheriges B<--no-triggers> (seit Dpkg 1.14.17).
 
 =item B<0>
 
-Die angeforderte Aktion wurde erfolgreich ausgeführt. Oder ein Prüfausdruck oder eine Zusicherung (Assertion) lieferte Wahr zurück.
+The requested command was successfully performed.  Or a check or assertion command returned true.
 
 =item B<1>
 
@@ -902,11 +906,17 @@ Das Programm, das B<dpkg> ausführen wird, wenn es eine neue interaktive Shell s
 
 =item B<DPKG_PAGER>
 
-Das Programm, das B<dpkg> ausführen wird, wenn es einen Pager mit „B<$SHELL -c>“ ausführt, beispielsweise zur Anzeige von Conffile-Dateiunterschieden. Falls B<SHELL> nicht gesetzt ist, wird stattdessen „B<%DPKG_DEFAULT_SHELL%>“ verwandt. B<DPKG_PAGER> setzt die Umgebungsvariable B<PAGER> außer Kraft (seit Dpkg 1.19.2).
+Das Programm, das B<dpkg> ausführen wird, wenn es einen Pager mit „B<$SHELL -c>“ ausführt, beispielsweise zur Anzeige von Conffile-Dateiunterschieden. Falls B<SHELL> nicht gesetzt ist, wird stattdessen „B<%DPKG_DEFAULT_SHELL%>“ verwandt.
+
+B<DPKG_PAGER> setzt die Umgebungsvariable B<PAGER> außer Kraft (seit Dpkg 1.19.2). Falls keines der Programme, auf die B<DPKG_PAGER> oder B<PAGER> zeigen, vorhanden ist, werden die folgenden Programme in dieser Reihenfolge ausprobiert (seit Dpkg 1.22.12): das Standardseitenanzeigeprogramm B<%DPKG_DEFAULT_PAGER%>, dann L<less(1)>, L<more(1)> und schließlich L<cat(1)>.
 
 =item B<DPKG_COLORS>
 
 Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte sind: B<auto> (Vorgabe), B<always> und B<never>.
+
+=item B<DPKG_NLS>
+
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language Support, auch als Unterstützung für Internationalisierung (oder i18n) bekannt, aktiviert wird (seit Dpkg 1.22.7). Die akzeptierten Werte sind: B<0> und B<1> (Vorgabe).
 
 =item B<DPKG_DEBUG>
 
@@ -916,6 +926,10 @@ Setzt die Fehlersuchmaske (seit Dpkg 1.21.10) aus einem oktalen Wert. Die aktuel
 
 Setzt die Erzwingungsschalter (seit Dpkg 1.19.5). Wenn diese Variable vorhanden ist, werden keine eingebauten Vorgaben für Erzwingungen angewandt. Falls diese Variable vorhanden, aber leer ist, werden alle Erzwingungsschalter deaktiviert.
 
+=item B<DPKG_ROOT>
+
+Falls gesetzt und die Option B<--instdir> oder B<--root> nicht angegeben wurde, wird dies als Dateisystemwurzelverzeichnis verwandt (seit Dpkg 1.21.10).
+
 =item B<DPKG_ADMINDIR>
 
 Falls gesetzt und die Option B<--admindir> oder B<--root> nicht verwandt wurde, wird dies als administratives Verzeichnis von B<dpkg> verwandt (seit Dpkg 1.20.0).
@@ -923,6 +937,18 @@ Falls gesetzt und die Option B<--admindir> oder B<--root> nicht verwandt wurde, 
 =item B<DPKG_FRONTEND_LOCKED>
 
 Wird von einer Paketverwalterprogrammoberfläche gesetzt, um Dpkg zu informieren, dass es nicht die Sperre der Oberfläche erlangen soll (seit Dpkg 1.19.1).
+
+=item B<DPKG_PATH_PASSWD>
+
+Setzt den Pfadnamen für die F<passwd>-Datei des Systems. Dieser Pfad ist relativ zum Verzeichnis B<--root>. Die Vorgabe ist F</etc/passwd>.
+
+Seit Dpkg 1.22.16.
+
+=item B<DPKG_PATH_GROUP>
+
+Setzt den Pfadnamen für die F<group>-Datei des Systems. Dieser Pfad ist relativ zum Verzeichnis B<--root>. Die Vorgabe ist F</etc/group>.
+
+Seit Dpkg 1.22.16.
 
 =back
 
@@ -936,7 +962,7 @@ Von B<dpkg> auf „B<-FRSXMQ>“ definiert, falls es nicht bereits gesetzt ist o
 
 =item B<DPKG_ROOT>
 
-Durch B<dpkg> in der Betreuerskriptumgebung definiert, um anzuzeigen, auf welche Installation gehandelt werden soll (seit Dpkg 1.18.5). Der Wert soll jedem Pfad, auf den Betreuerskripte agieren, vorangestellt werden. Während des Normalbetriebs ist diese Variable leer. Bei der Installation von Paketen in ein anderes B<instdir> wird B<dpkg> normalerweise Betreuerskripte mittels L<chroot(2)> aufrufen und diese Variable leer lassen. Falls aber B<--force-script-chrootless> angegeben ist, wird dieser L<chroot(2)>-Aufruf übersprungen und B<instdir> ist nicht leer.
+Durch B<dpkg> in der Betreuerskriptumgebung definiert, um anzuzeigen, auf welche Installation gehandelt werden soll (seit Dpkg 1.18.5). Der Wert soll jedem Pfad, auf den Betreuerskripte agieren, vorangestellt werden. Während des Normalbetriebs ist diese Variable leer. Bei der Installation von Paketen in ein anderes B<instdir> wird B<dpkg> normalerweise Betreuerskripte mittels L<chroot(2)> aufrufen und diese Variable leer lassen. Falls aber B<--force-script-chrootless> angegeben ist, wird dieser L<chroot(2)>-Aufruf übersprungen und diese Variable ist auf B<instdir> gesetzt (das nicht leer sein wird).
 
 =item B<DPKG_ADMINDIR>
 
@@ -1150,7 +1176,7 @@ Lesen Sie I<%PKGDOCDIR%/THANKS> für die Liste der Leute, die zu B<dpkg> beigetr
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

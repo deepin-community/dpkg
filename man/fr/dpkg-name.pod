@@ -22,7 +22,7 @@ B<dpkg-name> [I<option>...] [B<-->] I<fichier>...
 
 =head1 DESCRIPTION
 
-Cette page de manuel documente le programme B<dpkg-name> qui fournit une façon simple de redonner aux paquets B<Debian> leur nom complet. Ce nom consiste en une chaîne I<paquet>B<_>I<version>B<_>I<architecture>B<.>I<type-de-paquet> telle qu'elle est indiquée dans le fichier S<« control »> du paquet. La partie I<version> du nom est composée d'informations sur la version originelle qui peuvent ou non être suivies d'un trait d'union et d'informations sur la révision. La partie I<type-de-paquet> provient de ce champ s'il existe. La valeur par défaut est B<deb>.
+This manual page documents the B<dpkg-name> program which provides an easy way to rename B<Debian> packages into their full package names.  A full package name consists of I<package>B<_>I<version>B<_>I<architecture>B<.>I<package-type> as specified in the control file of the package.  The I<version> part of the filename consists of the upstream version information optionally followed by a hyphen and the revision information.  The I<package-type> part comes from that field if present or will fall back to B<deb>.
 
 =head1 OPTIONS
 
@@ -42,7 +42,7 @@ Remplace des fichiers existants s'ils ont le même nom que le fichier de destina
 
 =item B<-s>, B<--subdir> [I<rep>]
 
-Met les fichiers dans un sous-répertoire. Si le répertoire donné en paramètre existe, les fichiers sont déplacés dans ce répertoire ; sinon le répertoire cible, extrait du champ S<« section »> que contient la partie contrôle du paquet, sera S<« unstable/binary-I<architecture>/I<section> ».> Quand aucune information sur la section n'est trouvée dans le fichier S<« control »,> la section est supposée être B<no-section>. Dans ce cas, ainsi que si la section est B<non-free> ou B<contrib>, le répertoire cible est S<« I<section>/binary-I<architecture> ».> Le champ S<« section »> est facultatif ; aussi beaucoup de paquets sont dans la zone S<« no-section ».>
+Met les fichiers dans un sous-répertoire. Si le répertoire donné en paramètre existe, les fichiers sont déplacés dans ce répertoire ; sinon le répertoire cible, extrait du champ « section » que contient la partie contrôle du paquet, sera « unstable/binary-I<architecture>/I<section> ». Quand aucune information sur la section n'est trouvée dans le fichier « control », la section est supposée être B<no-section>. Dans ce cas, ainsi que si la section est B<non-free> ou B<contrib>, le répertoire cible est « I<section>/binary-I<architecture> ». Le champ « section » est facultatif ; aussi beaucoup de paquets sont dans la zone « no-section ».
 
 B<Warning>: Use this option with care, it is messy.
 
@@ -66,13 +66,17 @@ Afficher le numéro de version puis quitter.
 
 =over 
 
+=item B<DEB_HOST_ARCH>
+
+Sets the host architecture.  This affects the architecture name used in the package filename.
+
 =item B<DPKG_COLORS>
 
-Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
+Définit le mode de couleur (depuis dpkg 1.18.5). Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis dpkg 1.19.0). Les valeurs permises sont : B<0> et B<1> (par défaut).
 
 =back
 

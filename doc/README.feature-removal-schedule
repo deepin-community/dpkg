@@ -1,4 +1,4 @@
-This is a list of features that are scheduled to be removed from dpkg.
+# This is a list of features that are scheduled to be removed from dpkg.
 
 What: fallback of dpkg-source to source format "1.0" without explicit debian/source/format
 Status: deprecated
@@ -39,8 +39,8 @@ Why:
  and this option has no use any longer. The caller can set PERL5LIB or
  PERLLIB to specify the perl module search path now.
 
-History of feature removals
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# History of feature removals
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What: cleanup-info (program)
 Status: removed
@@ -178,3 +178,11 @@ Status: removed
 When: 1.22.1
 Why:
  GCJ has been dead upstream since 2018.
+
+What: symbols file ignore-blacklist tag and Ignore-Blacklist-Groups meta field
+Status: removed
+When: 1.23.0
+Warning: program
+Why:
+ These have been replaced by newly introduced interfaces (allow-internal and
+ Allow-Internal-Symbol-Groups), which have way more descriptive names.

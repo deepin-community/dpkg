@@ -128,7 +128,7 @@ E um dia do mês de um ou dois dígitos (B<01>-B<31>), onde o zero inicial é op
 
 A primeira linha "título" com no nome do pacote tem de começar na margem esquerda. margin.  A linha final “trailer” com os detalhes do maintainer e data deve ser precedida de exactamente um espaço (U+0020 B<SPACE>). Os detalhes do maintainer e a data devem estar separados por exactamente dois espaços (U+0020 B<SPACE>).  Cada parte de I<date> pode ser separada  por um ou mais espaços (U+0020 B<SPACE>), excepto após a vírgula onde pode ser separada por zero ou mais espaços (U+0020 B<SPACE>).
 
-Quaisquer linhas que consistam inteiramente (isto é, sem espaço em branco à esquerda) de B<#> ou B</* */> são comentários de estilo ou palavras chave RCS.
+Any line that consists entirely (i.e., no leading whitespace) of B<#> or B</* */> style comments or RCS keywords should be ignored.
 
 Linhas modelo do Vim ou variáveis locais do Emacs, e entradas changelog antigas com outros formatos até ao fim do ficheiro devem ser aceites e preservados no resultado, mas os seus conteúdos podem ser por outro lado ignorados e a análise parada nesse ponto.
 

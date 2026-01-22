@@ -174,6 +174,14 @@ Mostra a versão e termina.
 
 =over 
 
+=item B<DEB_HOST_ARCH>
+
+Define a arquitectura da máquina anfitriã.
+
+=item B<DEB_BUILD_PROFILES>
+
+If set, it will be used as the active build profile(s) to use when generating the .changes file.  It is a space separated list of profile names.
+
 =item B<DPKG_COLORS>
 
 Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B<auto> (predefinido), B<always> e B<never>.

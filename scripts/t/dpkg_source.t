@@ -13,8 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use strict;
-use warnings;
+use v5.36;
 
 use Test::More;
 use Test::Dpkg qw(:needs :paths test_neutralize_checksums);
@@ -28,7 +27,6 @@ use Dpkg::IPC;
 use Dpkg::Substvars;
 
 test_needs_command('xz');
-
 plan tests => 8;
 
 my $srcdir = rel2abs($ENV{srcdir} || '.');
@@ -101,11 +99,11 @@ sub gen_from_tmpl
 
 sub gen_source
 {
-    my (%options) = @_;
+    my (%opts) = @_;
 
     my $substvars = Dpkg::Substvars->new();
-    foreach my $var ((keys %default_substvars, keys %options)) {
-        my $value = $options{$var} // $default_substvars{$var};
+    foreach my $var ((keys %default_substvars, keys %opts)) {
+        my $value = $opts{$var} // $default_substvars{$var};
 
         $substvars->set_as_auto($var, $value);
     }
@@ -120,9 +118,9 @@ sub gen_source
     gen_from_tmpl("$dirname/debian/changelog", $tmpl_changelog, $substvars);
     gen_from_tmpl("$dirname/debian/control", $tmpl_control, $substvars);
 
-    if (defined $options{'control-test'}) {
+    if (defined $opts{'control-test'}) {
         make_path("$dirname/debian/tests");
-        gen_from_tmpl("$dirname/debian/tests/control", $options{'control-test'}, $substvars);
+        gen_from_tmpl("$dirname/debian/tests/control", $opts{'control-test'}, $substvars);
     }
 
     return $dirname;
@@ -146,12 +144,15 @@ sub test_diff
 
 sub test_build_source
 {
-    my ($name) = shift;
+    my $name = shift;
     my $stderr;
 
-    spawn(exec => [ $ENV{PERL}, "$srcdir/dpkg-source.pl", '--build', $name ],
-          error_to_string => \$stderr,
-          wait_child => 1, nocheck => 1);
+    spawn(
+        exec => [ $ENV{PERL}, "$srcdir/dpkg-source.pl", '--build', $name ],
+        error_to_string => \$stderr,
+        wait_child => 1,
+        no_check => 1,
+    );
 
     ok($? == 0, 'dpkg-source --build succeeded');
     diag($stderr) unless $? == 0;
@@ -163,22 +164,30 @@ sub test_build_source
 
 my $dirname;
 
-$dirname = gen_source('source-name' => 'testsuite',
-                      'source-version' => 0,
-                      'control-test' => '');
+$dirname = gen_source(
+    'source-name' => 'testsuite',
+    'source-version' => 0,
+    'control-test' => '',
+);
 test_build_source($dirname);
 
-$dirname = gen_source('source-name' => 'testsuite',
-                      'source-version' => 1,
-                      'control-test' => '');
+$dirname = gen_source(
+    'source-name' => 'testsuite',
+    'source-version' => 1,
+    'control-test' => '',
+);
 test_build_source($dirname);
 
-$dirname = gen_source('source-name' => 'testsuite',
-                      'source-version' => 2,
-                      'source-testsuite' => 'smokepkgtest, unitpkgtest, funcpkgtest',
-                      'control-test' => $tmpl_control_tests);
+$dirname = gen_source(
+    'source-name' => 'testsuite',
+    'source-version' => 2,
+    'source-testsuite' => 'smokepkgtest, unitpkgtest, funcpkgtest',
+    'control-test' => $tmpl_control_tests,
+);
 test_build_source($dirname);
 
-$dirname = gen_source('source-name' => 'testsuite',
-                      'source-version' => 3);
+$dirname = gen_source(
+    'source-name' => 'testsuite',
+    'source-version' => 3,
+);
 test_build_source($dirname);

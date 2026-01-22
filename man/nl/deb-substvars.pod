@@ -30,7 +30,39 @@ Een variabelesubstitutie heeft als vorm B<${>I<variabelenaam>B<}>. Variabelename
 
 =head2 Bestandssyntaxis
 
-Substitutievariabelen kunnen in een bestand worden opgegeven. Deze bestanden bestaan uit regels van de vorm I<naam>B<=>I<waarde> of I<naam>B<?=>I<waarde>. De operator B<=> wijst een normale substitutievariabele toe, terwijl de operator B<?=> (sinds dpkg 1.21.8) een optionele substitutievariabele toewijst die geen waarschuwingen geeft, zelfs als deze niet wordt gebruikt. Resterende witruimte op elke regel, lege regels en regels die beginnen met het symbool B<#> (commentaar) worden genegeerd.
+Substitution variables can be specified in a file.  These files consist of lines with variable assignments, that start with the variable name, immediately followed by an assignment operator, and then the value.  Each operator gives the variable specific attributes.  Trailing whitespace on each line, blank lines, and lines starting with a B<#> symbol (comments) are ignored.
+
+The following operators are supported:
+
+=over 
+
+=item B<=>
+
+Assigns a normal substitution variable.
+
+=item B<?=>
+
+Assigns an optional substitution variable which will emit no warnings even if unused.
+
+Supported since dpkg 1.21.8.
+
+=item B<!=>
+
+Assigns a required substitution variable which will error out if unused.
+
+Supported since dpkg 1.22.7.
+
+=item B<$=>
+
+Assigns an implicit substitution variable which will get automatically instantiated as a field, if that field is not defined for B<.dsc> and B<.deb> control files.
+
+The variable name needs to be formed as a namespace followed by a colon (‘B<:>’) and then the field name, such as B<tool:Depends>.  All implicit variables for any namespace matching the same field will get concatenated using a known field separator, or a space if the field separator is unknown.
+
+Supported since dpkg 1.23.0.
+
+=back
+
+For example C<some-package:Depends?=other-package (= 1.0), the-package>.
 
 =head2 Substitutie
 

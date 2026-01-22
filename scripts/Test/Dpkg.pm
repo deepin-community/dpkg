@@ -30,24 +30,22 @@ B<Note>: This is a private module, its API can change at any time.
 
 package Test::Dpkg 0.00;
 
-use strict;
-use warnings;
+use v5.36;
 
 our @EXPORT_OK = qw(
     all_po_files
+    all_shell_files
     all_perl_files
     all_perl_modules
-    test_get_po_dirs
-    test_get_perl_dirs
+    all_pod_modules
     test_get_data_path
     test_get_temp_path
+    test_chdir_srcdir
     test_needs_author
     test_needs_module
     test_needs_command
     test_needs_openpgp_backend
-    test_needs_srcdir_switch
     test_neutralize_checksums
-    test_get_openpgp_backend
 );
 our %EXPORT_TAGS = (
     needs => [ qw(
@@ -55,16 +53,16 @@ our %EXPORT_TAGS = (
         test_needs_module
         test_needs_command
         test_needs_openpgp_backend
-        test_needs_srcdir_switch
     ) ],
     paths => [ qw(
         all_po_files
+        all_shell_files
         all_perl_files
         all_perl_modules
-        test_get_po_dirs
-        test_get_perl_dirs
+        all_pod_modules
         test_get_data_path
         test_get_temp_path
+        test_chdir_srcdir
     ) ],
 );
 
@@ -116,7 +114,14 @@ sub test_get_temp_path
     return $path;
 }
 
-sub test_get_po_dirs
+sub test_chdir_srcdir
+{
+    if (defined $ENV{srcdir}) {
+        chdir $ENV{srcdir} or BAIL_OUT("cannot chdir to source directory: $!");
+    }
+}
+
+sub _test_get_po_dirs
 {
     if ($test_mode eq 'cpan') {
         return qw();
@@ -125,7 +130,7 @@ sub test_get_po_dirs
     }
 }
 
-sub test_get_perl_dirs
+sub _test_get_perl_dirs
 {
     if ($test_mode eq 'cpan') {
         return qw(t lib);
@@ -134,32 +139,139 @@ sub test_get_perl_dirs
     }
 }
 
-sub _test_get_files
+sub _test_scan_files($visit_func, $dirs)
 {
-    my ($filter, $dirs) = @_;
+    my $scan_files = {
+        wanted => $visit_func,
+        no_chdir => 1,
+    };
+    find($scan_files, @{$dirs});
+}
+
+sub _test_get_files($keep_func, $dirs)
+{
     my @files;
-    my $scan_files = sub {
-        push @files, $File::Find::name if m/$filter/;
+    my $visit_func = sub {
+        push @files, $File::Find::name if $keep_func->($File::Find::name);
     };
 
-    find($scan_files, @{$dirs});
+    _test_scan_files($visit_func, $dirs);
 
     return @files;
 }
 
 sub all_po_files
 {
-    return _test_get_files(qr/\.(?:po|pot)$/, [ test_get_po_dirs() ]);
+    my $keep_po_files = sub ($file) {
+        return $file =~ m{\.(?:po|pot)$};
+    };
+
+    return _test_get_files($keep_po_files, [ _test_get_po_dirs() ]);
+}
+
+sub all_shell_files(@files_todo)
+{
+    my %files_todo = map { $_ => 1 } @files_todo;
+    my @files = qw(
+        autogen
+        build-aux/gen-release
+        build-aux/get-vcs-id
+        build-aux/get-version
+        build-aux/run-script
+        debian/dpkg.cron.daily
+        debian/dpkg.postinst
+        debian/dpkg.postrm
+        debian/dselect.postrm
+    );
+
+    my $keep_shell_file = sub ($file) {
+        return 0 if exists $files_todo{$file};
+        return $file =~ qr{\.sh$};
+    };
+    my $keep_shebang_file = sub ($file) {
+        return 0 if exists $files_todo{$file};
+
+        return 0 if -z $file;
+        return 0 unless -f $file;
+
+        open my $fh, '<', $file
+            or die "error: cannot read file $file: $!\n";
+        my $shebang = readline $fh;
+        close $fh;
+
+        chomp $shebang;
+
+        return $shebang =~ m{^#!/bin/sh};
+    };
+
+
+    push @files, _test_get_files(
+        $keep_shell_file,
+        [ qw(
+            dselect/methods
+            src
+        ) ],
+    );
+    push @files, _test_get_files(
+        $keep_shebang_file,
+        [ qw(
+            debian/tests
+            lib/dpkg/t/data
+            scripts/t
+            tests
+        ) ],
+    );
+
+    return @files;
 }
 
 sub all_perl_files
 {
-    return _test_get_files(qr/\.(?:PL|pl|pm|t)$/, [ test_get_perl_dirs() ]);
+    my $keep_perl_files = sub ($file) {
+        return $file =~ m{\.(?:PL|pl|pm|t)$};
+    };
+
+    return _test_get_files($keep_perl_files, [ _test_get_perl_dirs() ]);
 }
 
 sub all_perl_modules
 {
-    return _test_get_files(qr/\.pm$/, [ test_get_perl_dirs() ]);
+    my $keep_perl_modules = sub ($file) {
+        return $file =~ m{\.pm$};
+    };
+
+    return _test_get_files($keep_perl_modules, [ _test_get_perl_dirs() ]);
+}
+
+sub all_pod_modules
+{
+    my @modules_todo = @_;
+    my %modules_todo = map { $_ => 1 } @modules_todo;
+    my @modules;
+
+    require Module::Metadata;
+    my $scan_perl_modules = sub {
+        my $module = $File::Find::name;
+
+        # Only check modules, scripts are documented in man pages.
+        return unless $module =~ s/\.pm$//;
+
+        my $mod = Module::Metadata->new_from_file($File::Find::name);
+
+        # As a first step just check public modules (version > 0.xx).
+        return if $mod->version() =~ m/^0\.\d\d$/;
+
+        $module =~ s{^\Q$File::Find::topdir\E/}{};
+        $module =~ s{/}{::}g;
+
+        return if exists $modules_todo{$module};
+
+        push @modules, $module;
+    };
+
+    _test_scan_files($scan_perl_modules, [ _test_get_perl_dirs() ]);
+
+    return @modules;
 }
 
 sub test_needs_author
@@ -198,48 +310,91 @@ sub test_needs_command
     }
 }
 
-my %openpgp_command = (
-    'gpg-sq' => {
+my @openpgp_backends = (
+    {
         backend => 'gpg',
+        cmd => 'gpg-sq',
+        cmdv => 'gpgv-sq',
     },
-    'gpg' => {
+    {
         backend => 'gpg',
+        cmd => 'gpg',
+        cmdv => 'gpgv',
     },
-    'sq' => {
+    {
         backend => 'sq',
+        cmd => 'sq',
+        cmdv => 'sqv',
     },
-    'sqop' => {
+    {
         backend => 'sop',
+        cmd => 'sop',
+        cmdv => 'sopv',
     },
-    'pgpainless-cli' => {
+    {
         backend => 'sop',
+        cmd => 'sqop',
+        cmdv => 'sqopv',
+    },
+    {
+        backend => 'sop',
+        cmd => 'rsop',
+        cmdv => 'rsopv',
+    },
+    {
+        backend => 'sop',
+        cmd => 'gosop',
+    },
+    {
+        backend => 'sop',
+        cmd => 'pgpainless-cli',
     },
 );
 
 sub test_needs_openpgp_backend
 {
-    my @cmds = sort keys %openpgp_command;
-    my @have_cmds = grep { can_run($_) } @cmds;
-    if (@have_cmds == 0) {
+    my @have_backends;
+    foreach my $backend (@openpgp_backends) {
+        my $name = $backend->{backend};
+        my $cmd = $backend->{cmd} // q();
+        my $cmdv = $backend->{cmdv} // q();
+
+        my $have_cmd = $cmd eq 'none' ? 0 : can_run($cmd);
+        my $have_cmdv = $cmdv eq 'none' ? 0 : can_run($cmdv);
+
+        next unless ($have_cmd || $have_cmdv);
+
+        my $have_backend = {
+            backend => $name,
+        };
+        $have_backend->{cmd} = $cmd if $have_cmd;
+        $have_backend->{cmdv} = $cmdv if $have_cmdv;
+
+        push @have_backends, $have_backend;
+
+        if ($have_cmd && $have_cmdv) {
+            push @have_backends, {
+                backend => $name,
+                cmd => $cmd,
+                cmdv => 'none',
+            };
+            push @have_backends, {
+                backend => $name,
+                cmd => 'none',
+                cmdv => $cmdv,
+            };
+        }
+    }
+    if (@have_backends == 0) {
+        my @cmds = grep {
+            $_ ne 'none'
+        } map {
+            ($_->{cmd}, $_->{cmdv})
+        } @openpgp_backends;
         plan skip_all => "requires >= 1 openpgp command: @cmds";
     }
 
-    return @have_cmds;
-}
-
-sub test_get_openpgp_backend
-{
-    my $cmd = shift;
-
-    return 'auto' if $cmd eq 'auto';
-    return $openpgp_command{$cmd}{backend};
-}
-
-sub test_needs_srcdir_switch
-{
-    if (defined $ENV{srcdir}) {
-        chdir $ENV{srcdir} or BAIL_OUT("cannot chdir to source directory: $!");
-    }
+    return @have_backends;
 }
 
 sub test_neutralize_checksums

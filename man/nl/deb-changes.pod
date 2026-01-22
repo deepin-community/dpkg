@@ -26,7 +26,7 @@ Elke Debian-upload bestaat uit een controlebestand .changes, dat een aantal veld
 
 Ieder veld begint met een markering, zoals B<Source> of B<Binary> (niet hoofdlettergevoelig), gevolgd door een dubbele punt en de tekstinhoud van het veld (hoofdlettergevoelig tenzij anders vermeld. Velden worden enkel door veldmarkeringen begrensd. De tekstinhoud van het veld kan met andere woorden verschillende regels lang zijn, maar de installatiegereedschappen zullen bij het verwerken van de tekstinhoud de regels gewoonlijk samenvoegen (behalve voor de multiregel-velden B<Description>, B<Changes>, B<Files>, B<Checksums-Sha1> en B<Checksums-Sha256>; zie hierna)
 
-De controle-data mogen ingesloten liggen in een OpenPGP-handtekening met ASCII-harnas volgens de specificatie RFC4880.
+De controle-data mogen ingesloten liggen in een OpenPGP-handtekening met ASCII-harnas volgens de specificatie RFC9580.
 
 =head1 VELDEN
 
@@ -52,11 +52,17 @@ Dit gevouwen veld is een lijst, met spatie als scheidingsteken, van binaire pakk
 
 =item B<Architecture:> I<arch-lijst>
 
-Somt de architecturen op van de bestanden die momenteel geüpload worden. Gebruikelijke architecturen zijn B<amd64>, B<armel>, B<i386>, enz. Merk op dat de waarde B<all> bedoeld is voor pakketten die architectuuronafhankelijk zijn. Indien ook de broncode voor het pakket geüpload wordt, wordt tevens de bijzondere vermelding B<source> toegevoegd. Jokertekens voor architecturen mogen nooit voorkomen in de lijst.
+Lists the architectures of the files currently being uploaded.
+
+Common architectures are B<amd64>, B<armel>, B<i386>, etc.  Note that the special B<all> value is meant for packages that are architecture independent (such as shell and Perl scripts or documentation).  If the source for the package is also being uploaded, the special entry B<source> is also present.
+
+B<Note:> Architecture wildcards are not allowed in this context.
 
 =item B<Version:> I<versie-tekenreeks> (verplicht)
 
 Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de auteur van het programma er ook voor gebruikt. Het kan ook een Debian-revisienummer bevatten (voor niet uit Debian stammende pakketten). De exacte indeling en het sorteringsalgoritme worden beschreven in L<deb-version(7)>.
+
+B<Note>: On some vendors, dpkg has been made to permit native sources with non-native versions, making this incoherent and adding to the confusion of the concept, where in addition this tends to be a trap for accidental mistakes.
 
 =item B<Distribution:> I<distributie>s (verplicht)
 
@@ -106,19 +112,27 @@ Dit multiregel-veld bevat een bestandslijst met voor elk bestand de vermelding v
 
 De eerste regel van de veldwaarde (het deel dat op dezelfde regel staat als de door een dubbele punt gevolgde veldnaam) is steeds leeg. De inhoud van het veld wordt in de vervolgregels verwoord, één regel per bestand. Elke regel bestaat uit elementen die onderling gescheiden zijn door een spatie en het bestand beschrijven: zijn md5som, zijn bestandsgrootte, zijn sectie, zijn prioriteit en zijn naam.
 
+If the section is omitted in the source package template control file, it defaults to B<unknown> (since dpkg 1.22.13).
+
+If the priority is omitted in the source package template control file, it defaults to B<optional> (since dpkg 1.22.13).
+
 Dit veld somt alle bestanden op die deel uitmaken van de upload. De lijst van bestanden uit dit veld moet overeenkomen met de bestandslijst in de andere gerelateerde B<Checksums>-velden.
 
-=item B<Checksums-Sha1:> (verplicht)
+B<Opmerking>: Het controlegetal MD5 wordt als zwak beschouwd en mag nooit worden beschouwd als zijnde voldoende voor een veilige verificatie, maar dit veld kan niet worden weggelaten omdat het metagegevens bevat die nergens anders beschikbaar zijn.
 
-=item B<Checksums-Sha256:> (verplicht)
+=item B<Checksums-Sha1:> (verplicht, zwak)
 
-=item S< >I<controlesom> I<grootte> I<bestandsnaam>
+=item B<Checksums-Sha256:> (verplicht, sterk)
 
-Deze multiregel-velden bevatten een lijst van bestanden met een controlesom en een bestandsgrootte voor elk van hen. Deze velden gebruiken dezelfde syntaxis en verschillen onderling enkel in het gebruikte algoritme voor het berekenen van de controlesom: SHA-1 voor B<Checksums-Sha1> en SHA-256 voor B<Checksums-Sha256>.
+=item S< >I<controlegetal> I<grootte> I<bestandsnaam>
 
-De eerste regel van de veldwaarde (het deel dat op dezelfde regel staat als de door een dubbele punt gevolgde veldnaam) is steeds leeg. De inhoud van het veld wordt in de vervolgregels verwoord, één regel per bestand. Elke regel bestaat uit elementen die onderling door een spatie gescheiden zijn en het bestand beschrijven: zijn controlesom, zijn bestandsgrootte en zijn naam.
+Deze multiregel-velden bevatten een lijst van bestanden met een controlegetal en een bestandsgrootte voor elk van hen. Deze velden gebruiken dezelfde syntaxis en verschillen onderling enkel in het gebruikte algoritme voor het berekenen van het controlegettal: SHA-1 voor B<Checksums-Sha1> en SHA-256 voor B<Checksums-Sha256>.
+
+De eerste regel van de veldwaarde (het deel dat op dezelfde regel staat als de door een dubbele punt gevolgde veldnaam) is steeds leeg. De inhoud van het veld wordt in de vervolgregels verwoord, één regel per bestand. Elke regel bestaat uit elementen die onderling door een spatie gescheiden zijn en het bestand beschrijven: zijn controlegetal, zijn bestandsgrootte en zijn naam.
 
 Deze velden sommen alle bestanden op die deel uitmaken van de upload. De lijst van bestanden uit deze velden moet overeenkomen met de bestandslijst in het veld B<Files> en in de andere gerelateerde B<Checksums>-velden.
+
+B<Opmerking>: Het controlegetal SHA-1 wordt als zwak beschouwd en mag nooit worden beschouwd als zijnde voldoende voor een veilige verificatie.
 
 =back
 

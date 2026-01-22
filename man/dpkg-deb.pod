@@ -65,8 +65,9 @@ I<binary-directory>.
 I<binary-directory>
 must have a
 B<DEBIAN>
-subdirectory, which contains the control information files such
-as the control file itself.
+subdirectory,
+which contains the package metadata files such as
+the binary package control file.
 This directory will
 I<not>
 appear in the binary package's filesystem archive, but instead
@@ -74,7 +75,7 @@ the files in it will be put in the binary package's control
 information area.
 
 Unless you specify
-B<--nocheck>, B<dpkg-deb>
+B<--no-check>, B<dpkg-deb>
 will read
 B<DEBIAN/control>
 and parse it.
@@ -84,7 +85,7 @@ B<dpkg-deb>
 will also check the permissions of the maintainer scripts and other
 files found in the
 B<DEBIAN>
-control information directory.
+package metadata directory.
 
 If no
 I<archive>
@@ -100,7 +101,7 @@ B<dpkg-deb>
 will write to the file
 I<directory>B</>I<package>B<_>I<version>B<_>I<arch>B<.deb.>
 When a target directory is specified, rather than a file, the
-B<--nocheck>
+B<--no-check>
 option may not be used (since
 B<dpkg-deb>
 needs to read and parse the package control file to determine which
@@ -187,7 +188,8 @@ which prints a listing of the files extracted as it goes.
 =item B<-R>, B<--raw-extract> I<archive> I<directory>
 
 Extracts the filesystem tree from a package archive into a specified
-directory, and the control information files into a
+directory,
+and the package metadata files into a
 B<DEBIAN>
 subdirectory of the specified directory (since dpkg 1.16.1).
 
@@ -220,7 +222,7 @@ The input archive will always be processed sequentially.
 
 =item B<-e>, B<--control> I<archive> [I<directory>]
 
-Extracts the control information files from a package archive into the
+Extracts the package metadata files from a package archive into the
 specified directory.
 
 If no directory is specified then a subdirectory
@@ -263,10 +265,11 @@ L<dpkg-query(1)>.
 
 The default for this field is “${Package}\t${Version}\n”.
 
-=item B<-z>I<compress-level>
+=item B<-z>, B<--compression-level=>I<compress-level>
 
 Specify which compression level to use on the compressor backend, when
-building a package (default is 9 for gzip, 6 for xz, 3 for zstd).
+building a package (default is 9 for gzip, 6 for xz, 3 for zstd;
+long option since dpkg 1.22.9).
 The accepted values are compressor specific.
 For gzip, from 0-9 with 0 being mapped to compressor none.
 For xz from 0-9.
@@ -274,17 +277,18 @@ For zstd from 0-22, with levels from 20 to 22 enabling its ultra mode.
 Before dpkg 1.16.2 level 0 was equivalent to compressor none for all
 compressors.
 
-=item B<-S>I<compress-strategy>
+=item B<-S>, B<--compression-strategy=>I<compress-strategy>
 
 Specify which compression strategy to use on the compressor backend, when
-building a package (since dpkg 1.16.2).
+building a package (since dpkg 1.16.2, long option since dpkg 1.22.9).
 Allowed values are B<none> (since
 dpkg 1.16.4), B<filtered>, B<huffman>, B<rle> and B<fixed> for
 gzip (since dpkg 1.17.0) and B<extreme> for xz.
 
-=item B<-Z>I<compress-type>
+=item B<-Z>, B<--compression=>I<compress-type>
 
-Specify which compression type to use when building a package.
+Specify which compression type to use when building a package
+(long option since dpkg 1.22.9).
 Allowed values are B<gzip>, B<xz> (since dpkg 1.15.6),
 B<zstd> (since dpkg 1.21.18)
 and B<none> (default is B<%DEB_DEFAULT_COMPRESSOR%>).
@@ -328,13 +332,19 @@ now obsolete; its only use is when building packages to be parsed by
 versions of dpkg older than 0.93.76 (September 1995), which was released
 as i386 a.out only.
 
-=item B<--nocheck>
+=item B<--no-check>
 
 Inhibits
 B<dpkg-deb --build>'s
 usual checks on the proposed contents of an archive.
 You can build
 any archive you want, no matter how broken, this way.
+
+Option supported since dpkg 1.22.12.
+
+=item B<--nocheck>
+
+This is an alias for B<--no-check>.
 
 =item B<-v>, B<--verbose>
 
@@ -393,6 +403,28 @@ The B<-z> option overrides this value.
 Sets the color mode (since dpkg 1.18.5).
 The currently accepted values are: B<auto> (default), B<always> and
 B<never>.
+
+=item B<DPKG_NLS>
+
+If set, it will be used to decide whether to activate Native Language Support,
+also known as internationalization (or i18n) support (since dpkg 1.22.7).
+The accepted values are: B<0> and B<1> (default).
+
+=item B<DPKG_PATH_PASSWD>
+
+Sets the pathname for the system F<passwd> file.
+This path is relative to the B<--root> directory.
+The default is F</etc/passwd>.
+
+Since dpkg 1.22.16.
+
+=item B<DPKG_PATH_GROUP>
+
+Sets the pathname for the system F<group> file.
+This path is relative to the B<--root> directory.
+The default is F</etc/group>.
+
+Since dpkg 1.22.16.
 
 =item B<TMPDIR>
 

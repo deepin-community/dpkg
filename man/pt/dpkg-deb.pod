@@ -36,15 +36,15 @@ Para a maioria dos comandos que recebem uma entrada de argumento de arquivo, o a
 
 =item B<-b>, B<--build> I<binary-directory> [I<archive>|I<directory>]
 
-Cria um arquivo debian para a árvore de sistema de ficheiros armazenada em I<binary-directory>. I<binary-directory> tem de ter um sub-directório B<DEBIAN>, o qual contém os ficheiros de informação de controlo tais como o próprio ficheiro control. Este directório I<não> irá aparecer no arquivo de sistema de ficheiros do pacote binários, mas em vez disso os ficheiros nele serão postos na área de informação de controlo do pacote binário.
+Creates a debian archive from the filesystem tree stored in I<binary-directory>.  I<binary-directory> must have a B<DEBIAN> subdirectory, which contains the package metadata files such as the binary package control file.  This directory will I<not> appear in the binary package's filesystem archive, but instead the files in it will be put in the binary package's control information area.
 
-A menos que você especifique B<--nocheck>, B<dpkg-deb> irá ler B<DEBIAN/control> e analisa-lo. Irá verificar o ficheiro por erros de sintaxe e outros problemas, e mostrar o nome do pacote binário a ser compilado. B<dpkg-deb> irá também verificar as permissões dos scripts do maintainer e outros ficheiros encontrados no directório de informação de controlo B<DEBIAN>.
+Unless you specify B<--no-check>, B<dpkg-deb> will read B<DEBIAN/control> and parse it.  It will check the file for syntax errors and other problems, and display the name of the binary package being built.  B<dpkg-deb> will also check the permissions of the maintainer scripts and other files found in the B<DEBIAN> package metadata directory.
 
 Se não for especificado nenhum I<archive> então o B<dpkg-deb> irá escrever o pacote no ficheiro I<binary-directory>B<.deb>.
 
 Se o arquivo a ser criado já existir, ele será sobrescrito.
 
-Se o segundo argumento for um directório então B<dpkg-deb> irá escrever para o ficheiro I<directory>B</>I<package>B<_>I<version>B<_>I<arch>B<.deb.> Quando é especificado um directório alvo, em vez de um ficheiro, a opção B<--nocheck> pode não ser usada (pois B<dpkg-deb> precisa de ler e analisar o ficheiro de controle do pacote para determinar qual o nome de ficheiro a suar).
+Se o segundo argumento for um directório então B<dpkg-deb> irá escrever para o ficheiro I<directory>B</>I<package>B<_>I<version>B<_>I<arch>B<.deb.> Quando é especificado um directório alvo, em vez de um ficheiro, a opção B<--no-check> pode não ser usada (pois B<dpkg-deb> precisa de ler e analisar o ficheiro de controle do pacote para determinar qual o nome de ficheiro a suar).
 
 =item B<-I>, B<--info> I<archive> [I<control-file-name>...]
 
@@ -86,7 +86,7 @@ I<directory> (mas não os seus parentes) será criada se necessário, e as suas 
 
 =item B<-R>, B<--raw-extract> I<archive> I<directory>
 
-Extrai a árvore do sistema de ficheiros de um arquivo pacote para um directório especificado, e os ficheiros de informação de controlo para um sub-directório B<DEBIAN> do directório especificado (desde dpkg 1.16.1).
+Extracts the filesystem tree from a package archive into a specified directory, and the package metadata files into a B<DEBIAN> subdirectory of the specified directory (since dpkg 1.16.1).
 
 O directório alvo (mas não os seus parentes) será criado se necessário.
 
@@ -102,7 +102,7 @@ Extrai os dados de árvore de sistema de ficheiros de um pacote binário e envia
 
 =item B<-e>, B<--control> I<archive> [I<directory>]
 
-Extrai ficheiros de informação de controlo a partir de uma arquivo de pacote para o directório especificado.
+Extracts the package metadata files from a package archive into the specified directory.
 
 Se nenhum directório for especificado, então é usado um sub-directório B<DEBIAN> no directório actual.
 
@@ -130,17 +130,17 @@ A string pode referenciar qualquer campo de estado usado o formato “${I<field-
 
 A predefinição para este campo é “${Package}\t${Version}\n”.
 
-=item B<-z>I<compress-level>
+=item B<-z>, B<--compression-level=>I<compress-level>
 
-Especifica que nível de compressão usar no backend compressor, quando compila um pacote (a predefinição é 9 para gzip, 6 para xz, 3 para zstd). Os valores aceites são específicos do compressor. Para gzip de 0-9 com 0 a ser mapeado para nenhuma compressão. Para xz de 0-9. Para zstd de 0-22, com os níveis de 20 a 22 a ativarem o seu modo ultra. Antes do dpkg 1.16.2 o nível 0 era equivalente a nenhuma compressão para todos os compressores.
+Especifica que nível de compressão usar no backend compressor, quando compila um pacote (a predefinição é 9 para gzip, 6 para xz, 3 para zstd; opção longa desde dpkg 1.22.9). Os valores aceites são específicos do compressor. Para gzip de 0-9 com 0 a ser mapeado para nenhuma compressão. Para xz de 0-9. Para zstd de 0-22, com os níveis de 20 a 22 a ativarem o seu modo ultra. Antes do dpkg 1.16.2 o nível 0 era equivalente a nenhuma compressão para todos os compressores.
 
-=item B<-S>I<compress-strategy>
+=item B<-S>, B<--compression-strategy=>I<compress-strategy>
 
-Especifica qual a estratégia de compressão usar no backend compressor, quando compila um pacote (desde dpkg 1.16.2). Valores permitidos são B<none> (desde dpkg 1.16.4), B<filtered>, B<huffman>, B<rle> e B<fixed> para gzip (desde dpkg 1.17.0) e B<extreme> para xz.
+Especifica qual a estratégia de compressão usar no backend compressor, quando compila um pacote (desde dpkg 1.16.2, opção longa desde dpkg 1.22.9). Valores permitidos são B<none> (desde dpkg 1.16.4), B<filtered>, B<huffman>, B<rle> e B<fixed> para gzip (desde dpkg 1.17.0) e B<extreme> para xz.
 
-=item B<-Z>I<compress-type>
+=item B<-Z>, B<--compression=>I<compress-type>
 
-Especifica qual tipo de compressão usar quando compila um pacote. Valores permitidos são B<gzip>, B<xz> (desde dpkg 1.15.6), B<zstd> (desde dpkg 1.21.18) e B<none> (a predefinição é B<%DEB_DEFAULT_COMPRESSOR%>).
+Especifica qual tipo de compressão usar quando compila um pacote (opção longa desde dpkg 1.22.9). Valores permitidos são B<gzip>, B<xz> (desde dpkg 1.15.6), B<zstd> (desde dpkg 1.21.18) e B<none> (a predefinição é B<%DEB_DEFAULT_COMPRESSOR%>).
 
 =item B<--[no-]uniform-compression>
 
@@ -162,9 +162,15 @@ Define a versão de formato de arquivo usado quando compila (desde dpkg 1.17.0).
 
 O formato de arquivo antigo é menos facilmente analisado por ferramentas não-Debian e está agora obsoleto; o seu único uso é quando se compila pacotes para serem analisados por versões do dpkg anteriores a 0.93.76 (Setembro 1995), o qual foi um lançamento apenas para i386.
 
-=item B<--nocheck>
+=item B<--no-check>
 
 Inibe as verificações usuais de B<dpkg-deb --build> no conteúdo proposto de um arquivo. Deste modo, você pode compilar qualquer arquivo que queira, não interessa o quanto estragado.
+
+Opção suportada desde dpkg 1.22.12.
+
+=item B<--nocheck>
+
+Este é um nome alternativo para B<--no-check>.
 
 =item B<-v>, B<--verbose>
 
@@ -216,6 +222,22 @@ A opção B<-z> sobrepõe este valor.
 
 Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B<auto> (predefinido), B<always> e B<never>.
 
+=item B<DPKG_NLS>
+
+Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nativa. Também como conhecido como suporte de internacionalização (ou i18n) (desde dpkg 1.22.7). Os valores aceites são B<0> e B<1> (predefinição).
+
+=item B<DPKG_PATH_PASSWD>
+
+Define o nome-de-caminho para o ficheiro F<passwd> do sistema.  Este caminho é relativo ao directório B<--root>.  A predefinição é F</etc/passwd>.
+
+Desde dpkg 1.22.16.
+
+=item B<DPKG_PATH_GROUP>
+
+Define o nome-de-caminho para o ficheiro F<group> do sistema.  Este caminho é relativo ao directório B<--root>.  A predefinição é F</etc/group>.
+
+Desde dpkg 1.22.16.
+
 =item B<TMPDIR>
 
 Se definido, B<dpkg-deb> irá usa-lo como o directório onde criar ficheiros e directórios temporários.
@@ -224,7 +246,7 @@ Se definido, B<dpkg-deb> irá usa-lo como o directório onde criar ficheiros e d
 
 Se definido, será usado como marca temporal (em segundos desde a época) no contentor L<ar(5)> de L<deb(5)> e usado para engatar o mtime nas entradas do ficheiro L<tar(5)>.
 
-Since dpkg 1.18.8.
+Desde dpkg 1.18.8.
 
 =back
 

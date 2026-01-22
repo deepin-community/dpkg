@@ -62,7 +62,7 @@ Par exemple, pour un fichier de configuration supprimé dans la version B<2.0-1>
 
 =item I<paquet>
 
-Le nom du paquet propriétaire du (des) nom(s) de chemin. Si le paquet est S<« Multi-Arch:> S<same »> ce paramètre doit inclure le type d'architecture, sinon, il ne devrait B<pas> habituellement inclure le type d'architecture (parce qu'il pourrait interdire les catégories croisées, ou le passage d'une architecture spécifique à l'architecture B<all> ou vice-versa). Si le paramètre est vide ou omis, les variables d'environnement B<DPKG_MAINTSCRIPT_PACKAGE> et B<DPKG_MAINTSCRIPT_ARCH> (telles que définies par B<dpkg> lors de l'exécution des scripts du responsable) seront utilisées pour créer un nom de paquet avec une qualification d'architecture.
+Le nom du paquet propriétaire du (des) nom(s) de chemin. Si le paquet est « Multi-Arch: same » ce paramètre doit inclure le type d'architecture, sinon, il ne devrait B<pas> habituellement inclure le type d'architecture (parce qu'il pourrait interdire les catégories croisées, ou le passage d'une architecture spécifique à l'architecture B<all> ou vice-versa). Si le paramètre est vide ou omis, les variables d'environnement B<DPKG_MAINTSCRIPT_PACKAGE> et B<DPKG_MAINTSCRIPT_ARCH> (telles que définies par B<dpkg> lors de l'exécution des scripts du responsable) seront utilisées pour créer un nom de paquet avec une qualification d'architecture.
 
 =item B<-->
 
@@ -82,7 +82,7 @@ B<Note>: This can be replaced in most cases by the C<remove-on-upgrade> flag in 
 
 If a conffile is completely removed, it should be removed from disk, unless the user has modified it.  If there are local modifications, they should be preserved.  If the package upgrade aborts, the newly obsolete conffile should not disappear.
 
-L'ensemble de ces pré-requis est mis en œuvre en utilisant les commandes shell suivantes dans les scripts B<preinst>, B<postinst> et S<B<postrm> :>
+L'ensemble de ces pré-requis est mis en œuvre en utilisant les commandes shell suivantes dans les scripts B<preinst>, B<postinst> et B<postrm> :
 
 =over 
 
@@ -94,13 +94,13 @@ Z<>
 
 I<fichier-de-configuration> est le nom du fichier de configuration à supprimer.
 
-Détails de la mise en œuvre S<actuelle :> dans le script B<preinst>, il est vérifié si le fichier de configuration a été modifié. Celui-ci est alors renommé, soit en I<fichier-de-configuration>B<.dpkg-remove> s'il n'a pas été modifié, soit en I<fichier-de-configuration>B<.dpkg-backup> s'il l'a été. Dans le script B<postinst>, ce dernier fichier est ensuite renommé en I<fichier-de-configuration>B<.dpkg-bak> et conservé pour référence puisqu'il contient des modifications locales, mais le premier est supprimé. Si la mise à jour du paquet est interrompue, le script B<postrm> remet en place le fichier de configuration d'origine. À la purge du paquet, le script B<postrm> supprimera également le fichier B<.dpkg-bak> qui avait été conservé jusque là.
+Détails de la mise en œuvre actuelle : dans le script B<preinst>, il est vérifié si le fichier de configuration a été modifié. Celui-ci est alors renommé, soit en I<fichier-de-configuration>B<.dpkg-remove> s'il n'a pas été modifié, soit en I<fichier-de-configuration>B<.dpkg-backup> s'il l'a été. Dans le script B<postinst>, ce dernier fichier est ensuite renommé en I<fichier-de-configuration>B<.dpkg-bak> et conservé pour référence puisqu'il contient des modifications locales, mais le premier est supprimé. Si la mise à jour du paquet est interrompue, le script B<postrm> remet en place le fichier de configuration d'origine. À la purge du paquet, le script B<postrm> supprimera également le fichier B<.dpkg-bak> qui avait été conservé jusque là.
 
 =head2 Renommer un fichier de configuration
 
 Si un fichier de configuration est déplacé à un autre endroit, il est nécessaire de garantir la préservation des modifications locales. À première vue, cela peut sembler être une simple modification dans le script B<preinst>, mais cela risque de résulter en une demande, par B<dpkg>, d'approbation de modifications locales qui n'existent pas réellement.
 
-Un renommage élégant peut être mis en œuvre avec les extraits shell qui suivent, dans les scripts B<preinst>, B<postinst> et S<B<postrm> :>
+Un renommage élégant peut être mis en œuvre avec les extraits shell qui suivent, dans les scripts B<preinst>, B<postinst> et B<postrm> :
 
 =over 
 
@@ -113,7 +113,7 @@ Z<>
 
 I<ancien-fichier-configuration> et I<nouveau-fichier-configuration> sont l'ancien et le nouveau nom du fichier de configuration à renommer.
 
-Détails de la mise en œuvre S<actuelle :> dans le script B<preinst>, il est vérifié si le fichier de configuration a été modifié. Celui-ci est alors soit laissé en place s'il a été modifié, soit renommé en I<ancien-fichier-configuration>B<.dpkg-remove> s'il ne l'a pas été. Lors de la configuration, le script B<postinst> supprime I<ancien-fichier-configuration>B<.dpkg-remove> et renomme I<ancien-fichier-configuration> et I<nouveau-fichier-configuration> si I<ancien-fichier-configuration> existe toujours. Si la mise à jour ou l'installation sont interrompues, le script B<postrm> renomme I<ancien-fichier-configuration>B<.dpkg-remove> en I<ancien-fichier-configuration> si c'est indispensable.
+Détails de la mise en œuvre actuelle : dans le script B<preinst>, il est vérifié si le fichier de configuration a été modifié. Celui-ci est alors soit laissé en place s'il a été modifié, soit renommé en I<ancien-fichier-configuration>B<.dpkg-remove> s'il ne l'a pas été. Lors de la configuration, le script B<postinst> supprime I<ancien-fichier-configuration>B<.dpkg-remove> et renomme I<ancien-fichier-configuration> et I<nouveau-fichier-configuration> si I<ancien-fichier-configuration> existe toujours. Si la mise à jour ou l'installation sont interrompues, le script B<postrm> renomme I<ancien-fichier-configuration>B<.dpkg-remove> en I<ancien-fichier-configuration> si c'est indispensable.
 
 =head1 SUBSTITUTIONS DE LIENS SYMBOLIQUES ET DE RÉPERTOIRES
 
@@ -125,7 +125,7 @@ B<Note>: The symlinks and directories created during these switches need to be s
 
 Si un lien symbolique est substitué à un répertoire réel, il est nécessaire de garantir qu'avant le dépaquetage le lien symbolique est retiré. À première vue, cela peut sembler être une simple modification dans le script B<preinst>, mais cela risque de résulter en problèmes si l'administrateur local a personnalisé le lien symbolique ou si l'on revient à une version antérieure du paquet.
 
-Un renommage élégant peut être mis en œuvre avec les extraits shell qui suivent, dans les scripts B<preinst>, B<postinst> et S<B<postrm> :>
+Un renommage élégant peut être mis en œuvre avec les extraits shell qui suivent, dans les scripts B<preinst>, B<postinst> et B<postrm> :
 
 =over 
 
@@ -137,13 +137,13 @@ Z<>
 
 I<nom-de-chemin> est le nom absolu de l'ancien lien symbolique (le chemin sera un répertoire à la fin de l'installation) et I<ancienne-cible> la cible de l'ancien lien symbolique vers I<nom-de-chemin>. Cela peut être un chemin absolu ou relatif vers le répertoire contenant I<nom-de-chemin>.
 
-Détails de la mise en œuvre S<actuelle :> dans le script B<preinst>, il est vérifié si le lien symbolique existe et pointe vers I<ancienne-cible>. Si ce n'est pas le cas, il est alors soit laissé en place, soit renommé en I<nom-de-chemin>B<.dpkg-backup>. Lors de la configuration, le script B<postinst> supprime I<nom-de-chemin>B<.dpkg-backup> si I<nom-de-chemin>B<.dpkg-backup> est encore un lien symbolique. Si la mise à niveau ou l'installation sont interrompues, le script B<postrm> renomme I<nom-de-chemin>B<.dpkg-backup> en I<nom-de-chemin> si c'est indispensable.
+Détails de la mise en œuvre actuelle : dans le script B<preinst>, il est vérifié si le lien symbolique existe et pointe vers I<ancienne-cible>. Si ce n'est pas le cas, il est alors soit laissé en place, soit renommé en I<nom-de-chemin>B<.dpkg-backup>. Lors de la configuration, le script B<postinst> supprime I<nom-de-chemin>B<.dpkg-backup> si I<nom-de-chemin>B<.dpkg-backup> est encore un lien symbolique. Si la mise à niveau ou l'installation sont interrompues, le script B<postrm> renomme I<nom-de-chemin>B<.dpkg-backup> en I<nom-de-chemin> si c'est indispensable.
 
 =head2 Substituer un répertoire à un lien symbolique
 
 Si un répertoire réel est substitué à un lien symbolique, il est nécessaire de garantir qu'avant le dépaquetage le répertoire est retiré. À première vue, cela peut sembler être une simple modification dans le script B<preinst>, mais cela risque de résulter en problèmes si le répertoire contient des fichiers de configuration, des noms de chemins qui appartiennent à d'autres paquets, des noms de chemin créés localement ou si l'on revient à une version antérieure du paquet.
 
-Une substitution élégante peut être mise en œuvre avec les extraits shell qui suivent, dans les scripts B<preinst>, B<postinst> et S<B<postrm> :>
+Une substitution élégante peut être mise en œuvre avec les extraits shell qui suivent, dans les scripts B<preinst>, B<postinst> et B<postrm> :
 
 =over 
 
@@ -155,13 +155,13 @@ Z<>
 
 I<nom-de-chemin> est le nom absolu de l'ancien répertoire (le chemin sera un lien symbolique à la fin de l'installation) et I<nouvelle-cible> la cible du nouveau lien symbolique vers I<nom-de-chemin>. Cela peut être un chemin absolu ou relatif vers le répertoire contenant I<nom-de-chemin>.
 
-Détails de la mise en œuvre S<actuelle :> dans le script B<preinst>, il est vérifié si le répertoire existe et ne contient pas de fichiers de configuration, de noms de chemin qui appartiennent à d'autres paquets, de noms de chemin créés localement. Si ce n'est pas le cas, il est alors soit laissé en place, soit renommé en I<nom-de-chemin>B<.dpkg-backup> et un répertoire vide provisoire nommé I<nom-de-chemin> est créé, marqué par un fichier pour que dpkg le suive. Lors de la configuration, le script B<postinst> achève la substitution si I<nom-de-chemin>B<.dpkg-backup>  est encore un répertoire et si I<nom-de-chemin> est le répertoire provisoire. Il supprime le fichier qui marque le fichier provisoire et déplace les fichiers nouvellement créés dans le répertoire provisoire vers la cible du lien symbolique I<nouvelle-cible>, remplace le répertoire provisoire I<nom-de-chemin>, maintenant vide, par un lien symbolique vers la I<nouvelle-cible> et, enfin supprime I<nom-de-chemin>B<.dpkg-backup>. Si la mise à niveau ou l'installation sont interrompues, le script B<postrm> renomme I<nom-de-chemin>B<.dpkg-backup> en I<nom-de-chemin> si c'est indispensable.
+Détails de la mise en œuvre actuelle : dans le script B<preinst>, il est vérifié si le répertoire existe et ne contient pas de fichiers de configuration, de noms de chemin qui appartiennent à d'autres paquets, de noms de chemin créés localement. Si ce n'est pas le cas, il est alors soit laissé en place, soit renommé en I<nom-de-chemin>B<.dpkg-backup> et un répertoire vide provisoire nommé I<nom-de-chemin> est créé, marqué par un fichier pour que dpkg le suive. Lors de la configuration, le script B<postinst> achève la substitution si I<nom-de-chemin>B<.dpkg-backup>  est encore un répertoire et si I<nom-de-chemin> est le répertoire provisoire. Il supprime le fichier qui marque le fichier provisoire et déplace les fichiers nouvellement créés dans le répertoire provisoire vers la cible du lien symbolique I<nouvelle-cible>, remplace le répertoire provisoire I<nom-de-chemin>, maintenant vide, par un lien symbolique vers la I<nouvelle-cible> et, enfin supprime I<nom-de-chemin>B<.dpkg-backup>. Si la mise à niveau ou l'installation sont interrompues, le script B<postrm> renomme I<nom-de-chemin>B<.dpkg-backup> en I<nom-de-chemin> si c'est indispensable.
 
 =head1 INTÉGRATION DANS LES PAQUETS
 
 When using a packaging helper, please check if it has native B<dpkg-maintscript-helper> integration, which might make your life easier. See for example L<dh_installdeb(1)>.
 
-Comme B<dpkg-maintscript-helper> est utilisé dans le script B<preinst>, l'utiliser sans conditions impose une pré-dépendance afin de garantir que la version minimale nécessaire de B<dpkg> ait bien été préalablement configurée. La version minimale dépend de la commande S<utilisée :> ainsi pour B<rm_conffile> et B<mv_conffile>, cette version est 1.15.7.2, pour B<symlink_to_dir> et B<dir_to_symlink>, c'est S<1.17.14 :>
+Given that B<dpkg-maintscript-helper> is used in the B<preinst>, using it unconditionally requires a versioned pre-dependency to ensure that the required version of B<dpkg> has been unpacked before, unless we know we are upgrading from a release where the required dpkg version is going to be satisfied.  The required version depends on the command used, for B<rm_conffile> and B<mv_conffile> it is 1.15.7.2, for B<symlink_to_dir> and B<dir_to_symlink> it is 1.17.14.  For example, if we required support for B<symlink_to_dir> when upgrading from a release that had a dpkg version earlier than 1.17.14, we would need to add:
 
 =over 
 
@@ -169,7 +169,7 @@ Comme B<dpkg-maintscript-helper> est utilisé dans le script B<preinst>, l'utili
 
 =back
 
-Cependant, dans de nombreux cas, l'opération réalisée par le programme n'est pas critique pour le paquet et au lieu d'utiliser une pré-dépendance, il est possible de ne lancer le programme que si on a la certitude que la commande nécessaire est gérée par la version actuellement installée de S<B<dpkg> :>
+Cependant, dans de nombreux cas, l'opération réalisée par le programme n'est pas critique pour le paquet et au lieu d'utiliser une pré-dépendance, il est possible de ne lancer le programme que si on a la certitude que la commande nécessaire est gérée par la version actuellement installée de B<dpkg> :
 
 =over 
 
@@ -196,7 +196,7 @@ Si cette variable est positionnée, ce répertoire sera utilisé comme répertoi
 
 =item B<DPKG_COLORS>
 
-Fixe le mode de couleur (depuis S<dpkg 1.19.1).> Les valeurs admises actuellement sont B<auto> (par défaut), B<always> et B<never>.
+Fixe le mode de couleur (depuis dpkg 1.19.1). Les valeurs admises actuellement sont B<auto> (par défaut), B<always> et B<never>.
 
 =back
 

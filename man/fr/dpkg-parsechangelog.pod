@@ -22,7 +22,7 @@ B<dpkg-parsechangelog> [I<option>...]
 
 =head1 DESCRIPTION
 
-B<dpkg-parsechangelog> lit et fait l'analyse du fichier S<« changelog »> d'une arborescence source dépaquetée et affiche les informations qu'il contient sur la sortie standard et sous une forme lisible par la machine.
+B<dpkg-parsechangelog> lit et fait l'analyse du fichier « changelog » d'une arborescence source dépaquetée et affiche les informations qu'il contient sur la sortie standard et sous une forme lisible par la machine.
 
 =head1 OPTIONS
 
@@ -30,7 +30,7 @@ B<dpkg-parsechangelog> lit et fait l'analyse du fichier S<« changelog »> d'une
 
 =item B<-l>, B<--file> I<fichier-des-changements>
 
-Indique le fichier des changements où trouver des renseignements. Un S<« - »> peut être utilisé pour spécifier une lecture à partir de l'entrée standard. Par défaut, c'est le fichier B<debian/changelog>.
+Indique le fichier des changements où trouver des renseignements. Un « - » peut être utilisé pour spécifier une lecture à partir de l'entrée standard. Par défaut, c'est le fichier B<debian/changelog>.
 
 =item B<-F> I<format-du-fichier-des-changements>
 
@@ -38,11 +38,11 @@ Specifies the format of the changelog.  By default the format is read from a spe
 
 =item B<-L> I<rep_lib>
 
-Option obsolète sans effet (depuis S<dpkg 1.18.8).> Fixer les variables d'environnement de Perl B<PERL5LIB> ou B<PERLLIB> a un effet similaire lors de la recherche des modules d'analyse de Perl.
+Option obsolète sans effet (depuis dpkg 1.18.8). Fixer les variables d'environnement de Perl B<PERL5LIB> ou B<PERLLIB> a un effet similaire lors de la recherche des modules d'analyse de Perl.
 
 =item B<-S>, B<--show-field> I<champ>
 
-Indique le nom du champ à afficher (depuis S<dpkg 1.17.0).> Le nom du champ n'est pas affiché, mais seulement sa valeur.
+Indique le nom du champ à afficher (depuis dpkg 1.17.0). Le nom du champ n'est pas affiché, mais seulement sa valeur.
 
 =item B<-?>, B<--help>
 
@@ -56,7 +56,7 @@ Afficher le numéro de version puis quitter.
 
 =head2 Options de filtrage
 
-Les options suivantes peuvent être utilisées pour influencer la sortie de l'analyseur du journal des modifications S<(« changelog »),> par exemple la gamme d'entrées ou le format de sortie.
+Les options suivantes peuvent être utilisées pour influencer la sortie de l'analyseur du journal des modifications (« changelog »), par exemple la gamme d'entrées ou le format de sortie.
 
 =over 
 
@@ -92,15 +92,15 @@ The date of the entry as a string, as it appears in the changelog.  With a L<str
 
 =item B<Timestamp:> I<horodatage>
 
-La date de l'entrée comme horodatage en secondes depuis S<« l'epoch »> (depuis dpkg 1.18.8).
+La date de l'entrée comme horodatage en secondes depuis « l'epoch » (depuis dpkg 1.18.8).
 
 =item B<Closes:> I<numéro-bogue>
 
-Les champs S<« Closes »> de toutes les entrées incluses sont fusionnés.
+Les champs « Closes » de toutes les entrées incluses sont fusionnés.
 
 =item B<Changes:> I<entrées-du-fichier-des-changements>
 
-Les textes de toutes les entrées de changelog sont concaténés. Pour faire de ce champ un champ de contrôle Debian valable, les lignes multiples qui sont vides sont remplacées par un point S<B<« . »>> et toutes les lignes sont indentées par une seule espace. Le contenu exact dépend du format du changelog.
+Les textes de toutes les entrées de changelog sont concaténés. Pour faire de ce champ un champ de contrôle Debian valable, les lignes multiples qui sont vides sont remplacées par un point B<« . »> et toutes les lignes sont indentées par une seule espace. Le contenu exact dépend du format du changelog.
 
 =back
 
@@ -112,7 +112,7 @@ Le format B<rfc822> utilise les mêmes champs mais le résultat est un paragraph
 
 =item B<--reverse>
 
-Inclut toutes les modifications en ordre inverse (depuis S<dpkg 1.19.1).>
+Inclut toutes les modifications en ordre inverse (depuis dpkg 1.19.1).
 
 B<Note>: For the B<dpkg> format the first entry will be the most ancient entry.
 
@@ -154,7 +154,7 @@ Modifie le point de départ pour B<--count>, à compter du début (ou la fin si 
 
 Il est possible d'utiliser un format différent de celui utilisé habituellement, en fournissant un analyseur pour le format alternatif.
 
-Afin que B<dpkg-parsechangelog> utilise le nouvel analyseur, il doit exister une ligne, parmi les 40 dernières du fichier, qui corresponde à l'expression régulière Perl “B<\schangelog-format:\s+([0-9a-z]+)\W> (la partie entre parenthèses doit être le nom du format). S<Exemple :>
+Afin que B<dpkg-parsechangelog> utilise le nouvel analyseur, il doit exister une ligne, parmi les 40 dernières du fichier, qui corresponde à l'expression régulière Perl “B<\schangelog-format:\s+([0-9a-z]+)\W> (la partie entre parenthèses doit être le nom du format). Exemple :
 
 =over 
 
@@ -162,7 +162,7 @@ Afin que B<dpkg-parsechangelog> utilise le nouvel analyseur, il doit exister une
 
 =back
 
-Les noms de formats de journaux de modifications sont des chaînes non vides de caractères alphanumériques en minuscules S<(« a-z0-9 »).>
+Les noms de formats de journaux de modifications sont des chaînes non vides de caractères alphanumériques en minuscules (« a-z0-9 »).
 
 Si une telle ligne existe, B<dpkg-parsechangelog> recherchera l'analyseur sous le nom du module Perl B<Dpkg::Changelog::>I<autreformat> ; s'il n'est pas présent, c'est une condition d'erreur. Le nom de l'analyseur dans le module Perl sera automatiquement mis en capitale. Le format de journaux de modifications par défaut est B<debian> et un analyseur pour ce format est fourni par défaut.
 
@@ -188,11 +188,11 @@ Analyse des options courtes avec des valeurs non-groupées, disponible seulement
 
 =item B<DPKG_COLORS>
 
-Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
+Définit le mode de couleur (depuis dpkg 1.18.5). Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis dpkg 1.19.0). Les valeurs permises sont : B<0> et B<1> (par défaut).
 
 =back
 

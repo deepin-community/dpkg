@@ -74,6 +74,10 @@ Gibt die Version aus und beendet das Programm.
 
 =over 
 
+=item B<DEB_HOST_ARCH>
+
+Setzt die Host-Architektur. Dies betrifft die Abhängigkeits-Auflöselogik, die dann eventuell keine Lösungen findet, bei denen das Dpkg des Hauptsystems welche fände.
+
 =item B<DEB_BUILD_PROFILES>
 
 Falls gesetzt, wird es als aktive(s) Bau-Profil(e) für das zu bauende Paket verwandt. Es ist eine durch Leerzeichen getrennte Liste von Profilnamen. Wird durch die Option B<-P> außer Kraft gesetzt.
@@ -91,7 +95,7 @@ Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language Support, au
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

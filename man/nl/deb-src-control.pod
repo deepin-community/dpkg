@@ -60,6 +60,12 @@ De URL van de homepage van het toeleverend project (upstream).
 
 De I<URL> van het bugopvolgingssysteem voor dit pakket. De momenteel gebruikte indeling is I<bts-type>B<://>I<bts-adres>, zoals B<debbugs://bugs.debian.org>. Meestal is dit veld niet nodig.
 
+=item B<Build-Driver:> I<stuurprogrammanaam>
+
+Dit experimentele veld specificeert de naam van het bouwstuurprogramma dat gebruikt moet worden om dit pakket te bouwen. Wanneer I<stuurprogrammanaam> wordt weggelaten, wordt dit standaard B<debian-rules>.
+
+Dit veld wordt ondersteund sinds dpkg 1.22.7.
+
 =item B<Rules-Requires-Root:> B<no>|B<binary-targets>|I<impl-trefwoorden>
 
 Dit veld wordt gebruikt om aan te geven of het bestand B<debian/rules> voorrechten van (fake)root nodig heeft om sommige van zijn targets uit te voeren, en zo ja wanneer.
@@ -68,11 +74,11 @@ Dit veld wordt gebruikt om aan te geven of het bestand B<debian/rules> voorrecht
 
 =item B<no>
 
-De binaire targets zullen (fake)root helemaal niet nodig hebben. Dit is de standaard in B<dpkg-build-api> level >= 1.
+De binaire targets zullen (fake)root helemaal niet nodig hebben. Dit is de standaard in B<dpkg-build-api> level >= 1, of sinds dpkg 1.22.13.
 
 =item B<binary-targets>
 
-De binaire targets moeten altijd onder (fake)root uitgevoerd worden. Dit is de standaardwaarde in B<dpkg-build-api> level 0 als dit veld ontbreekt. Als dit veld toegevoegd wordt met een expliciete B<binary-targets>, terwijl dit strikt genomen niet nodig is, geeft dit aan dat de noodzaak ervan onderzocht werd.
+De binaire targets moeten altijd onder (fake)root uitgevoerd worden. Dit is tot dpkg 1.22.13 de standaardwaarde in B<dpkg-build-api> level 0, wanneer dit veld ontbreekt. Als dit veld toegevoegd wordt met een expliciete B<binary-targets>, terwijl dit strikt genomen niet nodig is, geeft dit aan dat de noodzaak ervan onderzocht werd.
 
 =item I<impl-trefwoorden>
 
@@ -122,11 +128,17 @@ De naam van de distributie waaruit dit pakket afkomstig is. Meestal is dit veld 
 
 Dit is een veld van algemene aard dat het pakket in een categorie onderbrengt op basis van de software die het installeert. Enkele gebruikelijke secties zijn B<utils>, B<net>, B<mail>, B<text>, B<x11>, enz.
 
+Als de I<sectie> wordt weggelaten krijgt die de standaardwaarde B<unknown> (sinds dpkg 1.22.13).
+
+De geaccepteerde waarden zijn gebaseerd op het specifieke distributiebeleid.
+
 =item B<Priority:> I<prioriteit>
 
-Duidt het belang van dit pakket aan in verhouding tot het gehele systeem. Gebruikelijke prioriteiten zijn B<required>, B<standard>, B<optional>, B<extra>, enz.
+Duidt het belang van dit pakket aan in verhouding tot het gehele systeem. De bekende prioriteiten zijn B<required>, B<important>, B<standard>, B<optional>, B<extra> en B<unknown>, maar ook andere waarden kunnen gebruikt worden.
 
-De velden B<Section> en B<Priority> hebben gewoonlijk een welbepaalde set mogelijke waarden, afhankelijk van de richtlijnen van de distributie.
+Als de I<prioriteit> wordt weggelaten krijgt die de standaardwaarde B<optional> (sinds dpkg 1.22.13).
+
+Hoe deze waarden worden toegepast, hangt af van het specifieke distributiebeleid.
 
 =item B<Build-Depends:> I<pakketlijst>
 
@@ -162,15 +174,13 @@ De naam van een architectuurkwalificatie kan een echte Debian-architectuurnaam z
 
 Een versienummer kan beginnen met een ‘B<E<gt>E<gt>>’. In dat geval levert dit met alle latere versies een overeenkomst op. Een versienummer kan al dan niet ook een Debian-pakketrevisie bevatten (met een koppelteken tussen versienummer en Debian-pakketrevisie). Toegestane versierelaties zijn ‘B<E<gt>E<gt>>’ voor hoger dan, ‘B<E<lt>E<lt>>’ voor lager dan, ‘B<E<gt>=>’ voor hoger of gelijk aan, ‘B<E<lt>=>’ voor lager of gelijk aan en ‘B<=>’ voor gelijk aan.
 
-Een architectuuraanduiding bestaat uit één of meer architectuurnamen, onderling gescheiden door witruimte. Een uitroepteken mag elk van de namen voorafgaan, hetgeen de betekenis heeft van “NOT” (niet).
+An architecture specification consists of one or more architecture names, separated by whitespace.  Exclamation marks (B<!>) may be prepended to each of the names, meaning “NOT”.
 
-Een restrictieformule bestaat uit één of meer restrictielijsten, onderling gescheiden door witruimte. Elke restrictielijst staat tussen punthaakjes. De items in de restrictielijst zijn bouwprofielnamen, onderling gescheiden door witruimte, en kunnen voorafgegaan worden door een uitroepteken, hetgeen de betekenis heeft van “NOT” (niet). Een restrictieformule heeft de verschijningsvorm van een expressie in disjunctieve normaalvorm.
+A restriction formula consists of one or more restriction lists, separated by whitespace.  Each restriction list is enclosed in angle brackets (B<E<lt>> and B<E<gt>>).  Items in the restriction list are build profile names, separated by whitespace and can be prefixed with an exclamation mark (B<!>), meaning “NOT”.  A restriction formula represents a disjunctive normal form expression, that is whitespace inside enclosed angle brackets is read as “AND”, and whitespace between enclosing angle brackets is read as “OR“, such as “B<E<lt>>foo AND barB<E<gt>> OR B<E<lt>>quux AND bazB<E<gt>>”.
 
 Merk op dat de vermelding dat pakketten vereist worden die behoren tot de categorie B<build-essential>, weggelaten kan worden en dat het onmogelijk is om tegenover dergelijke pakketten een bouwtegenstrijdigheid te formuleren. Een lijst van deze pakketten is te vinden in het pakket build-essential.
 
 =head1 VELDEN BINAIR PAKKET
-
-Merk op dat de velden B<Priority>, B<Section> en B<Homepage> ook in een onderdeel over een binair pakket kunnen voorkomen ter vervanging van de globale waarde uit het broncodepakket.
 
 =over 
 
@@ -182,9 +192,15 @@ Dit veld wordt gebruikt om de naam van het binaire pakket te vermelden. Dezelfde
 
 Dit veld definieert het pakkettype. B<udeb> is voor pakketten waarvan de omvang aan beperkingen onderworpen is en die door het installatieprogramma van Debian gebruikt worden. B<deb> is de standaardwaarde, die verondersteld wordt als het veld ontbreekt. In de toekomst kunnen nog andere types toegevoegd worden.
 
-=item B<Architecture:> I<arch>|B<all>|B<any> (verplicht)
+=item B<Architecture:> I<arch-lijst> (verplicht)
 
-De architectuur geeft aan op welk type hardware dit pakket werkt. Gebruik de waarde B<any> voor pakketten die op alle architecturen werken. Voor pakketten die architectuuronafhankelijk zijn, zoals shell- en Perl-scripts of documentatie, moet u de waarde B<all> gebruiken. Om pakketten tot een bepaalde set van architecturen te beperken, moet u de namen van de architecturen opgeven, onderling gescheiden door een spatie. Het is ook mogelijk om architectuur-jokers te plaatsen in de lijst (zie L<dpkg-architecture(1)> voor bijkomende informatie daarover).
+The architecture list specifies on which type of machine this package runs. The value should be a list of architecture names and/or wildcards separated by spaces.
+
+The special B<all> value, by itself, is meant for packages that are architecture independent (such as shell and Perl scripts or documentation), the special B<any> wildcard value, by itself, is meant for packages that are architecture dependent but run on all architectures (which matches on all specific architecture names, excluding B<all>).  Most packages will use either B<all> or B<any>.  To restrict the packages to a certain set of architectures, specify one or more architecture names and/or architecture wildcards, separated by spaces.
+
+An architecture name or wildcard must start with an alphanumeric character (“0-9a-zA-Z”), and then gets followed by alphanumeric and dash (”-”) characters.
+
+For more information about architecture names and wildcards, see L<dpkg-architecture(1)>.
 
 =item B<Build-Profiles:> I<restrictie-formule>
 
@@ -207,6 +223,22 @@ Met andere woorden, indien aan jet onderdeel over een binair pakket een niet-lee
 =item B<Description:> I<korte-beschrijving> (aanbevolen)
 
 Deze velden worden beschreven in de man-pagina L<deb-control(5)>, vermits zij letterlijk naar het controlebestand van het binaire pakket gekopieerd worden.
+
+=item B<Section:> I<sectie>
+
+Overrides the value from the same field in the source package stanza.
+
+If there is no field in the binary or source stanza, then the it defaults to B<unknown> (since dpkg 1.22.13).
+
+=item B<Priority:> I<prioriteit>
+
+Overrides the value from the same field in the source package stanza.
+
+If there is no field in the binary or source stanza, then the it defaults to B<optional> (since dpkg 1.22.13).
+
+=item B<Homepage:> I<URL>
+
+Overrides the value from the same field in the source package stanza.
 
 =item B<Depends:> I<pakketlijst>
 
@@ -252,13 +284,19 @@ Het is toegelaten om aan het bestand control bijkomende door de gebruiker gedefi
 
 Het veld zal voorkomen in het control-bestand van het broncodepakket, zie L<dsc(5)>.
 
+Only expected in the source package stanza.
+
 =item B<B>
 
 Het veld zal voorkomen in het control-bestand van het binair pakket, zie L<deb-control(5)>.
 
+Allowed in the source package stanza or any binary package stanza.
+
 =item B<C>
 
 Het veld zal voorkomen in het controlebestand (.changes) van de upload, zie L<deb-changes(5)>.
+
+Only expected in the source package stanza.
 
 =back
 
@@ -268,32 +306,53 @@ Houd er rekening mee dat deze door de gebruiker gedefinieerde velden gebruik mak
 
 =head1 VOORBEELD
 
- # Commentaar
+ # Comment.
  Source: dpkg
  Section: admin
  Priority: required
  Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
- # dit veld wordt gekopieerd naar het binaire en het broncodepakket
+ # This field is copied to the binary and source packages.
  XBS-Upstream-Release-Status: stable
  Homepage: https://wiki.debian.org/Teams/Dpkg
  Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
  Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git
- Standards-Version: 3.7.3
- Build-Depends: pkgconf, debhelper (>= 4.1.81),
-  libselinux1-dev (>= 1.28-4) [!linux-any]
+ Standards-Version: 4.7.2
+ Build-Depends:
+  dpkg-build-api (= 1),
+  debhelper-compat (= 13),
+  debhelper (>= 13.10~),
+  pkgconf,
+  libselinux1-dev (>= 1.28-4) [!linux-any],
 
  Package: dpkg-dev
  Section: utils
  Priority: optional
  Architecture: all
- # dit is een aangepast veld in het binaire pakket
+ # This is a custom field in the binary package.
  XB-Mentoring-Contact: Raphael Hertzog <hertzog@debian.org>
- Depends: dpkg (>= 1.14.6), perl5, perl-modules, cpio (>= 2.4.2-2),
-  bzip2, lzma, patch (>= 2.2-1), make, binutils, libtimedate-perl
- Recommends: gcc | c-compiler, build-essential
- Suggests: gnupg, debian-keyring
- Conflicts: dpkg-cross (<< 2.0.0), devscripts (<< 2.10.26)
- Replaces: manpages-pl (<= 20051117-1)
+ Depends:
+  libdpkg-perl (= ${source:Version}),
+  dpkg (>= 1.14.6),
+  binutils,
+  bzip2,
+  xz-utils,
+ # This is a comment in the middle of a field value.
+  make,
+  patch (>= 2.2-1),
+  perl-modules,
+  perl5,
+ Recommends:
+  build-essential,
+  gcc | c-compiler,
+ Suggests:
+  debian-keyring,
+ Conflicts:
+  devscripts (<< 2.10.26),
+ Replaces:
+  manpages-pl (<= 20051117-1),
+ Provides:
+  dpkg-build-api (= 0),
+  dpkg-build-api (= 1),
  Description: Debian package development tools
   This package provides the development tools (including dpkg-source)
   required to unpack, build and upload Debian source packages.

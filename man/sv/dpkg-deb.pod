@@ -36,15 +36,15 @@ För de flesta kommandon som tar ett indataarkiv som argument kan arkivet läsas
 
 =item B<-b>, B<--build> I<binärkatalog> [I<arkiv>|I<katalog>]
 
-Skapar ett Debianarkiv från filsystemsträdet som lagras i I<binärkatalog>. I<binärkatalog> måste innehålla underkatalogen B<DEBIAN>, vilken innehåller styrinformationsfiler såsom själv styrfilen control. Katalogen kommer I<inte> att visas i binärpaketets filsystemsarkiv, utan istället kommer filerna läggas i binärpaketets styrinformationsområde.
+Creates a debian archive from the filesystem tree stored in I<binary-directory>.  I<binary-directory> must have a B<DEBIAN> subdirectory, which contains the package metadata files such as the binary package control file.  This directory will I<not> appear in the binary package's filesystem archive, but instead the files in it will be put in the binary package's control information area.
 
-Såvida du inte anger B<--nocheck> kommer dpkg-deb att läsa B<DEBIAN/control> och tolka den. Den kommer leta efter syntaxfel och andra problem i filen, och visa namnet på det binärpaket som byggs. B<dpkg-deb> kommer även att kontrollera behörigheten på paketskripten och andra filer som hittas i styrinformationskatalogen B<DEBIAN>.
+Unless you specify B<--no-check>, B<dpkg-deb> will read B<DEBIAN/control> and parse it.  It will check the file for syntax errors and other problems, and display the name of the binary package being built.  B<dpkg-deb> will also check the permissions of the maintainer scripts and other files found in the B<DEBIAN> package metadata directory.
 
 Om inget I<arkiv> anges kommer B<dpkg-deb> skriva paketet till filen I<binärkatalog>B<.deb>.
 
 Om arkivet som ska skapas redan finns kommer det skrivas över.
 
-Om den andra argumentet är en katalog kommer B<dpkg-deb> skriva till filen I<directory>B</>I<paket>B<_>I<version>B<_>I<arkitektur>B<.deb.> När en målkatalog anges, istället för en fil, kan inte flaggan B<--nocheck> användas (eftersom B<dpkg-deb> måste läsa och tolka paketets styrfil control för att ta reda på vilket filnamn som ska användas).
+Om den andra argumentet är en katalog kommer B<dpkg-deb> skriva till filen I<directory>B</>I<paket>B<_>I<version>B<_>I<arkitektur>B<.deb.> När en målkatalog anges, istället för en fil, kan inte flaggan B<--no-check> användas (eftersom B<dpkg-deb> måste läsa och tolka paketets styrfil control för att ta reda på vilket filnamn som ska användas).
 
 =item B<-I>, B<--info> I<arkiv> [I<control-filnamn> ...]
 
@@ -86,7 +86,7 @@ I<katalog> (men inte dess föräldrar) kommer skapas om nödvändigt, och dess b
 
 =item B<-R>, B<--raw-extract> I<arkiv> I<katalog>
 
-Extraherar filsystemsträdet från ett paketarkiv till den angivna katalogen och styrinformationsfilerna till underkatalogen B<DEBIAN> i den angivna katalogen (sedan dpkg 1.16.1).
+Extracts the filesystem tree from a package archive into a specified directory, and the package metadata files into a B<DEBIAN> subdirectory of the specified directory (since dpkg 1.16.1).
 
 Målkatalogen (men inte dess föräldrar) kommer att skapas om nödvändigt.
 
@@ -102,7 +102,7 @@ Extraherar filsystemsträdsdata från ett binärt paket och sänder det till sta
 
 =item B<-e>, B<--control> I<arkiv> [I<katalog>]
 
-Extraherar styrinformationsfilerna från paketarkivet till den angivna katalogen.
+Extracts the package metadata files from a package archive into the specified directory.
 
 Om ingen katalog anges kommer en underkatalog vid namn B<DEBIAN> i den aktuella katalogen att användas.
 
@@ -130,17 +130,17 @@ Strängen kan referera till statusfält på formen ”${I<field-name>}”, en f�
 
 Förvalet för fältet är ”${Package}\t${Version}\n”.
 
-=item B<-z>I<komprimeringsnivå>
+=item B<-z>, B<--compression-level>=I<komprimeringsnivå>
 
-Ange vilken komprimeringsnivå som ska användas i komprimeringsfunktionen när ett paket byggs (standard är 9 för gzip, 6 för xz, 3 för zstd). Giltiga värden är specifika för packaren. För gzip, 0-9 där 0 mappas mot komprimeraren ingen. För xz 0-9. För zstd 0-22, där nivåerna 20 till 22 aktiverar dess ultraläge. Före dpkg 1.16.2 var nivå 0 komprimeraren ingen för alla komprimerare.
+Ange vilken komprimeringsnivå som ska användas i komprimeringsfunktionen när ett paket byggs (standard är 9 för gzip, 6 för xz, 3 för zstd; lång flagga sedan dpkg 1.22.9). Giltiga värden är specifika för packaren. För gzip, 0-9 där 0 mappas mot komprimeraren ingen. För xz 0-9. För zstd 0-22, där nivåerna 20 till 22 aktiverar dess ultraläge. Före dpkg 1.16.2 var nivå 0 komprimeraren ingen för alla komprimerare.
 
-=item B<-S>I<komprimeringsstrategi>
+=item B<-Z>, B<--compression>=I<komprimeringsstrategi>
 
-Anger vilken komprimeringsstrategi som ska användas i komprimeringsfunktionen när paketet byggs (sedan dpkg 1.16.2). Tillåtet värde är B<none> (sedan dpkg 1.16.4), B<filtered>, B<huffman>, B<rle> och B<fixed> för gzip (sedan dpkg 1.17.0) och B<extreme> för xz.
+Anger vilken komprimeringsstrategi som ska användas i komprimeringsfunktionen när paketet byggs (sedan dpkg 1.16.2; lång flagga sedan dpkg 1.22.9). Tillåtet värde är B<none> (sedan dpkg 1.16.4), B<filtered>, B<huffman>, B<rle> och B<fixed> för gzip (sedan dpkg 1.17.0) och B<extreme> för xz.
 
-=item B<-Z>I<komprimeringstyp>
+=item B<-Z>, B<--compression>=I<komprimeringstyp>
 
-Ange vilken komprimeringstyp som ska användas när ett paket byggs. Tillåtna värden är B<gzip>, B<xz> (Sedan dpkg 1.15.6), B<zstd> (sedan dpkg 1.21.18) och B<none> (förval är B<%DEB_DEFAULT_COMPRESSOR%>).
+Ange vilken komprimeringstyp som ska användas när ett paket byggs (lång flagga sedan dpkg 1.22.9). Tillåtna värden är B<gzip>, B<xz> (Sedan dpkg 1.15.6), B<zstd> (sedan dpkg 1.21.18) och B<none> (förval är B<%DEB_DEFAULT_COMPRESSOR%>).
 
 =item B<--[no-]uniform-compression>
 
@@ -162,9 +162,15 @@ Väljer vilket arkivformat som skal användas i bygget (sedan dpkg 1.17.0). Till
 
 Det gamla arkivformatet är mer svårtolkat av icke-Debianverktyg och är nu utgånget; dess enda användningsområde är för att bygga paket som ska tolkas av versioner av dpkg äldre än 0.93.76 (september 1995), vilka endast släpptes som i386-a.out.
 
-=item B<--nocheck>
+=item B<--no-check>
 
 Förhindrar B<dpkg-deb --build s> normala tester på det föreslagna innehållet i arkivet. Du kan bygga vilket arkiv du än vill, oavsett hur trasigt, på det här sätt.
+
+Flaggan stöds sedan dpkg 1.22.12.
+
+=item B<--nocheck>
+
+Detta är ett alias för B<--no-check>.
 
 =item B<-v>, B<--verbose>
 
@@ -216,6 +222,22 @@ Flaggan B<-z> överstyr denna variabel.
 
 Väljer färgläge (sedan dpkg 1.18.5). För närvarande godtas följande värden: B<auto> (förval), B<always> och B<never>.
 
+=item B<DPKG_NLS>
+
+Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även känt som internationaliseringsstöd (eller i18n) (sedan dpkg 1.22.7). Tillåtna värden är: B<0> och B<1> (förval).
+
+=item B<DPKG_PATH_PASSWD>
+
+Anger sökvägsnamnet för systemets F<passwd>-fil. Sökvägen är relativ till katalogen som angavs med B<--root>. Förval är F</etc/passwd>.
+
+Sedan dpkg 1.22.16.
+
+=item B<DPKG_PATH_GROUP>
+
+Anger sökvägsnamnet för systemets F<group>-fil. Sökvägen är relativ till katalogen som angavs med B<--root>. Förval är F</etc/group>.
+
+Sedan dpkg 1.22.16.
+
 =item B<TMPDIR>
 
 Om satt kommer B<dpkg-deb> att använda det som katalogen där temporära filer och kataloger skapas.
@@ -224,7 +246,7 @@ Om satt kommer B<dpkg-deb> att använda det som katalogen där temporära filer 
 
 Om satt kommer det användas som tidsstämpel (som sekunder sedan epoken) i L<deb(5)>:s L<ar(5)>-behållare och användas för att tvinga mtime i L<tar(5)>-filposterna.
 
-Since dpkg 1.18.8.
+Sedan dpkg 1.18.8.
 
 =back
 

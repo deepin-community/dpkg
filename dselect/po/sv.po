@@ -1,16 +1,16 @@
 # Translation of dselect to Swedish
-# Copyright © 1999-2023 Software in the Public Interest
+# Copyright © 1999-2025 Software in the Public Interest
 # This file is distributed under the same license as the dpkg package.
 #
 # Daniel Nylander <po@danielnylander.se>, 2006.
-# Peter Krefting <peter@softwolves.pp.se>, 1999-2023.
+# Peter Krefting <peter@softwolves.pp.se>, 1999-2025.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dselect 1.22.0\n"
+"Project-Id-Version: dselect 1.22.18\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2024-03-10 20:21+0100\n"
-"PO-Revision-Date: 2023-10-24 18:29+0100\n"
+"POT-Creation-Date: 2025-12-20 02:18+0100\n"
+"PO-Revision-Date: 2025-03-10 18:25+0100\n"
 "Last-Translator: Peter Krefting <peter@softwolves.pp.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 3.38.0\n"
+"X-Generator: Gtranslator 42.0\n"
 
 #: dselect/basecmds.cc
 msgid "Search for ? "
@@ -109,11 +109,16 @@ msgid "%s to go back"
 msgstr "%s återgår"
 
 #: dselect/bindings.cc
+#, fuzzy
+#| msgid "[not bound]"
+msgctxt "keybinding"
 msgid "[not bound]"
 msgstr "[ej funnet]"
 
 #: dselect/bindings.cc
-#, c-format
+#, fuzzy, c-format
+#| msgid "[unk: %d]"
+msgctxt "keybinding"
 msgid "[unk: %d]"
 msgstr "[okänd: %d]"
 
@@ -417,6 +422,41 @@ msgid "Introduction to conflict/dependency resolution sub-list"
 msgstr "Introduktion till konflikt-/beroendehanteringsunderlistan"
 
 #: dselect/helpmsgs.cc
+#, fuzzy
+#| msgid ""
+#| "Dependency/conflict resolution - introduction.\n"
+#| "\n"
+#| "One or more of your choices have raised a conflict or dependency problem "
+#| "-\n"
+#| "some packages should only be installed in conjunction with certain "
+#| "others, and\n"
+#| "some combinations of packages may not be installed together.\n"
+#| "\n"
+#| "You will see a sub-list containing the packages involved.  The bottom "
+#| "half of\n"
+#| "the display shows relevant conflicts and dependencies; use 'i' to cycle "
+#| "between\n"
+#| "that, the package descriptions and the internal control information.\n"
+#| "\n"
+#| "A set of 'suggested' packages has been calculated, and the initial "
+#| "markings in\n"
+#| "this sub-list have been set to match those, so you can just hit Return "
+#| "to\n"
+#| "accept the suggestions if you wish.  You may abort the change(s) which "
+#| "caused\n"
+#| "the problem(s), and go back to the main list, by pressing capital 'X'.\n"
+#| "\n"
+#| "You can also move around the list and change the markings so that they "
+#| "are more\n"
+#| "like what you want, and you can 'reject' my suggestions by using the "
+#| "capital\n"
+#| "'D' or 'R' keys (see the keybindings help screen).  You can use capital "
+#| "'Q' to\n"
+#| "force to accept the situation currently displayed, in case you want to\n"
+#| "override a recommendation or think that the program is mistaken.\n"
+#| "\n"
+#| "Press <space> to leave help and enter the sub-list; remember: press '?' "
+#| "for help.\n"
 msgid ""
 "Dependency/conflict resolution - introduction.\n"
 "\n"
@@ -429,7 +469,7 @@ msgid ""
 "of\n"
 "the display shows relevant conflicts and dependencies; use 'i' to cycle "
 "between\n"
-"that, the package descriptions and the internal control information.\n"
+"that, the package descriptions and the internal package metadata.\n"
 "\n"
 "A set of 'suggested' packages has been calculated, and the initial markings "
 "in\n"
@@ -877,9 +917,10 @@ msgid "<attr> is:"
 msgstr "<attr> är:"
 
 #: dselect/main.cc
-#, c-format
-msgid "couldn't open debug file '%.255s'\n"
-msgstr "kunde inte öppna felsökningsfil ”%.255s”\n"
+#, fuzzy, c-format
+#| msgid "couldn't open debug file '%s'\n"
+msgid "cannot open debug file '%s'\n"
+msgstr "kunde inte öppna felsökningsfil ”%s”\n"
 
 #: dselect/main.cc
 #, c-format
@@ -924,11 +965,19 @@ msgid "terminal lacks necessary features, giving up"
 msgstr "terminalen saknar funktioner som behövs, ger upp"
 
 #: dselect/main.cc
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "\n"
+#| "Move around with ^P and ^N, cursor keys, initial letters, or digits;\n"
+#| "Press <enter> to confirm selection.   ^L redraws screen.\n"
+#| "\n"
 msgid ""
 "\n"
 "\n"
-"Move around with ^P and ^N, cursor keys, initial letters, or digits;\n"
-"Press <enter> to confirm selection.   ^L redraws screen.\n"
+"Move around with Ctrl+P and Ctrl+N, cursor keys, initial letters, or "
+"digits;\n"
+"Press <enter> to confirm selection. Ctrl+L redraws screen.\n"
 "\n"
 msgstr ""
 "\n"
@@ -960,8 +1009,8 @@ msgstr "kunde inte läsa tecken i huvudmenyn"
 
 #: dselect/main.cc
 #, c-format
-msgid "unknown action string '%.50s'"
-msgstr "okänd åtgärdssträng ”%.50s”"
+msgid "unknown action string '%s'"
+msgstr "okänd åtgärdssträng ”%s”"
 
 #: dselect/methlist.cc
 msgid "Abbrev."
@@ -1064,33 +1113,33 @@ msgstr "fråge-/inställningsskript"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "syntax error in method options file '%.250s' -- %s"
-msgstr "syntaxfel i metodflaggfil ”%.250s” -- %s"
+msgid "syntax error in method options file '%s' -- %s"
+msgstr "syntaxfel i metodflaggfil ”%s” -- %s"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "error reading options file '%.250s'"
-msgstr "fel vid läsning av flaggfil ”%.250s”"
+msgid "error reading options file '%s'"
+msgstr "fel vid läsning av flaggfil ”%s”"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to read '%.250s' directory for reading methods"
-msgstr "kunde inte läsa katalogen ”%.250s” för läsning av metoder"
+msgid "unable to read '%s' directory for reading methods"
+msgstr "kunde inte läsa katalogen ”%s” för läsning av metoder"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "method '%.250s' has name that is too long (%d > %d characters)"
-msgstr "metoden ”%.250s” har ett namn som är för långt (%d > %d tecken)"
+msgid "method '%s' has name that is too long (%d > %d characters)"
+msgstr "metoden ”%s” har ett namn som är för långt (%d > %d tecken)"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to access method script '%.250s'"
-msgstr "kunde inte komma åt metodskript ”%.250s”"
+msgid "unable to access method script '%s'"
+msgstr "kunde inte komma åt metodskript ”%s”"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to read method options file '%.250s'"
-msgstr "kunde inte läsa metodflaggfilen ”%.250s”"
+msgid "unable to read method options file '%s'"
+msgstr "kunde inte läsa metodflaggfilen ”%s”"
 
 #: dselect/methparse.cc
 msgid "non-digit where digit wanted"
@@ -1138,38 +1187,23 @@ msgstr "filslut i sammanfattning - radslut saknas"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to open option description file '%.250s'"
-msgstr "kunde inte öppna beskrivningsfil ”%.250s”"
+msgid "cannot load option description file '%s'"
+msgstr "kunde inte läsa flaggbeskrivningsfil ”%s”"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to stat option description file '%.250s'"
-msgstr "kunde inte ta status på beskrivningsfil ”%.250s”"
+msgid "error during read of method options file '%s'"
+msgstr "fel vid läsning av metodvalfil ”%s”"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "failed to read option description file '%.250s'"
-msgstr "kunde inte läsa beskrivningsfil ”%.250s”"
+msgid "unable to open current option file '%s'"
+msgstr "kunde inte öppna aktuell valfil ”%s”"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "error during read of option description file '%.250s'"
-msgstr "fel vid läsning av beskrivningsfil ”%.250s”"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "error during read of method options file '%.250s'"
-msgstr "fel vid läsning av metodvalfil ”%.250s”"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "unable to open current option file '%.250s'"
-msgstr "kunde inte öppna aktuell valfil ”%.250s”"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "unable to write new option to '%.250s'"
-msgstr "kunde inte skriva ny valfil ”%.250s”"
+msgid "unable to write new option to '%s'"
+msgstr "kunde inte skriva ny valfil ”%s”"
 
 #: dselect/pkgdisplay.cc
 msgid "new package"
@@ -1191,10 +1225,6 @@ msgstr "radera"
 msgid "purge"
 msgstr "radera"
 
-#. TRANSLATORS: The space is a trick to work around gettext which uses
-#. * the empty string to store information about the translation. DO NOT
-#. * CHANGE THAT IN A TRANSLATION! The code really relies on that being
-#. * a single space.
 #: dselect/pkgdisplay.cc
 msgid " "
 msgstr " "

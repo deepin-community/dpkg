@@ -7,7 +7,10 @@ CLEANFILES =
 
 nobase_dist_perllib_DATA = \
 	Dpkg/Arch.pm \
+	Dpkg/Archive/Ar.pm \
 	Dpkg/BuildAPI.pm \
+	Dpkg/BuildDriver.pm \
+	Dpkg/BuildDriver/DebianRules.pm \
 	Dpkg/BuildEnv.pm \
 	Dpkg/BuildFlags.pm \
 	Dpkg/BuildInfo.pm \
@@ -15,7 +18,6 @@ nobase_dist_perllib_DATA = \
 	Dpkg/BuildProfiles.pm \
 	Dpkg/BuildTree.pm \
 	Dpkg/BuildTypes.pm \
-	Dpkg/Build/Info.pm \
 	Dpkg/Changelog.pm \
 	Dpkg/Changelog/Debian.pm \
 	Dpkg/Changelog/Entry.pm \
@@ -84,10 +86,12 @@ nobase_dist_perllib_DATA = \
 	Dpkg/Source/Patch.pm \
 	Dpkg/Source/Quilt.pm \
 	Dpkg/Substvars.pm \
+	Dpkg/SysInfo.pm \
 	Dpkg/Vendor.pm \
 	Dpkg/Vendor/Debian.pm \
 	Dpkg/Vendor/Default.pm \
 	Dpkg/Vendor/Devuan.pm \
+	Dpkg/Vendor/PureOS.pm \
 	Dpkg/Vendor/Ubuntu.pm \
 	Dpkg/Version.pm \
 	Dpkg.pm \
@@ -95,10 +99,6 @@ nobase_dist_perllib_DATA = \
 
 EXTRA_DIST += \
 	Test/Dpkg.pm \
-	# EOL
-
-sbin_SCRIPTS = \
-	dpkg-fsys-usrunmess \
 	# EOL
 
 bin_SCRIPTS = \
@@ -124,6 +124,7 @@ bin_SCRIPTS = \
 	# EOL
 
 EXTRA_DIST += \
+	dpkg-ar.pl \
 	dpkg-architecture.pl \
 	dpkg-buildapi.pl \
 	dpkg-buildflags.pl \
@@ -131,7 +132,6 @@ EXTRA_DIST += \
 	dpkg-buildtree.pl \
 	dpkg-checkbuilddeps.pl \
 	dpkg-distaddfile.pl \
-	dpkg-fsys-usrunmess.pl \
 	dpkg-genbuildinfo.pl \
 	dpkg-genchanges.pl \
 	dpkg-gencontrol.pl \
@@ -191,12 +191,8 @@ if BUILD_POD_DOC
 	done
 endif
 
-# Ideally we'd use '$(SED) -i', but unfortunately that's not portable.
 install-data-hook:
-	$(do_perl_subst) <$(DESTDIR)$(perllibdir)/Dpkg.pm \
-	                 >$(DESTDIR)$(perllibdir)/Dpkg.pm.new
-	mv $(DESTDIR)$(perllibdir)/Dpkg.pm.new \
-	   $(DESTDIR)$(perllibdir)/Dpkg.pm
+	$(subst_perl_file) $(DESTDIR)$(perllibdir)/Dpkg.pm
 
 uninstall-local:
 if BUILD_POD_DOC
@@ -252,6 +248,7 @@ test_scripts = \
 	t/Dpkg_Conf.t \
 	t/Dpkg_Deps.t \
 	t/Dpkg_Path.t \
+	t/Dpkg_SysInfo.t \
 	t/Dpkg_Interface_Storable.t \
 	t/Dpkg_OpenPGP_KeyHandle.t \
 	t/Dpkg_OpenPGP.t \
@@ -274,6 +271,7 @@ test_scripts = \
 	t/Dpkg_Dist_Files.t \
 	t/dpkg_source.t \
 	t/dpkg_buildpackage.t \
+	t/dpkg_buildtree.t \
 	t/dpkg_mergechangelogs.t \
 	t/mk.t \
 	# EOL
@@ -323,6 +321,8 @@ test_data = \
 	t/Dpkg_OpenPGP/sign-file-inline.sig \
 	t/Dpkg_OpenPGP/sign-file.asc \
 	t/Dpkg_OpenPGP/sign-file.sig \
+	t/Dpkg_Shlibs/anglebrackets.cpp \
+	t/Dpkg_Shlibs/anglebrackets.symbols \
 	t/Dpkg_Shlibs/basictags.c \
 	t/Dpkg_Shlibs/basictags.symbols \
 	t/Dpkg_Shlibs/ld.so.conf \
@@ -330,6 +330,7 @@ test_data = \
 	t/Dpkg_Shlibs/ld.so.conf.d/normal.conf \
 	t/Dpkg_Shlibs/ld.so.conf.d/recursive.conf \
 	t/Dpkg_Shlibs/ld.so.conf_2 \
+	t/Dpkg_Shlibs/objdump.anglebrackets \
 	t/Dpkg_Shlibs/objdump.basictags-amd64 \
 	t/Dpkg_Shlibs/objdump.basictags-i386 \
 	t/Dpkg_Shlibs/objdump.basictags-mips \
@@ -369,6 +370,8 @@ test_data = \
 	t/Dpkg_Source_Package/package_1.0.orig.tar \
 	t/Dpkg_Source_Package/package_1.0.orig.tar.asc \
 	t/Dpkg_Source_Package/package_1.0.orig.tar.sig \
+	t/Dpkg_Substvars/substvars-impl \
+	t/Dpkg_Substvars/substvars-req \
 	t/Dpkg_Substvars/substvars1 \
 	t/Dpkg_Substvars/substvars2 \
 	t/dpkg_buildpackage/dpkgdb/status \
@@ -384,6 +387,16 @@ test_data = \
 	t/dpkg_buildpackage/test-source_0_full.hook \
 	t/dpkg_buildpackage/test-source_0_source.changes \
 	t/dpkg_buildpackage/test-source_0_source.hook \
+	t/dpkg_buildtree/src-build-api-v0/debian/control \
+	t/dpkg_buildtree/src-build-api-v1/debian/control \
+	t/dpkg_buildtree/src-rrr-binary-targets/debian/control \
+	t/dpkg_buildtree/src-rrr-dpkg-target-binary/debian/control \
+	t/dpkg_buildtree/src-rrr-dpkg-target-custom/debian/control \
+	t/dpkg_buildtree/src-rrr-dpkg-target-subcommand/debian/control \
+	t/dpkg_buildtree/src-rrr-dpkg-unknown-keyword/debian/control \
+	t/dpkg_buildtree/src-rrr-impl-specific-keyword/debian/control \
+	t/dpkg_buildtree/src-rrr-missing/debian/control \
+	t/dpkg_buildtree/src-rrr-no/debian/control \
 	t/dpkg_mergechangelogs/ch-a \
 	t/dpkg_mergechangelogs/ch-b \
 	t/dpkg_mergechangelogs/ch-badver-a \
@@ -430,16 +443,23 @@ EXTRA_DIST += \
 	# EOL
 
 test_data_objects = \
+	t/Dpkg_Shlibs/libobjdump.anglebrackets.so \
 	t/Dpkg_Shlibs/libobjdump.basictags-amd64.so \
 	t/Dpkg_Shlibs/libobjdump.basictags-i386.so \
 	t/Dpkg_Shlibs/libobjdump.basictags-mips.so \
 	t/Dpkg_Shlibs/libobjdump.patterns.so \
 	t/Dpkg_Shlibs/libobjdump.spacesyms.so \
+	t/Dpkg_Shlibs/spacesyms.c \
+	t/Dpkg_Shlibs/spacesyms.o \
 	# EOL
 
 CLEANFILES += \
 	$(test_data_objects) \
 	# EOL
+
+$(srcdir)/t/Dpkg_Shlibs/libobjdump.anglebrackets.so: $(srcdir)/t/Dpkg_Shlibs/anglebrackets.cpp
+	$(CXX) $(CXXFLAGS) -shared -fPIC -Wl,-soname -Wl,libanglebrackets.so.1 \
+	  $< -o $@
 
 $(srcdir)/t/Dpkg_Shlibs/libobjdump.basictags-amd64.so: $(srcdir)/t/Dpkg_Shlibs/basictags.c
 	$(CC) $(CFLAGS) -shared -fPIC -Wl,-soname -Wl,libbasictags.so.1 $< \
@@ -474,6 +494,8 @@ $(srcdir)/t/Dpkg_Shlibs/libobjdump.spacesyms.so: $(srcdir)/t/Dpkg_Shlibs/spacesy
 OBJDUMP = objdump -w -f -p -T -R
 
 refresh-test-data: $(test_data_objects)
+	$(OBJDUMP) $(srcdir)/t/Dpkg_Shlibs/libobjdump.anglebrackets.so \
+	  >$(srcdir)/t/Dpkg_Shlibs/objdump.anglebrackets
 	$(OBJDUMP) $(srcdir)/t/Dpkg_Shlibs/libobjdump.basictags-amd64.so \
 	  >$(srcdir)/t/Dpkg_Shlibs/objdump.basictags-amd64
 	$(OBJDUMP) $(srcdir)/t/Dpkg_Shlibs/libobjdump.basictags-i386.so \
@@ -484,7 +506,7 @@ refresh-test-data: $(test_data_objects)
 	  >$(srcdir)/t/Dpkg_Shlibs/objdump.patterns
 	$(OBJDUMP) $(srcdir)/t/Dpkg_Shlibs/libobjdump.spacesyms.so \
 	  >$(srcdir)/t/Dpkg_Shlibs/objdump.spacesyms
-	$(OBJDUMP) `which ls` >$(srcdir)/t/Dpkg_Shlibs/objdump.ls
+	$(OBJDUMP) `command -v ls` >$(srcdir)/t/Dpkg_Shlibs/objdump.ls
 
 include $(top_srcdir)/build-aux/tap.am
 

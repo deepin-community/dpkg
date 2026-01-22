@@ -36,7 +36,10 @@
 #include <dpkg/dpkg.h>
 #include <dpkg/subproc.h>
 
-static int signo_ignores[] = { SIGQUIT, SIGINT };
+static int signo_ignores[] = {
+	SIGQUIT,
+	SIGINT,
+};
 static struct sigaction sa_save[array_count(signo_ignores)];
 
 static void
@@ -54,7 +57,7 @@ subproc_set_signal(int sig, struct sigaction *sa, struct sigaction *sa_old,
                    const char *name)
 {
 	if (sigaction(sig, sa, sa_old))
-		ohshite(_("unable to ignore signal %s before running %.250s"),
+		ohshite(_("unable to ignore signal %s before running %s"),
 		        strsignal(sig), name);
 }
 
@@ -104,7 +107,7 @@ subproc_fork(void)
 	pid_t pid;
 
 	pid = fork();
-	if (pid == -1) {
+	if (pid < 0) {
 		onerr_abort++;
 		ohshite(_("fork failed"));
 	}
@@ -136,7 +139,7 @@ subproc_check(int status, const char *desc, enum subproc_flags flags)
 		if (flags & SUBPROC_RETERROR)
 			return n;
 
-		out(_("%s subprocess returned error exit status %d"), desc, n);
+		out(_("%s subprocess failed with exit status %d"), desc, n);
 	} else if (WIFSIGNALED(status)) {
 		n = WTERMSIG(status);
 		if (!n)
@@ -169,7 +172,8 @@ subproc_wait(pid_t pid, const char *desc)
 	pid_t dead_pid;
 	int status;
 
-	while ((dead_pid = waitpid(pid, &status, 0)) == -1 && errno == EINTR) ;
+	while ((dead_pid = waitpid(pid, &status, 0)) < 0 && errno == EINTR)
+		;
 
 	if (dead_pid != pid) {
 		onerr_abort++;

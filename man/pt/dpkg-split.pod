@@ -126,11 +126,7 @@ quando faz fila ou remontagem automática o B<dpkg-split> geralmente escreve uma
 
 =item B<--msdos>
 
-Impõe que os nomes de ficheiros gerados pelo B<--split> sejam compatíveis com MSDOS.
-
-Isto mutila o prefixo - ou a predefinição derivada do nome de ficheiro introduzido ou aquele fornecido como um argumento: alfanuméricos são minúsculas, sinais mais são substituídos por B<x>s e todos os outros caracteres são descartados.
-
-O resultado é então truncado o quanto necessário, e são gerados nomes de ficheiros no formato I<prefixoN>B<de>I<M>B<.deb>.
+Obsolete option without effect (since dpkg 1.23.0).
 
 =back
 
@@ -172,11 +168,15 @@ Define a máscara de depuração (desde dpkg 1.21.10) a partir dum valor octal. 
 
 Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B<auto> (predefinido), B<always> e B<never>.
 
+=item B<DPKG_NLS>
+
+Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nativa. Também como conhecido como suporte de internacionalização (ou i18n) (desde dpkg 1.22.7). Os valores aceites são B<0> e B<1> (predefinição).
+
 =item B<SOURCE_DATE_EPOCH>
 
 Se definido, irá ser usado como marca temporal (como segundos desde a época) no contentor L<ar(5)> de L<deb-split(5)>.
 
-Since dpkg 1.18.11.
+Desde dpkg 1.18.11.
 
 =back
 

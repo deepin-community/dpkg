@@ -54,13 +54,53 @@ is rescanned to look for more substitutions.
 =head2 File Syntax
 
 Substitution variables can be specified in a file.
-These files consist of lines of the form I<name>B<=>I<value> or
-I<name>B<?=>I<value>.
-The B<=> operator assigns a normal substitution variable, while the B<?=>
-operator (since dpkg 1.21.8) assigns an optional substitution variable
-which will emit no warnings even if unused.
+These files consist of lines with variable assignments,
+that start with the variable name,
+immediately followed by an assignment operator,
+and then the value.
+Each operator gives the variable specific attributes.
 Trailing whitespace on each line, blank lines, and lines starting with a
 B<#> symbol (comments) are ignored.
+
+The following operators are supported:
+
+=over
+
+=item B<=>
+
+Assigns a normal substitution variable.
+
+=item B<?=>
+
+Assigns an optional substitution variable which will emit no warnings
+even if unused.
+
+Supported since dpkg 1.21.8.
+
+=item B<!=>
+
+Assigns a required substitution variable which will error out if unused.
+
+Supported since dpkg 1.22.7.
+
+=item B<$=>
+
+Assigns an implicit substitution variable which will get automatically
+instantiated as a field,
+if that field is not defined for B<.dsc> and B<.deb> control files.
+
+The variable name needs to be formed as a namespace followed by
+a colon (‘B<:>’) and then the field name,
+such as B<tool:Depends>.
+All implicit variables for any namespace matching the same field
+will get concatenated using a known field separator,
+or a space if the field separator is unknown.
+
+Supported since dpkg 1.23.0.
+
+=back
+
+For example C<some-package:Depends?=other-package (= 1.0), the-package>.
 
 =head2 Substitution
 

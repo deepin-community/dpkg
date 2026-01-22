@@ -232,6 +232,8 @@ Pakketinformatie kan ingevoegd worden door variabeleverwijzingen naar pakketveld
 
 =item B<Description>
 
+=item B<Description-md5> (intern, frontend gerelateerd)
+
 =item B<Enhances>
 
 =item B<Protected>
@@ -246,9 +248,9 @@ Pakketinformatie kan ingevoegd worden door variabeleverwijzingen naar pakketveld
 
 =item B<MD5sum> (intern, frontend gerelateerd)
 
-=item B<MSDOS-Filename> (intern, frontend gerelateerd)
-
 =item B<Maintainer>
+
+=item B<Multi-Arch>
 
 =item B<Origin>
 
@@ -267,6 +269,12 @@ Pakketinformatie kan ingevoegd worden door variabeleverwijzingen naar pakketveld
 =item B<Revision> (verouderd)
 
 =item B<Section>
+
+=item B<SHA1> (intern, frontend gerelateerd)
+
+=item B<SHA256> (intern, frontend gerelateerd)
+
+=item B<SHA512> (intern, frontend gerelateerd)
 
 =item B<Size> (intern, frontend gerelateerd)
 
@@ -383,7 +391,9 @@ Stelt het uit te voeren programma in wanneer een commando via een shell voortgeb
 
 =item B<DPKG_PAGER>
 
-Stelt het te gebruiken pagineringscommando in (sinds dpkg 1.19.1), hetwelk uitgevoerd zal worden met «B<$SHELL -c>». Indien B<SHELL> niet ingesteld is, zal «B<%DPKG_DEFAULT_SHELL%>» gebruikt worden. B<DPKG_PAGER> overschrijft de omgevingsvariabele B<PAGER> (sinds dpkg 1.19.2).
+Stelt het te gebruiken pagineringscommando in (sinds dpkg 1.19.1), hetwelk uitgevoerd zal worden met «B<$SHELL -c>». Indien B<SHELL> niet ingesteld is, zal «B<%DPKG_DEFAULT_SHELL%>» gebruikt worden.
+
+The B<DPKG_PAGER> overrides the B<PAGER> environment variable (since dpkg 1.19.2).  If none of the programs pointed by B<DPKG_PAGER> or B<PAGER> are present, the following programs will be tried in order (since dpkg 1.22.12): the default pager B<%DPKG_DEFAULT_PAGER%>, then L<less(1)>, L<more(1)>, and finally L<cat(1)>.
 
 =item B<DPKG_ROOT>
 
@@ -400,6 +410,10 @@ Stelt het foutopsporingsmasker in (sinds dpkg 1.21.10) vanaf een octale waarde. 
 =item B<DPKG_COLORS>
 
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen worden zijn: B<auto> (standaard), B<always> en B<never>.
+
+=item B<DPKG_NLS>
+
+Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het activeren van moedertaalondersteuning, ook gekend als internationaliseringsondersteuning (of i18n) (sinds dpkg 1.22.7). Geldige waarden zijn: B<0> and B<1> (standaard).
 
 =back
 

@@ -158,9 +158,23 @@ Não verifica assinaturas nem sumários de verificação antes de desempacotar d
 
 Não sobrepõe o directório de extração se este já existir (desde dpkg 1.18.8).
 
+=item B<--no-vendor-certs>
+
+Do not use the vendor specific certificate keyrings.
+
+Supported since dpkg 1.23.0.
+
+=item B<--signer-certs=>I<keyring>
+
+Use this I<keyring> containing signer certificates during signature verification of source packages.
+
+The option may be repeated multiple times to add multiple keyrings.
+
+Supported since dpkg 1.23.0.
+
 =item B<--require-valid-signature>
 
-Recusa-se a desempacotar um pacote fonte se este não conter uma assinatura OpenPGP que possa ser verificada (desde dpkg 1.15.0) seja com o chaveiro I<trustedkeys.gpg> do utilizador, com um chaveiro específico do fornecedor, ou um dos chaveiros oficiais Debian (I</usr/share/keyrings/debian-keyring.gpg>, I</usr/share/keyrings/debian-nonupload.gpg> e I</usr/share/keyrings/debian-maintainers.gpg>).
+Refuse to unpack the source package if it doesn't contain an OpenPGP signature that can be verified (since dpkg 1.15.0) either with the user supplied B<--signer-certs> keyrings, or one of the vendor-specific keyrings, including any parent vendor keyrings if relevant.
 
 =item B<--require-strong-checksums>
 
@@ -193,6 +207,8 @@ Se você não sabe que formato de fonte usar, deve provavelmente escolher entre 
 =head2 Formato: 1.0
 
 Um pacote fonte neste formato consiste ou de um B<.orig.tar.gz> associado a um B<.diff.gz> ou de um único B<.tar.gz> (nesse caso diz-se que o pacote é I<nativo>). Opcionalmente o tarball origina pode estar acompanhado de uma assinatura separada do autor B<.orig.tar.gz.asc>, extração suportada desde dpkg 1.18.5.
+
+B<Note>: On some vendors, dpkg has been made to permit native sources with non-native versions, making this incoherent and adding to the confusion of the concept, where in addition this tends to be a trap for accidental mistakes.
 
 B<Extracting>
 
@@ -286,13 +302,15 @@ Quando se constrói um novo pacote fonte, qualquer alteração na fonte do autor
 
 Suportado desde dpkg 1.14.17. Este formato é uma extensão do formato de pacote nativo como definido no formato 1.0. Suporta todos os métodos de compressão e irá ignorar por predefinição quaisquer ficheiros específicos de VCS e directórios também assim como muitos ficheiros temporários (veja valor predefinido associado à opção B<-I> no resultado de B<--help>).
 
+B<Note>: On some vendors, dpkg has been made to permit native sources with non-native versions, making this incoherent and adding to the confusion of the concept, where in addition this tends to be a trap for accidental mistakes.
+
 =head2 Formato: 3.0 (quilt)
 
-Suportado desde dpkg 1.14.17.  Um pacote fonte neste formato contém pelo menos um tarball original (B<.orig.tar.>I<ext> onde I<ext> pode ser B<gz>, B<bz2>, B<lzma> e B<xz>) e um tarball debian (B<.debian.tar.>I<ext>). Também pode conter tarballs originais adicionais (B<.orig->I<component>B<.tar.>I<ext>).  I<component> pode apenas conter caracteres alfanuméricos (‘a-zA-Z0-9’) e hífens (‘-’). Opcionalmente cada tarball original pode ser acompanhado por uma assinatura em separado do autor (B<.orig.tar.>I<ext>B<.asc> e B<.orig->I<component>B<.tar.>I<ext>B<.asc>), extração suportada desde dpkg 1.17.20, compilação suportada desde dpkg 1.18.5.
+Supported since dpkg 1.14.17.  A source package in this format contains at least an original tarball (B<.orig.tar.>I<ext> where I<ext> can be B<gz>, B<bz2>, B<lzma> and B<xz>) and a debian tarball (B<.debian.tar.>I<ext>).  It can also contain additional original tarballs (B<.orig->I<addon>B<.tar.>I<ext>).  I<addon> can only contain alphanumeric (‘a-zA-Z0-9’) characters and hyphens (‘-’).  Optionally each original tarball can be accompanied by a detached upstream signature (B<.orig.tar.>I<ext>B<.asc> and B<.orig->I<addon>B<.tar.>I<ext>B<.asc>), extraction supported since dpkg 1.17.20, building supported since dpkg 1.18.5.
 
 B<Extracting>
 
-O tarball original principal é extraído primeiro, depois todos os tarballs originais adicionais são extraídos em sub-directórios nomeados após a parte I<component> do seu nome de ficheiro (qualquer directório pré-existente é substituído). O tarball debian é extraído no topo do directório fonte após a pré remoção de qualquer directório B<debian> pré-existente mas pode também conter ficheiros binários fora desse directório (veja a opção B<--include-binaries>).
+The main original tarball is extracted first, then all additional original tarballs are extracted in subdirectories named after the I<addon> part of their filename (any pre-existing directory is replaced).  The debian tarball is extracted on top of the source directory after prior removal of any pre-existing B<debian> directory.  Note that the debian tarball must contain a B<debian> sub-directory but it can also contain binary files outside of that directory (see B<--include-binaries> option).
 
 Todas as patches listadas em B<debian/patches/>I<vendor>B<.series> ou B<debian/patches/series> são então aplicadas, onde I<vendor> será o nome em minúsculas do fornecedor actual, ou B<debian> se não existir um fornecedor definido. Se o ficheiro anterior for usado e o posterior não existir (ou for um link simbólico), então o posterior é substituído por um link simbólico para o antigo. Isto destina-se a simplificar a utilização de B<quilt> para gerir o conjunto de patches. Ficheiros de séries especificas-de-fornecedor destinam-se a tornar possível a criação de séries de múltiplos ramos de desenvolvimento baseados no fornecedor, num modo declarativo, dando preferência a codificação-aberta deste manuseamento em B<debian/rules>. Isto é particularmente útil quando a fonte precisa de receber uma patch condicionalmente porque os ficheiros afectados não possuem suporte a oclusão condicional embutido. Note no entanto que enquanto B<dpkg-source> analisa correctamente ficheiros de séries com opções explícitas usadas para aplicar patch a aplicação (armazenada em cada linha antes do nome de ficheiro de patch e um ou mais espaços), ele ignora essas opções e espera sempre que as patches possam ser aplicadas com a opção B<-p1> ou B<patch>. Irá portanto emitir um aviso quando encontra tais opções, e é provável que a compilação falhe.
 
@@ -498,7 +516,7 @@ Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nati
 
 Se definido, será usado como marca temporal (em segundos desde a época) para engatar o mtime nas entradas do ficheiro L<tar(5)>.
 
-Since dpkg 1.18.11.
+Desde dpkg 1.18.11.
 
 =item B<VISUAL>
 

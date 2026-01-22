@@ -25,7 +25,7 @@
 #include <sys/types.h>
 
 #include <fcntl.h>
-#if HAVE_LOCALE_H
+#ifdef HAVE_LOCALE_H
 #include <locale.h>
 #endif
 #include <string.h>
@@ -86,7 +86,7 @@ usage(const char *const *argv)
 "                                     by dpkg).\n"
 "  --await                          Package needs to await the processing.\n"
 "  --no-await                       No package needs to await the processing.\n"
-"  --no-act                         Just test - don't actually change anything.\n"
+"  --no-act                         Just test - do not actually change anything.\n"
 "\n"), ADMINDIR, "/");
 
 	m_output(stdout, _("<standard output>"));
@@ -94,7 +94,7 @@ usage(const char *const *argv)
 	return 0;
 }
 
-static int opt_noact;
+static int opt_act = 1;
 static int opt_await = 1;
 static const char *opt_bypackage;
 
@@ -146,6 +146,7 @@ tdm_add_trig_begin(const char *trig)
 	trigdef_update_printf("%s", trig);
 	if (!ctrig || done_trig)
 		return;
+
 	yespackage(opt_bypackage);
 	done_trig = true;
 }
@@ -155,6 +156,7 @@ tdm_add_package(const char *awname)
 {
 	if (ctrig && strcmp(awname, opt_bypackage) == 0)
 		return;
+
 	yespackage(awname);
 }
 
@@ -182,19 +184,19 @@ do_trigger(const char *const *argv)
 
 	badname = parse_awaiter_package();
 	if (badname)
-		badusage(_("illegal awaited package name '%.250s': %.250s"),
+		badusage(_("invalid awaited package name '%s': %s"),
 		         opt_bypackage, badname);
 
 	activate = argv[0];
-	badname = trig_name_is_illegal(activate);
+	badname = trig_name_is_invalid(activate);
 	if (badname)
-		badusage(_("invalid trigger name '%.250s': %.250s"),
+		badusage(_("invalid trigger name '%s': %s"),
 		         activate, badname);
 
 	trigdef_set_methods(&tdm_add);
 
 	tduf = TDUF_NO_LOCK_OK;
-	if (!opt_noact)
+	if (opt_act)
 		tduf |= TDUF_WRITE | TDUF_WRITE_IF_EMPTY;
 	tdus = trigdef_update_start(tduf);
 	if (tdus >= 0) {
@@ -244,7 +246,7 @@ static const struct cmdinfo cmdinfos[] = {
 	{ "by-package",      'f', 1, NULL,       &opt_bypackage },
 	{ "await",           0,   0, &opt_await, NULL,       NULL, 1 },
 	{ "no-await",        0,   0, &opt_await, NULL,       NULL, 0 },
-	{ "no-act",          0,   0, &opt_noact, NULL,       NULL, 1 },
+	{ "no-act",          0,   0, &opt_act,   NULL,       NULL, 0 },
 	{  NULL  }
 };
 
@@ -257,7 +259,8 @@ main(int argc, const char *const *argv)
 	dpkg_program_init("dpkg-trigger");
 	dpkg_options_parse(&argv, cmdinfos, printforhelp);
 
-	debug(dbg_general, "root=%s admindir=%s", dpkg_fsys_get_dir(), dpkg_db_get_dir());
+	debug(dbg_general, "root=%s admindir=%s",
+	      dpkg_fsys_get_dir(), dpkg_db_get_dir());
 
 	if (!cipaction)
 		setaction(&cmdinfo_trigger, NULL);

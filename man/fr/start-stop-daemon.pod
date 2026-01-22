@@ -40,7 +40,7 @@ Vérifier aussi l'existence d'un processus particulier. Quand un tel processus e
 
 =item B<-T>, B<--status>
 
-Contrôle l'existence du processus indiqué et sort avec un code de sortie défini par les actions des scripts d'initialisation de la LSB S<(« LSB> Init Script S<Actions »> – depuis la version 1.16.1).
+Contrôle l'existence du processus indiqué et sort avec un code de sortie défini par les actions des scripts d'initialisation de la LSB (« LSB Init Script Actions » – depuis la version 1.16.1).
 
 =item B<-H>, B<--help>
 
@@ -64,7 +64,7 @@ Vérifie l'existence d'un processus avec le I<pid> spécifié (depuis la version
 
 =item [B<--ppid>] I<pid parent>
 
-Vérifie l'existence d'un processus avec le pid parent I<pid-parent> spécifié (depuis la version 1.17.7). Le I<pid-parent> doit avoir un numéro supérieur S<à 0.>
+Vérifie l'existence d'un processus avec le pid parent I<pid-parent> spécifié (depuis la version 1.17.7). Le I<pid-parent> doit avoir un numéro supérieur à 0.
 
 =item B<-p>, B<--pidfile> I<fichier-pid>
 
@@ -104,7 +104,7 @@ Modifie le I<groupe> ou le I<gid> au début du processus.
 
 =item B<-s>, B<--signal> I<signal>
 
-L'action B<--stop> définit le signal à envoyer au processus qui doit être arrêté (par S<défaut :> TERM).
+L'action B<--stop> définit le signal à envoyer au processus qui doit être arrêté (par défaut : TERM).
 
 =item B<-R>, B<--retry> I<durée>|I<action-prévue>
 
@@ -138,7 +138,7 @@ Change to this username/uid before starting the process.  You can also specify a
 
 =item B<-r>, B<--chroot> I<root>
 
-Change de répertoire racine pour B<root> avant de lancer le processus. Remarquez que le S<« pidfile »> est aussi écrit après le changement de racine.
+Change de répertoire racine pour B<root> avant de lancer le processus. Remarquez que le « pidfile » est aussi écrit après le changement de racine.
 
 =item B<-d>, B<--chdir> I<chemin>
 
@@ -146,7 +146,7 @@ Change de répertoire pour I<chemin> avant de commencer le processus. Cela est f
 
 =item B<-b>, B<--background>
 
-Utilisé généralement pour les programmes qui ne S<« se> S<détachent »> pas d'eux-mêmes. Cette option oblige B<start-stop-daemon> à se dupliquer (fork) avant de lancer le processus, et l'oblige à passer en arrière-plan.
+Utilisé généralement pour les programmes qui ne « se détachent » pas d'eux-mêmes. Cette option oblige B<start-stop-daemon> à se dupliquer (fork) avant de lancer le processus, et l'oblige à passer en arrière-plan.
 
 B<Warning>: B<start-stop-daemon> cannot check the exit status if the process fails to execute for B<any> reason.  This is a last resort, and is only meant for programs that either make no sense forking on their own, or where it's not feasible to add the code for them to do this themselves.
 
@@ -188,13 +188,13 @@ Cela modifie la priorité du processus avant qu'il ne soit lancé.
 
 =item B<-P>, B<--procsched> I<politique>B<:>I<priorité>
 
-Modifie la politique du programmateur de processus S<(« process> scheduler S<policy »)> et la priorité du processus avant de le démarrer (depuis la version 1.15.0). La priorité peut être indiquée de manière facultative avec B<:> suivi de la valeur souhaitée. La I<priorité> par défaut est 0. Les valeurs de politiques actuellement gérées sont B<other>, B<fifo> et B<rr>.
+Modifie la politique du programmateur de processus (« process scheduler policy ») et la priorité du processus avant de le démarrer (depuis la version 1.15.0). La priorité peut être indiquée de manière facultative avec B<:> suivi de la valeur souhaitée. La I<priorité> par défaut est 0. Les valeurs de politiques actuellement gérées sont B<other>, B<fifo> et B<rr>.
 
 Cette option peut ne rien faire sur certains système où la programmation des processus de POSIX n'est pas prise en charge.
 
 =item B<-I>, B<--iosched> I<classe>B<:>I<priorité>
 
-Modifie la classe du programmateur d'entrée/sortie S<(« IO> S<scheduler »)> et la priorité du processus avant de le démarrer (depuis la version 1.15.0). La priorité peut être indiquée de manière facultative avec B<:> suivi de la valeur souhaitée. La I<priorité> par défaut est 4, sauf si I<classe> est B<idle>, auquel cas I<priorité> sera toujours égale à 7. Les valeurs de I<classe> actuellement gérées sont B<idle>, B<best-effort> et B<real-time>.
+Modifie la classe du programmateur d'entrée/sortie (« IO scheduler ») et la priorité du processus avant de le démarrer (depuis la version 1.15.0). La priorité peut être indiquée de manière facultative avec B<:> suivi de la valeur souhaitée. La I<priorité> par défaut est 4, sauf si I<classe> est B<idle>, auquel cas I<priorité> sera toujours égale à 7. Les valeurs de I<classe> actuellement gérées sont B<idle>, B<best-effort> et B<real-time>.
 
 Cette option peut ne rien faire sur certains système où la programmation d'entrée/sortie de Linux n'est pas prise en charge.
 
@@ -204,13 +204,13 @@ Cela modifie le masque utilisateur du processus avant qu'il ne soit lancé (depu
 
 =item B<-m>, B<--make-pidfile>
 
-Utilisé lors du lancement d'un programme qui ne crée pas son propre fichier identificateur S<« pid ».> Cette option indique à B<start-stop-daemon> de créer le fichier référencé par B<--pidfile> et placer le S<« pid »> dans ce fichier juste avant d'exécuter le processus. Il faut remarquer que ce fichier ne sera supprimé quand le programme s'arrête que si B<--remove-pidfile> est utilisé.
+Utilisé lors du lancement d'un programme qui ne crée pas son propre fichier identificateur « pid ». Cette option indique à B<start-stop-daemon> de créer le fichier référencé par B<--pidfile> et placer le « pid » dans ce fichier juste avant d'exécuter le processus. Il faut remarquer que ce fichier ne sera supprimé quand le programme s'arrête que si B<--remove-pidfile> est utilisé.
 
 B<Note>: This feature may not work in all cases.  Most notably when the program being executed forks from its main process.  Because of this, it is usually only useful when combined with the B<--background> option.
 
 =item B<--remove-pidfile>
 
-Utilisé lors de l'arrêt d'un programme qui ne supprime pas lui-même son fichier identificateur S<« pid »> (depuis la version 1.17.19). Cette option indique à B<start-stop-daemon> de supprimer le fichier référencé par B<--pid-file> après l'arrêt du processus.
+Utilisé lors de l'arrêt d'un programme qui ne supprime pas lui-même son fichier identificateur « pid » (depuis la version 1.17.19). Cette option indique à B<start-stop-daemon> de supprimer le fichier référencé par B<--pid-file> après l'arrêt du processus.
 
 =item B<-v>, B<--verbose>
 
@@ -240,7 +240,7 @@ Toute autre erreur.
 
 =back
 
-Lorsque la commande B<--status> est utilisée, les codes d'état suivants sont S<renvoyés :>
+Lorsque la commande B<--status> est utilisée, les codes d'état suivants sont renvoyés :
 
 =over 
 
@@ -264,7 +264,7 @@ Impossible de déterminer l'état du programme.
 
 =head1 EXEMPLE
 
-Démarre le démon B<food>, à moins qu'il soit déjà en cours d'exécution (un processus nommé B<food>, tournant sous le nom d'utilisateur B<food>, avec un pid dans S<food.pid) :>
+Démarre le démon B<food>, à moins qu'il soit déjà en cours d'exécution (un processus nommé B<food>, tournant sous le nom d'utilisateur B<food>, avec un pid dans food.pid) :
 
 =over 
 
@@ -274,7 +274,7 @@ Démarre le démon B<food>, à moins qu'il soit déjà en cours d'exécution (un
 
 =back
 
-Envoie le signal B<SIGTERM> à B<food> et attend durant 5 secondes son S<arrêt :>
+Envoie le signal B<SIGTERM> à B<food> et attend durant 5 secondes son arrêt :
 
 =over 
 
@@ -283,7 +283,7 @@ Envoie le signal B<SIGTERM> à B<food> et attend durant 5 secondes son S<arrêt 
 
 =back
 
-Démonstration d'un ordonnanceur personnalisé pour l'arrêt de S<B<food> :>
+Démonstration d'un ordonnanceur personnalisé pour l'arrêt de B<food> :
 
 =over 
 

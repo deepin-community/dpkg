@@ -186,7 +186,7 @@ List paths for control files installed to your system from I<package-name>
 If I<control-file> is specified then only list the path for that control
 file if it is present.
 
-B<Warning>: this command is deprecated as it gives direct access to the
+B<Warning>: This command is deprecated as it gives direct access to the
 internal dpkg database, please switch to use B<--control-list> and
 B<--control-show> instead for all cases where those commands might
 give the same end result.
@@ -336,6 +336,8 @@ fields or fields stored in the binary package end up in it):
 
 =item B<Description>
 
+=item B<Description-md5> (internal, front-end related)
+
 =item B<Enhances>
 
 =item B<Protected>
@@ -350,9 +352,9 @@ fields or fields stored in the binary package end up in it):
 
 =item B<MD5sum> (internal, front-end related)
 
-=item B<MSDOS-Filename> (internal, front-end related)
-
 =item B<Maintainer>
+
+=item B<Multi-Arch>
 
 =item B<Origin>
 
@@ -371,6 +373,12 @@ fields or fields stored in the binary package end up in it):
 =item B<Revision> (obsolete)
 
 =item B<Section>
+
+=item B<SHA1> (internal, front-end related)
+
+=item B<SHA256> (internal, front-end related)
+
+=item B<SHA512> (internal, front-end related)
 
 =item B<Size> (internal, front-end related)
 
@@ -519,8 +527,15 @@ Sets the program to execute when spawning a command via a shell
 Sets the pager command to use (since dpkg 1.19.1), which will be executed
 with «B<$SHELL -c>».
 If B<SHELL> is not set, «B<%DPKG_DEFAULT_SHELL%>» will be used instead.
+
 The B<DPKG_PAGER> overrides the B<PAGER> environment variable
 (since dpkg 1.19.2).
+If none of the programs pointed by B<DPKG_PAGER> or B<PAGER> are present,
+the following programs will be tried in order (since dpkg 1.22.12):
+the default pager B<%DPKG_DEFAULT_PAGER%>,
+then L<less(1)>,
+L<more(1)>,
+and finally L<cat(1)>.
 
 =item B<DPKG_ROOT>
 
@@ -543,6 +558,12 @@ but not all these flags might have an effect on this program.
 Sets the color mode (since dpkg 1.18.5).
 The currently accepted values are: B<auto> (default), B<always> and
 B<never>.
+
+=item B<DPKG_NLS>
+
+If set, it will be used to decide whether to activate Native Language Support,
+also known as internationalization (or i18n) support (since dpkg 1.22.7).
+The accepted values are: B<0> and B<1> (default).
 
 =back
 

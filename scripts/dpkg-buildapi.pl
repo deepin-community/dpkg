@@ -17,8 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use warnings;
-use strict;
+use v5.36;
 
 use Dpkg ();
 use Dpkg::Gettext;
@@ -28,12 +27,12 @@ use Dpkg::Control::Info;
 
 textdomain('dpkg-dev');
 
-sub version()
+sub version
 {
     printf(g_("Debian %s version %s.\n"), $Dpkg::PROGNAME, $Dpkg::PROGVERSION);
 }
 
-sub usage()
+sub usage
 {
     printf g_(
 'Usage: %s [<option>...] [<command>]')
@@ -71,5 +70,3 @@ while (@ARGV) {
 my $ctrl = Dpkg::Control::Info->new($controlfile);
 
 print get_build_api($ctrl) . "\n";
-
-0;

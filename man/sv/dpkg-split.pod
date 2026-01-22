@@ -126,11 +126,7 @@ Vid automatisk köa-eller-sammanslå skriver B<dpkg-split> normalt ett meddeland
 
 =item B<--msdos>
 
-Tvingar utdatafilnamn skapade av B<--split> att vara MSDOS-kompatibla.
-
-Misshandlar prefixet - antingen förvalet taget från indatafilnamnet, eller det som angetts som argument: alfanumeriska tecken görs till gemener, plustecken ersätts med B<x> och alla andra tecken kastas.
-
-Resultatet trunkeras så långt som möjligt, och filnamn på formen I<prefixN>B<of>I<M>B<.deb> genereras.
+Obsolete option without effect (since dpkg 1.23.0).
 
 =back
 
@@ -172,11 +168,15 @@ Anger felsökningsmasken (sedan dpkg 1.21.10) från ett oktalt värde. De flaggo
 
 Väljer färgläge (sedan dpkg 1.18.5). För närvarande godtas följande värden: B<auto> (förval), B<always> och B<never>.
 
+=item B<DPKG_NLS>
+
+Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även känt som internationaliseringsstöd (eller i18n) (sedan dpkg 1.22.7). Tillåtna värden är: B<0> och B<1> (förval).
+
 =item B<SOURCE_DATE_EPOCH>
 
 Om satt kommer det användas som tidsstämpel (som sekunder sedan epoken) i L<deb-split(5)>:s L<ar(5)>-behållare.
 
-Since dpkg 1.18.11.
+Sedan dpkg 1.18.11.
 
 =back
 

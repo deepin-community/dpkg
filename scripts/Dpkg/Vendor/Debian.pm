@@ -1,5 +1,5 @@
 # Copyright © 2009-2011 Raphaël Hertzog <hertzog@debian.org>
-# Copyright © 2009, 2011-2017 Guillem Jover <guillem@debian.org>
+# Copyright © 2009-2024 Guillem Jover <guillem@debian.org>
 #
 # Hardening build flags handling derived from work of:
 # Copyright © 2009-2011 Kees Cook <kees@debian.org>
@@ -35,8 +35,7 @@ B<Note>: This is a private module, its API can change at any time.
 
 package Dpkg::Vendor::Debian 0.01;
 
-use strict;
-use warnings;
+use v5.36;
 
 use List::Util qw(any none);
 
@@ -51,13 +50,14 @@ sub run_hook {
     my ($self, $hook, @params) = @_;
 
     if ($hook eq 'package-keyrings') {
-        return ('/usr/share/keyrings/debian-keyring.gpg',
-                '/usr/share/keyrings/debian-nonupload.gpg',
-                '/usr/share/keyrings/debian-maintainers.gpg');
+        return ('/usr/share/keyrings/debian-keyring.pgp',
+                '/usr/share/keyrings/debian-tag2upload.pgp',
+                '/usr/share/keyrings/debian-nonupload.pgp',
+                '/usr/share/keyrings/debian-maintainers.pgp');
     } elsif ($hook eq 'archive-keyrings') {
-        return ('/usr/share/keyrings/debian-archive-keyring.gpg');
+        return ('/usr/share/keyrings/debian-archive-keyring.pgp');
     } elsif ($hook eq 'archive-keyrings-historic') {
-        return ('/usr/share/keyrings/debian-archive-removed-keys.gpg');
+        return ('/usr/share/keyrings/debian-archive-removed-keys.pgp');
     } elsif ($hook eq 'builtin-build-depends') {
         return qw(build-essential:native);
     } elsif ($hook eq 'builtin-build-conflicts') {
@@ -65,18 +65,18 @@ sub run_hook {
     } elsif ($hook eq 'register-custom-fields') {
     } elsif ($hook eq 'extend-patch-header') {
         my ($textref, $ch_info) = @params;
-	if ($ch_info->{'Closes'}) {
-	    foreach my $bug (split(/\s+/, $ch_info->{'Closes'})) {
-		$$textref .= "Bug-Debian: https://bugs.debian.org/$bug\n";
-	    }
-	}
+        if ($ch_info->{'Closes'}) {
+            foreach my $bug (split(/\s+/, $ch_info->{'Closes'})) {
+                $$textref .= "Bug-Debian: https://bugs.debian.org/$bug\n";
+            }
+        }
 
-	# XXX: Layer violation...
-	require Dpkg::Vendor::Ubuntu;
-	my $b = Dpkg::Vendor::Ubuntu::find_launchpad_closes($ch_info->{'Changes'});
-	foreach my $bug (@$b) {
-	    $$textref .= "Bug-Ubuntu: https://bugs.launchpad.net/bugs/$bug\n";
-	}
+        # XXX: Layer violation...
+        require Dpkg::Vendor::Ubuntu;
+        my $b = Dpkg::Vendor::Ubuntu::find_launchpad_closes($ch_info->{'Changes'});
+        foreach my $bug (@$b) {
+            $$textref .= "Bug-Ubuntu: https://bugs.launchpad.net/bugs/$bug\n";
+        }
     } elsif ($hook eq 'update-buildflags') {
         $self->set_build_features(@params);
         $self->add_build_flags(@params);
@@ -86,11 +86,27 @@ sub run_hook {
         return $self->_build_tainted_by();
     } elsif ($hook eq 'sanitize-environment') {
         # Reset umask to a sane default.
-        umask 0022;
+        umask 0o022;
         # Reset locale to a sane default.
+        #
+        # We ignore the LANGUAGE GNU extension, as that only affects
+        # LC_MESSAGES which will use LC_CTYPE for its codeset. We need to
+        # move the high priority LC_ALL catch-all into the low-priority
+        # LANG catch-all so that we can override LC_* variables, and remove
+        # any existing LC_* variables which would have been ignored anyway,
+        # and would now take precedence over LANG.
+        if (length $ENV{LC_ALL}) {
+            $ENV{LANG} = delete $ENV{LC_ALL};
+            foreach my $lc (grep { m/^LC_/ } keys %ENV) {
+                delete $ENV{$lc};
+            }
+        }
         $ENV{LC_COLLATE} = 'C.UTF-8';
+        $ENV{LC_CTYPE} = 'C.UTF-8';
     } elsif ($hook eq 'backport-version-regex') {
         return qr/~(bpo|deb)/;
+    } elsif ($hook eq 'has-fuzzy-native-source') {
+        return 1;
     } else {
         return $self->SUPER::run_hook($hook, @params);
     }
@@ -117,7 +133,7 @@ sub set_build_features {
             time64 => undef,
         },
         qa => {
-            bug => 0,
+            bug => undef,
             'bug-implicit-func' => undef,
             canary => 0,
         },
@@ -184,8 +200,6 @@ sub set_build_features {
         hurd-amd64
         hurd-i386
         i386
-        kfreebsd-amd64
-        kfreebsd-i386
         loong64
         mips
         mips64
@@ -227,7 +241,6 @@ sub set_build_features {
         hppa
         i386
         hurd-i386
-        kfreebsd-i386
         m68k
         mips
         mipsel
@@ -240,7 +253,6 @@ sub set_build_features {
         nios2
         powerpc
         powerpcel
-        powerpcspe
         s390
         sh3
         sh3eb
@@ -271,9 +283,9 @@ sub set_build_features {
 
     ## Area: abi
 
-    if (any { $arch eq $_ } qw(hurd-i386 kfreebsd-i386)) {
-        # Mask time64 on hurd-i386 and kfreebsd-i386, as their kernel lacks
-        # support for that arch and it will not be implemented.
+    if ($arch eq 'hurd-i386') {
+        # Mask time64 on hurd-i386, as its kernel lacks support for that
+        # feature and it will not be implemented.
         $use_feature{abi}{time64} = 0;
     } elsif (not defined $use_feature{abi}{time64}) {
         # If the user has not requested a specific setting, by default only
@@ -297,10 +309,6 @@ sub set_build_features {
     if ($use_feature{abi}{time64} && ! $builtin_feature{abi}{time64}) {
         # On glibc 64-bit time_t support requires LFS.
         $use_feature{abi}{lfs} = 1 if $libc eq 'gnu';
-
-        # Require -Werror=implicit-function-declaration, to avoid linking
-        # against the wrong symbol.
-        $use_feature{qa}{'bug-implicit-func'} = 1;
     }
 
     # XXX: Handle lfs alias from future abi feature area.
@@ -311,7 +319,14 @@ sub set_build_features {
 
     ## Area: qa
 
-    $use_feature{qa}{'bug-implicit-func'} //= $use_feature{qa}{bug};
+    # For time64 we require -Werror=implicit-function-declaration, to avoid
+    # linking against the wrong symbol. Instead of enabling this conditionally
+    # on time64 being enabled, do it unconditionally so that the effects are
+    # uniform and visible on all architectures. Unless it has been set
+    # explicitly.
+    $use_feature{qa}{'bug-implicit-func'} //= $use_feature{qa}{bug} // 1;
+
+    $use_feature{qa}{bug} //= 0;
 
     ## Area: reproducible
 
@@ -357,26 +372,26 @@ sub set_build_features {
     ## Area: hardening
 
     # Mask features that are not available on certain architectures.
-    if (none { $os eq $_ } qw(linux kfreebsd hurd) or
-        any { $cpu eq $_ } qw(alpha hppa ia64 sw64)) {
-	# Disabled on non-(linux/kfreebsd/hurd).
-        # Disabled on alpha, hppa, ia64 sw64.
-	$use_feature{hardening}{pie} = 0;
+    if (none { $os eq $_ } qw(linux hurd) or
+        any { $cpu eq $_ } qw(alpha hppa ia64 m68k sh4 x32)) {
+        # Disabled on non-(linux/hurd).
+        # Disabled on alpha, hppa, ia64, m68k, sh4, x32.
+        $use_feature{hardening}{pie} = 0;
     }
-    if (any { $cpu eq $_ } qw(ia64 alpha hppa nios2 sw64) or $arch eq 'arm') {
-	# Stack protector disabled on ia64, alpha, hppa, nios2 sw64.
-	#   "warning: -fstack-protector not supported for this target"
-	# Stack protector disabled on arm (ok on armel).
-	#   compiler supports it incorrectly (leads to SEGV)
-	$use_feature{hardening}{stackprotector} = 0;
+    if (any { $cpu eq $_ } qw(ia64 alpha hppa nios2) or $arch eq 'arm') {
+        # Stack protector disabled on ia64, alpha, hppa, nios2.
+        #   "warning: -fstack-protector not supported for this target"
+        # Stack protector disabled on arm (ok on armel).
+        #   compiler supports it incorrectly (leads to SEGV)
+        $use_feature{hardening}{stackprotector} = 0;
     }
     if (none { $arch eq $_ } qw(amd64 arm64 armhf armel)) {
         # Stack clash protector only available on amd64 and arm.
         $use_feature{hardening}{stackclash} = 0;
     }
     if (any { $cpu eq $_ } qw(ia64 hppa)) {
-	# relro not implemented on ia64, hppa.
-	$use_feature{hardening}{relro} = 0;
+        # relro not implemented on ia64, hppa.
+        $use_feature{hardening}{relro} = 0;
     }
     if (none { $cpu eq $_ } qw(amd64 arm64)) {
         # On amd64 use -fcf-protection.
@@ -387,20 +402,20 @@ sub set_build_features {
 
     # Mask features that might be influenced by other flags.
     if ($flags->get_option_value('optimize-level') == 0) {
-      # glibc 2.16 and later warn when using -O0 and _FORTIFY_SOURCE.
-      $use_feature{hardening}{fortify} = 0;
+        # glibc 2.16 and later warn when using -O0 and _FORTIFY_SOURCE.
+        $use_feature{hardening}{fortify} = 0;
     }
     $flags->set_option_value('fortify-level', 2);
 
     # Handle logical feature interactions.
     if ($use_feature{hardening}{relro} == 0) {
-	# Disable bindnow if relro is not enabled, since it has no
-	# hardening ability without relro and may incur load penalties.
-	$use_feature{hardening}{bindnow} = 0;
+        # Disable bindnow if relro is not enabled, since it has no
+        # hardening ability without relro and may incur load penalties.
+        $use_feature{hardening}{bindnow} = 0;
     }
     if ($use_feature{hardening}{stackprotector} == 0) {
-	# Disable stackprotectorstrong if stackprotector is disabled.
-	$use_feature{hardening}{stackprotectorstrong} = 0;
+        # Disable stackprotectorstrong if stackprotector is disabled.
+        $use_feature{hardening}{stackprotectorstrong} = 0;
     }
 
     ## Commit
@@ -443,25 +458,10 @@ sub add_build_flags {
         $default_d_flags = '-fdebug';
     } else {
         $default_d_flags = '-frelease';
-        # loong64: Enable 128-bit vector extension.
-        # As noted in Loongson's "Software Development and Build Convention
-        # for LoongArch Architectures," section 7.3:
-        #
-        # "Vector instruction support: Desktop and server chips default to
-        # supporting 128-bit vector instructions."
-        #
-        # Ref: https://github.com/loongson/la-softdev-convention/blob/master/la-softdev-convention.adoc#vector-instruction-support
-        require Dpkg::Arch;
-        my $arch = Dpkg::Arch::get_host_arch();
-        if ($arch eq 'loong64') {
-            $default_flags = "$default_flags -mlsx";
-        }
     }
 
     $flags->append($_, $default_flags) foreach @compile_flags;
-    $flags->append($_ . '_FOR_BUILD', $default_flags) foreach @compile_flags;
     $flags->append('DFLAGS', $default_d_flags);
-    $flags->append('DFLAGS_FOR_BUILD', $default_d_flags);
 
     ## Area: abi
 
@@ -489,9 +489,11 @@ sub add_build_flags {
     # Warnings that detect actual bugs.
     if ($flags->use_feature('qa', 'bug-implicit-func')) {
         $flags->append('CFLAGS', '-Werror=implicit-function-declaration');
+    } else {
+        $flags->append('CFLAGS', '-Wno-error=implicit-function-declaration');
     }
     if ($flags->use_feature('qa', 'bug')) {
-        # C/C++ flags
+        # C/C++ flags.
         my @cfamilyflags = qw(
             array-bounds
             clobbered
@@ -518,7 +520,7 @@ sub add_build_flags {
 
     # Warn when the __TIME__, __DATE__ and __TIMESTAMP__ macros are used.
     if ($flags->use_feature('reproducible', 'timeless')) {
-       $flags->append('CPPFLAGS', '-Wdate-time');
+        $flags->append('CPPFLAGS', '-Wdate-time');
     }
 
     # Avoid storing the build path in the binaries.
@@ -574,89 +576,114 @@ sub add_build_flags {
 
     ## Area: hardening
 
-    # PIE
+    # PIE.
     my $use_pie = $flags->get_feature('hardening', 'pie');
     my %hardening_builtins = $flags->get_builtins('hardening');
     if (defined $use_pie && $use_pie && ! $hardening_builtins{pie}) {
-	my $flag = "-specs=$Dpkg::DATADIR/pie-compile.specs";
+        my $flag = "-specs=$Dpkg::DATADIR/pie-compile.specs";
         $flags->append($_, $flag) foreach @compile_flags;
-	$flags->append('LDFLAGS', "-specs=$Dpkg::DATADIR/pie-link.specs");
+        $flags->append('LDFLAGS', "-specs=$Dpkg::DATADIR/pie-link.specs");
     } elsif (defined $use_pie && ! $use_pie && $hardening_builtins{pie}) {
-	my $flag = "-specs=$Dpkg::DATADIR/no-pie-compile.specs";
+        my $flag = "-specs=$Dpkg::DATADIR/no-pie-compile.specs";
         $flags->append($_, $flag) foreach @compile_flags;
-	$flags->append('LDFLAGS', "-specs=$Dpkg::DATADIR/no-pie-link.specs");
+        $flags->append('LDFLAGS', "-specs=$Dpkg::DATADIR/no-pie-link.specs");
     }
 
-    # Stack protector
+    # Stack protector.
     if ($flags->use_feature('hardening', 'stackprotectorstrong')) {
-	my $flag = '-fstack-protector-strong';
+        my $flag = '-fstack-protector-strong';
         $flags->append($_, $flag) foreach @compile_flags;
     } elsif ($flags->use_feature('hardening', 'stackprotector')) {
-	my $flag = '-fstack-protector --param=ssp-buffer-size=4';
+        my $flag = '-fstack-protector --param=ssp-buffer-size=4';
         $flags->append($_, $flag) foreach @compile_flags;
     }
 
-    # Stack clash
+    # Stack clash.
     if ($flags->use_feature('hardening', 'stackclash')) {
         my $flag = '-fstack-clash-protection';
         $flags->append($_, $flag) foreach @compile_flags;
     }
 
-    # Fortify Source
+    # Fortify Source.
     if ($flags->use_feature('hardening', 'fortify')) {
         my $fortify_level = $flags->get_option_value('fortify-level');
         $flags->append('CPPFLAGS', "-D_FORTIFY_SOURCE=$fortify_level");
     }
 
-    # Format Security
+    # Format Security.
     if ($flags->use_feature('hardening', 'format')) {
-	my $flag = '-Wformat -Werror=format-security';
-	$flags->append('CFLAGS', $flag);
-	$flags->append('CXXFLAGS', $flag);
-	$flags->append('OBJCFLAGS', $flag);
-	$flags->append('OBJCXXFLAGS', $flag);
+        my $flag = '-Wformat -Werror=format-security';
+        $flags->append('CFLAGS', $flag);
+        $flags->append('CXXFLAGS', $flag);
+        $flags->append('OBJCFLAGS', $flag);
+        $flags->append('OBJCXXFLAGS', $flag);
     }
 
-    # Read-only Relocations
+    # Read-only Relocations.
     if ($flags->use_feature('hardening', 'relro')) {
-	$flags->append('LDFLAGS', '-Wl,-z,relro');
+        $flags->append('LDFLAGS', '-Wl,-z,relro');
     }
 
-    # Bindnow
+    # Bindnow.
     if ($flags->use_feature('hardening', 'bindnow')) {
-	$flags->append('LDFLAGS', '-Wl,-z,now');
+        $flags->append('LDFLAGS', '-Wl,-z,now');
     }
 
-    # Branch protection
+    # Branch protection.
     if ($flags->use_feature('hardening', 'branch')) {
         my $cpu = $flags->get_option_value('hardening-branch-cpu');
         my $flag;
         if ($cpu eq 'arm64') {
             $flag = '-mbranch-protection=standard';
         } elsif ($cpu eq 'amd64') {
+            # TODO: On GNU/Linux, CET is currently only partially supported
+            # for the "-fcf-protection" option values:
+            #
+            # - For "return", the current version of glibc in Debian does
+            #   not enable support for it. See #1114518.
+            #
+            # - For "branch", the compiler injects the ENDBR instructions in
+            #   the function prologues, but the Linux kernel does not currently
+            #   have support to enable IBT support for user-space. And there
+            #   are proposals that could end up changing its ABI.
+            #
+            # We leave the current option value with the implicit "full", as
+            # there is still interest (as of 2025-09) to implement support on
+            # Linux to enable IBT for user-space, and then it would only need
+            # a new Linux kernel and a glibc to enable the support. If this
+            # does not change in a couple of years, we can revisit whether to
+            # switch to "return".
             $flag = '-fcf-protection';
         }
         # The following should always be true on Debian, but it might not
         # be on derivatives.
         if (defined $flag) {
             $flags->append($_, $flag) foreach @compile_flags;
+            $flags->append('LDFLAGS', $flag);
         }
+    }
+
+    # XXX: Handle *_FOR_BUILD flags here until we can properly initialize them.
+    require Dpkg::Arch;
+
+    my $host_arch = Dpkg::Arch::get_host_arch();
+    my $build_arch = Dpkg::Arch::get_build_arch();
+
+    if ($host_arch eq $build_arch) {
+        foreach my $flag ($flags->list()) {
+            next if $flag =~ m/_FOR_BUILD$/;
+            my $value = $flags->get($flag);
+            $flags->append($flag . '_FOR_BUILD', $value);
+        }
+    } else {
+        $flags->append($_ . '_FOR_BUILD', $default_flags) foreach @compile_flags;
+        $flags->append('DFLAGS_FOR_BUILD', $default_d_flags);
     }
 }
 
 sub _build_tainted_by {
     my $self = shift;
     my %tainted;
-
-    foreach my $pathname (qw(/bin /sbin /lib /lib32 /libo32 /libx32 /lib64)) {
-        next unless -l $pathname;
-
-        my $linkname = readlink $pathname;
-        if ($linkname eq "usr$pathname" or $linkname eq "/usr$pathname") {
-            $tainted{'merged-usr-via-aliased-dirs'} = 1;
-            last;
-        }
-    }
 
     require File::Find;
     my %usr_local_types = (
@@ -666,10 +693,17 @@ sub _build_tainted_by {
         libraries => [ qw(lib) ],
     );
     foreach my $type (keys %usr_local_types) {
-        File::Find::find({
+        my $scan_tainted = {
             wanted => sub { $tainted{"usr-local-has-$type"} = 1 if -f },
             no_chdir => 1,
-        }, grep { -d } map { "/usr/local/$_" } @{$usr_local_types{$type}});
+        };
+        my @dirs_taintable = grep {
+            -d
+        } map {
+            "/usr/local/$_"
+        } @{$usr_local_types{$type}};
+
+        File::Find::find($scan_tainted, @dirs_taintable);
     }
 
     my @tainted = sort keys %tainted;

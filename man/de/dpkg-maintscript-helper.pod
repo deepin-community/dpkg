@@ -159,7 +159,7 @@ Aktuelle Implementierung: das B<preinst> überprüft, ob das Verzeichnis existie
 
 Bei der Benutzung der Paketierungshelfer prüfen Sie bitte, ob eine native B<dpkg-maintscript-helper>-Integration existiert. Hierdurch könnte Ihr Aufwand verringert werden. Lesen Sie beispielsweise L<dh_installdeb(1)>.
 
-Da B<dpkg-maintscript-helper> im B<preinst> verwandt wird, benötigt der bedingungslose Einsatz eine prä-Abhängigkeit (I<pre-dependency>), um sicherzustellen, dass die Mindestversion von B<dpkg> bereits entpackt wurde. Die benötigte Version hängt vom verwandten Befehl ab, für B<rm_conffile> und B<mv_conffile> lautet sie 1.15.7.2, für B<symlink_to_dir> und B<dir_to_symlink> lautet sie 1.17.14:
+Da B<dpkg-maintscript-helper> im B<preinst> verwandt wird, benötigt der bedingungslose Einsatz eine versionierten prä-Abhängigkeit (I<pre-dependency>), um sicherzustellen, dass die Mindestversion von B<dpkg> bereits entpackt wurde, außer es ist bekannt, dass das Upgrade von einer Veröffentlichung erfolgt, in der die Dpkg-Version erfüllt ist. Die benötigte Version hängt vom verwandten Befehl ab, für B<rm_conffile> und B<mv_conffile> lautet sie 1.15.7.2, für B<symlink_to_dir> und B<dir_to_symlink> lautet sie 1.17.14. Wird beispielsweise Unterstützung für B<symlink_to_dir> beim Upgrade von einer Veröffentlichung benötigt, die Dpkg-Version älter als 1.17.14 hatte, dann müsste Folgendes ergänzt werden:
 
 =over 
 
@@ -205,7 +205,7 @@ L<dh_installdeb(1)>.
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

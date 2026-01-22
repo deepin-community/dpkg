@@ -13,8 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use strict;
-use warnings;
+use v5.36;
 
 use Test::More;
 use Test::Dpkg qw(:needs :paths test_neutralize_checksums);
@@ -30,7 +29,6 @@ use Dpkg::BuildTypes;
 use Dpkg::Substvars;
 
 test_needs_command('fakeroot');
-
 plan tests => 17;
 
 my $srcdir = rel2abs($ENV{srcdir} || '.');
@@ -89,6 +87,9 @@ DA := debian/${binary-name-any}
 
 # fakeroot confuses ASAN link order check.
 export ASAN_OPTIONS = verify_asan_link_order=0
+# Do not fail due to leaks, as the code is still using lots of
+# static variables and error variables.
+export LSAN_OPTIONS = exitcode=0
 
 clean:
 	rm -f debian/files
@@ -136,11 +137,11 @@ sub gen_from_tmpl
 
 sub gen_source
 {
-    my (%options) = @_;
+    my (%opts) = @_;
 
     my $substvars = Dpkg::Substvars->new();
     foreach my $var (%default_substvars) {
-        my $value = $options{$var} // $default_substvars{$var};
+        my $value = $opts{$var} // $default_substvars{$var};
 
         $substvars->set_as_auto($var, $value);
     }
@@ -181,7 +182,7 @@ sub test_build
     my ($basename, $type) = @_;
     my $dirname = $basename =~ tr/_/-/r;
 
-    set_build_type($type, 'buildtype', nocheck => 1);
+    set_build_type($type, 'buildtype', no_check => 1);
     my $typename = get_build_options_from_type();
 
     my $stderr;
@@ -205,17 +206,21 @@ sub test_build
     } @hook_names;
 
     chdir $dirname;
-    spawn(exec => [ $ENV{PERL}, "$srcdir/dpkg-buildpackage.pl",
-                    "--admindir=$datadir/dpkgdb",
-                    '--host-arch=amd64',
-                    '--ignore-builtin-builddeps',
-                    '--no-sign',
-                    "--build=$typename",
-                    '--check-command=',
-                    @hook_opts,
-                  ],
-          error_to_string => \$stderr,
-          wait_child => 1, nocheck => 1);
+    spawn(
+        exec => [
+            $ENV{PERL}, "$srcdir/dpkg-buildpackage.pl",
+            "--admindir=$datadir/dpkgdb",
+            '--host-arch=amd64',
+            '--ignore-builtin-builddeps',
+            '--no-sign',
+            "--build=$typename",
+            '--check-command=',
+            @hook_opts,
+        ],
+        error_to_string => \$stderr,
+        wait_child => 1,
+        no_check => 1,
+    );
     chdir '..';
 
     ok($? == 0, "dpkg-buildpackage --build=$typename succeeded");

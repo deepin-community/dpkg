@@ -66,9 +66,9 @@ Estas bandeiras permitem-nos restringir o conjunto de arquitecturas onde o símb
 
 Quando opera no modo predefinido não-modelo, entre os símbolos específicos de arquitectura, apenas aqueles que correspondem à arquitectura da máquina anfitriã actual são escritos no ficheiro de símbolos. Pelo contrário, quando se opera em modo de modelo, todos os símbolos específicos-de-arquitectura (incluindo aqueles de arquitecturas alienígenas) são sempre escritos no ficheiro de símbolos.
 
-O formato de I<architecture-list> é o mesmo que o usado no campo B<Build-Depends> de I<debian/control> (excepto nos parêntesis rectos []). Por exemplo, o primeiro símbolo da lista em baixo será considerado apenas nas arquitecturas alpha, any-amd64 e ia64, o segundo apenas em arquitecturas de linux, enquanto o terceiro em todas excepto em armel.
+O formato de I<architecture-list> é o mesmo que o usado no campo B<Build-Depends> de I<debian/control> (excepto nos parêntesis rectos []). Por exemplo, o primeiro símbolo da lista em baixo será considerado apenas nas arquitecturas arm64, any-amd64 e riscv64, o segundo apenas em arquitecturas de linux, enquanto o terceiro em todas excepto em armel.
 
-  (arch=alpha any-amd64 ia64)64bit_specific_symbol@Base 1.0
+  (arch=arm64 any-amd64 riscv64)arch_specific_symbol@Base 1.0
   (arch=linux-any)linux_specific_symbol@Base 1.0
   (arch=!armel)symbol_armel_does_not_have@Base 1.0
 
@@ -89,10 +89,6 @@ Múltiplas restrições podem ser ligadas em corrente.
 =item B<allow-internal>
 
 O dpkg-gensymbols tem uma lista interna de símbolos que não devem aparecer em ficheiros de símbolos pois eles são geralmente apenas efeitos secundários de detalhes de implementação da ferramenta-cadeia (desde dpkg 1.20.1). Se por alguma razão, você querer realmente que um desses símbolos seja incluído no ficheiro de símbolos, você deve etiquetar o símbolo com B<allow-internal>. Pode ser necessário para algumas ferramentas-cadeia de baixo nível como “libgcc”.
-
-=item B<ignore-blacklist>
-
-Um alias descontinuado para B<allow-internal> (desde dpkg 1.20.1, suportado desde dpkg 1.15.3).
 
 =item B<c++>
 
@@ -193,8 +189,8 @@ A directiva de inclusão pode também ser etiquetada como qualquer símbolo:
 Como resultado, todos os símbolos incluídos de I<file-to-include> serão considerados para serem etiquetados com I<tag> ... I<tagN> por predefinição. Você pode usar esta funcionalidade para criar um ficheiro I<package>.symbols comum que inclui ficheiros de símbolos específicos de arquitectura:
 
   common_symbol1@Base 1.0
- (arch=amd64 ia64 alpha)#include "package.symbols.64-bit"
- (arch=!amd64 !ia64 !alpha)#include "package.symbols.32-bit"
+ (arch-bits=64)#include "package.symbols.64-bit"
+ (arch-bits=32)#include "package.symbols.32-bit"
   common_symbol2@Base 1.0
 
 =back

@@ -22,7 +22,7 @@ B<debian/shlibs>, B<debian/>I<binary-name>B<.shlibs>, B<DEBIAN/shlibs>
 
 =head1 DESCRIPTION
 
-Les fichiers B<shlibs> associent les noms et versions (I<SONAMEs>) des bibliothèques partagées aux dépendances correspondantes dans les fichiers de contrôle des paquets. Il y a une entrée par ligne et les lignes vides ne sont B<pas> autorisées. Les lignes commençant par le caractère S<« B<(#)> »> sont considérées comme étant des commentaires et sont ignorées. Toutes les autres lignes doivent être au S<format :>
+Les fichiers B<shlibs> associent les noms et versions (I<SONAMEs>) des bibliothèques partagées aux dépendances correspondantes dans les fichiers de contrôle des paquets. Il y a une entrée par ligne et les lignes vides ne sont B<pas> autorisées. Les lignes commençant par le caractère « B<(#)> » sont considérées comme étant des commentaires et sont ignorées. Toutes les autres lignes doivent être au format :
 
 =over 
 
@@ -36,7 +36,7 @@ The I<dependencies> field has the same syntax as the B<Depends> field in a binar
 
 =head1 FORMATS DE SONAME
 
-Les formats de SONAME actuellement pris en charge S<sont :>
+Les formats de SONAME actuellement pris en charge sont :
 
 =over 
 
@@ -66,7 +66,7 @@ Le fichier B<shlibs> pour un paquet de bibliothèque nommé I<libcrunch1>, qui f
 
 =back
 
-Les I<dépendances> doivent indiquer la version la plus récente du paquet qui ajoute de nouveaux symboles à la S<bibliothèque :> dans l'exemple précédent, de nouveaux symboles ont été ajoutés avec la version 1.2 de I<libcrunch>. Ce n'est pas la seule raison pour laquelle les dépendances doivent être suivies avec soin.
+Les I<dépendances> doivent indiquer la version la plus récente du paquet qui ajoute de nouveaux symboles à la bibliothèque : dans l'exemple précédent, de nouveaux symboles ont été ajoutés avec la version 1.2 de I<libcrunch>. Ce n'est pas la seule raison pour laquelle les dépendances doivent être suivies avec soin.
 
 =head1 VOIR AUSSI
 

@@ -34,6 +34,12 @@ Dieses Programm wurde in Dpkg 1.22.3 hinzugefügt.
 
 Entfernt alle während eines Baus durch verschiedene Dpkg-Werkzeuge erstellte Artefakte und verwandte Pfadnamen, die durch Dpkg-Werkzeuge verwandt oder gesteuert und problemlos entfernt werden können. Diese Dateien werden zur Nachverfolgung von Zuständen zwischen Paketbauen verwandt und sind in vielen Fällen interne Implementierungsdetails, um die sich der Paketierer nicht kümmern sollte oder Vorbereitungsverzeichnisse, die Bauartefakte enthalten.
 
+=item B<is-rootless>
+
+Prüft, ob der Baubuam ohne Root-Privilegien gebaut werden kann (seit Dpkg 1.22.12).
+
+Dieser Befehl kann problemlos sogar mit Versionen verwandt werden, bei denen der Befehl noch nicht verfügbar war, da die Vorgabe der historische Wert ist, bei dem Root benötigt wird.
+
 =item B<--help>
 
 Zeigt einen Hinweis zum Aufruf und beendet das Programm.
@@ -41,6 +47,20 @@ Zeigt einen Hinweis zum Aufruf und beendet das Programm.
 =item B<--version>
 
 Gibt die Version aus und beendet das Programm.
+
+=back
+
+=head1 UMGEBUNG
+
+=over 
+
+=item B<DPKG_COLORS>
+
+Setzt den Farbmodus. Die derzeit unterstützten Werte sind: B<auto> (Vorgabe), B<always> und B<never>.
+
+=item B<DPKG_NLS>
+
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language Support, auch als Unterstützung für Internationalisierung (oder i18n) bekannt, aktiviert wird. Die akzeptierten Werte sind: B<0> und B<1> (Vorgabe).
 
 =back
 
@@ -87,7 +107,7 @@ Beispiel für ein Autoconf-artiges Bausystem:
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

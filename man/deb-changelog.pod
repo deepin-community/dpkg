@@ -1,6 +1,7 @@
 # dpkg manual page - deb-changelog(5)
 #
-# Copyright © 1996-1998 Ian Jackson and Christian Schwarz
+# Copyright © 1996-1998 Ian Jackson
+# Copyright © 1996-1998 Christian Schwarz
 # Copyright © 1998, 2001 Manoj Srivastava <srivasta@debian.org>
 # Copyright © 2001 Julian Gilbey <jdg@debian.org>
 # Copyright © 2003 Josip Rodin <joy@debian.org>
@@ -199,7 +200,7 @@ Each part of the I<date> can be separated by one or more spaces
 by zero or more spaces (U+0020 B<SPACE>).
 
 Any line that consists entirely (i.e., no leading whitespace) of B<#>
-or B</* */> style comments or RCS keywords.
+or B</* */> style comments or RCS keywords should be ignored.
 
 Vim modelines or Emacs local variables, and ancient changelog entries with
 other formats at the end of the file should be accepted and preserved on

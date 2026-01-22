@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dselect 1.17.22\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2024-03-10 20:21+0100\n"
+"POT-Creation-Date: 2025-12-20 02:18+0100\n"
 "PO-Revision-Date: 2014-11-27 02:33+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -110,11 +110,16 @@ msgid "%s to go back"
 msgstr "%s for at gå tilbage"
 
 #: dselect/bindings.cc
+#, fuzzy
+#| msgid "[not bound]"
+msgctxt "keybinding"
 msgid "[not bound]"
 msgstr "[ikke bundet]"
 
 #: dselect/bindings.cc
-#, c-format
+#, fuzzy, c-format
+#| msgid "[unk: %d]"
+msgctxt "keybinding"
 msgid "[unk: %d]"
 msgstr "[ukendt: %d]"
 
@@ -500,7 +505,7 @@ msgid ""
 "of\n"
 "the display shows relevant conflicts and dependencies; use 'i' to cycle "
 "between\n"
-"that, the package descriptions and the internal control information.\n"
+"that, the package descriptions and the internal package metadata.\n"
 "\n"
 "A set of 'suggested' packages has been calculated, and the initial markings "
 "in\n"
@@ -933,8 +938,8 @@ msgstr ""
 #| "  --expert                   Turn on expert mode.\n"
 #| "  --debug <file> | -D<file>  Turn on debugging, sending output to "
 #| "<file>.\n"
-#| "  --colour | --color screenpart:[foreground],[background][:"
-#| "attr[+attr+...]]\n"
+#| "  --colour | --color screenpart:[foreground],[background]"
+#| "[:attr[+attr+...]]\n"
 #| "                             Configure screen colours.\n"
 #| "\n"
 msgid ""
@@ -996,9 +1001,10 @@ msgid "<attr> is:"
 msgstr ""
 
 #: dselect/main.cc
-#, c-format
-msgid "couldn't open debug file '%.255s'\n"
-msgstr "kunne ikke åbne aflusningsfil »%.255s«\n"
+#, fuzzy, c-format
+#| msgid "couldn't open debug file '%s'\n"
+msgid "cannot open debug file '%s'\n"
+msgstr "kunne ikke åbne aflusningsfil »%s«\n"
 
 #: dselect/main.cc
 #, c-format
@@ -1049,11 +1055,19 @@ msgid "terminal lacks necessary features, giving up"
 msgstr "teminalen mangler nødvendige funktioner. Giver op"
 
 #: dselect/main.cc
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "\n"
+#| "Move around with ^P and ^N, cursor keys, initial letters, or digits;\n"
+#| "Press <enter> to confirm selection.   ^L redraws screen.\n"
+#| "\n"
 msgid ""
 "\n"
 "\n"
-"Move around with ^P and ^N, cursor keys, initial letters, or digits;\n"
-"Press <enter> to confirm selection.   ^L redraws screen.\n"
+"Move around with Ctrl+P and Ctrl+N, cursor keys, initial letters, or "
+"digits;\n"
+"Press <enter> to confirm selection. Ctrl+L redraws screen.\n"
 "\n"
 msgstr ""
 "\n"
@@ -1086,8 +1100,8 @@ msgstr "kunne ikke udføre 'getch' i hovedmenu"
 
 #: dselect/main.cc
 #, c-format
-msgid "unknown action string '%.50s'"
-msgstr "ukendt handlingsstreng »%.50s«"
+msgid "unknown action string '%s'"
+msgstr "ukendt handlingsstreng »%s«"
 
 #: dselect/methlist.cc
 msgid "Abbrev."
@@ -1190,33 +1204,33 @@ msgstr "script til forespørgsel/opsætning"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "syntax error in method options file '%.250s' -- %s"
-msgstr "syntaksfejl i metode-tilvalgsfil »%.250s« -- %s"
+msgid "syntax error in method options file '%s' -- %s"
+msgstr "syntaksfejl i metode-tilvalgsfil »%s« -- %s"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "error reading options file '%.250s'"
-msgstr "fejl under læsning af tilvalgsfil »%.250s«"
+msgid "error reading options file '%s'"
+msgstr "fejl under læsning af tilvalgsfil »%s«"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to read '%.250s' directory for reading methods"
-msgstr "kunne ikke læse »%.250s«-mappe for læsning af metoder"
+msgid "unable to read '%s' directory for reading methods"
+msgstr "kunne ikke læse »%s«-mappe for læsning af metoder"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "method '%.250s' has name that is too long (%d > %d characters)"
-msgstr "metoden »%.250s« har et for langt navn (%d > %d tegn)"
+msgid "method '%s' has name that is too long (%d > %d characters)"
+msgstr "metoden »%s« har et for langt navn (%d > %d tegn)"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to access method script '%.250s'"
-msgstr "kunne ikke tilgå metodescriptet »%.250s«"
+msgid "unable to access method script '%s'"
+msgstr "kunne ikke tilgå metodescriptet »%s«"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to read method options file '%.250s'"
-msgstr "kunne ikke læse metodetilvalgsfil »%.250s«"
+msgid "unable to read method options file '%s'"
+msgstr "kunne ikke læse metodetilvalgsfil »%s«"
 
 #: dselect/methparse.cc
 msgid "non-digit where digit wanted"
@@ -1273,39 +1287,25 @@ msgid "end of file in summary - missing newline"
 msgstr "slut-på-fil i beskrivelsen - manglende linjeskift"
 
 #: dselect/methparse.cc
-#, c-format
-msgid "unable to open option description file '%.250s'"
-msgstr "kunne ikke åbne tilvalgsbeskrivelsesfilen »%.250s«"
+#, fuzzy, c-format
+#| msgid "failed to read option description file '%s'"
+msgid "cannot load option description file '%s'"
+msgstr "kunne ikke læse tilvalgsbeskrivelsesfilen »%s«"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to stat option description file '%.250s'"
-msgstr "kunne ikke finde tilvalgsbeskrivelsesfilen »%.250s«"
+msgid "error during read of method options file '%s'"
+msgstr "fejl ved læsning af metodetilvalgsfilen »%s«"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "failed to read option description file '%.250s'"
-msgstr "kunne ikke læse tilvalgsbeskrivelsesfilen »%.250s«"
+msgid "unable to open current option file '%s'"
+msgstr "kunne ikke åbne aktuel tilvalgsfil »%s«"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "error during read of option description file '%.250s'"
-msgstr "fejl ved læsning af tilvalgsbeskrivelsesfilen »%.250s«"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "error during read of method options file '%.250s'"
-msgstr "fejl ved læsning af metodetilvalgsfilen »%.250s«"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "unable to open current option file '%.250s'"
-msgstr "kunne ikke åbne aktuel tilvalgsfil »%.250s«"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "unable to write new option to '%.250s'"
-msgstr "kunne ikke skrive ny tilvalgsfil »%.250s«"
+msgid "unable to write new option to '%s'"
+msgstr "kunne ikke skrive ny tilvalgsfil »%s«"
 
 #: dselect/pkgdisplay.cc
 msgid "new package"
@@ -1327,10 +1327,6 @@ msgstr "afinstaller"
 msgid "purge"
 msgstr "udrens"
 
-#. TRANSLATORS: The space is a trick to work around gettext which uses
-#. * the empty string to store information about the translation. DO NOT
-#. * CHANGE THAT IN A TRANSLATION! The code really relies on that being
-#. * a single space.
 #: dselect/pkgdisplay.cc
 msgid " "
 msgstr " "
@@ -1739,6 +1735,18 @@ msgstr "%s %s pakker i %s-gruppen"
 #, c-format
 msgid "%-*s %s%s%s;  %s (was: %s).  %s"
 msgstr "%-*s %s%s%s;  %s (var: %s).  %s"
+
+#, c-format
+#~ msgid "unable to open option description file '%s'"
+#~ msgstr "kunne ikke åbne tilvalgsbeskrivelsesfilen »%s«"
+
+#, c-format
+#~ msgid "unable to stat option description file '%s'"
+#~ msgstr "kunne ikke finde tilvalgsbeskrivelsesfilen »%s«"
+
+#, c-format
+#~ msgid "error during read of option description file '%s'"
+#~ msgstr "fejl ved læsning af tilvalgsbeskrivelsesfilen »%s«"
 
 #~ msgid "ioctl(TIOCGWINSZ) failed"
 #~ msgstr "ioctl(TIOCGWINSZ) fejlede"

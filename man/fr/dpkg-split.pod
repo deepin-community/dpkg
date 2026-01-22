@@ -24,7 +24,7 @@ B<dpkg-split> [I<option>...] I<commande>
 
 B<dpkg-split> décompose les fichiers d'un paquet binaire Debian en parties plus petites (et les recompose), pour permettre l'enregistrement des fichiers d'un paquet volumineux sur des média de faible capacité tels que les disquettes.
 
-On peut s'en servir S<« à> la S<main »> avec les options B<--split>, B<--join> et B<--info>.
+On peut s'en servir « à la main » avec les options B<--split>, B<--join> et B<--info>.
 
 Il possède aussi un mode automatique, appelé avec l'option B<--auto>, dans lequel il conserve séparément dans une file les parties connues ou recompose le fichier d'un paquet quand il connaît toutes ses parties. Les options B<--listq> et B<--discard> permettent la gestion de cette file.
 
@@ -38,7 +38,7 @@ Toutes les opérations de décomposition, recomposition ou de mise en file produ
 
 Décompose en plusieurs parties un paquet binaire Debian.
 
-Le nom d'une partie S<est :> I<préfixe>B<.>I<N>B<de>I<M>B<.deb> où I<N> le numéro de partie, commençant à 1, et I<M> est le nombre total de parties (les deux sont des décimaux).
+Le nom d'une partie est : I<préfixe>B<.>I<N>B<de>I<M>B<.deb> où I<N> le numéro de partie, commençant à 1, et I<M> est le nombre total de parties (les deux sont des décimaux).
 
 Quand on ne donne pas de I<préfixe>, le nom du fichier I<archive-complète> est utilisé, en incluant le répertoire et en supprimant tout B<.deb> restant.
 
@@ -104,11 +104,11 @@ Indique un répertoire différent pour la file comprenant les parties en attente
 
 =item B<--admindir> I<répertoire>
 
-Fixe le répertoire d'administration à I<répertoire> (depuis S<dpkg 1.21.10),> où se trouve aussi le fichier I<statoverride>. La valeur par défaut est I<%ADMINDIR%> si B<DPKG_ADMINDIR> n'a pas été défini.
+Fixe le répertoire d'administration à I<répertoire> (depuis dpkg 1.21.10), où se trouve aussi le fichier I<statoverride>. La valeur par défaut est I<%ADMINDIR%> si B<DPKG_ADMINDIR> n'a pas été défini.
 
 =item B<--root> I<répertoire>
 
-Définit le répertoire root à B<directory> (depuis S<dpkg 1.21.10),> ce qui définit le répertoire d'installation à S<« I<répertoire> »> et le répertoire d'administration à S<« I<répertoire>B<%ADMINDIR%> »> si B<DPKG_ROOT> n'a pas été défini.
+Définit le répertoire root à B<directory> (depuis dpkg 1.21.10), ce qui définit le répertoire d'installation à « I<répertoire> » et le répertoire d'administration à « I<répertoire>B<%ADMINDIR%> » si B<DPKG_ROOT> n'a pas été défini.
 
 =item B<-S>, B<--partsize> I<kibioctets>
 
@@ -118,7 +118,7 @@ Indique, en kibioctet (1024 octets), la taille maximum d'une partie lors d'une d
 
 Indique le nom du fichier à produire pour une recomposition.
 
-Cela annule le fichier par défaut lors d'une recomposition S<« à> la S<main »> (B<--join>) et c'est obligatoire pour une recomposition ou une mise en file automatiques (B<--auto>).
+Cela annule le fichier par défaut lors d'une recomposition « à la main » (B<--join>) et c'est obligatoire pour une recomposition ou une mise en file automatiques (B<--auto>).
 
 =item B<-Q>, B<--npquiet>
 
@@ -126,11 +126,7 @@ Pour une recomposition ou une mise en file automatiques, B<dpkg-split> affiche h
 
 =item B<--msdos>
 
-Oblige le nom des fichiers produits par B<--split> à se conformer à MS-DOS.
-
-Cela supprime le préfixe, soit celui par défaut dérivé du nom du fichier d'entrée, soit celui donné comme S<argument :> les caractères alphanumériques sont en minuscules, les signes plus sont remplacés par des B<x> et tous les autres caractères sont abandonnés.
-
-Le résultat est alors tronqué autant que nécessaire et des fichiers de la S<forme :> I<prefixN>B<of>I<M>B<.deb> sont créés.
+Obsolete option without effect (since dpkg 1.23.0).
 
 =back
 
@@ -158,19 +154,23 @@ Erreur fatale ou irrécupérable due à une utilisation non valable de la ligne 
 
 =item B<DPKG_ROOT>
 
-Si cette variable est positionnée et que l'option B<--root> n'est précisée, ce répertoire sera utilisé comme répertoire racine du système de fichiers (depuis S<dpkg 1.21.10).>
+Si cette variable est positionnée et que l'option B<--root> n'est précisée, ce répertoire sera utilisé comme répertoire racine du système de fichiers (depuis dpkg 1.21.10).
 
 =item B<DPKG_ADMINDIR>
 
-Si cette variable est positionnée et que les options B<--admindir> ou B<--root> ne sont pas précisées, ce répertoire sera utilisé comme répertoire de données pour B<dpkg> (depuis S<dpkg 1.21.10).>
+Si cette variable est positionnée et que les options B<--admindir> ou B<--root> ne sont pas précisées, ce répertoire sera utilisé comme répertoire de données pour B<dpkg> (depuis dpkg 1.21.10).
 
 =item B<DPKG_DEBUG>
 
-Définit le masque de débogage (depuis S<dpkg 1.21.10)> à partir d'une valeur octale. Actuellement, les drapeaux acceptés sont décrits dans l'option B<dpkg --debug>, mais ces drapeaux n'auront pas tous un effet sur ce programme.
+Définit le masque de débogage (depuis dpkg 1.21.10) à partir d'une valeur octale. Actuellement, les drapeaux acceptés sont décrits dans l'option B<dpkg --debug>, mais ces drapeaux n'auront pas tous un effet sur ce programme.
 
 =item B<DPKG_COLORS>
 
-Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
+Définit le mode de couleur (depuis dpkg 1.18.5). Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
+
+=item B<DPKG_NLS>
+
+If set, it will be used to decide whether to activate Native Language Support, also known as internationalization (or i18n) support (since dpkg 1.22.7).  The accepted values are: B<0> and B<1> (default).
 
 =item B<SOURCE_DATE_EPOCH>
 
