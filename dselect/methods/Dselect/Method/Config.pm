@@ -190,7 +190,7 @@ Return a string representation of the content.
 
 =cut
 
-sub output($self, $fh //= undef, %opts)
+sub output($self, $fh = undef, %opts)
 {
     my $ret = q{};
 
