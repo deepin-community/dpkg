@@ -2,7 +2,9 @@
 
 nobase_dist_perllib_DATA = \
 	Dselect/Method.pm \
+	Dselect/Method/Config.pm \
 	Dselect/Method/Ftp.pm \
+	Dselect/Method/Media.pm \
 	# EOL
 
 nobase_dist_methods_DATA = \
@@ -29,13 +31,13 @@ nobase_methods_SCRIPTS = \
 EXTRA_DIST = \
 	file/setup.sh \
 	file/update.sh \
-	file/install.sh \
+	file/install.pl \
 	ftp/setup.pl \
 	ftp/update.pl \
 	ftp/install.pl \
 	media/setup.sh \
 	media/update.sh \
-	media/install.sh \
+	media/install.pl \
 	media/README.media \
 	# EOL
 

@@ -30,7 +30,7 @@ B<dpkg-query> is een gereedschap om informatie te tonen over pakketten die opgen
 
 =item B<-l>, B<--list> [I<pakketnaampatroon>...]
 
-Alle gekende pakketten opsommen die beantwoorden aan één of meer patronen, ongeacht hun toestand, met daarbij inbegrepen elk reëel of virtueel pakket dat in om het even welk veld over vereistenrelaties (zoals B<Breaks>, B<Enhances>, enz.) vermeld wordt. Indien geen I<pakketnaampatroon> opgegeven werd, alle pakketten uit I<%ADMINDIR%/status> opsommen, met uitzondering van die welke als niet-geïnstalleerd gemarkeerd staan (d.w.z. die welke eerder gewist werden). De normale shell-jokertekens mogen in I<pakketnaampatroon> gebruikt worden. Merk op dat u I<pakketnaampatroon> wellicht tussen aanhalingstekens zult moeten plaatsen om te voorkomen dat de shell aan bestandsnaamexpansie zou doen. Het volgende zal bijvoorbeeld een opsomming geven van alle pakketnamen die beginnen met "libc6":
+Alle gekende pakketten opsommen die beantwoorden aan één of meer patronen, ongeacht hun toestand, met daarbij inbegrepen elk reëel of virtueel pakket dat in om het even welk veld over vereistenrelaties (zoals B<Breaks>, B<Enhances>, enz.) vermeld wordt. Indien geen I<pakketnaampatroon> opgegeven werd, alle pakketten uit I<%ADMINDIR%/status> opsommen, met uitzondering van die welke als niet-geïnstalleerd gemarkeerd staan (d.w.z. die welke eerder gewist werden). De normale shell-wildcardtekens mogen in I<pakketnaampatroon> gebruikt worden. Merk op dat u I<pakketnaampatroon> wellicht tussen aanhalingstekens zult moeten plaatsen om te voorkomen dat de shell aan bestandsnaamexpansie zou doen. Het volgende zal bijvoorbeeld een opsomming geven van alle pakketnamen die beginnen met "libc6":
 
 =over 
 
@@ -133,7 +133,7 @@ B<Waarschuwing>: dit commando wordt uitgefaseerd, omdat het rechtstreekse toegan
 
 =item B<-S>, B<--search> I<zoekpatroon-bestandsnaam>...
 
-Pakketten zoeken die bestanden hebben die overeenkomen met het opgegeven patroon. Standaard shell-jokertekens kunnen in het patroon gebruikt worden, waarbij sterretje (B<*>) en vraagteken (B<?>) met een slash overeenkomen en backslash (B<\>) als een maskeerteken (escape-teken) gebruikt wordt.
+Pakketten zoeken die bestanden hebben die overeenkomen met het opgegeven patroon. Standaard shell-wildcardtekens kunnen in het patroon gebruikt worden, waarbij sterretje (B<*>) en vraagteken (B<?>) met een slash overeenkomen en backslash (B<\>) als een maskeerteken (escape-teken) gebruikt wordt.
 
 Wanneer het eerste teken in het I<zoekpatroon-bestandsnaam> niet een van de tekens ‘B<*[?/>’ is, dan zal het beschouwd worden als deeltekenreeksvergelijking en zal het impliciet geplaatst worden tussen ‘B<*>’ (zoals in B<*>I<zoekpatroon-bestandsnaam>B<*>). Indien de daaropvolgende tekenreeks een van de tekens ‘B<*[?\>’ bevat, dan zal ze behandeld worden als een glob-patroon, anders zal een eventuele afsluitende ‘B</>’ of ‘B</.>’ verwijderd worden en zal er een letterlijke padopzoeking uitgevoerd worden.
 
@@ -232,6 +232,8 @@ Pakketinformatie kan ingevoegd worden door variabeleverwijzingen naar pakketveld
 
 =item B<Description>
 
+=item B<Description-md5> (intern, frontend gerelateerd)
+
 =item B<Enhances>
 
 =item B<Protected>
@@ -246,9 +248,9 @@ Pakketinformatie kan ingevoegd worden door variabeleverwijzingen naar pakketveld
 
 =item B<MD5sum> (intern, frontend gerelateerd)
 
-=item B<MSDOS-Filename> (intern, frontend gerelateerd)
-
 =item B<Maintainer>
+
+=item B<Multi-Arch>
 
 =item B<Origin>
 
@@ -267,6 +269,12 @@ Pakketinformatie kan ingevoegd worden door variabeleverwijzingen naar pakketveld
 =item B<Revision> (verouderd)
 
 =item B<Section>
+
+=item B<SHA1> (intern, frontend gerelateerd)
+
+=item B<SHA256> (intern, frontend gerelateerd)
+
+=item B<SHA512> (intern, frontend gerelateerd)
 
 =item B<Size> (intern, frontend gerelateerd)
 
@@ -383,7 +391,9 @@ Stelt het uit te voeren programma in wanneer een commando via een shell voortgeb
 
 =item B<DPKG_PAGER>
 
-Stelt het te gebruiken pagineringscommando in (sinds dpkg 1.19.1), hetwelk uitgevoerd zal worden met «B<$SHELL -c>». Indien B<SHELL> niet ingesteld is, zal «B<%DPKG_DEFAULT_SHELL%>» gebruikt worden. B<DPKG_PAGER> overschrijft de omgevingsvariabele B<PAGER> (sinds dpkg 1.19.2).
+Stelt het te gebruiken pagineringscommando in (sinds dpkg 1.19.1), hetwelk uitgevoerd zal worden met «B<$SHELL -c>». Indien B<SHELL> niet ingesteld is, zal «B<%DPKG_DEFAULT_SHELL%>» gebruikt worden.
+
+De B<DPKG_PAGER> overschrijft de omgevingsvariabele B<PAGER> (sinds dpkg 1.19.2). Als geen van de programma's waarnaar wordt verwezen door B<DPKG_PAGER> of B<PAGER> aanwezig is, worden de volgende programma's in volgorde geprobeerd (sinds dpkg 1.22.12): het standaardpagineringsprogramma B<%DPKG_DEFAULT_PAGER%>, vervolgens L<less(1)>, L<more(1)> en ten slotte L<cat(1)>.
 
 =item B<DPKG_ROOT>
 
@@ -400,6 +410,10 @@ Stelt het foutopsporingsmasker in (sinds dpkg 1.21.10) vanaf een octale waarde. 
 =item B<DPKG_COLORS>
 
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen worden zijn: B<auto> (standaard), B<always> en B<never>.
+
+=item B<DPKG_NLS>
+
+Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het activeren van moedertaalondersteuning, ook gekend als internationaliseringsondersteuning (of i18n) (sinds dpkg 1.22.7). Geldige waarden zijn: B<0> and B<1> (standaard).
 
 =back
 

@@ -19,8 +19,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use strict;
-use warnings;
+use v5.36;
 
 use Getopt::Long qw(:config posix_default bundling_values no_ignorecase);
 
@@ -35,7 +34,7 @@ use Dpkg::Control::Info;
 
 textdomain('dpkg-dev');
 
-sub version()
+sub version
 {
     printf g_("Debian %s version %s.\n"), $Dpkg::PROGNAME, $Dpkg::PROGVERSION;
 }
@@ -60,7 +59,7 @@ sub usage {
       --version  show the version.')
     . "\n\n" . g_(
 '<control-file> is the control file to process (default: debian/control).')
-	. "\n", $Dpkg::PROGNAME;
+    . "\n", $Dpkg::PROGNAME;
 }
 
 my $ignore_bd_arch = 0;
@@ -71,8 +70,14 @@ my $bp_value;
 my $host_arch = get_host_arch();
 my $admindir = $Dpkg::ADMINDIR;
 my @options_spec = (
-    'help|?' => sub { usage(); exit(0); },
-    'version' => sub { version(); exit 0; },
+    'help|?' => sub {
+        usage();
+        exit 0;
+    },
+    'version' => sub {
+        version();
+        exit 0;
+    },
     'A' => \$ignore_bd_arch,
     'B' => \$ignore_bd_indep,
     'I' => \$ignore_bd_builtin,
@@ -119,18 +124,25 @@ unless (defined($bd_value) or defined($bc_value)) {
 my (@unmet, @conflicts);
 
 if ($bd_value) {
-    my $dep = deps_parse($bd_value, reduce_restrictions => 1,
-                         build_dep => 1, build_profiles => \@build_profiles,
-                         host_arch => $host_arch);
+    my $dep = deps_parse($bd_value,
+        reduce_restrictions => 1,
+        build_dep => 1,
+        build_profiles => \@build_profiles,
+        host_arch => $host_arch,
+    );
     error(g_('cannot parse %s field'),
           'Build-Depends/Build-Depends-Arch/Build-Depends-Indep')
         unless defined $dep;
     push @unmet, build_depends($dep, $facts);
 }
 if ($bc_value) {
-    my $dep = deps_parse($bc_value, reduce_restrictions => 1, union => 1,
-                         build_dep => 1, build_profiles => \@build_profiles,
-                         host_arch => $host_arch);
+    my $dep = deps_parse($bc_value,
+        reduce_restrictions => 1,
+        union => 1,
+        build_dep => 1,
+        build_profiles => \@build_profiles,
+        host_arch => $host_arch,
+    );
     error(g_('cannot parse %s field'),
           'Build-Conflicts/Build-Conflicts-Arch/Build-Conflicts-Indep')
         unless defined $dep;
@@ -138,16 +150,16 @@ if ($bc_value) {
 }
 
 if (@unmet) {
-    errormsg(g_('Unmet build dependencies: %s'),
+    errormsg(g_('unmet build dependencies: %s'),
              join(' ', map { $_->output() } @unmet));
 }
 if (@conflicts) {
-    errormsg(g_('Build conflicts: %s'),
+    errormsg(g_('unmet build conflicts: %s'),
              join(' ', map { $_->output() } @conflicts));
 }
 exit 1 if @unmet || @conflicts;
 
-# Silly little status file parser that returns a Dpkg::Deps::KnownFacts
+# Silly little status file parser that returns a Dpkg::Deps::KnownFacts.
 sub parse_status {
     my $status = shift;
 
@@ -165,7 +177,11 @@ sub parse_status {
         $facts->add_installed_package($package, $version, $arch, $multiarch);
 
         if (/^Provides: (.*)$/m) {
-            my $provides = deps_parse($1, reduce_arch => 1, virtual => 1, union => 1);
+            my $provides = deps_parse($1,
+                reduce_arch => 1,
+                virtual => 1,
+                union => 1,
+            );
             next if not defined $provides;
             foreach (grep { $_->isa('Dpkg::Deps::Simple') }
                      $provides->get_deps())

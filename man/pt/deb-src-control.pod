@@ -24,7 +24,7 @@ B<debian/control>
 
 Cada pacote fonte Debian contem o ficheiro modelo de controle de fonte «B<debian/control>», e o seu formato L<deb822(5)> é um superconjunto do ficheiro B<control> enviado em pacotes binários Debian, veja L<deb-control(5)>.
 
-Este ficheiro contem pelo menos 2 estrofes, separadas por uma linha vazia. A primeira estrofe é chamada a estrofe do pacote fonte e lista toda a informação acerca do pacote fonte em geral, enquanto cada uma das estrofe seguintes são chamadas estrofes de pacote binário e descrevem exactamente um pacote binário por cada estrofe. Cada estrofe consiste de pelo menos um campo. Um campo começa com um nome de campo, tal como B<Package> ou B<Section> (insensível a maiúsculas/minúsculas), seguido de dois pontos, o corpo do campo (sensível a maiúsculas/minúsculas a menos que declarado o contrário) e uma mudança de linha. São também permitirmos campos multi-linha, mas cada linha suplementar, sem um nome de campo, deve começar com pelo menos um espaço em branco. O conteúdo dos campos multi-linha é geralmente juntado numa única pelas ferramentas (excepto no caso do campo B<Description>, ver abaixo). Para inserir linhas vazias num campo de multi-linha, insira um ponto após o espaço. As linhas começadas com ‘B<#>’ são tratadas como comentários.
+Este ficheiro contem pelo menos 2 estrofes, separadas por uma linha vazia. A primeira estrofe é chamada a estrofe do pacote fonte e lista toda a informação acerca do pacote fonte em geral, enquanto cada uma das estrofe seguintes são chamadas estrofes de pacote binário e descrevem exactamente um pacote binário por cada estrofe. Cada estrofe consiste de pelo menos um campo. Um campo começa com um nome de campo, tal como B<Package> ou B<Section> (insensível a maiúsculas/minúsculas), seguido de dois pontos, o corpo do campo (sensível a maiúsculas/minúsculas a menos que declarado o contrário) e uma mudança de linha. São também permitirmos campos multi-linha, mas cada linha suplementar, sem um nome de campo, tem de começar com pelo menos um espaço em branco. O conteúdo dos campos multi-linha é geralmente juntado numa única pelas ferramentas (excepto no caso do campo B<Description>, ver abaixo). Para inserir linhas vazias num campo de multi-linha, insira um ponto após o espaço. As linhas começadas com ‘B<#>’ são tratadas como comentários.
 
 =head1 CAMPOS DE FONTE
 
@@ -32,7 +32,7 @@ Este ficheiro contem pelo menos 2 estrofes, separadas por uma linha vazia. A pri
 
 =item B<Source:> I<source-package-name> (necessário)
 
-O valor deste campo é o nome do pacote fonte, e deve corresponder ao nome do pacote fonte no ficheiro debian/changelog. O nome de um pacote deve consistir apenas de letras minúsculas (a-z), dígitos (0-9), e dos sinais mais (+) e menos (-) e de pontos (.). Os nomes dos pacotes devem ter pelo menos dois caracteres de comprimento e têm de começar com um caractere alfanumérico minúsculo (a-z0-9).
+O valor deste campo é o nome do pacote fonte, e tem de corresponder ao nome do pacote fonte no ficheiro debian/changelog. O nome de um pacote tem de consistir apenas de letras minúsculas (a-z), dígitos (0-9), e dos sinais mais (+) e menos (-) e de pontos (.). Os nomes dos pacotes devem ter pelo menos dois caracteres de comprimento e têm de começar com um caractere alfanumérico minúsculo (a-z0-9).
 
 =item B<Maintainer:> I<fullname-email> (recomendado)
 
@@ -60,6 +60,12 @@ O URL da página inicial do projecto do autor original
 
 O I<url> do sistema de acompanhamento de bugs deste pacote. O formato usado actualmente é I<bts-type>B<://>I<bts-address>, como B<debbugs://bugs.debian.org>. Este campo geralmente não é necessário.
 
+=item B<Build-Driver:> I<driver-name>
+
+Este campo experimental especifica o nome da driver de compilação a usar para compilar este pacote. Quando omitido o I<driver-name> é predefinido para B<debian-rules>.
+
+Este campo é suportado desde dpkg 1.22.7.
+
 =item B<Rules-Requires-Root:> B<no>|B<binary-targets>|I<impl-keywords>
 
 Este campo é usado para indicar se o campo B<debian/rules> requer privilégios de (fake)root para correr alguns dos seus alvos, e se sim quando.
@@ -68,11 +74,11 @@ Este campo é usado para indicar se o campo B<debian/rules> requer privilégios 
 
 =item B<no>
 
-Os alvos binários não irão requerer (fake)root de todo. Esta é a predefinição em B<dpkg-build-api> nível >= 1.
+Os alvos binários não irão requerer (fake)root de todo. Esta é a predefinição em B<dpkg-build-api> nível >= 1, ou desde dpkg 1.22.13.
 
 =item B<binary-targets>
 
-Os alvos binários devem ser sempre corridos sob (fake)root. Este é a predefinição em B<dpkg-build-api> nível 0, quando o campo é omitido, adicionar o campo com um B<binary-targets> explícito quando não estritamente necessário, marca-o como tendo sido analisada para este requerimento.
+Os alvos binários devem ser sempre corridos sob (fake)root. Este é a predefinição em B<dpkg-build-api> nível 0 até ao dpkg 1.22.13, quando o campo é omitido, adicionar o campo com um B<binary-targets> explícito quando não estritamente necessário, marca-o como tendo sido analisada para este requerimento.
 
 =item I<impl-keywords>
 
@@ -122,11 +128,17 @@ O nome da distribuição de onde este pacote é originário. Normalmente este ca
 
 Este é um campo geral que dá ao pacote uma categoria baseada no software que ele instala. Algumas secções comuns são B<utils>, B<net>, B<mail>, B<text>, B<x11>, etc.
 
+Quando omitido, a I<section> predefine para B<unknown> (desde dpkg 1.22.13).
+
+Os valores aceites são baseados na política específica da distribuição.
+
 =item B<Priority:> I<priority>
 
-Define a importância deste pacote relativamente ao sistema como um todo. Prioridades comuns são B<required>, B<standard>, B<optional>, B<extra>, etc.
+Define a importância deste pacote relativamente ao sistema como um todo. As prioridades conhecidas são B<required>, B<important>, B<standard>, B<optional>, B<extra>, e B<unknown>, mas pode-se também usar outros valores.
 
-Os campos B<Section> e B<Priority> têm geralmente um conjunto definido de valores aceites baseados na política específica da distribuição.
+Quando omitido, a I<priority> predefine para B<optional> (desde dpkg 1.22.13).
+
+Como aplicar estes valores depende da política específica da distribuição.
 
 =item B<Build-Depends:> I<package-list>
 
@@ -162,15 +174,13 @@ Um nome qualificador de arquitectura pode ser um nome de arquitectura real Debia
 
 Um número de versão pode começar com um ‘B<E<gt>E<gt>>’, nesse caso qualquer versão posterior irá corresponder, e pode especificar ou omitir a revisão de empacotamento Debian (separada por um hífen). Relacionamentos de versão aceites são ‘B<E<gt>E<gt>>’ para maior que, ‘B<E<lt>E<lt>>’ para menor que, ‘B<E<gt>=>’ para maior ou igual a, ‘B<E<lt>=>’ para menor ou igual a, e ‘B<=>’ para igual a.
 
-Uma especificação de arquitectura consiste em um ou mais nomes de arquitectura, separados por espaços em branco. Pode ser adicionado no inicio de cada nome um ponto de exclamação, o que significa "NÃO".
+Uma especificação de arquitectura consiste em um ou mais nomes de arquitectura, separados por espaços em branco. Pode ser adicionado no inicio de cada nome um ponto de exclamação (B<!>), o que significa "NÃO".
 
-Uma fórmula de restrição consiste em uma ou mais listas de restrições, separadas por espaços em branco. Cada lista de restrição fica dentro de colchetes angulares, os itens na lista de restrição são nomes de perfis de compilação, separados por espaços em branco e pode ser prefixados com um ponto de exclamação, que significa “NÃO”. Uma fórmula de restrição representa uma expressão de forma normal disjuntiva.
+Uma fórmula de restrição consiste em uma ou mais listas de restrições, separadas por espaços em branco. Cada lista de restrição fica dentro de colchetes angulares (B<E<lt>> e B<E<gt>>).  os itens na lista de restrição são nomes de perfis de compilação, separados por espaços em branco e pode ser prefixados com um ponto de exclamação, que significa “NÃO”. Uma fórmula de restrição representa uma expressão de forma normal disjuntiva, que é um espaço em branco dentro de colchetes angulares fechados é lida como “E”, e espaço em branco entre colchetes angulares a fechar é lido como “OU“, tal como “B<E<lt>>foo E barB<E<gt>> OU B<E<lt>>quux E bazB<E<gt>>”.
 
 Note que as dependências de pacotes no conjunto B<build-essential> podem ser omitidas e que declarar conflitos de compilação contra elas é impossível. Uma lista desses pacotes está no pacote build-essential.
 
 =head1 CAMPOS DE BINÁRIOS
-
-Note que os campos B<Priority>, B<Section> e B<Homepage> podem também ficar numa estrofe binário para sobrepor o valor global do pacote fonte.
 
 =over 
 
@@ -182,9 +192,15 @@ Este campo é usado para dar nome ao nome do pacote binário. Aplicam-se as mesm
 
 Este campo define o tipo de pacote. B<udeb> é para pacotes de tamanho reduzido usados pelo instalador de debian. B<deb> é o valor predefinido, é assumido se o campo estiver ausente. Mais tipos podem ser adicionados no futuro.
 
-=item B<Architecture:> I<arch>|B<all>|B<any> (necessário)
+=item B<Architecture:> I<arch-list> (necessário)
 
-A arquitectura especifica em que tipo de hardware este pacote corre. Para os pacotes que correm em toras as arquitecturas, use o valor B<any>. Para pacotes que são independentes da arquitectura, tais como scripts de shell e Perl ou documentação, use o valor B<all>. Para restringir os pacotes a certo conjunto de arquitecturas, especifique os nomes das arquitecturas, separadas por um espaço. É também possível colocar wildcards de arquitecturas nessa lista (veja L<dpkg-architecture(1)> para mais informação sobre isto).
+A lista de arquitecturas especifica em que tipo de máquina este pacote corre.  O valor deve ser uma lista de nomes de arquitectura e/ou wildcards separados por espaços.
+
+O valor especial B<all>, por ele próprio, destina-se a pacotes que são independentes da arquitectura (tais como scripts de shell e Perl ou documentação), o valor wildcard especial B<any>, por ele próprio, destina-se a pacotes que são dependentes da arquitectura mas correm em todas as arquitecturas (o que corresponde a todos os nomes de arquitectura específicos, excluindo B<all>).  A maioria dos pacotes vão usar ou B<all> ou B<any>.  Para restringir os pacotes a um certo conjunto de arquitecturas, especifique um ou mais nomes de arquitecturas e/ou wildcards de arquitecturas, separados por espaços.
+
+Um nome de arquitectura ou wildcard tem de começar com um caractere alfanumérico (“0-9a-zA-Z”), e depois seguido por caracteres alfanuméricos e traço (‘-’).
+
+Para mais informação sobre nomes de arquitecturas e wildcards, veja L<dpkg-architecture(1)>.
 
 =item B<Build-Profiles:> I<restriction-formula>
 
@@ -207,6 +223,22 @@ Por outras palavras, se uma estrofe de pacote binário estiver anotado com um ca
 =item B<Description:> I<short-description> (recomendado)
 
 Estes campos estão descritos no manual do L<deb-control(5)>, pois eles são literalmente copiados para o ficheiro de controle do pacote binário.
+
+=item B<Section:> I<section>
+
+Sobrepõe o valor do mesmo campo na estrofe do pacote fonte.
+
+Se não existir nenhum campo na estrofe de binário ou fonte, então predefine para B<unknown> (desde dpkg 1.22.13).
+
+=item B<Priority:> I<priority>
+
+Sobrepõe o valor do mesmo campo na estrofe do pacote fonte.
+
+Se não existir nenhum campo na estrofe de binário ou fonte, então predefine para B<optional> (desde dpkg 1.22.13).
+
+=item B<Homepage:> I<url>
+
+Sobrepõe o valor do mesmo campo na estrofe do pacote fonte.
 
 =item B<Depends:> I<package-list>
 
@@ -252,13 +284,19 @@ Estes campos são usados pelo instalador de debian em B<udeb>s e geralmente não
 
 O campo irá aparecer no ficheiro de controle do pacote fonte, veja L<dsc(5)>.
 
+Apenas esperado na estrofe do pacote fonte.
+
 =item B<B>
 
 O campo irá aparecer no ficheiro de controle do pacote binário, veja L<deb-control(5)>.
 
+Permitido na estrofe do pacote fonte ou qualquer estrofe de pacote binário.
+
 =item B<C>
 
 O campo irá aparecer no ficheiro de controle de envio (.changes), veja L<deb-changes(5)>.
+
+Apenas esperado na estrofe do pacote fonte.
 
 =back
 
@@ -268,32 +306,53 @@ Tenha em conta que estes campos definidos pelo utilizador irão usar o espaço d
 
 =head1 EXEMPLO
 
- # Comment
+ # Comment.
  Source: dpkg
  Section: admin
  Priority: required
  Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
- # this field is copied to the binary and source packages
+ # This field is copied to the binary and source packages.
  XBS-Upstream-Release-Status: stable
  Homepage: https://wiki.debian.org/Teams/Dpkg
  Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
  Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git
- Standards-Version: 3.7.3
- Build-Depends: pkgconf, debhelper (>= 4.1.81),
-  libselinux1-dev (>= 1.28-4) [!linux-any]
+ Standards-Version: 4.7.3
+ Build-Depends:
+  dpkg-build-api (= 1),
+  debhelper-compat (= 13),
+  debhelper (>= 13.10~),
+  pkgconf,
+  libselinux1-dev (>= 1.28-4) [!linux-any],
 
  Package: dpkg-dev
  Section: utils
  Priority: optional
  Architecture: all
- # this is a custom field in the binary package
+ # This is a custom field in the binary package.
  XB-Mentoring-Contact: Raphael Hertzog <hertzog@debian.org>
- Depends: dpkg (>= 1.14.6), perl5, perl-modules, cpio (>= 2.4.2-2),
-  bzip2, lzma, patch (>= 2.2-1), make, binutils, libtimedate-perl
- Recommends: gcc | c-compiler, build-essential
- Suggests: gnupg, debian-keyring
- Conflicts: dpkg-cross (<< 2.0.0), devscripts (<< 2.10.26)
- Replaces: manpages-pl (<= 20051117-1)
+ Depends:
+  libdpkg-perl (= ${source:Version}),
+  dpkg (>= 1.14.6),
+  binutils,
+  bzip2,
+  xz-utils,
+ # This is a comment in the middle of a field value.
+  make,
+  patch (>= 2.2-1),
+  perl-modules,
+  perl5,
+ Recommends:
+  build-essential,
+  gcc | c-compiler,
+ Suggests:
+  debian-keyring,
+ Conflicts:
+  devscripts (<< 2.10.26),
+ Replaces:
+  manpages-pl (<= 20051117-1),
+ Provides:
+  dpkg-build-api (= 0),
+  dpkg-build-api (= 1),
  Description: Debian package development tools
   This package provides the development tools (including dpkg-source)
   required to unpack, build and upload Debian source packages.

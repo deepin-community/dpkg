@@ -104,6 +104,10 @@ De versie tonen en afsluiten.
 
 =over 
 
+=item B<DEB_HOST_ARCH>
+
+Stelt de computerarchitectuur in.
+
 =item B<DPKG_COLORS>
 
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen worden zijn: B<auto> (standaard), B<always> en B<never>.
@@ -120,7 +124,7 @@ Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het active
 
 =item B<debian/control>
 
-Het belangrijkste controle-informatiebestand van de broncode, waarin versieonafhankelijke informatie over het broncodepakket gegeven wordt en over de binaire pakketten die eruit gebouwd kunnen worden.
+Het sjablooncontrole-bestand van het broncodepakket, waarin versieonafhankelijke informatie over het broncodepakket gegeven wordt en over de binaire pakketten die eruit gebouwd kunnen worden.
 
 =item B<debian/files>
 

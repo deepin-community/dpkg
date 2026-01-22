@@ -54,10 +54,6 @@ Samma som B<Build-Depends-Package> men godtar en kommaseparerad lista med paketn
 
 Anger vilka interna symbolgrupper som ska ignoreras, som en blankteckenavdelad lista, så att symbolerna som förekommer i dessa grupper tas med i utdatafilen (sedan dpkg 1.20.1). Detta bör endast vara nödvändigt för vektygskedjepaket som tillhandahåller dessa interna symboler. Vilka grupper som är tillgängliga beror på systemet, för ELF- och GNU-baserade system är de B<aeabi> och B<gomp>.
 
-=item B<Ignore-Blacklist-Groups>
-
-Ett alias för B<Allow-Internal-Symbol-Groups> som avråds från (sedan dpkg 1.20.1, stöds sedan dpkg 1.17.6).
-
 =back
 
 =head1 EXEMPEL

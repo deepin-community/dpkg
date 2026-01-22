@@ -82,7 +82,7 @@ Het bestand buildinfo op de standaarduitvoer weergeven (of in I<bestandsnaam> al
 
 =item B<-u>I<map-upload-bestanden>
 
-De bestanden die geüpload moeten worden opzoeken in I<map-upload-bestanden> eerder dan in B<..> (B<dpkg-genbuildinfo> moet deze bestanden kunnen vinden, zodat het hun grootte en hun controlesom kan opnemen in het bestand B<.buildinfo>)
+De bestanden die geüpload moeten worden opzoeken in I<map-upload-bestanden> eerder dan in B<..> (B<dpkg-genbuildinfo> moet deze bestanden kunnen vinden, zodat het hun grootte en hun controlegetal kan opnemen in het bestand B<.buildinfo>)
 
 =item B<--always-include-kernel>
 
@@ -123,6 +123,18 @@ De versie tonen en afsluiten.
 =item B<DEB_BUILD_OPTIONS>
 
 Deze variabele kan gebruikt worden via de optie B<buildinfo> voor het activeren of deactiveren van verschillende functies die invloed hebben op de informatie die opgenomen wordt in het bestand .buildinfo (sinds dpkg 1.18.19). Deze optie bevat een lijst van onderling door komma's gescheiden functies, die voorafgegaan worden door de bepaling ‘B<+>’ of ‘B<->’, welke aangeven of die functie al dan niet geactiveerd moet worden. De bijzondere functie “B<all>” kan gebruikt worden om alle overige functies te activeren of te deactiveren. De functie “B<path>” regelt of het veld B<Build-Path> onvoorwaardelijk mee opgenomen moet worden.
+
+=item B<DEB_BUILD_PROFILES>
+
+Indien dit ingesteld is, zal dit gebruikt worden als het/de actieve te gebruiken bouwprofiel(en) bij het genereren van het bestand .buildinfo. Het is een lijst van profielnamen die onderling door spaties gescheiden worden.
+
+=item B<DEB_BUILD_ARCH>
+
+Stelt de bouwarchitectuur in. Dit beïnvloedt de waarde van het veld B<build-architecture> en de controle op de cross-compilatiemodus.
+
+=item B<DEB_HOST_ARCH>
+
+Stelt de computerarchitectuur in. Dit beïnvloedt de bestandsnaam die gebruikt wordt voor het bestand .buildinfo en de controle op de cross-compilatiemodus.
 
 =item B<DPKG_COLORS>
 

@@ -22,7 +22,7 @@ B<dpkg-genbuildinfo> [I<flagga>...]
 
 =head1 BESKRIVNING
 
-B<dpkg-genbuildinfo> läser information från ett uppackat och byggt Debiankällkodsträd och från de filer det har genererat, och genererar en styrfil som beskriver byggmiljön och byggartifakterna (B<.buildinfo>-filen).
+B<dpkg-genbuildinfo> läser information från ett uppackat och byggt Debiankällkodsträd och från de filer det har genererat, och genererar en styrfil som beskriver byggmiljön och byggartefakterna (B<.buildinfo>-filen).
 
 Programmet introducerades i dpkg 1.18.11.
 
@@ -123,6 +123,18 @@ Visar version och avslutar.
 =item B<DEB_BUILD_OPTIONS>
 
 Den här variabeln kan aanvändas för att aktivera eller inaktivera olika funktioner som påverkar den information som tas med i filen .buildinfo, via flaggan B<buildinfo> (sedan dpkg 1.18.19). Flaggan innehåller en kommaavdelad lista över funktioner, inledda med modifieringstecknen ”B<+>” eller ”B<->”, för att ange om de ska aktiveras eller inaktiveras. Specialfunktionen ”B<all>” kan användas för att aktivera eller inaktivera alla andra funktioner. Funktionen ”B<path>” styr huruvida fältet B<Build-Path> ska tas ovillkorligen med.
+
+=item B<DEB_BUILD_PROFILES>
+
+If set, it will be used as the active build profile(s) to use when generating the .buildinfo file.  It is a space separated list of profile names.
+
+=item B<DEB_BUILD_ARCH>
+
+Anger byggarkitekturen. Detta påverkar värdet för fältet B<Build-Architecture> och testet för korskompileringsläge.
+
+=item B<DEB_HOST_ARCH>
+
+Anger värdarkitekturen. Detta påverkar värdet för fältet .buildinfo-filen och testet för korskompileringsläge.
 
 =item B<DPKG_COLORS>
 

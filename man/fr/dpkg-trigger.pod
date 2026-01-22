@@ -26,7 +26,7 @@ B<dpkg-trigger> [I<option>...] I<commande>
 
 B<dpkg-trigger> est un outil pour activer explicitement les actions différées et pour vérifier leur gestion dans le fonctionnement de B<dpkg>.
 
-Utilisable par les scripts du responsable dans certaines situations complexes où un fichier d'actions différées S<(« triggers »)> ou la directive B<activate> du fichier de contrôle des actions différées ne sont pas suffisants. Peut également être utilisé pour des essais ou par les administrateurs système (noter que les actions différées ne seront alors pas exécutées par B<dpkg-trigger>).
+Utilisable par les scripts du responsable dans certaines situations complexes où un fichier d'actions différées (« triggers ») ou la directive B<activate> du fichier de contrôle des actions différées ne sont pas suffisants. Peut également être utilisé pour des essais ou par les administrateurs système (noter que les actions différées ne seront alors pas exécutées par B<dpkg-trigger>).
 
 Les syntaxes non reconnues pour le nom des actions différées constituent une erreur pour B<dpkg-trigger>.
 
@@ -60,7 +60,7 @@ Change l'endroit où se trouve la base de données de B<dpkg>. Par défaut, c'es
 
 =item B<--root=>I<répertoire>
 
-Définit le répertoire root à B<directory>, ce qui définit le répertoire d'administration à S<« I<répertoire>B<%ADMINDIR%> »> (depuis S<dpkg 1.21.0).>
+Définit le répertoire root à B<directory>, ce qui définit le répertoire d'administration à « I<répertoire>B<%ADMINDIR%> » (depuis dpkg 1.21.0).
 
 =item B<--by-package=>I<paquet>
 
@@ -72,7 +72,7 @@ Cette option fait en sorte que le paquet appelant I<T> (s'il existe) n'a pas bes
 
 =item B<--await>
 
-Cette option a l'effet inverse de B<--no-await> (depuis S<dpkg 1.17.21).> Si le paquet intéressé a déclaré une directive S<«noawait »,> cette option ne sera pas effective. C'est actuellement le comportement par défaut.
+Cette option a l'effet inverse de B<--no-await> (depuis dpkg 1.17.21). Si le paquet intéressé a déclaré une directive «noawait », cette option ne sera pas effective. C'est actuellement le comportement par défaut.
 
 =item B<--no-act>
 
@@ -86,11 +86,11 @@ Teste uniquement, n'apporte aucun changement.
 
 =item B<0>
 
-L'action demandée s'est correctement déroulée. Ou bien une commande de vérification ou de déclaration renvoie S<« true ».>
+L'action demandée s'est correctement déroulée. Ou bien une commande de vérification ou de déclaration renvoie « true ».
 
 =item B<1>
 
-Une commande de vérification ou de déclaration renvoie S<« false ».>
+Une commande de vérification ou de déclaration renvoie « false ».
 
 =item B<2>
 
@@ -104,7 +104,7 @@ Erreur fatale ou irrécupérable due à l'utilisation d'une ligne de commande no
 
 =item B<DPKG_ROOT>
 
-Si cette variable est positionnée et que l'options B<--root> n'est pas précisées, ce répertoire sera utilisé comme répertoire racine du système de fichiers (depuis S<dpkg 1.21.0).>
+Si cette variable est positionnée et que l'options B<--root> n'est pas précisées, ce répertoire sera utilisé comme répertoire racine du système de fichiers (depuis dpkg 1.21.0).
 
 =item B<DPKG_ADMINDIR>
 
@@ -112,11 +112,15 @@ Si cette variable est positionnée et que l'option B<--admindir> n'est pas préc
 
 =item B<DPKG_DEBUG>
 
-Définit le masque de débogage (depuis S<dpkg 1.21.10)> à partir d'une valeur octale. Actuellement, les drapeaux acceptés sont décrits dans l'option B<dpkg --debug>, mais ces drapeaux n'auront pas tous un effet sur ce programme.
+Définit le masque de débogage (depuis dpkg 1.21.10) à partir d'une valeur octale. Actuellement, les drapeaux acceptés sont décrits dans l'option B<dpkg --debug>, mais ces drapeaux n'auront pas tous un effet sur ce programme.
 
 =item B<DPKG_COLORS>
 
-Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
+Définit le mode de couleur (depuis dpkg 1.18.5). Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
+
+=item B<DPKG_NLS>
+
+If set, it will be used to decide whether to activate Native Language Support, also known as internationalization (or i18n) support (since dpkg 1.22.7).  The accepted values are: B<0> and B<1> (default).
 
 =back
 

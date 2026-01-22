@@ -90,7 +90,7 @@ Actualmente mete o ficheiro de lado (ou para trás). B<dpkg-divert> irá abortar
 
 =item B<--no-rename>
 
-Especifica que o ficheiro não deve ser renomeado enquanto se adiciona ou remove o desvio na base de dados (desde dpkg 1.19.1). Isto destina-se a desvios de ficheiros do conjunto de pacotes B<Essential>, onde o desaparecimento temporário do ficheiro original não é aceitável, pois pode tornar o sistema não-funcional. Este é o comportamento predefinido, mas isso irá mudar no ciclo dpkg 1.20.x.
+Especifica que o ficheiro não deve ser renomeado enquanto se adiciona ou remove o desvio na base de dados (desde dpkg 1.19.1). Isto destina-se a desvios de ficheiros do conjunto de pacotes B<Essential>, onde o desaparecimento temporário do ficheiro original não é aceitável, pois pode tornar o sistema não-funcional. Este é o comportamento predefinido, que irá mudar assim que não existirem utilizadores conhecidos, mas não antes do ciclo de lançamento do dpkg 1.23.x.
 
 =item B<--test>
 
@@ -143,6 +143,10 @@ Define a máscara de depuração (desde dpkg 1.21.10) a partir dum valor octal. 
 =item B<DPKG_COLORS>
 
 Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B<auto> (predefinido), B<always> e B<never>.
+
+=item B<DPKG_NLS>
+
+Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nativa. Também como conhecido como suporte de internacionalização (ou i18n) (desde dpkg 1.22.7). Os valores aceites são B<0> e B<1> (predefinição).
 
 =back
 

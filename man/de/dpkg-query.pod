@@ -232,6 +232,8 @@ Paketinformationen können einbezogen werden, indem Variablenreferenzen auf Pake
 
 =item B<Description>
 
+=item B<Description-md5> (intern, Oberflächen-bezogen)
+
 =item B<Enhances>
 
 =item B<Protected>
@@ -246,9 +248,9 @@ Paketinformationen können einbezogen werden, indem Variablenreferenzen auf Pake
 
 =item B<MD5sum> (intern, Oberflächen-bezogen)
 
-=item B<MSDOS-Filename> (inter, Oberflächen-bezogen)
-
 =item B<Maintainer>
+
+=item B<Multi-Arch>
 
 =item B<Origin>
 
@@ -267,6 +269,12 @@ Paketinformationen können einbezogen werden, indem Variablenreferenzen auf Pake
 =item B<Revision> (veraltet)
 
 =item B<Section>
+
+=item B<SHA1> (intern, Oberflächen-bezogen)
+
+=item B<SHA256> (intern, Oberflächen-bezogen)
+
+=item B<SHA512> (intern, Oberflächen-bezogen)
 
 =item B<Size> (intern, Oberflächen-bezogen)
 
@@ -383,7 +391,9 @@ Setzt das auszuführende Programm, wenn ein Befehl über eine Shell ausgeführt 
 
 =item B<DPKG_PAGER>
 
-Setzt den zu verwendenden Pager-Befehl (seit Dpkg 1.19.1), der mit „B<$SHELL -c>“ ausgeführt wird. Falls B<SHELL> nicht gesetzt ist, wird stattdessen „B<%DPKG_DEFAULT_SHELL%>“ verwandt. B<DPKG_PAGER> setzt die Umgebungsvariable B<PAGER> außer Kraft (seit Dpkg 1.19.2).
+Setzt den zu verwendenden Pager-Befehl (seit Dpkg 1.19.1), der mit „B<$SHELL -c>“ ausgeführt wird. Falls B<SHELL> nicht gesetzt ist, wird stattdessen „B<%DPKG_DEFAULT_SHELL%>“ verwandt.
+
+B<DPKG_PAGER> setzt die Umgebungsvariable B<PAGER> außer Kraft (seit Dpkg 1.19.2). Falls keines der Programme, auf die B<DPKG_PAGER> oder B<PAGER> zeigen, vorhanden ist, werden die folgenden Programme in dieser Reihenfolge ausprobiert (seit Dpkg 1.22.12): das Standardseitenanzeigeprogramm B<%DPKG_DEFAULT_PAGER%>, dann L<less(1)>, L<more(1)> und schließlich L<cat(1)>.
 
 =item B<DPKG_ROOT>
 
@@ -400,6 +410,10 @@ Setzt die Fehlersuchmaske (seit Dpkg 1.21.10) aus einem oktalen Wert. Die derzei
 =item B<DPKG_COLORS>
 
 Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte sind: B<auto> (Vorgabe), B<always> und B<never>.
+
+=item B<DPKG_NLS>
+
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language Support, auch als Unterstützung für Internationalisierung (oder i18n) bekannt, aktiviert wird (seit Dpkg 1.22.7). Die akzeptierten Werte sind: B<0> und B<1> (Vorgabe).
 
 =back
 
@@ -424,7 +438,7 @@ L<dpkg(1)>.
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

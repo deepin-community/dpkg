@@ -24,9 +24,9 @@ B<debian/rules>
 
 Ce fichier fournit les instructions nécessaires à la construction des paquets binaires à partir de paquets sources.
 
-Le fichier I<debian/rules> est un Makefile exécutable avec un S<« shebang »> qui est habituellement positionné sur S<« #!/usr/bin/make> S<-f ».>
+Le fichier I<debian/rules> est un Makefile exécutable avec un « shebang » qui est habituellement positionné sur « #!/usr/bin/make -f ».
 
-Il doit prendre en charge les cibles S<« make »> S<suivantes :>
+Il doit prendre en charge les cibles « make » suivantes :
 
 =over 
 

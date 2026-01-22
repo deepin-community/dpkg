@@ -19,11 +19,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use strict;
-use warnings;
+use v5.36;
 
 use List::Util qw(none);
-use POSIX qw(:errno_h :fcntl_h);
+use Fcntl;
 use File::Find;
 
 use Dpkg ();
@@ -31,7 +30,6 @@ use Dpkg::Gettext;
 use Dpkg::ErrorHandling;
 use Dpkg::Lock;
 use Dpkg::Arch qw(get_host_arch debarch_eq debarch_is debarch_list_parse);
-use Dpkg::BuildProfiles qw(get_build_profiles);
 use Dpkg::Deps;
 use Dpkg::Control;
 use Dpkg::Control::Info;
@@ -100,8 +98,8 @@ while (@ARGV) {
     $_ = shift @ARGV;
     if (m/^-p/p) {
         $oppackage = ${^POSTMATCH};
-        my $err = pkg_name_is_illegal($oppackage);
-        error(g_("illegal package name '%s': %s"), $oppackage, $err) if $err;
+        my $err = pkg_name_is_invalid($oppackage);
+        error(g_("invalid package name '%s': %s"), $oppackage, $err) if $err;
     } elsif (m/^-c/p) {
         $controlfile = ${^POSTMATCH};
     } elsif (m/^-l/p) {
@@ -127,8 +125,8 @@ while (@ARGV) {
     } elsif (m/^-V(\w[-:0-9A-Za-z]*)[=:]/p) {
         $substvars->set_as_used($1, ${^POSTMATCH});
     } elsif (m/^-T(.*)$/) {
-	$substvars->load($1) if -e $1;
-	$substvars_loaded = 1;
+        $substvars->load($1) if -e $1;
+        $substvars_loaded = 1;
     } elsif (m/^-n/p) {
         $forcefilename = ${^POSTMATCH};
     } elsif (m/^-(?:\?|-help)$/) {
@@ -142,14 +140,17 @@ while (@ARGV) {
     }
 }
 
-umask 0022; # ensure sane default permissions for created files
-my %options = (file => $changelogfile);
-$options{changelogformat} = $changelogformat if $changelogformat;
-my $changelog = changelog_parse(%options);
+# Ensure sane default permissions for created files.
+umask 0o022;
+my %changelog_opts = (
+    filename => $changelogfile,
+);
+$changelog_opts{changelogformat} = $changelogformat if $changelogformat;
+my $changelog = changelog_parse(%changelog_opts);
 if ($changelog->{'Binary-Only'}) {
-    $options{count} = 1;
-    $options{offset} = 1;
-    my $prev_changelog = changelog_parse(%options);
+    $changelog_opts{count} = 1;
+    $changelog_opts{offset} = 1;
+    my $prev_changelog = changelog_parse(%changelog_opts);
     $sourceversion = $prev_changelog->{'Version'};
 } else {
     $sourceversion = $changelog->{'Version'};
@@ -169,7 +170,7 @@ my $control = Dpkg::Control::Info->new($controlfile);
 my $fields = Dpkg::Control->new(type => CTRL_DEB);
 
 # Old-style bin-nmus change the source version submitted to
-# set_version_substvars()
+# set_version_substvars().
 $sourceversion = $substvars->get('source:Version');
 
 my $pkg;
@@ -191,7 +192,7 @@ if (defined($oppackage)) {
 }
 $substvars->set_msg_prefix(sprintf(g_('package %s: '), $pkg->{Package}));
 
-# Scan source package
+# Scan source package.
 my $src_fields = $control->get_source();
 foreach my $f (keys %{$src_fields}) {
     if ($f eq 'Source') {
@@ -206,33 +207,33 @@ foreach my $f (keys %{$src_fields}) {
 }
 $substvars->set_field_substvars($src_fields, 'S');
 
-# Scan binary package
+# Scan binary package.
 foreach my $f (keys %{$pkg}) {
     my $v = $pkg->{$f};
 
     if (field_get_dep_type($f)) {
-	# Delay the parsing until later
+        # Delay the parsing until later.
     } elsif ($f eq 'Architecture') {
-	my $host_arch = get_host_arch();
+        my $host_arch = get_host_arch();
 
-	if (debarch_eq('all', $v)) {
+        if (debarch_eq('all', $v)) {
             $fields->{$f} = $v;
-	} else {
-	    my @archlist = debarch_list_parse($v, positive => 1);
+        } else {
+            my @archlist = debarch_list_parse($v, positive => 1);
 
-	    if (none { debarch_is($host_arch, $_) } @archlist) {
-		error(g_("current host architecture '%s' does not " .
-			 "appear in package '%s' architecture list (%s)"),
-		      $host_arch, $oppackage, "@archlist");
-	    }
+            if (none { debarch_is($host_arch, $_) } @archlist) {
+                error(g_("current host architecture '%s' does not " .
+                         "appear in package '%s' architecture list (%s)"),
+                      $host_arch, $oppackage, "@archlist");
+            }
             $fields->{$f} = $host_arch;
-	}
+        }
     } else {
         field_transfer_single($pkg, $fields, $f);
     }
 }
 
-# Scan fields of dpkg-parsechangelog
+# Scan fields of dpkg-parsechangelog.
 foreach my $f (keys %{$changelog}) {
     my $v = $changelog->{$f};
 
@@ -241,8 +242,8 @@ foreach my $f (keys %{$changelog}) {
     } elsif ($f eq 'Version') {
         # Already handled previously.
     } elsif ($f eq 'Maintainer') {
-        # That field must not be copied from changelog even if it's
-        # allowed in the binary package control information
+        # That field must not be copied from changelog even if it is
+        # allowed in the binary package control information.
     } else {
         field_transfer_single($changelog, $fields, $f);
     }
@@ -257,50 +258,61 @@ my $facts = Dpkg::Deps::KnownFacts->new();
 $facts->add_installed_package($fields->{'Package'}, $fields->{'Version'},
                               $fields->{'Architecture'}, $fields->{'Multi-Arch'});
 if (exists $pkg->{'Provides'}) {
-    my $provides = deps_parse($substvars->substvars($pkg->{'Provides'}, no_warn => 1),
-                              reduce_restrictions => 1, virtual => 1, union => 1);
+    my $provides = deps_parse($substvars->substvars($pkg->{'Provides'},
+        no_warn => 1),
+        reduce_restrictions => 1,
+        virtual => 1,
+        union => 1,
+    );
     if (defined $provides) {
-	foreach my $subdep ($provides->get_deps()) {
-	    if ($subdep->isa('Dpkg::Deps::Simple')) {
-		$facts->add_provided_package($subdep->{package},
+        foreach my $subdep ($provides->get_deps()) {
+            if ($subdep->isa('Dpkg::Deps::Simple')) {
+                $facts->add_provided_package($subdep->{package},
                         $subdep->{relation}, $subdep->{version},
                         $fields->{'Package'});
-	    }
-	}
+            }
+        }
     }
 }
 
-my (@seen_deps);
+my @seen_deps;
 foreach my $field (field_list_pkg_dep()) {
-    # Arch: all can't be simplified as the host architecture is not known
+    # «Arch: all» cannot be simplified as the host architecture is not known.
     my $reduce_arch = debarch_eq('all', $pkg->{Architecture} || 'all') ? 0 : 1;
     if (exists $pkg->{$field}) {
-	my $dep;
-	my $field_value = $substvars->substvars($pkg->{$field},
-	    msg_prefix => sprintf(g_('%s field of package %s: '), $field, $pkg->{Package}));
-	if (field_get_dep_type($field) eq 'normal') {
-	    $dep = deps_parse($field_value, use_arch => 1,
-	                      reduce_arch => $reduce_arch,
-	                      reduce_profiles => 1);
+        my $dep;
+        my $field_value = $substvars->substvars($pkg->{$field},
+            msg_prefix => sprintf(g_('%s field of package %s: '), $field, $pkg->{Package}),
+        );
+        if (field_get_dep_type($field) eq 'normal') {
+            $dep = deps_parse($field_value,
+                use_arch => 1,
+                reduce_arch => $reduce_arch,
+                reduce_profiles => 1,
+            );
             error(g_("parsing package '%s' %s field: %s"), $oppackage,
                   $field, $field_value) unless defined $dep;
-	    $dep->simplify_deps($facts, @seen_deps);
-	    # Remember normal deps to simplify even further weaker deps
-	    push @seen_deps, $dep;
-	} else {
-	    $dep = deps_parse($field_value, use_arch => 1,
-	                      reduce_arch => $reduce_arch,
-	                      reduce_profiles => 1, union => 1);
+            $dep->simplify_deps($facts, @seen_deps);
+            # Remember normal deps to simplify even further weaker deps.
+            push @seen_deps, $dep;
+        } else {
+            $dep = deps_parse($field_value,
+                use_arch => 1,
+                reduce_arch => $reduce_arch,
+                reduce_profiles => 1,
+                union => 1,
+            );
             error(g_("parsing package '%s' %s field: %s"), $oppackage,
                   $field, $field_value) unless defined $dep;
-	    $dep->simplify_deps($facts);
+            $dep->simplify_deps($facts);
             $dep->sort();
-	}
-	error(g_('the %s field contains an arch-specific dependency but the ' .
-	         "package '%s' is architecture all"), $field, $oppackage)
-	    if $dep->has_arch_restriction();
-	$fields->{$field} = $dep->output();
-	delete $fields->{$field} unless $fields->{$field}; # Delete empty field
+        }
+        error(g_('the %s field contains an arch-specific dependency but the ' .
+                 "package '%s' is architecture all"), $field, $oppackage)
+            if $dep->has_arch_restriction();
+        $fields->{$field} = $dep->output();
+        # Delete empty field.
+        delete $fields->{$field} unless $fields->{$field};
     }
 }
 
@@ -311,6 +323,21 @@ for my $f (qw(Package Version Architecture)) {
 for my $f (qw(Maintainer Description)) {
     warning(g_('missing information for output field %s'), $f)
         unless defined $fields->{$f};
+}
+for my $f (qw(Section)) {
+    next if defined $fields->{$f};
+
+    $fields->{$f} = field_get_default_value($f);
+    warning(g_('missing information for output field %s; ' .
+               'using default value "%s"'), $f, $fields->{$f});
+}
+for my $f (qw(Priority)) {
+    $fields->{$f} //= field_get_default_value($f);
+}
+
+if (defined $fields->{'Maintainer'}) {
+    my $maint = field_parse_maintainer($fields);
+    $fields->{'Maintainer'} = $maint->as_string();
 }
 
 my $pkg_type = $pkg->{'Package-Type'} ||
@@ -335,7 +362,10 @@ if ($binarypackage ne $sourcepackage || $verdiff) {
     $fields->{'Source'} .= ' (' . $sourceversion . ')' if $verdiff;
 }
 
-if (!defined($substvars->get('Installed-Size'))) {
+if (! defined($substvars->get('Installed-Size'))) {
+    # XXX: Switch to builtin::ceil() once we can use v5.40.
+    require POSIX;
+
     my $installed_size = 0;
     my %hardlink;
     my $scan_installed_size = sub {
@@ -389,11 +419,14 @@ if ($stdout) {
     $sversion =~ s/^\d+://;
     $forcefilename //= sprintf('%s_%s_%s.%s', $fields->{'Package'}, $sversion,
                                $fields->{'Architecture'}, $pkg_type);
-    my $section = $fields->{'Section'} || '-';
-    my $priority = $fields->{'Priority'} || '-';
+
+    my %fileprop;
+    foreach my $f (qw(Section Priority)) {
+        $fileprop{lc $f} = $fields->{$f};
+    }
 
     # Obtain a lock on debian/control to avoid simultaneous updates
-    # of debian/files when parallel building is in use
+    # of debian/files when parallel building is in use.
     my $lockfh;
     my $lockfile = 'debian/control';
     $lockfile = $controlfile if not -e $lockfile;
@@ -418,13 +451,13 @@ if ($stdout) {
     my %fileattrs;
     $fileattrs{automatic} = 'yes' if $fields->{'Auto-Built-Package'};
 
-    $dist->add_file($forcefilename, $section, $priority, %fileattrs);
+    $dist->add_file($forcefilename, @fileprop{qw(section priority)}, %fileattrs);
     $dist->save("$fileslistfile.new");
 
     rename "$fileslistfile.new", $fileslistfile
         or syserr(g_('install new files list file'));
 
-    # Release the lock
+    # Release the lock.
     close $lockfh or syserr(g_('cannot close %s'), $lockfile);
 
     $fields->save("$outputfile.new");

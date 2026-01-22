@@ -51,7 +51,7 @@ B<dpkg-shlibdeps> maakt niet langer gebruik van de omgevingsvariabele B<LD_LIBRA
 
 =item *
 
-B<dpkg-buildpackage> stelt standaard B<Rules-Requires-Root> in op waarde B<no>. Om het gedrag uit B<v0> te herstellen moet B<Rules-Requires-Root> worden ingesteld op B<binary-targets>.
+B<dpkg-buildpackage> stelt standaard B<Rules-Requires-Root> in op waarde B<no>. Om het gedrag uit B<v0> (van vóór dpkg 1.22.13) te herstellen moet B<Rules-Requires-Root> worden ingesteld op B<binary-targets>.
 
 =item *
 

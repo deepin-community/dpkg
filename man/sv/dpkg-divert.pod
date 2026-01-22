@@ -24,7 +24,7 @@ B<dpkg-divert> [I<flagga>...] I<åtgärd>
 
 B<dpkg-divert> är verktyget som används för att ställa in och uppdatera listan över omdirigeringar.
 
-File I<diversions> are a way of forcing L<dpkg(1)> not to install a file into its location, but to a I<diverted> location.  Diversions can be used through the package maintainer scripts to move a file away when it causes a conflict.  System administrators can also use it to override some package's configuration file, or whenever some files (which aren't marked as “conffiles”) need to be preserved by B<dpkg>, when installing a newer version of a package which contains those files.
+Filomdirigeringar (I<diversions>) är ett sätt att tvinga L<dpkg(1)> att inte installera en fil på sin plats, utan på en I<omdirigerad> plats. Omdirigeringar kan användas i pakethanteringsskript för att flytta bort en fil när den orsakar en konflikt. Systemadministratörer kan också använda det för att överstyra några pakets konfigurationsfiler, eller när några filer (som inte markerats som konfigurationsfiler) måste bibehållas av B<dpkg> när en nyare version av ett paket som innehåller de filerna installeras.
 
 =head1 KOMMANDON
 
@@ -90,7 +90,7 @@ Flytta faktiskt filen åt sidan (eller tillbaka). B<dpkg-divert> kommer att avbr
 
 =item B<--no-rename>
 
-Anger att filen inte ska få ett nytt namn när omdirigeringar läggs till eller tas bort i databasen (sedan dpkg 1.19.1). Detta är tänkt för omdirigeringar av filer från paketuppsättningen märkt B<Essential>, där det att originalfilen temporärt försvinner inte är acceptabelt, eftersom det kan göra så att systemet inte längre fungerar. Detta är standardbeteendet, men det kommer ändras i dpkg 1.20.x-cykeln.
+Specifies that the file should not be renamed while adding or removing the diversion into the database (since dpkg 1.19.1).  This is intended for diversions of files from the B<Essential> package set, where the temporary disappearance of the original file is not acceptable, as it can render the system non-functional.  This is the default behavior, which will change once there are no known users, but not before the dpkg 1.23.x release cycle.
 
 =item B<--test>
 
@@ -143,6 +143,10 @@ Anger felsökningsmasken (sedan dpkg 1.21.10) från ett oktalt värde. De flaggo
 =item B<DPKG_COLORS>
 
 Väljer färgläge (sedan dpkg 1.18.5). För närvarande godtas följande värden: B<auto> (förval), B<always> och B<never>.
+
+=item B<DPKG_NLS>
+
+Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även känt som internationaliseringsstöd (eller i18n) (sedan dpkg 1.22.7). Tillåtna värden är: B<0> och B<1> (förval).
 
 =back
 

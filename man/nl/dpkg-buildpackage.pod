@@ -18,17 +18,21 @@ dpkg-buildpackage - binaire of broncodepakketten bouwen uit de broncode
 
 =head1 OVERZICHT
 
-B<dpkg-buildpackage> [I<optie>...]
+B<dpkg-buildpackage> [I<optie>...] [B<-->] [I<bestandsnaam>.dsc|I<map>]
 
 =head1 BESCHRIJVING
 
-B<dpkg-buildpackage> is een programma dat het proces van het bouwen van een Debian pakket automatiseert. Het bestaat uit de volgende stappen:
+B<dpkg-buildpackage> is een programma dat het proces van het bouwen van een Debian pakket automatiseert.
+
+De argumenten I<bestandsnaam>.dsc en I<map> worden ondersteund sinds dpkg 1.22.7. Hun semantiek is experimenteel.
+
+Het bestaat uit de volgende stappen:
 
 =over 
 
 =item B<1.>
 
-Het voert de uitbreiding (hook) B<preinit> uit voordat een bronbestand wordt gelezen. Het bereidt de bouwomgeving voor door verschillende omgevingsvariabelen in te stellen(zie B<OMGEVING>), voert de uitbreiding B<init> uit en roept B<dpkg-source --before-build> aan (tenzij B<-T> of B<--target> gebruikt werd).
+Het voert de uitbreiding (hook) B<preinit> uit voordat een bronbestand wordt gelezen. Als een B<.dsc>-bestand werd opgegeven, pakt het dit opnieuw uit en gaat het naar de map ervan. Als een I<map> werd opgegeven, wordt er naar die map gegaan. Anders wordt verwacht dat de huidige map de broncodeboom bevat. Het bereidt de bouwomgeving voor door verschillende omgevingsvariabelen in te stellen(zie B<OMGEVING>), voert de uitbreiding B<init> uit en roept B<dpkg-source --before-build> aan (tenzij B<-T> of B<--target> gebruikt werd).
 
 =item B<2.>
 
@@ -40,7 +44,7 @@ Indien met de optie B<-T> of B<--target> een of meer specifieke doelen geselecte
 
 =item B<4.>
 
-Het voert de uitbreiding (hook) B<source> uit en roept B<dpkg-source -b> aan om het broncodepakket te genereren (indien het bouwen van B<source> aangevraagd werd met B<--build> of gelijkwaardige opties).
+Het voert de uitbreiding (hook) B<source> uit en roept B<dpkg-source -b> aan om het broncodepakket te genereren (indien het bouwen van B<source> aangevraagd werd met B<--build> of gelijkwaardige opties en als geen B<.dsc> werd opgegeven).
 
 =item B<5.>
 
@@ -48,7 +52,7 @@ Het voert de uitbreiding (hook) B<build> uit en roept B<debian/rules> I<build-ta
 
 =item B<6.>
 
-Het voert de uitbreiding (hook) B<buildinfo> uit en roept B<dpkg-genbuildinfo> aan om een bestand B<.buildinfo> aan te maken. Verschillende opties van B<dpkg-buildpackage> worden aan B<dpkg-genbuildinfo> overgemaakt.
+Het voert de uitbreiding (hook) B<buildinfo> uit en roept B<dpkg-genbuildinfo> aan om een bestand B<.buildinfo> aan te maken. Verschillende opties van B<dpkg-buildpackage> worden aan B<dpkg-genbuildinfo> overgemaakt. Als er een I<.dsc> werd opgegeven, wordt hiernaar verwezen in het gegenereerde B<.buildinfo>-bestand, zodat we de herkomst van de broncodeboom kunnen vaststellen.
 
 =item B<7.>
 
@@ -89,6 +93,10 @@ Het voert de uitbreiding (hook) B<check> uit en roept een pakketcontroleprogramm
 Het voert de uitbreiding (hook) B<sign> uit en ondertekent met behulp van de OpenPGP-backend (voor zover het geen bouw van het type UNRELEASED is of tenzij B<--no-sign> werd opgegeven) voor het ondertekenen van het bestand B<.dsc> (als dat bestaat, tenzij B<-us> of B<--unsigned-source> opgegeven werden), van het bestand B<.buildinfo> (tenzij B<-ui>, B<--unsigned-buildinfo>, B<-uc> of B<--unsigned-changes> opgegeven werden) en van het bestand B<.changes> (tenzij B<-uc> of B<--unsigned-changes> opgegeven werden).
 
 =item B<12.>
+
+Als een B<.dsc>-bestand werd opgegeven, wordt de uitgepakte broncodemap verwijderd.
+
+=item B<13.>
 
 Het voert de uitbreiding (hook) B<done> uit.
 
@@ -254,7 +262,7 @@ Ingebouwde bouwvereisten en tegenstrijdigheden niet controleren (sinds dpkg 1.18
 
 =item B<--rules-requires-root>
 
-Het veld B<Rules-Requires-Root> niet honoreren; er wordt teruggevallen op zijn verouderde standaardwaarde (since dpkg 1.19.1).
+Het veld B<Rules-Requires-Root> niet honoreren; er wordt teruggevallen op zijn verouderde standaardwaarde B<binary-targets> (since dpkg 1.19.1).
 
 =item B<-nc>, B<--no-pre-clean>
 
@@ -316,7 +324,7 @@ Haalt B<DPKG_BUILDPACKAGE_HOOK_SOURCE_OPTIONS> op met de door spaties gescheiden
 
 =item B<build>
 
-Haalt B<DPKG_BUILDPACKAGE_HOOK_BUILD_TARGET> op met de naam van het aangeroepen bouwdoel uit B<debian/rules>, maar alleen als het wordt aangeroepen.
+Haalt B<DPKG_BUILDPACKAGE_HOOK_BUILD_TARGET> op met de naam van het aangeroepen bouwdoel uit B<debian/rules>. Vóór dpkg 1.22.7 werd de variabele alleen ingesteld als het doel werd aangeroepen.
 
 =item B<binary>
 
@@ -506,7 +514,7 @@ Indien dit ingesteld werd, zal het gebruikt worden als het commando waarmee het 
 
 =item B<DEB_SIGN_KEYID>
 
-Indien dit ingesteld werd, zal het gebruikt worden om de bestanden B<.changes>, B<.buildinfo> en B<.dsc> te ondertekenen (sinds dpkg 1.17.2). De optie B<--sign-key> heeft hierop voorrang.
+Indien dit ingesteld werd, zal het gebruikt worden om de bestanden B<.changes>, B<.buildinfo> en B<.dsc> te ondertekenen (sinds dpkg 1.17.2). De optie B<--sign-keyid> heeft hierop voorrang.
 
 =item B<DEB_SIGN_KEYFILE>
 
@@ -514,7 +522,7 @@ Indien dit ingesteld werd, zal het gebruikt worden om de bestanden B<.changes>, 
 
 =item B<DEB_BUILD_OPTIONS>
 
-If set, it will contain a space-separated list of options that affect the behavior of some dpkg tools involved in package building, and might affect the package build process if the code in F<debian/rules> honors them.  These options can have parameters specified immediately after an equal sign (‘B<=>‘).  For options that support multiple parameters, these will not be separated by spaces, as these are reserved to separate options.
+Indien dit ingesteld werd, zal het een door spaties gescheiden lijst met opties bevatten die het gedrag beïnvloeden van sommige dpkg-gereedschappen die betrokken zijn bij het bouwen van pakketten, en die het bouwproces van pakketten kunnen beïnvloeden als de code in F<debian/rules> deze opties erkent. Deze opties kunnen parameters hebben die direct na een gelijkheidsteken ('B<=>') worden opgegeven. Bij opties die meerdere parameters ondersteunen, worden deze niet gescheiden door spaties, omdat die gereserveerd zijn voor het scheiden van opties.
 
 Hieronder volgen de opties die bekend zijn en worden ondersteund door dpkg-gereedschappen; andere opties die worden erkend door F<debian/rules> kunnen worden gedefinieerd door distributiespecifiek beleid.
 
@@ -540,21 +548,21 @@ In het verpakkingsproces moet F<debian/rules> ervoor zorgen dat geen foutopspori
 
 B<dpkg-buildpackage> zal de L<make(1)>-vlag B<--no-print-directory> toevoegen aan de omgevingsvariabele B<MAKEFLAGS>. In het verpakkingsproces moet F<debian/rules> de breedsprakigheid beperken, maar niet helemaal stil zijn.
 
-=item B<hardening=>I<feature-spec>
+=item B<hardening=>I<functie-spec>
 
-=item B<reproducible=>I<feature-spec>
+=item B<reproducible=>I<functie-spec>
 
-=item B<abi=>I<feature-spec>
+=item B<abi=>I<functie-spec>
 
-=item B<future=>I<feature-spec>
+=item B<future=>I<functie-spec>
 
-=item B<qa=>I<feature-spec>
+=item B<qa=>I<functie-spec>
 
-=item B<optimize=>I<feature-spec>
+=item B<optimize=>I<functie-spec>
 
-=item B<sanitize=>I<feature-spec>
+=item B<sanitize=>I<functie-spec>
 
-These are feature areas that control build flag features.  See L<dpkg-buildflags(1)> for further details.
+Dit zijn functiegebieden die de bouwvlagfuncties regelen. Zie L<dpkg-buildflags(1)> voor verdere details.
 
 =back
 
@@ -624,7 +632,7 @@ Tussen dpkg 1.14.17 en 1.16.1 exporteerde B<dpkg-buildpackage> compileervlaggen 
 
 =head2 Standaard bouwtargets
 
-B<dpkg-buildpackage> gebruikt sinds dpkg 1.16.2 de targets B<build-arch> en B<build-indep>. Deze targets zijn dus verplicht. Maar om te vermijden dat bestaande pakketten defect raken en om de overgang te vergemakkelijken, zal het, indien het broncodepakket niet zowel architectuuronafhankelijke als architectuurspecifieke binaire pakketten bouwt (sinds dpkg 1.18.8), terugvallen op het gebruik van het target B<build> indien B<make -f debian/rules -qn> I<bouwtarget> 2 teruggeeft als afsluitwaarde.
+B<dpkg-buildpackage> gebruikt de targets B<build-arch> en B<build-indep> sinds dpkg 1.16.2. Vóór dpkg 1.22.7 was er code om te proberen de ontbrekende targets te detecteren en terug te vallen op de B<build> target. Die targets zijn dus verplicht.
 
 =head1 BEVEILIGING
 

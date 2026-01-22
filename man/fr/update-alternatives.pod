@@ -28,19 +28,19 @@ Il est possible d'installer, sur un même système et en même temps, des progra
 
 The alternatives system aims to solve this problem.  A generic name in the filesystem is shared by all files providing interchangeable functionality. The alternatives system and the system administrator together determine which actual file is referenced by this generic name.  For example, if the text editors L<ed(1)> and L<nvi(1)> are both installed on the system, the alternatives system will cause the generic name I</usr/bin/editor> to refer to I</usr/bin/nvi> by default.  The system administrator can override this and cause it to refer to I</usr/bin/ed> instead, and the alternatives system will not alter this setting until explicitly requested to do so.
 
-Le nom générique n'est pas un lien symbolique direct vers l'alternative choisie. C'est en fait un lien symbolique vers un nom situé dans le I<répertoire> I<des S<« alternatives »>,> lequel nom est à son tour un lien symbolique vers le fichier réellement visé. Les modifications faites par l'administrateur système sont ainsi confinées dans le répertoire I<%CONFDIR%> ; le FHS (lisez-le) donne de Bonnes Raisons de faire ainsi.
+Le nom générique n'est pas un lien symbolique direct vers l'alternative choisie. C'est en fait un lien symbolique vers un nom situé dans le I<répertoire> I<des « alternatives »>, lequel nom est à son tour un lien symbolique vers le fichier réellement visé. Les modifications faites par l'administrateur système sont ainsi confinées dans le répertoire I<%CONFDIR%> ; le FHS (lisez-le) donne de Bonnes Raisons de faire ainsi.
 
-When each package providing a file with a particular functionality is installed, changed or removed, B<update-alternatives> is called to update information about that file in the alternatives system. B<update-alternatives> is usually called from the following Debian package maintainer scripts, B<postinst> (configure) to install the alternative and from B<prerm> and B<postrm> (remove) to remove the alternative.  B<Note>: in most (if not all) cases no other maintainer script actions should call B<update-alternatives>, in particular neither of B<upgrade> nor B<disappear>, as any other such action can lose the manual state of an alternative, or make the alternative temporarily flip-flop, or completely switch when several of them have the same priority.
+When each package providing a file with a particular functionality is installed, changed or removed, B<update-alternatives> is called to update information about that file in the alternatives system. B<update-alternatives> is usually called from the following Debian package maintainer scripts, B<postinst> (configure) to install the alternative and from B<prerm> and B<postrm> (remove) to remove the alternative.  B<Note>: In most (if not all) cases no other maintainer script actions should call B<update-alternatives>, in particular neither of B<upgrade> nor B<disappear>, as any other such action can lose the manual state of an alternative, or make the alternative temporarily flip-flop, or completely switch when several of them have the same priority.
 
 It is often useful for a number of alternatives to be synchronized, so that they are changed as a group; for example, when several versions of the L<vi(1)> editor are installed, the manual page referenced by I</usr/share/man/man1/vi.1> should correspond to the executable referenced by I</usr/bin/vi>.  B<update-alternatives> handles this by means of I<master> and I<slave> links; when the master is changed, any associated slaves are changed too.  A master link and its associated slaves make up a I<link> I<group>.
 
-À tout moment, un groupe de liens est dans l'un des deux modes S<suivants :> automatique ou manuel. Quand un groupe est dans le mode automatique et que des paquets sont installés ou désinstallés, le système des S<« alternatives »> décide automatiquement s'il doit mettre à jour les liens et comment le faire. Dans le mode manuel, le système des S<« alternatives »> ne change pas les liens et laisse l'administrateur système prendre toutes les décisions (sauf si quelque chose est cassé).
+À tout moment, un groupe de liens est dans l'un des deux modes suivants : automatique ou manuel. Quand un groupe est dans le mode automatique et que des paquets sont installés ou désinstallés, le système des « alternatives » décide automatiquement s'il doit mettre à jour les liens et comment le faire. Dans le mode manuel, le système des « alternatives » ne change pas les liens et laisse l'administrateur système prendre toutes les décisions (sauf si quelque chose est cassé).
 
 Un groupe de liens est en mode automatique quand il est créé sur un système pour la première fois. Quand l'administrateur système modifie le paramétrage automatique du système, B<update-alternatives> le remarquera la prochaine fois qu'il sera lancé pour ce groupe aux liens modifiés et il fera passer ce groupe en mode manuel.
 
 À chaque alternative est associée une I<priorité>. Quand un groupe de liens est en mode automatique, l'alternative visée par les éléments du groupe est celle qui possède la priorité la plus élevée.
 
-Quand l'option B<--config> est utilisée, B<update-alternatives> affiche toutes les possibilités du groupe pour lequel I<nom> est le lien principal. Le choix actuel est noté par un S<« * ».> Il sera alors demandé quel choix doit être fait pour ce groupe. Suivant le choix effectué, le groupe de liens peut ne plus être en mode I<auto>. Il vous faudra utiliser l'option B<--auto> pour revenir au mode automatique (ou réutiliser B<--config> et choisir l'entrée marquée comme automatique).
+Quand l'option B<--config> est utilisée, B<update-alternatives> affiche toutes les possibilités du groupe pour lequel I<nom> est le lien principal. Le choix actuel est noté par un « * ». Il sera alors demandé quel choix doit être fait pour ce groupe. Suivant le choix effectué, le groupe de liens peut ne plus être en mode I<auto>. Il vous faudra utiliser l'option B<--auto> pour revenir au mode automatique (ou réutiliser B<--config> et choisir l'entrée marquée comme automatique).
 
 Si vous voulez configurer de manière non interactive, vous pouvez utiliser l'option B<--set> (voir ci-dessous).
 
@@ -54,7 +54,7 @@ Comme les opérations de B<update-alternatives> sont très compliquées, voici q
 
 =item nom générique (ou lien alternatif)
 
-C'est un nom, par exemple I</usr/bin/editor>, qui renvoie, à travers le système des S<« alternatives »,> à l'un des fichiers qui remplissent des fonctions similaires.
+C'est un nom, par exemple I</usr/bin/editor>, qui renvoie, à travers le système des « alternatives », à l'un des fichiers qui remplissent des fonctions similaires.
 
 =item nom alternatif
 
@@ -80,17 +80,17 @@ C'est un ensemble de liens symboliques corrélés, de manière qu'on puisse les 
 
 Dans un groupe de liens, c'est le lien alternatif qui détermine comment sont configurés les autres liens du groupe.
 
-=item lien secondaire S<(« slave »)>
+=item lien secondaire (« slave »)
 
 Dans un groupe de liens, c'est un lien alternatif contrôlé par la configuration du lien principal.
 
 =item mode automatique
 
-Quand un groupe de liens est en mode automatique, le système des S<« alternatives »> assure que les liens dans le groupe pointent vers l'alternative possédant la priorité la plus élevée dans ce groupe.
+Quand un groupe de liens est en mode automatique, le système des « alternatives » assure que les liens dans le groupe pointent vers l'alternative possédant la priorité la plus élevée dans ce groupe.
 
 =item mode manuel 
 
-Quand un groupe de liens est en mode manuel, le système des S<« alternatives »> ne modifie pas le paramétrage de l'administrateur système.
+Quand un groupe de liens est en mode manuel, le système des « alternatives » ne modifie pas le paramétrage de l'administrateur système.
 
 =back
 
@@ -102,7 +102,7 @@ Quand un groupe de liens est en mode manuel, le système des S<« alternatives �
 
 Ajoute un groupe d'alternatives au système. I<lien> est le nom générique du lien principal, I<nom> est le nom de son lien symbolique, et I<chemin> est l'alternative présentée pour le lien principal. Les paramètres qui suivent B<--slave> sont le nom générique, le lien symbolique dans le répertoire des alternatives et l'alternative pour un lien secondaire. On peut indiquer zéro ou plusieurs options B<--slave>, chacune suivie par trois paramètres. L'alternative principale doit exister, sinon la commande échouera. Cependant, si une alternative secondaire n'existe pas, le lien secondaire ne sera simplement pas installé (mais un avertissement sera affiché). Si un fichier existe à l'emplacement où l'alternative doit être installée, il est conservé sauf si B<--force> est utilisé.
 
-Quand le lien principal spécifié existe déjà dans les enregistrements du système des S<« alternatives »,> les renseignements fournis sont ajoutés dans un nouvel ensemble d'alternatives pour le groupe. Sinon, un nouveau groupe contenant ces informations est ajouté et mis en mode automatique. Quand un groupe est en mode automatique, et que la priorité des alternatives nouvellement ajoutées est supérieure à celle de toutes les alternatives installées dans ce groupe, les liens symboliques sont mis à jour et pointent vers les alternatives nouvellement ajoutées.
+Quand le lien principal spécifié existe déjà dans les enregistrements du système des « alternatives », les renseignements fournis sont ajoutés dans un nouvel ensemble d'alternatives pour le groupe. Sinon, un nouveau groupe contenant ces informations est ajouté et mis en mode automatique. Quand un groupe est en mode automatique, et que la priorité des alternatives nouvellement ajoutées est supérieure à celle de toutes les alternatives installées dans ce groupe, les liens symboliques sont mis à jour et pointent vers les alternatives nouvellement ajoutées.
 
 =item B<--set> I<nom> I<chemin>
 
@@ -110,7 +110,7 @@ Ajoute le programme I<chemin> comme alternative pour I<nom>. C'est équivalent �
 
 =item B<--remove> I<nom> I<chemin>
 
-Enlève une alternative et tous les liens secondaires associés. I<nom> est un nom dans le répertoire des S<« alternatives »,> et I<chemin> est un nom de fichier auquel I<nom> peut être lié. Quand I<nom> est en effet lié à I<chemin>, I<nom> est mis à jour et pointe vers une autre alternative adéquate ou bien est enlevé s'il n'y en a pas d'autre. De même, les liens secondaires associés sont mis à jour ou enlevés. Quand le lien ne pointe pas déjà sur I<chemin>, aucun lien n'est modifié ; seules les informations sur l'alternative sont supprimées.
+Enlève une alternative et tous les liens secondaires associés. I<nom> est un nom dans le répertoire des « alternatives », et I<chemin> est un nom de fichier auquel I<nom> peut être lié. Quand I<nom> est en effet lié à I<chemin>, I<nom> est mis à jour et pointe vers une autre alternative adéquate ou bien est enlevé s'il n'y en a pas d'autre. De même, les liens secondaires associés sont mis à jour ou enlevés. Quand le lien ne pointe pas déjà sur I<chemin>, aucun lien n'est modifié ; seules les informations sur l'alternative sont supprimées.
 
 =item B<--remove-all> I<nom>
 
@@ -164,19 +164,19 @@ Afficher le numéro de version puis quitter.
 
 =item B<--altdir> I<répertoire>
 
-Donne le répertoire des alternatives, quand il est différent de celui par défaut. Il s'agit par défaut de S<« I<%CONFDIR%/alternatives> ».>
+Donne le répertoire des alternatives, quand il est différent de celui par défaut. Il s'agit par défaut de « I<%CONFDIR%/alternatives> ».
 
 =item B<--admindir> I<répertoire>
 
-Donne le répertoire administratif, quand il est différent de celui par défaut. C'est par défaut S<« I<%ADMINDIR%/alternatives>» si> B<%ADMINDIR_ENVVAR%> n'a pas été défini.
+Donne le répertoire administratif, quand il est différent de celui par défaut. C'est par défaut « I<%ADMINDIR%/alternatives>» si B<%ADMINDIR_ENVVAR%> n'a pas été défini.
 
 =item B<--instdir> I<répertoire>
 
-Définit le répertoire d'installation qui désigne le répertoire où les paquets sont installés (depuis S<dpkg 1.19.2).> Par défaut, c'est S<« I</> »> si B<%INSTDIR_ENVVAR%> n'a pas été défini.
+Définit le répertoire d'installation qui désigne le répertoire où les paquets sont installés (depuis dpkg 1.19.2). Par défaut, c'est « I</> » si B<%INSTDIR_ENVVAR%> n'a pas été défini.
 
 =item B<--root> I<répertoire>
 
-Indique le répertoire racine (depuis la S<version 1.20.1).> Cela définit aussi les répertoires des alternatives, d'installation et d'administration qui correspondent. Par défaut, c'est S<« I</> »> si B<%INSTDIR_ENVVAR%> n'a pas été défini.
+Indique le répertoire racine (depuis la version 1.20.1). Cela définit aussi les répertoires des alternatives, d'installation et d'administration qui correspondent. Par défaut, c'est « I</> » si B<%INSTDIR_ENVVAR%> n'a pas été défini.
 
 =item B<--log> I<fichier>
 
@@ -238,7 +238,7 @@ Si cette variable est positionnée et que l'option B<--admindir> n'est pas préc
 
 =item I<%CONFDIR%/alternatives/>
 
-Le répertoire des S<« alternatives »> par défaut. Peut être remplacé avec l'option B<--altdir>.
+Le répertoire des « alternatives » par défaut. Peut être remplacé avec l'option B<--altdir>.
 
 =item I<%ADMINDIR%/alternatives/>
 
@@ -248,7 +248,7 @@ Le répertoire administratif par défaut. Peut être remplacé avec l'option B<-
 
 =head1 FORMAT DE REQUÊTE
 
-Le format de B<--query> est un format à plat de type RFC822. Il est constitué de I<n> S<+ 1> paragraphes où I<n> est le nombre d'alternatives disponibles dans le groupe de liens interrogé. Le premier paragraphe contient les champs S<suivants :>
+Le format de B<--query> est un format à plat de type RFC822. Il est constitué de I<n> + 1 paragraphes où I<n> est le nombre d'alternatives disponibles dans le groupe de liens interrogé. Le premier paragraphe contient les champs suivants :
 
 =over 
 
@@ -333,7 +333,7 @@ Avec l'option B<--verbose>, B<update-alternatives> affiche de très nombreuses i
 
 There are several packages which provide a text editor compatible with B<vi>, for example B<nvi> and B<vim>.  Which one is used is controlled by the link group B<vi>, which includes links for the program itself and the associated manual page.
 
-Pour afficher les paquets disponibles qui fournissent B<vi> et son paramétrage actuel, on peut utiliser l'action S<B<--display> :>
+Pour afficher les paquets disponibles qui fournissent B<vi> et son paramétrage actuel, on peut utiliser l'action B<--display> :
 
 =over 
 
@@ -341,7 +341,7 @@ Pour afficher les paquets disponibles qui fournissent B<vi> et son paramétrage 
 
 =back
 
-Pour choisir une implémentation particulière de B<vi>, on peut utiliser cette commande en tant que superutilisateur et choisir un nombre dans la S<liste :>
+Pour choisir une implémentation particulière de B<vi>, on peut utiliser cette commande en tant que superutilisateur et choisir un nombre dans la liste :
 
 =over 
 
@@ -349,7 +349,7 @@ Pour choisir une implémentation particulière de B<vi>, on peut utiliser cette 
 
 =back
 
-Pour retrouver l'implémentation par défaut de B<vi>, on peut utiliser cette commande en tant que S<superutilisateur :>
+Pour retrouver l'implémentation par défaut de B<vi>, on peut utiliser cette commande en tant que superutilisateur :
 
 =over 
 

@@ -90,7 +90,7 @@ Het bestand effectief uit de weg (of terug) zetten. B<dpkg-divert> zal de bewerk
 
 =item B<--no-rename>
 
-Geeft aan dat het bestand niet hernoemd mag worden als de omlegging toegevoegd wordt aan of verwijderd wordt uit de databank van omleggingen (sinds dpkg 1.19.1). Dit is bedoeld voor omleggingen van bestanden uit het geheel van B<Essential> pakketten, waarvoor het tijdelijk verdwijnen van het originele bestand onaanvaardbaar is, aangezien dit het systeem onbruikbaar kan maken. Dit is het standaardgedrag, maar dat zal veranderen in de cyclus 1.20.x van dpkg.
+Geeft aan dat het bestand niet hernoemd mag worden als de omlegging toegevoegd wordt aan of verwijderd wordt uit de databank van omleggingen (sinds dpkg 1.19.1). Dit is bedoeld voor omleggingen van bestanden uit het geheel van B<Essential> pakketten, waarvoor het tijdelijk verdwijnen van het originele bestand onaanvaardbaar is, aangezien dit het systeem onbruikbaar kan maken. Dit is het standaardgedrag, dat zal veranderen zodra er geen bekende gebruikers meer zijn, maar niet vóór de releasecyclus van dpkg 1.23.x.
 
 =item B<--test>
 
@@ -143,6 +143,10 @@ Stelt het foutopsporingsmasker in (sinds dpkg 1.21.10) vanaf een octale waarde. 
 =item B<DPKG_COLORS>
 
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen worden zijn: B<auto> (standaard), B<always> en B<never>.
+
+=item B<DPKG_NLS>
+
+Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het activeren van moedertaalondersteuning, ook gekend als internationaliseringsondersteuning (of i18n) (sinds dpkg 1.22.7). Geldige waarden zijn: B<0> and B<1> (standaard).
 
 =back
 

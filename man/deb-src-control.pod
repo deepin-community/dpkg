@@ -2,7 +2,7 @@
 #
 # Copyright © 2010 Oxan van Leeuwen <oxan@oxanvanleeuwen.nl>
 # Copyright © 2011 Raphaël Hertzog <hertzog@debian.org>
-# Copyright © 2011-2015 Guillem Jover <guillem@debian.org>
+# Copyright © 2011-2024 Guillem Jover <guillem@debian.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ A field starts with a field name, such as B<Package> or B<Section>
 (case insensitive), followed by a colon, the body of the field
 (case sensitive unless stated otherwise) and a newline.
 Multi-line fields are also allowed, but each supplementary line, without a
-field name, should start with at least one space.
+field name, must start with at least one space.
 The content of the multi-line
 fields is generally joined to a single line by the tools (except in the case of
 the
@@ -60,8 +60,8 @@ Lines starting with a ‘B<#>’ are treated as comments.
 
 =item B<Source:> I<source-package-name> (required)
 
-The value of this field is the name of the source package, and should
-match the name of the source package in the debian/changelog file.
+The value of this field is the name of the source package,
+and must match the name of the source package in the debian/changelog file.
 A package
 name must consist only of lowercase letters (a-z), digits (0-9), plus (+) and
 minus (-) signs, and periods (.).
@@ -108,6 +108,14 @@ used format is I<bts-type>B<://>I<bts-address>, like
 B<debbugs://bugs.debian.org>.
 This field is usually not needed.
 
+=item B<Build-Driver:> I<driver-name>
+
+This experimental field specifies the name of the build driver to use to
+build this package.
+When omitted the I<driver-name> defaults to B<debian-rules>.
+
+This field is supported since dpkg 1.22.7.
+
 =item B<Rules-Requires-Root:> B<no>|B<binary-targets>|I<impl-keywords>
 
 This field is used to indicate whether the B<debian/rules> file requires
@@ -118,12 +126,13 @@ This field is used to indicate whether the B<debian/rules> file requires
 =item B<no>
 
 The binary targets will not require (fake)root at all.
-This is the default in B<dpkg-build-api> level >= 1.
+This is the default in B<dpkg-build-api> level >= 1,
+or since dpkg 1.22.13.
 
 =item B<binary-targets>
 
 The binary targets must always be run under (fake)root.
-This value is the default in B<dpkg-build-api> level 0,
+This value is the default in B<dpkg-build-api> level 0 until dpkg 1.22.13,
 when the field is omitted;
 adding the field with an explicit B<binary-targets>,
 while not strictly needed,
@@ -200,18 +209,23 @@ software that it installs.
 Some common sections are B<utils>, B<net>, B<mail>, B<text>,
 B<x11>, etc.
 
+When omitted,
+the I<section> defaults to B<unknown>
+(since dpkg 1.22.13).
+
+The accepted values are based on the specific distribution policy.
+
 =item B<Priority:> I<priority>
 
 Sets the importance of this package in relation to the system as a whole.
-Common priorities are B<required>, B<standard>, B<optional>,
-B<extra>, etc.
+The known priorities are B<required>, B<important>, B<standard>, B<optional>,
+B<extra>, and B<unknown>, but other values can be used as well.
 
-The
-B<Section>
-and
-B<Priority>
-fields usually have a defined set of accepted values based on the specific
-distribution policy.
+When omitted,
+the I<priority> defaults to B<optional>
+(since dpkg 1.22.13).
+
+How to apply these values depends on the specific distribution policy.
 
 =item B<Build-Depends:> I<package-list>
 
@@ -322,16 +336,20 @@ for equal to.
 
 An architecture specification consists of one or more architecture names,
 separated by whitespace.
-Exclamation marks may be prepended to each of the
-names, meaning “NOT”.
+Exclamation marks (B<!>) may be prepended to each of the names,
+meaning “NOT”.
 
-A restriction formula consists of one or more restriction lists, separated
-by whitespace.
-Each restriction list is enclosed in angle brackets.
-Items
-in the restriction list are build profile names, separated by whitespace
-and can be prefixed with an exclamation mark, meaning “NOT”.
-A restriction formula represents a disjunctive normal form expression.
+A restriction formula consists of one or more restriction lists,
+separated by whitespace.
+Each restriction list is enclosed in angle brackets (B<E<lt>> and B<E<gt>>).
+Items in the restriction list are build profile names,
+separated by whitespace
+and can be prefixed with an exclamation mark (B<!>),
+meaning “NOT”.
+A restriction formula represents a disjunctive normal form expression,
+that is whitespace inside enclosed angle brackets is read as “AND”,
+and whitespace between enclosing angle brackets is read as “OR“,
+such as “B<E<lt>>foo AND barB<E<gt>> OR B<E<lt>>quux AND bazB<E<gt>>”.
 
 Note that dependencies on packages in the
 B<build-essential>
@@ -340,13 +358,6 @@ impossible.
 A list of these packages is in the build-essential package.
 
 =head1 BINARY FIELDS
-
-Note that the
-B<Priority>, B<Section>
-and
-B<Homepage>
-fields can also be in a binary stanza to override the global value from the
-source package.
 
 =over
 
@@ -363,23 +374,28 @@ B<udeb> is for size-constrained packages used by the debian installer.
 B<deb> is the default value, it is assumed if the field is absent.
 More types might be added in the future.
 
-=item B<Architecture:> I<arch>|B<all>|B<any> (required)
+=item B<Architecture:> I<arch-list> (required)
 
-The architecture specifies on which type of hardware this package runs.
-For
-packages that run on all architectures, use the
-B<any>
-value.
-For packages that are architecture independent, such as shell and Perl
-scripts or documentation, use the
-B<all>
-value.
-To restrict the packages to a certain set of architectures, specify the
-architecture names, separated by a space.
-It's also possible to put
-architecture wildcards in that list (see
-L<dpkg-architecture(1)>
-for more information about them).
+The architecture list specifies on which type of machine this package runs.
+The value should be a list of architecture names and/or wildcards
+separated by spaces.
+
+The special B<all> value, by itself, is meant for packages that are
+architecture independent (such as shell and Perl scripts or documentation),
+the special B<any> wildcard value, by itself, is meant for packages that are
+architecture dependent but run on all architectures
+(which matches on all specific architecture names, excluding B<all>).
+Most packages will use either B<all> or B<any>.
+To restrict the packages to a certain set of architectures,
+specify one or more architecture names and/or architecture wildcards,
+separated by spaces.
+
+An architecture name or wildcard must start with
+an alphanumeric character (“0-9a-zA-Z”),
+and then gets followed by alphanumeric and dash (”-”) characters.
+
+For more information about architecture names and wildcards,
+see L<dpkg-architecture(1)>.
 
 =item B<Build-Profiles:> I<restriction-formula>
 
@@ -412,6 +428,26 @@ These fields are described in the
 L<deb-control(5)>
 manual page, as they are copied literally to the control file of the binary
 package.
+
+=item B<Section:> I<section>
+
+Overrides the value from the same field in the source package stanza.
+
+If there is no field in the binary or source stanza,
+then the it defaults to B<unknown>
+(since dpkg 1.22.13).
+
+=item B<Priority:> I<priority>
+
+Overrides the value from the same field in the source package stanza.
+
+If there is no field in the binary or source stanza,
+then the it defaults to B<optional>
+(since dpkg 1.22.13).
+
+=item B<Homepage:> I<url>
+
+Overrides the value from the same field in the source package stanza.
 
 =item B<Depends:> I<package-list>
 
@@ -473,15 +509,21 @@ the letters B<SBC> and a hyphen.
 
 The field will appear in the source package control file, see L<dsc(5)>.
 
+Only expected in the source package stanza.
+
 =item B<B>
 
 The field will appear in the control file in the binary package, see
 L<deb-control(5)>.
 
+Allowed in the source package stanza or any binary package stanza.
+
 =item B<C>
 
 The field will appear in the upload control (.changes) file, see
 L<deb-changes(5)>.
+
+Only expected in the source package stanza.
 
 =back
 
@@ -499,32 +541,53 @@ fields with B<Private->, such as B<XB-Private-New-Field>.
 
 =head1 EXAMPLE
 
- # Comment
+ # Comment.
  Source: dpkg
  Section: admin
  Priority: required
  Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
- # this field is copied to the binary and source packages
+ # This field is copied to the binary and source packages.
  XBS-Upstream-Release-Status: stable
  Homepage: https://wiki.debian.org/Teams/Dpkg
  Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
  Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git
- Standards-Version: 3.7.3
- Build-Depends: pkgconf, debhelper (>= 4.1.81),
-  libselinux1-dev (>= 1.28-4) [!linux-any]
+ Standards-Version: 4.7.3
+ Build-Depends:
+  dpkg-build-api (= 1),
+  debhelper-compat (= 13),
+  debhelper (>= 13.10~),
+  pkgconf,
+  libselinux1-dev (>= 1.28-4) [!linux-any],
 
  Package: dpkg-dev
  Section: utils
  Priority: optional
  Architecture: all
- # this is a custom field in the binary package
+ # This is a custom field in the binary package.
  XB-Mentoring-Contact: Raphael Hertzog <hertzog@debian.org>
- Depends: dpkg (>= 1.14.6), perl5, perl-modules, cpio (>= 2.4.2-2),
-  bzip2, lzma, patch (>= 2.2-1), make, binutils, libtimedate-perl
- Recommends: gcc | c-compiler, build-essential
- Suggests: gnupg, debian-keyring
- Conflicts: dpkg-cross (<< 2.0.0), devscripts (<< 2.10.26)
- Replaces: manpages-pl (<= 20051117-1)
+ Depends:
+  libdpkg-perl (= ${source:Version}),
+  dpkg (>= 1.14.6),
+  binutils,
+  bzip2,
+  xz-utils,
+ # This is a comment in the middle of a field value.
+  make,
+  patch (>= 2.2-1),
+  perl-modules,
+  perl5,
+ Recommends:
+  build-essential,
+  gcc | c-compiler,
+ Suggests:
+  debian-keyring,
+ Conflicts:
+  devscripts (<< 2.10.26),
+ Replaces:
+  manpages-pl (<= 20051117-1),
+ Provides:
+  dpkg-build-api (= 0),
+  dpkg-build-api (= 1),
  Description: Debian package development tools
   This package provides the development tools (including dpkg-source)
   required to unpack, build and upload Debian source packages.

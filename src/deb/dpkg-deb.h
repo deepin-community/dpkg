@@ -40,7 +40,7 @@ extern int opt_verbose;
 extern int opt_root_owner_group;
 extern int opt_uniform_compression;
 extern int opt_debug;
-extern int opt_nocheck;
+extern int opt_check;
 extern const char *opt_showformat;
 
 extern struct deb_version deb_format;
@@ -60,8 +60,9 @@ enum DPKG_ATTR_ENUM_FLAGS dpkg_tar_options {
 	DPKG_TAR_CREATE_DIR = DPKG_BIT(4),
 };
 
-void extracthalf(const char *debar, const char *dir,
-                 enum dpkg_tar_options taroption, int admininfo);
+void
+extracthalf(const char *debar, const char *dir,
+            enum dpkg_tar_options taroption, int admininfo);
 
 extern struct compress_params compress_params_deb0;
 extern struct compress_params compress_params;
@@ -81,9 +82,9 @@ extern struct compress_params compress_params;
 #define DATAMEMBER		"data.tar"
 
 #ifdef PATH_MAX
-# define INTERPRETER_MAX PATH_MAX
+# define INTERPRETER_MAX	PATH_MAX
 #else
-# define INTERPRETER_MAX 1024
+# define INTERPRETER_MAX	1024
 #endif
 
 #endif /* DPKG_DEB_H */

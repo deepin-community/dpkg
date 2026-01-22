@@ -30,7 +30,39 @@ A substituição de variável tem o formato B<${>I<variable-name>B<}>.  Nomes de
 
 =head2 Sintaxe de Ficheiro
 
-As variáveis de substituição podem ser especificadas num ficheiro. Estes ficheiros consistem de linhas no formato I<name>B<=>I<value> ou I<name>B<?=>I<value>. O operado B<=> designa uma substituição normal de variável, enquanto o operador B<?=> (desde dpkg 1.21.8) designa uma variável de substituição opcional a qual não irá emitir avisos mesmo se não for usada. Espaços no final de cada linha, as linhas em branco, e as linhas que comecem com o símbolo B<#> (comentários) serão ignoradas.
+Variáveis de substituição podem ser especificadas num ficheiro.  Estes ficheiros consistem de linhas com atribuições de variável, que começam com o nome da variável, imediatamente seguido dum operador de atribuição, e depois o valor.  Cada operador dá os atributos específicos da variável.  Espaços em branco atrás de cada linha, linhas vazias, e linhas começadas com um símbolo B<#>(comentários) são ignorados.
+
+Os seguintes operadores são suportados:
+
+=over 
+
+=item B<=>
+
+Atribui uma variável de substituição normal.
+
+=item B<?=>
+
+Atribui uma variável de substituição opcional que não vai emitir avisos mesmo que não usada.
+
+Suportado desde dpkg 1.21.8.
+
+=item B<!=>
+
+Atribui uma variável de substituição requerida que irá dar erro se não for usada.
+
+Suportado desde dpkg 1.22.7
+
+=item B<$=>
+
+Atribui uma variável de substituição implícita que vai ser automaticamente instanciada como um campo, se esse campo não estiver definido para ficheiros de controle B<.dsc> e B<.deb>.
+
+O nome da variável precisa de ser formado como um espaço de nome seguido por dois pontos (‘B<:>’) e depois o nome do campo, tal como B<tool:Depends>. Todas as variáveis implícitas para qualquer espaço de nome que corresponda ao mesmo campo irão ser concatenadas usando um separador de campo conhecido; ou um espaço se o separador de campo for desconhecido.
+
+Suportado desde dpkg 1.23.0.
+
+=back
+
+Por exemplo C<algum-pacote:Depends?=outro-pacote (= 1.0), o-pacote>.
 
 =head2 Substituição
 

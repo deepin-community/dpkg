@@ -38,6 +38,7 @@
 #include <dpkg/debug.h>
 #include <dpkg/dpkg.h>
 #include <dpkg/dpkg-db.h>
+#include <dpkg/string.h>
 #include <dpkg/pkg.h>
 #include <dpkg/subproc.h>
 #include <dpkg/command.h>
@@ -60,17 +61,17 @@ post_postinst_tasks(struct pkginfo *pkg, enum pkgstatus new_status)
 		pkg_set_status(pkg, PKG_STAT_INSTALLED);
 	modstatdb_note(pkg);
 
-	debug(dbg_triggersdetail, "post_postinst_tasks - trig_incorporate");
+	debug_at(dbg_triggersdetail, "trig_incorporate");
 	trig_incorporate(modstatdb_get_status());
 }
 
 static void
 post_script_tasks(void)
 {
-	debug(dbg_triggersdetail, "post_script_tasks - ensure_diversions");
+	debug_at(dbg_triggersdetail, "ensure_diversions");
 	ensure_diversions();
 
-	debug(dbg_triggersdetail, "post_script_tasks - trig_incorporate");
+	debug_at(dbg_triggersdetail, "trig_incorporate");
 	trig_incorporate(modstatdb_get_status());
 }
 
@@ -87,7 +88,8 @@ setexecute(const char *path, struct stat *stab)
 		return;
 	if (!chmod(path, 0755))
 		return;
-	ohshite(_("unable to set execute permissions on '%.250s'"), path);
+
+	ohshite(_("unable to set execute permissions on '%s'"), path);
 }
 
 /**
@@ -122,12 +124,14 @@ maintscript_pre_exec(struct command *cmd)
 			         "directory with --force-not-root, consider "
 			         "using --force-script-chrootless?"));
 		else if (rc)
-			ohshite(_("failed to chroot to '%.250s'"), instdir);
+			ohshite(_("failed to chroot to '%s'"), instdir);
 	}
+
 	/* Switch to a known good directory to give the maintainer script
 	 * a saner environment, also needed after the chroot(). */
 	if (chdir(changedir))
-		ohshite(_("failed to chdir to '%.255s'"), changedir);
+		ohshite(_("failed to chdir to '%s'"), changedir);
+
 	if (debug_has_flag(dbg_scripts)) {
 		struct varbuf args = VARBUF_INIT;
 		const char **argv = cmd->argv;
@@ -136,11 +140,11 @@ maintscript_pre_exec(struct command *cmd)
 			varbuf_add_char(&args, ' ');
 			varbuf_add_str(&args, *argv);
 		}
-		varbuf_end_str(&args);
-		debug(dbg_scripts, "fork/exec %s (%s )", cmd->filename,
-		      args.buf);
+		debug(dbg_scripts, "fork/exec %s (%s )",
+		      cmd->filename, varbuf_str(&args));
 		varbuf_destroy(&args);
 	}
+
 	if (instdirlen == 0 || in_force(FORCE_SCRIPT_CHROOTLESS))
 		return cmd->filename;
 
@@ -170,7 +174,7 @@ maintscript_set_exec_context(struct command *cmd)
 
 static int
 maintscript_exec(struct pkginfo *pkg, struct pkgbin *pkgbin,
-                 struct command *cmd, struct stat *stab, int warn)
+                 struct command *cmd, struct stat *stab, int subproc_opts)
 {
 	pid_t pid;
 	int rc;
@@ -205,7 +209,7 @@ maintscript_exec(struct pkginfo *pkg, struct pkgbin *pkgbin,
 		command_exec(cmd);
 	}
 	subproc_signals_ignore(cmd->name);
-	rc = subproc_reap(pid, cmd->name, warn);
+	rc = subproc_reap(pid, cmd->name, subproc_opts);
 	subproc_signals_restore();
 
 	pop_cleanup(ehflag_normaltidy);
@@ -214,19 +218,19 @@ maintscript_exec(struct pkginfo *pkg, struct pkgbin *pkgbin,
 }
 
 static int
-vmaintscript_installed(struct pkginfo *pkg, const char *scriptname,
-                       const char *desc, va_list args)
+vmaintscript_run_old(struct pkginfo *pkg,
+                     const char *scriptname, va_list args)
 {
 	struct command cmd;
 	const char *scriptpath;
 	struct stat stab;
-	char *buf;
+	char *scriptdesc;
 
 	scriptpath = pkg_infodb_get_file(pkg, &pkg->installed, scriptname);
-	m_asprintf(&buf, _("installed %s package %s script"),
-	           pkg_name(pkg, pnaw_nonambig), desc);
+	scriptdesc = str_fmt(_("old %s package %s maintainer script"),
+	                     pkg_name(pkg, pnaw_nonambig), scriptname);
 
-	command_init(&cmd, scriptpath, buf);
+	command_init(&cmd, scriptpath, scriptdesc);
 	command_add_arg(&cmd, scriptname);
 	command_add_argv(&cmd, args);
 
@@ -234,18 +238,16 @@ vmaintscript_installed(struct pkginfo *pkg, const char *scriptname,
 		command_destroy(&cmd);
 
 		if (errno == ENOENT) {
-			debug(dbg_scripts,
-			      "vmaintscript_installed nonexistent %s",
-			      scriptname);
-			free(buf);
+			debug_at(dbg_scripts, "nonexistent %s", scriptname);
+			free(scriptdesc);
 			return 0;
 		}
-		ohshite(_("unable to stat %s '%.250s'"), buf, scriptpath);
+		ohshite(_("unable to stat %s '%s'"), scriptdesc, scriptpath);
 	}
 	maintscript_exec(pkg, &pkg->installed, &cmd, &stab, 0);
 
 	command_destroy(&cmd);
-	free(buf);
+	free(scriptdesc);
 
 	return 1;
 }
@@ -255,14 +257,13 @@ vmaintscript_installed(struct pkginfo *pkg, const char *scriptname,
  */
 
 int
-maintscript_installed(struct pkginfo *pkg, const char *scriptname,
-                      const char *desc, ...)
+maintscript_run_old(struct pkginfo *pkg, const char *scriptname, ...)
 {
 	va_list args;
 	int rc;
 
-	va_start(args, desc);
-	rc = vmaintscript_installed(pkg, scriptname, desc, args);
+	va_start(args, scriptname);
+	rc = vmaintscript_run_old(pkg, scriptname, args);
 	va_end(args);
 
 	if (rc)
@@ -278,7 +279,7 @@ maintscript_postinst(struct pkginfo *pkg, ...)
 	int rc;
 
 	va_start(args, pkg);
-	rc = vmaintscript_installed(pkg, POSTINSTFILE, "post-installation", args);
+	rc = vmaintscript_run_old(pkg, POSTINSTFILE, args);
 	va_end(args);
 
 	if (rc)
@@ -288,20 +289,21 @@ maintscript_postinst(struct pkginfo *pkg, ...)
 }
 
 int
-maintscript_new(struct pkginfo *pkg, const char *scriptname,
-                const char *desc, const char *cidir, char *cidirrest, ...)
+maintscript_run_new(struct pkginfo *pkg,
+                    const char *cidir, char *cidirrest,
+                    const char *scriptname, ...)
 {
 	struct command cmd;
 	struct stat stab;
 	va_list args;
-	char *buf;
+	char *scriptdesc;
 
 	strcpy(cidirrest, scriptname);
-	m_asprintf(&buf, _("new %s package %s script"),
-	           pkg_name(pkg, pnaw_nonambig), desc);
+	scriptdesc = str_fmt(_("new %s package %s maintainer script"),
+	                     pkg_name(pkg, pnaw_nonambig), scriptname);
 
-	va_start(args, cidirrest);
-	command_init(&cmd, cidir, buf);
+	va_start(args, scriptname);
+	command_init(&cmd, cidir, scriptdesc);
 	command_add_arg(&cmd, scriptname);
 	command_add_argv(&cmd, args);
 	va_end(args);
@@ -310,68 +312,69 @@ maintscript_new(struct pkginfo *pkg, const char *scriptname,
 		command_destroy(&cmd);
 
 		if (errno == ENOENT) {
-			debug(dbg_scripts,
-			      "maintscript_new nonexistent %s '%s'",
-			      scriptname, cidir);
-			free(buf);
+			debug_at(dbg_scripts, "nonexistent %s '%s'",
+			         scriptname, cidir);
+			free(scriptdesc);
 			return 0;
 		}
-		ohshite(_("unable to stat %s '%.250s'"), buf, cidir);
+		ohshite(_("unable to stat %s '%s'"), scriptdesc, cidir);
 	}
 	maintscript_exec(pkg, &pkg->available, &cmd, &stab, 0);
 
 	command_destroy(&cmd);
-	free(buf);
+	free(scriptdesc);
 	post_script_tasks();
 
 	return 1;
 }
 
 int
-maintscript_fallback(struct pkginfo *pkg,
-                     const char *scriptname, const char *desc,
-                     const char *cidir, char *cidirrest,
-                     const char *ifok, const char *iffallback)
+maintscript_run_old_or_new(struct pkginfo *pkg,
+                           const char *cidir, char *cidirrest,
+                           const char *scriptname,
+                           const char *ifok, const char *iffallback)
 {
 	struct command cmd;
 	const char *oldscriptpath;
 	struct stat stab;
-	char *buf;
+	char *scriptdesc;
 
 	oldscriptpath = pkg_infodb_get_file(pkg, &pkg->installed, scriptname);
-	m_asprintf(&buf, _("old %s package %s script"),
-	           pkg_name(pkg, pnaw_nonambig), desc);
+	scriptdesc = str_fmt(_("old %s package %s maintainer script"),
+	                     pkg_name(pkg, pnaw_nonambig), scriptname);
 
-	command_init(&cmd, oldscriptpath, buf);
+	command_init(&cmd, oldscriptpath, scriptdesc);
 	command_add_args(&cmd, scriptname, ifok,
 	                 versiondescribe(&pkg->available.version, vdew_nonambig),
 	                 NULL);
 
 	if (stat(oldscriptpath, &stab)) {
 		if (errno == ENOENT) {
-			debug(dbg_scripts,
-			      "maintscript_fallback nonexistent %s '%s'",
-			      scriptname, oldscriptpath);
+			debug_at(dbg_scripts, "nonexistent %s '%s'",
+			         scriptname, oldscriptpath);
 			command_destroy(&cmd);
-			free(buf);
+			free(scriptdesc);
 			return 0;
 		}
-		warning(_("unable to stat %s '%.250s': %s"),
+		warning(_("unable to stat %s '%s': %s"),
 		        cmd.name, oldscriptpath, strerror(errno));
 	} else if (!maintscript_exec(pkg, &pkg->installed, &cmd, &stab, SUBPROC_WARN)) {
 		command_destroy(&cmd);
-		free(buf);
+		free(scriptdesc);
 		post_script_tasks();
 		return 1;
 	}
-	notice(_("trying script from the new package instead ..."));
+	command_destroy(&cmd);
+	free(scriptdesc);
+
+	notice(_("trying %s maintainer script from the new %s package instead ..."),
+	       scriptname, pkg_name(pkg, pnaw_nonambig));
 
 	strcpy(cidirrest, scriptname);
-	m_asprintf(&buf, _("new %s package %s script"),
-	           pkg_name(pkg, pnaw_nonambig), desc);
+	scriptdesc = str_fmt(_("new %s package %s maintainer script"),
+	                     pkg_name(pkg, pnaw_nonambig), scriptname);
 
-	command_destroy(&cmd);
-	command_init(&cmd, cidir, buf);
+	command_init(&cmd, cidir, scriptdesc);
 	command_add_args(&cmd, scriptname, iffallback,
 	                 versiondescribe(&pkg->installed.version, vdew_nonambig),
 	                 versiondescribe(&pkg->available.version, vdew_nonambig),
@@ -381,17 +384,19 @@ maintscript_fallback(struct pkginfo *pkg,
 		command_destroy(&cmd);
 
 		if (errno == ENOENT)
-			ohshit(_("there is no script in the new version of the package - giving up"));
+			ohshit(_("missing %s maintainer script in new %s package, giving up"),
+			       scriptname, pkg_name(pkg, pnaw_nonambig));
 		else
-			ohshite(_("unable to stat %s '%.250s'"), buf, cidir);
+			ohshite(_("unable to stat %s '%s'"), scriptdesc, cidir);
 	}
 
 	maintscript_exec(pkg, &pkg->available, &cmd, &stab, 0);
-	notice(_("... it looks like that went OK"));
 
 	command_destroy(&cmd);
-	free(buf);
+	free(scriptdesc);
 	post_script_tasks();
+
+	notice(_("... it looks like that went OK"));
 
 	return 1;
 }

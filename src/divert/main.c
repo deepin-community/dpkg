@@ -28,7 +28,7 @@
 #include <sys/stat.h>
 
 #include <errno.h>
-#if HAVE_LOCALE_H
+#ifdef HAVE_LOCALE_H
 #include <locale.h>
 #endif
 #include <fcntl.h>
@@ -103,7 +103,7 @@ usage(const char *const *argv)
 "  --admindir <directory>   set the directory with the diversions file.\n"
 "  --instdir <directory>    set the root directory, but not the admin dir.\n"
 "  --root <directory>       set the directory of the root filesystem.\n"
-"  --test                   don't do anything, just demonstrate.\n"
+"  --test                   do not do anything, just demonstrate.\n"
 "  --quiet                  quiet operation, minimal output.\n"
 "  --help                   show this help message.\n"
 "  --version                show the version.\n"
@@ -127,7 +127,7 @@ opt_rename_setup(void)
 
 	opt_rename = 0;
 	warning(_("please specify --no-rename explicitly, the default "
-	          "will change to --rename in 1.20.x"));
+	          "will change to --rename not before 1.23.x"));
 }
 
 struct file {
@@ -147,7 +147,6 @@ file_init(struct file *f, const char *filename)
 
 	varbuf_add_str(&usefilename, dpkg_fsys_get_dir());
 	varbuf_add_str(&usefilename, filename);
-	varbuf_end_str(&usefilename);
 
 	f->name = varbuf_detach(&usefilename);
 	f->stat_state = FILE_STAT_INVALID;
@@ -312,24 +311,22 @@ static const char *
 varbuf_diversion(struct varbuf *str, const char *pkgname,
                  const char *filename, const char *divertto)
 {
-	varbuf_reset(str);
-
 	if (pkgname == NULL) {
 		if (divertto == NULL)
-			varbuf_printf(str, _("local diversion of %s"), filename);
+			varbuf_set_fmt(str, _("local diversion of %s"), filename);
 		else
-			varbuf_printf(str, _("local diversion of %s to %s"),
+			varbuf_set_fmt(str, _("local diversion of %s to %s"),
 			              filename, divertto);
 	} else {
 		if (divertto == NULL)
-			varbuf_printf(str, _("diversion of %s by %s"),
-			              filename, pkgname);
+			varbuf_set_fmt(str, _("diversion of %s by %s"),
+			               filename, pkgname);
 		else
-			varbuf_printf(str, _("diversion of %s to %s by %s"),
-			              filename, divertto, pkgname);
+			varbuf_set_fmt(str, _("diversion of %s to %s by %s"),
+			               filename, divertto, pkgname);
 	}
 
-	return str->buf;
+	return varbuf_str(str);
 }
 
 static const char *
@@ -338,18 +335,17 @@ diversion_current(const char *filename)
 	static struct varbuf str = VARBUF_INIT;
 
 	if (opt_pkgname_match_any) {
-		varbuf_reset(&str);
-
 		if (opt_divertto == NULL)
-			varbuf_printf(&str, _("any diversion of %s"), filename);
+			varbuf_set_fmt(&str, _("any diversion of %s"), filename);
 		else
-			varbuf_printf(&str, _("any diversion of %s to %s"),
-			              filename, opt_divertto);
+			varbuf_set_fmt(&str, _("any diversion of %s to %s"),
+			               filename, opt_divertto);
 	} else {
-		return varbuf_diversion(&str, opt_pkgname, filename, opt_divertto);
+		return varbuf_diversion(&str, opt_pkgname,
+		                        filename, opt_divertto);
 	}
 
-	return str.buf;
+	return varbuf_str(&str);
 }
 
 static const char *
@@ -462,6 +458,7 @@ diversion_is_owned_by_self(struct pkgset *set, struct fsys_namenode *namenode)
 	return owned;
 }
 
+/* TODO: Refactor diversion accesses. */
 static int
 diversion_add(const char *const *argv)
 {
@@ -511,9 +508,12 @@ diversion_add(const char *const *argv)
 
 	/* Check we are not stomping over an existing diversion. */
 	if (fnn_from->divert || fnn_to->divert) {
-		if (fnn_to->divert && fnn_to->divert->camefrom &&
+		/* TODO: Refactor this overly complex conditional. */
+		if (fnn_to->divert &&
+		    fnn_to->divert->camefrom &&
 		    strcmp(fnn_to->divert->camefrom->name, filename) == 0 &&
-		    fnn_from->divert && fnn_from->divert->useinstead &&
+		    fnn_from->divert &&
+		    fnn_from->divert->useinstead &&
 		    strcmp(fnn_from->divert->useinstead->name, opt_divertto) == 0 &&
 		    fnn_from->divert->pkgset == pkgset) {
 			if (opt_verbose > 0)
@@ -632,12 +632,14 @@ diversion_remove(const char *const *argv)
 
 	namenode = fsys_hash_find_node(filename, FHFF_NO_NEW);
 
-	if (namenode == NULL || namenode->divert == NULL ||
+	if (namenode == NULL ||
+	    namenode->divert == NULL ||
 	    namenode->divert->useinstead == NULL) {
 		if (opt_verbose > 0)
 			printf(_("No diversion '%s', none removed.\n"),
 			       diversion_current(filename));
 		modstatdb_shutdown();
+
 		return 0;
 	}
 
@@ -671,6 +673,7 @@ diversion_remove(const char *const *argv)
 			printf(_("Ignoring request to remove shared diversion '%s'.\n"),
 			       diversion_describe(contest));
 		modstatdb_shutdown();
+
 		return 0;
 	}
 
@@ -866,7 +869,8 @@ main(int argc, const char * const *argv)
 	dpkg_program_init("dpkg-divert");
 	dpkg_options_parse(&argv, cmdinfos, printforhelp);
 
-	debug(dbg_general, "root=%s admindir=%s", dpkg_fsys_get_dir(), dpkg_db_get_dir());
+	debug(dbg_general, "root=%s admindir=%s",
+	      dpkg_fsys_get_dir(), dpkg_db_get_dir());
 
 	env_pkgname = getenv("DPKG_MAINTSCRIPT_PACKAGE");
 	if (opt_pkgname_match_any && env_pkgname)

@@ -157,7 +157,7 @@ Implementação actual: o B<preinst> verifica se o directório existe, não cont
 
 Quando usar um ajudante de empacotamento, por favor verifique se ele tem integração com B<dpkg-maintscript-helper> nativa, o que pode tornar a sua vida mais fácil. Veja por exemplo L<dh_installdeb(1)>.
 
-Dado que B<dpkg-maintscript-helper> é usado no B<preinst>, usa-lo incondicionalmente requer uma pré-dependência para assegurar que a versão requerida do B<dpkg> já foi desempacotada antes. A versão requerida depende do comando usado, para B<rm_conffile> e B<mv_conffile> é 1.15.7.2, para B<symlink_to_dir> e B<dir_to_symlink> é 1.17.14:
+Dado que B<dpkg-maintscript-helper> é usado no B<preinst>, usa-lo incondicionalmente requer uma pré-dependência versionada para assegurar que a versão requerida do B<dpkg> já foi desempacotada antes, a menos que saibamos que estamos a atualizar a partir de um lançamento onde a versão de dpkg requerida vai ser satisfeita.  A versão requerida depende do comando usado, para B<rm_conffile> e B<mv_conffile> é 1.15.7.2, para B<symlink_to_dir> e B<dir_to_symlink> é 1.17.14.  Por exemplo, se nós requerermos suporte para B<symlink_to_dir> ao atualizar a partir dum lançamento que tinha uma versão de dpkg anterior a 1.17.14, nós iremos precisar de adicionar:
 
 =over 
 

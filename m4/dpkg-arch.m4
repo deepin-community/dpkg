@@ -3,7 +3,7 @@
 # Copyright © 2006-2023 Guillem Jover <guillem@debian.org>
 
 # _DPKG_ARCHITECTURE([DEB_VAR], [sh_var])
-# ---------------------------------------
+# ------------------
 # Use dpkg-architecture from the source tree to set sh_var using DEB_VAR for
 # the target architecture, to avoid duplicating its logic.
 AC_DEFUN([_DPKG_ARCHITECTURE], [
@@ -19,7 +19,7 @@ AC_DEFUN([_DPKG_ARCHITECTURE], [
 AC_DEFUN([DPKG_CPU_TYPE], [
   AC_MSG_CHECKING([dpkg cpu type])
   _DPKG_ARCHITECTURE([DEB_HOST_ARCH_CPU], [cpu_type])
-  AS_IF([test "x$cpu_type" = "x"], [
+  AS_IF([test -z "$cpu_type"], [
     cpu_type=$host_cpu
     AC_MSG_RESULT([$cpu_type])
     AC_MSG_WARN([$host_cpu not found in cputable])
@@ -37,7 +37,7 @@ AC_DEFUN([DPKG_CPU_TYPE], [
 AC_DEFUN([DPKG_OS_TYPE], [
   AC_MSG_CHECKING([dpkg operating system type])
   _DPKG_ARCHITECTURE([DEB_HOST_ARCH_OS], [os_type])
-  AS_IF([test "x$os_type" = "x"], [
+  AS_IF([test -z "$os_type"], [
     os_type=$host_os
     AC_MSG_RESULT([$os_type])
     AC_MSG_WARN([$host_os not found in ostable])
@@ -49,7 +49,7 @@ AC_DEFUN([DPKG_OS_TYPE], [
 ])# DPKG_OS_TYPE
 
 # DPKG_ARCHITECTURE
-# ------------------------
+# -----------------
 # Determine the Debian name for the host operating system,
 # sets ARCHITECTURE.
 AC_DEFUN([DPKG_ARCHITECTURE], [
@@ -57,7 +57,7 @@ AC_DEFUN([DPKG_ARCHITECTURE], [
   DPKG_OS_TYPE
   AC_MSG_CHECKING([dpkg architecture name])
   _DPKG_ARCHITECTURE([DEB_HOST_ARCH], [dpkg_arch])
-  AS_IF([test "x$dpkg_arch" = "x"], [
+  AS_IF([test -z "$dpkg_arch"], [
     AC_MSG_ERROR([cannot determine host dpkg architecture])
   ], [
     AC_MSG_RESULT([$dpkg_arch])
@@ -80,6 +80,7 @@ AC_DEFUN([DPKG_ARCH_ABI], [
   AC_CHECK_SIZEOF([long double])
   AC_CHECK_SIZEOF([void *])
   AC_CHECK_SIZEOF([off_t], [], [[
+#undef _TIME_BITS
 #undef _FILE_OFFSET_BITS
 #undef _LARGE_FILES
 #include <sys/types.h>

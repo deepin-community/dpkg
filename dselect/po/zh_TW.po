@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dselect 1.13\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2024-03-10 20:21+0100\n"
+"POT-Creation-Date: 2026-01-18 18:28+0100\n"
 "PO-Revision-Date: 2023-01-28 15:57+0800\n"
 "Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: Chinese (traditional) <debian-l10n-chinese@lists.debian.org>\n"
@@ -106,11 +106,16 @@ msgid "%s to go back"
 msgstr "%s 可跳回原位"
 
 #: dselect/bindings.cc
+#, fuzzy
+#| msgid "[not bound]"
+msgctxt "keybinding"
 msgid "[not bound]"
 msgstr "[未綁定按鍵]"
 
 #: dselect/bindings.cc
-#, c-format
+#, fuzzy, c-format
+#| msgid "[unk: %d]"
+msgctxt "keybinding"
 msgid "[unk: %d]"
 msgstr "[未知：%d]"
 
@@ -408,6 +413,41 @@ msgid "Introduction to conflict/dependency resolution sub-list"
 msgstr "用於解決衝突/依賴問題的子列表簡介"
 
 #: dselect/helpmsgs.cc
+#, fuzzy
+#| msgid ""
+#| "Dependency/conflict resolution - introduction.\n"
+#| "\n"
+#| "One or more of your choices have raised a conflict or dependency problem "
+#| "-\n"
+#| "some packages should only be installed in conjunction with certain "
+#| "others, and\n"
+#| "some combinations of packages may not be installed together.\n"
+#| "\n"
+#| "You will see a sub-list containing the packages involved.  The bottom "
+#| "half of\n"
+#| "the display shows relevant conflicts and dependencies; use 'i' to cycle "
+#| "between\n"
+#| "that, the package descriptions and the internal control information.\n"
+#| "\n"
+#| "A set of 'suggested' packages has been calculated, and the initial "
+#| "markings in\n"
+#| "this sub-list have been set to match those, so you can just hit Return "
+#| "to\n"
+#| "accept the suggestions if you wish.  You may abort the change(s) which "
+#| "caused\n"
+#| "the problem(s), and go back to the main list, by pressing capital 'X'.\n"
+#| "\n"
+#| "You can also move around the list and change the markings so that they "
+#| "are more\n"
+#| "like what you want, and you can 'reject' my suggestions by using the "
+#| "capital\n"
+#| "'D' or 'R' keys (see the keybindings help screen).  You can use capital "
+#| "'Q' to\n"
+#| "force to accept the situation currently displayed, in case you want to\n"
+#| "override a recommendation or think that the program is mistaken.\n"
+#| "\n"
+#| "Press <space> to leave help and enter the sub-list; remember: press '?' "
+#| "for help.\n"
 msgid ""
 "Dependency/conflict resolution - introduction.\n"
 "\n"
@@ -420,7 +460,7 @@ msgid ""
 "of\n"
 "the display shows relevant conflicts and dependencies; use 'i' to cycle "
 "between\n"
-"that, the package descriptions and the internal control information.\n"
+"that, the package descriptions and the internal package metadata.\n"
 "\n"
 "A set of 'suggested' packages has been calculated, and the initial markings "
 "in\n"
@@ -849,9 +889,10 @@ msgid "<attr> is:"
 msgstr "<attr> 是："
 
 #: dselect/main.cc
-#, c-format
-msgid "couldn't open debug file '%.255s'\n"
-msgstr "無法打開偵錯檔案「%.255s」\n"
+#, fuzzy, c-format
+#| msgid "couldn't open debug file '%s'\n"
+msgid "cannot open debug file '%s'\n"
+msgstr "無法打開偵錯檔案「%s」\n"
 
 #: dselect/main.cc
 #, c-format
@@ -902,11 +943,19 @@ msgid "terminal lacks necessary features, giving up"
 msgstr "由於終端機缺乏必要功能，只能放棄操作"
 
 #: dselect/main.cc
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "\n"
+#| "Move around with ^P and ^N, cursor keys, initial letters, or digits;\n"
+#| "Press <enter> to confirm selection.   ^L redraws screen.\n"
+#| "\n"
 msgid ""
 "\n"
 "\n"
-"Move around with ^P and ^N, cursor keys, initial letters, or digits;\n"
-"Press <enter> to confirm selection.   ^L redraws screen.\n"
+"Move around with Ctrl+P and Ctrl+N, cursor keys, initial letters, or "
+"digits;\n"
+"Press <enter> to confirm selection. Ctrl+L redraws screen.\n"
 "\n"
 msgstr ""
 "\n"
@@ -939,8 +988,8 @@ msgstr "在主選單中 getch 失敗"
 
 #: dselect/main.cc
 #, c-format
-msgid "unknown action string '%.50s'"
-msgstr "未知的動作字串「%.50s」"
+msgid "unknown action string '%s'"
+msgstr "未知的動作字串「%s」"
 
 #: dselect/methlist.cc
 msgid "Abbrev."
@@ -1043,33 +1092,33 @@ msgstr "查詢/設置指令稿"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "syntax error in method options file '%.250s' -- %s"
-msgstr "存取方式的選項檔案「%.250s」中有語法錯誤 -- %s"
+msgid "syntax error in method options file '%s' -- %s"
+msgstr "存取方式的選項檔案「%s」中有語法錯誤 -- %s"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "error reading options file '%.250s'"
-msgstr "讀取安裝方式的選項檔案「%.250s」時出錯"
+msgid "error reading options file '%s'"
+msgstr "讀取安裝方式的選項檔案「%s」時出錯"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to read '%.250s' directory for reading methods"
-msgstr "無法讀取「%.250s」目錄中關於安裝方式的訊息"
+msgid "unable to read '%s' directory for reading methods"
+msgstr "無法讀取「%s」目錄中關於安裝方式的訊息"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "method '%.250s' has name that is too long (%d > %d characters)"
-msgstr "安裝方式「%.250s」的名字過長 (%d > %d 個字元)"
+msgid "method '%s' has name that is too long (%d > %d characters)"
+msgstr "安裝方式「%s」的名字過長 (%d > %d 個字元)"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to access method script '%.250s'"
-msgstr "無法取得方式指令稿「%.250s」"
+msgid "unable to access method script '%s'"
+msgstr "無法取得方式指令稿「%s」"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to read method options file '%.250s'"
-msgstr "無法讀取方式選項檔「%.250s」"
+msgid "unable to read method options file '%s'"
+msgstr "無法讀取方式選項檔「%s」"
 
 #: dselect/methparse.cc
 msgid "non-digit where digit wanted"
@@ -1116,39 +1165,25 @@ msgid "end of file in summary - missing newline"
 msgstr "在概述中發現 EOF - 缺少換列符號"
 
 #: dselect/methparse.cc
-#, c-format
-msgid "unable to open option description file '%.250s'"
-msgstr "無法開啟選項說明檔「%.250s」"
+#, fuzzy, c-format
+#| msgid "failed to read option description file '%s'"
+msgid "cannot load option description file '%s'"
+msgstr "讀取選項說明檔「%s」失敗"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to stat option description file '%.250s'"
-msgstr "無法取得選項說明檔「%.250s」的狀態"
+msgid "error during read of method options file '%s'"
+msgstr "讀取安裝方式的選項檔「%s」時出錯"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "failed to read option description file '%.250s'"
-msgstr "讀取選項說明檔「%.250s」失敗"
+msgid "unable to open current option file '%s'"
+msgstr "無法開啟目前的選項檔「%s」"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "error during read of option description file '%.250s'"
-msgstr "讀取選項說明檔「%.250s」時出錯"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "error during read of method options file '%.250s'"
-msgstr "讀取安裝方式的選項檔「%.250s」時出錯"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "unable to open current option file '%.250s'"
-msgstr "無法開啟目前的選項檔「%.250s」"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "unable to write new option to '%.250s'"
-msgstr "無法寫入新的選項檔至「%.250s」"
+msgid "unable to write new option to '%s'"
+msgstr "無法寫入新的選項檔至「%s」"
 
 #: dselect/pkgdisplay.cc
 msgid "new package"
@@ -1170,10 +1205,6 @@ msgstr "移除"
 msgid "purge"
 msgstr "清理"
 
-#. TRANSLATORS: The space is a trick to work around gettext which uses
-#. * the empty string to store information about the translation. DO NOT
-#. * CHANGE THAT IN A TRANSLATION! The code really relies on that being
-#. * a single space.
 #: dselect/pkgdisplay.cc
 msgid " "
 msgstr " "
@@ -1574,6 +1605,18 @@ msgstr "%3$s 類別中的 %1$s %2$s 軟體包"
 msgid "%-*s %s%s%s;  %s (was: %s).  %s"
 msgstr "%-*s %s%s%s;  %s (曾為：%s)。 %s"
 
+#, c-format
+#~ msgid "unable to open option description file '%s'"
+#~ msgstr "無法開啟選項說明檔「%s」"
+
+#, c-format
+#~ msgid "unable to stat option description file '%s'"
+#~ msgstr "無法取得選項說明檔「%s」的狀態"
+
+#, c-format
+#~ msgid "error during read of option description file '%s'"
+#~ msgstr "讀取選項說明檔「%s」時出錯"
+
 #~ msgid "ioctl(TIOCGWINSZ) failed"
 #~ msgstr "ioctl(TIOCGWINSZ) 失敗"
 
@@ -1646,14 +1689,14 @@ msgstr "%-*s %s%s%s;  %s (曾為：%s)。 %s"
 #~ msgid "foreign architectures enabled but multi-arch is not supported"
 #~ msgstr "外部平台啟動但是多平台不支援"
 
-#~ msgid "unable to open new option file `%.250s'"
-#~ msgstr "無法打開新的的選項檔案“%.250s”"
+#~ msgid "unable to open new option file `%s'"
+#~ msgstr "無法打開新的的選項檔案“%s”"
 
-#~ msgid "unable to close new option file `%.250s'"
-#~ msgstr "無法關閉新的選項檔案“%.250s”"
+#~ msgid "unable to close new option file `%s'"
+#~ msgstr "無法關閉新的選項檔案“%s”"
 
-#~ msgid "unable to install new option as `%.250s'"
-#~ msgstr "無法安裝新的選項檔案到“%.250s”"
+#~ msgid "unable to install new option as `%s'"
+#~ msgstr "無法安裝新的選項檔案到“%s”"
 
 #~ msgid "returned error exit status %d.\n"
 #~ msgstr "回傳了錯誤的退出狀態碼 %d。\n"
@@ -1670,14 +1713,14 @@ msgstr "%-*s %s%s%s;  %s (曾為：%s)。 %s"
 #~ msgid "failed with an unknown wait return code %d.\n"
 #~ msgstr "因為得到了一個不能識別的傳回碼 %d 而使操作失敗。\n"
 
-#~ msgid "unable to run %.250s process `%.250s'"
-#~ msgstr "無法執行 %.250s 程序“%.250s”"
+#~ msgid "unable to run %s process `%s'"
+#~ msgstr "無法執行 %s 程序“%s”"
 
 #~ msgid "failed config"
 #~ msgstr "設定失敗"
 
-#~ msgid "unable to wait for %.250s"
-#~ msgstr "無法等待子程序“%.250s”"
+#~ msgid "unable to wait for %s"
+#~ msgstr "無法等待子程序“%s”"
 
 #~ msgid "got wrong child's status - asked for %ld, got %ld"
 #~ msgstr "誤取了其他子程序的狀態 - 本想要 %ld 的，結果拿到了 %ld 的"
@@ -1723,7 +1766,7 @@ msgstr "%-*s %s%s%s;  %s (曾為：%s)。 %s"
 #~ msgid "error un-catching signal %d: %s\n"
 #~ msgstr "發生錯誤，有無法取得的信號 %d：%s\n"
 
-#~ msgid "unable to ignore signal %d before running %.250s"
+#~ msgid "unable to ignore signal %d before running %s"
 #~ msgstr "無法在執行 %2$.250s 之前忽略信號 %1$d"
 
 #~ msgid "(no clientdata)"

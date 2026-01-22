@@ -128,7 +128,7 @@ där:
 
 Den första ”titel”-raden med paketnamnet måste börja i vänstermarginalen. ”Släpraden” med ansvarige och datum måste inledas med exakt ett blanktecken (U+0020 B<SPACE>). Informationen om ansvarige och datumet måste åtskiljas av exakt två blanksteg (U+0020 B<SPACE>). Varje del av I<datum> kan avdelas av ett eller flera blanksteg (U+0020 B<SPACE>), bortsett från efter komma där det kan avdelas av noll eller flera blanksteg (U+0020 B<SPACE>).
 
-Rader som i sin helhet (dvs., inga inledande blanksteg) består av kommentarer på formen B<#> eller B</* */> eller RCS-nyckelord.
+Any line that consists entirely (i.e., no leading whitespace) of B<#> or B</* */> style comments or RCS keywords should be ignored.
 
 Vim-lägesrader eller Emacs-lokala variabler, och antika ändringsloggar med andra format på slutet av filen bör godtas och behållas i utdata, men deras innehåll kan annars ignoreras och tolkningen kan avbrytas när de upptäcks.
 

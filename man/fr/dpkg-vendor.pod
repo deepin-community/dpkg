@@ -22,7 +22,13 @@ B<dpkg-vendor> [I<option>...] I<commande>
 
 =head1 DESCRIPTION
 
-B<dpkg-vendor> est un outil qui permet de récupérer des informations sur les éditeurs S<(« vendors »)> de distributions référencés dans B<%PKGCONFDIR%/origins>. B<%PKGCONFDIR%/origins/default> contient l'information relative à l'éditeur actuellement utilisé.
+B<dpkg-vendor> est un outil qui permet de récupérer des informations sur les éditeurs (« vendors ») de distributions référencés dans B<%PKGCONFDIR%/origins>. B<%PKGCONFDIR%/origins/default> contient l'information relative à l'éditeur actuellement utilisé.
+
+The origin files provide metadata about specific vendors, such as their URL or where to file bug reports, and are usually used both to determine the behavior of tools and resulting contents during package builds targeting a specific vendor, and to describe the provenance of packages.
+
+Packages can explicitly declare their vendor by including an B<Origin> field, otherwise the vendor for a package without such field is assumed to be the one pointed to by the F<default> origin symbolic link.
+
+The F<default> symbolic link is also used to denote the origin of the current installation managed by B<dpkg>, be that a full distribution or an overlay on top of an existing base system that contains either no packaging system or a native one.
 
 This program was introduced in dpkg 1.15.1.
 
@@ -68,15 +74,27 @@ Suppose que l'éditeur actuel est I<éditeur> au lieu d'utiliser la variable B<D
 
 =item B<DEB_VENDOR>
 
-Ce réglage définit l'éditeur S<(« vendor »)> actuel. Si cette valeur est vide, le contenu du fichier B<%PKGCONFDIR%/origins/default> est utilisé.
+Ce réglage définit l'éditeur (« vendor ») actuel. Si cette valeur est vide, le contenu du fichier B<%PKGCONFDIR%/origins/default> est utilisé.
 
 =item B<DPKG_COLORS>
 
-Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
+Définit le mode de couleur (depuis dpkg 1.18.5). Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis dpkg 1.19.0). Les valeurs permises sont : B<0> et B<1> (par défaut).
+
+=back
+
+=head1 FICHIERS
+
+=head2 Gestion de l'empaquetage
+
+=over 
+
+=item B<%PKGDATADIR%/vendor.mk>
+
+Makefile snippet that sets the current vendor and its parent into variables, and provides make macros to check for derivatives (since dpkg 1.16.1).
 
 =back
 

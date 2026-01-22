@@ -34,7 +34,7 @@ Anger ändringsloggfilen som information ska läsas från. Ett ”-” kan anvä
 
 =item B<-F> I<ändringsloggformat>
 
-Specifies the format of the changelog.  By default the format is read from a special line near the bottom of the changelog or failing that defaults to the B<debian> standard format.  See also L</CHANGELOG FORMATS>.
+Anger format på ändringsloggen. Som standard läses formatet från en speciell rad nära slutet av ändringsloggen, om det misslyckas används formatet B<debian> som standard. Se även B</FORMAT PÅ ÄNDRINGSLOGGEN>.
 
 =item B<-L> I<bibliotekskatalog>
 

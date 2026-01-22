@@ -158,9 +158,23 @@ Prüft Signaturen und Prüfsummen vor dem Entpacken nicht (seit Dpkg 1.14.17).
 
 Das Entpackverzeichnis nicht überschreiben, falls es bereits existiert (seit Dpkg 1.18.8).
 
+=item B<--no-vendor-certs>
+
+Do not use the vendor specific certificate keyrings.
+
+Supported since dpkg 1.23.0.
+
+=item B<--signer-certs=>I<keyring>
+
+Use this I<keyring> containing signer certificates during signature verification of source packages.
+
+The option may be repeated multiple times to add multiple keyrings.
+
+Supported since dpkg 1.23.0.
+
 =item B<--require-valid-signature>
 
-Lehnt das Entpacken des Quellpakets ab, falls es keine OpenPGP-Signatur enthält, die entweder mit dem I<trustedkeys.gpg>-Schlüsselbund des Benutzers, mit einem der Schlüsselbunde des Lieferanten oder mit einem der offiziellen Debian-Schüsselbunde (I</usr/share/keyrings/debian-keyring.gpg>, I</usr/share/keyrings/debian-nonupload.gpg> und I</usr/share/keyrings/debian-maintainers.gpg>) überprüft werden kann (seit Dpkg 1.15.0).
+Refuse to unpack the source package if it doesn't contain an OpenPGP signature that can be verified (since dpkg 1.15.0) either with the user supplied B<--signer-certs> keyrings, or one of the vendor-specific keyrings, including any parent vendor keyrings if relevant.
 
 =item B<--require-strong-checksums>
 
@@ -193,6 +207,8 @@ Falls Sie nicht wissen, welches Quellformat Sie verwenden sollen, verwenden Sie 
 =head2 Format: 1.0
 
 Ein Quellpaket in diesem Format besteht entweder aus einem B<.orig.tar.gz> mit zugehörigem B<.diff.gz> oder einem einzelnen B<.tar.gz> (in diesem Fall wird das Paket als I<nativ> bezeichnet). Optional kann der ursprüngliche Tarball von einer separaten Signatur der Originalautoren B<.orig.tar.gz.asc> begleitet werden. Das Entpacken wird seit Dpkg 1.18.5 unterstützt.
+
+B<Hinweis>: Bei einigen Lieferanten wurde L<dpkg> so gebaut, dass native Quellen mit nichtnativen Versionen erlaubt sind. Dadurch wird dies inkohärent und fügt Verwirrung zum Konzept hinzu, wo schon so dies eine Falle für versehentliche Fehler ist.
 
 B<Entpacken>
 
@@ -286,13 +302,15 @@ Wenn ein neues Quellpaket gebaut wird, werden alle Änderungen an den Quellen de
 
 Seit Dpkg 1.14.17 unterstützt. Dieses Format ist eine Erweiterung des nativen Paketformats, wie es im 1.0-Format definiert ist. Es unterstützt alle Kompressionsmethoden und ignoriert standardmäßig alle VCS-spezifischen Dateien und Verzeichnisse sowie viele temporäre Dateien (lesen Sie den Standardwert der Option B<-I> bei der Ausgabe von B<--help>).
 
+B<Hinweis>: Bei einigen Lieferanten wurde L<dpkg> so gebaut, dass native Quellen mit nichtnativen Versionen erlaubt sind. Dadurch wird dies inkohärent und fügt Verwirrung zum Konzept hinzu, wo schon so dies eine Falle für versehentliche Fehler ist.
+
 =head2 Format: 3.0 (quilt)
 
-Seit Dpkg 1.14.17 unterstützt. Ein Quellpaket in diesem Format enthält mindestens einen Original-Tarball (B<.orig.tar.>I<Erw>, wobei I<Erw> B<gz>, B<bz2>, B<lzma> und B<xz> sein kann) und einen Debian-Tarball (B<.debian.tar.>I<Erw>). Es kann auch zusätzliche Original-Tarbälle (B<.orig->I<Komponente>B<.tar.>I<Erw>) enthalten. I<Komponente> kann nur alphanumerische Zeichen (‚a-zA-Z0-9’) und Bindestriche (‚-’) enthalten. Optional kann jeder Original-Tarball von einer separaten Signatur der Originalautoren (B<.orig.tar.>I<Erw>B<.asc> und B<.orig->I<Komponente>B<.tar.>I<Erw>B<.asc>) begleitet werden. Das Entpacken wird seit Dpkg 1.17.20, das Bauen seit Dpkg 1.18.5 unterstützt.
+Seit Dpkg 1.14.17 unterstützt. Ein Quellpaket in diesem Format enthält mindestens einen Original-Tarball (B<.orig.tar.>I<Erw>, wobei I<Erw> B<gz>, B<bz2>, B<lzma> und B<xz> sein kann) und einen Debian-Tarball (B<.debian.tar.>I<Erw>). Es kann auch zusätzliche Original-Tarbälle (B<.orig->I<Ergänzung>B<.tar.>I<Erw>) enthalten. I<Ergänzung> kann nur alphanumerische Zeichen (‚a-zA-Z0-9’) und Bindestriche (‚-’) enthalten. Optional kann jeder Original-Tarball von einer separaten Signatur der Originalautoren (B<.orig.tar.>I<Erw>B<.asc> und B<.orig->I<Ergänzung>B<.tar.>I<Erw>B<.asc>) begleitet werden. Das Entpacken wird seit Dpkg 1.17.20, das Bauen seit Dpkg 1.18.5 unterstützt.
 
 B<Entpacken>
 
-Der Haupt-Originaltarball wird zuerst entpackt, dann werden alle zusätzlichen Originaltarbälle in Unterverzeichnisse entpackt, die nach dem I<Komponente>n-Teil ihres Dateinamens benannt werden (jedes bereits existierende Verzeichnis wird ersetzt). Der Debian-Tarball wird über das Quellverzeichnis entpackt, nachdem jedes bereits existierende B<debian>-Verzeichnis entfernt wurde. Beachten Sie, dass der Debian-Tarball ein B<debian>-Unterverzeichnis enthalten muss, er aber auch Binärdateien außerhalb dieses Verzeichnisses enthalten darf (sehen Sie hierzu die Option B<--include-binaries>).
+Der Haupt-Originaltarball wird zuerst entpackt, dann werden alle zusätzlichen Originaltarbälle in Unterverzeichnisse entpackt, die nach dem I<Ergänzung>-Teil ihres Dateinamens benannt werden (jedes bereits existierende Verzeichnis wird ersetzt). Der Debian-Tarball wird über das Quellverzeichnis entpackt, nachdem jedes bereits existierende B<debian>-Verzeichnis entfernt wurde. Beachten Sie, dass der Debian-Tarball ein B<debian>-Unterverzeichnis enthalten muss, er aber auch Binärdateien außerhalb dieses Verzeichnisses enthalten darf (sehen Sie hierzu die Option B<--include-binaries>).
 
 Dann werden alle in B<debian/patches/>I<Lieferant>B<.series> oder B<debian/patches/series> aufgeführten Patches angewandt, wobei I<Lieferant> der Name des aktuellen Lieferanten in Kleinbuchstaben ist oder B<debian>, falls kein Lieferant definiert ist. Falls die erstere Datei verwandt wird und die Letztere nicht existiert (oder ein Symlink ist), dann wird die Letztere durch einen Symlink zu Ersterer ersetzt. Dies ist zur Vereinfachung der Verwendung von B<quilt> gedacht, um die Gruppe von Patches zu verwalten. Lieferantenspezifische Seriendateien sind dazu gedacht, es zu ermöglichen, mehrere Entwicklungszweige basierend auf dem Lieferanten auf eine deklarative Art zu serialisieren, und diese gegenüber der offenen Codierung dieser Handhabung in B<debian/rules> zu bevorzugen. Dies ist insbesondere nützlich, wenn die Quellen mit Bedingungen gepacht werden müssten, da die betroffenen Dateien keine eingebaute abhängige Okklusionsunterstützung haben. Beachten Sie allerdings, dass B<dpkg-source> zwar Seriendateien auswertet, in denen explizite Optionen für die Anwendung der Patches verwandt werden (diese werden auf jede Zeile nach dem Patch-Dateinamen und einem oder mehreren Leerzeichen gespeichert), diese Optionen dann aber ignoriert und immer erwartet, dass die Patches mit der Option B<-p1> von B<patch> angewandt werden können. Es wird daher eine Warnung ausgegeben, wenn es auf solche Optionen trifft, und der Bau wird wahrscheinlich fehlschlagen.
 
@@ -582,7 +600,7 @@ L<deb-src-control(5)>, L<deb-changelog(5)>, L<deb-substvars(5)>, L<dsc(5)>.
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

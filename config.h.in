@@ -3,7 +3,7 @@
 /* Define if building universal (internal helper macro) */
 #undef AC_APPLE_UNIVERSAL_BUILD
 
-/* The normal alignment of `max_align_t', in bytes. */
+/* The normal alignment of 'max_align_t', in bytes. */
 #undef ALIGNOF_MAX_ALIGN_T
 
 /* Set this to the canonical dpkg architecture name. */
@@ -40,14 +40,11 @@
    language is requested. */
 #undef ENABLE_NLS
 
-/* Define to 1 if you have the `alphasort' function. */
+/* Define to 1 if you have the 'alphasort' function. */
 #undef HAVE_ALPHASORT
 
-/* Define to 1 if you have the `asprintf' function. */
+/* Define to 1 if you have the 'asprintf' function. */
 #undef HAVE_ASPRINTF
-
-/* Define to 1 if the compiler supports C99. */
-#undef HAVE_C99
 
 /* Define to 1 if the 'snprintf' family is C99 conformant */
 #undef HAVE_C99_SNPRINTF
@@ -60,11 +57,14 @@
    the CoreFoundation framework. */
 #undef HAVE_CFPREFERENCESCOPYAPPVALUE
 
+/* Define to 1 if you have the 'closefrom' function. */
+#undef HAVE_CLOSEFROM
+
+/* Define to 1 if you have the 'close_range' function. */
+#undef HAVE_CLOSE_RANGE
+
 /* Define to 1 if you have the <curses.h> header file. */
 #undef HAVE_CURSES_H
-
-/* Define to 1 if the compiler supports C++11. */
-#undef HAVE_CXX11
 
 /* Define to 1 if you have the <cxxabi.h> header file. */
 #undef HAVE_CXXABI_H
@@ -73,15 +73,15 @@
    */
 #undef HAVE_DCGETTEXT
 
-/* Define to 1 if you have the declaration of `sys_errlist', and to 0 if you
+/* Define to 1 if you have the declaration of 'sys_errlist', and to 0 if you
    don't. */
 #undef HAVE_DECL_SYS_ERRLIST
 
-/* Define to 1 if you have the declaration of `sys_nerr', and to 0 if you
+/* Define to 1 if you have the declaration of 'sys_nerr', and to 0 if you
    don't. */
 #undef HAVE_DECL_SYS_NERR
 
-/* Define to 1 if you have the declaration of `sys_siglist', and to 0 if you
+/* Define to 1 if you have the declaration of 'sys_siglist', and to 0 if you
    don't. */
 #undef HAVE_DECL_SYS_SIGLIST
 
@@ -97,8 +97,14 @@
 /* Define to 1 if you have the <err.h> header file. */
 #undef HAVE_ERR_H
 
-/* Define to 1 if you have the `fallocate' function. */
+/* Define to 1 if you have the 'fallocate' function. */
 #undef HAVE_FALLOCATE
+
+/* Define to 1 if you have the 'fgetgrent' function. */
+#undef HAVE_FGETGRENT
+
+/* Define to 1 if you have the 'fgetpwent' function. */
+#undef HAVE_FGETPWENT
 
 /* Define to 1 if the 'fsync' function works on directories */
 #undef HAVE_FSYNC_DIR
@@ -109,22 +115,22 @@
 /* Define to 1 if 'F_PREALLOCATE' is declared in <fcntl.h> */
 #undef HAVE_F_PREALLOCATE
 
-/* Define to 1 if you have the `getdtablesize' function. */
+/* Define to 1 if you have the 'getdtablesize' function. */
 #undef HAVE_GETDTABLESIZE
 
-/* Define to 1 if you have the `getexecname' function. */
+/* Define to 1 if you have the 'getexecname' function. */
 #undef HAVE_GETEXECNAME
 
-/* Define to 1 if you have the `getopt' function. */
+/* Define to 1 if you have the 'getopt' function. */
 #undef HAVE_GETOPT
 
-/* Define to 1 if you have the `getopt_long' function. */
+/* Define to 1 if you have the 'getopt_long' function. */
 #undef HAVE_GETOPT_LONG
 
-/* Define to 1 if you have the `getprocs64' function. */
+/* Define to 1 if you have the 'getprocs64' function. */
 #undef HAVE_GETPROCS64
 
-/* Define to 1 if you have the `getprogname' function. */
+/* Define to 1 if you have the 'getprogname' function. */
 #undef HAVE_GETPROGNAME
 
 /* Define if the GNU gettext() function is already present or preinstalled. */
@@ -136,13 +142,10 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
-/* Define to 1 if you have the `isascii' function. */
-#undef HAVE_ISASCII
-
 /* Define to 1 if you have the <kvm.h> header file. */
 #undef HAVE_KVM_H
 
-/* Define to 1 if you have the `lchown' function. */
+/* Define to 1 if you have the 'lchown' function. */
 #undef HAVE_LCHOWN
 
 /* Define to 1 if you have the <libintl.h> header file. */
@@ -154,7 +157,7 @@
 /* Define to 1 if you have the <locale.h> header file. */
 #undef HAVE_LOCALE_H
 
-/* Define to 1 if you have the `lutimes' function. */
+/* Define to 1 if you have the 'lutimes' function. */
 #undef HAVE_LUTIMES
 
 /* xz multi-threaded decompression support */
@@ -169,13 +172,10 @@
 /* Define to 1 if you have the <md5.h> header file. */
 #undef HAVE_MD5_H
 
-/* Define to 1 if you have the `memcpy' function. */
-#undef HAVE_MEMCPY
-
 /* Define to 1 if you have the <minix/config.h> header file. */
 #undef HAVE_MINIX_CONFIG_H
 
-/* Define to 1 if you have the `mmap' function. */
+/* Define to 1 if you have the 'mmap' function. */
 #undef HAVE_MMAP
 
 /* Define to 1 if you have the <ncursesw/ncurses.h> header file. */
@@ -193,7 +193,7 @@
 /* Define to 1 if you have the <ncurses/term.h> header file. */
 #undef HAVE_NCURSES_TERM_H
 
-/* Define to 1 if you have the `obstack_free' function. */
+/* Define to 1 if you have the 'obstack_free' function. */
 #undef HAVE_OBSTACK_FREE
 
 /* Define to 1 if 'offsetof' is declared in <stddef.h> */
@@ -202,10 +202,10 @@
 /* Define to 1 if 'O_NOFOLLOW' is declared in <fcntl.h> */
 #undef HAVE_O_NOFOLLOW
 
-/* Define to 1 if you have the `posix_fadvise' function. */
+/* Define to 1 if you have the 'posix_fadvise' function. */
 #undef HAVE_POSIX_FADVISE
 
-/* Define to 1 if you have the `posix_fallocate' function. */
+/* Define to 1 if you have the 'posix_fallocate' function. */
 #undef HAVE_POSIX_FALLOCATE
 
 /* Define to 1 if you have program_invocation_short_name */
@@ -214,14 +214,11 @@
 /* Define to 1 if 'P_tmpdir' is declared in <stdio.h> */
 #undef HAVE_P_TMPDIR
 
-/* Define to 1 if you have the `scandir' function. */
+/* Define to 1 if you have the 'scandir' function. */
 #undef HAVE_SCANDIR
 
-/* Define to 1 if you have the `setsid' function. */
+/* Define to 1 if you have the 'setsid' function. */
 #undef HAVE_SETSID
-
-/* Define to 1 if you have the <stddef.h> header file. */
-#undef HAVE_STDDEF_H
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H
@@ -232,10 +229,10 @@
 /* Define to 1 if you have the <stdlib.h> header file. */
 #undef HAVE_STDLIB_H
 
-/* Define to 1 if you have the `strchrnul' function. */
+/* Define to 1 if you have the 'strchrnul' function. */
 #undef HAVE_STRCHRNUL
 
-/* Define to 1 if you have the `strerror' function. */
+/* Define to 1 if you have the 'strerror' function. */
 #undef HAVE_STRERROR
 
 /* Define to 1 if you have the <strings.h> header file. */
@@ -244,19 +241,16 @@
 /* Define to 1 if you have the <string.h> header file. */
 #undef HAVE_STRING_H
 
-/* Define to 1 if you have the `strndup' function. */
+/* Define to 1 if you have the 'strndup' function. */
 #undef HAVE_STRNDUP
 
-/* Define to 1 if you have the `strnlen' function. */
+/* Define to 1 if you have the 'strnlen' function. */
 #undef HAVE_STRNLEN
 
-/* Define to 1 if you have the `strsignal' function. */
+/* Define to 1 if you have the 'strsignal' function. */
 #undef HAVE_STRSIGNAL
 
-/* Define to 1 if you have the `strtoimax' function. */
-#undef HAVE_STRTOIMAX
-
-/* Define to 1 if the system has the type `struct psinfo'. */
+/* Define to 1 if the system has the type 'struct psinfo'. */
 #undef HAVE_STRUCT_PSINFO
 
 /* Define to 1 if you have the <sys/mkdev.h> header file. */
@@ -301,10 +295,10 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
-/* Define to 1 if you have the `unsetenv' function. */
+/* Define to 1 if you have the 'unsetenv' function. */
 #undef HAVE_UNSETENV
 
-/* Define to 1 if you have the `uselocale' function. */
+/* Define to 1 if you have the 'uselocale' function. */
 #undef HAVE_USELOCALE
 
 /* Define to 1 if the 'va_copy' macro exists */
@@ -319,7 +313,7 @@
 /* Define to 1 if you have the <xlocale.h> header file. */
 #undef HAVE_XLOCALE_H
 
-/* Define to 1 if you have the `__cxa_pure_virtual' function. */
+/* Define to 1 if you have the '__cxa_pure_virtual' function. */
 #undef HAVE___CXA_PURE_VIRTUAL
 
 /* Define to 1 if you have __progname */
@@ -358,37 +352,37 @@
 /* GNU patch program */
 #undef PATCH
 
-/* The size of `double', as computed by sizeof. */
+/* The size of 'double', as computed by sizeof. */
 #undef SIZEOF_DOUBLE
 
-/* The size of `float', as computed by sizeof. */
+/* The size of 'float', as computed by sizeof. */
 #undef SIZEOF_FLOAT
 
-/* The size of `int', as computed by sizeof. */
+/* The size of 'int', as computed by sizeof. */
 #undef SIZEOF_INT
 
-/* The size of `long', as computed by sizeof. */
+/* The size of 'long', as computed by sizeof. */
 #undef SIZEOF_LONG
 
-/* The size of `long double', as computed by sizeof. */
+/* The size of 'long double', as computed by sizeof. */
 #undef SIZEOF_LONG_DOUBLE
 
-/* The size of `long long', as computed by sizeof. */
+/* The size of 'long long', as computed by sizeof. */
 #undef SIZEOF_LONG_LONG
 
-/* The size of `off_t', as computed by sizeof. */
+/* The size of 'off_t', as computed by sizeof. */
 #undef SIZEOF_OFF_T
 
-/* The size of `short', as computed by sizeof. */
+/* The size of 'short', as computed by sizeof. */
 #undef SIZEOF_SHORT
 
-/* The size of `time_t', as computed by sizeof. */
+/* The size of 'time_t', as computed by sizeof. */
 #undef SIZEOF_TIME_T
 
-/* The size of `void *', as computed by sizeof. */
+/* The size of 'void *', as computed by sizeof. */
 #undef SIZEOF_VOID_P
 
-/* Define to 1 if all of the C90 standard headers exist (not just the ones
+/* Define to 1 if all of the C89 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for
    backward compatibility; new code need not use it. */
 #undef STDC_HEADERS
@@ -414,7 +408,7 @@
 /* Use unreliable mmap support */
 #undef USE_MMAP
 
-/* Enable extensions on AIX 3, Interix.  */
+/* Enable extensions on AIX, Interix, z/OS.  */
 #ifndef _ALL_SOURCE
 # undef _ALL_SOURCE
 #endif
@@ -475,11 +469,15 @@
 #ifndef __STDC_WANT_IEC_60559_DFP_EXT__
 # undef __STDC_WANT_IEC_60559_DFP_EXT__
 #endif
+/* Enable extensions specified by C23 Annex F.  */
+#ifndef __STDC_WANT_IEC_60559_EXT__
+# undef __STDC_WANT_IEC_60559_EXT__
+#endif
 /* Enable extensions specified by ISO/IEC TS 18661-4:2015.  */
 #ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
 # undef __STDC_WANT_IEC_60559_FUNCS_EXT__
 #endif
-/* Enable extensions specified by ISO/IEC TS 18661-3:2015.  */
+/* Enable extensions specified by C23 Annex H and ISO/IEC TS 18661-3:2015.  */
 #ifndef __STDC_WANT_IEC_60559_TYPES_EXT__
 # undef __STDC_WANT_IEC_60559_TYPES_EXT__
 #endif
@@ -541,25 +539,31 @@
 /* Number of bits in a file offset, on hosts where this is settable. */
 #undef _FILE_OFFSET_BITS
 
-/* Define for large files, on AIX-style hosts. */
+/* Define to 1 on platforms where this makes off_t a 64-bit type. */
 #undef _LARGE_FILES
 
-/* Define to 1 if type `char' is unsigned and your compiler does not
+/* Number of bits in time_t, on hosts where this is settable. */
+#undef _TIME_BITS
+
+/* Define to 1 if type 'char' is unsigned and your compiler does not
    predefine this macro.  */
 #ifndef __CHAR_UNSIGNED__
 # undef __CHAR_UNSIGNED__
 #endif
 
-/* Define to empty if `const' does not conform to ANSI C. */
+/* Define to 1 on platforms where this makes time_t a 64-bit type. */
+#undef __MINGW_USE_VC2005_COMPAT
+
+/* Define to empty if 'const' does not conform to ANSI C. */
 #undef const
 
-/* Define to `__inline__' or `__inline' if that's what the C compiler
+/* Define to '__inline__' or '__inline' if that's what the C compiler
    calls it, or to nothing if 'inline' is not supported under any name.  */
 #ifndef __cplusplus
 #undef inline
 #endif
 
-/* Define to `int' if <sys/types.h> does not define. */
+/* Define to 'int' if <sys/types.h> does not define. */
 #undef mode_t
 
 /* Define as a signed integer type capable of holding a process identifier. */
@@ -568,9 +572,9 @@
 /* Define to 'int' if <malloc.h> does not define. */
 #undef ptrdiff_t
 
-/* Define to `unsigned int' if <sys/types.h> does not define. */
+/* Define as 'unsigned int' if <stddef.h> doesn't define. */
 #undef size_t
 
-/* Define to empty if the keyword `volatile' does not work. Warning: valid
-   code using `volatile' can become incorrect without. Disable with care. */
+/* Define to empty if the keyword 'volatile' does not work. Warning: valid
+   code using 'volatile' can become incorrect without. Disable with care. */
 #undef volatile

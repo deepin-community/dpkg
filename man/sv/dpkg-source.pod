@@ -158,9 +158,23 @@ Kontrollera inte signaturer och kontrollsummor före uppackning (sedan dpkg 1.14
 
 Skriv inte över uppackningskatalogen om den redan finns (sedan dpkg 1.18.8).
 
+=item B<--no-vendor-certs>
+
+Do not use the vendor specific certificate keyrings.
+
+Supported since dpkg 1.23.0.
+
+=item B<--signer-certs=>I<keyring>
+
+Use this I<keyring> containing signer certificates during signature verification of source packages.
+
+The option may be repeated multiple times to add multiple keyrings.
+
+Supported since dpkg 1.23.0.
+
 =item B<--require-valid-signature>
 
-Vägra packa upp källkodspaketet om det inte innehåller en OpenPGP-signatur som kan verifieras (sedan dpkg 1.15.0) antingen med användarens I<trustedkeys.gpg>-nyckelring, en av de säljarspecifka nyckelringarna, eller en av de officiella Debiannyckelringarna (I</usr/share/keyrings/debian-keyring.gpg>, I</usr/share/keyrings/debian-nonupload.gpg> och I</usr/share/keyrings/debian-maintainers.gpg>).
+Refuse to unpack the source package if it doesn't contain an OpenPGP signature that can be verified (since dpkg 1.15.0) either with the user supplied B<--signer-certs> keyrings, or one of the vendor-specific keyrings, including any parent vendor keyrings if relevant.
 
 =item B<--require-strong-checksums>
 
@@ -193,6 +207,8 @@ Om du inte vet vilket källkodspaketformat du ska använda, bör du antagligen v
 =head2 Format: 1.0
 
 Ett källkodspaket i detta format består antingen av en B<.orig.tar.gz>, förbunden med en B<.diff.gz>, eller en ensam B<.tar.gz> (i så fall anses paketet vara I<eget>, ”I<native>”). Original-tarbollen kan också valfritt åtföljas av en friliggande uppströmssignatur B<.orig.tar.gz.asc>, uppackning stöds sedan dpkg 1.18.5.
+
+B<Note>: On some vendors, dpkg has been made to permit native sources with non-native versions, making this incoherent and adding to the confusion of the concept, where in addition this tends to be a trap for accidental mistakes.
 
 B<Uppackning>
 
@@ -286,13 +302,15 @@ När du bygger ett nytt källkodspaket kommer eventuella ändringar på uppströ
 
 Stöds sedan dpkg 1.14.17. Detta format är en utökning av det egna paketformatet som anges av 1.0-formatet. Det stöder alla komprimeringsmetoder och kommer att som standard ignorera alla VCS-specifika filer och kataloger, samt många temporärfiler (se standardvärdet som är knutet till flaggan B<-i> i texten för B<--help>).
 
+B<Note>: On some vendors, dpkg has been made to permit native sources with non-native versions, making this incoherent and adding to the confusion of the concept, where in addition this tends to be a trap for accidental mistakes.
+
 =head2 Format: 3.0 (quilt)
 
-Stöds sedan dpkg 1.14.17. Ett källkodspaket i detta format innehåller åtminstone en original-tarboll (B<.orig.tar.>I<ext>, där I<ext> kan vara B<gz>, B<bz2>, B<lzma> eller B<xz>) och en Debiantarboll (B<.debian.tar.>I<ext>). Den kan även innehålla ytterligare original-tarbollar (B<.orig->I<komponent>B<.tar.>I<ext>). I<komponent> kan endast innehålla alfanumeriska (”a-zA-Z0-9”) tecken och bindestreck (”-”). Varje original-tarboll kan också valfritt åtföljas av en friliggande uppströmssignatur (B<.orig.tar.>I<ext>B<.asc> och B<.orig->I<komponent>B<.tar.>I<ext>B<.asc>), uppackning stöds sedan dpkg 1.17.20, byggning stöds sedan dpkg 1.18.5.
+Supported since dpkg 1.14.17.  A source package in this format contains at least an original tarball (B<.orig.tar.>I<ext> where I<ext> can be B<gz>, B<bz2>, B<lzma> and B<xz>) and a debian tarball (B<.debian.tar.>I<ext>).  It can also contain additional original tarballs (B<.orig->I<addon>B<.tar.>I<ext>).  I<addon> can only contain alphanumeric (‘a-zA-Z0-9’) characters and hyphens (‘-’).  Optionally each original tarball can be accompanied by a detached upstream signature (B<.orig.tar.>I<ext>B<.asc> and B<.orig->I<addon>B<.tar.>I<ext>B<.asc>), extraction supported since dpkg 1.17.20, building supported since dpkg 1.18.5.
 
 B<Uppackning>
 
-Huvud-originaltarbollen packas upp först, därefter packas alla ytterligare originaltarbollar upp i underkataloger med namn efter I<komponent>-delen i sitt filnamn (eventuella redan befintliga kataloger ersätts). Debian-tarbollen packas sedan upp ovanpå källkodskatalogen efter att en redan befintlig B<debian>-katalog har tagits bort först. Observera att debian-tarbollen måste bestå av en B<debian>-underkatalog, men att den även kan innehålla binärfiler utanför den katalogen (se flaggan B<--include-binaries>).
+The main original tarball is extracted first, then all additional original tarballs are extracted in subdirectories named after the I<addon> part of their filename (any pre-existing directory is replaced).  The debian tarball is extracted on top of the source directory after prior removal of any pre-existing B<debian> directory.  Note that the debian tarball must contain a B<debian> sub-directory but it can also contain binary files outside of that directory (see B<--include-binaries> option).
 
 Alla patchar listade i B<debian/patches/>I<återförsäljare>B<.series> eller B<debian/patches/series> tillämpas sedan, där I<återförsäljare> är namnet på den aktuella återförsäljaren skrivet med små bokstäver, eller B<debian> om ingen har angivits. Om den förstnämnda filen används och den sistnämnda inte existerar (eller är en symbolisk länk), kommer den senare att ersättas av en symbolisk länk till den första. Tanken är att göra det enklare att använda B<quilt> till att hantera patchuppsättningen. Återförsäljarspecifika series-filer är tänkta att göra det möjligt att serialisera flera utvecklingsgrenar baserade på återförsäljaren, på ett deklarativt sätt, istället för att öppet koda den här hanteringen i B<debian/rules>. Detta är speciellt användbart när källkoden behöver patchas olika eftersom de rörda filerna inte stöder inbyggd villkorlig tillämpning. Observera att, även om B<dpkg-source> korrekt tolkar series-filer som använder explicita flaggor till patch-programmet (lagrade på kommandoraden efter patch-filnamnet och ett eller flera blanksteg), så ignoreras dessa flaggor och det förväntar sig att patchar kan tillämpas med flaggan B<-p1> till B<patch>. Det kommer därför visa en varning sådana flaggor upptäcks, och bygget kommer troligen att misslyckas.
 
@@ -498,7 +516,7 @@ Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även 
 
 Om satt kommer det användas som tidsstämpel (som sekunder sedan epoken) för att tvinga mtime i L<tar(5)>-filposterna.
 
-Since dpkg 1.18.11.
+Sedan dpkg 1.18.11.
 
 =item B<VISUAL>
 

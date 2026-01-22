@@ -17,8 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use strict;
-use warnings;
+use v5.36;
 
 use Getopt::Long qw(:config posix_default bundling_values no_ignorecase);
 use List::Util qw(any);
@@ -28,6 +27,7 @@ use Dpkg ();
 use Dpkg::Gettext;
 use Dpkg::ErrorHandling;
 use Dpkg::Control;
+use Dpkg::Control::Fields;
 use Dpkg::Checksums;
 use Dpkg::Compression::FileHandle;
 use Dpkg::Compression;
@@ -39,8 +39,10 @@ my %override;
 use constant {
     O_PRIORITY      => 0,
     O_SECTION       => 1,
-    O_MAINT_FROM    => 2,   # undef for non-specific, else listref
-    O_MAINT_TO      => 3,   # undef if there's no maint override
+    # If non-specific then undef, else listref.
+    O_MAINT_FROM    => 2,
+    # If there is no maint override then undef.
+    O_MAINT_TO      => 3,
 };
 
 my %extra_override;
@@ -53,7 +55,7 @@ my %priority = (
     'required' => 5,
 );
 
-# Switches
+# Switches.
 
 my $debug = 0;
 my $no_sort = 0;
@@ -63,8 +65,14 @@ my @sources;
 
 my @option_spec = (
     'debug!' => \$debug,
-    'help|?' => sub { usage(); exit 0; },
-    'version' => sub { version(); exit 0; },
+    'help|?' => sub {
+        usage();
+        exit 0;
+    },
+    'version' => sub {
+        version();
+        exit 0;
+    },
     'no-sort|n' => \$no_sort,
     'source-override|s=s' => \$src_override,
     'extra-override|e=s' => \$extra_override_file,
@@ -76,10 +84,10 @@ sub version {
 
 sub usage {
     printf g_(
-"Usage: %s [<option>...] <binary-path> [<override-file> [<path-prefix>]] > Sources
+'Usage: %s [<option>...] <binary-path> [<override-file> [<path-prefix>]] > Sources
 
 Options:
-  -n, --no-sort            don't sort by package before outputting.
+  -n, --no-sort            do not sort by package before outputting.
   -e, --extra-override <file>
                            use extra override file.
   -s, --source-override <file>
@@ -90,96 +98,100 @@ Options:
       --version            show the version.
 
 See the man page for the full documentation.
-"), $Dpkg::PROGNAME;
+'), $Dpkg::PROGNAME;
 }
 
 sub load_override {
     my $file = shift;
     local $_;
 
-    my $comp_file = Dpkg::Compression::FileHandle->new(filename => $file);
+    my $comp_file = Dpkg::Compression::FileHandle->new(
+        filename => $file,
+    );
     while (<$comp_file>) {
         s/#.*//;
-	next if /^\s*$/;
-	s/\s+$//;
+        next if /^\s*$/;
+        s/\s+$//;
 
-	my @data = split ' ', $_, 4;
-	unless (@data == 3 || @data == 4) {
-	    warning(g_('invalid override entry at line %d (%d fields)'),
-	            $., 0 + @data);
-	    next;
-	}
-	my ($package, $priority, $section, $maintainer) = @data;
-	if (exists $override{$package}) {
-	    warning(g_('ignoring duplicate override entry for %s at line %d'),
-	            $package, $.);
-	    next;
-	}
-	if (!$priority{$priority}) {
-	    warning(g_('ignoring override entry for %s, invalid priority %s'),
-	            $package, $priority);
-	    next;
-	}
+        my @data = split ' ', $_, 4;
+        unless (@data == 3 || @data == 4) {
+            warning(g_('invalid override entry at line %d (%d fields)'),
+                    $., 0 + @data);
+            next;
+        }
+        my ($package, $priority, $section, $maintainer) = @data;
+        if (exists $override{$package}) {
+            warning(g_('ignoring duplicate override entry for %s at line %d'),
+                    $package, $.);
+            next;
+        }
+        if (! $priority{$priority}) {
+            warning(g_('ignoring override entry for %s, invalid priority %s'),
+                    $package, $priority);
+            next;
+        }
 
-	$override{$package} = [];
-	$override{$package}[O_PRIORITY] = $priority;
-	$override{$package}[O_SECTION] = $section;
-	if (!defined $maintainer) {
-	    # do nothing
+        $override{$package} = [];
+        $override{$package}[O_PRIORITY] = $priority;
+        $override{$package}[O_SECTION] = $section;
+        if (! defined $maintainer) {
+            # Do nothing.
         } elsif ($maintainer =~ /^(.*\S)\s*=>\s*(.*)$/) {
-	    $override{$package}[O_MAINT_TO] = $2;
-	    $override{$package}[O_MAINT_FROM] = [split m{\s*//\s*}, $1];
+            $override{$package}[O_MAINT_TO] = $2;
+            $override{$package}[O_MAINT_FROM] = [ split m{\s*//\s*}, $1 ];
         } else {
-	    $override{$package}[O_MAINT_TO] = $maintainer;
-	}
+            $override{$package}[O_MAINT_TO] = $maintainer;
+        }
     }
     close($comp_file);
 }
 
 sub load_src_override {
     my ($user_file, $regular_file) = @_;
-    my ($file);
+    my $file;
     local $_;
 
     if (defined $user_file) {
-	$file = $user_file;
+        $file = $user_file;
     } elsif (defined $regular_file) {
         my $comp = compression_guess_from_filename($regular_file);
         if (defined($comp)) {
-	    $file = $regular_file;
+            $file = $regular_file;
             my $ext = compression_get_file_extension($comp);
             $file =~ s/\.$ext$/.src.$ext/;
         } else {
-	    $file = "$regular_file.src";
+            $file = "$regular_file.src";
         }
         return unless -e $file;
     } else {
-	return;
+        return;
     }
 
     debug(1, "source override file $file");
-    my $comp_file = Dpkg::Compression::FileHandle->new(filename => $file);
+    my $comp_file = Dpkg::Compression::FileHandle->new(
+        filename => $file,
+    );
     while (<$comp_file>) {
         s/#.*//;
-	next if /^\s*$/;
-	s/\s+$//;
+        next if /^\s*$/;
+        s/\s+$//;
 
-	my @data = split ' ';
-	unless (@data == 2) {
-	    warning(g_('invalid source override entry at line %d (%d fields)'),
-	            $., 0 + @data);
-	    next;
-	}
+        my @data = split ' ';
+        unless (@data == 2) {
+            warning(g_('invalid source override entry at line %d (%d fields)'),
+                    $., 0 + @data);
+            next;
+        }
 
-	my ($package, $section) = @data;
-	my $key = "source/$package";
-	if (exists $override{$key}) {
-	    warning(g_('ignoring duplicate source override entry for %s at line %d'),
-	            $package, $.);
-	    next;
-	}
-	$override{$key} = [];
-	$override{$key}[O_SECTION] = $section;
+        my ($package, $section) = @data;
+        my $key = "source/$package";
+        if (exists $override{$key}) {
+            warning(g_('ignoring duplicate source override entry for %s at line %d'),
+                    $package, $.);
+            next;
+        }
+        $override{$key} = [];
+        $override{$key}[O_SECTION] = $section;
     }
     close($comp_file);
 }
@@ -187,14 +199,16 @@ sub load_src_override {
 sub load_override_extra
 {
     my $extra_override = shift;
-    my $comp_file = Dpkg::Compression::FileHandle->new(filename => $extra_override);
+    my $comp_file = Dpkg::Compression::FileHandle->new(
+        filename => $extra_override,
+    );
 
     while (<$comp_file>) {
-	s/\#.*//;
-	s/\s+$//;
-	next unless $_;
+        s/\#.*//;
+        s/\s+$//;
+        next unless $_;
 
-	my ($p, $field, $value) = split(/\s+/, $_, 3);
+        my ($p, $field, $value) = split(/\s+/, $_, 3);
         $extra_override{$p}{$field} = $value;
     }
     close($comp_file);
@@ -217,7 +231,7 @@ sub process_dsc {
     $fields->load($file);
     $fields->set_options(type => CTRL_REPO_SRC);
 
-    # Get checksums
+    # Get checksums.
     my $checksums = Dpkg::Checksums->new();
     $checksums->add_from_file($file, key => $basename);
     $checksums->add_from_control($fields, use_files_for_md5 => 1);
@@ -241,29 +255,29 @@ sub process_dsc {
     my $priority_override = $override{$binary_by_priority[-1]};
     my $priority = $priority_override ?
                    $priority_override->[O_PRIORITY] :
-                   undef;
-    $fields->{Priority} = $priority if defined $priority;
+                   field_get_default_value('Priority');
+    $fields->{Priority} = $priority;
 
     # For the section override, first check for a record from the source
     # override file, else use the regular override file.
     my $section_override = $override{"source/$source"} || $override{$source};
     my $section = $section_override ?
                   $section_override->[O_SECTION] :
-                  undef;
-    $fields->{Section} = $section if defined $section;
+                  field_get_default_value('Section');
+    $fields->{Section} = $section;
 
     # For the maintainer override, use the override record for the first
     # binary. Modify the maintainer if necessary.
     my $maintainer_override = $override{$binary[0]};
     if ($maintainer_override && defined $maintainer_override->[O_MAINT_TO]) {
-        if (!defined $maintainer_override->[O_MAINT_FROM] ||
+        if (! defined $maintainer_override->[O_MAINT_FROM] ||
             any { $fields->{Maintainer} eq $_ }
                 @{ $maintainer_override->[O_MAINT_FROM] }) {
             $fields->{Maintainer} = $maintainer_override->[O_MAINT_TO];
         }
     }
 
-    # Process extra override
+    # Process extra override.
     if (exists $extra_override{$source}) {
         my ($field, $value);
         while (($field, $value) = each %{$extra_override{$source}}) {
@@ -279,7 +293,7 @@ sub process_dsc {
     push @sources, $fields;
 }
 
-### Main
+## Main.
 
 {
     local $SIG{__WARN__} = sub { usageerr($_[0]) };
@@ -300,11 +314,14 @@ load_src_override $src_override, $override;
 load_override_extra $extra_override_file if defined $extra_override_file;
 
 my @dsc;
-my $scan_dsc = sub {
-    push @dsc, $File::Find::name if m/\.dsc$/;
+my $scan_dsc = {
+    wanted => sub {
+        push @dsc, $File::Find::name if m/\.dsc$/;
+    },
+    follow => 1,
+    follow_skip => 2,
 };
-
-find({ follow => 1, follow_skip => 2, wanted => $scan_dsc }, $dir);
+find($scan_dsc, $dir);
 foreach my $fn (@dsc) {
     # FIXME: Fix it instead to not die on syntax and general errors?
     eval {

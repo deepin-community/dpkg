@@ -22,17 +22,15 @@ B<%PKGCONFDIR%/origins/>I<fichier>
 
 =head1 DESCRIPTION
 
-Les fichiers de B<%PKGCONFDIR%/origins> peuvent fournir des informations sur les différents distributeurs qui fournissent des paquets Debian.
+The files in B<%PKGCONFDIR%/origins> can provide information about various vendors that are providing Debian packages.  These files are usually used both to determine the behavior of tools and resulting contents during package builds targeting a specific vendor, and to describe the provenance of packages.
 
-Ils contiennent un certain nombre de champs ou de commentaires pour les lignes commençant par un caractère S<« B<#> ».> Chaque champ commence par une étiquette, telle que B<Vendor> ou B<Parent>, suivi du caractère S<« deux-points »> et du contenu du champ. Les champs sont délimités par les étiquettes de champs. En d'autres termes, le contenu d'un champ peut s'étendre sur plusieurs lignes, mais les outils d'installation joindront en général les lignes pendant le traitement du contenu du champ.
+Packages can explicitly declare their vendor by including an B<Origin> field, otherwise the vendor for a package without such field is assumed to be the one pointed to by the F<default> origin symbolic link.
+
+Ils contiennent un certain nombre de champs ou de commentaires pour les lignes commençant par un caractère « B<#> ». Chaque champ commence par une étiquette, telle que B<Vendor> ou B<Parent>, suivi du caractère « deux-points » et du contenu du champ. Les champs sont délimités par les étiquettes de champs. En d'autres termes, le contenu d'un champ peut s'étendre sur plusieurs lignes, mais les outils d'installation joindront en général les lignes pendant le traitement du contenu du champ.
 
 Le fichier sera nommé d'après le nom du distributeur. La convention habituelle est d'appeler le fichier distributeur avec le nom du distributeur tout en minuscules, mais des variantes sont possibles.
 
-C'est-à-dire (depuis S<dpkg 1.21.10),> les caractères non alphanumériques (‘B<[^A-Za-z0-9]>’) sont d'abord remplacés par des tirets S<(« B<-> »),> puis le nom résultant sera testé successivement en le mettant en minuscules, en le gardant tel qu'il est, en le mettant en minuscules avec une majuscule initiale, puis en le mettant en capitales uniquement.
-
-En plus, pour des raisons historiques et de rétrocompatibilité, le nom sera testé tel qu'il est sans remplacer les caractères non alphanumériques, puis le nom résultant sera testé successivement en le mettant en minuscules, en le gardant tel qu'il est, en le mettant en minuscules avec une majuscule initiale, puis en le mettant en majuscules uniquement. Finalement le nom sera testé en remplaçant les espaces par des tirets S<(« B<-> »),> puis le nom résultant sera testé successivement en le mettant en minuscules, en le gardant tel qu'il est, en le mettant en minuscules puis avec une majusculeinitiale, puis en le mettant en capitales uniquement.
-
-Cependant ces recherches de module rétrocompatibles seront supprimées durant le cycle de publication de S<dpkg 1.22.x.>
+C'est-à-dire (depuis dpkg 1.21.10), les caractères non alphanumériques (‘B<[^A-Za-z0-9]>’) sont d'abord remplacés par des tirets (« B<-> »), puis le nom résultant sera testé successivement en le mettant en minuscules, en le gardant tel qu'il est, en le mettant en minuscules avec une majuscule initiale, puis en le mettant en capitales uniquement.
 
 =head1 LES CHAMPS
 

@@ -28,9 +28,21 @@ Os modelos de ficheiros symbol são enviados em pacotes fonte Debian, e o seu fo
 
 Comentários são suportados em modelos de ficheiros de símbolos: Qualquer linha com um ‘#’ no primeiro caractere é um comentário excepto se começar com ‘#include’ (veja secção L</Usando inclusões>). As linhas que começam com ‘#MISSING:’ são comentários especiais que documentam símbolos que desapareceram.
 
-=head2 Usando substituição de #PACKAGE#
+=head2 Using metavariable substitutions
 
-Em alguns casos raros, o nome da biblioteca varia entre arquitecturas. Para evitar dificultar o nome do pacote no ficheiro de símbolos, você pode usar o marcador I<#PACKAGE#>. Será substituído pelo nome real do pacote durante a instalação dos ficheiros de símbolos. Contrariamente ao marcador I<#MINVER#>, I<#PACKAGE#> nunca irá aparecer num ficheiro de símbolos dentro de um pacote binário.
+In some cases instead of hardcoding some variable text, we can use metavariables that will be replaced either when generating the symbols file shipped in the binary package, or during dependency generation.
+
+Contrary to the I<#MINVER#> metavariable, the following metavariables will never appear in a symbols file inside a binary package.
+
+=head3 Using the #PACKAGE# metavariable
+
+In some rare cases, the name of the library varies between architectures. To avoid hardcoding the name of the package in the symbols file, you can use the I<#PACKAGE#> metavariable.  It will be replaced by the real package name during installation of the symbols files.
+
+=head2 Using the #CURVER# metavariable
+
+In some cases, a symbol with an unstable ABI will require a strict dependency on the current package version.  To avoid hardcoding the current version in the symbols file, you can use the I<#CURVER#> metavariable.  It will be replaced by a dependency version constraint in the form of “(= I<binary-version>)”, where this would be generally be used in combination with I<#PACKAGE#>.
+
+Supported since dpkg 1.23.4.
 
 =head2 Usar etiquetas símbolo
 
@@ -66,9 +78,9 @@ Estas bandeiras permitem-nos restringir o conjunto de arquitecturas onde o símb
 
 Quando opera no modo predefinido não-modelo, entre os símbolos específicos de arquitectura, apenas aqueles que correspondem à arquitectura da máquina anfitriã actual são escritos no ficheiro de símbolos. Pelo contrário, quando se opera em modo de modelo, todos os símbolos específicos-de-arquitectura (incluindo aqueles de arquitecturas alienígenas) são sempre escritos no ficheiro de símbolos.
 
-O formato de I<architecture-list> é o mesmo que o usado no campo B<Build-Depends> de I<debian/control> (excepto nos parêntesis rectos []). Por exemplo, o primeiro símbolo da lista em baixo será considerado apenas nas arquitecturas alpha, any-amd64 e ia64, o segundo apenas em arquitecturas de linux, enquanto o terceiro em todas excepto em armel.
+O formato de I<architecture-list> é o mesmo que o usado no campo B<Build-Depends> de I<debian/control> (excepto nos parêntesis rectos []). Por exemplo, o primeiro símbolo da lista em baixo será considerado apenas nas arquitecturas arm64, any-amd64 e riscv64, o segundo apenas em arquitecturas de linux, enquanto o terceiro em todas excepto em armel.
 
-  (arch=alpha any-amd64 ia64)64bit_specific_symbol@Base 1.0
+  (arch=arm64 any-amd64 riscv64)arch_specific_symbol@Base 1.0
   (arch=linux-any)linux_specific_symbol@Base 1.0
   (arch=!armel)symbol_armel_does_not_have@Base 1.0
 
@@ -89,10 +101,6 @@ Múltiplas restrições podem ser ligadas em corrente.
 =item B<allow-internal>
 
 O dpkg-gensymbols tem uma lista interna de símbolos que não devem aparecer em ficheiros de símbolos pois eles são geralmente apenas efeitos secundários de detalhes de implementação da ferramenta-cadeia (desde dpkg 1.20.1). Se por alguma razão, você querer realmente que um desses símbolos seja incluído no ficheiro de símbolos, você deve etiquetar o símbolo com B<allow-internal>. Pode ser necessário para algumas ferramentas-cadeia de baixo nível como “libgcc”.
-
-=item B<ignore-blacklist>
-
-Um alias descontinuado para B<allow-internal> (desde dpkg 1.20.1, suportado desde dpkg 1.15.3).
 
 =item B<c++>
 
@@ -193,8 +201,8 @@ A directiva de inclusão pode também ser etiquetada como qualquer símbolo:
 Como resultado, todos os símbolos incluídos de I<file-to-include> serão considerados para serem etiquetados com I<tag> ... I<tagN> por predefinição. Você pode usar esta funcionalidade para criar um ficheiro I<package>.symbols comum que inclui ficheiros de símbolos específicos de arquitectura:
 
   common_symbol1@Base 1.0
- (arch=amd64 ia64 alpha)#include "package.symbols.64-bit"
- (arch=!amd64 !ia64 !alpha)#include "package.symbols.32-bit"
+ (arch-bits=64)#include "package.symbols.64-bit"
+ (arch-bits=32)#include "package.symbols.32-bit"
   common_symbol2@Base 1.0
 
 =back

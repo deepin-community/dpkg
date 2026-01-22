@@ -40,8 +40,10 @@ secure_unlink_statted(const char *pathname, const struct stat *stab)
 	mode_t mode = stab->st_mode;
 
 	if (S_ISREG(mode) ? (mode & 07000) :
-	    !(S_ISLNK(mode) || S_ISDIR(mode) ||
-	      S_ISFIFO(mode) || S_ISSOCK(mode))) {
+	    !(S_ISLNK(mode) ||
+	      S_ISDIR(mode) ||
+	      S_ISFIFO(mode) ||
+	      S_ISSOCK(mode))) {
 		if (chmod(pathname, 0600))
 			return -1;
 	}
@@ -89,23 +91,22 @@ secure_remove(const char *pathname)
 	int rc, e;
 
 	if (!rmdir(pathname)) {
-		debug(dbg_eachfiledetail, "secure_remove '%s' rmdir OK",
-		      pathname);
+		debug_at(dbg_eachfiledetail, "'%s' rmdir OK", pathname);
 		return 0;
 	}
 
 	if (errno != ENOTDIR) {
 		e = errno;
-		debug(dbg_eachfiledetail, "secure_remove '%s' rmdir %s",
-		      pathname, strerror(e));
+		debug_at(dbg_eachfiledetail, "'%s' rmdir %s",
+		         pathname, strerror(e));
 		errno = e;
 		return -1;
 	}
 
 	rc = secure_unlink(pathname);
 	e = errno;
-	debug(dbg_eachfiledetail, "secure_remove '%s' unlink %s",
-	      pathname, rc ? strerror(e) : "OK");
+	debug_at(dbg_eachfiledetail, "'%s' unlink %s",
+	         pathname, rc ? strerror(e) : "OK");
 	errno = e;
 
 	return rc;
@@ -126,16 +127,18 @@ path_remove_tree(const char *pathname)
 	if (u[0] == '\0')
 		internerr("pathname '%s' reduces to nothing", pathname);
 
-	debug(dbg_eachfile, "%s '%s'", __func__, pathname);
+	debug_at(dbg_eachfile, "'%s'", pathname);
 	if (!rmdir(pathname))
-		return; /* Deleted it OK, it was a directory. */
+		/* Deleted it OK, it was a directory. */
+		return;
 	if (errno == ENOENT || errno == ELOOP)
 		return;
 	if (errno == ENOTDIR) {
 		/* Either it's a file, or one of the path components is. If
 		 * one of the path components is this will fail again ... */
 		if (secure_unlink(pathname) == 0)
-			return; /* OK, it was. */
+			/* OK, it was. */
+			return;
 		if (errno == ENOTDIR)
 			return;
 	}
@@ -147,7 +150,7 @@ path_remove_tree(const char *pathname)
 		errno = EROFS;
 	}
 	if (errno != ENOTEMPTY && errno != EEXIST) /* Huh? */
-		ohshite(_("unable to securely remove '%.255s'"), pathname);
+		ohshite(_("unable to securely remove '%s'"), pathname);
 
 	pid = subproc_fork();
 	if (pid == 0) {
@@ -155,6 +158,6 @@ path_remove_tree(const char *pathname)
 		ohshite(_("unable to execute %s (%s)"),
 		        _("rm command for cleanup"), RM);
 	}
-	debug(dbg_eachfile, "%s running rm -rf '%s'", __func__, pathname);
+	debug_at(dbg_eachfile, "running rm -rf '%s'", pathname);
 	subproc_reap(pid, _("rm command for cleanup"), 0);
 }

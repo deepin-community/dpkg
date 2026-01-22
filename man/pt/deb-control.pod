@@ -40,7 +40,9 @@ Este campo define o tipo de pacote. B<udeb> é para pacotes de tamanho reduzido 
 
 =item B<Version:>I< string-de-versão> (obrigatório)
 
-Tipicamente, isto é o número de versão do pacote original seja em que formato o autor do programa usa. Pode também incluir um número de revisão Debian (para pacotes não-nativos). O formato exacto e algoritmo de ordenação estão descritos em L<deb-version(7)>.
+Tipicamente, isto é o número de versão do pacote original seja em que formato o autor do programa usa.  Pode também incluir um número de revisão Debian (para pacotes não-nativos).  O formato exacto e algoritmo de ordenação estão descritos em L<deb-version(7)>.
+
+B<Nota>: Em alguns fornecedores, o dpkg foi feito para permitir fontes nativas com versões não-nativas, tornando isto incoerente e adicional à confusão do conceito, onde adicionalmente isto tende a ser uma armadilha para enganos acidentais.
 
 =item B<Maintainer:> I<fullname-email> (recomendado)
 
@@ -50,21 +52,19 @@ Deverá estar no formato "Joe Bloggs E<lt>jbloggs@foo.comE<gt>", e é tipicament
 
 =item S< >I<long-description>
 
-O formato da descrição do pacote é um sumário breve e curto an primeira linha (após o campo B<Description>). As linhas seguintes devem ser usadas para uma descrição longa e mais detalhada. Cada linha da descrição longa tem de ser precedida com um espaço, e as linhas em branco na descrição longa têm de conter um único ‘B<.>’ a seguir ao espaço que precede.
+O formato da descrição do pacote é um sumário breve e curto na primeira linha (após o campo B<Description>). As linhas seguintes devem ser usadas para uma descrição longa e mais detalhada. Cada linha da descrição longa tem de ser precedida com um espaço, e as linhas em branco na descrição longa têm de conter um único ‘B<.>’ a seguir ao espaço que precede.
 
 =item B<Section:> I<section>
 
 Este é um campo geral que dá ao pacote uma categoria baseada no software que ele instala. Algumas secções comuns são B<utils>, B<net>, B<mail>, B<text>, B<x11>, etc.
 
+Os valores aceites são baseados na política específica da distribuição.
+
 =item B<Priority:> I<priority>
 
-Define a importância deste pacote relativamente ao sistema como um todo. Prioridades comuns são B<required>, B<standard>, B<optional>, B<extra>, etc.
+Define a importância deste pacote relativamente ao sistema como um todo. As prioridades conhecidas são B<required>, B<important>, B<standard>, B<optional>, B<extra>, e B<unknown>, mas pode-se também usar outros valores.
 
-=back
-
-Os campos B<Section> e B<Priority> têm geralmente um conjunto definido de valores aceites baseados na política específica da distribuição.
-
-=over 
+Como aplicar estes valores depende da política específica da distribuição.
 
 =item B<Installed-Size:> I<size>
 
@@ -84,9 +84,15 @@ Este campo normalmente não é necessário quando a resposta é B<sim>. Ele indi
 
 Este campo geralmente não é necessário quando a resposta é B<sim>, e é injetado de modo comum pelo software do arquivo. Denota um pacote que é requerido quando se compila outros pacotes.
 
-=item B<Architecture:> I<arch>|B<all> (necessário)
+=item B<Architecture:> B<all>|I<arch> (requerido)
 
-A arquitectura especifica para que tipo de hardware este pacote foi compilado. Arquitecturas comuns são B<amd64>, B<armel>, B<i386>, B<powerpc>, etc. Note que o valor B<all> é destinada a pacotes que são independentes da arquitectura. Alguns exemplos disto são scripts de shell e Perl, e documentação.
+A arquitectura especifica em qual tipo de máquina este pacote corre.
+
+Arquitecturas comuns são B<amd64>, B<armel>, B<i386>, B<powerpc>, etc. Note que o valor especial B<all> é destinado a pacotes que são independentes da arquitectura. (tal como scripts de shell e Perl ou documentação).
+
+B<Nota:> Os wildcards de arquitectura não são permitidos neste contexto.
+
+Um nome de arquitectura tem de começar com um caractere alfanumérico (“0-9a-zA-Z”), e depois seguido por caracteres alfanuméricos e traço (‘-’).
 
 =item B<Origin:> I<name>
 
@@ -227,16 +233,19 @@ O formato ou o modo de computar cada build-id não é definido pelo desenho.
 =head1 EXEMPLO
 
  Package: grep
+ Version: 3.11-3
  Essential: yes
  Priority: required
- Section: base
- Maintainer: Wichert Akkerman <wakkerma@debian.org>
+ Section: utils
+ Maintainer: Anibal Monsalve Salazar <anibal@debian.org>
  Architecture: sparc
- Version: 2.4-1
- Pre-Depends: libc6 (>= 2.0.105)
+ Multi-Arch: foreign
+ Pre-Depends: libc6 (>= 2.34), libpcre2-8-0 (>= 10.32)
  Provides: rgrep
  Conflicts: rgrep
- Description: GNU grep, egrep and fgrep.
+ Installed-Size. 1267
+ Homepage: https://www.gnu.org/software/grep/
+ Description: GNU grep, egrep and fgrep
   The GNU family of grep utilities may be the "fastest grep in the west".
   GNU grep is based on a fast lazy-state deterministic matcher (about
   twice as fast as stock Unix egrep) hybridized with a Boyer-Moore-Gosper

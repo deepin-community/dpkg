@@ -42,6 +42,8 @@ Dit veld definieert het pakkettype. B<udeb> is voor pakketten waarvan de omvang 
 
 Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de auteur van het programma er ook voor gebruikt. Het kan ook een Debian-revisienummer bevatten (voor niet uit Debian stammende pakketten). De exacte indeling en het sorteringsalgoritme worden beschreven in L<deb-version(7)>.
 
+B<Opmerking>: Bij sommige leveranciers is dpkg zo aangepast dat authentieke bronnen samen met niet-authentieke versies zijn toegestaan. Dit maakt het inconsistent en draagt ​​bij aan de verwarring rond het concept. Bovendien vormt dit een valkuil voor onbedoelde fouten.
+
 =item B<Maintainer:> I<volledige-naam-en-e-mail> (aanbevolen)
 
 Moet opgemaakt worden volgens de indeling “Joe Bloggs E<lt>jbloggs@foo.comE<gt>”, en is gewoonlijk de persoon die het pakket maakte, in tegenstelling tot de auteur van de verpakte software.
@@ -56,15 +58,13 @@ De indeling van een pakketbeschrijving bestaat uit een beknopte korte samenvatti
 
 Dit is een veld van algemene aard dat het pakket in een categorie onderbrengt op basis van de software die het installeert. Enkele gebruikelijke secties zijn B<utils>, B<net>, B<mail>, B<text>, B<x11>, enz.
 
+De geaccepteerde waarden zijn gebaseerd op het specifieke distributiebeleid.
+
 =item B<Priority:> I<prioriteit>
 
-Duidt het belang van dit pakket aan in verhouding tot het gehele systeem. Gebruikelijke prioriteiten zijn B<required>, B<standard>, B<optional>, B<extra>, enz.
+Duidt het belang van dit pakket aan in verhouding tot het gehele systeem. De bekende prioriteiten zijn B<required>, B<important>, B<standard>, B<optional>, B<extra> en B<unknown>, maar ook andere waarden kunnen gebruikt worden.
 
-=back
-
-De velden B<Section> en B<Priority> hebben gewoonlijk een welbepaalde set mogelijke waarden, afhankelijk van de richtlijnen van de distributie.
-
-=over 
+Hoe deze waarden worden toegepast, hangt af van het specifieke distributiebeleid.
 
 =item B<Installed-Size:> I<grootte>
 
@@ -84,9 +84,15 @@ Meestal is dit veld enkel nodig als het antwoord B<yes> is. Het geeft een pakket
 
 Meestal is dit veld enkel nodig als het antwoord B<yes> is en het wordt gewoonlijk ingevoegd door de archiefsoftware. Het duidt een pakket aan dat vereist is voor het bouwen van andere pakketten.
 
-=item B<Architecture:> I<arch>|B<all> (verplicht)
+=item B<Architecture:> B<all>|I<arch> (verplicht)
 
-De architectuur geeft aan voor welk type hardware dit pakket gecompileerd werd. Gebruikelijke architecturen zijn B<amd64>, B<armel>, B<i386>, B<powerpc>, enz. Merk op dat de waarde B<all> bedoeld is voor pakketten die architectuuronafhankelijk zijn. Enkele voorbeelden hiervan zijn shell- en Perl-scripts en documentatie.
+De architectuur geeft aan op welk type machine dit pakket draait.
+
+Gebruikelijke architecturen zijn B<amd64>, B<armel>, B<i386>, B<powerpc>, enz. Merk op dat de speciale waarde B<all> bedoeld is voor pakketten die architectuuronafhankelijk zijn (zoals shell- en Perl-scripts en documentatie).
+
+B<Opmerking:> Architectuurwildcards zijn in deze context niet toegestaan.
+
+Een architectuurnaam moet beginnen met een alfanumeriek teken (“0-9a-zA-Z”), gevolgd door alfanumerieke tekens en streepjes (‘-’).
 
 =item B<Origin:> I<naam>
 
@@ -227,15 +233,21 @@ De indeling of de berekeningswijze voor elke bouw-id ligt niet vast bij ontwerp.
 =head1 VOORBEELD
 
  Package: grep
+ Version: 3.11-3
  Essential: yes
  Priority: required
- Section: base
- Maintainer: Wichert Akkerman <wakkerma@debian.org>
+ Section: utils
+ Maintainer: Anibal Monsalve Salazar <anibal@debian.org>
  Architecture: sparc
- Version: 2.4-1
- Pre-Depends: libc6 (>= 2.0.105)
+
+ Multi-Arch: foreign
+ Pre-Depends: libc6 (>= 2.34), libpcre2-8-0 (>= 10.32)
  Provides: rgrep
  Conflicts: rgrep
+
+ Installed-Size. 1267
+
+ Homepage: https://www.gnu.org/software/grep/
  Description: GNU grep, egrep and fgrep.
   The GNU family of grep utilities may be the "fastest grep in the west".
   GNU grep is based on a fast lazy-state deterministic matcher (about
@@ -245,6 +257,7 @@ De indeling of de berekeningswijze voor elke bouw-id ligt niet vast bij ontwerp.
   look at every character. The result is typically many times faster
   than Unix grep or egrep. (Regular expressions containing backreferencing
   will run more slowly, however).
+
 
 =head1 BUGS
 

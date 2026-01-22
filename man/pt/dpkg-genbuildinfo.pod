@@ -124,6 +124,18 @@ Mostra a versão e termina.
 
 Esta variável pode ser usada para activar e desactivar várias funcionalidades que afectam a informação incluída no ficheiro .buildinfo, via opção B<buildinfo> (desde dpkg 1.18.19). Esta opção contém uma lista separada por vírgulas de funcionalidades, prefixadas com os modificadores ‘B<+>’ ou ‘B<->’, para denotar se se os deve activar ou desactivar. A funcionalidade especial “B<all>” pode ser usada para activar ou desactivar todas as outras funcionalidades. A funcionalidade "B<path>” controla se se deve incluir incondicionalmente o campo B<Build-Path>.
 
+=item B<DEB_BUILD_PROFILES>
+
+Se definido, será usado como perfil(es) de compilação activos para usar quando se gera o ficheiro .buildinfo.  É uma lista separada por espaços de nomes de perfis. 
+
+=item B<DEB_BUILD_ARCH>
+
+Define a arquitectura de compilação. Isto afecta o valor para o campo B<Build-Architecture>, e a verificação para modo de compilação-cruzada.
+
+=item B<DEB_HOST_ARCH>
+
+Define a arquitectura anfitriã. Isto afecta o nome de ficheiro usado para o ficheiro .buildinfo, e a verificação para modo de compilação-cruzada.
+
 =item B<DPKG_COLORS>
 
 Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B<auto> (predefinido), B<always> e B<never>.

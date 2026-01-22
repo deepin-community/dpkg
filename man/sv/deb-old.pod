@@ -34,7 +34,7 @@ Nästa rad är en decimalsträng (utan inledande nollor) som anger längden på 
 
 Båda dessa rader avslutas med ett ensamt radbrytningstecken.
 
-Den första tar-filen innehåller styrinformationen, lagrade som ett antal vanliga filer. Filen B<control> måste finnas, eftersom den innehåller grundläggande styrinformation.
+The first tarfile contains the package metadata, as a series of ordinary files.  The file B<control> must be present, as it contains the package control information.
 
 I vissa väldigt gamla arkiv kan filerna i styr-tarfilen eventuellt ligga i en underkatalog vid namn B<DEBIAN>. Om så är fallet kommer underkatalogen B<DEBIAN> också att finnas i styr-tarfilen, och styr-tarfilen kommer endast innehålla filer i den katalogen. Eventuellt kan styr-tarfilen innehålla en post för ”B<.>”, det vill säga den aktuella katalogen.
 

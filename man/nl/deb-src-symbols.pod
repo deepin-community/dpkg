@@ -28,9 +28,21 @@ De symboolbestand-sjablonen worden geleverd met Debian bronpakketten en de indel
 
 Commentaar wordt ondersteund in sjabloonsymboolbestanden. Elke regel met ‘#’ als eerste teken is een commentaarregel, behalve als die regel begint met ‘#include’ (zie het onderdeel over L</Het gebruik van includes>). Regels die beginnen met ‘#MISSING:’ zijn een bijzondere vorm van commentaar waarin symbolen die verdwenen zijn, gedocumenteerd worden.
 
-=head2 Substitutie van #PACKAGE# gebruiken
+=head2 Using metavariable substitutions
 
-In enkele zeldzame gevallen verschilt de naam van de bibliotheek naargelang de architectuur. Om de naam van het pakket niet rechtstreeks in het symboolbestand te moeten inschrijven, kunt u gebruik maken van de marker I<#PACKAGE#>. Die zal tijdens de installatie van de symboolbestanden vervangen worden door de echte pakketnaam. In tegenstelling tot de marker I<#MINVER#>, zal I<#PACKAGE#> nooit te vinden zijn in een symboolbestand binnenin een binair pakket.
+In some cases instead of hardcoding some variable text, we can use metavariables that will be replaced either when generating the symbols file shipped in the binary package, or during dependency generation.
+
+Contrary to the I<#MINVER#> metavariable, the following metavariables will never appear in a symbols file inside a binary package.
+
+=head3 Using the #PACKAGE# metavariable
+
+In some rare cases, the name of the library varies between architectures. To avoid hardcoding the name of the package in the symbols file, you can use the I<#PACKAGE#> metavariable.  It will be replaced by the real package name during installation of the symbols files.
+
+=head2 Using the #CURVER# metavariable
+
+In some cases, a symbol with an unstable ABI will require a strict dependency on the current package version.  To avoid hardcoding the current version in the symbols file, you can use the I<#CURVER#> metavariable.  It will be replaced by a dependency version constraint in the form of “(= I<binary-version>)”, where this would be generally be used in combination with I<#PACKAGE#>.
+
+Supported since dpkg 1.23.4.
 
 =head2 Symbooltags gebruiken
 
@@ -66,9 +78,9 @@ Deze tags laten iemand toe om de set architecturen waarvoor het symbool veronder
 
 Als in de standaardmodus (niet-sjabloonmodus) gewerkt wordt, worden van de architectuurspecifieke symbolen enkel die in het symboolbestand opgeschreven die overeenkomen met de huidige hostarchitectuur. Als daarentegen in de sjabloonmodus gewerkt wordt, worden steeds alle architectuurspecifieke symbolen (ook die voor vreemde architecturen) opgeschreven in het symboolbestand.
 
-De indeling voor de I<architectuurlijst> is dezelfde als die welke gebruikt wordt voor het veld B<Build-Depends> van I<debian/control> (behalve de omsluitende vierkante haakjes []). Met het eerste symbool uit de onderstaande lijst zal bijvoorbeeld enkel rekening gehouden worden bij de architecturen alpha, any-amd64 en ia64, met het tweede enkel op linux-architecturen en met het derde overal behalve op armel.
+De indeling voor de I<architectuurlijst> is dezelfde als die welke gebruikt wordt voor het veld B<Build-Depends> van I<debian/control> (behalve de omsluitende vierkante haakjes []). Met het eerste symbool uit de onderstaande lijst zal bijvoorbeeld enkel rekening gehouden worden bij de architecturen arm64, any-amd64 en riscv64, met het tweede enkel op linux-architecturen en met het derde overal behalve op armel.
 
-  (arch=alpha any-amd64 ia64)64bits_specifiek_symbool@Base 1.0
+  (arch=arm64 any-amd64 riscv64)arch_specifiek_symbool@Base 1.0
   (arch=linux-any)linux_specifiek_symbool@Base 1.0
   (arch=!armel)symbool_dat_armel_niet_heeft@Base 1.0
 
@@ -89,10 +101,6 @@ Meerdere beperkingen kunnen aaneengeregen worden.
 =item B<allow-internal>
 
 dpkg-gensymbols hanteert een lijst van interne symbolen die niet zouden mogen voorkomen in symboolbestanden omdat ze gewoonlijk slechts een neveneffect zijn van details in de wijze waarop de gereedschapsketen (toolchain) geïmplementeerd wordt. Indien u om een of andere reden echt wilt dat een van deze symbolen opgenomen wordt in het symboolbestand, moet u het symbool markeren met de tag B<allow-internal>. Dit kan nodig zijn voor sommige gereedschapsketenbibliotheken van lagere orde zoals “libgcc”.
-
-=item B<ignore-blacklist>
-
-Een verouderde alias voor B<allow-internal> (sinds dpkg 1.20.1, ondersteund sinds dpkg 1.15.3).
 
 =item B<c++>
 
@@ -147,7 +155,7 @@ Dit patroon wordt door de tag I<symver> aangegeven. Goed onderhouden bibliotheke
 
 Alle symbolen die horen bij de versies GLIBC_2.0 en GLIBC_2.7 zullen resulteren in de respectieve minimale versies 2.0 en 2.7, met uitzondering van het symbool access@GLIBC_2.0. Dit laatste zal resulteren in een minimale vereiste van libc6 versie 2.2 en dit ondanks het feit dat het valt binnen het bereik van het patroon "(symver)GLIBC_2.0". De reden hiervoor is dat specifieke symbolen voorrang hebben op patronen.
 
-Merk op dat hoewel patronen met jokertekens volgens de oude stijl (in het veld symboolnaam aangegeven door "*@version") nog steeds ondersteund worden, zij vervangen werden door een syntaxis volgens de nieuwe stijl "(symver|optional)version". Als hetzelfde effect gewenst wordt moet bijvoorbeeld "*@GLIBC_2.0 2.0" geschreven worden als "(symver|optional)GLIBC_2.0 2.0".
+Merk op dat hoewel wildcardpatronen volgens de oude stijl (in het veld symboolnaam aangegeven door "*@version") nog steeds ondersteund worden, zij vervangen werden door een syntaxis volgens de nieuwe stijl "(symver|optional)version". Als hetzelfde effect gewenst wordt moet bijvoorbeeld "*@GLIBC_2.0 2.0" geschreven worden als "(symver|optional)GLIBC_2.0 2.0".
 
 =item B<regex>
 
@@ -193,8 +201,8 @@ Net zoals om het even welk symbool kan ook een include-opdracht tags krijgen:
 Als gevolg daarvan zal er standaard van uitgegaan worden dat alle symbolen die uit I<in-te-voegen-bestand> opgenomen worden, gemarkeerd zijn met I<tag> ... I<tagN>. U kunt van deze functionaliteit gebruik maken om een gemeenschappelijk bestand I<pakket>.symbols te maken waarin architectuurspecifieke symboolbestanden opgenomen worden:
 
   gemeenschappelijk_symbool1@Base 1.0
- (arch=amd64 ia64 alpha)#include "package.symbols.64-bit"
- (arch=!amd64 !ia64 !alpha)#include "package.symbols.32-bit"
+ (arch-bits=64)#invoegen van "pakket.symbolen.64-bit"
+ (arch-bits=32)#invoegen van "pakket.symbolen.32-bit"
   gemeenschappelijk_symbool2@Base 1.0
 
 =back

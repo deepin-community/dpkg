@@ -22,9 +22,9 @@ B<dpkg-gencontrol> [I<option>...]
 
 =head1 DESCRIPTION
 
-B<dpkg-gencontrol> lit les informations contenues dans une arborescence Debian dépaquetée et crée le fichier S<« control »> d'un paquet binaire (par défaut, c'est le fichier debian/tmp/DEBIAN/control) ; durant cette action il y a simplification des champs de relations.
+B<dpkg-gencontrol> lit les informations contenues dans une arborescence Debian dépaquetée et crée le fichier « control » d'un paquet binaire (par défaut, c'est le fichier debian/tmp/DEBIAN/control) ; durant cette action il y a simplification des champs de relations.
 
-B<Pre-Depends>, B<Depends>, B<Recommends> et B<Suggests> sont simplifiés dans cet ordre pour supprimer les dépendances qui sont connues pour être vérifiées par la plus forte dépendance déjà traitée. Sont aussi supprimées toutes les auto-dépendances (dans les faits, cela supprime les dépendances qui sont déjà validées par la version du paquet déjà installé). Logiquement, il conserve les correspondances entre plusieurs dépendances dans le même paquet. L'ordre des dépendances est conservé du mieux S<possible :> si une dépendance doit être supprimée à cause d'une autre dépendance qui apparaît plus loin dans le champ, la dépendance remplaçante prendra la place de celle éliminée.
+B<Pre-Depends>, B<Depends>, B<Recommends> et B<Suggests> sont simplifiés dans cet ordre pour supprimer les dépendances qui sont connues pour être vérifiées par la plus forte dépendance déjà traitée. Sont aussi supprimées toutes les auto-dépendances (dans les faits, cela supprime les dépendances qui sont déjà validées par la version du paquet déjà installé). Logiquement, il conserve les correspondances entre plusieurs dépendances dans le même paquet. L'ordre des dépendances est conservé du mieux possible : si une dépendance doit être supprimée à cause d'une autre dépendance qui apparaît plus loin dans le champ, la dépendance remplaçante prendra la place de celle éliminée.
 
 Les autres champs (B<Enhances>, B<Conflicts>, B<Breaks>, B<Replaces> et B<Provides>) sont également simplifiés individuellement par l'analyse des différentes dépendances lorsque un paquet est indiqué plusieurs fois dans le champ.
 
@@ -44,7 +44,7 @@ Set an output substitution variable.  See L<deb-substvars(5)> for discussion of 
 
 =item B<-T>I<fichier-substvars>
 
-Lecture des variables de substitution depuis I<fichier-substvars> ; la valeur par défaut est B<debian/substvars>. Cette option peut être utilisée plusieurs fois pour lire les variables de substitution depuis plusieurs fichiers (depuis S<dpkg 1.15.6).>
+Lecture des variables de substitution depuis I<fichier-substvars> ; la valeur par défaut est B<debian/substvars>. Cette option peut être utilisée plusieurs fois pour lire les variables de substitution depuis plusieurs fichiers (depuis dpkg 1.15.6).
 
 =item B<-D>I<champ>B<=>I<valeur>
 
@@ -76,7 +76,7 @@ Cette option produit les informations concernant le paquet binaire I<paquet>.Si 
 
 =item B<-n>I<nom-de-fichier>
 
-Le nom du paquet est I<nom-de-fichier> au lieu de S<l'habituel :> paquet_version_arch.deb.
+Le nom du paquet est I<nom-de-fichier> au lieu de l'habituel : paquet_version_arch.deb.
 
 =item B<-is>, B<-ip>, B<-isp>
 
@@ -88,7 +88,7 @@ Analyse I<répertoire-construction-paquet> au lieu de B<debian/tmp>. Cette valeu
 
 =item B<-O>[I<nom-de-fichier>]
 
-Affiche le fichier S<« control »> sur la sortie standard (ou I<nom-de-fichier>, depuis S<dpkg 1.17.2),> au lieu de B<debian/tmp/DEBIAN/control> (ou I<répertoire-construction-paquet>B</DEBIAN/control> si l'option B<-P> a été utilisée).
+Affiche le fichier « control » sur la sortie standard (ou I<nom-de-fichier>, depuis dpkg 1.17.2), au lieu de B<debian/tmp/DEBIAN/control> (ou I<répertoire-construction-paquet>B</DEBIAN/control> si l'option B<-P> a été utilisée).
 
 =item B<-?>, B<--help>
 
@@ -104,13 +104,17 @@ Afficher le numéro de version puis quitter.
 
 =over 
 
+=item B<DEB_HOST_ARCH>
+
+Sets the host architecture.
+
 =item B<DPKG_COLORS>
 
-Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
+Définit le mode de couleur (depuis dpkg 1.18.5). Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis dpkg 1.19.0). Les valeurs permises sont : B<0> et B<1> (par défaut).
 
 =back
 
@@ -120,11 +124,11 @@ Si cette variable est définie, elle sera utilisée pour décider l'activation d
 
 =item B<debian/control>
 
-Le principal fichier d'information sur les sources ; il donne des renseignements qui ne dépendent pas d'une version concernant le paquet source et les paquets binaires qui peuvent être créés.
+The source package template control file, giving version-independent information about the source package and the binary packages it can produce.
 
 =item B<debian/files>
 
-La liste des fichiers créés qui font partie de ceux qui seront envoyés sur le serveur. B<dpkg-gencontrol> ajoute les noms présumés des fichiers des paquets binaires à partir des fichiers S<« control »> qu'il crée.
+La liste des fichiers créés qui font partie de ceux qui seront envoyés sur le serveur. B<dpkg-gencontrol> ajoute les noms présumés des fichiers des paquets binaires à partir des fichiers « control » qu'il crée.
 
 =back
 

@@ -18,17 +18,21 @@ dpkg-buildpackage - bygg binär- eller källkodspaket från källkod
 
 =head1 SYNOPS
 
-B<dpkg-buildpackage> [I<flagga>...]
+B<dpkg-buildpackage> [I<flagga>...] [B<-->] [I<filnamn>.dsc|I<katalog>]
 
 =head1 BESKRIVNING
 
-B<dpkg-buildprogram> är ett program som automatiserar processen med att bygga ett Debianpaket. Det består av följande steg:
+B<dpkg-buildprogram> är ett program som automatiserar processen med att bygga ett Debianpaket.
+
+Flagoorna I<filnamn>.dsc och I<katalog> stöds sedan dpkg 1.22.7. Semantiken för dessa flaggor är experimentella.
+
+Det består av följande steg:
 
 =over 
 
 =item B<1.>
 
-Kroken B<preinit> körs innan några källkodsfiler läses. Byggmiljön förbereds genom att diverse miljövariabler sätts (se B<MILJÖ>), kör kroken B<init> och anropar B<dpkg-source --before-build> (såvida inte B<-T> eller B<--target> används).
+Kroken B<preinit> körs innan några källkodsfiler läses. Om en B<.dsc>-fil anges packar programmet upp den på nytt och byter katalog till den, om en I<katalog> anges byter det katalog till den, annars förväntar det att den aktuella katalogen innehåller källkodsträdet. Byggmiljön förbereds genom att diverse miljövariabler sätts (se B<MILJÖ>), kroken B<init> körs och B<dpkg-source --before-build> anropas (såvida inte B<-T> eller B<--target> används).
 
 =item B<2.>
 
@@ -40,7 +44,7 @@ Om ett eller flera specifika mål har valts med flaggan B<-T> eller B<--target> 
 
 =item B<4.>
 
-Kör kroken B<source> och anropar B<dpkg-source -b> för att skapa källkodspaketet (om ett B<source>-bygge (källkod) har ombetts via B<--build> eller liknande flaggor).
+Kör kroken B<source> och anropar B<dpkg-source -b> för att skapa källkodspaketet (om ett B<source>-bygge (källkod) har ombetts via B<--build> eller liknande flaggor, och om ingen B<.dsc> har angivits).
 
 =item B<5.>
 
@@ -48,7 +52,7 @@ Kör kroken B<build> och anropar B<debian/rules> I<byggmål>, därefter körs kr
 
 =item B<6.>
 
-Kör kroken B<buildinfo> och anropar B<dpkg-genbuildinfo> för att skapa en B<.buildinfo>-fil. Många av flaggorna till B<dpkg-buildpackage> vidaresänds till B<dpkg-genchanges>.
+Kör kroken B<buildinfo> och anropar B<dpkg-genbuildinfo> för att skapa en B<.buildinfo>-fil. Många av flaggorna till B<dpkg-buildpackage> vidaresänds till B<dpkg-genchanges>. Om en I<.dsc> har angivits kommer den att refereras till i den genererade B<.buildinfo>-filen, så att vi kan fastställa källkodsträdets ursprung.
 
 =item B<7.>
 
@@ -89,6 +93,10 @@ Kör kroken B<check> och anropar en paketkontrollerare för B<.changes>-filen (o
 Kör kroken B<sign> och signerar med OpenPGP-programmet (såvida det inte är ett UNRELEASED-bygge, eller om B<--no-sign> angavs) för att signera B<.dsc>-filen (om sådan finns, såvida inte B<-us> eller B<--unsigned-source> anges), B<.buildinfo>-filen (såvida inte B<-ui>, B<--unsigned-buildinfo>, B<-uc> eller B<--unsigned-changes> anges) och B<.changes>-filen (såvida inte B<-uc> eller B<--unsigned-changes> anges).
 
 =item B<12.>
+
+Om en B<.dsc>-fil har angivits tas den uppackade källkodskatalogen bort.
+
+=item B<13.>
 
 Kör kroken B<done>.
 
@@ -254,7 +262,7 @@ Kontrollera inte inbyggda byggberoenden och -konflikter (sedan dpkg 1.18.2). Det
 
 =item B<--rules-requires-root>
 
-Följ inte fältet B<Rules-Requires-Root>, fall tillbaka på dess gamla förval (sedan dpkg 1.19.1).
+Följ inte fältet B<Rules-Requires-Root>, fall tillbaka på dess gamla förval B<binary-targets> (sedan dpkg 1.19.1).
 
 =item B<-nc>, B<--no-pre-clean>
 
@@ -286,7 +294,7 @@ För att bygga ett Debianpaket körs normalt kommandot B<debian/rules> med flera
 
 =item B<--check-command=>I<kontrollkommando>
 
-Kommando som kontrollerar själva B<.changes>-filen och byggda artifakter som refereras i filen (sedan dpkg 1.17.6). Kommandot ska ta sökvägen till B<.changes> som argument. Kommandot är normalt B<lintian>.
+Kommando som kontrollerar själva B<.changes>-filen och byggda artefakter som refereras i filen (sedan dpkg 1.17.6). Kommandot ska ta sökvägen till B<.changes> som argument. Kommandot är normalt B<lintian>.
 
 =item B<--check-option=>I<val>
 
@@ -316,7 +324,7 @@ Hämtar B<DPKG_BUILDPACKAGE_HOOK_SOURCE_OPTIONS> med den blankstegsavdelade list
 
 =item B<build>
 
-Hämtar B<DPKG_BUILDPACKAGE_HOOK_BUILD_TARGET> med namnet på det byggmål i B<debian/rules> som anropades, men bara om anropat.
+Hämtar B<DPKG_BUILDPACKAGE_HOOK_BUILD_TARGET> med namnet på det byggmål i B<debian/rules> som anropades. Före dpkg 1.22.7 sattes bara variabeln om måket anropats.
 
 =item B<binary>
 
@@ -374,7 +382,7 @@ Uppströmsversionen.
 
 =item B<--buildinfo-file=>I<filnamn>
 
-Ange I<filnamn> att använda för den skapade B<.buildinfo>-filen (sedam dpkg 1.21.0).
+Ange I<filnamn> att använda för den skapade B<.buildinfo>-filen (sedan dpkg 1.21.0).
 
 =item B<--buildinfo-option=>I<val>
 
@@ -416,7 +424,7 @@ Ange en Open PGP-nyckel-id (antingen ett fingeravtryck eller ett användar-ID) f
 
 Ange en OpenPGP-I<nyckelfil> som innehåller den hemliga nyckeln att använda vid signering av paket (sedan dpkg 1.21-10).
 
-B<Observera>: Av säkerhetsskäl är det bäst att håll I<nyckelfil> låst med ett lösenord.
+B<Observera>: Av säkerhetsskäl är det bäst att hålla I<nyckelfil> låst med ett lösenord.
 
 =item B<-us>, B<--unsigned-source>
 
@@ -424,7 +432,7 @@ Signera inte källkodspaketet (lång flagga sedan dpkg 1.18.8).
 
 =item B<-ui>, B<--unsigned-buildinfo>
 
-Signera inte B<.buildinfo>-filen (sedam dpkg 1.18.19).
+Signera inte B<.buildinfo>-filen (sedan dpkg 1.18.19).
 
 =item B<-uc>, B<--unsigned-changes>
 
@@ -506,7 +514,7 @@ Om satt, används som kommandot för att kontrollera B<.changes>-filen (sedan dp
 
 =item B<DEB_SIGN_KEYID>
 
-Används för att signera filerna B<.changes>, B<.buildinfo> och B<.dsc>-filerna om satt (sedan dpkg 1.17.2). Överstyrs av flaggan B<--sign-key>.
+Används för att signera filerna B<.changes>, B<.buildinfo> och B<.dsc>-filerna om satt (sedan dpkg 1.17.2). Överstyrs av flaggan B<--sign-keyid>.
 
 =item B<DEB_SIGN_KEYFILE>
 
@@ -514,7 +522,7 @@ Används för att signera filerna B<.changes>, B<.buildinfo> och B<.dsc>-filerna
 
 =item B<DEB_BUILD_OPTIONS>
 
-If set, it will contain a space-separated list of options that affect the behavior of some dpkg tools involved in package building, and might affect the package build process if the code in F<debian/rules> honors them.  These options can have parameters specified immediately after an equal sign (‘B<=>‘).  For options that support multiple parameters, these will not be separated by spaces, as these are reserved to separate options.
+Om satt, innehåller en blankstegsavdelad lista med flaggor som påverkar beteendet för några dpkg-verktyg som används i paketbyggandet, och kan påverka paketbyggprocessen om koden i F<debian/rules> stöder dem. Dessa flaggor kan ha parametrar angivna omedelbart efter ett likhetstecken (”B<=>”). För flaggor som stöder flera parametrar avdelas de inte med blanksteg, eftersom dessa reserverats för att avdela flaggor.
 
 Följande flaggor känns och stöds av dpkg-verktygen, andra flaggor som stöds av F<debian/rules> kan anges av distributionsspecifika policydokument.
 
@@ -540,21 +548,21 @@ Paketets F<debian/rules> bör se till att objekt inte får felsökningsinformati
 
 B<dpkg-buildpackage> lägger till L<make(1)>-flaggan B<--no-print-directory> till miljövariabeln B<MAKEFLAGS>. Paketets F<debian/rules> bör minska pratsamheten, utan att bli helt tyst.
 
-=item B<hardening=>I<feature-spec>
+=item B<hardening=>I<funktionsangivelse>
 
-=item B<reproducible=>I<feature-spec>
+=item B<reproducible=>I<funktionsangivelse>
 
-=item B<abi=>I<feature-spec>
+=item B<abi=>I<funktionsangivelse>
 
-=item B<future=>I<feature-spec>
+=item B<future=>I<funktionsangivelse>
 
-=item B<qa=>I<feature-spec>
+=item B<qa=>I<funktionsangivelse>
 
-=item B<optimize=>I<feature-spec>
+=item B<optimize=>I<funktionsangivelse>
 
-=item B<sanitize=>I<feature-spec>
+=item B<sanitize=>I<funktionsangivelse>
 
-These are feature areas that control build flag features.  See L<dpkg-buildflags(1)> for further details.
+Detta är funktionsområden som styr funktioner i byggflaggor. Se L<dpkg-buildflags(1)> för ytterligare detaljer.
 
 =back
 
@@ -624,7 +632,7 @@ Mellan dpkg 1.14.17 och 1.16.1 exporterade B<dpkg-buildpackage> kompilatorflaggo
 
 =head2 Förvalda byggmål
 
-B<dpkg-buildpackage> använder målen B<build-archi> och B<build-indep> från dpkg 1.16.2. Dessa mål krävs därmed, men för att undvika att existerande paket går sönder, och för att förenkla övergången, om källkodspaketet inte både bygger arkitektursoberoende och -beroende binärpaket (sedan dpkg 1.18.8) kommer den falla tillbaka till att använda målet B<build> om B<make -f debian/rules -gn> I<byggmål> returnerar statuskoden 2.
+B<dpkg-buildpackage> använder målen B<build-arch> och B<build-indep> sedan dpkg 1.16.2. Före dpkg 1.22.7 fanns det kod för att försöka detektera de saknade målen och falla tillbaka på målet B<build>. Dessa mål är därför obligatoriska.
 
 =head1 SÄKERHET
 

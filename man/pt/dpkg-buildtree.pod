@@ -34,6 +34,12 @@ Este programa foi introduzido no dpkg 1.22.3.
 
 Remove todos os artefactos gerados durante uma compilação pelas várias ferramentas do dpkg, e os nomes de caminho usados ou controlados pelas ferramentas do dpkg que são seguras de se limpar. Estes ficheiros são usados para acompanhar o estado entre execuções de compilação do pacote, e são em muitos casos detalhes de implementação interna com que o empacotador não se deve preocupar, ou são directórios de estágios contendo artefactos de compilação.
 
+=item B<is-rootless>
+
+Verifica se a árvore de compilação pode ser compilada sem privilégios de root (desde dpkg 1.22.12).
+
+Este comando pode ser usado em segurança mesmo com versões onde o comando ainda não estava disponível pois a predefinição será a histórica onde root era requerido.
+
 =item B<--help>
 
 Mostra a mensagem de utilização e termina.
@@ -41,6 +47,20 @@ Mostra a mensagem de utilização e termina.
 =item B<--version>
 
 Mostra a versão e termina.
+
+=back
+
+=head1 AMBIENTE
+
+=over 
+
+=item B<DPKG_COLORS>
+
+Define o modo de cor. Os valores actualmente aceites são: B<auto> (predefinido), B<always> e B<never>.
+
+=item B<DPKG_NLS>
+
+Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nativa. Também como conhecido como suporte de internacionalização (ou i18n). Os valores aceites são B<0> e B<1> (predefinição).
 
 =back
 

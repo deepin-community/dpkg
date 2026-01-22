@@ -22,7 +22,7 @@ B<dpkg-name> [I<option>...] [B<-->] I<file>...
 
 =head1 DESCRIÇÃO
 
-Este manual documenta o programa B<dpkg-name> o qual fornece uma maneira fácil de renomear pacotes B<Debian> nos seus nomes de pacote completos. Todos os nomes de pacote completos consistem de I<pacote>B<_>I<versão>B<_>I<arquitectura>B<.>I<tipo-de-pacote> como especificado no ficheiro de controle do pacote. A parte I<versão> do nome do ficheiro consiste da informação de versão do autor seguida opcionalmente por um hífen e a informação de revisão. A parte I<tipo-de-pacote> vem desse campo se presente ou regressa a B<deb>.
+Este manual documenta o programa B<dpkg-name> o qual fornece uma maneira fácil de renomear pacotes B<Debian> nos seus nomes de pacote completos. Todos os nomes de pacote completos consistem de I<pacote>B<_>I<versão>B<_>I<arquitectura>B<.>I<tipo-de-pacote> como especificado no ficheiro de controle do pacote. A parte I<versão> do nome do ficheiro consiste da informação de versão do autor seguida opcionalmente por um hífen e a informação de revisão. A parte I<tipo-de-pacote> vem desse campo se estiver presente ou irá regressar a B<deb>.
 
 =head1 OPÇÕES
 
@@ -65,6 +65,10 @@ Mostra a versão e termina.
 =head1 AMBIENTE
 
 =over 
+
+=item B<DEB_HOST_ARCH>
+
+Define a arquitectura da máquina anfitriã. Isto afecta o nome de arquitectura usado no nome de ficheiro do pacote.
 
 =item B<DPKG_COLORS>
 

@@ -90,7 +90,7 @@ Schiebt die Dateien tatsächlich beiseite (oder zurück). B<dpkg-divert> wird de
 
 =item B<--no-rename>
 
-Legt fest, dass die Datei beim Hinzufügen oder Entfernen der Umleitung in die Datenbank nicht umbenannt werden soll (seit Dpkg 1.19.1). Dies ist für Umleitungen von Dateien aus der Paketgruppe B<Essential> gedacht, bei der das vorübergehende Verschwinden der ursprünglichen Datei nicht akzeptiert werden kann, da es zu einem nicht funktionalen System führen kann. Dies ist das Standardverhalten, was sich allerdings im Dpkg 1.20.x-Zyklus ändern wird.
+Legt fest, dass die Datei beim Hinzufügen oder Entfernen der Umleitung in die Datenbank nicht umbenannt werden soll (seit Dpkg 1.19.1). Dies ist für Umleitungen von Dateien aus der Paketgruppe B<Essential> gedacht, bei der das vorübergehende Verschwinden der ursprünglichen Datei nicht akzeptiert werden kann, da es zu einem nicht funktionalen System führen kann. Dies ist das Standardverhalten. Dies wird sich ändern, sobald es keine bekannten Nutzer mehr gibt, aber nicht vor dem Dpkg 1.23.x-Veröffentlichungszyklus.
 
 =item B<--test>
 
@@ -144,6 +144,10 @@ Setzt die Fehlersuchmaske (seit Dpkg 1.21.10) aus einem oktalen Wert. Die derzei
 
 Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte sind: B<auto> (Vorgabe), B<always> und B<never>.
 
+=item B<DPKG_NLS>
+
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language Support, auch als Unterstützung für Internationalisierung (oder i18n) bekannt, aktiviert wird (seit Dpkg 1.22.7). Die akzeptierten Werte sind: B<0> und B<1> (Vorgabe).
+
 =back
 
 =head1 DATEIEN
@@ -192,7 +196,7 @@ L<dpkg(1)>.
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

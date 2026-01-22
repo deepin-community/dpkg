@@ -30,15 +30,111 @@ O formato descrito aqui é usado desde Debian 0.93; detalhes do formato antigo e
 
 O ficheiro é um arquivo B<ar> com um valor mágico de B<!E<lt>archE<gt>>. Apenas é suportado o formato de arquivo B<ar> comum, sem extensões longas de nome de ficheiro, mas com nomes de ficheiro que contêm uma barra invertida opcional, o que limita o seu comprimento a 15 caracteres (dos 16 permitidos). Os tamanhos dos ficheiros são limitados a 10 dígitos decimais do ASCII, permitindo aproximadamente 9536.74 MiB de ficheiros membros.
 
-Os arquivos B<tar> actualmente permitidos são, o formato de estilo antigo (v7), o formato ustar pré-POSIX, um subconjunto do formato GNU (nomes de caminho longos e nomes de links longos no novo estilo suportados desde dpkg 1.4.1.17; metadados de ficheiros longos desde dpkg 1.18.24), e o formato ustar do POSIX (nomes longos suportados desde o dpkg 1.15.0). Tipos de flags de tar não reconhecidas são consideradas um erro. Cada tamanho de entrada tar dentro do arquivo tar está limitada a 11 dígitos ASCII em octal, permitindo até 8 GiB de entradas tar. O suporte a metadados de ficheiros longos de GNU permite tamanhos de entrada tar de 95-bit e marcas temporais negativas, e UID de 63-bit, GID e números de dispositivos.
+Os arquivos B<tar> atualmente permitidos são:
 
-O primeiro membro é chamado B<debian-binary> e contém uma série de linhas, separadas por novas linhas. Actualmente está presente apenas uma linha, o número de versão do formato, B<2.0> na altura que este manual foi escrito, Programas que leem arquivos de novo formato deve estar preparados para o número menor estar aumentado e e estarem presentes novas linhas, e devem ignorar estas se for o caso.
+=over 
+
+=item * formato de estilo-antigo (v7)
+
+=item * formato ustar de pre-POSIX
+
+=item * sub-conjunto do formato GNU
+
+Novo estilo de nomes de caminho longos e nomes de link longos, suportado desde dpkg 1.4.1.17; ficheiro de metadados grande desde dpkg 1.18.24.
+
+=item * formato ustar de POSIX
+
+Nomes longos suportados desde dpkg 1.15.0
+
+=back
+
+Tipos de flags de tar não reconhecidas são consideradas um erro. Por predefinição cada tamanho de entrada tar dentro do arquivo tar está limitada a 11 dígitos ASCII em octal, permitindo até 8 GiB de entradas tar.  O suporte a metadados de ficheiros longos de GNU permite tamanhos de entrada tar de 95-bit e marcas temporais negativas, e UID de 63-bit, GID e números de dispositivos, o que dá montantes até praticamente valores ilimitados.
+
+O arquivo B<ar> é composto de múltiplos membros numa ordem específica:
+
+=over 
+
+=item B<debian-binary>
+
+O primeiro membro requerido contém uma série de linhas, separadas por novas linhas. Actualmente está presente apenas uma linha, o número de versão do formato, B<2.0> na altura que este manual foi escrito. Programas que leem arquivos de novo formato deve estar preparados para o número menor estar aumentado e estarem presentes novas linhas, e devem ignorar estas se for o caso.
 
 Se o número maior mudou, foi feita uma mudança incompatível e o programa deverá parar. Se não o fizer, então o programa deve ser capaz de continuar em segurança, a menos que encontre um membro inesperado no arquivo (excepto no fim), como descrito em baixo.
 
-O segundo membro obrigatório é chamado B<control.tar>. É um arquivo tar que contém a informação de controle do pacote, esteja não comprimido (suportado desde dpkg 1.17.6), ou comprimido com gzip (com extensão B<.gz>) ou xz (com extensão B<.xz>, suportado desde 1.17.6), zstd (com extensão B<.zst>, suportado desde dpkg 1.21.18), como uma série de ficheiros simples, do qual o ficheiro B<control> é obrigatório e contém a informação de controle do núcleo, os ficheiros B<md5sums>, B<conffiles>, B<triggers>, B<shlibs> e B<symbols> contêm informação de controle opcional, e os ficheiros B<preinst>, B<postinst>, B<prerm> e B<postrm> são scripts opcionais do maintainer. O tarbal de controle pode opcionalmente conter uma entrada para ‘B<.>’, o directório actual.
+=item B<control.tar>
 
-O terceiro e último membro obrigatório é chamado B<data.tar>. Contém o sistema de ficheiros como um arquivo tar, esteja não comprimido (suportado desde  dpkg 1.10.24), ou comprimido com gzip (com extensão B<.gz>), xz (com extensão B<.xz>, suportado desde dpkg 1.15.6), zstd (com extensão B<.zst> suportado desde dpkg 1.21.18), bzip2 (com extensão B<.bz2>, suportado desde dpkg 1.10.24) ou lzma (com extensão B<.lzma>, suportado desde dpkg 1.13.25).
+O segundo membro requerido é um arquivo tar que contém os metadados do pacote.
+
+Pode usar a seguinte compressão:
+
+=over 
+
+=item * none (suportado desde dpkg 1.17.6)
+
+=item * gzip (com extensão B<.gz>)
+
+=item * xz (com extensão B<.xz>, suportado desde dpkg 1.17.6)
+
+=item * zstd (com extensão B<.zst>, suportado desde dpkg 1.21.18)
+
+=back
+
+Contém uma série de ficheiros simples:
+
+=over 
+
+=item B<control>
+
+Informação de controle obrigatória, em formato L<deb822(5)>.
+
+=item B<md5sums>
+
+=item B<conffiles>
+
+=item B<triggers>
+
+=item B<shlibs>
+
+=item B<symbols>
+
+Metadados de pacote opcionais.
+
+=item B<preinst>
+
+=item B<postinst>
+
+=item B<prerm>
+
+=item B<postrm>
+
+Scripts de maintainer opcionais.
+
+=back
+
+O tarball de controle pode conter opcionalmente uma entrada para ‘B<.>’, o directório atual.
+
+=item B<data.tar>
+
+O terceiro, último membro requerido, contém o sistema de ficheiros como um arquivo tar.
+
+Pode usar a seguinte compressão:
+
+=over 
+
+=item * none (suportado desde dpkg 1.10.24)
+
+=item * gzip (com extensão B<.gz>)
+
+=item * xz (com extensão B<.xz>, suportado desde dpkg 1.15.6)
+
+=item * zstd (com extensão B<.zst>, suportado desde dpkg 1.21.18)
+
+=item * bzip2 (com extensão B<.bz2>, suportado desde dpkg 1.10.24)
+
+=item * lzma (com extensão B<.lzma>, suportado desde 1.13.25)
+
+=back
+
+=back
 
 Estes membros têm de ocorrer na ordem exacta. As implementações actuais deverão ignorar quaisquer membros adicionais após o B<data.tar>. Podem ser definidos mais membros no futuro, e (se possível) serão colocados após estes três. Quaisquer membros adicionais que possam precisar de serem inseridos após B<debian-binary> e antes de B<control.tar> ou B<data.tar> e que deverão ser seguramente ignorados por programas mais antigos, terão os nomes a começar com um underscore, ‘B<_>’.
 

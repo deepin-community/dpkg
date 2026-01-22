@@ -18,7 +18,7 @@ dpkg - en mellannivåpakethanterare för Debian
 
 =head1 SYNOPS
 
-B<dpkg> [I<flagga>...] I<åtgärd>
+B<dpkg> [I<option>...] I<command>
 
 =head1 VARNING
 
@@ -28,9 +28,9 @@ Den bör I<inte> användas av paketansvariga som vill lära sig hur B<dpkg> komm
 
 =head1 BESKRIVNING
 
-B<dpkg> är ett mellannivåverktyg för att installera, bygga, ta bort och hantera Debianpaket. Det primära och mer användarvänliga skalet runt B<dpkg> som ett CLI (kommandoradsgränssnitt) är L<apt(8)> och som ett TUI (terminalanvändargränssnitt) är L<aptitude(8)>. B<dpkg> kontrolleras helt och hållet via kommandoradsparametrar, vilka består av exakt en åtgärd och noll eller fler flaggor. Åtgärdsparametern talar om för dpkg vad som ska göras, och flaggorna styr på vilket sätt åtgärden ska utföras.
+B<dpkg> is a medium-level tool to install, build, remove and manage Debian packages.  The primary and more user-friendly front-end for B<dpkg> as a CLI (command-line interface) is L<apt(8)> and as a TUI (terminal user interface) is L<aptitude(8)>.  B<dpkg> itself is controlled entirely via command line parameters, which consist of exactly one command and zero or more options. The command-parameter tells B<dpkg> what to do and options control the behavior of the command in some way.
 
-B<dpkg> kan också användas som ett skal runt L<dpkg-deb(1)> och L<dpkg-query(1)>. En förteckning över tillgängliga åtgärder beskrivs nedan i stycket B<ÅTGÄRDER>. Om B<dpkg> upptäcker en sådan åtgärd anropas bara B<dpkg-dpkg> eller B<dpkg-query> med de givna flaggorna, men inga specifika flaggor sänds direkt till dem, för att använda sådana flaggor måste bakgrundsprogrammen anropas direkt.
+B<dpkg> can also be used as a front-end to L<dpkg-deb(1)> and L<dpkg-query(1)>.  The list of supported commands can be found later on in the B<COMMANDS> section.  If any such command is encountered B<dpkg> just runs B<dpkg-deb> or B<dpkg-query> with the parameters given to it, but no specific options are currently passed to them, to use any such option the back-ends need to be called directly.
 
 =head1 INFORMATION OM PAKET
 
@@ -114,7 +114,7 @@ Ett paket markerat B<ominstallation krävs> är trasigt och kräver ominstallati
 
 =back
 
-=head1 ÅTGÄRDER
+=head1 KOMMANDON
 
 =over 
 
@@ -246,7 +246,7 @@ Utför sundhets- och konsekvenskontroll för I<paketnamn> eller alla paket om de
 
 =item B<--merge-avail> [I<Packages-fil>]
 
-Uppdatera B<dpkg>s och B<dselect>s lista över vilka paket som finns tillgängliga. Med B<--merge-avail> kombineras den gamla informationen med informationen från I<Packages-filen>. Med B<--update-avail> ersätts den gamla informationen med informationen från I<Packages-filen>. I<Packages-filerna> som medföljer Debian heter helt enkelt ”I<Packages>”. Om I<Packages-fil>-argumentet saknas eller namnet ”B<->” anges kommer det att läsas från standard in (sedan dpkg 1.17.7). B<dpkg> skriver sin lista över tillgängliga paket i I<%ADMINDIR%/available>.
+Update B<dpkg>'s and B<dselect>'s idea of which packages are available. With the B<--merge-avail> command, old information is combined with information from I<Packages-file>.  With the B<--update-avail> command, old information is replaced with the information in the I<Packages-file>.  The I<Packages-file> distributed with Debian is simply named «I<Packages>».  If the I<Packages-file> argument is missing or named «B<->» then it will be read from standard input (since dpkg 1.17.7).  B<dpkg> keeps its record of available packages in I<%ADMINDIR%/available>.
 
 Ett lättare enkelkommando för att hämta och uppdater I<available>-filen är B<dselect update>. Observera att den här filen i huvudsak är onödig om du använder ett APT-baserat skal istället för B<dselect>: APT har ett eget system för att hålla reda på tillgängliga paket.
 
@@ -404,9 +404,9 @@ Visar B<dpkg>s versionsinformation.
 
 När det används tillsammans med B<--robot> kommer utdata vara programmets versionsnummer i ett numeriskt format avdelat med punkt, utan radbrytningstecken.
 
-=item B<dpkg-deb-åtgärder>
+=item B<dpkg-deb commands>
 
-Se L<dpkg-deb(1)> för ytterligare information om följande åtgärder, och andra åtgärder och flaggor som inte är tillgängliga via skalet B<dpkg>.
+See L<dpkg-deb(1)> for more information about the following commands, and other commands and options not exposed by the B<dpkg> front-end.
 
 =over 
 
@@ -448,9 +448,9 @@ Visa information om ett paket.
 
 =back
 
-=item B<dpkg-query-åtgärder>
+=item B<dpkg-query commands>
 
-Se L<dpkg-query(1)> för ytterligare information om följande åtgärder, och andra åtgärder och flaggor som inte är tillgängliga via skalet B<dpkg>.
+See L<dpkg-query(1)> for more information about the following commands, and other commands and options not exposed by the B<dpkg> front-end.
 
 =over 
 
@@ -653,29 +653,29 @@ Ignorera beroendekontroll för angivna paket (i verkligheten utförs kontrollen,
 
 =item B<--no-act>, B<--dry-run>, B<--simulate>
 
-Gör allting som efterfrågas, men skriv inte några ändringar. Detta används för att se vad som skulle ha hänt med åtgärden utan att faktiskt ändra något.
+Do everything which is supposed to be done, but don't write any changes. This is used to see what would happen with the specified command, without actually modifying anything.
 
-Be sure to give B<--no-act> before the action-parameter, or you might end up with undesirable results (e.g. B<dpkg --purge foo --no-act> will first purge package “foo” and then try to purge package ”--no-act”, even though you probably expected it to actually do nothing).
+Be sure to give B<--no-act> before the command-parameter, or you might end up with undesirable results (e.g. B<dpkg --purge foo --no-act> will first purge package “foo” and then try to purge package ”--no-act”, even though you probably expected it to actually do nothing).
 
 =item B<-R>, B<--recursive>
 
-Hantera alla vanliga filer som matchar sökmönstret B<*.deb> rekursivt i de kataloger som anges, med alla sina underkataloger. Flaggan kan användas tillsammans med åtgärderna B<-i>, B<-A>, B<--install>, B<--unpack> och B<--record-avail>.
+Recursively handle all regular files matching pattern B<*.deb> found at specified directories and all of its subdirectories.  This can be used with B<-i>, B<-A>, B<--install>, B<--unpack> and B<--record-avail> commands.
 
 =item B<-G>
 
 Installera inte paketet om en nyare version av samma paket redan är installerat. Detta är ett alias för B<--refuse-downgrade>.
 
-=item B<--admindir=>I<kat>
+=item B<--admindir=>I<directory>
 
 Ställ in administrationskatalogen till I<katalog>. Katalogen innehåller flera filer som beskriver status för installerade eller avinstallerade paket, osv. Standardvärde är ”I<%ADMINDIR%>” om B<DPKG_ADMINDIR> inte har satts.
 
-=item B<--instdir=>I<katalog>
+=item B<--instdir=>I<directory>
 
-Ställ in installationskatalogen, vilket anger katalogen där paket ska installeras. B<instdir> är även katalogen som skickas som argument till L<chroot(2)> innan paketets installationsfiler körs, vilket betyder att skripten ser B<instdir> som rotkatalog. (Förval är ”I</>”)
+Set the installation directory, which refers to the directory where packages are to be installed.  B<instdir> is also the directory passed to L<chroot(2)> before running package's installation scripts, which means that the scripts see B<instdir> as a root directory.  Defaults to «I</>» if B<DPKG_ROOT> has not been set (since dpkg 1.21.10).
 
-=item B<--root=>I<katalog>
+=item B<--root>=I<katalog>
 
-Ställ in rotkatalogen till B<katalog>, vilket sätter installationskatalogen till ”I<katalog>” och den administrativa katalogen till ”I<katalog>B<%ADMINDIR%>”.
+Set the root directory to B<directory>, which sets the installation directory to «I<directory>» and the administrative directory to «I<directory>B<%ADMINDIR%>» if B<DPKG_ROOT> has not been set (since dpkg 1.21.10).
 
 =item B<-O>, B<--selected-only>
 
@@ -691,7 +691,9 @@ Sedan dpkg 1.21.10 tar även arkitekturen med i beräkningen, vilket gör det m�
 
 =item B<--post-invoke=>I<kommando>
 
-Sätter en anropskrok I<kommando> som körs via ”%DPKG_DEFAULT_SHELL% -c” före eller efter B<dpkg> körs för åtgärderna I<unpack>, I<configure>, I<install>, I<triggers-only>, I<remove> och I<purge> (sedan dpkg 1.15.4) samt I<add-architecture> och I<remove-architecture> (sedan dpkg 1.17.19). Flaggan kan anges flera gånger. Ordningen på flaggorna som anges behålls och de som anges i konfigurationsfilen har företräde. Miljövariabeln B<DPKG_HOOK_ACTION> sätts för hakar i den nuvarande B<dpkg>-åtgärden. 
+Ange en anropskrok I<kommando> som körs via ”%DPKG_DEFAULT_SHELL% -c” före eller efter B<dpkg> körs för åtgärderna I<unpack>, I<configure>, I<install>, I<triggers-only>, I<remove> och I<purge> (sedan dpkg 1.15.4) samt I<add-architecture> och I<remove-architecture> (sedan dpkg 1.17.19). Flaggan kan anges flera gånger. Ordningen på flaggorna som anges behålls och de som anges i konfigurationsfilen har företräde. Miljövariabeln B<DPKG_HOOK_ACTION> sätts för hakar i den nuvarande B<dpkg>-åtgärden. 
+
+Anropskrokarna körs inte när B<--no-act> anges, eller vid körning som icke-root utan B<--force-not-root>.
 
 B<Observera>: Skal kan anropa B<dpkg> flera gånger per körning, vilket kan göra att hakarna körs fler gånger än förväntat.
 
@@ -726,7 +728,7 @@ Det enda utdataformatet som stöds är för närvarande B<rpm>, som består av e
 
 Z<>
  B<missing  > [B<c>] I<sökvägsnamn> [B<(>I<felmeddelande>B<)>]
- B<??5??????> [B<c>] I<sökvägsnamn>
+ B<?M5??????> [B<c>] I<sökvägsnamn>
 
 De första 9 tecknen används för att rapportera resultaten från testerna, antingen ett bokstavligt B<missing> (saknas) om filen inte finns eller dess metadata inte kan hämtas, eller ett av följande specialtecken som rapporterar resultatet från varje enskilt test:
 
@@ -809,6 +811,8 @@ Sänds precis innan ett hanteringsskede påbörjas. I<Skede> är något av B<upg
 
 Sänd maskinläsbar paketstatus och förloppsinformation till skal-I<kommando>ts standard in, som körs via ”%DPKG_DEFAULT_SHELL% -c” (sedan dpkg 1.16.0). Flaggan kan anges flera gånger. Utdataformatet som används är detsamma som för B<--status-fd>.
 
+Statusloggarna körs inte när B<--no-act> anges, eller när det körs som icke-root utan B<--force-non-root>
+
 =item B<--log=>I<filnamn>
 
 Logga uppdateringar av statusändringar och åtgärder till I<filnamn>, istället för den förvalda I<%LOGDIR%/dpkg.log>. Om flaggan anges flera gånger används det sista filnamnet. Loggmeddelanden är på formen:
@@ -864,7 +868,7 @@ Annullerar ett tidigare B<--no-triggers> (sedan dpkg 1.14.17).
 
 =item B<0>
 
-Den önskade funktionen utfördes utan fel. Eller ett test eller ett påstående returnerade sant.
+The requested command was successfully performed.  Or a check or assertion command returned true.
 
 =item B<1>
 
@@ -902,11 +906,17 @@ Programmet B<dpkg> kommer att exekveras när ett nytt skal startas, eller när e
 
 =item B<DPKG_PAGER>
 
-Programmet B<dpkg> kommer att köra när en bläddrare körs, vilken kommer att köras med ”B<$SHELL -c>”, till exempel när skillnader i konffiler ska visas. Om B<SHELL> inte är satt kommer ”B<%DPKG_DEFAULT_SHELL%>” att användas istället. B<DPKG_PAGER> överstyr miljövariabeln B<PAGER> (sedan dpkg 1.19.2).
+Programmet B<dpkg> kommer att köra när en bläddrare körs, vilken kommer att köras med ”B<$SHELL -c>”, till exempel när skillnader i konffiler ska visas. Om B<SHELL> inte är satt kommer ”B<%DPKG_DEFAULT_SHELL%>” att användas istället.
+
+The B<DPKG_PAGER> overrides the B<PAGER> environment variable (since dpkg 1.19.2).  If none of the programs pointed by B<DPKG_PAGER> or B<PAGER> are present, the following programs will be tried in order (since dpkg 1.22.12): the default pager B<%DPKG_DEFAULT_PAGER%>, then L<less(1)>, L<more(1)>, and finally L<cat(1)>.
 
 =item B<DPKG_COLORS>
 
 Väljer färgläge (sedan dpkg 1.18.5). För närvarande godtas följande värden: B<auto> (förval), B<always> och B<never>.
+
+=item B<DPKG_NLS>
+
+Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även känt som internationaliseringsstöd (eller i18n) (sedan dpkg 1.22.7). Tillåtna värden är: B<0> och B<1> (förval).
 
 =item B<DPKG_DEBUG>
 
@@ -916,6 +926,10 @@ Anger felsökningsmasken (sedan dpkg 1.21.10) från ett oktalt värde. De flaggo
 
 Ställer in de tvingande flaggorna (sedan dpkg 1.19.5). När variabeln är satt kommer inte de inbyggda förvalda tvingande flaggorna att användas. Om variabeln är närvarande men tom kommer alla tvingande flaggor att inaktiverats.
 
+=item B<DPKG_ROOT>
+
+If set and the B<--instdir> or B<--root> options have not been specified, it will be used as the filesystem root directory (since dpkg 1.21.10).
+
 =item B<DPKG_ADMINDIR>
 
 Om satt, och flaggorna B<--admindir> och B<-root> inte har angivits, används värdet som administrativ katalog för B<dpkg> (sedan dpkg 1.20.0).
@@ -923,6 +937,18 @@ Om satt, och flaggorna B<--admindir> och B<-root> inte har angivits, används v�
 =item B<DPKG_FRONTEND_LOCKED>
 
 Ställer in ett pakethanterarskal att meddela dpkg att det inte ska ta skal-låset (sedan dpkg 1.19.1).
+
+=item B<DPKG_PATH_PASSWD>
+
+Anger sökvägsnamnet för systemets F<passwd>-fil. Sökvägen är relativ till katalogen som angavs med B<--root>. Förval är F</etc/passwd>.
+
+Sedan dpkg 1.22.16.
+
+=item B<DPKG_PATH_GROUP>
+
+Anger sökvägsnamnet för systemets F<group>-fil. Sökvägen är relativ till katalogen som angavs med B<--root>. Förval är F</etc/group>.
+
+Sedan dpkg 1.22.16.
 
 =back
 
@@ -936,7 +962,7 @@ Definieras av B<dpkg> till ”B<-FRSXMQ>” om det inte redan har satts, när en
 
 =item B<DPKG_ROOT>
 
-Definieras av B<dpkg> i utvecklarskriptets miljö till att ange vilken installation det ska utföras på (sedan dpkg 1.18.5). Värdet är tänkt att läggas till först i alla sökvägar utvecklarskripten opererar på. Under vanlig körning är den här variabeln tom. När paket installeras i ett annat B<instdir> startar B<dpkg> normalt utecklarskipten med L<chroot(2)> och lämnar variabeln tom, men om B<--force-script-chrootless> anges kommer L<chroot(2)>-anropet att hoppas över och B<instdir> är icke-tomt.
+Defined by B<dpkg> on the maintainer script environment to indicate which installation to act on (since dpkg 1.18.5).  The value is intended to be prepended to any path maintainer scripts operate on.  During normal operation, this variable is empty.  When installing packages into a different B<instdir>, B<dpkg> normally invokes maintainer scripts using L<chroot(2)> and leaves this variable empty, but if B<--force-script-chrootless> is specified then the L<chroot(2)> call is skipped and this variable is set to B<instdir> (which will be non-empty).
 
 =item B<DPKG_ADMINDIR>
 
