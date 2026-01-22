@@ -242,7 +242,11 @@ Opções para o compilador Fortran 9x da maquina. O mesmo que B<FFLAGS>. Desde d
 
 =item B<LDFLAGS>
 
-Opções passadas ao compilador da maquina quando faz link a executáveis ou objetos partilhados (se o vinculador (linker) for chamado directamente, então B<-Wl> e B<,> têm de ser cortados destas opções). Valor predefinido: empty.
+Options passed to the host compiler when linking executables or shared objects.
+
+B<Note>: It is not safe to pass this variable directly to L<ld(1)>, but if the variable needs to be passed anyway, then these options should be sanitized to allow only options known to work.  In general B<-Wl>, B<-l> and B<-L> options should be safe, with B<-Wl> getting stripped and B<,> in its arguments replaced with spaces.  But whether any sanitized option is safe to be passed through, will depend on the intended semantics of the L<ld(1)> invocation.
+
+Default value: empty.
 
 =item B<ASFLAGS_FOR_BUILD>
 
@@ -282,7 +286,13 @@ Opções para o compilador Fortran 9x de compilação. O mesmo que B<FFLAGS_FOR_
 
 =item B<LDFLAGS_FOR_BUILD>
 
-Opções passadas ao compilador da compilação quando faz link a executáveis ou objetos partilhados (se o vinculador (linker) for chamado directamente, então B<-Wl> e B<,> têm de ser cortados destas opções). Valor predefinido: empty. Desde dpkg 1.22.1.
+Options passed to the build compiler when linking executables or shared objects.
+
+B<Note>: It is not safe to pass this variable directly to L<ld(1)>, but if the variable needs to be passed anyway, then these options should be sanitized to allow only options known to work.  In general B<-Wl>, B<-l> and B<-L> options should be safe, with B<-Wl> getting stripped and B<,> in its arguments replaced with spaces.  But whether any sanitized option is safe to be passed through, will depend on the intended semantics of the L<ld(1)> invocation.
+
+Default value: empty.
+
+Since dpkg 1.22.1.
 
 =back
 
@@ -329,9 +339,9 @@ Quando esta funcionalidade é activa irá sobrepor o valor da mesma funcionalida
 
 =item B<time64>
 
-This setting (since dpkg 1.22.0; enabled by default except for i386, hurd-i386 and kfreebsd-i386 since dpkg 1.22.5) enables 64-bit time_t support on 32-bit architectures where their ABI does not include it by default, by adding B<-D_TIME_BITS=64> to B<CPPFLAGS>.  This setting automatically enables the B<lfs> feature from the B<abi> feature area.
+Esta definição (desde dpkg 1.22.0; activada por predefinição excepto para i386 e hurd-i386 desde dpkg 1.22.5) activa suporte time_t de 64bit em arquitecturas de 32-bit onde o seu ABI não a inclui por predefinição, ao adicionar B<-D_TIME_BITS=64> a B<CPPFLAGS>.  Esta definição activa automaticamente a funcionalidade B<lfs> da área de funcionalidades da B<abi>.
 
-Se a definição for explicitamente activada então fica activada em todas as arquitecturas incluindo i386 mas não hurd-i386 nem kfreebsd-i386 (onde o kernel não tem interfaces time64), ignorando a compatibilidade predefinida de versões binárias antigas.
+Se a definição for explicitamente activada então fica activada em todas as arquitecturas incluindo i386 mas não hurd-i386 (onde o kernel não tem interfaces time64), ignorando a compatibilidade predefinida de versões binárias antigas.
 
 É também activada por predefinição pelo gcc nas arquitecturas Debian armel, armhf, hppa, m68k, mips, mipsel, powerpc e sh4, onde desactivar a funcionalidade irá adicionar então B<-U_LARGEFILE_SOURCE -U_FILE_OFFSET_BITS -U_TIME_BITS> a B<CPPFLAGS>.
 
@@ -357,7 +367,7 @@ Várias opções de tempo de compilação (detalhado em baixo) podem ser usadas 
 
 =item B<bug-implicit-func>
 
-This setting (since dpkg 1.22.3; enabled by default since dpkg 1.22.6) adds B<-Werror=implicit-function-declaration> to B<CFLAGS>.
+Esta definição (desde dpkg 1.22.3; activada por predefinição desde dpkg 1.22.6) adiciona B<-Werror=implicit-function-declaration> a B<CFLAGS>.
 
 =item B<bug>
 
@@ -373,7 +383,7 @@ Esta definição (desde dpkg 1.17.14; desactivada por predefinição) adiciona o
 
 =head2 optimize
 
-Várias opções de tempo de compilação (detalhado em baixo) podem ser usadas para ajudar a optimizar um binário resultante (desde dpkg 1.21.0). B<Nota>: ativador B<todas> estas opções pode resultar em artefactos binários não reproduzíveis.
+Várias opções de tempo de compilação (detalhado em baixo) podem ser usadas para ajudar a optimizar um binário resultante (desde dpkg 1.21.0). B<Nota>: Ativar B<todas> estas opções pode resultar em artefactos binários não reproduzíveis.
 
 =over 
 
@@ -385,7 +395,7 @@ Esta definição (desde dpkg 1.21.0; desactivada por predefinição) activa Link
 
 =head2 sanitize
 
-Várias opções de tempo de compilação (detalhado em baixo) podem ser usadas para ajudar a higienizar um binário resultante contra corrupções de memória, fugas de memória, utilização após livre, segmentação de dados e bugs de comportamento indefinido.  B<Nota>: estas opções B<não> devem ser usadas para compilações de produção pois elas podem reduzir a confiança na conformidade do código, reduzir a segurança ou mesmo a funcionalidade.
+Várias opções de tempo de compilação (detalhado em baixo) podem ser usadas para ajudar a higienizar um binário resultante contra corrupções de memória, fugas de memória, utilização após livre, segmentação de dados e bugs de comportamento indefinido.  B<Nota>: Estas opções B<não> devem ser usadas para compilações de produção pois elas podem reduzir a confiança na conformidade do código, reduzir a segurança ou mesmo a funcionalidade.
 
 =over 
 
@@ -455,7 +465,7 @@ Esta definição (desde dpkg 1.16.1; desactivada por predefinição) adiciona B<
 
 =item B<pie>
 
-Esta definição (desde dpkg 1.16.1; sem uma predefinição global desde dpkg 1.18.23, pois é agora activa por predefinição pelo gcc nas arquitecturas Debian amd64, arm64, armel, armhf, hurd-i386, i386, kfreebsd-amd64, kfreebsd-i386, mips, mipsel, mips64el, powerpc, ppc64, ppc64el, riscv64, s390x, sparc e sparc64) adiciona as opções requeridas para activar ou desactivar PIE via ficheiros de especificações do gcc, Se necessário, dependendo de se o gcc injeta nessa arquitectura as bandeiras por ele próprio ou não. Quando a definição está activa e o gcc injeta as bandeiras, não adiciona nada. Quando a definição está activa e o gcc não injeta as bandeiras, adiciona B<-fPIE> (via I<%PKGDATADIR%/pie-compiler.specs>) a B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<FFLAGS> e B<FCFLAGS>, e B<-fPIE -pie> (via I<%PKGDATADIR%/pie-link.specs>) a B<LDFLAGS>. Quando a definição está desactivada e o gcc injeta as bandeiras, adiciona B<-fno-PIE> (via I<%PKGDATADIR%/no-pie-compile.specs>) a B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<FFLAGS> e B<FCFLAGS>, e B<-fno-PIE -no-pie> (via I<%PKGDATADIR%/no-pie-link.specs>) a B<LDFLAGS>.
+Esta definição (desde dpkg 1.16.1; sem uma predefinição global desde dpkg 1.18.23, pois é agora activa por predefinição pelo gcc nas arquitecturas Debian amd64, arm64, armel, armhf, hurd-i386, i386, mips, mipsel, mips64el, powerpc, ppc64, ppc64el, riscv64, s390x, sparc e sparc64) adiciona as opções requeridas para activar ou desactivar PIE via ficheiros de especificações do gcc, se necessário, dependendo de se o gcc injeta nessa arquitectura as bandeiras por ele próprio ou não.  Quando a definição está activa e o gcc injeta as bandeiras, não adiciona nada.  Quando a definição está activa e o gcc não injeta as bandeiras, adiciona B<-fPIE> (via I<%PKGDATADIR%/pie-compiler.specs>) a B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<FFLAGS> e B<FCFLAGS>, e B<-fPIE -pie> (via I<%PKGDATADIR%/pie-link.specs>) a B<LDFLAGS>. Quando a definição está desactivada e o gcc injeta as bandeiras, adiciona B<-fno-PIE> (via I<%PKGDATADIR%/no-pie-compile.specs>) a B<CFLAGS>, B<CXXFLAGS>, B<OBJCFLAGS>, B<OBJCXXFLAGS>, B<FFLAGS> e B<FCFLAGS>, e B<-fno-PIE -no-pie> (via I<%PKGDATADIR%/no-pie-link.specs>) a B<LDFLAGS>.
 
 Position Independent Executable (PIE) é necessário para tirar vantagem de Address Space Layout Randomization (ASLR), suportado por algumas versões de kernel. Enquanto ASLR já pode ser aplicada para áreas de dados na stack e heap (brk e mmap), as áreas de código têm de ser compiladas como independente-de-posição. As bibliotecas partilhadas já fazem isto (B<-fPIC>), assim elas ganham ASLR automaticamente, mas as regiões de texto binários precisam de ser compiladas como PIE para ganhar ASLR. Quando isto acontece, os ataques ROP (Return Oriented Programming) são mais difíceis pois não são localizações estáticas para ressaltar durante um ataque de corrupção de memória.
 
@@ -547,6 +557,8 @@ Esta variável pode ser usada para adicionar opções suplementares ao inicio do
 
 Estas variáveis podem ser usadas por um utilizador ou maintainer para desactivar/activar várias funcionalidades de área que afectam bandeiras de compilação. A variável B<DEB_BUILD_MAINT_OPTIONS> sobrepõe qualquer definição nas áreas de funcionalidade de B<DEB_BUILD_OPTIONS>. Veja a secção L</ÁREAS DE CARACTERÍSTICAS> para detalhes.
 
+Alguns perfis de compilação podem atualmente requerer que o seu homólogo seja também incluído nas opções de compilação, a lista de tais perfis de compilação é especifica do fornecedor.  Para mais informação acerca de perfis de compilação, veja L<dpkg-buildpackage(1)>.
+
 =item B<DEB_VENDOR>
 
 Esta definição define o fornecedor actual. Se não definida, irá descobrir o fornecedor actual ao ler B<%PKGCONFDIR%/origins/default>.
@@ -554,6 +566,10 @@ Esta definição define o fornecedor actual. Se não definida, irá descobrir o 
 =item B<DEB_BUILD_PATH>
 
 Esta variável define o caminho de compilação (desde dpkg 1.18.8) a usar em funcionalidades como B<fixdebugpath> para que possam ser controladas pelo chamador. Esta variável é actualmente específica de Debian e derivados.
+
+=item B<DEB_HOST_ARCH>
+
+Define a arquitectura do anfitrião. Isto afecta as bandeiras de compilação que são emitidas, o que é tipicamente relevante quando se faz compilação cruzada, onde B<DEB_HOST_ARCH> é diferente de B<DEB_BUILD_ARCH>.
 
 =item B<DPKG_COLORS>
 
@@ -589,7 +605,11 @@ Ficheiro de configuração do utilizador.
 
 =item B<%PKGDATADIR%/buildflags.mk>
 
-trecho do Makefile que irá carregar (e opcionalmente exportar) todas as bandeiras suportadas pelo B<dpkg-buildflags> em variáveis (desde dpkg 1.16.1).
+Trecho do Makefile que carrega (e opcionalmente exporta) todas as bandeiras suportadas pelo B<dpkg-buildflags> em variáveis (desde dpkg 1.16.1).
+
+=item B<%PKGDATADIR%/buildtools.mk>
+
+Trecho do Makefile que define anfitrião apropriado e ferramentas de compilação (e opcionalmente exporta-las) em variáveis (desde dpkg 1.19.0).
 
 =back
 

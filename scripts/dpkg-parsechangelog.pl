@@ -19,8 +19,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use strict;
-use warnings;
+use v5.36;
 
 use Dpkg ();
 use Dpkg::Gettext;
@@ -93,9 +92,9 @@ while (@ARGV) {
     } elsif ($arg eq '--reverse') {
         $options{reverse} = 1;
     } elsif ($arg eq '-l' or $arg eq '--file') {
-        $options{file} = shift;
+        $options{filename} = shift;
         usageerr(g_('missing changelog filename'))
-            unless length $options{file};
+            unless length $options{filename};
     } elsif ($arg eq '-S' or $arg eq '--show-field') {
         $fieldname = shift;
     } elsif ($arg eq '-c' or $arg eq '--count' or $arg eq '-n') {
@@ -113,13 +112,15 @@ while (@ARGV) {
         $options{until} = shift;
         ## use critic
     } elsif ($arg eq '--all') {
-	$options{all} = undef;
+        $options{all} = undef;
     } elsif ($arg eq '-?' or $arg eq '--help') {
-	usage(); exit(0);
+        usage();
+        exit 0;
     } elsif ($arg eq '--version') {
-	version(); exit(0);
+        version();
+        exit 0;
     } else {
-	usageerr(g_("unknown option '%s'"), $arg);
+        usageerr(g_("unknown option '%s'"), $arg);
     }
 }
 usageerr(g_('takes no non-option arguments')) if @ARGV;

@@ -45,7 +45,7 @@ B<Package-List>, B<Files>, B<Checksums-Sha1> and B<Checksums-Sha256>,
 see below).
 
 The control data might be enclosed in an OpenPGP ASCII Armored signature,
-as specified in RFC4880.
+as specified in RFC9580.
 
 =head1 FIELDS
 
@@ -85,11 +85,12 @@ architecture, build-profile and other involved restrictions.
 
 =item B<Architecture:> I<arch-list> (recommended)
 
-A list of architectures and architecture wildcards separated by spaces
-which specify the type of hardware this package can be compiled for.
+The architecture list specifies on which type of machine this package runs.
+The value should be a list of architecture names and/or wildcards
+separated by spaces.
+
 Common architecture names and architecture wildcards are B<amd64>,
 B<armel>, B<i386>, B<linux-any>, B<any-amd64>, etc.
-
 Note that the B<all> value is meant for packages that are architecture
 independent, and B<any> for packages that are architecture dependent.
 The list may include (or consist solely of) the special value B<all>.
@@ -106,6 +107,11 @@ the program's author uses.
 It may also include a Debian revision number (for non-native packages).
 The exact format and sorting algorithm are described in
 L<deb-version(7)>.
+
+B<Note>: On some vendors,
+dpkg has been made to permit native sources with non-native versions,
+making this incoherent and adding to the confusion of the concept,
+where in addition this tends to be a trap for accidental mistakes.
 
 =item B<Origin:> I<name>
 
@@ -216,7 +222,9 @@ The I<package-type> is the binary package type, usually B<deb>, another
 common value is B<udeb>.
 
 The I<section> and I<priority> match the binary package fields of the
-same name.
+same name,
+or if omitted default to B<unknown> and B<optional> respectively
+(since dpkg 1.22.13).
 
 The I<key-value-list> is a space separated I<key>B<=>I<value> list,
 and the currently known optional keys are:
@@ -231,8 +239,22 @@ field, with spaces converted to ‘,’.
 =item B<profile>
 
 The normalized build-profile restriction formula from the binary package
-B<Build-Profile> field, with ORs converted to ‘+’ and ANDs to
-‘,’.
+B<Build-Profile> field,
+with ANDs (whitespace inside enclosed angle brackets) converted to ‘,’,
+and ORs (whitespace between enclosing angle brackets) to ‘+’.
+All angle brackets get removed during normalization.
+
+Deprecated since dpkg 1.23.0, superseded by B<profile:v1>.
+
+=item B<profile:v1>
+
+The normalized build-profile restriction formula from the binary package
+B<Build-Profile> field,
+with ANDs (whitespace inside enclosed angle brackets) converted to ‘&’,
+and ORs (whitespace between enclosing angle brackets) to ‘|’.
+All angle brackets get removed during normalization.
+
+Supported since dpkg 1.23.0.
 
 =item B<protected>
 
@@ -248,11 +270,11 @@ B<Essential> field, that is a B<yes> value.
 
 =back
 
-=item B<Files:> (required)
+=item B<Files:> (required, weak)
 
-=item B<Checksums-Sha1:> (required)
+=item B<Checksums-Sha1:> (required, weak)
 
-=item B<Checksums-Sha256:> (required)
+=item B<Checksums-Sha256:> (required, strong)
 
 =item S< >I<checksum> I<size> I<filename>
 
@@ -271,6 +293,9 @@ file name.
 These fields list all files that make up the source package.
 The list of files in these fields must match the list of files in the
 other related fields.
+
+B<Note>: The MD5 and SHA-1 checksums are considered weak,
+and should never be assumed to be sufficient for secure verification.
 
 =back
 

@@ -162,6 +162,22 @@ Om satt och ingen av flaggorna B<--force->I<...> har angivits används det som d
 
 Väljer färgläge (sedan dpkg 1.18.5). För närvarande godtas följande värden: B<auto> (förval), B<always> och B<never>.
 
+=item B<DPKG_NLS>
+
+Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även känt som internationaliseringsstöd (eller i18n) (sedan dpkg 1.22.7). Tillåtna värden är: B<0> och B<1> (förval).
+
+=item B<DPKG_PATH_PASSWD>
+
+Anger sökvägsnamnet för systemets F<passwd>-fil. Sökvägen är relativ till katalogen som angavs med B<--root>. Förval är F</etc/passwd>.
+
+Sedan dpkg 1.22.16.
+
+=item B<DPKG_PATH_GROUP>
+
+Anger sökvägsnamnet för systemets F<group>-fil. Sökvägen är relativ till katalogen som angavs med B<--root>. Förval är F</etc/group>.
+
+Sedan dpkg 1.22.16.
+
 =back
 
 =head1 FILER

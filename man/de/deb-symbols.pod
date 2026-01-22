@@ -54,10 +54,6 @@ Identisch zu B<Build-Depends-Package>, akzeptiert aber eine Kommata-getrennte Li
 
 Es gibt in einer durch Leerraumzeichen getrennten Liste an, welche internen Gruppen ignoriert werden sollten, so dass Symbole, die in diesen Gruppen enthalten sind, in die Ausgabedatei aufgenommen werden (seit Dpkg 1.20.1). Dies sollte nur für Toolchain-Pakete notwendig sein, die solche internen Symbole bereitstellen. Die verfügbaren Gruppen sind systemabhängig, für ELF- und GNU-basierte Systeme sind dies B<aeabi> und B<gomp>.
 
-=item B<Ignore-Blacklist-Groups>
-
-Ein veralteter Alias für B<Allow-Internal-Symbol-Groups> (seit Dpkg 1.20.1, unterstützt seit Dpkg 1.17.6).
-
 =back
 
 =head1 BEISPIELE
@@ -86,7 +82,7 @@ L<https://wiki.debian.org/Projects/ImprovedDpkgShlibdeps>, L<deb-src-symbols(5)>
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

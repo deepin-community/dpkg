@@ -8,6 +8,7 @@ AC_INIT([dpkg], m4_esyscmd([build-aux/get-version]),
         [https://wiki.debian.org/Teams/Dpkg])
 DPKG_DIST_IS_RELEASE
 AC_SUBST([PACKAGE_COPYRIGHT_HOLDER], ['Dpkg Developers'])
+AC_SUBST([PACKAGE_VCS_ID], m4_esyscmd([build-aux/get-vcs-id]))
 AC_SUBST([PACKAGE_VCS_TYPE], [git])
 AC_SUBST([PACKAGE_VCS_URL], [https://git.dpkg.org/git/dpkg/dpkg.git])
 AC_SUBST([PACKAGE_VCS_WEB], [https://git.dpkg.org/cgit/dpkg/dpkg.git])
@@ -93,9 +94,9 @@ AC_PROG_SED
 AC_PROG_GREP
 AC_PROG_EGREP
 AC_PROG_CC
-DPKG_C_C99
+DPKG_C_STD([99])
 AC_PROG_CXX
-DPKG_CXX_CXX11
+DPKG_CXX_STD([14])
 DPKG_PROG_PATCH
 AC_CHECK_PROGS([DOXYGEN], [doxygen])
 AC_CHECK_PROG([HAVE_DOT], [dot], [YES], [NO])
@@ -116,10 +117,10 @@ DPKG_LIB_BZ2
 DPKG_LIB_LZMA
 DPKG_LIB_ZSTD
 DPKG_LIB_SELINUX
-AS_IF([test "x$build_dselect" = "xyes"], [
+AS_IF([test "$build_dselect" = "yes"], [
   DPKG_LIB_CURSES
 ])
-AS_IF([test "x$build_start_stop_daemon" = "xyes"], [
+AS_IF([test "$build_start_stop_daemon" = "yes"], [
   DPKG_LIB_SOCKET
   DPKG_LIB_PS
   DPKG_LIB_KVM
@@ -127,7 +128,6 @@ AS_IF([test "x$build_start_stop_daemon" = "xyes"], [
 
 # Checks for header files.
 AC_CHECK_HEADERS([\
-  stddef.h \
   error.h \
   err.h \
   locale.h \
@@ -161,7 +161,7 @@ AC_CHECK_HEADERS([sys/proc.h], [], [], [
 #endif
 ])
 
-AS_IF([test "x$build_dselect" = "xyes"], [
+AS_IF([test "$build_dselect" = "yes"], [
   AC_LANG_PUSH([C++])
   AC_CHECK_HEADERS([cxxabi.h])
   AC_LANG_POP([C++])
@@ -203,17 +203,20 @@ DPKG_CHECK_COMPAT_FUNCS([\
   strerror \
   strsignal \
   asprintf \
+  fgetpwent \
+  fgetgrent \
   scandir \
   alphasort \
   unsetenv \
 ])
-AC_CHECK_FUNCS([memcpy lchown],
-  [], [AC_MSG_ERROR([missing required function])])
 AC_CHECK_FUNCS([\
-  strtoimax \
-  isascii \
+  lchown \
+], [], [AC_MSG_ERROR([missing required function])])
+AC_CHECK_FUNCS([\
   setsid \
   getdtablesize \
+  closefrom \
+  close_range \
   getprocs64 \
   getprogname \
   getexecname \
@@ -224,7 +227,7 @@ AC_CHECK_FUNCS([\
   uselocale \
 ])
 
-AS_IF([test "x$build_dselect" = "xyes"], [
+AS_IF([test "$build_dselect" = "yes"], [
   AC_LANG_PUSH([C++])
   AC_CHECK_FUNCS([__cxa_pure_virtual])
   AC_LANG_POP([C++])
@@ -235,6 +238,8 @@ DPKG_USE_DISK_PREALLOCATE
 
 # Checks for the build machinery.
 AC_DEFINE([LIBDPKG_VOLATILE_API], [1], [Acknowledge the volatility of the API.])
+DPKG_COMPILER_DIALECT
+DPKG_COMPILER_HARDENING
 DPKG_COMPILER_WARNINGS
 DPKG_COMPILER_SANITIZER
 DPKG_COMPILER_ANALYZER
@@ -273,6 +278,10 @@ AC_OUTPUT
 
 # Print the current configuration
 cat <<CONFIG
+
+Release:
+  Version . . . . . : $PACKAGE_VERSION
+  VCS id  . . . . . : $PACKAGE_VCS_ID
 
 Configuration:
   Arch attributes:

@@ -227,9 +227,9 @@ virt_status_abbrev(struct varbuf *vb,
 	if (pkgbin != &pkg->installed)
 		return;
 
-	varbuf_add_char(vb, pkg_abbrev_want(pkg));
-	varbuf_add_char(vb, pkg_abbrev_status(pkg));
-	varbuf_add_char(vb, pkg_abbrev_eflag(pkg));
+	varbuf_add_str(vb, pkg_abbrev_want(pkg));
+	varbuf_add_str(vb, pkg_abbrev_status(pkg));
+	varbuf_add_str(vb, pkg_abbrev_eflag(pkg));
 }
 
 static void
@@ -301,7 +301,7 @@ virt_fsys_last_modified(struct varbuf *vb,
 	}
 
 	mtime = st.st_mtime;
-	varbuf_printf(vb, "%jd", mtime);
+	varbuf_add_fmt(vb, "%jd", mtime);
 }
 
 /*
@@ -352,8 +352,10 @@ virt_source_version(struct varbuf *vb,
 
 static void
 virt_source_upstream_version(struct varbuf *vb,
-                             const struct pkginfo *pkg, const struct pkgbin *pkgbin,
-                             enum fwriteflags flags, const struct fieldinfo *fip)
+                             const struct pkginfo *pkg,
+                             const struct pkgbin *pkgbin,
+                             enum fwriteflags flags,
+                             const struct fieldinfo *fip)
 {
 	struct dpkg_version version;
 
@@ -361,7 +363,6 @@ virt_source_upstream_version(struct varbuf *vb,
 
 	if (version.version)
 		varbuf_add_str(vb, version.version);
-	varbuf_end_str(vb);
 }
 
 static const struct fieldinfo virtinfos[] = {
@@ -402,9 +403,10 @@ pkg_format_item(struct varbuf *vb,
 	if (node->width == 0)
 		varbuf_add_str(vb, str);
 	else
-		varbuf_printf(vb, "%*s", node->width, str);
+		varbuf_add_fmt(vb, "%*s", node->width, str);
 }
 
+/* TODO: Refactor to reduce nesting levels. */
 void
 pkg_format_print(struct varbuf *vb, const struct pkg_format_node *head,
                  struct pkginfo *pkg, struct pkgbin *pkgbin)
@@ -428,8 +430,7 @@ pkg_format_print(struct varbuf *vb, const struct pkg_format_node *head,
 			if (fip) {
 				fip->wcall(&wb, pkg, pkgbin, 0, fip);
 
-				varbuf_end_str(&wb);
-				pkg_format_item(&fb, node, wb.buf);
+				pkg_format_item(&fb, node, varbuf_str(&wb));
 				varbuf_reset(&wb);
 				ok = true;
 			} else {
@@ -449,8 +450,7 @@ pkg_format_print(struct varbuf *vb, const struct pkg_format_node *head,
 
 			if ((width != 0) && (len > width))
 				len = width;
-			varbuf_add_buf(vb, fb.buf, len);
-			varbuf_end_str(vb);
+			varbuf_add_buf(vb, varbuf_str(&fb), len);
 		}
 
 		varbuf_reset(&fb);

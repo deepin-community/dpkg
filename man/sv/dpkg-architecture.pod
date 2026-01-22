@@ -82,19 +82,19 @@ Visar version och avslutar.
 
 =item B<-a>, B<--host-arch> I<arkitektur>
 
-Sätter värd-Debianarkitekturen.
+Ange värd-Debianarkitekturen.
 
 =item B<-t>, B<--host-type> I<gnu-system-typ>
 
-Sätter värd-GNU-systemtypen.
+Ange värd-GNU-systemtypen.
 
 =item B<-A>, B<--target-arch> I<arkitektur>
 
-Sätt mål-Debian-arkitekturen (sedan dpkg 1.17.14).
+Ange mål-Debian-arkitekturen (sedan dpkg 1.17.14).
 
 =item B<-T>, B<--target-type> I<gnu-system-typ>
 
-Sätt mål-GNU-systemtypen (sedan dpkg 1.17.14).
+Ange mål-GNU-systemtypen (sedan dpkg 1.17.14).
 
 =item B<-W>, B<--match-wildcard> I<arkitektur-jokertecken>
 
@@ -132,19 +132,31 @@ Maskinen paketet byggs för.
 
 =item målmaskin
 
-Maskinen kompilatorn bygger för, eller emulatorn kör kod för. Endast nödvändigt för att bygga en korsverktygskedja (eller emulator), en som byggs på byggarkitekturen och körs på målarkitekturen, och för att bygga (eller köra under emulering) kod för målarkitekturen.
+Maskinen kompilatorn bygger för, eller emulatorn kör kod för. Endast nödvändigt för att bygga en korsverktygskedja (eller emulator), en som byggs på byggarkitekturen och körs på målarkitekturen, och som själv kommer att bygga (eller köra under emulering) kod för målarkitekturen.
 
 =item Debianarkitektur
 
-Debianarkitektursträngen, vilken anger binärträdet i FTP-arkivet. Exempel: i386, sparc, hurd-i386.
+A Debian architecture describes a “machine” (considering it as an abstraction not necessarily tied to an actual physical device)  representing a specific execution environment, including its CPU and attributes (such as endianness and bits), an operating system (usually a kernel, but other paradigms using userland services are possible) and its interfaces towards userland including the executable format and their ABI, and a libc library and its ABI.
+
+The special architecture B<all> denotes an architecture independent execution environment, used for things such as shell and Perl scripts or documentation.
+
+A Debian architecture is used in binary package metadata and filenames (which specifies the binary tree in a package repository), and can appear in package relationships.
+
+An architecture must start with an alphanumeric character (“0-9a-zA-Z”), and then gets followed by alphanumeric or dash (“-”) characters.
+
+Examples: amd64, i386, sparc64, hurd-amd64, musl-linux-riscv64.
 
 =item Debianarkitektur-tupel
 
-En Debianarkitektur-tupel är den fullt kvalificerade arkitekturen med alla dess komponenter detaljerat redogjort för. Den skiljer sig från Debianarkitekturen i det att åtminstone I<cpu>-komponenten inte innehåller I<abi>. Den nuvarande tupeln har formen I<abi>-I<libc>-I<os>-I<cpu>. Exempel: base-gnu-linux-amd64, eabihf-musl-linux-arm.
+En Debianarkitektur-tupel är den fullt kvalificerade arkitekturen med alla dess komponenter detaljerat redogjort för. Den skiljer sig från Debianarkitekturen i det att åtminstone I<cpu>-komponenten inte innehåller I<abi>. Den nuvarande tupeln har formen I<abi>-I<libc>-I<os>-I<cpu>.
+
+Exempel: base-gnu-linux-amd64, eabihf-musl-linux-arm.
 
 =item Debianarkitektursökmönster
 
-Ett Debianarkitektursökmönster är en speciell arkitektursträng som matchar alla äkta arkitekturer som finns i den. Den genella formen är en Debianarkitektur-tupel med fyra eller färre element, och där åtminstone ett av dem är B<any>. Saknade element i tupeln läggs till i början implicit som B<any>, och följande par är därmet ekvivalenta:
+A Debian architecture wildcard is a special architecture that acts as a pattern and will match any ”machine” architecture being part of it (except for B<all>).
+
+The general form is a Debian architecture tuple with four or less elements, and with at least one of them being B<any>.  Missing elements of the tuple are prefixed implicitly as B<any>, and thus the following pairs are equivalent:
 
 =over 
 
@@ -160,11 +172,17 @@ Exempel: linux-any, any-i386, hurd-any, eabi-any-any-arm, musl-any-any.
 
 =item GNU-systemtyp
 
-En arkitekturspecificeringssträng som består av två delar, avdelade med bindestreck: processor och system. Exempel: i586-linux-gnu, sparc-linux-gnu, i386-gnu, x86_64-netbsd.
+A GNU architecture specification string consisting of two parts separated by a hyphen: CPU and system.
+
+Processordelen innehåller aldrig ett bindestreck, medan systemdelen kan i sig innehålla ett bindestreck för att skilja mellan en kärna och dess generella ABI, där det generella ABI:et kan innehålla både ABI-angivelser både för körtid (såsom libc) och program, sammanslagna utan bindestreck.
+
+Examples: i586-linux-gnu, sparc64-linux-gnu, i686-gnu, x86_64-netbsd.
 
 =item multiark-triplett
 
-Den förtydligade GNU-systemtypen, använd i filsystemssökväg. Tripletten förändras inte när baslinje-ISA:en uppdateras, vilket innebär att de resulterande sökvägarna är stabila över tid. De enda skillnaderna mot GNU-systemtypen är förnärvarande att CPU-delen för i386-baserade system alltid är i386. Exempel: i386-linux-gnu, x86_64-linux-gnu. Exempel på sökvägar: /lib/powerpc64le-linux-gnu/, /usr/lib/i386-kfreebsd-gnu/.
+Den förtydligade GNU-systemtypen, använd i filsystemssökväg. Tripletten förändras inte när baslinje-ISA:en uppdateras, vilket innebär att de resulterande sökvägarna är stabila över tid. De enda skillnaderna mot GNU-systemtypen är för närvarande att CPU-delen för i386-baserade system alltid är i386.
+
+Examples: i386-linux-gnu, x86_64-linux-gnu.  Example paths: /lib/powerpc64le-linux-gnu/, /usr/lib/i386-gnu/.
 
 =back
 
@@ -177,6 +195,8 @@ Följande variabler läses från miljön (med mindre B<--force> har angivits) oc
 =item B<DEB_BUILD_ARCH>
 
 Debianarkitekturen för byggmaskinen.
+
+B<Observera>: Om du inte bygger verktyg som behöver köras under bygget är det här antagligen inte variablerna du ser efter. Se stycket L</TERMINOLOGI> för betydelsen av dessa termer.
 
 =item B<DEB_BUILD_ARCH_ABI>
 
@@ -266,6 +286,8 @@ Den förtydligade GNU-systemtypen för värdmaskinen, används för sökvägar i
 
 Debianarkitekturen för målmaskinen (sedan dpkg 1.17.14).
 
+B<Observera>: Om du inte bygger korsverktygskedjor (eller emulatorer) är det här antagligen inte variablerna du ser efter. Se stycket L</TERMINOLOGI> för betydelsen av dessa termer.
+
 =item B<DEB_TARGET_ARCH_ABI>
 
 Debian-ABI-namnet för målmaskinen (sedan dpkg 1.18.11).
@@ -340,7 +362,7 @@ Tabell över Debianarkitektur-ABI-attributöverstyrningar. Formatversion 2.0 (se
 
 =item I<%PKGDATADIR%/architecture.mk>
 
-Makefile-utklipp som sätter alla variabler B<dpkg-architecture> skriver (sedan dpkg 1.16.1):
+Makefile-klipp som sätter alla variabler B<dpkg-architecture> skriver (sedan dpkg 1.16.1):
 
 =back
 
@@ -360,9 +382,9 @@ Kontrollera om aktuell eller angiven värdarkitektur är identisk till en arkite
 
 =over 
 
-dpkg-architecture -elinux-alpha
+ dpkg-architecture -elinux-arm64
 
-dpkg-architecture -amips -elinux-mips
+ dpkg-architecture -ariscv64 -elinux-riscv64
 
 =back
 
@@ -372,7 +394,7 @@ Se om den aktuella eller angivna arkitekturen är ett Linuxsystem:
 
 dpkg-architecture -ilinux-any
 
-dpkg-architecture -ai386 -ilinux-any
+ dpkg-architecture -aamd64 -ilinux-any
 
 =back
 
@@ -404,7 +426,7 @@ Gör något endast för en specifik arkitektur:
 
  DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 
- ifeq ($(DEB_HOST_ARCH),alpha)
+ ifeq ($(DEB_HOST_ARCH),arm64)
    [...]
  endif
 
@@ -412,13 +434,13 @@ Gör något endast för en specifik arkitektur:
 
 eller, om du bara vill testa på processor- eller OS-typ, använd variablerna B<DEB_HOST_ARCH_CPU> eller B<DEB_HOST_ARCH_OS>.
 
-Observera att du även kan bero på att ett externt Makefile-utklipp sätter alla variabler B<dpkg-architecture> kan tillhandahålla:
+Observera att du även kan bero på att ett externt Makefile-klipp sätter alla variabler B<dpkg-architecture> kan tillhandahålla:
 
 =over 
 
 include %PKGDATADIR%/architecture.mk
 
- ifeq ($(DEB_HOST_ARCH),alpha)
+ ifeq ($(DEB_HOST_ARCH),arm64)
    [...]
  endif
 

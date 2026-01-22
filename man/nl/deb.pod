@@ -30,15 +30,111 @@ De hier beschreven indeling wordt gebruikt sinds Debian 0.93; de oude indeling w
 
 Het bestand is een B<ar>-archief met een magische waarde van B<!E<lt>archE<gt>>. Enkel de gewone B<ar>-archiefindeling wordt ondersteund zonder lange bestandsnaamextensies, maar met bestandsnamen met facultatief een afsluitende slash, wat de lengte ervan beperkt tot 15 lettertekens (van de 16 die toegelaten zijn). De grootte van bestanden is beperkt tot 10 ASCII decimalen, waardoor tot ongeveer 9536.74 MiB aan bestandselementen toegelaten is.
 
-De B<tar>-archieven die momenteel toegelaten zijn, zijn de indeling in oude stijl (v7), de pre-POSIX ustar-indeling, een subset van de GNU-indeling (de lange padnamen en lange koppelingsnamen in nieuwe stijl, die sinds dpkg 1.4.1.17 ondersteund worden; uitgebreide bestandsmetadata sinds 1.18.24) en de POSIX ustar-indeling (lange namen, ondersteund sinds dpkg 1.15.0). Niet-herkende tar-typevlaggen worden als een fout beschouwd. Binnen een tar-archief is de grootte van elk item beperkt tot 11 ASCII octale cijfers, hetgeen tot maximaal 8 GiB aan tar-items mogelijk maakt. De ondersteuning voor uitgebreide bestandsmetadata in de GNU-indeling maakt een grootte mogelijk van 95 bits voor een tar-item, negatieve tijdstempels en UID-, GID- en apparaatnummers van 63 bits.
+De volgende B<tar>-archieven zijn momenteel toegestaan:
 
-Het eerste element wordt B<debian-binary> genoemd en bevat een aantal regels, gescheiden door regeleinden. Momenteel, op het moment van het schrijven van deze man-pagina, heeft dit slechts één regel, het versienummer van de indeling, B<2.0>. Programma's die archieven lezen in de nieuwe indeling, moeten erop voorbereid zijn dat het onderversienummer verhoogd wordt en dat er nieuwe regels aanwezig kunnen zijn. En als dat het geval is, moeten ze die negeren.
+=over 
+
+=item * oude stijl (v7) indeling
+
+=item * pre-POSIX ustar-indeling
+
+=item * subset van de GNU-indeling
+
+Nieuwe stijl lange padnamen en lange linknamen, ondersteund sinds dpkg 1.4.1.17; grote bestandsmetadata sinds dpkg 1.18.24.
+
+=item * POSIX ustar-indeling
+
+Lange namen ondersteund sinds dpkg 1.15.0.
+
+=back
+
+Niet-herkende tar-typevlaggen worden als een fout beschouwd. Binnen een tar-archief is de grootte van elk item standaard beperkt tot 11 ASCII octale cijfers, hetgeen tot maximaal 8 GiB aan tar-items mogelijk maakt. De ondersteuning voor uitgebreide bestandsmetadata in de GNU-indeling maakt een grootte mogelijk van 95 bits voor een tar-item, negatieve tijdstempels en UID-, GID- en apparaatnummers van 63 bits, wat neerkomt op praktisch onbeperkte waarden.
+
+Het B<ar>-archief is samengesteld uit meerdere elementen in een specifieke volgorde:
+
+=over 
+
+=item B<debian-binary>
+
+Het eerste verplichte element bevat een aantal regels, gescheiden door regeleinden. Momenteel, op het moment van het schrijven van deze man-pagina, heeft dit slechts één regel, het versienummer van de indeling, B<2.0>. Programma's die archieven lezen in de nieuwe indeling, moeten erop voorbereid zijn dat het onderversienummer verhoogd wordt en dat er nieuwe regels aanwezig kunnen zijn. En als dat het geval is, moeten ze die negeren.
 
 Indien het hoofdversienummer gewijzigd werd, werd een niet-compatibele wijziging gemaakt en zou het programma moeten stoppen. Indien dit niet het geval is, dan zou het programma in staat moeten zijn probleemloos voort te gaan, tenzij het in het archief (behalve op het einde) een onverwacht element tegenkomt, zoals hierna beschreven wordt.
 
-Het tweede vereiste element wordt B<control.tar> genoemd. Het is een tar-archief dat de controle-informatie van het pakket bevat, ofwel niet-gecomprimeerd (ondersteund sinds dpkg 1.17.6) of gecomprimeerd met gzip (met de extensie B<.gz>), met xz (met de extensie B<.xz>, ondersteund sinds 1.17.6) of met zstd (met de extensie B<.zst>, ondersteund sinds dpkg 1.21.18), onder de vorm van een reeks gewone bestanden, waarvan het bestand B<control>, dat de kern van de controle-informatie bevat, verplicht deel uitmaakt. De bestanden B<md5sums>, B<conffiles>, B<triggers>, B<shlibs> en B<symbols> bevatten facultatieve controle-informatie en de bestanden B<preinst>, B<postinst>, B<prerm> en B<postrm> zijn facultatieve scripts van de pakketbeheerder. Het controle-tar-archief kan facultatief een vermelding bevatten van ‘B<.>’, de huidige map.
+=item B<control.tar>
 
-Het derde en laatste verplichte element wordt B<data.tar> genoemd. Het bevat het bestandssysteem in de vorm van een tar-archief, dat ofwel niet-gecomprimeerd is (ondersteund sinds dpkg 1.10.24) of gecomprimeerd met gzip (met de extensie B<.gz>), met xz (met de extensie B<.xz>, ondersteund sinds dpkg 1.15.6), met zstd (met de extensie B<.zst>, ondersteund sinds dpkg 1.21.18), met bzip2 (met de extensie B<.bz2>, ondersteund sinds dpkg 1.10.24) of met lzma (met de extensie B<.lzma>, ondersteund sinds dpkg 1.13.25).
+Het tweede verplichte element is een tar-archief dat de pakketmetadata bevat.
+
+Het kan de volgende compressiemethoden gebruiken:
+
+=over 
+
+=item * geen (ondersteund sinds dpkg 1.17.6)
+
+=item * gzip (met de extensie B<.gz>)
+
+=item * xz (met de extensie B<.xz>, ondersteund sinds dpkg 1.17.6)
+
+=item * zstd (met de extensie B<.zst>, ondersteund sinds dpkg 1.21.18)
+
+=back
+
+Het bevat een reeks gewone bestanden:
+
+=over 
+
+=item B<control>
+
+Verplichte controle-informatie, in de indeling L<deb822(5)>.
+
+=item B<md5sums>
+
+=item B<conffiles>
+
+=item B<triggers>
+
+=item B<shlibs>
+
+=item B<symbols>
+
+Optionele pakketmetadata.
+
+=item B<preinst>
+
+=item B<postinst>
+
+=item B<prerm>
+
+=item B<postrm>
+
+Optionele pakketbeheerdersscripts.
+
+=back
+
+De controle-tarball kan optioneel een vermelding bevatten voor ‘B<.>’, de huidige map.
+
+=item B<data.tar>
+
+Het derde en laatste verplichte element bevat het bestandssysteem als een tar-archief.
+
+Het kan de volgende compressiemethoden gebruiken:
+
+=over 
+
+=item * geen (ondersteund sinds dpkg 1.10.24)
+
+=item * gzip (met de extensie B<.gz>)
+
+=item * xz (met de extensie B<.xz>, ondersteund sinds dpkg 1.15.6)
+
+=item * zstd (met de extensie B<.zst>, ondersteund sinds dpkg 1.21.18)
+
+=item * bzip2 (met de extensie B<.bz2>, ondersteund sinds dpkg 1.10.24)
+
+=item * lzma (met de extensie B<.lzma>, ondersteund sinds dpkg 1.13.25)
+
+=back
+
+=back
 
 Deze elementen moeten exact in deze volgorde voorkomen. Huidige implementaties moeten eventuele bijkomende elementen na B<data.tar> negeren. Het kan zijn dat in de toekomst meer elementen gedefinieerd worden, die (zo mogelijk) na deze drie geplaatst zullen worden. Eventuele bijkomende elementen die ingevoegd zouden moeten worden na B<debian-binary> en voor B<control.tar> of B<data.tar> en die door oudere programma's probleemloos genegeerd zouden moeten worden, zullen namen krijgen die beginnen met een laag liggend streepje, ‘B<_>’.
 

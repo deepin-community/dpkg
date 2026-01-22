@@ -22,6 +22,16 @@
 /* NLS can be disabled through the configure --disable-nls option.  */
 #if ENABLE_NLS
 
+# ifndef __has_attribute
+# define __has_attribute(x)	0
+# endif
+
+# if __has_attribute(__format_arg__)
+#   define GETTEXT_ATTR_FMT_ARG(n) __attribute__((__format_arg__(n)))
+# else
+#   define GETTEXT_ATTR_FMT_ARG(n)
+# endif
+
 /* Get declarations of GNU message catalog functions.  */
 # include <libintl.h>
 
@@ -133,6 +143,7 @@ inline
 #endif
 #endif
 static const char *
+GETTEXT_ATTR_FMT_ARG(3)
 pgettext_aux (const char *domain,
 	      const char *msg_ctxt_id, const char *msgid,
 	      int category)
@@ -152,6 +163,7 @@ inline
 #endif
 #endif
 static const char *
+GETTEXT_ATTR_FMT_ARG(3) GETTEXT_ATTR_FMT_ARG(4)
 npgettext_aux (const char *domain,
 	       const char *msg_ctxt_id, const char *msgid,
 	       const char *msgid_plural, unsigned long int n,
@@ -196,6 +208,7 @@ inline
 #endif
 #endif
 static const char *
+GETTEXT_ATTR_FMT_ARG(3)
 dcpgettext_expr (const char *domain,
 		 const char *msgctxt, const char *msgid,
 		 int category)
@@ -241,6 +254,7 @@ inline
 #endif
 #endif
 static const char *
+GETTEXT_ATTR_FMT_ARG(3) GETTEXT_ATTR_FMT_ARG(4)
 dcnpgettext_expr (const char *domain,
 		  const char *msgctxt, const char *msgid,
 		  const char *msgid_plural, unsigned long int n,

@@ -66,7 +66,7 @@ dpkg_ar_open(const char *filename)
 	else
 		fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		ohshite(_("failed to read archive '%.255s'"), filename);
+		ohshite(_("failed to read archive '%s'"), filename);
 
 	return dpkg_ar_fdopen(filename, fd);
 }
@@ -78,7 +78,7 @@ dpkg_ar_create(const char *filename, mode_t mode)
 
 	fd = creat(filename, mode);
 	if (fd < 0)
-		ohshite(_("unable to create '%.255s'"), filename);
+		ohshite(_("unable to create '%s'"), filename);
 
 	return dpkg_ar_fdopen(filename, fd);
 }
@@ -138,7 +138,7 @@ dpkg_ar_member_get_size(struct dpkg_ar *ar, struct dpkg_ar_hdr *arh)
 		if (*str == ' ')
 			break;
 		if (*str < '0' || *str > '9')
-			ohshit(_("invalid character '%c' in archive '%.250s' "
+			ohshit(_("invalid character '%c' in archive '%s' "
 			         "member '%.16s' size"),
 			       *str, ar->name, arh->ar_name);
 
@@ -150,7 +150,7 @@ dpkg_ar_member_get_size(struct dpkg_ar *ar, struct dpkg_ar_hdr *arh)
 }
 
 bool
-dpkg_ar_member_is_illegal(struct dpkg_ar_hdr *arh)
+dpkg_ar_member_is_invalid(struct dpkg_ar_hdr *arh)
 {
 	return memcmp(arh->ar_fmag, DPKG_AR_FMAG, sizeof(arh->ar_fmag)) != 0;
 }
@@ -171,9 +171,11 @@ dpkg_ar_member_put_header(struct dpkg_ar *ar, struct dpkg_ar_member *member)
 	if (strlen(member->name) > 15)
 		ohshit(_("ar member name '%s' length too long"), member->name);
 	if (member->size > 9999999999L)
-		ohshit(_("ar member size %jd too large"), (intmax_t)member->size);
+		ohshit(_("ar member size %jd too large"),
+		       (intmax_t)member->size);
 	if (member->time > 999999999999L)
-		ohshit(_("ar member time %jd too large"), (intmax_t)member->time);
+		ohshit(_("ar member time %jd too large"),
+		       (intmax_t)member->time);
 
 	n = snprintf(header, sizeof(struct dpkg_ar_hdr) + 1,
 	             "%-16s%-12jd%-6lu%-6lu%-8lo%-10jd`\n",

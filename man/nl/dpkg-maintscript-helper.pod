@@ -157,7 +157,7 @@ Huidige toepassing: het script B<preinst> controleert of de map bestaat en geen 
 
 Gelieve bij het gebruiken van een hulpmiddel voor het verpakken na te gaan of er geen systeemeigen integratie in B<dpkg-maintscript-helper> van bestaat, wat het leven voor u makkelijker zou maken. Zie bijvoorbeeld L<dh_installdeb(1)>.
 
-Gegeven het feit dat B<dpkg-maintscript-helper> gebruikt wordt in het script B<preinst>, houdt een onvoorwaardelijk gebruik ervan een voorafgaande vereiste in om te kunnen garanderen dat de benodigde versie van B<dpkg> voordien uitgepakt werd. De benodigde versie hangt af van het gebruikte commando. Voor B<rm_conffile> en B<mv_conffile> is dat 1.15.7.2. Voor B<symlink_to_dir> en B<dir_to_symlink> is dat 1.17.14:
+Gegeven het feit dat B<dpkg-maintscript-helper> gebruikt wordt in het script B<preinst>, houdt een onvoorwaardelijk gebruik ervan een versiegebonden voorvereiste in om te kunnen garanderen dat de benodigde versie van B<dpkg> voordien uitgepakt werd, tenzij we weten dat we upgraden vanaf een release waarin de vereiste dpkg-versie al aanwezig is. De benodigde versie hangt af van het gebruikte commando. Voor B<rm_conffile> en B<mv_conffile> is dat 1.15.7.2. Voor B<symlink_to_dir> en B<dir_to_symlink> is dat 1.17.14. Als we bijvoorbeeld ondersteuning voor B<symlink_to_dir> nodig hebben bij een upgrade van een release met een dpkg-versie ouder dan 1.17.14, dan moeten we het volgende toevoegen:
 
 =over 
 

@@ -51,7 +51,7 @@ B<dpkg-shlibdeps> já não usa a variável de ambiente B<LD_LIBRARY_PATH>. Deve 
 
 =item *
 
-B<dpkg-buildpackage> predefine B<Rules-Requires-Root> para valor B<no>. Para restaurar o comportamento B<v0>, B<Rules-Requires-Root> deve ser definido para B<binary-targets>.
+B<dpkg-buildpackage> predefine B<Rules-Requires-Root> para valor B<no>. Para restaurar o comportamento B<v0> (anterior ao dpkg 1.22.13), B<Rules-Requires-Root> deve ser definido para B<binary-targets>.
 
 =item *
 

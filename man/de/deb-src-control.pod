@@ -24,7 +24,7 @@ B<debian/control>
 
 Jedes Debian-Quellpaket enthält die Vorlagenquellsteuerdatei „B<debian/control>“. Deren L<deb822(5)>-Format ist eine Obermenge der in Debian-Binärpaketen ausgelieferten B<control>-Datei, siehe L<deb-control(5)>.
 
-Diese Datei enthält mindestens zwei Absätze, die durch eine Leerzeile getrennt werden. Der erste Absatz heißt Quellpaketabsatz und führt alle allgemeinen Informationen über das Quellpaket auf, während alle folgende Absätze Binärpaketabsatz heißen und genau ein Binärpaket pro Absatz beschreiben. Jeder Absatz besteht aus mindestens einem Feld. Ein Feld beginnt mit einem Feldnamen, wie B<Package> oder B<Section> (Groß-/Kleinschreibung egal), gefolgt von einem Doppelpunkt, dem Inhalt des Feldes (Groß-/Kleinschreibung ist relevant, außer anders angegeben) und einem Zeilenumbruch. Mehrzeilige Felder sind auch erlaubt, aber jede ergänzende Zeile ohne Feldnamen sollte mit mindestens einem Leerzeichen beginnen. Der Inhalt des mehrzeiligen Feldes wird durch die Werkzeuge im Allgemeinen zu einer Zeile zusammengeführt (das Feld B<Description> ist eine Ausnahme, siehe unten). Um Leerzeilen in ein mehrzeiliges Feld einzufügen, verwenden Sie einen Satzpunkt nach dem Leerzeichen. Zeilen, die mit ‚B<#>’ beginnen, werden als Kommentare betrachtet.
+Diese Datei enthält mindestens zwei Absätze, die durch eine Leerzeile getrennt werden. Der erste Absatz heißt Quellpaketabsatz und führt alle allgemeinen Informationen über das Quellpaket auf, während alle folgende Absätze Binärpaketabsatz heißen und genau ein Binärpaket pro Absatz beschreiben. Jeder Absatz besteht aus mindestens einem Feld. Ein Feld beginnt mit einem Feldnamen, wie B<Package> oder B<Section> (Groß-/Kleinschreibung egal), gefolgt von einem Doppelpunkt, dem Inhalt des Feldes (Groß-/Kleinschreibung ist relevant, außer anders angegeben) und einem Zeilenumbruch. Mehrzeilige Felder sind auch erlaubt, aber jede ergänzende Zeile ohne Feldnamen muss mit mindestens einem Leerzeichen beginnen. Der Inhalt des mehrzeiligen Feldes wird durch die Werkzeuge im Allgemeinen zu einer Zeile zusammengeführt (das Feld B<Description> ist eine Ausnahme, siehe unten). Um Leerzeilen in ein mehrzeiliges Feld einzufügen, verwenden Sie einen Satzpunkt nach dem Leerzeichen. Zeilen, die mit ‚B<#>’ beginnen, werden als Kommentare betrachtet.
 
 =head1 QUELLPAKET-FELDER
 
@@ -32,7 +32,7 @@ Diese Datei enthält mindestens zwei Absätze, die durch eine Leerzeile getrennt
 
 =item B<Source:> I<Quellpaketname> (verpflichtend)
 
-Der Wert dieses Feldes ist der Name des Quellpakets und sollte mit dem Namen des Quellpakets in der Datei I<debian/changelog> übereinstimmen. Ein Paketname darf nur aus Kleinbuchstaben (a-z), Ziffern (0-9), Plus- (+) und Minuszeichen (-) und Satzpunkten (.) bestehen. Paketnamen müssen mindestens zwei Zeichen lang sein und mit einem klein geschriebenen alphanumerischen Zeichen (a-z0-9) beginnen.
+Der Wert dieses Feldes ist der Name des Quellpakets und muss mit dem Namen des Quellpakets in der Datei I<debian/changelog> übereinstimmen. Ein Paketname darf nur aus Kleinbuchstaben (a-z), Ziffern (0-9), Plus- (+) und Minuszeichen (-) und Satzpunkten (.) bestehen. Paketnamen müssen mindestens zwei Zeichen lang sein und mit einem klein geschriebenen alphanumerischen Zeichen (a-z0-9) beginnen.
 
 =item B<Maintainer:> I<Vollständiger-Name-und-E-Mail> (empfohlen)
 
@@ -60,6 +60,12 @@ Die URL des Original- (Upstream-)Projekts.
 
 Die I<URL> der Fehlerdatenbank für dieses Paket. Das derzeit verwendete Format ist I<BTS-Art>B<://>I<BTS-Adresse> wie in B<debbugs://bugs.debian.org>. Dieses Feld wird normalerweise nicht benötigt.
 
+=item B<Build-Driver:> I<Treibername>
+
+Dieses experiementelle Feld legt den Namen des Bautreibers fest, der zum Bau dieses Pakets verwendet werden soll. Falls nicht angegeben, ist die Vorgabe für I<Treibername> B<debian-rules>.
+
+Dieses Feld wird seit Dpkg 1.22.7 unterstützt.
+
 =item B<Rules-Requires-Root:> B<no>|B<binary-targets>|I<impl-keywords>
 
 Dieses Feld wird verwandt, um anzuzeigen, ob die Datei B<debian/rules> (fake)root-Priviliegien benötigt, um einige ihrer Ziele auszuführen, und falls ja, wann.
@@ -68,11 +74,11 @@ Dieses Feld wird verwandt, um anzuzeigen, ob die Datei B<debian/rules> (fake)roo
 
 =item B<no>
 
-Die Binärziele werden überhaupt kein (fake)root benötigen. Dies ist in B<dpkg-build-api> Stufe >=1 die Vorgabe.
+Die Binärziele werden überhaupt kein (fake)root benötigen. Dies ist in B<dpkg-build-api> Stufe >=1 oder seit Dpkg 1.22.13 die Vorgabe.
 
 =item B<binary-targets>
 
-Die Binärziele müssen immer unter (fake)root ausgeführt werden. Dieser Wert ist in B<dpkg-build-api> Stufe 0 die Vorgabe, wenn die Datei fehlt. Die Aufnahme dieses Feldes mit einem expliziten B<binary-targets> ist zwar streng genommen nicht notwendig, markiert aber, dass es darauf untersucht wurde.
+Die Binärziele müssen immer unter (fake)root ausgeführt werden. Dieser Wert ist in B<dpkg-build-api> Stufe 0 bis Dpkg 1.22.13 die Vorgabe, wenn die Datei fehlt. Die Aufnahme dieses Feldes mit einem expliziten B<binary-targets> ist zwar streng genommen nicht notwendig, markiert aber, dass es darauf untersucht wurde.
 
 =item I<Impl-Schlüsselwörter>
 
@@ -122,11 +128,17 @@ Der Name der Distribution, aus der dieses Paket ursprünglich stammt. Dieses Fel
 
 Dies ist ein allgemeines Feld, das das Paket in eine Kategorie einordnet, basierend auf der Software, die es installiert. Einige übliche Sektionen sind B<utils>, B<net>, B<mail>, B<text>, B<x11> usw.
 
+Falls entfallen ist die Vorgabe von I<section> B<unknown> (seit Dpkg 1.22.13).
+
+Die akzeptierten Werte hängen von den jeweiligen Distributionsrichtlinien ab.
+
 =item B<Priority:> I<Priorität>
 
-Setzt die Bedeutung dieses Pakets in Bezug zu dem Gesamtsystem. Übliche Prioritäten sind B<required>, B<standard>, B<optional>, B<extra> usw.
+Setzt die Bedeutung dieses Pakets in Bezug zu dem Gesamtsystem. Die bekannten Prioritäten sind B<required>, B<important>, B<standard>, B<optional>, B<extra> und B<unknown>, es können aber auch andere Werte verwandt werden.
 
-Die Felder B<Section> und B<Priority> haben eine definierte Menge an Werten, abhängig von den jeweiligen Distributionsrichtlinien.
+Falls entfallen ist die Vorgabe von I<priority> B<optional> (seit Dpkg 1.22.13).
+
+Wie diese Werte angewandt werden, hängt von den jeweiligen Distributionsrichtlinien ab.
 
 =item B<Build-Depends:> I<Paketliste>
 
@@ -162,15 +174,13 @@ Eine Architekturspezifikation kann ein echter Debian-Architekturname sein (seit 
 
 Eine Versionsnummer kann mit ‚B<E<gt>E<gt>>’ beginnen, in diesem Falle passen alle neueren Versionen, und kann die Debian-Paketrevision (getrennt durch einen Bindestrich) enthalten oder auch nicht. Akzeptierte Versionsbeziehungen sind ‚B<E<gt>E<gt>>’ für größer als, ‚B<E<lt>E<lt>>’ für kleiner als, ‚B<E<gt>=>’ für größer als oder identisch zu, ‚B<E<lt>=>’ für kleiner als oder identisch zu und ‚B<=>’ für identisch zu.
 
-Eine Architekturspezifikation besteht aus einer oder mehreren durch Leerraumzeichen getrennten Architekturnamen. Jedem Namen darf ein Ausrufezeichen vorangestellt werden, das „NICHT“ bedeutet.
+An architecture specification consists of one or more architecture names, separated by whitespace.  Exclamation marks (B<!>) may be prepended to each of the names, meaning “NOT”.
 
-Eine Einschränkungsformel besteht aus einer oder mehrerer durch Leerraum getrennten Einschränkungslisten. Jede Einschränkungsliste wird in spitze Klammern eingeschlossen. Einträge in den Einschränkungslisten sind Bauprofilnamen, getrennt durch Leerraum. Diesen Listen kann ein Ausrufezeichen vorangestellt werden, das „NICHT“ bedeutet. Eine Einschränkungsformel stellt einen Ausdruck in einer disjunkten Normalform dar.
+A restriction formula consists of one or more restriction lists, separated by whitespace.  Each restriction list is enclosed in angle brackets (B<E<lt>> and B<E<gt>>).  Items in the restriction list are build profile names, separated by whitespace and can be prefixed with an exclamation mark (B<!>), meaning “NOT”.  A restriction formula represents a disjunctive normal form expression, that is whitespace inside enclosed angle brackets is read as “AND”, and whitespace between enclosing angle brackets is read as “OR“, such as “B<E<lt>>foo AND barB<E<gt>> OR B<E<lt>>quux AND bazB<E<gt>>”.
 
 Beachten Sie, dass die Abhängigkeiten von Paketen aus der Menge der B<build-essential> entfallen kann und die Angabe von Baukonflikten gegen sie nicht möglich ist. Eine Liste dieser Pakete befindet sich im Paket build-essential.
 
 =head1 BINÄRPAKET-FELDER
-
-Beachten Sie, dass die Felder B<Priority>, B<Section> und B<Homepage> sich auch im Binärprogrammabsatz befinden können, um die globalen Werte des Quellpakets zu überschreiben.
 
 =over 
 
@@ -182,9 +192,15 @@ Dieses Feld wird zur Angabe des Binärpaketnamens verwandt. Es gelten die gleich
 
 Dieses Feld definiert die Art des Pakets. B<udeb> ist für größenbegrenzte Pakete, wie sie vom Debian-Installer verwandt werden. B<deb> ist der Standardwert, er wird angenommen, falls das Feld fehlt. Weitere Typen könnten in der Zukunft hinzugefügt werden.
 
-=item B<Architecture:> I<arch>|B<all>|B<any> (verpflichtend)
+=item B<Architecture:> I<Architekturliste> (verpflichtend)
 
-Die Architektur gibt an, auf welcher Art von Hardware dieses Paket läuft. Bei Paketen, die auf allen Architekturen laufen, verwenden Sie den Wert B<any>. Für Pakete, die architekturunabhängig sind, wie Shell- und Perl-Skripte oder Dokumentation, verwenden Sie den Wert B<all>. Um das Paket für einen bestimmten Satz von Architekturen zu begrenzen, geben Sie die durch Leerzeichen getrennten Namen der Architekturen an. Es ist auch möglich, Platzhalter für Architekturen in dieser Liste anzugeben (lesen Sie L<dpkg-architecture(1)> für weitere Informationen dazu).
+The architecture list specifies on which type of machine this package runs. The value should be a list of architecture names and/or wildcards separated by spaces.
+
+The special B<all> value, by itself, is meant for packages that are architecture independent (such as shell and Perl scripts or documentation), the special B<any> wildcard value, by itself, is meant for packages that are architecture dependent but run on all architectures (which matches on all specific architecture names, excluding B<all>).  Most packages will use either B<all> or B<any>.  To restrict the packages to a certain set of architectures, specify one or more architecture names and/or architecture wildcards, separated by spaces.
+
+An architecture name or wildcard must start with an alphanumeric character (“0-9a-zA-Z”), and then gets followed by alphanumeric and dash (”-”) characters.
+
+For more information about architecture names and wildcards, see L<dpkg-architecture(1)>.
 
 =item B<Build-Profiles:> I<Einschränkungsformel>
 
@@ -207,6 +223,22 @@ Mit anderen Worten: Falls der Absatz eines Binärpaketes mit einem nicht leeren 
 =item B<Description:> I<Kurzbeschreibung> (empfohlen)
 
 Diese Felder sind in der Handbuchseite L<deb-control(5)> beschrieben, da sie wörtlich in die I<control>-Datei des Binärpakets kopiert werden.
+
+=item B<Section:> I<Sektion>
+
+Overrides the value from the same field in the source package stanza.
+
+If there is no field in the binary or source stanza, then the it defaults to B<unknown> (since dpkg 1.22.13).
+
+=item B<Priority:> I<Priorität>
+
+Overrides the value from the same field in the source package stanza.
+
+If there is no field in the binary or source stanza, then the it defaults to B<optional> (since dpkg 1.22.13).
+
+=item B<Homepage:> I<URL>
+
+Overrides the value from the same field in the source package stanza.
 
 =item B<Depends:>  I<Paketliste>
 
@@ -252,13 +284,19 @@ Es ist erlaubt, zusätzliche benutzerdefinierte Felder zu der Steuerdatei hinzuz
 
 Das Feld wird in der Steuerdatei des Quellpakets auftauchen, siehe L<dsc(5)>.
 
+Only expected in the source package stanza.
+
 =item B<B>
 
 Das Feld wird in der Steuerdatei des Binärpakets auftauchen, siehe L<deb-control(5)>.
 
+Allowed in the source package stanza or any binary package stanza.
+
 =item B<C>
 
 Das Feld wird in der Steuerdatei des Uploads (.changes) auftauchen, siehe L<deb-changes(5)>.
+
+Only expected in the source package stanza.
 
 =back
 
@@ -268,32 +306,53 @@ Beachten Sie, dass diese benutzerdefinierten Felder den globalen Namensraum nutz
 
 =head1 BEISPIEL
 
- # Kommentar
+ # Comment.
  Source: dpkg
  Section: admin
  Priority: required
  Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
- # dieses Feld wird in das Binär- und Quellpaket kopiert
+ # This field is copied to the binary and source packages.
  XBS-Upstream-Release-Status: stable
  Homepage: https://wiki.debian.org/Teams/Dpkg
  Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
  Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git
- Standards-Version: 3.7.3
- Build-Depends: pkgconf, debhelper (>= 4.1.81),
-  libselinux1-dev (>= 1.28-4) [!linux-any]
+ Standards-Version: 4.7.3
+ Build-Depends:
+  dpkg-build-api (= 1),
+  debhelper-compat (= 13),
+  debhelper (>= 13.10~),
+  pkgconf,
+  libselinux1-dev (>= 1.28-4) [!linux-any],
 
  Package: dpkg-dev
  Section: utils
  Priority: optional
  Architecture: all
- # dies ist ein spezielles Feld im Binärpaket
+ # Dies ist ein spezielles Feld im Binärpaket.
  XB-Mentoring-Contact: Raphael Hertzog <hertzog@debian.org>
- Depends: dpkg (>= 1.14.6), perl5, perl-modules, cpio (>= 2.4.2-2),
-  bzip2, lzma, patch (>= 2.2-1), make, binutils, libtimedate-perl
- Recommends: gcc | c-compiler, build-essential
- Suggests: gnupg, debian-keyring
- Conflicts: dpkg-cross (<< 2.0.0), devscripts (<< 2.10.26)
- Replaces: manpages-pl (<= 20051117-1)
+ Depends:
+  libdpkg-perl (= ${source:Version}),
+  dpkg (>= 1.14.6),
+  binutils,
+  bzip2,
+  xz-utils,
+ # Dies ist ein Kommentar in der Mitte eines Feldwertes.
+  make,
+  patch (>= 2.2-1),
+  perl-modules,
+  perl5,
+ Recommends:
+  build-essential,
+  gcc | c-compiler,
+ Suggests:
+  debian-keyring,
+ Conflicts:
+  devscripts (<< 2.10.26),
+ Replaces:
+  manpages-pl (<= 20051117-1),
+ Provides:
+  dpkg-build-api (= 0),
+  dpkg-build-api (= 1),
  Description: Debian package development tools
   This package provides the development tools (including dpkg-source)
   required to unpack, build and upload Debian source packages.
@@ -308,7 +367,7 @@ I<%PKGDOCDIR%/spec/rootless-builds.txt>, L<deb822(5)>, L<deb-control(5)>, L<deb-
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

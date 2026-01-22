@@ -9,7 +9,8 @@ fi
 
 srcdir="$(pwd)"
 
-cd $AUTOPKGTEST_TMP
+cd "$AUTOPKGTEST_TMP"
+# shellcheck disable=SC2016 # configure needs to expand exec_prefix.
 "$srcdir/configure" \
   --disable-nls \
   --disable-dselect \
@@ -18,4 +19,4 @@ cd $AUTOPKGTEST_TMP
   --sysconfdir=/etc \
   --localstatedir=/var \
   # EOL
-make installcheck TESTSUITEFLAGS=--verbose
+make installcheck TEST_VERBOSE=1

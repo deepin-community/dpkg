@@ -26,7 +26,7 @@ Elk Debian-broncodepakket bestaat uit een .dsc-controlebestand, dat een aantal v
 
 Ieder veld begint met een markering, zoals B<Source> of B<Binary> (niet hoofdlettergevoelig), gevolgd door een dubbele punt en de tekstinhoud van het veld (hoofdlettergevoelig tenzij anders vermeld). Velden worden enkel door veldmarkeringen begrensd. De tekstinhoud van het veld kan met andere woorden verschillende regels lang zijn, maar de installatiegereedschappen zullen bij het verwerken van de tekstinhoud de regels gewoonlijk samenvoegen (behalve in het geval van de multiregel-velden B<Package-List>, B<Files>, B<Checksums-Sha1> en B<Checksums-Sha256>; zie hierna)
 
-De controle-data mogen ingesloten liggen in een OpenPGP-handtekening met ASCII-harnas volgens de specificatie RFC4880.
+De controle-data mogen ingesloten liggen in een OpenPGP-handtekening met ASCII-harnas volgens de specificatie RFC9580.
 
 =head1 VELDEN
 
@@ -50,15 +50,17 @@ Dit veld is nu vervangen door het veld B<Package-List> dat voldoende informatie 
 
 =item B<Architecture:> I<arch-lijst> (aanbevolen)
 
-Een lijst van door spaties van elkaar gescheiden architecturen en architectuurjokertekens die aangeven voor welk type hardware dit pakket gecompileerd kan worden. Gebruikelijke architectuurnamen en architectuurjokertekens zijn B<amd64>, B<armel>, B<i386>, B<linux-any>, B<any-amd64>, enz.
+De architectuurlijst geeft aan op welk type machine dit pakket draait. De waarde moet een lijst zijn van architectuurnamen en/of wildcards, gescheiden door spaties.
 
-Merk op dat de waarde B<all> bedoeld is voor pakketten die architectuuronafhankelijk zijn en B<any> voor pakketten die architectuurafhankelijk zijn. De lijst mag de speciale waarde  B<all> bevatten (of er uitsluitend uit bestaan). Wanneer de lijst het architectuurjokerteken B<any> bevat, is B<all> de enige andere toegelaten waarde in de lijst.
+Merk op dat de waarde B<all> bedoeld is voor pakketten die architectuuronafhankelijk zijn en B<any> voor pakketten die architectuurafhankelijk zijn. De lijst mag de speciale waarde  B<all> bevatten (of er uitsluitend uit bestaan). Wanneer de lijst de architectuurwildcard B<any> bevat, is B<all> de enige andere toegelaten waarde in de lijst.
 
 De waarde van dit veld wordt gewoonlijk gegenereerd op basis van de B<Architecture>-velden in het bestand I<debian/control> van het broncodepakket.
 
 =item B<Version:> I<versie-tekenreeks> (verplicht)
 
 Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de auteur van het programma er ook voor gebruikt. Het kan ook een Debian-revisienummer bevatten (voor niet uit Debian stammende pakketten). De exacte indeling en het sorteringsalgoritme worden beschreven in L<deb-version(7)>.
+
+B<Opmerking>: Bij sommige leveranciers is dpkg zo aangepast dat authentieke bronnen samen met niet-authentieke versies zijn toegestaan. Dit maakt het inconsistent en draagt ​​bij aan de verwarring rond het concept. Bovendien vormt dit een valkuil voor onbedoelde fouten.
 
 =item B<Origin:> I<naam>
 
@@ -143,7 +145,7 @@ Het element I<pakket> is de naam van het binaire pakket.
 
 Het element I<pakket-type> is het type van het binaire pakket, meestal B<deb>; een andere gebruikelijke waarde is B<udeb>.
 
-De elementen I<sectie> (section) en I<prioriteit> (priority) komen overeen met de velden met dezelfde naam van het binaire pakket.
+De elementen I<sectie> (section) en I<prioriteit> (priority) komen overeen met de velden met dezelfde naam van het binaire pakket. Als ze worden weggelaten, worden ze standaard ingesteld op B<unknown> en B<optional> (sinds dpkg 1.22.13).
 
 Het element I<trefwoord-waarde-lijst> is een lijst van door spaties gescheiden I<trefwoord>B<=>I<waarde> en de momenteel herkende optionele trefwoorden zijn:
 
@@ -155,7 +157,15 @@ De architectuurrestrictie uit het veld B<Architecture> van het binaire pakket, w
 
 =item B<profile>
 
-De genormaliseerde bouwprofiel-restrictieformule uit het veld B<Build-Profile> van het binaire pakket, waarbij OR's omgezet worden naar ‘+’ en AND's naar ‘,’.
+De genormaliseerde bouwprofiel-restrictieformule uit het veld B<Build-Profile> van het binaire pakket, waarbij AND's (spaties binnen punthaken) worden omgezet in ',' en OR's (spaties tussen punthaken) in '+'. Alle punthaken worden verwijderd tijdens de normalisatie.
+
+Niet meer beschikbaar sinds dpkg 1.23.0, vervangen door B<profile:v1>.
+
+=item B<profile:v1>
+
+De genormaliseerde bouwprofiel-restrictieformule uit het veld B<Build-Profile> van het binaire pakket, waarbij AND's (spaties binnen de punthaken) worden omgezet in '&' en OR's (spaties tussen de punthaken) in '|'. Alle punthaken worden verwijderd tijdens de normalisatie.
+
+Ondersteund sinds dpkg 1.23.0.
 
 =item B<protected>
 
@@ -169,19 +179,21 @@ Indien het binaire pakket essentieel (essential) is, zal dit trefwoord de waarde
 
 =back
 
-=item B<Files:> (verplicht)
+=item B<Files:> (verplicht, zwak)
 
-=item B<Checksums-Sha1:> (verplicht)
+=item B<Checksums-Sha1:> (verplicht, zwak)
 
-=item B<Checksums-Sha256:> (verplicht)
+=item B<Checksums-Sha256:> (verplicht, sterk)
 
-=item S< >I<controlesom> I<grootte> I<bestandsnaam>
+=item S< >I<controlegetal> I<grootte> I<bestandsnaam>
 
-Deze multiregel-velden bevatten een lijst van bestanden met voor elk van hen een controlesom en een grootte. Deze velden hebben een identieke syntaxis en verschillen onderling enkel inzake het gebruikte algoritme voor de controlesom: MD5 voor B<Files>, SHA-1 voor B<Checksums-Sha1> en SHA-256 voor B<Checksums-Sha256>.
+Deze multiregel-velden bevatten een lijst van bestanden met voor elk van hen een controlegetal en een grootte. Deze velden hebben een identieke syntaxis en verschillen onderling enkel inzake het gebruikte algoritme voor het controlegetal: MD5 voor B<Files>, SHA-1 voor B<Checksums-Sha1> en SHA-256 voor B<Checksums-Sha256>.
 
-De eerste regel van de veldwaarde (het deel dat op dezelfde regel staat als de door een dubbele punt gevolgde veldnaam) is steeds leeg. De inhoud van het veld wordt in de vervolgregels verwoord, één regel per bestand. Elke regel bestaat uit de controlesom, een spatie, de bestandsgrootte, een spatie en de bestandsnaam.
+De eerste regel van de veldwaarde (het deel dat op dezelfde regel staat als de door een dubbele punt gevolgde veldnaam) is steeds leeg. De inhoud van het veld wordt in de vervolgregels verwoord, één regel per bestand. Elke regel bestaat uit het controlegetal, een spatie, de bestandsgrootte, een spatie en de bestandsnaam.
 
 Deze velden sommen alle bestanden op die deel uitmaken van het broncodepakket. De lijst bestanden in deze velden moet overeenkomen met de lijst bestanden in de andere verwante velden.
+
+B<Opmerking>: De controlegetallen MD5 en SHA-1 worden als zwak beschouwd en mogen nooit worden beschouwd als zijnde voldoende voor een veilige verificatie.
 
 =back
 

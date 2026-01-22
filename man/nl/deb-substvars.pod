@@ -30,7 +30,39 @@ Een variabelesubstitutie heeft als vorm B<${>I<variabelenaam>B<}>. Variabelename
 
 =head2 Bestandssyntaxis
 
-Substitutievariabelen kunnen in een bestand worden opgegeven. Deze bestanden bestaan uit regels van de vorm I<naam>B<=>I<waarde> of I<naam>B<?=>I<waarde>. De operator B<=> wijst een normale substitutievariabele toe, terwijl de operator B<?=> (sinds dpkg 1.21.8) een optionele substitutievariabele toewijst die geen waarschuwingen geeft, zelfs als deze niet wordt gebruikt. Resterende witruimte op elke regel, lege regels en regels die beginnen met het symbool B<#> (commentaar) worden genegeerd.
+Substitutievariabelen kunnen in een bestand worden opgegeven. Deze bestanden bestaan ​​uit regels met variabeletoewijzingen, die beginnen met de variabelenaam, direct gevolgd door een toewijzingsoperator en vervolgens de waarde. Elke operator geeft de variabele specifieke kenmerken. Overgebleven witruimte aan het einde van elke regel, lege regels en regels die beginnen met een B<#>-symbool (commentaar) worden genegeerd.
+
+De volgende operators worden ondersteund:
+
+=over 
+
+=item B<=>
+
+Wijst een normale substitutievariabele toe.
+
+=item B<?=>
+
+Wijst een optionele substitutievariabele toe die geen aanleiding geeft tot waarschuwingen, zelfs als deze niet wordt gebruikt.
+
+Ondersteund sinds dpkg 1.21.8.
+
+=item B<!=>
+
+Wijst een verplichte substitutievariabele toe die aanleiding geeft tot een foutmelding als deze niet wordt gebruikt.
+
+Ondersteund sinds dpkg 1.22.7.
+
+=item B<$=>
+
+Wijst een impliciete substitutievariabele toe die automatisch als veld wordt geïnstantieerd als dat veld niet is gedefinieerd voor B<.dsc>- en B<.deb>-controlebestanden.
+
+De variabelenaam moet worden opgebouwd als een naamruimte gevolgd door een dubbele punt (‘B<:>’) en vervolgens de veldnaam, zoals B<tool:Depends>. Alle impliciete variabelen voor een naamruimte die overeenkomen met hetzelfde veld worden samengevoegd met behulp van een bekend veldscheidingsteken of een spatie als het veldscheidingsteken onbekend is.
+
+Ondersteund sinds dpkg 1.23.0.
+
+=back
+
+Bijvoorbeeld: C<een-bepaald-pakket:Depends?=een-ander-pakket (= 1.0), het-pakket>.
 
 =head2 Substitutie
 

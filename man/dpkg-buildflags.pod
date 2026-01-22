@@ -322,11 +322,16 @@ Since dpkg 1.17.7.
 =item B<LDFLAGS>
 
 Options passed to the host compiler when linking executables or shared
-objects (if the linker is called directly, then
-B<-Wl>
-and
-B<,>
-have to be stripped from these options).
+objects.
+
+B<Note>: It is not safe to pass this variable directly to L<ld(1)>,
+but if the variable needs to be passed anyway,
+then these options should be sanitized to allow only options known to work.
+In general B<-Wl>, B<-l> and B<-L> options should be safe,
+with B<-Wl> getting stripped and B<,> in its arguments replaced with spaces.
+But whether any sanitized option is safe to be passed through,
+will depend on the intended semantics of the L<ld(1)> invocation.
+
 Default value: empty.
 
 =item B<ASFLAGS_FOR_BUILD>
@@ -387,9 +392,18 @@ Since dpkg 1.22.1.
 =item B<LDFLAGS_FOR_BUILD>
 
 Options passed to the build compiler when linking executables or shared
-objects (if the linker is called directly, then B<-Wl> and B<,> have to
-be stripped from these options).
+objects.
+
+B<Note>: It is not safe to pass this variable directly to L<ld(1)>,
+but if the variable needs to be passed anyway,
+then these options should be sanitized to allow only options known to work.
+In general B<-Wl>, B<-l> and B<-L> options should be safe,
+with B<-Wl> getting stripped and B<,> in its arguments replaced with spaces.
+But whether any sanitized option is safe to be passed through,
+will depend on the intended semantics of the L<ld(1)> invocation.
+
 Default value: empty.
+
 Since dpkg 1.22.1.
 
 =back
@@ -465,15 +479,15 @@ feature in the B<future> feature area.
 
 =item B<time64>
 
-This setting (since dpkg 1.22.0; enabled by default except for i386,
-hurd-i386 and kfreebsd-i386 since dpkg 1.22.5) enables 64-bit time_t support
+This setting (since dpkg 1.22.0; enabled by default except for i386 and
+hurd-i386 since dpkg 1.22.5) enables 64-bit time_t support
 on 32-bit architectures where their ABI does not include it by default,
 by adding B<-D_TIME_BITS=64> to B<CPPFLAGS>.
 This setting automatically enables the B<lfs> feature from the B<abi>
 feature area.
 
 If the setting is enabled explicitly then it gets enabled on all
-architectures including i386 but not hurd-i386 nor kfreebsd-i386
+architectures including i386 but not hurd-i386
 (where the kernel does not have time64 interfaces),
 ignoring the binary backwards compatibility default.
 
@@ -551,7 +565,7 @@ B<LDFLAGS> set to B<-Wl,-z,deb-canary->I<random-id>.
 
 Several compile-time options (detailed below) can be used to help optimize
 a resulting binary (since dpkg 1.21.0).
-B<Note>: enabling B<all> these options can result in unreproducible binary
+B<Note>: Enabling B<all> these options can result in unreproducible binary
 artifacts.
 
 =over
@@ -570,7 +584,7 @@ B<FFLAGS>, B<FCFLAGS> and B<LDFLAGS>.
 Several compile-time options (detailed below) can be used to help sanitize
 a resulting binary against memory corruptions, memory leaks, use after free,
 threading data races and undefined behavior bugs.
-B<Note>: these options should B<not> be used for production builds
+B<Note>: These options should B<not> be used for production builds
 as they can reduce reliability for conformant code, reduce security or
 even functionality.
 
@@ -728,7 +742,7 @@ The option cannot become enabled if B<relro> is not enabled.
 This setting (since dpkg 1.16.1; with no global default since dpkg 1.18.23,
 as it is enabled
 by default now by gcc on the amd64, arm64, armel, armhf, hurd-i386, i386,
-kfreebsd-amd64, kfreebsd-i386, mips, mipsel, mips64el, powerpc, ppc64,
+mips, mipsel, mips64el, powerpc, ppc64,
 ppc64el, riscv64, s390x, sparc and sparc64 Debian architectures) adds
 the required options to enable or disable PIE via gcc specs files, if
 needed, depending on whether gcc injects on that architecture the flags
@@ -910,6 +924,12 @@ The B<DEB_BUILD_MAINT_OPTIONS> variable overrides any setting in the
 B<DEB_BUILD_OPTIONS> feature areas.
 See the L</FEATURE AREAS> section for details.
 
+Some build profiles might currently require their counterpart to also
+be included in the build options,
+the list of such build profiles is vendor specific.
+For more information about build profiles,
+see L<dpkg-buildpackage(1)>.
+
 =item B<DEB_VENDOR>
 
 This setting defines the current vendor.
@@ -921,6 +941,13 @@ B<%PKGCONFDIR%/origins/default>.
 This variable sets the build path (since dpkg 1.18.8) to use in features
 such as B<fixdebugpath> so that they can be controlled by the caller.
 This variable is currently Debian and derivatives-specific.
+
+=item B<DEB_HOST_ARCH>
+
+Sets the host architecture.
+This affects the build flags that are emitted,
+which is typically relevant when cross-compiling,
+where B<DEB_HOST_ARCH> is different to B<DEB_BUILD_ARCH>.
 
 =item B<DPKG_COLORS>
 
@@ -960,8 +987,13 @@ User configuration file.
 
 =item B<%PKGDATADIR%/buildflags.mk>
 
-Makefile snippet that will load (and optionally export) all flags
+Makefile snippet that loads (and optionally exports) all flags
 supported by B<dpkg-buildflags> into variables (since dpkg 1.16.1).
+
+=item B<%PKGDATADIR%/buildtools.mk>
+
+Makefile snippet that sets suitable host and build tools
+(and optionally exports them) into variables (since dpkg 1.19.0).
 
 =back
 

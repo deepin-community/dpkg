@@ -26,7 +26,7 @@ Jeder Debian-Upload besteht aus einer .changes-Steuerdatei, die eine Reihe von F
 
 Jedes Feld beginnt mit einer Markierung wie B<Source> oder B<Binary> (Groß-/Kleinschreibung ist egal), gefolgt von einem Doppelpunkt und dem Inhalt des Feldes (Groß-/Kleinschreibung ist relevant, außer anders angegeben). Felder werden nur durch Feldmarkierungen abgegrenzt. Mit anderen Worten: Der Feldtext kann sich über mehrere Zeilen erstrecken, wobei die Installationswerkzeuge die Zeilen bei der Verarbeitung des Feldinhaltes zusammenfügen werden (Ausnahmen sind die mehrzeiligen Felder B<Description>, B<Changes>, B<Files>, B<Checksums-Sha1> und B<Checksums-Sha256>, siehe unten).
 
-Die Steuerdaten können in eine Signatur mit einer wie in RFC4880 spezifizierten OpenPGP-ASCII-Hülle eingeschlossen sein.
+Die Steuerdaten können in eine Signatur mit einer wie in RFC 9580 spezifizierten OpenPGP-ASCII-Hülle eingeschlossen sein.
 
 =head1 FELDER
 
@@ -52,11 +52,17 @@ Dieses gefaltete Feld ist eine durch Leerzeichen getrennte Liste von hochzuladen
 
 =item B<Architecture:> I<Architekturliste>
 
-Listet die Architekturen der derzeit hochgeladenen Dateien auf. Geläufige Architekturen sind B<amd64>, B<armel>, B<i386>, usw. Beachten Sie, dass der Wert B<all> für Pakete gedacht ist, die Architektur-unabhängig sind. Falls die Quellen für das Paket auch hochgeladen werden, ist der besondere Eintrag B<source> auch vorhanden. Architektur-Platzhalter dürfen in der Liste niemals auftauchen.
+Lists the architectures of the files currently being uploaded.
+
+Common architectures are B<amd64>, B<armel>, B<i386>, etc.  Note that the special B<all> value is meant for packages that are architecture independent (such as shell and Perl scripts or documentation).  If the source for the package is also being uploaded, the special entry B<source> is also present.
+
+B<Note:> Architecture wildcards are not allowed in this context.
 
 =item B<Version:> I<Versionszeichenkette> (verpflichtend)
 
 Typischerweise ist das die Original-Paketversionsnummer, in der Form, die der Programmautor verwendet. Es kann auch eine Debian-Revisionsnummer enthalten (für nicht aus Debian stammende Pakete). Das genaue Format und der Sortieralgorithmus sind in L<deb-version(7)> beschrieben.
+
+B<Hinweis>: Bei einigen Lieferanten wurde L<dpkg> so gebaut, dass native Quellen mit nichtnativen Versionen erlaubt sind. Dadurch wird dies inkohärent und fügt Verwirrung zum Konzept hinzu, wo schon so dies eine Falle für versehentliche Fehler ist.
 
 =item B<Distribution:> I<Distribution>en (verpflichtend)
 
@@ -106,11 +112,17 @@ Das mehrzeilige Feld enthält eine Liste der Dateien mit Md5sum, Größe, Sektio
 
 Die erste Zeile des Feldwertes (dem Teil auf der gleichen Zeile wie der von einem Doppelpunkt gefolgte Feldname) ist immer leer. Der Inhalt des Feldes wird durch Fortsetzungszeilen ausgedrückt, eine Zeile pro Datei. Jede Zeile besteht aus durch Leerzeichen getrennten Einträgen, die die Datei beschreiben: die Md5sum, die Dateigröße, die Datei-Sektion, die Datei-Priorität und der Dateiname.
 
+If the section is omitted in the source package template control file, it defaults to B<unknown> (since dpkg 1.22.13).
+
+If the priority is omitted in the source package template control file, it defaults to B<optional> (since dpkg 1.22.13).
+
 Dieses Feld führt alle Dateien, die den Upload bilden, auf. Die Liste der Dateien in diesem Feld muss auf die Liste der Dateien in den anderen zugehörigen B<Checksums>-Feldern passen.
 
-=item B<Checksums-Sha1:> (verpflichtend)
+B<Hinweis>: Die MD5-Prüfsumme wird als schwach betrachtet und sollte niemals für die sichere Überprüfung als ausreichend betrachtet werden. Dieses Feld kann allerdings nicht entfallen, da es ansonsten nicht verfügbare Metadaten bereitstellt.
 
-=item B<Checksums-Sha256:> (verpflichtend)
+=item B<Checksums-Sha1:> (verpflichtend, schwach)
+
+=item B<Checksums-Sha256:> (verpflichtend, stark)
 
 =item S< >I<Prüfsumme> I<Größe> I<Dateiname>
 
@@ -119,6 +131,8 @@ Diese mehrzeiligen Felder enthalten eine Liste von Dateien mit einer Prüfsumme 
 Die erste Zeile des Feldwertes (der Teil auf der gleichen Zeile wie der durch einen Doppelpunkt gefolgte Feldname) ist immer leer. Der Inhalt des Feldes wird durch Fortsetzungszeilen ausgedrückt, eine Zeile pro Datei. Jede Zeile besteht aus durch Leerzeichen getrennten Einträgen, die die Datei beschreiben: der Prüfsumme, der Dateigröße und dem Dateinamen.
 
 Diese Felder führen alle Dateien auf, aus denen der Upload besteht. Die Liste der Dateien in diesen Feldern muss zu der Liste in dem Feld B<Files> und den anderen zugehörigen B<Checksums>-Feldern passen.
+
+B<Hinweis>: Die SHA-1-Prüfsumme wird als schwach betrachtet und sollte niemals für die sichere Überprüfung als ausreichend betrachtet werden.
 
 =back
 
@@ -133,7 +147,7 @@ L<deb822(5)>, L<deb-src-control(5)>, L<deb-version(7)>.
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

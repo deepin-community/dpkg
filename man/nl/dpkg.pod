@@ -18,7 +18,7 @@ dpkg - pakketbeheerder voor Debian
 
 =head1 OVERZICHT
 
-B<dpkg> [I<optie>...] I<actie>
+B<dpkg> [I<optie>...] I<commando>
 
 =head1 WAARSCHUWING
 
@@ -28,9 +28,9 @@ Zij zou I<niet> gebruikt moeten worden door pakketbeheerders die willen begrijpe
 
 =head1 BESCHRIJVING
 
-B<dpkg> is gereedschap op een tussenniveau voor het installeren, bouwen, verwijderen en beheren van Debian pakketten. Het belangrijkste en meer gebruikersvriendelijke frontend voor B<dpkg> als commandoregelinterface (CLI - command-line interface) is L<apt(8)> en is L<aptitude(8)> als terminalgebruikersinterface (TUI - terminal user interface). B<dpkg> zelf wordt volledig gestuurd via commandoregelparameters, die bestaan uit exact één actie en nul of meer opties. De actieparameter zegt B<dpkg> wat het moet doen en de opties sturen in zekere zin het gedrag van de actie.
+B<dpkg> is gereedschap op een tussenniveau voor het installeren, bouwen, verwijderen en beheren van Debian pakketten. Het belangrijkste en meer gebruikersvriendelijke frontend voor B<dpkg> als commandoregelinterface (CLI - command-line interface) is L<apt(8)> en is L<aptitude(8)> als terminalgebruikersinterface (TUI - terminal user interface). B<dpkg> zelf wordt volledig gestuurd via commandoregelparameters, die bestaan uit exact één commando en nul of meer opties. De commandoparameter zegt B<dpkg> wat het moet doen en de opties sturen in zekere zin het gedrag van het commando.
 
-B<dpkg> kan ook gebruikt worden als een frontend voor L<dpkg-deb(1)> en L<dpkg-query(1)>. De lijst van ondersteunde acties kunt u verderop in het onderdeel B<ACTIES> vinden. Indien B<dpkg> een dergelijke actie tegenkomt, voert het gewoon B<dpkg-deb> of B<dpkg-query> uit met de parameters die het meekreeg. Maar momenteel worden aan hen geen specifieke opties doorgegeven. Indien u een dergelijke optie wenst te gebruiken moet u deze programma's rechtstreeks gebruiken.
+B<dpkg> kan ook gebruikt worden als een frontend voor L<dpkg-deb(1)> en L<dpkg-query(1)>. De lijst van ondersteunde commando's kunt u verderop in het onderdeel B<COMMANDOS> vinden. Indien B<dpkg> een dergelijk commando tegenkomt, voert het gewoon B<dpkg-deb> of B<dpkg-query> uit met de parameters die het meekreeg. Maar momenteel worden aan hen geen specifieke opties doorgegeven. Indien u een dergelijke optie wenst te gebruiken moet u deze programma's rechtstreeks gebruiken.
 
 =head1 INFORMATIE OVER PAKKETTEN
 
@@ -114,7 +114,7 @@ Een pakket dat als B<reinstreq> gemarkeerd werd, is defect en moet opnieuw geïn
 
 =back
 
-=head1 ACTIES
+=head1 COMMANDO'S
 
 =over 
 
@@ -234,7 +234,7 @@ Zal triggers verwerken, tenzij B<--no-triggers> werd opgegeven.
 
 Controleert de integriteit van I<pakketnaam> of van alle pakketten indien er geen naam opgegeven werd. De controle gebeurt door een vergelijking te maken van informatie uit de bestanden die door een pakket geïnstalleerd worden met de metadata-informatie over die bestanden die in de database van B<dpkg> opgeslagen is (sinds dpkg 1.17.2). De metadata-informatie over die bestanden in de database is afkomstig van het binaire pakket zelf. Die metadata worden verzameld tijdens het installatieproces op het moment van het uitpakken van het pakket.
 
-Momenteel is de enige functionele toets die uitgevoerd wordt, een verificatie van de md5-controlesom van de inhoud van het bestand tegenover de opgeslagen waarde in de bestandsdatabase. De toets wordt enkel uitgevoerd als de database de md5-controlesom van het bestand bevat. Om na te gaan of er eventueel metadata ontbreken in de database, kan het commando B<--audit> gebruikt worden. Dit is slechts een integriteitscontrole en mag niet worden beschouwd als enige vorm van veiligheidsverificatie.
+Momenteel is de enige functionele toets die uitgevoerd wordt, een verificatie van het md5-controlegetal van de inhoud van het bestand tegenover de opgeslagen waarde in de bestandsdatabase. De toets wordt enkel uitgevoerd als de database het md5-controlegetal van het bestand bevat. Om na te gaan of er eventueel metadata ontbreken in de database, kan het commando B<--audit> gebruikt worden. Dit is slechts een integriteitscontrole en mag niet worden beschouwd als enige vorm van veiligheidsverificatie.
 
 De indeling van de uitvoer kan met de optie B<--verify-format> gekozen worden. Standaard wordt de indeling B<rpm> gebruikt, maar dit kan in de toekomst veranderen en om die reden zouden programma's die de uitvoer van dit commando ontleden, expliciet moeten aangeven welke indeling zij verwachten.
 
@@ -246,7 +246,7 @@ Voert op de database correctheids- en consistentietoetsen uit met betrekking tot
 
 =item B<--merge-avail> [I<Packages-bestand>]
 
-De kennis van B<dpkg> en B<dselect> over welke pakketten beschikbaar zijn bijwerken. Bij de actie B<--merge-avail> wordt oude informatie gecombineerd met informatie uit het I<Packages-bestand>. Bij de actie B<--update-avail> wordt de oude informatie vervangen door de informatie uit het I<Packages-bestand>. Het I<Packages-bestand> dat door Debian verdeeld wordt, heeft gewoon «I<Packages>» als naam. Indien het argument I<Packages-bestand> ontbreekt of «B<->» als naam heeft, zal het gelezen worden van de standaardinvoer (sinds dpkg 1.17.7). B<dpkg> houdt zijn overzicht van beschikbare pakketten bij in I<%ADMINDIR%/available>.
+De kennis van B<dpkg> en B<dselect> over welke pakketten beschikbaar zijn bijwerken. Bij het commando B<--merge-avail> wordt oude informatie gecombineerd met informatie uit het I<Packages-bestand>. Bij het commando B<--update-avail> wordt de oude informatie vervangen door de informatie uit het I<Packages-bestand>. Het I<Packages-bestand> dat door Debian verdeeld wordt, heeft gewoon «I<Packages>» als naam. Indien het argument I<Packages-bestand> ontbreekt of «B<->» als naam heeft, zal het gelezen worden van de standaardinvoer (sinds dpkg 1.17.7). B<dpkg> houdt zijn overzicht van beschikbare pakketten bij in I<%ADMINDIR%/available>.
 
 Een eenvoudiger commando om in één keer het bestand I<available> op te halen en bij te werken is B<dselect update>. Merk op dat dit bestand grotendeels nutteloos is als u niet B<dselect> gebruikt, maar een op APT gebaseerd frontend: APT heeft zijn eigen systeem om zicht te houden op de beschikbare pakketten.
 
@@ -404,9 +404,9 @@ Versie-informatie geven over B<dpkg>.
 
 Wanneer dit gebruikt wordt met B<--robot>, zal de uitvoer het versienummer bevatten in een gespikkeld numeriek formaat, zonder regeleinde.
 
-=item B<dpkg-deb actions>
+=item B<dpkg-deb commands>
 
-Zie L<dpkg-deb(1)> voor meer informatie over de volgende acties, en andere acties en opties die niet worden weergegeven door de B<dpkg>-frontend.
+Zie L<dpkg-deb(1)> voor meer informatie over de volgende commando's, en andere commando's en opties die niet worden weergegeven door de B<dpkg>-frontend.
 
 =over 
 
@@ -448,9 +448,9 @@ Informatie over een pakket tonen.
 
 =back
 
-=item B<dpkg-query acties>
+=item B<dpkg-query commands>
 
-Zie L<dpkg-query(1)> voor meer informatie over de volgende acties, en andere acties en opties die niet worden weergegeven door de B<dpkg>-frontend.
+Zie L<dpkg-query(1)> voor meer informatie over de volgende commando's, en andere commando's en opties die niet worden weergegeven door de B<dpkg>-frontend.
 
 =over 
 
@@ -653,13 +653,13 @@ Voor de opgegeven pakketten het toetsen van afhankelijkheden negeren (eigenlijk 
 
 =item B<--no-act>, B<--dry-run>, B<--simulate>
 
-Alles wat gedaan moet worden, uitvoeren, maar geen veranderingen wegschrijven. Dit wordt gebruikt om te zien wat er bij de opgegeven actie zou gebeuren, zonder dat er effectief iets gewijzigd wordt.
+Alles wat gedaan moet worden, uitvoeren, maar geen veranderingen wegschrijven. Dit wordt gebruikt om te zien wat er bij het opgegeven commando zou gebeuren, zonder dat er effectief iets gewijzigd wordt.
 
-Zorg ervoor om B<--no-act> voor de actie-parameter op te geven, anders zou u ongewenste resultaten kunnen bekomen (bijvoorbeeld zal B<dpkg --purge foo --no-act> eerst pakket "foo" wissen en dan proberen pakket "--no-act" te wissen, ook al verwachtte u wellicht dat er niets gedaan zou worden).
+Zorg ervoor om B<--no-act> voor de commando-parameter op te geven, anders zou u ongewenste resultaten kunnen bekomen (bijvoorbeeld zal B<dpkg --purge foo --no-act> eerst pakket "foo" wissen en dan proberen pakket "--no-act" te wissen, ook al verwachtte u wellicht dat er niets gedaan zou worden).
 
 =item B<-R>, B<--recursive>
 
-Alle gewone bestanden die beantwoorden aan het patroon B<*.deb>, recursief behandelen in de opgegeven mappen en al hun onderliggende mappen. Dit kan gebruikt worden samen met de acties B<-i>, B<-A>, B<--install>, B<--unpack> en B<--record-avail>.
+Alle gewone bestanden die beantwoorden aan het patroon B<*.deb>, recursief behandelen in de opgegeven mappen en al hun onderliggende mappen. Dit kan gebruikt worden samen met de commando's B<-i>, B<-A>, B<--install>, B<--unpack> en B<--record-avail>.
 
 =item B<-G>
 
@@ -671,11 +671,11 @@ De administratieve map instellen op I<directory>. In deze map zitten veel bestan
 
 =item B<--instdir=>I<map>
 
-Instellen van de installatiemap, welke de map aangeeft waarin pakketten geïnstalleerd zullen worden. B<instdir> is ook de map die aan L<chroot(2)> doorgegeven wordt vooraleer de installatiescripts van een pakket uitgevoerd worden, waardoor de scripts B<instdir> als de hoofdmap beschouwen. Standaard is dat «I</>».
+Instellen van de installatiemap, welke de map aangeeft waarin pakketten geïnstalleerd zullen worden. B<instdir> is ook de map die aan L<chroot(2)> doorgegeven wordt vooraleer de installatiescripts van een pakket uitgevoerd worden, waardoor de scripts B<instdir> als de hoofdmap beschouwen. Standaard is dat «I</>» als B<DPKG_ROOT> niet is ingesteld (sinds dpkg 1.21.10).
 
 =item B<--root=>I<map>
 
-De hoofdmap instellen op B<directory>, hetgeen de installatiemap instelt op «I<map>» en de administratieve map op «I<map>B<%ADMINDIR%>».
+De hoofdmap instellen op B<map>, hetgeen de installatiemap instelt op «I<map>» en de administratieve map op «I<map>B<%ADMINDIR%>» indien B<DPKG_ROOT> niet werd ingesteld (sinds dpkg 1.21.10).
 
 =item B<-O>, B<--selected-only>
 
@@ -691,7 +691,9 @@ Sinds dpkg 1.21.10 wordt ook rekening gehouden met de architectuur, wat het moge
 
 =item B<--post-invoke=>I<commando>
 
-Instellen dat een uitbreiding (hook) I<commando> via "%DPKG_DEFAULT_SHELL% -c" moet uitgevoerd worden voor of na het uitvoeren van B<dpkg> bij de acties I<unpack>, I<configure>, I<install>, I<triggers-only>, I<remove>, I<purge> (sinds dpkg 1.15.4) en de acties I<add-architecture> en I<remove-architecture> (sinds dpkg 1.17.19) van B<dpkg>. Deze optie kan meermaals opgegeven worden. De volgorde waarin de opties opgegeven worden, wordt behouden, waarbij deze uit de configuratiebestanden voorrang hebben. De omgevingsvariabele B<DPKG_HOOK_ACTION> wordt ingesteld voor de uitbreidingen (hooks) bij de huidige actie van B<dpkg>.
+Instellen dat een aanroepuitbreiding (invoke hook) I<commando> via "%DPKG_DEFAULT_SHELL% -c" moet uitgevoerd worden voor of na het uitvoeren van B<dpkg> bij de acties I<unpack>, I<configure>, I<install>, I<triggers-only>, I<remove>, I<purge> (sinds dpkg 1.15.4) en de acties I<add-architecture> en I<remove-architecture> (sinds dpkg 1.17.19) van B<dpkg>. Deze optie kan meermaals opgegeven worden. De volgorde waarin de opties opgegeven worden, wordt behouden, waarbij deze uit de configuratiebestanden voorrang hebben. De omgevingsvariabele B<DPKG_HOOK_ACTION> wordt ingesteld voor de uitbreidingen (hooks) bij de huidige actie van B<dpkg>.
+
+De aanroepuitbreidingen worden niet uitgevoerd als B<--no-act> werd gespecificeerd, of wanneer dit uitgevoerd wordt als niet-root zonder without B<--force-not-root>.
 
 B<Opmerking>: frontends kunnen B<dpkg> meerdere keren per aanroep aanroepen, waardoor de uitbreidingen meer keren dan verwacht uitgevoerd kunnen worden.
 
@@ -703,7 +705,7 @@ Het I<glob-patroon> bij het installeren instellen als een filter voor paden, ofw
 
 B<Waarschuwing>: Houd er rekening mee dat u, afhankelijk van de paden die uitgesloten worden, uw systeem volledig defect kunt maken. Gebruik dit behoedzaam.
 
-In de glob-patronen kunnen dezelfde jokertekens gebruikt worden als in de shell, waarbij ‘*’ overeenkomt met om het even welke reeks tekens, met inbegrip van de lege tekenreeks evenals van ‘/’. Bijvoorbeeld, «I</usr/*/READ*>» komt overeen met «I</usr/share/doc/package/README>». Zoals gebruikelijk komt ‘?’ overeen met één willekeurig teken (opnieuw met inbegrip van ‘/’). En ‘[’ geeft het begin aan van een klasse van tekens, die een lijst van tekens, bereiken of complementaties kan bevatten. Zie L<glob(7)> voor gedetailleerde informatie over het gebruik van glob-patronen. B<Opmerking>: het is mogelijk dat de huidige implementatie meer mappen en symbolische koppelingen opnieuw opneemt dan nodig is, in het bijzonder wanneer er een meer specifieke heropname is. Dit is om op veilig te spelen en mogelijke mislukkingen bij het uitpakken te vermijden. In de toekomst kan eraan gewerkt worden om dit te verbeteren.
+In de glob-patronen kunnen dezelfde wildcards gebruikt worden als in de shell, waarbij ‘*’ overeenkomt met om het even welke reeks tekens, met inbegrip van de lege tekenreeks evenals van ‘/’. Bijvoorbeeld, «I</usr/*/READ*>» komt overeen met «I</usr/share/doc/package/README>». Zoals gebruikelijk komt ‘?’ overeen met één willekeurig teken (opnieuw met inbegrip van ‘/’). En ‘[’ geeft het begin aan van een klasse van tekens, die een lijst van tekens, bereiken of complementaties kan bevatten. Zie L<glob(7)> voor gedetailleerde informatie over het gebruik van glob-patronen. B<Opmerking>: het is mogelijk dat de huidige implementatie meer mappen en symbolische koppelingen opnieuw opneemt dan nodig is, in het bijzonder wanneer er een meer specifieke heropname is. Dit is om op veilig te spelen en mogelijke mislukkingen bij het uitpakken te vermijden. In de toekomst kan eraan gewerkt worden om dit te verbeteren.
 
 Dit kan gebruikt worden om alle paden te verwijderen op enkele specifieke paden na. Een typische casus is:
 
@@ -726,7 +728,7 @@ De enige momenteel ondersteunde indeling van de uitvoer is B<rpm>, die bestaat u
 
 Z<>
  B<missing  > [B<c>] I<padnaam> [B<(>I<foutmelding>B<)>]
- B<??5??????> [B<c>] I<padnaam>
+ B<?M5??????> [B<c>] I<padnaam>
 
 De eerste 9 tekens worden gebruikt om het resultaat van de controle te rapporteren, ofwel een letterlijke B<missing> wanneer het bestand niet aanwezig is of de metagegevens ervan niet kunnen worden opgehaald, ofwel een van de volgende speciale tekens die het resultaat voor elke controle aangeven:
 
@@ -809,6 +811,8 @@ Verzonden juist voor het begin van een verwerkingsfase. I<fase> is een van de vo
 
 Door een machine te lezen informatie over pakketstatus en voortgang versturen naar de standaardinvoer van het shell-commando I<commando> dat via "%DPKG_DEFAULT_SHELL% -c" moet uitgevoerd worden (sinds dpkg 1.16.0). Deze optie kan meermaals opgegeven worden. De indeling van de uitvoer is dezelfde als bij B<--status-fd>.
 
+De statusloggers worden niet uitgevoerd wanneer B<--no-act> is opgegeven, of wanneer het commando wordt uitgevoerd als niet-root zonder B<--force-not-root>.
+
 =item B<--log=>I<bestandsnaam>
 
 Updates van toestandswijzigingen en acties loggen in I<bestandsnaam> in plaats van in het standaardlogbestand I<%LOGDIR%/dpkg.log>. Indien deze optie meerdere keren opgegeven wordt, wordt de laatst opgegeven bestandsnaam gebruikt. Log-berichten zijn in de volgende vorm:
@@ -864,7 +868,7 @@ Annuleert een eerder gegeven B<--no-triggers> (sinds dpkg 1.14.17).
 
 =item B<0>
 
-De gevraagde actie werd succesvol uitgevoerd. Of een commando dat een toets of een assertie verrichtte gaf waar als resultaat.
+Het gevraagde commando werd succesvol uitgevoerd. Of een commando dat een toets of een assertie verrichtte gaf waar als resultaat.
 
 =item B<1>
 
@@ -902,11 +906,17 @@ Het programma dat B<dpkg> zal uitvoeren bij het starten van een nieuwe interacti
 
 =item B<DPKG_PAGER>
 
-Het programma dat B<dpkg> zal uitvoeren als het gebruik maakt van een pagineringsprogramma, dat uitgevoerd zal worden met «B<$SHELL -c>», bijvoorbeeld voor het tonen van de verschillen tussen de configuratiebestanden. Indien B<SHELL> niet ingesteld is, dan zal «B<%DPKG_DEFAULT_SHELL%>» gebruikt worden. B<DPKG_PAGER> overschrijft de omgevingsvariabele B<PAGER> (sinds dpkg 1.19.2).
+Het programma dat B<dpkg> zal uitvoeren als het gebruik maakt van een pagineringsprogramma, dat uitgevoerd zal worden met «B<$SHELL -c>», bijvoorbeeld voor het tonen van de verschillen tussen de configuratiebestanden. Indien B<SHELL> niet ingesteld is, dan zal «B<%DPKG_DEFAULT_SHELL%>» gebruikt worden.
+
+De B<DPKG_PAGER> overschrijft de omgevingsvariabele B<PAGER> (sinds dpkg 1.19.2). Als geen van de programma's waarnaar wordt verwezen door B<DPKG_PAGER> of B<PAGER> aanwezig is, worden de volgende programma's in volgorde geprobeerd (sinds dpkg 1.22.12): het standaardpagineringsprogramma B<%DPKG_DEFAULT_PAGER%>, vervolgens L<less(1)>, L<more(1)> en ten slotte L<cat(1)>.
 
 =item B<DPKG_COLORS>
 
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen worden zijn: B<auto> (standaard), B<always> en B<never>.
+
+=item B<DPKG_NLS>
+
+Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het activeren van moedertaalondersteuning, ook gekend als internationaliseringsondersteuning (of i18n) (sinds dpkg 1.22.7). Geldige waarden zijn: B<0> and B<1> (standaard).
 
 =item B<DPKG_DEBUG>
 
@@ -916,6 +926,10 @@ Stelt het foutopsporingsmasker in (sinds dpkg 1.21.10) vanaf een octale waarde. 
 
 Stelt de forceer-vlaggen in (sinds dpkg 1.19.5). Indien deze variabele aanwezig is, zullen geen ingebouwde forceer-standaardwaarden toegepast worden. Indien de variabele aanwezig, maar leeg is, zullen alle forceer-vlaggen gedeactiveerd worden.
 
+=item B<DPKG_ROOT>
+
+Indien dit ingesteld is en de opties B<--instdir> of B<--root> niet opgegeven werden, zal dit gebruikt worden als de hoofdmap voor het bestandssysteem (sinds dpkg 1.21.10).
+
 =item B<DPKG_ADMINDIR>
 
 Indien dit ingesteld is en de opties B<--admindir> of B<--root> niet opgegeven werden, zal dit gebruikt worden als de administratieve map voor B<dpkg> (sinds dpkg 1.20.0).
@@ -923,6 +937,18 @@ Indien dit ingesteld is en de opties B<--admindir> of B<--root> niet opgegeven w
 =item B<DPKG_FRONTEND_LOCKED>
 
 Ingesteld door een frontend voor pakketbeheer om dpkg te informeren dat het de frontendgrendel niet mag bemachtigen (since dpkg 1.19.1).
+
+=item B<DPKG_PATH_PASSWD>
+
+Stelt de padnaam in voor het systeembestand F<passwd>. Dit pad is relatief ten opzichte van de map B<--root>. De standaardwaarde is F</etc/passwd>.
+
+Sinds dpkg 1.22.16.
+
+=item B<DPKG_PATH_GROUP>
+
+Stelt de padnaam in voor het systeembestand F<group>. Dit pad is relatief ten opzichte van de map B<--root>. De standaardwaarde is F</etc/group>.
+
+Sinds dpkg 1.22.16.
 
 =back
 
@@ -936,7 +962,7 @@ Ingeval dit niet reeds ingesteld is, wordt dit door B<dpkg> als “B<-FRSXMQ>”
 
 =item B<DPKG_ROOT>
 
-Gedefinieerd door B<dpkg> in de omgeving van het pakketbeheerderscript om aan te geven op welke installatie gewerkt moet worden (sinds dpkg 1.18.5). Het is de bedoeling dat deze waarde vooraan toegevoegd wordt aan elk pad waarop scripts van de pakketbeheerder ageren. Tijdens een normale operatie is deze variabele leeg. Indien pakketten geïnstalleerd worden in een afwijkende B<instdir> (installatiemap), zal B<dpkg> de scripts van de pakketbeheerder normaal uitvoeren met behulp van L<chroot(2)> en deze variabele leeg laten, maar indien B<--force-script-chrootless> opgegeven werd, wordt het aanroepen van L<chroot(2)> overgeslagen en is B<instdir> niet leeg.
+Gedefinieerd door B<dpkg> in de omgeving van het pakketbeheerderscript om aan te geven op welke installatie gewerkt moet worden (sinds dpkg 1.18.5). Het is de bedoeling dat deze waarde vooraan toegevoegd wordt aan elk pad waarop scripts van de pakketbeheerder ageren. Tijdens een normale operatie is deze variabele leeg. Indien pakketten geïnstalleerd worden in een afwijkende B<instdir> (installatiemap), zal B<dpkg> de scripts van de pakketbeheerder normaal uitvoeren met behulp van L<chroot(2)> en deze variabele leeg laten, maar indien B<--force-script-chrootless> opgegeven werd, wordt het aanroepen van L<chroot(2)> overgeslagen en wordt deze variabele ingesteld op B<instdir> (die niet leeg zal zijn).
 
 =item B<DPKG_ADMINDIR>
 

@@ -80,7 +80,6 @@ varbuf_add_pkgbin_name(struct varbuf *vb,
 	varbuf_add_str(vb, pkg->set->name);
 	if (pkgbin_name_needs_arch(pkgbin, pnaw))
 		varbuf_add_archqual(vb, pkgbin->arch);
-	varbuf_end_str(vb);
 }
 
 const char *
@@ -267,10 +266,10 @@ pkg_synopsis(const struct pkginfo *pkg, int *len)
  *
  * @return The character abbreviated representation.
  */
-int
+const char *
 pkg_abbrev_want(const struct pkginfo *pkg)
 {
-	return "uihrp"[pkg->want];
+	return want_abbrev[pkg->want].name;
 }
 
 /**
@@ -280,10 +279,10 @@ pkg_abbrev_want(const struct pkginfo *pkg)
  *
  * @return The character abbreviated representation.
  */
-int
+const char *
 pkg_abbrev_status(const struct pkginfo *pkg)
 {
-	return "ncHUFWti"[pkg->status];
+	return status_abbrev[pkg->status].name;
 }
 
 /**
@@ -293,10 +292,10 @@ pkg_abbrev_status(const struct pkginfo *pkg)
  *
  * @return The character abbreviated representation.
  */
-int
+const char *
 pkg_abbrev_eflag(const struct pkginfo *pkg)
 {
-	return " R"[pkg->eflag];
+	return eflag_abbrev[pkg->eflag].name;
 }
 
 /**
@@ -395,7 +394,7 @@ pkg_sorter_by_nonambig_name_arch(const void *a, const void *b)
  * Add a string representation of the source package version to a varbuf.
  *
  * It parses the Source field (if present), and extracts the optional
- * version enclosed in parenthesis. Otherwise it fallsback to use the
+ * version enclosed in parenthesis. Otherwise it falls back to use the
  * binary package version. It NUL terminates the varbuf.
  *
  * @param vb      The varbuf struct to modify.
@@ -410,7 +409,6 @@ varbuf_add_source_version(struct varbuf *vb,
 
 	pkg_source_version(&version, pkg, pkgbin);
 	varbufversion(vb, &version, vdew_nonambig);
-	varbuf_end_str(vb);
 }
 
 void
@@ -434,11 +432,10 @@ pkg_source_version(struct dpkg_version *version,
 		version_str++;
 		len = strcspn(version_str, ")");
 		varbuf_add_buf(&vb, version_str, len);
-		varbuf_end_str(&vb);
 
-		if (parseversion(version, vb.buf, &err) < 0)
+		if (parseversion(version, varbuf_str(&vb), &err) < 0)
 			ohshit(_("version '%s' has bad syntax: %s"),
-			       vb.buf, err.str);
+			       varbuf_str(&vb), err.str);
 
 		varbuf_destroy(&vb);
 	}

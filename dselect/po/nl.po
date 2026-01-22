@@ -4,14 +4,14 @@
 #
 # Bart Cornelis <cobaco@skolelinux.no>, 2008.
 # Jeroen Schot <schot@a-eskwadraat.nl>, 2011.
-# Frans Spiesschaert <Frans.Spiesschaert@yucom.be>, 2014, 2022-2023.
+# Frans Spiesschaert <Frans.Spiesschaert@yucom.be>, 2014, 2022-2023, 2025.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dselect 1.22.0\n"
+"Project-Id-Version: dselect 1.23.3\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2024-03-10 20:21+0100\n"
-"PO-Revision-Date: 2023-09-11 21:13+0200\n"
+"POT-Creation-Date: 2026-01-18 18:28+0100\n"
+"PO-Revision-Date: 2025-12-25 16:45+0100\n"
 "Last-Translator: Frans Spiesschaert <Frans.Spiesschaert@yucom.be>\n"
 "Language-Team: Debian Dutch l10n Team <debian-l10n-dutch@lists.debian.org>\n"
 "Language: nl\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.6\n"
 
 #: dselect/basecmds.cc
 msgid "Search for ? "
@@ -92,7 +92,7 @@ msgstr "kon zoekvenster niet aanmaken"
 
 #: dselect/baselist.cc
 msgid "Keybindings"
-msgstr "Toetsenbindingen"
+msgstr "Sneltoetsen"
 
 #: dselect/baselist.cc
 #, c-format
@@ -110,11 +110,13 @@ msgid "%s to go back"
 msgstr "%s om terug te gaan"
 
 #: dselect/bindings.cc
+msgctxt "keybinding"
 msgid "[not bound]"
-msgstr "[niet gebonden]"
+msgstr "[geen sneltoets]"
 
 #: dselect/bindings.cc
 #, c-format
+msgctxt "keybinding"
 msgid "[unk: %d]"
 msgstr "[onbek: %d]"
 
@@ -441,7 +443,7 @@ msgid ""
 "of\n"
 "the display shows relevant conflicts and dependencies; use 'i' to cycle "
 "between\n"
-"that, the package descriptions and the internal control information.\n"
+"that, the package descriptions and the internal package metadata.\n"
 "\n"
 "A set of 'suggested' packages has been calculated, and the initial markings "
 "in\n"
@@ -474,9 +476,9 @@ msgstr ""
 "van het scherm bevat de relevante conflicten en vereisten; gebruik `i' om "
 "te\n"
 "wisselen tussen de lijst, de pakketbeschrijvingen en de interne "
-"besturingsinfo.\n"
+"pakketmetadata.\n"
 "\n"
-"Een set `voorgestelde' pakketten werd berekend en de beginmarkeringen in de\n"
+"Een set 'voorgestelde' pakketten werd berekend en de beginmarkeringen in de\n"
 "sub-lijst komen eraan tegemoet, zodat u gewoon op Enter kunt drukken als u "
 "het\n"
 "er mee eens bent. U kunt de verandering(en) afbreken die de problemen "
@@ -487,8 +489,7 @@ msgstr ""
 "U kunt ook door de lijst bewegen en de markeringen veranderen zodat ze meer\n"
 "overeenkomen met wat u wilt, en u kunt mijn suggesties verwerpen met de "
 "hoofd-\n"
-"letters `D' of `R' (zie hulpscherm over toetsen). Gebruik de hoofdletter "
-"`Q'\n"
+"letters `D' of `R' (zie hulpscherm sneltoetsen). Gebruik de hoofdletter `Q'\n"
 "om me te dwingen de nu getoonde situatie te accepteren in het geval u een\n"
 "aanbeveling wilt omzeilen of denkt dat het programma het mis heeft.\n"
 "\n"
@@ -894,8 +895,8 @@ msgstr "<attr> is:"
 
 #: dselect/main.cc
 #, c-format
-msgid "couldn't open debug file '%.255s'\n"
-msgstr "kon debugbestand `%.255s' niet openen\n"
+msgid "cannot open debug file '%s'\n"
+msgstr "kan debugbestand '%s' niet openen\n"
 
 #: dselect/main.cc
 #, c-format
@@ -943,14 +944,15 @@ msgstr "terminal mist essentiële functionaliteit, er wordt opgegeven"
 msgid ""
 "\n"
 "\n"
-"Move around with ^P and ^N, cursor keys, initial letters, or digits;\n"
-"Press <enter> to confirm selection.   ^L redraws screen.\n"
+"Move around with Ctrl+P and Ctrl+N, cursor keys, initial letters, or "
+"digits;\n"
+"Press <enter> to confirm selection. Ctrl+L redraws screen.\n"
 "\n"
 msgstr ""
 "\n"
 "\n"
-"Beweeg met ^P en ^N, cursortoetsen, beginletters, of cijfers;\n"
-"Druk op <enter> om selectie te activeren.  ^L ververst het beeld.\n"
+"Beweeg met Ctrl+P en Ctrl+N, cursortoetsen, beginletters, of cijfers;\n"
+"Druk op <enter> om selectie te activeren. Ctrl+L ververst het scherm.\n"
 "\n"
 
 #: dselect/main.cc
@@ -977,8 +979,8 @@ msgstr "toets lezen in hoofdmenu is mislukt"
 
 #: dselect/main.cc
 #, c-format
-msgid "unknown action string '%.50s'"
-msgstr "onbekend actiewoord `%.50s'"
+msgid "unknown action string '%s'"
+msgstr "onbekend actiewoord `%s'"
 
 #: dselect/methlist.cc
 msgid "Abbrev."
@@ -1082,33 +1084,33 @@ msgstr "zoeken/instellingen-script"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "syntax error in method options file '%.250s' -- %s"
-msgstr "syntaxisfout in bestand met methodeopties`%.250s' -- %s"
+msgid "syntax error in method options file '%s' -- %s"
+msgstr "syntaxisfout in bestand met methodeopties`%s' -- %s"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "error reading options file '%.250s'"
-msgstr "fout bij lezen optiebestand `%.250s'"
+msgid "error reading options file '%s'"
+msgstr "fout bij lezen optiebestand `%s'"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to read '%.250s' directory for reading methods"
-msgstr "kon niet in map `%.250s' lezen om de methodes in te lezen"
+msgid "unable to read '%s' directory for reading methods"
+msgstr "kon niet in map `%s' lezen om de methodes in te lezen"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "method '%.250s' has name that is too long (%d > %d characters)"
-msgstr "methode `%.250s' heeft een te lange naam (%d > %d tekens)"
+msgid "method '%s' has name that is too long (%d > %d characters)"
+msgstr "methode `%s' heeft een te lange naam (%d > %d tekens)"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to access method script '%.250s'"
-msgstr "kon methodescript `%.250s' niet benaderen"
+msgid "unable to access method script '%s'"
+msgstr "kon methodescript `%s' niet benaderen"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to read method options file '%.250s'"
-msgstr "kon bestand met methodeopties `%.250s' niet lezen"
+msgid "unable to read method options file '%s'"
+msgstr "kon bestand met methodeopties `%s' niet lezen"
 
 #: dselect/methparse.cc
 msgid "non-digit where digit wanted"
@@ -1156,38 +1158,23 @@ msgstr "bestandseinde in samenvatting - ontbrekende nieuwe regel"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to open option description file '%.250s'"
-msgstr "kon bestand met optiebeschrijvingen `%.250s' niet openen"
+msgid "cannot load option description file '%s'"
+msgstr "kon bestand '%s' met optiebeschrijvingen niet laden"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "unable to stat option description file '%.250s'"
-msgstr "kon bestand met optiebeschrijvingen `%.250s' niet vinden"
+msgid "error during read of method options file '%s'"
+msgstr "fout bij lezen van bestand met methodeopties `%s'"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "failed to read option description file '%.250s'"
-msgstr "kon bestand met optiebeschrijvingen `%.250s' niet lezen"
+msgid "unable to open current option file '%s'"
+msgstr "kon huidig optiebestand `%s' niet openen"
 
 #: dselect/methparse.cc
 #, c-format
-msgid "error during read of option description file '%.250s'"
-msgstr "fout bij lezen van bestand met optiebeschrijvingen `%.250s'"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "error during read of method options file '%.250s'"
-msgstr "fout bij lezen van bestand met methodeopties `%.250s'"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "unable to open current option file '%.250s'"
-msgstr "kon huidig optiebestand `%.250s' niet openen"
-
-#: dselect/methparse.cc
-#, c-format
-msgid "unable to write new option to '%.250s'"
-msgstr "kon nieuwe optie niet wegschrijven naar `%.250s'"
+msgid "unable to write new option to '%s'"
+msgstr "kon nieuwe optie niet wegschrijven naar `%s'"
 
 #: dselect/pkgdisplay.cc
 msgid "new package"
@@ -1209,10 +1196,6 @@ msgstr "verwijderen"
 msgid "purge"
 msgstr "wissen"
 
-#. TRANSLATORS: The space is a trick to work around gettext which uses
-#. * the empty string to store information about the translation. DO NOT
-#. * CHANGE THAT IN A TRANSLATION! The code really relies on that being
-#. * a single space.
 #: dselect/pkgdisplay.cc
 msgid " "
 msgstr " "

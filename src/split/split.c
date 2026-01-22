@@ -99,35 +99,17 @@ parse_timestamp(const char *value)
 
 	errno = 0;
 	timestamp = strtoimax(value, &end, 10);
-	if (value == end || *end || errno != 0)
-		ohshite(_("unable to parse timestamp '%.255s'"), value);
+	if (value == end || *end)
+		ohshit(_("unable to parse timestamp '%s'"), value);
+	else if (errno != 0)
+		ohshite(_("unable to parse timestamp '%s'"), value);
 
 	return timestamp;
 }
 
-/* Cleanup filename for use in crippled msdos systems. */
-static char *
-clean_msdos_filename(char *filename)
-{
-	char *d, *s;
-
-	for (s = d = filename; *s; d++, s++) {
-		if (*s == '+')
-			*d = 'x';
-		else if (c_isupper(*s))
-			*d = c_tolower(*s);
-		else if (c_islower(*s) || c_isdigit(*s))
-			*d = *s;
-		else
-			s++;
-	}
-
-	return filename;
-}
-
+/* TODO: Reduce scope of variables. */
 static int
-mksplit(const char *file_src, const char *prefix, off_t maxpartsize,
-        bool msdos)
+mksplit(const char *file_src, const char *prefix, off_t maxpartsize)
 {
 	struct pkginfo *pkg;
 	struct dpkg_error err;
@@ -140,18 +122,17 @@ mksplit(const char *file_src, const char *prefix, off_t maxpartsize,
 	int nparts, curpart;
 	off_t partsize;
 	off_t cur_partsize, last_partsize;
-	char *prefixdir = NULL, *msdos_prefix = NULL;
 	struct varbuf file_dst = VARBUF_INIT;
 	struct varbuf partmagic = VARBUF_INIT;
 	struct varbuf partname = VARBUF_INIT;
 
 	fd_src = open(file_src, O_RDONLY);
 	if (fd_src < 0)
-		ohshite(_("unable to open source file '%.250s'"), file_src);
+		ohshite(_("unable to open source file '%s'"), file_src);
 	if (fstat(fd_src, &st))
 		ohshite(_("unable to fstat source file"));
 	if (!S_ISREG(st.st_mode))
-		ohshit(_("source file '%.250s' not a plain file"), file_src);
+		ohshit(_("source file '%s' not a plain file"), file_src);
 
 	if (fd_md5(fd_src, hash, -1, &err) < 0)
 		ohshit(_("cannot compute MD5 digest for file '%s': %s"),
@@ -162,7 +143,7 @@ mksplit(const char *file_src, const char *prefix, off_t maxpartsize,
 	version = versiondescribe(&pkg->available.version, vdew_nonambig);
 
 	timestamp_str = getenv("SOURCE_DATE_EPOCH");
-	if (timestamp_str)
+	if (str_is_set(timestamp_str))
 		timestamp = parse_timestamp(timestamp_str);
 	else
 		timestamp = time(NULL);
@@ -177,35 +158,12 @@ mksplit(const char *file_src, const char *prefix, off_t maxpartsize,
 	          "Splitting package %s into %d parts: ", nparts),
 	       pkg->set->name, nparts);
 
-	if (msdos) {
-		char *t;
-
-		t = m_strdup(prefix);
-		prefixdir = m_strdup(dirname(t));
-		free(t);
-
-		msdos_prefix = m_strdup(path_basename(prefix));
-		prefix = clean_msdos_filename(msdos_prefix);
-	}
-
 	for (curpart = 1; curpart <= nparts; curpart++) {
 		struct dpkg_ar *ar;
 
-		varbuf_reset(&file_dst);
 		/* Generate output filename. */
-		if (msdos) {
-			char *refname;
-			int prefix_max;
-
-			refname = str_fmt("%dof%d", curpart, nparts);
-			prefix_max = max(8 - strlen(refname), 0);
-			varbuf_printf(&file_dst, "%s/%.*s%.8s" DEBEXT,
-			              prefixdir, prefix_max, prefix, refname);
-			free(refname);
-		} else {
-			varbuf_printf(&file_dst, "%s.%dof%d" DEBEXT,
-			              prefix, curpart, nparts);
-		}
+		varbuf_set_fmt(&file_dst, "%s.%dof%d" DEBEXT,
+		               prefix, curpart, nparts);
 
 		if (curpart == nparts)
 			cur_partsize = last_partsize;
@@ -227,20 +185,18 @@ mksplit(const char *file_src, const char *prefix, off_t maxpartsize,
 		dpkg_ar_put_magic(ar);
 
 		/* Write the debian-split part. */
-		varbuf_printf(&partmagic,
-		              "%s\n%s\n%s\n%s\n%jd\n%jd\n%d/%d\n%s\n",
-		              SPLITVERSION, pkg->set->name, version, hash,
-		              (intmax_t)st.st_size, (intmax_t)partsize,
-		              curpart, nparts, pkg->available.arch->name);
+		varbuf_set_fmt(&partmagic,
+		               "%s\n%s\n%s\n%s\n%jd\n%jd\n%d/%d\n%s\n",
+		               SPLITVERSION, pkg->set->name, version, hash,
+		               (intmax_t)st.st_size, (intmax_t)partsize,
+		               curpart, nparts, pkg->available.arch->name);
 		dpkg_ar_member_put_mem(ar, PARTMAGIC,
 		                       partmagic.buf, partmagic.used);
-		varbuf_reset(&partmagic);
 
 		/* Write the data part. */
-		varbuf_printf(&partname, "data.%d", curpart);
+		varbuf_set_fmt(&partname, "data.%d", curpart);
 		dpkg_ar_member_put_file(ar, partname.buf,
 		                        fd_src, cur_partsize);
-		varbuf_reset(&partname);
 
 		dpkg_ar_close(ar);
 
@@ -250,9 +206,6 @@ mksplit(const char *file_src, const char *prefix, off_t maxpartsize,
 	varbuf_destroy(&file_dst);
 	varbuf_destroy(&partname);
 	varbuf_destroy(&partmagic);
-
-	free(prefixdir);
-	free(msdos_prefix);
 
 	close(fd_src);
 
@@ -281,7 +234,7 @@ do_split(const char *const *argv)
 		prefix = nfstrnsave(sourcefile, sourcefile_len);
 	}
 
-	mksplit(sourcefile, prefix, opt_maxpartsize, opt_msdos);
+	mksplit(sourcefile, prefix, opt_maxpartsize);
 
 	return 0;
 }

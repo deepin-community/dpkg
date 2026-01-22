@@ -54,10 +54,6 @@ Hetzelfde als B<Build-Depends-Package>, maar aanvaardt een door komma's gescheid
 
 Dit vermeldt in een lijst met witruimte als scheidingsteken welke interne symbolengroepen genegeerd moeten worden, zodat de symbolen uit deze groepen mee opgenomen worden in het uitvoerbestand (sinds dpkg 1.20.1). Dit zou enkel noodzakelijk moeten zijn voor pakketten uit de gereedschapsketen die deze interne symbolen ter beschikking stellen. De beschikbare groepen zijn systeemafhankelijk en voor op ELF en op GNU gebaseerde systemen zijn dat B<aeabi> en B<gomp>.
 
-=item B<Ignore-Blacklist-Groups>
-
-Een verouderde alias voor B<Allow-Internal-Symbol-Groups> (sins dpkg 1.20.1, ondersteund sinds dpkg 1.17.6).
-
 =back
 
 =head1 VOORBEELDEN

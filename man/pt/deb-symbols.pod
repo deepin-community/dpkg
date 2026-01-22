@@ -54,10 +54,6 @@ O mesmo que B<Build-Depends-Package> mas aceita uma lista separada por virgulas 
 
 Indica que grupos de símbolos internos deverão ser ignorados, como uma lista separada por espaços em branco, para que os símbolos contidos nesses grupos sejam incluídos no ficheiro resultante (desde dpkg 1.20.1). Isto só deve ser necessário para pacotes ferramenta-cadeia que providenciem esses símbolos internos. Os grupos disponíveis são dependentes do sistema, para ELF e sistemas baseados em GNU estes são B<aeabi> e B<gomp>.
 
-=item B<Ignore-Blacklist-Groups>
-
-Um alias descontinuado para B<Allow-Internal-Symbol-Groups> (desde dpkg 1.20.1, suportado desde dpkg 1.17.6).
-
 =back
 
 =head1 EXEMPLOS

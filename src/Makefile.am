@@ -27,6 +27,7 @@ bin_PROGRAMS = \
 	dpkg-deb \
 	dpkg-divert \
 	dpkg-query \
+	dpkg-realpath \
 	dpkg-split \
 	dpkg-statoverride \
 	dpkg-trigger \
@@ -34,7 +35,6 @@ bin_PROGRAMS = \
 
 bin_SCRIPTS = \
 	dpkg-maintscript-helper \
-	dpkg-realpath \
 	# EOL
 
 pkglibexec_SCRIPTS = \
@@ -46,7 +46,6 @@ EXTRA_DIST += \
 	dpkg-db-backup.sh \
 	dpkg-db-keeper.sh \
 	dpkg-maintscript-helper.sh \
-	dpkg-realpath.sh \
 	# EOL
 
 CLEANFILES += \
@@ -107,6 +106,10 @@ dpkg_query_SOURCES = \
 	query/main.c \
 	# EOL
 
+dpkg_realpath_SOURCES = \
+	realpath/main.c \
+	# EOL
+
 dpkg_split_SOURCES = \
 	split/dpkg-split.h \
 	split/info.c \
@@ -158,7 +161,9 @@ TESTSUITE_AT += $(srcdir)/at/deb-content.at
 TESTSUITE_AT += $(srcdir)/at/deb-split.at
 TESTSUITE_AT += $(srcdir)/at/realpath.at
 TESTSUITE_AT += $(srcdir)/at/divert.at
+TESTSUITE_AT += $(srcdir)/at/trigger.at
 TESTSUITE_AT += $(srcdir)/at/chdir.at
+TESTSUITE_AT += $(srcdir)/at/dpkg-arch.at
 EXTRA_DIST += $(TESTSUITE_AT)
 
 TESTSUITE = $(srcdir)/at/testsuite

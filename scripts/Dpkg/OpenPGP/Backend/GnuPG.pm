@@ -30,12 +30,12 @@ B<Note>: This is a private module, its API can change at any time.
 
 package Dpkg::OpenPGP::Backend::GnuPG 0.01;
 
-use strict;
-use warnings;
+use v5.36;
 
 use POSIX qw(:sys_wait_h);
+use File::Basename;
 use File::Temp;
-use MIME::Base64;
+use File::Copy;
 
 use Dpkg::ErrorHandling;
 use Dpkg::IPC;
@@ -57,12 +57,6 @@ sub DEFAULT_CMD {
     return [ qw(gpg-sq gpg) ];
 }
 
-sub has_backend_cmd {
-    my $self = shift;
-
-    return defined $self->{cmd} && defined $self->{cmdstore};
-}
-
 sub has_keystore {
     my $self = shift;
 
@@ -79,12 +73,6 @@ sub can_use_key {
     return $self->has_keystore();
 }
 
-sub has_verify_cmd {
-    my $self = shift;
-
-    return defined $self->{cmdv} || defined $self->{cmd};
-}
-
 sub get_trusted_keyrings {
     my $self = shift;
 
@@ -98,107 +86,10 @@ sub get_trusted_keyrings {
     }
 
     my @keyrings;
-    foreach my $keyring (qw(trustedkeys.kbx trustedkeys.gpg)) {
+    foreach my $keyring (qw(trustedkeys.gpg trustedkeys.kbx)) {
         push @keyrings, "$keystore/$keyring" if -r "$keystore/$keyring";
     }
     return @keyrings;
-}
-
-# _pgp_* functions are strictly for applying or removing ASCII armor.
-# See <https://datatracker.ietf.org/doc/html/rfc4880#section-6> for more
-# details.
-#
-# Note that these _pgp_* functions are only necessary while relying on
-# gpgv, and gpgv itself does not verify multiple signatures correctly
-# (see https://bugs.debian.org/1010955).
-
-sub _pgp_dearmor_data {
-    my ($type, $data) = @_;
-
-    # Note that we ignore an incorrect or absent checksum, following the
-    # guidance of
-    # <https://datatracker.ietf.org/doc/draft-ietf-openpgp-crypto-refresh/>.
-    my $armor_regex = qr{
-        -----BEGIN\ PGP\ \Q$type\E-----[\r\t ]*\n
-        (?:[^:]+:\ [^\n]*[\r\t ]*\n)*
-        [\r\t ]*\n
-        ([a-zA-Z0-9/+\n]+={0,2})[\r\t ]*\n
-        (?:=[a-zA-Z0-9/+]{4}[\r\t ]*\n)?
-        -----END\ PGP\ \Q$type\E-----
-    }xm;
-
-    if ($data =~ m/$armor_regex/) {
-        return decode_base64($1);
-    }
-    return;
-}
-
-sub _pgp_armor_checksum {
-    my ($data) = @_;
-
-    # From the upcoming revision to RFC 4880
-    # <https://datatracker.ietf.org/doc/draft-ietf-openpgp-crypto-refresh/>.
-    #
-    # The resulting three-octet-wide value then gets base64-encoded into
-    # four base64 ASCII characters.
-
-    my $CRC24_INIT = 0xB704CE;
-    my $CRC24_GENERATOR = 0x864CFB;
-
-    my @bytes = unpack 'C*', $data;
-    my $crc = $CRC24_INIT;
-    for my $b (@bytes) {
-        $crc ^= ($b << 16);
-        for (1 .. 8) {
-            $crc <<= 1;
-            if ($crc & 0x1000000) {
-                # Clear bit 25 to avoid overflow.
-                $crc &= 0xffffff;
-                $crc ^= $CRC24_GENERATOR;
-            }
-        }
-    }
-    my $sum = pack 'CCC', ($crc >> 16) & 0xff, ($crc >> 8) & 0xff, $crc & 0xff;
-    return encode_base64($sum, q{});
-}
-
-sub _pgp_armor_data {
-    my ($type, $data) = @_;
-
-    my $out = encode_base64($data, q{}) =~ s/(.{1,64})/$1\n/gr;
-    chomp $out;
-    my $crc = _pgp_armor_checksum($data);
-    my $armor = <<~"ARMOR";
-        -----BEGIN PGP $type-----
-
-        $out
-        =$crc
-        -----END PGP $type-----
-        ARMOR
-    return $armor;
-}
-
-sub armor {
-    my ($self, $type, $in, $out) = @_;
-
-    my $raw_data = file_slurp($in);
-    my $data = _pgp_dearmor_data($type, $raw_data) // $raw_data;
-    my $armor = _pgp_armor_data($type, $data);
-    return OPENPGP_BAD_DATA unless defined $armor;
-    file_dump($out, $armor);
-
-    return OPENPGP_OK;
-}
-
-sub dearmor {
-    my ($self, $type, $in, $out) = @_;
-
-    my $armor = file_slurp($in);
-    my $data = _pgp_dearmor_data($type, $armor);
-    return OPENPGP_BAD_DATA unless defined $data;
-    file_dump($out, $data);
-
-    return OPENPGP_OK;
 }
 
 sub _gpg_exec
@@ -206,8 +97,14 @@ sub _gpg_exec
     my ($self, @exec) = @_;
 
     my ($stdout, $stderr);
-    spawn(exec => \@exec, wait_child => 1, nocheck => 1, timeout => 10,
-          to_string => \$stdout, error_to_string => \$stderr);
+    spawn(
+        exec => \@exec,
+        wait_child => 1,
+        no_check => 1,
+        timeout => 10,
+        to_string => \$stdout,
+        error_to_string => \$stderr,
+    );
     if (WIFEXITED($?)) {
         my $status = WEXITSTATUS($?);
         print { *STDERR } "$stdout$stderr" if $status;
@@ -225,43 +122,62 @@ sub _gpg_options_weak_digests {
     return @gpg_weak_digests;
 }
 
+sub _file_is_keybox($file)
+{
+    my $header;
+
+    open my $fh, '<', $file
+        or syserr(g_('cannot open %s'), $file);
+    my $rc = read $fh, $header, 32;
+    if (! defined $rc || $rc != 32) {
+        syserr(g_('cannot read %s'), $file);
+    }
+    close $fh;
+
+    my ($lead, $magic) = unpack 'a8a4', $header;
+
+    return $magic eq 'KBXf';
+}
+
 sub _gpg_verify {
     my ($self, $signeddata, $sig, $data, @certs) = @_;
 
     return OPENPGP_MISSING_CMD if ! $self->has_verify_cmd();
 
-    my $gpg_home = File::Temp->newdir('dpkg-gpg-verify.XXXXXXXX', TMPDIR => 1);
-    my @cmd_opts = qw(--no-options --no-default-keyring --batch --quiet);
-    my @gpg_opts;
-    push @gpg_opts, _gpg_options_weak_digests();
-    push @gpg_opts, '--homedir', $gpg_home;
-    push @cmd_opts, @gpg_opts;
+    my $gpg_home = File::Temp->newdir(
+        TEMPLATE => 'dpkg-gpg-verify.XXXXXXXX',
+        TMPDIR => 1,
+    );
 
     my @exec;
     if ($self->{cmdv}) {
         push @exec, $self->{cmdv};
-        push @exec, @gpg_opts;
         # We need to touch the trustedkeys.gpg keyring, otherwise gpgv will
         # emit an error about the trustedkeys.kbx file being of unknown type.
         file_touch("$gpg_home/trustedkeys.gpg");
     } else {
         push @exec, $self->{cmd};
-        push @exec, @cmd_opts;
+        push @exec, qw(--no-options --no-default-keyring --batch --quiet);
     }
+    push @exec, _gpg_options_weak_digests();
+    push @exec, '--homedir', $gpg_home;
     foreach my $cert (@certs) {
-        my $certring = File::Temp->new(UNLINK => 1, SUFFIX => '.pgp');
+        my $certring = File::Temp->new(
+            UNLINK => 1,
+            SUFFIX => '.pgp',
+        );
         my $rc;
-        # XXX: The internal dearmor() does not handle concatenated ASCII Armor,
-        # but the old implementation handled such certificate keyrings, so to
-        # avoid regressing for now, we fallback to use the GnuPG dearmor.
-        if ($cert =~ m{\.kbx$}) {
-            # Accept GnuPG apparent keybox-format keyrings as-is.
+        if ($cert =~ m{\.kbx$} || _file_is_keybox($cert)) {
+            # Accept GnuPG apparent or real keybox-format keyrings as-is, but
+            # warn that they are deprecated.
             $rc = 1;
-        } elsif (defined $self->{cmd}) {
-            $rc = $self->_gpg_exec($self->{cmd}, @cmd_opts, '--yes',
-                                          '--output', $certring,
-                                          '--dearmor', $cert);
+            warning(g_('using GnuPG specific KeyBox formatted keyring %s is deprecated; ' .
+                       'use an OpenPGP formatted keyring instead'),
+                    $cert);
         } else {
+            # Note that these _pgp_* functions are only necessary while
+            # relying on gpgv, and gpgv itself does not verify multiple
+            # signatures correctly (see https://bugs.debian.org/1010955).
             $rc = $self->dearmor('PUBLIC KEY BLOCK', $cert, $certring);
         }
         $certring = $cert if $rc;
@@ -282,19 +198,54 @@ sub _gpg_verify {
 sub inline_verify {
     my ($self, $inlinesigned, $data, @certs) = @_;
 
+    return OPENPGP_MISSING_KEYRINGS if @certs == 0;
+
     return $self->_gpg_verify($inlinesigned, undef, $data, @certs);
 }
 
 sub verify {
     my ($self, $data, $sig, @certs) = @_;
 
+    return OPENPGP_MISSING_KEYRINGS if @certs == 0;
+
     return $self->_gpg_verify($data, $sig, undef, @certs);
+}
+
+sub _gpg_fixup_newline {
+    my $origfile = shift;
+
+    my $signdir = File::Temp->newdir(
+        TEMPLATE => 'dpkg-sign.XXXXXXXX',
+        TMPDIR => 1,
+    );
+    my $signfile = $signdir . q(/) . basename($origfile);
+
+    copy($origfile, $signfile);
+
+    # Make sure the file to sign ends with a newline, as GnuPG does not adhere
+    # to the OpenPGP specification (see <https://dev.gnupg.org/T7106>).
+    open my $signfh, '>>', $signfile
+        or syserr(g_('cannot open %s'), $signfile);
+    print { $signfh } "\n";
+    close $signfh
+        or syserr(g_('cannot close %s'), $signfile);
+
+    # Return the dir object so that it is kept in scope in the caller, and
+    # thus not cleaned up within this function.
+    return ($signdir, $signfile);
 }
 
 sub inline_sign {
     my ($self, $data, $inlinesigned, $key) = @_;
 
     return OPENPGP_MISSING_CMD if ! $self->has_backend_cmd();
+
+    my ($signdir, $signfile);
+    if ($self->{cmd} !~ m{/gpg-sq$}) {
+        ($signdir, $signfile) = _gpg_fixup_newline($data);
+    } else {
+        $signfile = $data;
+    }
 
     my @exec = ($self->{cmd});
     push @exec, _gpg_options_weak_digests();
@@ -306,7 +257,10 @@ sub inline_sign {
     if ($key->type eq 'keyfile') {
         # Promote the keyfile keyhandle to a keystore, this way we share the
         # same gpg-agent and can get any password cached.
-        my $gpg_home = File::Temp->newdir('dpkg-sign.XXXXXXXX', TMPDIR => 1);
+        my $gpg_home = File::Temp->newdir(
+            TEMPLATE => 'dpkg-sign.XXXXXXXX',
+            TMPDIR => 1,
+        );
 
         push @exec, '--homedir', $gpg_home;
         $self->_gpg_exec(@exec, qw(--quiet --no-tty --batch --import), $key->handle);
@@ -318,7 +272,7 @@ sub inline_sign {
     }
     push @exec, '--output', $inlinesigned;
 
-    my $rc = $self->_gpg_exec(@exec, '--clearsign', $data);
+    my $rc = $self->_gpg_exec(@exec, '--clearsign', $signfile);
     return OPENPGP_CMD_CANNOT_SIGN if $rc;
     return OPENPGP_OK;
 }

@@ -5,14 +5,14 @@
 # Antoni Bella <bella5@teleline.es>, 2001-2002.
 # Jordi Mallach <jordi@debian.org>, 2002-2006, 2008-2010, 2015.
 # Jordà Polo <jorda@ettin.org>, 2006.
-# Guillem Jover <guillem@debian.org>, 2006-2023.
+# Guillem Jover <guillem@debian.org>, 2006-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.21.18\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2024-03-10 20:20+0100\n"
-"PO-Revision-Date: 2023-12-17 20:02+0100\n"
+"POT-Creation-Date: 2026-01-18 18:28+0100\n"
+"PO-Revision-Date: 2025-08-31 06:18+0200\n"
 "Last-Translator: Guillem Jover <guillem@debian.org>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
 "Language: ca\n"
@@ -27,13 +27,13 @@ msgstr "no s'ha pogut fer «fstat» a l'arxiu"
 
 #: lib/dpkg/ar.c
 #, c-format
-msgid "failed to read archive '%.255s'"
-msgstr "no s'ha pogut llegir l'arxiu «%.255s»"
+msgid "failed to read archive '%s'"
+msgstr "no s'ha pogut llegir l'arxiu «%s»"
 
 #: lib/dpkg/ar.c lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to create '%.255s'"
-msgstr "no es pot crear «%.255s»"
+msgid "unable to create '%s'"
+msgstr "no es pot crear «%s»"
 
 #: lib/dpkg/ar.c lib/dpkg/dir.c src/split/join.c src/split/queue.c
 #: src/divert/main.c utils/update-alternatives.c
@@ -43,15 +43,14 @@ msgstr "no es pot tancar el fitxer «%s»"
 
 #: lib/dpkg/ar.c
 #, c-format
-msgid "invalid character '%c' in archive '%.250s' member '%.16s' size"
+msgid "invalid character '%c' in archive '%s' member '%.16s' size"
 msgstr ""
-"el caràcter ‘%c’ no és vàlid en la mida de l'element «%.16s» de l'arxiu "
-"«%.250s»"
+"el caràcter ‘%c’ no és vàlid en la mida de l'element «%.16s» de l'arxiu «%s»"
 
 #: lib/dpkg/ar.c utils/update-alternatives.c
 #, c-format
 msgid "unable to write file '%s'"
-msgstr "no es pot escriure el fitxer «%.250s»"
+msgstr "no es pot escriure el fitxer «%s»"
 
 #: lib/dpkg/ar.c
 #, c-format
@@ -119,28 +118,28 @@ msgstr "no es pot crear el directori base per a «%s»"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
-msgid "unable to create new file '%.250s'"
-msgstr "no es pot crear el fitxer nou «%.250s»"
+msgid "unable to create new file '%s'"
+msgstr "no es pot crear el fitxer nou «%s»"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
-msgid "unable to write new file '%.250s'"
-msgstr "no es pot escriure el fitxer nou «%.250s»"
+msgid "unable to write new file '%s'"
+msgstr "no es pot escriure el fitxer nou «%s»"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
-msgid "unable to flush new file '%.250s'"
+msgid "unable to flush new file '%s'"
 msgstr "no es pot fer «flush» al fitxer nou «%s»"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
-msgid "unable to sync new file '%.250s'"
-msgstr "no es pot fer «sync» al fitxer nou «%.255s»"
+msgid "unable to sync new file '%s'"
+msgstr "no es pot fer «sync» al fitxer nou «%s»"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
-msgid "unable to close new file '%.250s'"
-msgstr "no es pot tancar el fitxer nou «%.250s»"
+msgid "unable to close new file '%s'"
+msgstr "no es pot tancar el fitxer nou «%s»"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
@@ -157,8 +156,8 @@ msgstr ""
 #: lib/dpkg/atomic-file.c lib/dpkg/db-ctrl-upgrade.c lib/dpkg/triglib.c
 #: src/main/remove.c
 #, c-format
-msgid "cannot remove '%.250s'"
-msgstr "no es pot esborrar «%.250s»"
+msgid "cannot remove '%s'"
+msgstr "no es pot esborrar «%s»"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
@@ -361,14 +360,201 @@ msgstr "el nivell de compressió %d no és vàlid"
 msgid "unknown compression strategy"
 msgstr "el tipus d'estratègia de compressió és desconegut"
 
+#: lib/dpkg/db-ctrl-access.c
+#, c-format
+msgid "unable to check existence of '%s'"
+msgstr "no es pot comprovar l'existència de «%s»"
+
+#: lib/dpkg/db-ctrl-access.c lib/dpkg/db-ctrl-upgrade.c
+msgid "cannot read info directory"
+msgstr "no es pot llegir el directori «info»"
+
+#: lib/dpkg/db-ctrl-format.c src/main/unpack.c
+#, c-format
+msgid "error trying to open %s"
+msgstr "s'ha produït un error en intentar obrir %s"
+
+#: lib/dpkg/db-ctrl-format.c
+#, c-format
+msgid "corrupt info database format file '%s'"
+msgstr "el fitxer de format «%s» de la base de dades «info» està corromput"
+
+#: lib/dpkg/db-ctrl-format.c
+#, c-format
+msgid "info database format (%d) is bogus or too new; try getting a newer dpkg"
+msgstr ""
+"el format (%d) de la base de dades «info» és erroni o massa nou; proveu amb "
+"una versió més nova de dpkg"
+
+#: lib/dpkg/db-ctrl-upgrade.c
+#, fuzzy, c-format
+#| msgid "info file %s/%s not associated to any package"
+msgid "metadata file %s/%s not associated to any package"
+msgstr "el fitxer d'informació %s/%s no està associat a cap paquet"
+
+#: lib/dpkg/db-ctrl-upgrade.c src/main/archives.c
+#, c-format
+msgid "error creating hard link '%s'"
+msgstr "s'ha produït un error en crear l'enllaç dur «%s»"
+
+#: lib/dpkg/db-ctrl-upgrade.c
+#, c-format
+msgid "error while writing '%s'"
+msgstr "s'ha produït un error en escriure «%s»"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing final newline"
+msgstr ""
+"al fitxer de control «%s» del paquet «%s» li manca una línia nova final"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing value"
+msgstr "el fitxer de control «%s» del paquet «%s» manca un valor"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing value separator"
+msgstr "el fitxer de control «%s» del paquet «%s» manca un separador de valor"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' contains empty filename"
+msgstr "el fitxer de control «%s» del paquet «%s» conté un nom de fitxer buit"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "loading control file '%s' for package '%s'"
+msgstr "no es pot carregar el fitxer de control «%s» del paquet «%s»"
+
+#: lib/dpkg/db-fsys-divert.c
+#, c-format
+msgid "conflicting diversions involving '%s' or '%s'"
+msgstr "hi ha desviacions en conflicte en «%s» o «%s»"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "files list file for package '%s' is missing final newline"
+msgstr ""
+"al fitxer de la llista de fitxers del paquet «%s» li manca una línia nova "
+"final"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "files list file for package '%s' contains empty filename"
+msgstr ""
+"el fitxer de la llista de fitxers del paquet «%s» conté un nom de fitxer buit"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "loading files list file for package '%s'"
+msgstr "s'esta carregant el fitxer de la llista de fitxers del paquet «%s»"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid ""
+"files list file for package '%s' missing; assuming package has no files "
+"currently installed"
+msgstr ""
+"manca el fitxer de la llista de fitxers del paquet «%s», s'assumirà que el "
+"paquet no té cap fitxer actualment instal·lat"
+
+#: lib/dpkg/db-fsys-files.c
+msgid "(Reading database ... "
+msgstr "(S'està llegint la base de dades… "
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "%d file or directory currently installed.)\n"
+msgid_plural "%d files and directories currently installed.)\n"
+msgstr[0] "hi ha %d fitxer o directori instal·lat actualment.)\n"
+msgstr[1] "hi ha %d fitxers i directoris instal·lats actualment.)\n"
+
+#: lib/dpkg/db-fsys-load.c
+#, c-format
+msgid "cannot open %s file"
+msgstr "no es pot obrir el fitxer «%s»"
+
+#: lib/dpkg/db-fsys-load.c
+#, c-format
+msgid "cannot get %s file metadata"
+msgstr "no es poden obtenir les metadades del fitxer «%s»"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "invalid statoverride uid %s"
+msgstr "l'uid %s de statoverride no és vàlid"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "invalid statoverride gid %s"
+msgstr "el gid %s de statoverride no és vàlid"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "invalid statoverride mode %s"
+msgstr "el mode %s de statoverride no és vàlid "
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "reading statoverride file '%s'"
+msgstr "s'ha produït un error en llegir el fitxer de statoverride «%s»"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "statoverride file is missing final newline"
+msgstr "al fitxer de statoverride li manca una línia nova final"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "statoverride file contains empty line"
+msgstr "el fitxer de statoverride conté una línia buida"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "syntax error in statoverride file"
+msgstr "error de sintaxi al fitxer de statoverride"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid ""
+"unknown system user '%s' in statoverride file; the system user got removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
+"usuari de sistema «%s» desconegut en el fitxer statoverride; l'usuari de "
+"sistema s'ha eliminat abans de la substitució, que és probablement un error "
+"en l'empaquetat, per a recuperar-ho podeu eliminar manualment la substitució "
+"amb %s"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "unexpected end of line in statoverride file"
+msgstr "s'ha trobat una fi de línia inesperada al fitxer de statoverride"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid ""
+"unknown system group '%s' in statoverride file; the system group got "
+"removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
+"grup de sistema «%s» desconegut en el fitxer statoverride; el grup de "
+"sistema s'ha eliminat abans de la substitució, que és probablement un error "
+"en l'empaquetat, per a recuperar-ho podeu eliminar manualment la substitució "
+"amb %s"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "multiple statoverrides present for file '%s'"
+msgstr "hi ha múltiples statoverrides per al fitxer «%s»"
+
 #: lib/dpkg/dbmodify.c
 #, c-format
 msgid ""
-"updates directory contains file '%.250s' whose name is too long (length=%d, "
+"updates directory contains file '%s' whose name is too long (length=%d, "
 "max=%d)"
 msgstr ""
-"el directori d'actualitzacions conté el fitxer «%.250s», amb un nom massa "
-"gran (longitud=%d, màx=%d)"
+"el directori d'actualitzacions conté el fitxer «%s», amb un nom massa gran "
+"(longitud=%d, màx=%d)"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
@@ -385,29 +571,29 @@ msgstr "no es pot crear el directori d'actualitzacions de dpkg «%s»"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "cannot scan updates directory '%.255s'"
-msgstr "no es pot analitzar el directori d'actualitzacions «%.255s»"
+msgid "cannot scan updates directory '%s'"
+msgstr "no es pot analitzar el directori d'actualitzacions «%s»"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "failed to remove incorporated update file %.255s"
-msgstr "no s'ha pogut eliminar el fitxer d'actualització incorporat %.255s"
+msgid "failed to remove incorporated update file %s"
+msgstr "no s'ha pogut eliminar el fitxer d'actualització incorporat %s"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to fill %.250s with padding"
-msgstr "no es pot emplenar %.250s"
+msgid "unable to fill %s with padding"
+msgstr "no es pot emplenar %s"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to flush %.250s after padding"
-msgstr "no es pot fer «flush» en %.250s després del farciment"
+msgid "unable to flush %s after padding"
+msgstr "no es pot fer «flush» en %s després del farciment"
 
 # FIXME original
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to seek to start of %.250s after padding"
-msgstr "no es pot tornar al principi de %.250s després del farciment"
+msgid "unable to seek to start of %s after padding"
+msgstr "no es pot tornar al principi de %s després del farciment"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
@@ -467,233 +653,38 @@ msgstr ""
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "failed to remove my own update file %.255s"
-msgstr "no s'ha pogut esborrar el nostre propi fitxer d'actualització %.255s"
+msgid "failed to remove my own update file %s"
+msgstr "no s'ha pogut esborrar el nostre propi fitxer d'actualització %s"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to write updated status of '%.250s'"
-msgstr "no es pot escriure l'estat d'actualització de «%.250s»"
+msgid "unable to write updated status of '%s'"
+msgstr "no es pot escriure l'estat d'actualització de «%s»"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to flush updated status of '%.250s'"
-msgstr "no es pot fer «flush» amb l'estat d'actualització de «%.250s»"
+msgid "unable to flush updated status of '%s'"
+msgstr "no es pot fer «flush» amb l'estat d'actualització de «%s»"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to truncate for updated status of '%.250s'"
-msgstr "no es pot truncar l'estat actualitzat de «%.250s»"
+msgid "unable to truncate for updated status of '%s'"
+msgstr "no es pot truncar l'estat actualitzat de «%s»"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to fsync updated status of '%.250s'"
-msgstr "no es pot fer «fsync» a l'estat d'actualització de «%.250s»"
+msgid "unable to fsync updated status of '%s'"
+msgstr "no es pot fer «fsync» a l'estat d'actualització de «%s»"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to close updated status of '%.250s'"
-msgstr "no es pot tancar l'estat d'actualització de «%.250s»"
+msgid "unable to close updated status of '%s'"
+msgstr "no es pot tancar l'estat d'actualització de «%s»"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to install updated status of '%.250s'"
-msgstr "no es pot instal·lar l'estat actualització de «%.250s»"
-
-#: lib/dpkg/db-ctrl-access.c
-#, c-format
-msgid "unable to check existence of '%.250s'"
-msgstr "no es pot comprovar l'existència de «%.250s»"
-
-#: lib/dpkg/db-ctrl-access.c lib/dpkg/db-ctrl-upgrade.c
-msgid "cannot read info directory"
-msgstr "no es pot llegir el directori «info»"
-
-#: lib/dpkg/db-ctrl-format.c src/main/unpack.c
-#, c-format
-msgid "error trying to open %.250s"
-msgstr "s'ha produït un error en intentar obrir %.250s"
-
-#: lib/dpkg/db-ctrl-format.c
-#, c-format
-msgid "corrupt info database format file '%s'"
-msgstr "el fitxer de format «%s» de la base de dades «info» està corromput"
-
-#: lib/dpkg/db-ctrl-format.c
-#, c-format
-msgid "info database format (%d) is bogus or too new; try getting a newer dpkg"
-msgstr ""
-"el format (%d) de la base de dades «info» és erroni o massa nou; proveu amb "
-"una versió més nova de dpkg"
-
-#: lib/dpkg/db-ctrl-upgrade.c
-#, c-format
-msgid "info file %s/%s not associated to any package"
-msgstr "el fitxer d'informació %s/%s no està associat a cap paquet"
-
-#: lib/dpkg/db-ctrl-upgrade.c src/main/archives.c
-#, c-format
-msgid "error creating hard link '%.255s'"
-msgstr "s'ha produït un error en crear l'enllaç dur «%.255s»"
-
-#: lib/dpkg/db-ctrl-upgrade.c
-#, c-format
-msgid "error while writing '%s'"
-msgstr "s'ha produït un error en escriure «%s»"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing final newline"
-msgstr ""
-"al fitxer de control «%s» del paquet «%.250s» li manca una línia nova final"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing value"
-msgstr "el fitxer de control «%s» del paquet «%.250s» manca un valor"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing value separator"
-msgstr ""
-"el fitxer de control «%s» del paquet «%.250s» manca un separador de valor"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' contains empty filename"
-msgstr ""
-"el fitxer de control «%s» del paquet «%.250s» conté un nom de fitxer buit"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "loading control file '%s' for package '%s'"
-msgstr "no es pot carregar el fitxer de control «%s» del paquet «%s»"
-
-#: lib/dpkg/db-fsys-divert.c
-msgid "failed to open diversions file"
-msgstr "no s'ha pogut obrir el fitxer de desviacions"
-
-#: lib/dpkg/db-fsys-divert.c
-msgid "failed to fstat diversions file"
-msgstr "no s'ha pogut fer «fstat» al fitxer de desviacions"
-
-#: lib/dpkg/db-fsys-divert.c
-#, c-format
-msgid "conflicting diversions involving '%.250s' or '%.250s'"
-msgstr "hi ha desviacions en conflicte en «%.250s» o «%.250s»"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "loading files list file for package '%s'"
-msgstr "s'esta carregant el fitxer de la llista de fitxers del paquet «%s»"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid ""
-"files list file for package '%.250s' missing; assuming package has no files "
-"currently installed"
-msgstr ""
-"manca el fitxer de la llista de fitxers del paquet «%.250s», s'assumirà que "
-"el paquet no té cap fitxer actualment instal·lat"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "files list file for package '%.250s' is missing final newline"
-msgstr ""
-"al fitxer de la llista de fitxers del paquet «%.250s» li manca una línia "
-"nova final"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "files list file for package '%.250s' contains empty filename"
-msgstr ""
-"el fitxer de la llista de fitxers del paquet «%.250s» conté un nom de fitxer "
-"buit"
-
-#: lib/dpkg/db-fsys-files.c
-msgid "(Reading database ... "
-msgstr "(S'està llegint la base de dades… "
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "%d file or directory currently installed.)\n"
-msgid_plural "%d files and directories currently installed.)\n"
-msgstr[0] "hi ha %d fitxer o directori instal·lat actualment.)\n"
-msgstr[1] "hi ha %d fitxers i directoris instal·lats actualment.)\n"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "invalid statoverride uid %s"
-msgstr "l'uid %s de statoverride no és vàlid"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "invalid statoverride gid %s"
-msgstr "el gid %s de statoverride no és vàlid"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "invalid statoverride mode %s"
-msgstr "el mode %s de statoverride no és vàlid "
-
-#: lib/dpkg/db-fsys-override.c
-msgid "failed to open statoverride file"
-msgstr "no s'ha pogut obrir el fitxer de statoverride"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "failed to fstat statoverride file"
-msgstr "no s'ha pogut fer «fstat» al fitxer de statoverride"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "reading statoverride file '%.250s'"
-msgstr "s'ha produït un error en llegir el fitxer de statoverride «%.250s»"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "statoverride file is missing final newline"
-msgstr "al fitxer de statoverride li manca una línia nova final"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "statoverride file contains empty line"
-msgstr "el fitxer de statoverride conté una línia buida"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "syntax error in statoverride file"
-msgstr "error de sintaxi al fitxer de statoverride"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid ""
-"unknown system user '%s' in statoverride file; the system user got removed\n"
-"before the override, which is most probably a packaging bug, to recover you\n"
-"can remove the override manually with %s"
-msgstr ""
-"usuari de sistema «%s» desconegut en el fitxer statoverride; l'usuari de "
-"sistema s'ha eliminat abans de la substitució, que és probablement un error "
-"en l'empaquetat, per a recuperar-ho podeu eliminar manualment la substitució "
-"amb %s"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "unexpected end of line in statoverride file"
-msgstr "s'ha trobat una fi de línia inesperada al fitxer de statoverride"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid ""
-"unknown system group '%s' in statoverride file; the system group got "
-"removed\n"
-"before the override, which is most probably a packaging bug, to recover you\n"
-"can remove the override manually with %s"
-msgstr ""
-"grup de sistema «%s» desconegut en el fitxer statoverride; el grup de "
-"sistema s'ha eliminat abans de la substitució, que és probablement un error "
-"en l'empaquetat, per a recuperar-ho podeu eliminar manualment la substitució "
-"amb %s"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "multiple statoverrides present for file '%.250s'"
-msgstr "hi ha múltiples statoverrides per al fitxer «%.250s»"
+msgid "unable to install updated status of '%s'"
+msgstr "no es pot instal·lar l'estat actualització de «%s»"
 
 #: lib/dpkg/deb-version.c
 msgid "format version with too big major component"
@@ -727,7 +718,7 @@ msgstr "no es pot analitzar la màscara de depuració de la variable d'entorn %s
 #: lib/dpkg/dir.c
 #, c-format
 msgid "unable to get file descriptor for directory '%s'"
-msgstr "no es pot obtenir el descriptor de fitxer del directori «%.250s»"
+msgstr "no es pot obtenir el descriptor de fitxer del directori «%s»"
 
 # No es pot sincronitzar, o no es pot fer «sync»? jm
 #: lib/dpkg/dir.c
@@ -747,15 +738,15 @@ msgstr "no es pot obrir el fitxer «%s»"
 
 # No es pot sincronitzar, o no es pot fer «sync»? jm
 #: lib/dpkg/dir.c src/deb/build.c src/split/join.c src/split/queue.c
-#: src/divert/main.c utils/update-alternatives.c
+#: src/divert/main.c src/main/archives.c utils/update-alternatives.c
 #, c-format
 msgid "unable to sync file '%s'"
 msgstr "no es pot fer «sync» al fitxer «%s»"
 
 #: lib/dpkg/dump.c
 #, c-format
-msgid "failed to write details of '%.50s' to '%.250s'"
-msgstr "no s'han pogut escriure els detalls de «%.50s» a «%.250s»"
+msgid "failed to write details of '%s' to '%s'"
+msgstr "no s'han pogut escriure els detalls de «%s» a «%s»"
 
 #: lib/dpkg/dump.c
 #, c-format
@@ -767,8 +758,7 @@ msgstr ""
 #, c-format
 msgid "failed to write %s database stanza about '%s' to '%s'"
 msgstr ""
-"no s'ha pogut escriure l'estrofa de la base de dades %s sobre «%.50s» a "
-"«%.250s»"
+"no s'ha pogut escriure l'estrofa de la base de dades %s sobre «%s» a «%s»"
 
 #: lib/dpkg/ehandle.c utils/update-alternatives.c
 msgid "error"
@@ -825,8 +815,8 @@ msgstr "li manca un valor"
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "has invalid value '%.50s'"
-msgstr "el valor «%.50s» no és vàlid"
+msgid "has invalid value '%s'"
+msgstr "el valor «%s» no és vàlid"
 
 #: lib/dpkg/fields.c
 msgid "has trailing junk"
@@ -907,7 +897,7 @@ msgstr "tercera paraula (d'estat) al camp «%s»: %s"
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "'%s' field value '%.250s'"
+msgid "'%s' field value '%s'"
 msgstr "valor «%2$.250s» del camp «%1$s»"
 
 #: lib/dpkg/fields.c
@@ -939,8 +929,8 @@ msgstr ""
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "'%s' field, invalid package name '%.255s': %s"
-msgstr "en el camp «%s», el nom de paquet no és vàlid «%.255s»: %s"
+msgid "'%s' field, invalid package name '%s': %s"
+msgstr "en el camp «%s», el nom de paquet no és vàlid «%s»: %s"
 
 #: lib/dpkg/fields.c
 #, c-format
@@ -953,37 +943,36 @@ msgstr ""
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid ""
-"'%s' field, reference to '%.255s': invalid architecture name '%.255s': %s"
+msgid "'%s' field, reference to '%s': invalid architecture name '%s': %s"
 msgstr ""
-"en el camp «%s», que fa referència a «%.255s»: el nom d'arquitectura "
-"«%.255s» no és vàlid: %s"
+"en el camp «%s», que fa referència a «%s»: el nom d'arquitectura «%s» no és "
+"vàlid: %s"
 
 #: lib/dpkg/fields.c
 #, c-format
 msgid ""
-"'%s' field, reference to '%.255s':\n"
+"'%s' field, reference to '%s':\n"
 " bad version relationship %c%c"
 msgstr ""
-"en el camp «%s», que fa referència a «%.255s»:\n"
+"en el camp «%s», que fa referència a «%s»:\n"
 " la relació de versió %c%c és errònia"
 
 #: lib/dpkg/fields.c
 #, c-format
 msgid ""
-"'%s' field, reference to '%.255s':\n"
+"'%s' field, reference to '%s':\n"
 " '%c' is obsolete, use '%c=' or '%c%c' instead"
 msgstr ""
-"en el camp «%s», que fa referència a «%.255s»:\n"
+"en el camp «%s», que fa referència a «%s»:\n"
 " «%c» és obsolet, empreu «%c=» o «%c%c»"
 
 #: lib/dpkg/fields.c
 #, c-format
 msgid ""
-"'%s' field, reference to '%.255s':\n"
+"'%s' field, reference to '%s':\n"
 " implicit exact match on version number, suggest using '=' instead"
 msgstr ""
-"en el camp «%s», que fa referència a «%.255s»:\n"
+"en el camp «%s», que fa referència a «%s»:\n"
 " coincidència implícita en el número exacte de versió, se suggereix emprar "
 "«=»"
 
@@ -995,36 +984,35 @@ msgstr "només podeu emprar versions exactes per al camp «%s»"
 #: lib/dpkg/fields.c
 #, c-format
 msgid ""
-"'%s' field, reference to '%.255s':\n"
+"'%s' field, reference to '%s':\n"
 " version value starts with non-alphanumeric, suggest adding a space"
 msgstr ""
-"en el camp «%s», que fa referència a «%.255s»:\n"
+"en el camp «%s», que fa referència a «%s»:\n"
 " el valor de versió comença amb un caràcter no alfanumèric, se suggereix "
 "afegir un espai"
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "'%s' field, reference to '%.255s': version unterminated"
-msgstr "en el camp «%s», que fa referència a «%.255s»: versió no terminada"
+msgid "'%s' field, reference to '%s': version unterminated"
+msgstr "en el camp «%s», que fa referència a «%s»: versió no terminada"
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid ""
-"'%s' field, reference to '%.255s': version contains '%c' instead of '%c'"
+msgid "'%s' field, reference to '%s': version contains '%c' instead of '%c'"
 msgstr ""
-"en el camp «%s», que fa referència a «%.255s»: la versió conté un ‘%c’ en "
+"en el camp «%s», que fa referència a «%s»: la versió conté un ‘%c’ en "
 "comptes de ‘%c’"
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "'%s' field, reference to '%.255s': version '%s'"
-msgstr "en el camp «%s», que fa referència a «%.255s»: versió «%s»"
+msgid "'%s' field, reference to '%s': version '%s'"
+msgstr "en el camp «%s», que fa referència a «%s»: versió «%s»"
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "'%s' field, syntax error after reference to package '%.255s'"
+msgid "'%s' field, syntax error after reference to package '%s'"
 msgstr ""
-"en el camp «%s», error de sintaxi després de la referència al paquet «%.255s»"
+"en el camp «%s», error de sintaxi després de la referència al paquet «%s»"
 
 #: lib/dpkg/fields.c
 #, c-format
@@ -1032,39 +1020,46 @@ msgid "alternatives ('|') not allowed in '%s' field"
 msgstr "no s'admeten alternatives («|») en el camp «%s»"
 
 #: lib/dpkg/fields.c
-#, c-format
-msgid "illegal pending trigger name '%.255s': %s"
-msgstr "el nom de l'activador pendent «%.255s» és il·legal: %s"
+#, fuzzy, c-format
+#| msgid "illegal pending trigger name '%s': %s"
+msgid "invalid pending trigger name '%s': %s"
+msgstr "el nom de l'activador pendent «%s» és il·legal: %s"
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "duplicate pending trigger '%.255s'"
-msgstr "l'activador pendent «%.255s» és duplicat"
+msgid "duplicate pending trigger '%s'"
+msgstr "l'activador pendent «%s» és duplicat"
+
+#: lib/dpkg/fields.c
+#, fuzzy, c-format
+#| msgid "illegal package name in awaited trigger '%s': %s"
+msgid "invalid package name in awaited trigger '%s': %s"
+msgstr "el nom del paquet al activador esperat «%s» és il·legal: %s"
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "illegal package name in awaited trigger '%.255s': %s"
-msgstr "el nom del paquet al activador esperat «%.255s» és il·legal: %s"
-
-#: lib/dpkg/fields.c
-#, c-format
-msgid "duplicate awaited trigger package '%.255s'"
-msgstr "el paquet de l'activador esperat «%.255s» és duplicat"
+msgid "duplicate awaited trigger package '%s'"
+msgstr "el paquet de l'activador esperat «%s» és duplicat"
 
 #: lib/dpkg/file.c
 #, c-format
-msgid "unable to stat source file '%.250s'"
-msgstr "no es pot fer «stat» al fitxer origen «%.250s»"
+msgid "cannot canonicalize pathname %s"
+msgstr "no es pot canonintzar el nom de camí «%s»"
 
 #: lib/dpkg/file.c
 #, c-format
-msgid "unable to change ownership of target file '%.250s'"
-msgstr "no es pot canviar el propietari del fitxer destí «%.250s»"
+msgid "unable to stat source file '%s'"
+msgstr "no es pot fer «stat» al fitxer origen «%s»"
 
 #: lib/dpkg/file.c
 #, c-format
-msgid "unable to set mode of target file '%.250s'"
-msgstr "no es pot establir el mode del fitxer destí «%.250s»"
+msgid "unable to change ownership of target file '%s'"
+msgstr "no es pot canviar el propietari del fitxer destí «%s»"
+
+#: lib/dpkg/file.c
+#, c-format
+msgid "unable to set mode of target file '%s'"
+msgstr "no es pot establir el mode del fitxer destí «%s»"
 
 #: lib/dpkg/file.c
 #, c-format
@@ -1122,11 +1117,16 @@ msgstr ""
 #: lib/dpkg/file.c
 #, c-format
 msgid ""
-"%s was locked by another process with pid %d\n"
+"%s was locked by %s process with pid %d\n"
 "%s"
 msgstr ""
-"%s estava blocada per un altre procés amb pid %d\n"
+"%s estava blocada per el procés %s amb pid %d\n"
 "%s"
+
+#: lib/dpkg/file.c
+msgctxt "process"
+msgid "<unknown>"
+msgstr "<desconegut>"
 
 #: lib/dpkg/file.c
 #, c-format
@@ -1191,19 +1191,18 @@ msgstr "s'ha produït un error en escriure a «%s»"
 
 #: lib/dpkg/mustlib.c
 #, c-format
-msgid "unable to read filedescriptor flags for %.250s"
-msgstr ""
-"no es poden llegir las propietats del descriptor de fitxers per a %.250s"
+msgid "unable to read filedescriptor flags for %s"
+msgstr "no es poden llegir las propietats del descriptor de fitxers per a %s"
 
 #: lib/dpkg/mustlib.c
 #, c-format
-msgid "unable to set close-on-exec flag for %.250s"
-msgstr "no es pot establir l'atribut close-on-exec per a «%.250s»"
+msgid "unable to set close-on-exec flag for %s"
+msgstr "no es pot establir l'atribut close-on-exec per a «%s»"
 
 #: lib/dpkg/options-parsers.c
 #, c-format
-msgid "--%s needs a valid package name but '%.250s' is not: %s"
-msgstr "--%s necessita un nom de paquet vàlid, però «%.250s» no ho és: %s"
+msgid "--%s needs a valid package name but '%s' is not: %s"
+msgstr "--%s necessita un nom de paquet vàlid, però «%s» no ho és: %s"
 
 #: lib/dpkg/options.c
 #, c-format
@@ -1212,8 +1211,8 @@ msgstr "error de configuració: %s:%d: %s"
 
 #: lib/dpkg/options.c
 #, c-format
-msgid "failed to open configuration file '%.255s' for reading: %s"
-msgstr "no s'ha pogut obrir per lectura el fitxer de configuració «%.255s»: %s"
+msgid "failed to open configuration file '%s' for reading: %s"
+msgstr "no s'ha pogut obrir per lectura el fitxer de configuració «%s»: %s"
 
 #: lib/dpkg/options.c
 #, c-format
@@ -1237,18 +1236,18 @@ msgstr "l'opció «%s» no porta paràmetres"
 
 #: lib/dpkg/options.c
 #, c-format
-msgid "read error in configuration file '%.255s'"
-msgstr "error de lectura al fitxer de configuració «%.250s»"
+msgid "read error in configuration file '%s'"
+msgstr "error de lectura al fitxer de configuració «%s»"
 
 #: lib/dpkg/options.c
 #, c-format
-msgid "error closing configuration file '%.255s'"
-msgstr "s'ha produït un error en tancar el fitxer de configuració «%.250s»"
+msgid "error closing configuration file '%s'"
+msgstr "s'ha produït un error en tancar el fitxer de configuració «%s»"
 
 #: lib/dpkg/options.c
 #, c-format
 msgid "error opening configuration directory '%s'"
-msgstr "s'ha produït un error en obrir el directori de configuració «%.250s»"
+msgstr "s'ha produït un error en obrir el directori de configuració «%s»"
 
 #: lib/dpkg/options.c
 msgid "missing program name in argv[0]"
@@ -1286,13 +1285,13 @@ msgstr "l'opció -%c no porta paràmetres"
 
 #: lib/dpkg/options.c src/split/main.c
 #, c-format
-msgid "invalid integer for --%s: '%.250s'"
-msgstr "l'enter no és vàlid per a --%s: «%.250s»"
+msgid "invalid integer for --%s: '%s'"
+msgstr "l'enter no és vàlid per a --%s: «%s»"
 
 #: lib/dpkg/options.c
 #, c-format
-msgid "invalid integer for -%c: '%.250s'"
-msgstr "l'enter no és vàlid per a -%c: «%.250s»"
+msgid "invalid integer for -%c: '%s'"
+msgstr "l'enter no és vàlid per a -%c: «%s»"
 
 #: lib/dpkg/options.c
 #, c-format
@@ -1396,32 +1395,36 @@ msgstr ""
 "múltiples instàncies instal·lades"
 
 #: lib/dpkg/parse.c
-#, c-format
-msgid "failed to open package info file '%.255s' for reading"
+#, fuzzy, c-format
+#| msgid "failed to open package info file '%s' for reading"
+msgid "failed to open package control file '%s' for reading"
 msgstr ""
-"no s'ha pogut obrir el fitxer d'informació del paquet «%.255s» per la lectura"
+"no s'ha pogut obrir el fitxer d'informació del paquet «%s» per la lectura"
 
 #: lib/dpkg/parse.c
-#, c-format
-msgid "can't stat package info file '%.255s'"
-msgstr "no es pot executar «stat» al fitxer «%.255s»"
+#, fuzzy, c-format
+#| msgid "cannot stat package info file '%s'"
+msgid "cannot stat package control file '%s'"
+msgstr "no es pot executar «stat» al fitxer «%s»"
 
 #: lib/dpkg/parse.c
-#, c-format
-msgid "reading package info file '%s': %s"
+#, fuzzy, c-format
+#| msgid "reading package info file '%s': %s"
+msgid "reading package control file '%s': %s"
 msgstr ""
-"s'ha produït un error al llegir el fitxer d'informació de paquet «%.255s»: %s"
+"s'ha produït un error al llegir el fitxer d'informació de paquet «%s»: %s"
 
 #: lib/dpkg/parse.c
-#, c-format
-msgid "can't mmap package info file '%.255s'"
-msgstr "no es pot executar «mmap» al fitxer d'informació de paquet «%.255s»"
+#, fuzzy, c-format
+#| msgid "cannot mmap package info file '%s'"
+msgid "cannot mmap package control file '%s'"
+msgstr "no es pot executar «mmap» al fitxer d'informació de paquet «%s»"
 
 #: lib/dpkg/parse.c
-#, c-format
-msgid "reading package info file '%.255s'"
-msgstr ""
-"s'ha produït un error al llegir el fitxer d'informació de paquet «%.255s»"
+#, fuzzy, c-format
+#| msgid "reading package info file '%s'"
+msgid "reading package control file '%s'"
+msgstr "s'ha produït un error al llegir el fitxer d'informació de paquet «%s»"
 
 #: lib/dpkg/parse.c
 msgid "empty field name"
@@ -1444,8 +1447,8 @@ msgstr "línia nova dins del nom del camp «%.*s»"
 
 #: lib/dpkg/parse.c
 #, c-format
-msgid "MSDOS end of file (^Z) in field name '%.*s'"
-msgstr "final del fitxer d'MSDOS (^Z) dins del nom del camp «%.*s»"
+msgid "MSDOS end of file (Ctrl+Z) in field name '%.*s'"
+msgstr "final del fitxer d'MSDOS (Ctrl+Z) dins del nom del camp «%.*s»"
 
 #: lib/dpkg/parse.c
 #, c-format
@@ -1461,9 +1464,9 @@ msgstr ""
 
 #: lib/dpkg/parse.c
 #, c-format
-msgid "MSDOS end of file (^Z) in value of field '%.*s' (missing newline?)"
+msgid "MSDOS end of file (Ctrl+Z) in value of field '%.*s' (missing newline?)"
 msgstr ""
-"final del fitxer d'MSDOS (^Z) dins del valor del camp «%.*s» (manca una "
+"final del fitxer d'MSDOS (Ctrl+Z) dins del valor del camp «%.*s» (manca una "
 "línia nova?)"
 
 #: lib/dpkg/parse.c
@@ -1480,8 +1483,8 @@ msgstr ""
 
 #: lib/dpkg/parse.c
 #, c-format
-msgid "failed to close after read: '%.255s'"
-msgstr "no s'ha pogut tancar després de la lectura: «%.255s»"
+msgid "failed to close after read: '%s'"
+msgstr "no s'ha pogut tancar després de la lectura: «%s»"
 
 #: lib/dpkg/parse.c
 msgid "several package info entries found, only one allowed"
@@ -1490,8 +1493,8 @@ msgstr ""
 
 #: lib/dpkg/parse.c
 #, c-format
-msgid "no package information in '%.255s'"
-msgstr "no hi ha informació de paquets en «%.255s»"
+msgid "no package information in '%s'"
+msgstr "no hi ha informació de paquets en «%s»"
 
 #: lib/dpkg/parsehelp.c
 #, c-format
@@ -1505,10 +1508,10 @@ msgstr ""
 #: lib/dpkg/parsehelp.c
 #, c-format
 msgid ""
-"parsing file '%.255s' near line %d:\n"
+"parsing file '%s' near line %d:\n"
 " "
 msgstr ""
-"analitzant el fitxer «%.255s» prop de la línia %d:\n"
+"analitzant el fitxer «%s» prop de la línia %d:\n"
 " "
 
 #: lib/dpkg/parsehelp.c
@@ -1568,10 +1571,10 @@ msgstr "caràcter no vàlid al número de versió"
 msgid "invalid character in revision number"
 msgstr "caràcter no vàlid al número de revisió"
 
-#: lib/dpkg/path-remove.c
+#: lib/dpkg/path-remove.c src/main/remove.c
 #, c-format
-msgid "unable to securely remove '%.255s'"
-msgstr "no es pot esborrar «%.255s» de forma segura"
+msgid "unable to securely remove '%s'"
+msgstr "no es pot esborrar «%s» de forma segura"
 
 #: lib/dpkg/path-remove.c
 msgid "rm command for cleanup"
@@ -1612,17 +1615,20 @@ msgid "version '%s' has bad syntax: %s"
 msgstr "la versió «%s» té una sintaxi incorrecta: %s"
 
 #: lib/dpkg/pkg-spec.c
-#, c-format
-msgid "illegal package name in specifier '%s%s%s': %s"
+#, fuzzy, c-format
+#| msgid "illegal package name in specifier '%s%s%s': %s"
+msgid "invalid package name in specifier '%s%s%s': %s"
 msgstr "el nom del paquet en l'especificador «%s%s%s» és il·legal: %s"
 
 #: lib/dpkg/pkg-spec.c
-#, c-format
-msgid "illegal architecture name in specifier '%s:%s': %s"
+#, fuzzy, c-format
+#| msgid "illegal architecture name in specifier '%s:%s': %s"
+msgid "invalid architecture name in specifier '%s:%s': %s"
 msgstr "el nom de l'arquitectura en l'especificador «%s:%s» és il·legal: %s"
 
 #. TRANSLATORS: This is part of the progress output, it is a decimal
-#. * percentage.
+#. percentage.
+#.
 #: lib/dpkg/progress.c
 #, c-format
 msgid "%d%%"
@@ -1631,6 +1637,16 @@ msgstr "%d%%"
 #: lib/dpkg/report.c utils/update-alternatives.c
 msgid "warning"
 msgstr "avís"
+
+#: lib/dpkg/report.c
+msgid "hint"
+msgstr "consell"
+
+#: lib/dpkg/strvec.c
+#, c-format
+msgid "cannot grow strvec to size %zu; it would overflow"
+msgstr ""
+"no es pot augmentar la mida del “strvec” a %zu; es produiria desbordament"
 
 #: lib/dpkg/strwide.c
 #, c-format
@@ -1651,8 +1667,8 @@ msgstr "s'ha produït un error en desassignar el senyal %s: %s\n"
 
 #: lib/dpkg/subproc.c
 #, c-format
-msgid "unable to ignore signal %s before running %.250s"
-msgstr "no es pot descartar el senyal %s abans d'executar %.250s"
+msgid "unable to ignore signal %s before running %s"
+msgstr "no es pot descartar el senyal %s abans d'executar %s"
 
 #: lib/dpkg/subproc.c
 #, c-format
@@ -1665,8 +1681,8 @@ msgstr "ha fallat el «fork»"
 
 #: lib/dpkg/subproc.c
 #, c-format
-msgid "%s subprocess returned error exit status %d"
-msgstr "el subprocés «%s» retornà el codi d'eixida d'error %d"
+msgid "%s subprocess failed with exit status %d"
+msgstr "el subprocés «%s» ha fallat amb codi de sortida %d"
 
 #: lib/dpkg/subproc.c
 #, c-format
@@ -1761,8 +1777,8 @@ msgstr "l'arrel pel caminador de l'arbre «%s» no és un directori"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "unable to open/create triggers lock file '%.250s'"
-msgstr "no es pot obrir/crear el fitxer de blocatge d'activadors «%.250s»"
+msgid "unable to open/create triggers lock file '%s'"
+msgstr "no es pot obrir/crear el fitxer de blocatge d'activadors «%s»"
 
 #: lib/dpkg/trigdeferred.c
 msgid "triggers database lock"
@@ -1770,143 +1786,149 @@ msgstr "blocatge de la base de dades d'activadors"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "unable to open triggers deferred file '%.250s'"
-msgstr "no es pot obrir el fitxer d'activadors ajornats «%.250s»"
+msgid "unable to open triggers deferred file '%s'"
+msgstr "no es pot obrir el fitxer d'activadors ajornats «%s»"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "unable to stat triggers deferred file '%.250s'"
-msgstr "no es pot fer «stat» al fitxer d'activadors ajornats «%.250s»"
+msgid "unable to stat triggers deferred file '%s'"
+msgstr "no es pot fer «stat» al fitxer d'activadors ajornats «%s»"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "unable to open/create new triggers deferred file '%.250s'"
-msgstr "no es pot obrir/crear el fitxer d'activadors ajornats nou «%.250s»"
+msgid "unable to open/create new triggers deferred file '%s'"
+msgstr "no es pot obrir/crear el fitxer d'activadors ajornats nou «%s»"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
 msgid ""
-"syntax error in triggers deferred file '%.250s' at line %d character %zd '%s'"
+"syntax error in triggers deferred file '%s' at line %d character %zd '%s'"
 msgstr ""
-"error de sintaxi al fitxer d'activadors ajornats «%.250s» en la línia %d al "
+"error de sintaxi al fitxer d'activadors ajornats «%s» en la línia %d al "
 "caràcter %zd «%s»"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "invalid package name '%.250s' in triggers deferred file '%.250s'"
+msgid "invalid package name '%s' in triggers deferred file '%s'"
 msgstr ""
-"el nom del paquet «%.250s» no és vàlid al fitxer d'activadors ajornats "
-"«%.250s»"
+"el nom del paquet «%s» no és vàlid al fitxer d'activadors ajornats «%s»"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "error reading triggers deferred file '%.250s'"
-msgstr ""
-"s'ha produït un error en llegir el fitxer d'activadors ajornats «%.255s»"
+msgid "error reading triggers deferred file '%s'"
+msgstr "s'ha produït un error en llegir el fitxer d'activadors ajornats «%s»"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "unable to write new triggers deferred file '%.250s'"
-msgstr "no es pot escriure el fitxer d'activadors ajornats nou «%.250s»"
+msgid "unable to write new triggers deferred file '%s'"
+msgstr "no es pot escriure el fitxer d'activadors ajornats nou «%s»"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "unable to close new triggers deferred file '%.250s'"
-msgstr "no es pot tancar el fitxer d'activadors ajornats nou «%.250s»"
+msgid "unable to close new triggers deferred file '%s'"
+msgstr "no es pot tancar el fitxer d'activadors ajornats nou «%s»"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "unable to install new triggers deferred file '%.250s'"
-msgstr "no es pot instal·lar el fitxer d'activadors ajornats nou «%.250s»"
+msgid "unable to install new triggers deferred file '%s'"
+msgstr "no es pot instal·lar el fitxer d'activadors ajornats nou «%s»"
 
 #: lib/dpkg/triglib.c
 #, c-format
 msgid ""
-"invalid or unknown syntax in trigger name '%.250s' (in trigger interests for "
-"package '%.250s')"
+"invalid or unknown syntax in trigger name '%s' (in trigger interests for "
+"package '%s')"
 msgstr ""
-"la sintaxi del nom de l'activador «%.250s» no és vàlida o desconeguda (als "
-"activadors interessats per al paquet «%.250s»"
+"la sintaxi del nom de l'activador «%s» no és vàlida o desconeguda (als "
+"activadors interessats per al paquet «%s»"
 
 #: lib/dpkg/triglib.c
 #, c-format
-msgid "failed to open trigger interest list file '%.250s'"
-msgstr "no s'ha pogut obrir el fitxer d'activadors interessats «%.250s»"
+msgid "failed to open trigger interest list file '%s'"
+msgstr "no s'ha pogut obrir el fitxer d'activadors interessats «%s»"
 
 #: lib/dpkg/triglib.c
 #, c-format
-msgid "failed to rewind trigger interest file '%.250s'"
+msgid "failed to rewind trigger interest file '%s'"
 msgstr ""
-"no s'ha pogut tornar al principi de fitxer d'activadors interessats «%.250s»"
+"no s'ha pogut tornar al principi de fitxer d'activadors interessats «%s»"
+
+#: lib/dpkg/triglib.c
+#, fuzzy, c-format
+#| msgid ""
+#| "trigger interest file '%s' syntax error; illegal package name '%s': %s"
+msgid "trigger interest file '%s' syntax error; invalid package name '%s': %s"
+msgstr ""
+"error de sintaxi al fitxer d'activadors interessats «%s»; el nom del paquet "
+"«%s» és il·legal: %s"
 
 #: lib/dpkg/triglib.c
 #, c-format
+msgid "duplicate file trigger interest for filename '%s' and package '%s'"
+msgstr ""
+"hi ha un fitxer d'activadors interessats duplicat per al fitxer «%s» i el "
+"paquet «%s»"
+
+#: lib/dpkg/triglib.c
+#, c-format
+msgid "unable to read file triggers file '%s'"
+msgstr "no es pot llegir el fitxer d'activadors de fitxer «%s»"
+
+#: lib/dpkg/triglib.c
+#, c-format
+msgid "syntax error in file triggers file '%s'"
+msgstr "error de sintaxi al fitxer d'activadors de fitxer «%s»"
+
+#: lib/dpkg/triglib.c
+#, fuzzy, c-format
+#| msgid ""
+#| "file triggers record mentions illegal package name '%s' (for interest in "
+#| "file '%s'): %s"
 msgid ""
-"trigger interest file '%.250s' syntax error; illegal package name '%.250s': "
-"%.250s"
+"file triggers record mentions invalid package name '%s' (for interest in "
+"file '%s'): %s"
 msgstr ""
-"error de sintaxi al fitxer d'activadors interessats «%.250s»; el nom del "
-"paquet «%.250s» és il·legal: %.250s"
+"el registre d'activadors de fitxer menciona el nom de paquet il·legal «%s» "
+"(per l'interès en el fitxer «%s»): %s"
 
 #: lib/dpkg/triglib.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "triggers ci file '%s' contains illegal trigger syntax in trigger name "
+#| "'%s': %s"
 msgid ""
-"duplicate file trigger interest for filename '%.250s' and package '%.250s'"
+"triggers package metadata file '%s' contains invalid trigger syntax in "
+"trigger name '%s': %s"
 msgstr ""
-"hi ha un fitxer d'activadors interessats duplicat per al fitxer «%.250s» i "
-"el paquet «%.250s»"
+"el fitxer d'informació de control dels activadors «%s» conté sintaxi "
+"d'activador il·legal al nom d'activador «%s»: %s"
 
 #: lib/dpkg/triglib.c
-#, c-format
-msgid "unable to read file triggers file '%.250s'"
-msgstr "no es pot llegir el fitxer d'activadors de fitxer «%.250s»"
+#, fuzzy, c-format
+#| msgid "unable to open triggers ci file '%s'"
+msgid "unable to open triggers package metadata file '%s'"
+msgstr "no es pot obrir el fitxer d'informació de control dels activadors «%s»"
 
 #: lib/dpkg/triglib.c
-#, c-format
-msgid "syntax error in file triggers file '%.250s'"
-msgstr "error de sintaxi al fitxer d'activadors de fitxer «%.250s»"
-
-#: lib/dpkg/triglib.c
-#, c-format
-msgid ""
-"file triggers record mentions illegal package name '%.250s' (for interest in "
-"file '%.250s'): %.250s"
-msgstr ""
-"el registre d'activadors de fitxer menciona el nom de paquet il·legal "
-"«%.250s» (per l'interès en el fitxer «%.250s»): %.250s"
-
-#: lib/dpkg/triglib.c
-#, c-format
-msgid ""
-"triggers ci file '%.250s' contains illegal trigger syntax in trigger name "
-"'%.250s': %.250s"
-msgstr ""
-"el fitxer d'informació de control dels activadors «%.250s» conté sintaxi "
-"d'activador il·legal al nom d'activador «%.250s»: %.250s"
-
-#: lib/dpkg/triglib.c
-#, c-format
-msgid "unable to open triggers ci file '%.250s'"
-msgstr ""
-"no es pot obrir el fitxer d'informació de control dels activadors «%.250s»"
-
-#: lib/dpkg/triglib.c
-msgid "triggers ci file contains unknown directive syntax"
+#, fuzzy, c-format
+#| msgid "triggers ci file contains unknown directive syntax"
+msgid "triggers package metadata file '%s' contains unknown directive syntax"
 msgstr ""
 "el fitxer d'informació de control dels activadors conté sintaxi de directiva "
 "desconeguda"
 
 #: lib/dpkg/triglib.c
-#, c-format
-msgid "triggers ci file contains unknown directive '%.250s'"
+#, fuzzy, c-format
+#| msgid "triggers ci file contains unknown directive '%s'"
+msgid "triggers package metadata file '%s' contains unknown directive '%s'"
 msgstr ""
 "el fitxer d'informació de control dels activadors conté la directiva "
-"desconeguda «%.250s»"
+"desconeguda «%s»"
 
 #: lib/dpkg/triglib.c
 #, c-format
-msgid "unable to create triggers state directory '%.250s'"
-msgstr "no es pot crear el directori d'estat dels activadors «%.250s»"
+msgid "unable to create triggers state directory '%s'"
+msgstr "no es pot crear el directori d'estat dels activadors «%s»"
 
 #: lib/dpkg/trigname.c
 msgid "empty trigger names are not permitted"
@@ -1918,23 +1940,23 @@ msgstr "el nom de l'activador conté un caràcter invàlid"
 
 #: lib/dpkg/utils.c
 #, c-format
-msgid "read error in '%.250s'"
-msgstr "error de lectura a «%.250s»"
+msgid "read error in '%s'"
+msgstr "error de lectura a «%s»"
 
 #: lib/dpkg/utils.c
 #, c-format
-msgid "fgets gave an empty string from '%.250s'"
-msgstr "«fgets» ha donat una cadena buida des de «%.250s»"
+msgid "fgets gave an empty string from '%s'"
+msgstr "«fgets» ha donat una cadena buida des de «%s»"
 
 #: lib/dpkg/utils.c
 #, c-format
-msgid "too-long line or missing newline in '%.250s'"
-msgstr "la línia és massa llarga o manca una línia nova a «%.250s»"
+msgid "too-long line or missing newline in '%s'"
+msgstr "la línia és massa llarga o manca una línia nova a «%s»"
 
 #: lib/dpkg/utils.c
 #, c-format
-msgid "unexpected end of file reading '%.250s'"
-msgstr "s'ha trobat un final del fitxer inesperat en llegir «%.250s»"
+msgid "unexpected end of file reading '%s'"
+msgstr "s'ha trobat un final del fitxer inesperat en llegir «%s»"
 
 #: lib/dpkg/varbuf.c
 #, c-format
@@ -2011,17 +2033,17 @@ msgid "Do not chroot into maintainer script environment"
 msgstr "No canvia el directori arrel en l'entorn del guió de mantenidor"
 
 #: src/common/force.c
-msgid "Always use the new config files, don't prompt"
+msgid "Always use the new config files, do not prompt"
 msgstr "Utilitza sempre els conffiles nous, sense preguntar"
 
 #: src/common/force.c
-msgid "Always use the old config files, don't prompt"
+msgid "Always use the old config files, do not prompt"
 msgstr "Utilitza sempre els conffiles antics, sense preguntar"
 
 #: src/common/force.c
 msgid ""
 "Use the default option for new config files if one\n"
-"is available, don't prompt. If no default can be found,\n"
+"is available, do not prompt. If no default can be found,\n"
 "you will be prompted unless one of the confold or\n"
 "confnew options is also given"
 msgstr ""
@@ -2078,7 +2100,7 @@ msgid ""
 "  stop with error:    --refuse-<thing>,<thing>,... | --no-force-<thing>,...\n"
 " Forcing things:\n"
 msgstr ""
-"Les opcions de forçat de %s - controlen el comportament quan hi ha "
+"Les opcions de forçat de %s; controlen el comportament quan hi ha "
 "problemes:\n"
 "  avisa però continua:      --force-<cosa>,<cosa>,…\n"
 "  atura't amb error:        --refuse-<cosa>,<cosa>,… | --no-force-<cosa>,…\n"
@@ -2092,15 +2114,15 @@ msgid ""
 "Forcing options marked [*] are enabled by default.\n"
 msgstr ""
 "\n"
-"AVÍS - forçar l'ús de les opcions marcades amb [!] poden malmetre\n"
+"AVÍS: forçar l'ús de les opcions marcades amb [!] poden malmetre\n"
 "seriosament la instal·lació. Les opcions de forçat marcades amb [*] estan\n"
 "activades per defecte.\n"
 
-#: src/common/force.c src/deb/build.c src/deb/extract.c src/deb/info.c
-#: src/deb/main.c src/split/info.c src/split/main.c src/split/queue.c
-#: src/divert/main.c src/statoverride/main.c src/trigger/main.c
-#: src/query/main.c src/main/archives.c src/main/enquiry.c src/main/main.c
-#: src/main/packages.c src/main/select.c src/main/verify.c
+#: src/common/force.c src/realpath/main.c src/deb/build.c src/deb/extract.c
+#: src/deb/info.c src/deb/main.c src/split/info.c src/split/main.c
+#: src/split/queue.c src/divert/main.c src/statoverride/main.c
+#: src/trigger/main.c src/query/main.c src/main/archives.c src/main/enquiry.c
+#: src/main/main.c src/main/packages.c src/main/select.c src/main/verify.c
 msgid "<standard output>"
 msgstr "<eixida estàndard>"
 
@@ -2143,6 +2165,77 @@ msgid "cannot set security context for file object '%s'"
 msgstr ""
 "no es pot establir el context de seguretat per a l'objecte de fitxer «%s»"
 
+#: src/realpath/main.c
+msgid "Use --help for help about this utility."
+msgstr "Empreu --help per a obtenir ajuda sobre aquesta utilitat."
+
+#: src/realpath/main.c src/divert/main.c src/statoverride/main.c
+#, c-format
+msgid "Debian %s version %s.\n"
+msgstr "Debian %s versió %s.\n"
+
+#: src/realpath/main.c src/deb/main.c src/split/main.c src/divert/main.c
+#: src/statoverride/main.c src/trigger/main.c src/query/main.c src/main/main.c
+#: utils/update-alternatives.c
+#, c-format
+msgid ""
+"This is free software; see the GNU General Public License version 2 or\n"
+"later for copying conditions. There is NO warranty.\n"
+msgstr ""
+"Això és programari lliure, vegeu la Llicència Pública General GNU versió 2\n"
+"o posterior per a les condicions de còpia. No hi ha CAP garantia.\n"
+
+#: src/realpath/main.c
+#, c-format
+msgid ""
+"Usage: %s [<option>...] <pathname>\n"
+"\n"
+msgstr ""
+"Forma d'ús: %s [<opció>…] <nom-de-camí>\n"
+"\n"
+
+#: src/realpath/main.c
+#, c-format
+msgid ""
+"Options:\n"
+"  -z, --zero                   end output line with NUL, not newline.\n"
+"      --instdir <directory>    set the root directory.\n"
+"      --root <directory>       set the root directory.\n"
+"      --version                show the version.\n"
+"      --help                   show this help message.\n"
+"\n"
+msgstr ""
+"Opcions:\n"
+"  -z, --zero                   acaba la línia amb NUL, i no línia nova.\n"
+"      --instdir <directori>    estableix el directori arrel.\n"
+"      --root <directory>       estableix el directori arrel.\n"
+"      --version                mostra la versió.\n"
+"      --help                   mostra aquest missatge d'ajuda.\n"
+"\n"
+
+#: src/realpath/main.c
+msgid "too many levels of symbolic links"
+msgstr "massa nivells d'enllaços simbòlics"
+
+#: src/realpath/main.c
+#, c-format
+msgid "cannot read link '%s'"
+msgstr "no es pot llegir l'enllaç «%s»"
+
+#: src/realpath/main.c src/main/archives.c src/main/configure.c
+#, c-format
+msgid "symbolic link '%s' size has changed from %jd to %zd"
+msgstr "la mida de l'enllaç simbòlic «%s» ha canviat de %jd a %zd"
+
+#: src/realpath/main.c
+msgid "need a pathname argument"
+msgstr "necessita un paràmetre de nom del camí"
+
+#: src/realpath/main.c
+#, c-format
+msgid "link '%s' includes root prefix '%s'"
+msgstr "l'enllaç «%s» inclou el prefix arrel «%s»"
+
 #: src/deb/build.c
 #, c-format
 msgid "failed to write filename to tar pipe (%s)"
@@ -2177,23 +2270,22 @@ msgstr ""
 
 #: src/deb/build.c
 #, c-format
-msgid "maintainer script '%.50s' is not a plain file or symlink"
+msgid "maintainer script '%s' is not a plain file or symlink"
 msgstr ""
-"el guió del mantenidor «%.50s» no és un fitxer normal o un enllaç simbòlic"
+"el guió del mantenidor «%s» no és un fitxer normal o un enllaç simbòlic"
 
 #: src/deb/build.c
 #, c-format
 msgid ""
-"maintainer script '%.50s' has bad permissions %03lo (must be >=0555 and "
-"<=0775)"
+"maintainer script '%s' has bad permissions %03lo (must be >=0555 and <=0775)"
 msgstr ""
-"el guió del mantenidor «%.50s» té permisos erronis %03lo (ha de ser >=0555 i "
+"el guió del mantenidor «%s» té permisos erronis %03lo (ha de ser >=0555 i "
 "<=0775)"
 
 #: src/deb/build.c
 #, c-format
-msgid "maintainer script '%.50s' is not stattable"
-msgstr "no es pot fer «stat» al guió del mantenidor «%.50s»"
+msgid "maintainer script '%s' is not stattable"
+msgstr "no es pot fer «stat» al guió del mantenidor «%s»"
 
 #: src/deb/build.c
 msgid "error opening conffiles file"
@@ -2241,13 +2333,13 @@ msgstr "el nom del conffile «%s» conté espais en blanc al final"
 
 #: src/deb/build.c
 #, c-format
-msgid "conffile '%.250s' does not appear in package"
-msgstr "el conffile «%.250s» no està dins del paquet"
+msgid "conffile '%s' does not appear in package"
+msgstr "el conffile «%s» no està dins del paquet"
 
 #: src/deb/build.c
 #, c-format
-msgid "conffile '%.250s' is not stattable"
-msgstr "no es pot fer «stat» al conffile «%.250s»"
+msgid "conffile '%s' is not stattable"
+msgstr "no es pot fer «stat» al conffile «%s»"
 
 #: src/deb/build.c
 #, c-format
@@ -2269,7 +2361,7 @@ msgid "error reading conffiles file"
 msgstr "s'ha produït un error en llegir el fitxer de conffiles"
 
 #: src/deb/build.c
-msgid "package name has characters that aren't lowercase alphanums or '-+.'"
+msgid "package name has characters that are not lowercase alphanums or '-+.'"
 msgstr ""
 "el nom del paquet té caràcters que no són minúscules, alfanumèrics o «-+»."
 
@@ -2284,6 +2376,28 @@ msgstr "«%s» conté un valor Priority «%s» definit per l'usuari"
 
 #: src/deb/build.c
 #, c-format
+msgid "cannot get root directory %s metadata"
+msgstr "no es poden obtenir les metadades del directori arrel «%s»"
+
+#: src/deb/build.c
+#, c-format
+msgid "root pathname %s is not a directory"
+msgstr "el nom de cami arrel «%s» no és un directori"
+
+#: src/deb/build.c
+#, c-format
+msgid "root directory %s has unusual owner or group %u:%u"
+msgstr "el directori arrel %s té un propietari o group inusual %u:%u"
+
+#: src/deb/build.c
+#, c-format
+msgid "you might need to pass --root-owner-group, see <%s> for further details"
+msgstr ""
+"es possible que hagueu de passar --root-owner-group, vegeu <%s> per a més "
+"detalls"
+
+#: src/deb/build.c
+#, c-format
 msgid "ignoring %d warning about the control file(s)"
 msgid_plural "ignoring %d warnings about the control file(s)"
 msgstr[0] "s'omet %d avís sobre els fitxers de control"
@@ -2291,13 +2405,13 @@ msgstr[1] "s'ometen %d avisos sobre els fitxers de control"
 
 #: src/deb/build.c
 #, c-format
-msgid "unable to check for existence of archive '%.250s'"
-msgstr "no es pot comprovar l'existència de l'arxiu «%.250s»"
+msgid "unable to check for existence of archive '%s'"
+msgstr "no es pot comprovar l'existència de l'arxiu «%s»"
 
 #: src/deb/build.c src/main/script.c
 #, c-format
-msgid "failed to chdir to '%.255s'"
-msgstr "no s'ha pogut canviar al directori «%.255s»"
+msgid "failed to chdir to '%s'"
+msgstr "no s'ha pogut canviar al directori «%s»"
 
 #: src/deb/build.c
 msgid "compressing tar member"
@@ -2309,8 +2423,8 @@ msgstr "<compressió> des de tar -cf"
 
 #: src/deb/build.c src/split/split.c
 #, c-format
-msgid "unable to parse timestamp '%.255s'"
-msgstr "no es pot analitzar la marca horària «%.255s»"
+msgid "unable to parse timestamp '%s'"
+msgstr "no es pot analitzar la marca horària «%s»"
 
 #: src/deb/build.c utils/update-alternatives.c
 #, c-format
@@ -2325,7 +2439,7 @@ msgstr "--%s accepta com a molt dos arguments"
 #: src/deb/build.c
 msgid "target is directory - cannot skip control file check"
 msgstr ""
-"l'objectiu és un directori - no es pot ometre la comprovació del fitxer de "
+"l'objectiu és un directori; no es pot ometre la comprovació del fitxer de "
 "control"
 
 #: src/deb/build.c
@@ -2378,13 +2492,13 @@ msgstr "ordre d'intèrpret per moure fitxers"
 
 #: src/deb/extract.c src/split/main.c
 #, c-format
-msgid "unexpected end of file in %s in %.255s"
-msgstr "fi de fitxer inesperada en %s en %.255s"
+msgid "unexpected end of file in %s in %s"
+msgstr "fi de fitxer inesperada en %s en %s"
 
 #: src/deb/extract.c src/split/main.c
 #, c-format
-msgid "error reading %s from file %.255s"
-msgstr "s'ha produït un error en llegir %s del fitxer %.255s"
+msgid "error reading %s from file %s"
+msgstr "s'ha produït un error en llegir %s del fitxer %s"
 
 #: src/deb/extract.c
 msgid "archive magic version number"
@@ -2396,17 +2510,15 @@ msgstr "capçalera de l'element de l'arxiu"
 
 #: src/deb/extract.c
 #, c-format
-msgid "file '%.250s' is corrupt - bad archive header magic"
+msgid "file '%s' is corrupt - bad archive header magic"
 msgstr ""
-"el fitxer «%.250s» està corromput - número màgic de la capçalera de l'arxiu "
-"erroni"
+"el fitxer «%s» està corromput; número màgic de la capçalera de l'arxiu erroni"
 
 #: src/deb/extract.c
 #, c-format
-msgid "file '%.250s' is not a Debian binary archive (try dpkg-split?)"
+msgid "file '%s' is not a Debian binary archive (try dpkg-split?)"
 msgstr ""
-"el fitxer «%.250s» no és un arxiu binari de Debian (proveu amb el dpkg-"
-"split?)"
+"el fitxer «%s» no és un arxiu binari de Debian (proveu amb el dpkg-split?)"
 
 #: src/deb/extract.c
 msgid "archive information header member"
@@ -2440,8 +2552,8 @@ msgstr ""
 
 #: src/deb/extract.c
 #, c-format
-msgid "archive '%.250s' contains two control members, giving up"
-msgstr "l'arxiu «%.250s» conté dos elements de control, s'abandona"
+msgid "archive '%s' contains two control members, giving up"
+msgstr "l'arxiu «%s» conté dos elements de control, s'abandona"
 
 #: src/deb/extract.c
 #, c-format
@@ -2492,8 +2604,8 @@ msgstr ""
 
 #: src/deb/extract.c
 #, c-format
-msgid "'%.255s' is not a Debian format archive"
-msgstr "«%.255s» no és un arxiu amb el format Debian"
+msgid "'%s' is not a Debian format archive"
+msgstr "«%s» no és un arxiu amb el format Debian"
 
 #: src/deb/extract.c
 #, c-format
@@ -2567,6 +2679,11 @@ msgid "--%s does not support (yet) reading the .deb from standard input"
 msgstr ""
 "--%s no suporta (encara) la lectura del .deb des de l'entrada estàndard"
 
+#: src/deb/info.c src/statoverride/main.c src/main/archives.c
+#, c-format
+msgid "error setting permissions of '%s'"
+msgstr "s'ha produït un error en establir els permisos de «%s»"
+
 #: src/deb/info.c src/main/unpack.c
 msgid "unable to create temporary directory"
 msgstr "no s'ha pogut crear el directori temporal"
@@ -2578,15 +2695,13 @@ msgstr "no es pot extreure el fitxer de control «%s» de «%s»: %s"
 
 #: src/deb/info.c
 #, c-format
-msgid "'%.255s' contains no control component '%.255s'"
-msgstr "«%.255s» no conté cap component de control «%.255s»"
+msgid "'%s' contains no control component '%s'"
+msgstr "«%s» no conté cap component de control «%s»"
 
 #: src/deb/info.c
 #, c-format
-msgid "open component '%.255s' (in %.255s) failed in an unexpected way"
-msgstr ""
-"l'obertura del component «%.255s» (dins de %.255s) ha fallat de forma "
-"inesperada"
+msgid "cannot open file '%s'"
+msgstr "no es pot obrir el fitxer «%s»"
 
 #: src/deb/info.c
 #, c-format
@@ -2597,23 +2712,18 @@ msgstr[1] "Manquen els components de control requerits %d"
 
 #: src/deb/info.c utils/update-alternatives.c
 #, c-format
-msgid "cannot scan directory '%.255s'"
-msgstr "no es pot examinar el directori «%.255s»"
+msgid "cannot scan directory '%s'"
+msgstr "no es pot examinar el directori «%s»"
 
 #: src/deb/info.c
 #, c-format
-msgid "cannot stat '%.255s' (in '%.255s')"
-msgstr "no es pot fer «stat» a «%.255s» (en «%.255s»)"
+msgid "cannot get file '%s' metadata"
+msgstr "no es poden obtenir les metadades del fitxer «%s»"
 
 #: src/deb/info.c
 #, c-format
-msgid "cannot open '%.255s' (in '%.255s')"
-msgstr "no es pot obrir «%.255s» (en «%.255s»)"
-
-#: src/deb/info.c
-#, c-format
-msgid "failed to read '%.255s' (in '%.255s')"
-msgstr "no s'ha pogut llegir «%.255s» (en «%.255s»)"
+msgid "cannot read file '%s'"
+msgstr "no es pot llegir el fitxer «%s»"
 
 #: src/deb/info.c
 #, c-format
@@ -2627,12 +2737,12 @@ msgstr " %7jd octets, %5d línies %c  %.127s\n"
 
 #: src/deb/info.c
 #, c-format
-msgid "     not a plain file          %.255s\n"
-msgstr "     no és un fitxer normal    %.255s\n"
+msgid "     not a plain file          %s\n"
+msgstr "     no és un fitxer normal    %s\n"
 
 #: src/deb/info.c
 msgid "no 'control' file in control archive!"
-msgstr "no hi ha cap fitxer «control» en l'arxiu de control!"
+msgstr "no hi ha cap fitxer «control» en l'arxiu de control"
 
 #: src/deb/info.c src/query/main.c
 #, c-format
@@ -2649,17 +2759,6 @@ msgstr "--%s accepta exactament un argument"
 msgid "Debian '%s' package archive backend version %s.\n"
 msgstr "Rerefons d'arxius de paquets «%s» de Debian versió %s.\n"
 
-#: src/deb/main.c src/split/main.c src/divert/main.c src/statoverride/main.c
-#: src/trigger/main.c src/query/main.c src/main/main.c
-#: utils/update-alternatives.c
-#, c-format
-msgid ""
-"This is free software; see the GNU General Public License version 2 or\n"
-"later for copying conditions. There is NO warranty.\n"
-msgstr ""
-"Això és programari lliure, vegeu la Llicència Pública General GNU versió 2\n"
-"o posterior per a les condicions de còpia. No hi ha CAP garantia.\n"
-
 #: src/deb/main.c src/divert/main.c src/query/main.c src/main/main.c
 #, c-format
 msgid ""
@@ -2670,7 +2769,22 @@ msgstr ""
 "\n"
 
 #: src/deb/main.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Commands:\n"
+#| "  -b|--build <directory> [<deb>]   Build an archive.\n"
+#| "  -c|--contents <deb>              List contents.\n"
+#| "  -I|--info <deb> [<cfile>...]     Show info to stdout.\n"
+#| "  -W|--show <deb>                  Show information on package(s)\n"
+#| "  -f|--field <deb> [<cfield>...]   Show field(s) to stdout.\n"
+#| "  -e|--control <deb> [<directory>] Extract control info.\n"
+#| "  -x|--extract <deb> <directory>   Extract files.\n"
+#| "  -X|--vextract <deb> <directory>  Extract & list files.\n"
+#| "  -R|--raw-extract <deb> <directory>\n"
+#| "                                   Extract control info and files.\n"
+#| "  --ctrl-tarfile <deb>             Output control tarfile.\n"
+#| "  --fsys-tarfile <deb>             Output filesystem tarfile.\n"
+#| "\n"
 msgid ""
 "Commands:\n"
 "  -b|--build <directory> [<deb>]   Build an archive.\n"
@@ -2678,11 +2792,11 @@ msgid ""
 "  -I|--info <deb> [<cfile>...]     Show info to stdout.\n"
 "  -W|--show <deb>                  Show information on package(s)\n"
 "  -f|--field <deb> [<cfield>...]   Show field(s) to stdout.\n"
-"  -e|--control <deb> [<directory>] Extract control info.\n"
-"  -x|--extract <deb> <directory>   Extract files.\n"
-"  -X|--vextract <deb> <directory>  Extract & list files.\n"
+"  -e|--control <deb> [<directory>] Extract metadata files.\n"
+"  -x|--extract <deb> <directory>   Extract filesystem files.\n"
+"  -X|--vextract <deb> <directory>  Extract and list filesystem files.\n"
 "  -R|--raw-extract <deb> <directory>\n"
-"                                   Extract control info and files.\n"
+"                                   Extract metadata and filesystem files.\n"
 "  --ctrl-tarfile <deb>             Output control tarfile.\n"
 "  --fsys-tarfile <deb>             Output filesystem tarfile.\n"
 "\n"
@@ -2740,18 +2854,18 @@ msgid ""
 "      --deb-format=<format>        Select archive format.\n"
 "                                     Allowed values: 0.939000, 2.0 "
 "(default).\n"
-"      --nocheck                    Suppress control file check (build bad\n"
-"                                     packages).\n"
+"      --no-check                   Suppress all checks (build bad "
+"packages).\n"
+"      --nocheck                    Alias for --no-check.\n"
 "      --root-owner-group           Forces the owner and groups to root.\n"
 "      --threads-max=<threads>      Use at most <threads> with compressor.\n"
 "      --[no-]uniform-compression   Use the compression params on all "
 "members.\n"
-"  -z#                              Set the compression level when building.\n"
-"  -Z<type>                         Set the compression type used when "
-"building.\n"
+"  -Z, --compression=<compressor>   Set build compression type.\n"
 "                                     Allowed types: gzip, xz, zstd, none.\n"
-"  -S<strategy>                     Set the compression strategy when "
-"building.\n"
+"  -z, --compression-level=<level>  Set build compression level.\n"
+"  -S, --compression-strategy=<name>\n"
+"                                   Set build compression strategy.\n"
 "                                     Allowed values: none; extreme (xz);\n"
 "                                     filtered, huffman, rle, fixed (gzip).\n"
 "\n"
@@ -2763,17 +2877,20 @@ msgstr ""
 "      --deb-format=<format>  Selecciona el format d'arxiu.\n"
 "                               Valors permesos: 0.939000, 2.0 "
 "(predeterminat).\n"
-"      --nocheck              Suprimeix la comprovació del fitxer de control\n"
+"      --no-check             Suprimeix la comprovació del fitxer de control\n"
 "                               (construeix un paquet erroni).\n"
+"      --nocheck              Alies de --no-check.\n"
 "      --root-owner-group     Força el propietari i el grup a «root».\n"
 "      --threads-max=<fils>   Empra com a mínim <fils> amb el compressor.\n"
 "      --[no-]uniform-compression\n"
 "                             Empra els paràmetres de compressió en tots els\n"
 "                               elements.\n"
-"  -z#                        Estableix el nivell de compressió.\n"
-"  -Z<tipus>                  Estableix el tipus de compressió.\n"
+"  -Z, --compression=<tipus>  Estableix el tipus de compressió.\n"
 "                               Tipus permesos: gzip, xz, zstd, none.\n"
-"  -S<estratègia>             Estableix l'estratègia de compressió.\n"
+"  -z, --compression-level=<nivell>\n"
+"                             Estableix el nivell de compressió.\n"
+"  -S, --compression-strategy=<nom>\n"
+"                             Estableix l'estratègia de compressió.\n"
 "                               Valors permesos: none; extreme (xz);\n"
 "                               filtered, huffman, rle, fixed (gzip).\n"
 "\n"
@@ -2785,8 +2902,8 @@ msgid ""
 "  A format is a string that will be output for each package. The format\n"
 "  can include the standard escape sequences \\n (newline), \\r (carriage\n"
 "  return) or \\\\ (plain backslash). Package information can be included\n"
-"  by inserting variable references to package fields using the ${var[;"
-"width]}\n"
+"  by inserting variable references to package fields using the $"
+"{var[;width]}\n"
 "  syntax. Fields will be right-aligned unless the width is negative in "
 "which\n"
 "  case left alignment will be used.\n"
@@ -2839,12 +2956,12 @@ msgstr "número de versió de format deb desconeguda: %s"
 #: src/deb/main.c
 #, c-format
 msgid "unknown compression strategy '%s'!"
-msgstr "el tipus d'estratègia de compressió «%s» és desconegut!"
+msgstr "el tipus d'estratègia de compressió «%s» és desconegut"
 
 #: src/deb/main.c
 #, c-format
 msgid "unknown compression type '%s'!"
-msgstr "el tipus de compressió «%s» és desconegut!"
+msgstr "el tipus de compressió «%s» és desconegut"
 
 #: src/deb/main.c
 #, c-format
@@ -2878,8 +2995,8 @@ msgstr "el tipus de compressió «%s» no està admès amb compressió uniforme"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - bad digit (code %d) in %s"
-msgstr "el fitxer «%.250s» està corromput - dígit erroni (codi %d) en %s"
+msgid "file '%s' is corrupt - bad digit (code %d) in %s"
+msgstr "el fitxer «%s» està corromput; dígit erroni (codi %d) en %s"
 
 #: src/split/info.c
 #, c-format
@@ -2888,37 +3005,47 @@ msgstr "el fitxer «%s» està corromput; número sencer fora de rang en %s"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - %.250s missing"
-msgstr "el fitxer «%.250s» està corromput - manca %.250s"
+msgid "file '%s' is corrupt - %s missing"
+msgstr "el fitxer «%s» està corromput; manca %s"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - missing newline after %.250s"
+msgid "file '%s' is corrupt - missing newline after %s"
+msgstr "el fitxer «%s» està corromput; manca una línia nova després de %s"
+
+#: src/split/info.c
+#, c-format
+msgid "error reading %s"
+msgstr "s'ha produït un error al llegir %s"
+
+#: src/split/info.c
+#, fuzzy
+#| msgid "archive member header"
+msgid "ar header"
+msgstr "capçalera de l'element de l'arxiu"
+
+#: src/split/info.c
+#, c-format
+msgid "file '%s' is corrupt - bad magic at end of first header"
 msgstr ""
-"el fitxer «%.250s» està corromput - manca una línia nova després de %.250s"
+"el fitxer «%s» està corromput; valor màgic erroni al final de la primera "
+"capçalera"
+
+#: src/split/info.c
+#, fuzzy
+#| msgid "archive information header member"
+msgid "reading header member"
+msgstr "capçalera de l'element d'informació de l'arxiu"
 
 #: src/split/info.c
 #, c-format
-msgid "error reading %.250s"
-msgstr "s'ha produït un error al llegir %.250s"
+msgid "file '%s' is corrupt - bad padding character (code %d)"
+msgstr "el fitxer «%s» està corromput; caràcter de farcit erroni (codi %d)"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - bad magic at end of first header"
-msgstr ""
-"el fitxer «%.250s» està corromput - valor màgic erroni al final de la "
-"primera capçalera"
-
-#: src/split/info.c
-#, c-format
-msgid "file '%.250s' is corrupt - bad padding character (code %d)"
-msgstr ""
-"el fitxer «%.250s» està corromput - caràcter de farcit erroni (codi %d)"
-
-#: src/split/info.c
-#, c-format
-msgid "file '%.250s' is corrupt - nulls in info section"
-msgstr "el fitxer «%.250s» està corromput - hi ha nuls en la secció d'info."
+msgid "file '%s' is corrupt - nulls in info section"
+msgstr "el fitxer «%s» està corromput; hi ha nuls en la secció d'info"
 
 #: src/split/info.c
 msgid "format version number"
@@ -2926,15 +3053,14 @@ msgstr "número de versió del format"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' has invalid format version: %s"
-msgstr "el fitxer «%.250s» té una versió de format invàlida: %s"
+msgid "file '%s' has invalid format version: %s"
+msgstr "el fitxer «%s» té una versió de format invàlida: %s"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is format version %d.%d; get a newer dpkg-split"
+msgid "file '%s' is format version %d.%d; get a newer dpkg-split"
 msgstr ""
-"el fitxer «%.250s» té versió de format %d.%d; necessiteu un dpkg-split més "
-"nou"
+"el fitxer «%s» té versió de format %d.%d; necessiteu un dpkg-split més nou"
 
 #: src/split/info.c
 msgid "package name"
@@ -2950,8 +3076,8 @@ msgstr "resum MD5 del fitxer de paquet"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - bad MD5 checksum '%.250s'"
-msgstr "el fitxer «%.250s» està corromput - resum MD5 «%.250s» erroni"
+msgid "file '%s' is corrupt - bad MD5 checksum '%s'"
+msgstr "el fitxer «%s» està corromput; resum MD5 «%s» erroni"
 
 #: src/split/info.c
 msgid "archive total size"
@@ -2967,10 +3093,10 @@ msgstr "número de la part de l'arxiu"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - no slash between archive part numbers"
+msgid "file '%s' is corrupt - no slash between archive part numbers"
 msgstr ""
-"el fitxer «%.250s» està corromput - no hi ha una barra entre els nombres de "
-"parts de l'arxiu"
+"el fitxer «%s» està corromput; no hi ha una barra entre els nombres de parts "
+"de l'arxiu"
 
 #: src/split/info.c
 msgid "number of archive parts"
@@ -2978,8 +3104,8 @@ msgstr "nombre de parts de l'arxiu"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - bad number of archive parts"
-msgstr "el fitxer «%.250s» està corromput - nombre de parts de l'arxiu erroni"
+msgid "file '%s' is corrupt - bad number of archive parts"
+msgstr "el fitxer «%s» està corromput; nombre de parts de l'arxiu erroni"
 
 #: src/split/info.c
 msgid "archive parts number"
@@ -2987,55 +3113,58 @@ msgstr "nombre de parts de l'arxiu"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - bad archive part number"
-msgstr "el fitxer «%.250s» està corromput - número de part de l'arxiu erroni"
+msgid "file '%s' is corrupt - bad archive part number"
+msgstr "el fitxer «%s» està corromput; número de part de l'arxiu erroni"
 
 #: src/split/info.c
 msgid "package architecture"
 msgstr "arquitectura del paquet"
 
 #: src/split/info.c
-#, c-format
-msgid "file '%.250s' is corrupt - bad magic at end of second header"
+msgid "reading data part member ar header"
 msgstr ""
-"el fitxer «%.250s» està corromput - valor màgic erroni al final de la segona "
+
+#: src/split/info.c
+#, c-format
+msgid "file '%s' is corrupt - bad magic at end of second header"
+msgstr ""
+"el fitxer «%s» està corromput; valor màgic erroni al final de la segona "
 "capçalera"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - second member is not data member"
+msgid "file '%s' is corrupt - second member is not data member"
 msgstr ""
-"el fitxer «%.250s» està corromput - el segon element no és un element de "
-"dades"
+"el fitxer «%s» està corromput; el segon element no és un element de dades"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - wrong number of parts for quoted sizes"
+msgid "file '%s' is corrupt - wrong number of parts for quoted sizes"
 msgstr ""
-"el fitxer «%.250s» està corromput - número equivocat de parts per a les "
-"mides indicades"
+"el fitxer «%s» està corromput; número equivocat de parts per a les mides "
+"indicades"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - size is wrong for quoted part number"
+msgid "file '%s' is corrupt - size is wrong for quoted part number"
 msgstr ""
-"el fitxer «%.250s» està corromput - la mida està equivocada pel número de "
-"part indicada"
+"el fitxer «%s» està corromput; la mida està equivocada pel número de part "
+"indicada"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - too short"
-msgstr "el fitxer «%.250s» està corromput - massa curt"
+msgid "file '%s' is corrupt - too short"
+msgstr "el fitxer «%s» està corromput; massa curt"
 
 #: src/split/info.c
 #, c-format
-msgid "cannot open archive part file '%.250s'"
-msgstr "no es pot obrir el fitxer part d'arxiu «%.250s»"
+msgid "cannot open archive part file '%s'"
+msgstr "no es pot obrir el fitxer part d'arxiu «%s»"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is not an archive part"
-msgstr "el fitxer «%.250s» no és una part d'arxiu"
+msgid "file '%s' is not an archive part"
+msgstr "el fitxer «%s» no és una part d'arxiu"
 
 #: src/split/info.c
 #, c-format
@@ -3093,13 +3222,13 @@ msgstr[1] "S'està assemblant el paquet %s amb %d parts: "
 
 #: src/split/join.c
 #, c-format
-msgid "unable to open output file '%.250s'"
-msgstr "no es pot obrir el fitxer d'eixida «%.250s»"
+msgid "unable to open output file '%s'"
+msgstr "no es pot obrir el fitxer d'eixida «%s»"
 
 #: src/split/join.c
 #, c-format
-msgid "unable to (re)open input part file '%.250s'"
-msgstr "no es pot (re)obrir el fitxer part d'entrada «%.250s»"
+msgid "unable to (re)open input part file '%s'"
+msgstr "no es pot (re)obrir el fitxer part d'entrada «%s»"
 
 #: src/split/join.c
 #, c-format
@@ -3118,13 +3247,13 @@ msgstr "fet\n"
 
 #: src/split/join.c
 #, c-format
-msgid "files '%.250s' and '%.250s' are not parts of the same file"
-msgstr "els fitxers «%.250s» i «%.250s» no són parts del mateix fitxer"
+msgid "files '%s' and '%s' are not parts of the same file"
+msgstr "els fitxers «%s» i «%s» no són parts del mateix fitxer"
 
 #: src/split/join.c
 #, c-format
-msgid "there are several versions of part %d - at least '%.250s' and '%.250s'"
-msgstr "hi han diverses versions de la part %d - almenys «%.250s» i «%.250s»"
+msgid "there are several versions of part %d - at least '%s' and '%s'"
+msgstr "hi han diverses versions de la part %d; almenys «%s» i «%s»"
 
 #: src/split/join.c
 #, c-format
@@ -3167,7 +3296,18 @@ msgstr ""
 "\n"
 
 #: src/split/main.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Options:\n"
+#| "      --depotdir <directory>       Use <directory> instead of %s/%s.\n"
+#| "      --admindir <directory>       Use <directory> instead of %s.\n"
+#| "      --root <directory>           Use <directory> instead of %s.\n"
+#| "  -S, --partsize <size>            In KiB, for -s (default is 450).\n"
+#| "  -o, --output <file>              Filename, for -j (default is\n"
+#| "                                     <package>_<version>_<arch>.deb).\n"
+#| "  -Q, --npquiet                    Be quiet when -a is not a part.\n"
+#| "      --msdos                      Generate 8.3 filenames.\n"
+#| "\n"
 msgid ""
 "Options:\n"
 "      --depotdir <directory>       Use <directory> instead of %s/%s.\n"
@@ -3177,7 +3317,6 @@ msgid ""
 "  -o, --output <file>              Filename, for -j (default is\n"
 "                                     <package>_<version>_<arch>.deb).\n"
 "  -Q, --npquiet                    Be quiet when -a is not a part.\n"
-"      --msdos                      Generate 8.3 filenames.\n"
 "\n"
 msgstr ""
 "Opcions:\n"
@@ -3225,8 +3364,8 @@ msgstr "<error estàndard>"
 
 #: src/split/queue.c
 #, c-format
-msgid "unable to read depot directory '%.250s'"
-msgstr "no es pot llegir el directori de dipòsit «%.250s»"
+msgid "unable to read depot directory '%s'"
+msgstr "no es pot llegir el directori de dipòsit «%s»"
 
 #: src/split/queue.c
 msgid "--auto requires the use of the --output option"
@@ -3238,13 +3377,13 @@ msgstr "--auto requereix exactament un fitxer part com a argument"
 
 #: src/split/queue.c
 #, c-format
-msgid "unable to read part file '%.250s'"
-msgstr "no es pot llegir el fitxer part «%.250s»"
+msgid "unable to read part file '%s'"
+msgstr "no es pot llegir el fitxer part «%s»"
 
 #: src/split/queue.c
 #, c-format
-msgid "File '%.250s' is not part of a multipart archive.\n"
-msgstr "El fitxer «%.250s» no és part d'un arxiu multipart.\n"
+msgid "File '%s' is not part of a multipart archive.\n"
+msgstr "El fitxer «%s» no és part d'un arxiu multipart.\n"
 
 #: src/split/queue.c
 #, c-format
@@ -3253,13 +3392,13 @@ msgstr "no es pot crear el directori «%s»"
 
 #: src/split/queue.c
 #, c-format
-msgid "unable to reopen part file '%.250s'"
-msgstr "no es pot reobrir el fitxer part «%.250s»"
+msgid "unable to reopen part file '%s'"
+msgstr "no es pot reobrir el fitxer part «%s»"
 
 #: src/split/queue.c
 #, c-format
-msgid "unable to open new depot file '%.250s'"
-msgstr "no es pot obrir el fitxer de dipòsit nou «%.250s»"
+msgid "unable to open new depot file '%s'"
+msgstr "no es pot obrir el fitxer de dipòsit nou «%s»"
 
 #: src/split/queue.c
 #, c-format
@@ -3268,8 +3407,8 @@ msgstr "no es pot extreure la part «%s» del paquet trossejat: %s"
 
 #: src/split/queue.c
 #, c-format
-msgid "unable to rename new depot file '%.250s' to '%.250s'"
-msgstr "no es pot canviar el nom del fitxer de dipòsit nou «%.250s» a «%.250s»"
+msgid "unable to rename new depot file '%s' to '%s'"
+msgstr "no es pot canviar el nom del fitxer de dipòsit nou «%s» a «%s»"
 
 #: src/split/queue.c
 #, c-format
@@ -3282,8 +3421,8 @@ msgstr " i "
 
 #: src/split/queue.c
 #, c-format
-msgid "unable to delete used-up depot file '%.250s'"
-msgstr "no es pot esborrar el fitxer de dipòsit emprat «%.250s»"
+msgid "unable to delete used-up depot file '%s'"
+msgstr "no es pot esborrar el fitxer de dipòsit emprat «%s»"
 
 #: src/split/queue.c src/trigger/main.c src/main/enquiry.c src/main/select.c
 #: src/main/update.c
@@ -3298,8 +3437,8 @@ msgstr "Queden fitxers de brutícia al directori de dipòsit:\n"
 
 #: src/split/queue.c
 #, c-format
-msgid "unable to stat '%.250s'"
-msgstr "no es pot fer «stat» a «%.250s»"
+msgid "unable to stat '%s'"
+msgstr "no es pot fer «stat» a «%s»"
 
 #: src/split/queue.c
 #, c-format
@@ -3323,8 +3462,8 @@ msgstr " Paquet %s: part(s) "
 
 #: src/split/queue.c
 #, c-format
-msgid "part file '%.250s' is not a plain file"
-msgstr "el fitxer part «%.250s» no és un fitxer normal"
+msgid "part file '%s' is not a plain file"
+msgstr "el fitxer part «%s» no és un fitxer normal"
 
 #: src/split/queue.c
 #, c-format
@@ -3333,8 +3472,8 @@ msgstr "(total %jd octets)\n"
 
 #: src/split/queue.c
 #, c-format
-msgid "unable to discard '%.250s'"
-msgstr "no es pot descartar «%.250s»"
+msgid "unable to discard '%s'"
+msgstr "no es pot descartar «%s»"
 
 #: src/split/queue.c
 #, c-format
@@ -3351,8 +3490,8 @@ msgstr "<dpkg-deb --info canonada>"
 
 #: src/split/split.c
 #, c-format
-msgid "unable to open source file '%.250s'"
-msgstr "no es pot obrir el fitxer origen «%.250s»"
+msgid "unable to open source file '%s'"
+msgstr "no es pot obrir el fitxer origen «%s»"
 
 #: src/split/split.c
 msgid "unable to fstat source file"
@@ -3360,8 +3499,8 @@ msgstr "no es pot fer «fstat» al fitxer origen"
 
 #: src/split/split.c
 #, c-format
-msgid "source file '%.250s' not a plain file"
-msgstr "el fitxer origen «%.250s» no és un fitxer normal"
+msgid "source file '%s' not a plain file"
+msgstr "el fitxer origen «%s» no és un fitxer normal"
 
 #: src/split/split.c src/main/configure.c src/main/verify.c
 #, c-format
@@ -3397,11 +3536,6 @@ msgstr "--split pren com molt un nom de fitxer origen i un prefix de destí"
 msgid "Use --help for help about diverting files."
 msgstr "Empreu --help per a obtenir ajuda sobre la desviació de fitxers."
 
-#: src/divert/main.c src/statoverride/main.c
-#, c-format
-msgid "Debian %s version %s.\n"
-msgstr "Debian %s versió %s.\n"
-
 #: src/divert/main.c
 #, c-format
 msgid ""
@@ -3435,7 +3569,7 @@ msgid ""
 "  --admindir <directory>   set the directory with the diversions file.\n"
 "  --instdir <directory>    set the root directory, but not the admin dir.\n"
 "  --root <directory>       set the directory of the root filesystem.\n"
-"  --test                   don't do anything, just demonstrate.\n"
+"  --test                   do not do anything, just demonstrate.\n"
 "  --quiet                  quiet operation, minimal output.\n"
 "  --help                   show this help message.\n"
 "  --version                show the version.\n"
@@ -3469,8 +3603,8 @@ msgid ""
 "Package preinst/postrm scripts should always specify --package and --"
 "divert.\n"
 msgstr ""
-"En afegir, les opcions per defecte són --local i --divert <original>."
-"distrib.\n"
+"En afegir, les opcions per defecte són --local i --divert "
+"<original>.distrib.\n"
 "En eliminar, --package o --local i --divert han de coincidir en cas\n"
 "d'especificar-se.\n"
 "Els guions de preinst/postrm sempre haurien d'especificar --package i --"
@@ -3479,10 +3613,10 @@ msgstr ""
 #: src/divert/main.c
 msgid ""
 "please specify --no-rename explicitly, the default will change to --rename "
-"in 1.20.x"
+"not before 1.23.x"
 msgstr ""
-"especifiqueu --no-rename explícitament, l'opció predeterminada canviar a --"
-"rename a 1.20.x"
+"especifiqueu --no-rename explícitament, l'opció predeterminada canviarà a --"
+"rename, però no abans de 1.23.x"
 
 #: src/divert/main.c utils/update-alternatives.c
 #, c-format
@@ -3506,7 +3640,7 @@ msgstr ""
 #: src/divert/main.c utils/update-alternatives.c
 #, c-format
 msgid "unable to create file '%s'"
-msgstr "no es pot crear el fitxer «%.250s»"
+msgstr "no es pot crear el fitxer «%s»"
 
 #: src/divert/main.c
 #, c-format
@@ -3734,13 +3868,8 @@ msgstr "el grup «%s» no existeix"
 
 #: src/statoverride/main.c src/main/archives.c
 #, c-format
-msgid "error setting ownership of '%.255s'"
-msgstr "s'ha produït un error en establir el propietari de «%.255s»"
-
-#: src/statoverride/main.c src/main/archives.c
-#, c-format
-msgid "error setting permissions of '%.255s'"
-msgstr "s'ha produït un error en establir els permisos de «%.255s»"
+msgid "error setting ownership of '%s'"
+msgstr "s'ha produït un error en establir el propietari de «%s»"
 
 #: src/statoverride/main.c
 #, c-format
@@ -3828,7 +3957,7 @@ msgid ""
 "  --await                          Package needs to await the processing.\n"
 "  --no-await                       No package needs to await the "
 "processing.\n"
-"  --no-act                         Just test - don't actually change "
+"  --no-act                         Just test - do not actually change "
 "anything.\n"
 "\n"
 msgstr ""
@@ -3840,7 +3969,7 @@ msgstr ""
 "  --await                         El paquet necessita esperar el processat.\n"
 "  --no-await                      Cap paquet necessita esperar el "
 "processat.\n"
-"  --no-act                        Només comprova, no canvies res.\n"
+"  --no-act                        Només comprova, no efectua canvis.\n"
 "\n"
 
 #: src/trigger/main.c
@@ -3853,14 +3982,15 @@ msgid "takes one argument, the trigger name"
 msgstr "només accepta un argument, el nom de l'activador"
 
 #: src/trigger/main.c
-#, c-format
-msgid "illegal awaited package name '%.250s': %.250s"
-msgstr "el nom de paquet esperat «%.255s» és il·legal: %.250s"
+#, fuzzy, c-format
+#| msgid "illegal awaited package name '%s': %s"
+msgid "invalid awaited package name '%s': %s"
+msgstr "el nom de paquet esperat «%s» és il·legal: %s"
 
 #: src/trigger/main.c
 #, c-format
-msgid "invalid trigger name '%.250s': %.250s"
-msgstr "el nom d'activador «%.250s» no és vàlid: %.250s»"
+msgid "invalid trigger name '%s': %s"
+msgstr "el nom d'activador «%s» no és vàlid: %s»"
 
 #: src/trigger/main.c
 msgid "triggers data directory not yet created"
@@ -3878,22 +4008,29 @@ msgstr "no s'ha trobat cap paquet que correspongui amb %s"
 # jm: Açò jo no se si traduir-ho. Ha de caber en una línia i hem de dir
 # jm: quina lletra correspon a cada estat.
 #. TRANSLATORS: This is the header that appears on 'dpkg-query -l'. The
-#. * string should remain under 80 characters. The uppercase letters in
-#. * the state values denote the abbreviated letter that will appear on
-#. * the first three columns, which should ideally match the English one
-#. * (e.g. Remove → supRimeix), see dpkg-query(1) for further details. The
-#. * translated message can use additional lines if needed.
+#. string should remain under 80 characters. The uppercase letters in
+#. the state values denote the abbreviated letter that will appear on
+#. the first three columns, which should ideally match the English one
+#. (e.g. Remove → supRimeix), see dpkg-query(1) for further details. The
+#. translated message can use additional lines if needed. The ASCII art
+#. can use Unicode box characters.
+#.
 #: src/query/main.c
 msgid ""
-"Desired=Unknown/Install/Remove/Purge/Hold\n"
-"| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-"
+"+-- Desired=Unknown/Install/Remove/Purge/Hold\n"
+"|+- Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-"
 "pend\n"
-"|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)\n"
+"||+ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)\n"
 msgstr ""
-"Desitjat=desconegUt/Instal·la/elimina(R)/Purga/retín(H)\n"
-"| Estat=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-"
+"┌── Desitjat=desconegUt/Instal·la/elimina(R)/Purga/retín(H)\n"
+"│┌─ Estat=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-"
 "pend\n"
-"|/ Err?=(none)/Reinst-required (Estat,Err: majúsc.=dolent)\n"
+"││┌ Err?=(none)/Reinst-required (Estat,Err: majúsc.=dolent)\n"
+
+#: src/query/main.c
+msgctxt "query-list-header"
+msgid "|"
+msgstr "│"
 
 #: src/query/main.c
 msgid "Name"
@@ -3910,6 +4047,21 @@ msgstr "Arquitectura"
 #: src/query/main.c
 msgid "Description"
 msgstr "Descripció"
+
+#: src/query/main.c
+msgctxt "query-list-header"
+msgid "+++-"
+msgstr "├┼┼─"
+
+#: src/query/main.c
+msgctxt "query-list-header"
+msgid "="
+msgstr "═"
+
+#: src/query/main.c
+msgctxt "query-list-header"
+msgid "-"
+msgstr "─"
 
 #: src/query/main.c
 msgid "showing package list on pager"
@@ -4090,105 +4242,99 @@ msgstr "s'ha produït un error en llegir des d'un conducte de dpkg-deb"
 
 #: src/main/archives.c
 #, c-format
-msgid "cannot skip padding for file '%.255s': %s"
-msgstr "no es pot ometre el farcit pel fitxer «%.255s»: %s"
+msgid "cannot skip padding for file '%s': %s"
+msgstr "no es pot ometre el farcit pel fitxer «%s»: %s"
 
 #: src/main/archives.c
 #, c-format
-msgid "cannot skip file '%.255s' (replaced or excluded?) from pipe: %s"
+msgid "cannot skip file '%s' (replaced or excluded?) from pipe: %s"
 msgstr ""
-"no es pot ometre del conducte el fitxer «%.255s» (reemplaçat o exclòs?): %s"
+"no es pot ometre del conducte el fitxer «%s» (reemplaçat o exclòs?): %s"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to create '%.255s' (while processing '%.255s')"
-msgstr "no s'ha pogut crear «%.255s» (en processar «%.255s»)"
+msgid "unable to create '%s' (while processing '%s')"
+msgstr "no s'ha pogut crear «%s» (en processar «%s»)"
 
 #: src/main/archives.c
 #, c-format
-msgid "cannot copy extracted data for '%.255s' to '%.255s': %s"
-msgstr "no es poden copiar les dades extretes de «%.250s» a «%.250s»: %s"
+msgid "cannot copy extracted data for '%s' to '%s': %s"
+msgstr "no es poden copiar les dades extretes de «%s» a «%s»: %s"
 
 #: src/main/archives.c
 #, c-format
-msgid "error closing/writing '%.255s'"
-msgstr "s'ha produït un error en tancar/escriure «%.255s»"
+msgid "error closing/writing '%s'"
+msgstr "s'ha produït un error en tancar/escriure «%s»"
 
 #: src/main/archives.c
 #, c-format
-msgid "error creating pipe '%.255s'"
-msgstr "s'ha produït un error en crear el conducte «%.255s»"
+msgid "error creating pipe '%s'"
+msgstr "s'ha produït un error en crear el conducte «%s»"
 
 #: src/main/archives.c
 #, c-format
-msgid "error creating device '%.255s'"
-msgstr "s'ha produït un error en crear el dispositiu «%.255s»"
+msgid "error creating device '%s'"
+msgstr "s'ha produït un error en crear el dispositiu «%s»"
 
 #: src/main/archives.c utils/update-alternatives.c
 #, c-format
-msgid "error creating symbolic link '%.255s'"
-msgstr "s'ha produït un error en crear l'enllaç simbòlic «%.255s»"
+msgid "error creating symbolic link '%s'"
+msgstr "s'ha produït un error en crear l'enllaç simbòlic «%s»"
 
 #: src/main/archives.c
 #, c-format
-msgid "error creating directory '%.255s'"
-msgstr "s'ha produït un error en crear el directori «%.255s»"
+msgid "error creating directory '%s'"
+msgstr "s'ha produït un error en crear el directori «%s»"
 
 #: src/main/archives.c
 #, c-format
-msgid "cannot compute MD5 digest for file '%.255s' in tar archive: %s"
+msgid "cannot compute MD5 digest for file '%s' in tar archive: %s"
+msgstr "no es pot calcular el resum MD5 per al fitxer «%s» en l'arxiu tar: %s"
+
+#: src/main/archives.c
+#, c-format
+msgid "error setting timestamps of '%s'"
+msgstr "s'ha produït un error en establir les marques horàries de «%s»"
+
+#: src/main/archives.c
+#, c-format
+msgid "error setting ownership of symlink '%s'"
 msgstr ""
-"no es pot calcular el resum MD5 per al fitxer «%.250s» en l'arxiu tar: %s"
+"s'ha produït un error en establir el propietari de l'enllaç simbòlic «%s»"
 
 #: src/main/archives.c
 #, c-format
-msgid "error setting timestamps of '%.255s'"
-msgstr "s'ha produït un error en establir les marques horàries de «%.255s»"
-
-#: src/main/archives.c
-#, c-format
-msgid "error setting ownership of symlink '%.255s'"
-msgstr ""
-"s'ha produït un error en establir el propietari de l'enllaç simbòlic «%.255s»"
-
-#: src/main/archives.c
-#, c-format
-msgid "unable to read link '%.255s'"
-msgstr "no es pot llegir l'enllaç «%.255s»"
-
-#: src/main/archives.c src/main/configure.c
-#, c-format
-msgid "symbolic link '%.250s' size has changed from %jd to %zd"
-msgstr "la mida de l'enllaç simbòlic «%.250s» ha canviat de %jd a %zd"
+msgid "unable to read link '%s'"
+msgstr "no es pot llegir l'enllaç «%s»"
 
 #: src/main/archives.c
 #, c-format
 msgid ""
-"trying to overwrite shared '%.250s', which is different from other instances "
-"of package %.250s"
+"trying to overwrite shared '%s', which is different from other instances of "
+"package %s"
 msgstr ""
-"s'està intentant sobreescriure «%.250s» compartit, que és diferent d'altres "
-"instàncies del paquet %.250s"
+"s'està intentant sobreescriure «%s» compartit, que és diferent d'altres "
+"instàncies del paquet %s"
 
 #: src/main/archives.c
 #, c-format
-msgid "failed to stat (dereference) existing symlink '%.250s'"
+msgid "failed to stat (dereference) existing symlink '%s'"
 msgstr ""
-"no s'ha pogut fer «stat» (dereferència) a l'enllaç simbòlic existent «%.250s»"
+"no s'ha pogut fer «stat» (dereferència) a l'enllaç simbòlic existent «%s»"
 
 #: src/main/archives.c
 #, c-format
 msgid ""
-"failed to stat (dereference) proposed new symlink target '%.250s' for "
-"symlink '%.250s'"
+"failed to stat (dereference) proposed new symlink target '%s' for symlink "
+"'%s'"
 msgstr ""
 "no s'ha pogut fer «stat» (dereferència) a l'objectiu del nou enllaç simbòlic "
-"proposat «%.250s» per a l'enllaç simbòlic «%.250s»"
+"proposat «%s» per a l'enllaç simbòlic «%s»"
 
 #: src/main/archives.c
 #, c-format
-msgid "newline not allowed in archive object name '%.255s'"
-msgstr "no es permet una línia nova al nom de l'objecte de l'arxiu «%.250s»"
+msgid "newline not allowed in archive object name '%s'"
+msgstr "no es permet una línia nova al nom de l'objecte de l'arxiu «%s»"
 
 #: src/main/archives.c
 #, c-format
@@ -4200,43 +4346,38 @@ msgstr ""
 #: src/main/archives.c
 #, c-format
 msgid ""
-"trying to overwrite '%.250s', which is the diverted version of "
-"'%.250s' (package: %.100s)"
+"trying to overwrite '%s', which is the diverted version of '%s' (package: %s)"
 msgstr ""
-"s'està intentant sobreescriure «%.250s», que és la versió desviada de "
-"«%.250s» (paquet: %.100s)"
+"s'està intentant sobreescriure «%s», que és la versió desviada de «%s» "
+"(paquet: %s)"
 
 #: src/main/archives.c
 #, c-format
-msgid "trying to overwrite '%.250s', which is the diverted version of '%.250s'"
-msgstr ""
-"s'està intentant sobreescriure «%.250s», que és la versió desviada de "
-"«%.250s»"
+msgid "trying to overwrite '%s', which is the diverted version of '%s'"
+msgstr "s'està intentant sobreescriure «%s», que és la versió desviada de «%s»"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to stat '%.255s' (which was about to be installed)"
-msgstr "no es pot fer «stat» a «%.255s» (que és el que s'anava a instal·lar)"
+msgid "unable to stat '%s' (which was about to be installed)"
+msgstr "no es pot fer «stat» a «%s» (que és el que s'anava a instal·lar)"
 
 #: src/main/archives.c
 #, c-format
 msgid ""
-"unable to clean up mess surrounding '%.255s' before installing another "
-"version"
+"unable to clean up mess surrounding '%s' before installing another version"
 msgstr ""
-"no es pot netejar el desordre de «%.255s» abans d'instal·lar una altra versió"
+"no es pot netejar el desordre de «%s» abans d'instal·lar una altra versió"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to stat restored '%.255s' before installing another version"
+msgid "unable to stat restored '%s' before installing another version"
 msgstr ""
-"no es pot fer «stat» al «%.255s» restablert abans d'instal·lar una altra "
-"versió"
+"no es pot fer «stat» al «%s» restablert abans d'instal·lar una altra versió"
 
 #: src/main/archives.c
 #, c-format
-msgid "archive contained object '%.255s' of unknown type 0x%x"
-msgstr "l'arxiu conté l'objecte «%.255s» de tipus 0x%x desconegut"
+msgid "archive contained object '%s' of unknown type 0x%x"
+msgstr "l'arxiu conté l'objecte «%s» de tipus 0x%x desconegut"
 
 #: src/main/archives.c
 #, c-format
@@ -4250,59 +4391,49 @@ msgstr "Reemplaçat pels fitxers al paquet instal·lat %s (%s)…\n"
 
 #: src/main/archives.c
 #, c-format
-msgid ""
-"trying to overwrite directory '%.250s' in package %.250s %.250s with "
-"nondirectory"
+msgid "trying to overwrite directory '%s' in package %s (%s) with nondirectory"
 msgstr ""
-"s'està intentant sobreescriure el directori «%.250s» del paquet %.250s "
-"%.250s amb un no directori"
+"s'està intentant sobreescriure el directori «%s» del paquet %s (%s) amb un "
+"no directori"
 
 #: src/main/archives.c
 #, c-format
-msgid "trying to overwrite '%.250s', which is also in package %.250s %.250s"
+msgid "trying to overwrite '%s', which is also in package %s (%s)"
 msgstr ""
-"s'està intentant sobreescriure «%.250s», que també està en el paquet %.250s "
-"%.250s"
+"s'està intentant sobreescriure «%s», que també està en el paquet %s (%s)"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to move aside '%.255s' to install new version"
-msgstr "no es pot moure «%.255s» per a instal·lar una versió nova"
+msgid "unable to move aside '%s' to install new version"
+msgstr "no es pot moure «%s» per a instal·lar una versió nova"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to make backup symlink for '%.255s'"
+msgid "unable to make backup symlink for '%s'"
+msgstr "no es pot fer una còpia de seguretat de l'enllaç simbòlic per a «%s»"
+
+#: src/main/archives.c
+#, c-format
+msgid "unable to chown backup symlink for '%s'"
 msgstr ""
-"no es pot fer una còpia de seguretat de l'enllaç simbòlic per a «%.255s»"
+"no es pot fer «chown» a l'enllaç simbòlic de la còpia de seguretat de «%s»"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to chown backup symlink for '%.255s'"
+msgid "unable to make backup link of '%s' before installing new version"
 msgstr ""
-"no es pot fer «chown» a l'enllaç simbòlic de la còpia de seguretat de "
-"«%.255s»"
+"no es pot crear un enllaç de seguretat de «%s» abans d'instal·lar la versió "
+"nova"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to make backup link of '%.255s' before installing new version"
-msgstr ""
-"no es pot crear un enllaç de seguretat de «%.255s» abans d'instal·lar la "
-"versió nova"
+msgid "unable to install new version of '%s'"
+msgstr "no es pot instal·lar una versió nova de «%s»"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to install new version of '%.255s'"
-msgstr "no es pot instal·lar una versió nova de «%.255s»"
-
-#: src/main/archives.c
-#, c-format
-msgid "unable to open '%.255s'"
-msgstr "no es pot obrir «%.255s»"
-
-#: src/main/archives.c
-#, c-format
-msgid "unable to sync file '%.255s'"
-msgstr "no es pot fer «sync» al fitxer «%.255s»"
+msgid "unable to open '%s'"
+msgstr "no es pot obrir «%s»"
 
 #: src/main/archives.c
 #, c-format
@@ -4405,21 +4536,21 @@ msgstr ""
 
 #: src/main/archives.c
 msgid "ignoring breakage, may proceed anyway!"
-msgstr "s'ignorarà el trencament, es pot procedir igualment!"
+msgstr "s'ignorarà el trencament, es pot procedir igualment"
 
 #: src/main/archives.c
 #, c-format
 msgid ""
-"installing %.250s would break %.250s, and\n"
+"installing %s would break %s, and\n"
 " deconfiguration is not permitted (--auto-deconfigure might help)"
 msgstr ""
-"instal·lar %.250s trencaria %.250s, i\n"
+"instal·lar %s trencaria %s, i\n"
 " la deconfiguració no és permesa (--auto-deconfigure podria ajudar)"
 
 #: src/main/archives.c
 #, c-format
-msgid "installing %.250s would break existing software"
-msgstr "la instal·lació del paquet %.250s trencaria el programari existent"
+msgid "installing %s would break existing software"
+msgstr "la instal·lació del paquet %s trencaria el programari existent"
 
 #: src/main/archives.c
 #, c-format
@@ -4458,12 +4589,12 @@ msgstr "sí, es desinstal·larà %s en favor de %s"
 
 #: src/main/archives.c
 #, c-format
-msgid "conflicting packages - not installing %.250s"
-msgstr "paquets en conflicte - no s'instal·larà %.250s"
+msgid "conflicting packages - not installing %s"
+msgstr "paquets en conflicte; no s'instal·larà %s"
 
 #: src/main/archives.c
 msgid "ignoring conflict, may proceed anyway!"
-msgstr "s'ignorarà el conflicte, es pot procedir igualment!"
+msgstr "s'ignorarà el conflicte, es pot procedir igualment"
 
 #: src/main/archives.c
 #, c-format
@@ -4473,8 +4604,8 @@ msgstr "--%s --recursive necessita almenys un camí com a argument"
 #: src/main/archives.c
 msgid "searched, but found no packages (files matching *.deb)"
 msgstr ""
-"s'ha buscat, però no s'han trobat paquets (fitxers que coincidisquen amb *."
-"deb)"
+"s'ha buscat, però no s'han trobat paquets (fitxers que coincidisquen amb "
+"*.deb)"
 
 #: src/main/archives.c
 #, c-format
@@ -4503,47 +4634,47 @@ msgstr "S'està ometent el paquet no seleccionat %s.\n"
 
 #: src/main/archives.c
 #, c-format
-msgid "version %.250s of %.250s already installed, skipping"
-msgstr "la versió %.250s de %.250s ja és instal·lada, es descarta"
+msgid "package %s (%s) with same version already installed, skipping"
+msgstr "el paquet %s (%s) amb la mateixa versió ja és instal·lat, es descarta"
 
 #: src/main/archives.c
 #, c-format
-msgid "downgrading %.250s from %.250s to %.250s"
-msgstr "s'està desactualitzant %.250s de %.250s a %.250s"
+msgid "downgrading %s (%s) to (%s)"
+msgstr "s'està desactualitzant %s (%s) a (%s)"
 
 #: src/main/archives.c
 #, c-format
-msgid "will not downgrade %.250s from %.250s to %.250s, skipping"
-msgstr "no es desactualitzarà %.250s de %.250s a %.250s, es descarta"
+msgid "will not downgrade %s (%s) to (%s), skipping"
+msgstr "no es desactualitzarà %s (%s) a (%s), es descarta"
 
 #: src/main/cleanup.c
 #, c-format
 msgid ""
-"unable to remove newly-installed version of '%.250s' to allow reinstallation "
-"of backup copy"
+"unable to remove newly-installed version of '%s' to allow reinstallation of "
+"backup copy"
 msgstr ""
-"no es pot esborrar la versió acabada d'instal·lar de «%.250s» per a permetre "
-"la reinstal·lació de la còpia de seguretat"
+"no es pot esborrar la versió acabada d'instal·lar de «%s» per a permetre la "
+"reinstal·lació de la còpia de seguretat"
 
 #: src/main/cleanup.c
 #, c-format
-msgid "unable to restore backup version of '%.250s'"
-msgstr "no es pot restablir la versió de la còpia de seguretat de «%.250s»"
+msgid "unable to restore backup version of '%s'"
+msgstr "no es pot restablir la versió de la còpia de seguretat de «%s»"
 
 #: src/main/cleanup.c
 #, c-format
-msgid "unable to remove backup copy of '%.250s'"
-msgstr "no es pot eliminar la còpia de seguretat de «%.250s»"
+msgid "unable to remove backup copy of '%s'"
+msgstr "no es pot eliminar la còpia de seguretat de «%s»"
 
 #: src/main/cleanup.c
 #, c-format
-msgid "unable to remove newly-installed version of '%.250s'"
-msgstr "no es pot eliminar la versió acabada d'instal·lar de «%.250s»"
+msgid "unable to remove newly-installed version of '%s'"
+msgstr "no es pot eliminar la versió acabada d'instal·lar de «%s»"
 
 #: src/main/cleanup.c
 #, c-format
-msgid "unable to remove newly-extracted version of '%.250s'"
-msgstr "no es pot eliminar la versió acabada d'extraure de «%.250s»"
+msgid "unable to remove newly-extracted version of '%s'"
+msgstr "no es pot eliminar la versió acabada d'extraure de «%s»"
 
 #: src/main/configure.c
 #, c-format
@@ -4672,7 +4803,7 @@ msgid "Useful environment variables:\n"
 msgstr "Variables d'entorn útils:\n"
 
 #: src/main/configure.c
-msgid "Type 'exit' when you're done.\n"
+msgid "Type 'exit' when you are done.\n"
 msgstr "Escriviu «exit» quan acabeu.\n"
 
 #: src/main/configure.c
@@ -4681,13 +4812,13 @@ msgstr "intèrpret d'ordres de conffile"
 
 #: src/main/configure.c
 #, c-format
-msgid "unable to stat new distributed conffile '%.250s'"
-msgstr "no es pot fer «stat» al conffile de nova distribució «%.250s»"
+msgid "unable to stat new distributed conffile '%s'"
+msgstr "no es pot fer «stat» al conffile de nova distribució «%s»"
 
 #: src/main/configure.c
 #, c-format
-msgid "unable to stat current installed conffile '%.250s'"
-msgstr "no es pot fer «stat» al conffile «%.250s» actualment instal·lat"
+msgid "unable to stat current installed conffile '%s'"
+msgstr "no es pot fer «stat» al conffile «%s» actualment instal·lat"
 
 #: src/main/configure.c
 #, c-format
@@ -4702,8 +4833,8 @@ msgstr ""
 
 #: src/main/configure.c
 #, c-format
-msgid "%s: failed to remove old backup '%.250s': %s"
-msgstr "%s: no s'ha pogut esborrar l'antiga còpia de seguretat «%.250s»: %s"
+msgid "%s: failed to remove old backup '%s': %s"
+msgstr "%s: no s'ha pogut esborrar l'antiga còpia de seguretat «%s»: %s"
 
 # Reanomenar - Canviar el nom - Tornar a anomenar? -- Jordà
 # Jo personalment preferisc "canvia el nom", però per exemple al Termcat
@@ -4712,29 +4843,28 @@ msgstr "%s: no s'ha pogut esborrar l'antiga còpia de seguretat «%.250s»: %s"
 # Fins on jo veig, el Nautilus diu això, en octubre de 2010…
 #: src/main/configure.c
 #, c-format
-msgid "%s: failed to rename '%.250s' to '%.250s': %s"
-msgstr "%s: no s'ha pogut canviar el nom de «%.250s» a «%.250s»: %s"
+msgid "%s: failed to rename '%s' to '%s': %s"
+msgstr "%s: no s'ha pogut canviar el nom de «%s» a «%s»: %s"
 
 #: src/main/configure.c src/main/unpack.c
 #, c-format
-msgid "%s: failed to remove '%.250s': %s"
+msgid "%s: failed to remove '%s': %s"
 msgstr "%s: no s'ha pogut esborrar «%s»: %s"
 
 #: src/main/configure.c
 #, c-format
-msgid "%s: failed to remove old distributed version '%.250s': %s"
-msgstr ""
-"%s: no s'ha pogut esborrar la versió de l'antiga distribució «%.250s»: %s"
+msgid "%s: failed to remove old distributed version '%s': %s"
+msgstr "%s: no s'ha pogut esborrar la versió de l'antiga distribució «%s»: %s"
 
 #: src/main/configure.c
 #, c-format
-msgid "%s: failed to remove '%.250s' (before overwrite): %s"
-msgstr "%s: no s'ha pogut esborrar «%.250s» (abans de sobreescriure): %s"
+msgid "%s: failed to remove '%s' (before overwrite): %s"
+msgstr "%s: no s'ha pogut esborrar «%s» (abans de sobreescriure): %s"
 
 #: src/main/configure.c
 #, c-format
-msgid "%s: failed to link '%.250s' to '%.250s': %s"
-msgstr "%s: no s'ha pogut enllaçar «%.250s» a «%.250s»: %s"
+msgid "%s: failed to link '%s' to '%s': %s"
+msgstr "%s: no s'ha pogut enllaçar «%s» a «%s»: %s"
 
 #: src/main/configure.c
 #, c-format
@@ -4743,8 +4873,8 @@ msgstr "S'està instal·lant una versió nova del fitxer de configuració %s…\
 
 #: src/main/configure.c utils/update-alternatives.c
 #, c-format
-msgid "unable to install '%.250s' as '%.250s'"
-msgstr "no es pot instal·lar «%.250s» com a «%.250s»"
+msgid "unable to install '%s' as '%s'"
+msgstr "no es pot instal·lar «%s» com a «%s»"
 
 #: src/main/configure.c
 #, c-format
@@ -4753,17 +4883,17 @@ msgstr "no hi ha instal·lat cap paquet anomenat «%s», no es pot configurar"
 
 #: src/main/configure.c
 #, c-format
-msgid "package %.250s is already installed and configured"
-msgstr "el paquet %.250s ja està instal·lat i configurat"
+msgid "package %s is already installed and configured"
+msgstr "el paquet %s ja està instal·lat i configurat"
 
 #: src/main/configure.c
 #, c-format
 msgid ""
-"package %.250s is not ready for configuration\n"
-" cannot configure (current status '%.250s')"
+"package %s is not ready for configuration\n"
+" cannot configure (current status '%s')"
 msgstr ""
-"el paquet %.250s no està llest per a configurar-se\n"
-" no es pot configurar (estat actual «%.250s»)"
+"el paquet %s no està llest per a configurar-se\n"
+" no es pot configurar (estat actual «%s»)"
 
 #: src/main/configure.c
 #, c-format
@@ -4775,9 +4905,11 @@ msgstr ""
 #: src/main/configure.c
 #, c-format
 msgid ""
-"package %s %s cannot be configured because %s is at a different version (%s)"
+"package %s (%s) cannot be configured because %s is at a different version "
+"(%s)"
 msgstr ""
-"el paquet %s %s no es pot configurar perquè %s és en una versió (%s) diferent"
+"el paquet %s (%s) no es pot configurar perquè %s és en una versió (%s) "
+"diferent"
 
 #: src/main/configure.c
 #, c-format
@@ -4790,7 +4922,7 @@ msgstr ""
 
 #: src/main/configure.c
 msgid "dependency problems - leaving unconfigured"
-msgstr "problemes de dependències - es deixa sense configurar"
+msgstr "problemes de dependències; es deixa sense configurar"
 
 #: src/main/configure.c
 #, c-format
@@ -4845,17 +4977,17 @@ msgstr ""
 #: src/main/configure.c
 #, c-format
 msgid ""
-"%s: conffile '%.250s' resolves to degenerate filename\n"
+"%s: conffile '%s' resolves to degenerate filename\n"
 " ('%s' is a symlink to '%s')"
 msgstr ""
-"%s: el conffile «%.250s» apunta a un nom de fitxer corromput\n"
+"%s: el conffile «%s» apunta a un nom de fitxer corromput\n"
 " («%s» és un enllaç simbòlic a «%s»)"
 
 #: src/main/configure.c
 #, c-format
-msgid "%s: conffile '%.250s' is not a plain file or symlink (= '%s')"
+msgid "%s: conffile '%s' is not a plain file or symlink (= '%s')"
 msgstr ""
-"%s: el conffile «%.250s» no és un fitxer normal o un enllaç simbòlic (= «%s»)"
+"%s: el conffile «%s» no és un fitxer normal o un enllaç simbòlic (= «%s»)"
 
 #: src/main/configure.c
 #, c-format
@@ -4899,83 +5031,83 @@ msgstr "%s millora %s"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s is to be removed.\n"
-msgstr "  %.250s serà desinstal·lat.\n"
+msgid "  %s is to be removed.\n"
+msgstr "  %s serà desinstal·lat.\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s is to be deconfigured.\n"
-msgstr "  %.250s serà desconfigurat.\n"
+msgid "  %s is to be deconfigured.\n"
+msgstr "  %s serà desconfigurat.\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s is to be installed, but is version %.250s.\n"
-msgstr "   %.250s serà instal·lat, però té una versió %.250s.\n"
+msgid "  %s is to be installed, but is version %s.\n"
+msgstr "   %s serà instal·lat, però té una versió %s.\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s is installed, but is version %.250s.\n"
-msgstr "  %.250s està instal·lat, però té una versió %.250s.\n"
+msgid "  %s is installed, but is version %s.\n"
+msgstr "  %s està instal·lat, però té una versió %s.\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s is unpacked, but has never been configured.\n"
-msgstr "  %.250s està desempaquetat, però no ha estat configurat.\n"
+msgid "  %s is unpacked, but has never been configured.\n"
+msgstr "  %s està desempaquetat, però no ha estat configurat.\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s is unpacked, but is version %.250s.\n"
-msgstr "  %.250s està desempaquetat, però té una versió %.250s.\n"
+msgid "  %s is unpacked, but is version %s.\n"
+msgstr "  %s està desempaquetat, però té una versió %s.\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s latest configured version is %.250s.\n"
-msgstr "  la darrera versió configurada de %.250s és la %.250s.\n"
+msgid "  %s latest configured version is %s.\n"
+msgstr "  la darrera versió configurada de %s és la %s.\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s is %s.\n"
-msgstr "  %.250s és %s.\n"
+msgid "  %s is %s.\n"
+msgstr "  %s és %s.\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s provides %.250s but is to be removed.\n"
-msgstr "  %.250s proveeix %.250s però serà desinstal·lat.\n"
+msgid "  %s provides %s but is to be removed.\n"
+msgstr "  %s proveeix %s però serà desinstal·lat.\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s provides %.250s but is to be deconfigured.\n"
-msgstr "  %.250s proveeix %.250s però serà desconfigurat.\n"
+msgid "  %s provides %s but is to be deconfigured.\n"
+msgstr "  %s proveeix %s però serà desconfigurat.\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s provides %.250s but is %s.\n"
-msgstr "  %.250s proveeix %.250s però és %s.\n"
+msgid "  %s provides %s but is %s.\n"
+msgstr "  %s proveeix %s però és %s.\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s is not installed.\n"
-msgstr "  %.250s no està instal·lat.\n"
+msgid "  %s is not installed.\n"
+msgstr "  %s no està instal·lat.\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s (version %.250s) is to be installed.\n"
-msgstr "  %.250s (versió %.250s) serà instal·lat.\n"
+msgid "  %s (version %s) is to be installed.\n"
+msgstr "  %s (versió %s) serà instal·lat.\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s (version %.250s) is present and %s.\n"
-msgstr "  %.250s (versió %.250s) és present i %s.\n"
+msgid "  %s (version %s) is present and %s.\n"
+msgstr "  %s (versió %s) és present i %s.\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s provides %.250s and is to be installed.\n"
-msgstr "  %.250s proveeix %.250s y serà instal·lat.\n"
+msgid "  %s provides %s and is to be installed.\n"
+msgstr "  %s proveeix %s y serà instal·lat.\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s provides %.250s and is present and %s.\n"
-msgstr "  %.250s proveeix %.250s i és present i %s.\n"
+msgid "  %s provides %s and is present and %s.\n"
+msgstr "  %s proveeix %s i és present i %s.\n"
 
 #: src/main/enquiry.c
 msgid ""
@@ -5060,7 +5192,9 @@ msgid "The following packages do not have an architecture:\n"
 msgstr "Els paquets següents no tenen arquitectura:\n"
 
 #: src/main/enquiry.c
-msgid "The following packages have an illegal architecture:\n"
+#, fuzzy
+#| msgid "The following packages have an illegal architecture:\n"
+msgid "The following packages have an invalid architecture:\n"
 msgstr "Els paquets següents tenen una arquitectura il·legal:\n"
 
 #: src/main/enquiry.c
@@ -5146,7 +5280,7 @@ msgstr ""
 #: src/main/enquiry.c
 #, c-format
 msgid "%s assert options - assert whether features are supported:\n"
-msgstr "opcions d'afirmació %s - afirma si s'admeten les característiques:\n"
+msgstr "opcions d'afirmació %s, afirma si s'admeten les característiques:\n"
 
 #: src/main/enquiry.c
 #, c-format
@@ -5164,9 +5298,8 @@ msgstr ""
 
 #: src/main/enquiry.c
 #, c-format
-msgid "cannot satisfy pre-dependencies for %.250s (wanted due to %.250s)"
-msgstr ""
-"no es pot satisfer la predependència per a %.250s (necessària per a %.250s)"
+msgid "cannot satisfy pre-dependencies for %s (wanted due to %s)"
+msgstr "no es pot satisfer la predependència per a %s (necessària per a %s)"
 
 #: src/main/enquiry.c
 #, c-format
@@ -5355,7 +5488,6 @@ msgid ""
 "  --update-avail [<Packages-file>] Replace available packages info.\n"
 "  --merge-avail [<Packages-file>]  Merge with info from file.\n"
 "  --clear-avail                    Erase existing available info.\n"
-"  --forget-old-unavail             Forget uninstalled unavailable pkgs.\n"
 "  -s|--status [<package>...]       Display package status details.\n"
 "  -p|--print-avail [<package>...]  Display available version details.\n"
 "  -L|--listfiles <package>...      List files 'owned' by package(s).\n"
@@ -5401,8 +5533,6 @@ msgstr ""
 "                                   Fusiona amb la informació del fitxer.\n"
 "  --clear-avail                    Elimina la informació actual sobre els\n"
 "                                     paquets disponibles.\n"
-"  --forget-old-unavail             Oblida la informació sobre paquets no\n"
-"                                     instal·lats i no disponibles.\n"
 "  -s|--status [<paquet>…]          Mostra detalls sobre l'estat del paquet.\n"
 "  -p|--print-avail [<paquet>…]     Mostra detalls sobre la versió "
 "disponible.\n"
@@ -5428,7 +5558,7 @@ msgstr ""
 "  --assert-<característica>        Afirma el suport per la "
 "<característica>.\n"
 "  --validate-<cosa> <text>         Valida el <text> de la <cosa>.\n"
-"  --compare-versions <a> <op> <b>  Compara els números de versió - mireu\n"
+"  --compare-versions <a> <op> <b>  Compara els números de versió, mireu\n"
 "                                     més endavant.\n"
 "  --force-help                     Mostra l'ajuda sobre forçar.\n"
 "  -Dh|--debug=help                 Mostra l'ajuda sobre la depuració.\n"
@@ -5486,7 +5616,7 @@ msgid ""
 "  --no-pager                 Disables the use of any pager.\n"
 "  --no-debsig                Do not try to verify package signatures.\n"
 "  --no-act|--dry-run|--simulate\n"
-"                             Just say what we would do - don't do it.\n"
+"                             Just say what we would do - do not do it.\n"
 "  -D|--debug=<octal>         Enable debugging (see -Dhelp or --debug=help).\n"
 "  --status-fd <n>            Send status change updates to file descriptor "
 "<n>.\n"
@@ -5532,7 +5662,7 @@ msgstr ""
 "  --no-pager                 Desactiva l'ús de cap paginador.\n"
 "  --no-debsig                No verifiques les signatures dels paquets.\n"
 "  --no-act|--dry-run|--simulate\n"
-"                             Indica només el que es faria, però no faces "
+"                             Indica només el que es faria, però sense fer "
 "res.\n"
 "  -D|--debug=<octal>         Habilita la depuració (vegeu -Dhelp ó --"
 "debug=help).\n"
@@ -5604,8 +5734,8 @@ msgstr ""
 "Escriviu dpkg-deb --help per a obtenir ajuda sobre la manipulació de "
 "fitxers .deb;\n"
 "\n"
-"Les opcions marcades amb ([*]) produeixen una eixida estesa - canalitzeu-la "
-"a través de «less» o «more»!"
+"Les opcions marcades amb ([*]) produeixen una eixida estesa; canalitzeu-la a "
+"través de «less» o «more»."
 
 #: src/main/main.c
 msgid "Generally helpful progress information"
@@ -5694,7 +5824,7 @@ msgstr "l'opció del format de sortida de verificació «%s» és desconeguda"
 
 #: src/main/main.c
 #, c-format
-msgid "null package name in --%s comma-separated list '%.250s'"
+msgid "null package name in --%s comma-separated list '%s'"
 msgstr ""
 "nom de paquet buit en la llista separada per comes «%2$.250s» de --%1$s"
 
@@ -5709,9 +5839,10 @@ msgid "status logger"
 msgstr "registre d'estat"
 
 #: src/main/main.c
-#, c-format
-msgid "architecture '%s' is illegal: %s"
-msgstr "l'arquitectura «%s» és il·legal: %s"
+#, fuzzy, c-format
+#| msgid "architecture name '%s' is invalid: %s"
+msgid "architecture '%s' is invalid: %s"
+msgstr "l'arquitectura «%s» no és vàlida: %s"
 
 #: src/main/main.c
 #, c-format
@@ -5734,8 +5865,9 @@ msgid "cannot remove architecture '%s' currently in use by the database"
 msgstr "no es pot esborrar l'arquitectura «%s» que és en ús a la base de dades"
 
 #: src/main/main.c
-#, c-format
-msgid "couldn't open '%i' for stream"
+#, fuzzy, c-format
+#| msgid "couldn't open '%i' for stream"
+msgid "cannot open '%i' for stream"
 msgstr "no s'ha pogut obrir «%i» per a un flux"
 
 #: src/main/main.c
@@ -5781,17 +5913,17 @@ msgid ""
 "More than one copy of package %s has been unpacked\n"
 " in this run !  Only configuring it once.\n"
 msgstr ""
-"S'ha desempaquetat més d'una còpia del paquet %s!\n"
+"S'ha desempaquetat més d'una còpia del paquet %s.\n"
 " Només es configurarà una vegada.\n"
 
 #: src/main/packages.c
 #, c-format
 msgid ""
-"package %.250s is not ready for trigger processing\n"
-" (current status '%.250s' with no pending triggers)"
+"package %s is not ready for trigger processing\n"
+" (current status '%s' with no pending triggers)"
 msgstr ""
-"el paquet %.250s no està llest per a processar activadors\n"
-" (estat actual «%.250s» amb cap activador pendent)"
+"el paquet %s no està llest per a processar activadors\n"
+" (estat actual «%s» amb cap activador pendent)"
 
 #: src/main/packages.c
 #, c-format
@@ -5874,17 +6006,16 @@ msgstr "; tot i així:\n"
 
 #: src/main/remove.c
 #, c-format
-msgid "ignoring request to remove %.250s which isn't installed"
-msgstr ""
-"s'està ignorant la petició de desinstal·lar %.250s que no està instal·lat"
+msgid "ignoring request to remove %s which is not installed"
+msgstr "s'està ignorant la petició de desinstal·lar %s que no està instal·lat"
 
 #: src/main/remove.c
 #, c-format
 msgid ""
-"ignoring request to remove %.250s, only the config\n"
+"ignoring request to remove %s, only the config\n"
 " files of which are on the system; use --purge to remove them too"
 msgstr ""
-"es descarta la petició de desinstal·lar %.250s, del qual\n"
+"es descarta la petició de desinstal·lar %s, del qual\n"
 " només els fitxers de configuració queden en el sistema; empreu --purge per\n"
 " a esborrar també aquests fitxers"
 
@@ -5907,7 +6038,7 @@ msgstr ""
 
 #: src/main/remove.c
 msgid "dependency problems - not removing"
-msgstr "problemes de dependències - no es desinstal·la"
+msgstr "problemes de dependències; no es desinstal·la"
 
 #: src/main/remove.c
 #, c-format
@@ -5938,29 +6069,24 @@ msgid "Removing %s (%s) ...\n"
 msgstr "S'està desinstal·lant %s (%s)…\n"
 
 #: src/main/remove.c src/main/unpack.c
-#, c-format
-msgid "unable to delete control info file '%.250s'"
-msgstr "no es pot eliminar el fitxer d'informació de control «%.250s»"
+#, fuzzy, c-format
+#| msgid "unable to delete used-up depot file '%s'"
+msgid "unable to delete package metadata file '%s'"
+msgstr "no es pot esborrar el fitxer de dipòsit emprat «%s»"
 
 #: src/main/remove.c
 #, c-format
 msgid ""
-"while removing %.250s, unable to remove directory '%.250s': %s - directory "
-"may be a mount point?"
+"while removing %s, unable to remove directory '%s': %s - directory may be a "
+"mount point?"
 msgstr ""
-"al desinstal·lar %.250s, no es pot esborrar el directori «%.250s»: %s - el "
-"directori podria ser un punt de muntatge?"
+"al desinstal·lar %s, no es pot esborrar el directori «%s»: %s, el directori "
+"podria ser un punt de muntatge?"
 
 #: src/main/remove.c
 #, c-format
-msgid "unable to securely remove '%.250s'"
-msgstr "no es pot esborrar «%.250s» de forma segura"
-
-#: src/main/remove.c
-#, c-format
-msgid "while removing %.250s, directory '%.250s' not empty so not removed"
-msgstr ""
-"al desinstal·lar %.250s, el directori «%.250s» no està buit, no s'esborra"
+msgid "while removing %s, directory '%s' not empty so not removed"
+msgstr "al desinstal·lar %s, el directori «%s» no està buit, no s'esborra"
 
 #: src/main/remove.c
 #, c-format
@@ -5969,36 +6095,35 @@ msgstr "S'estan purgant els fitxers de configuració de %s (%s)…\n"
 
 #: src/main/remove.c
 #, c-format
-msgid "cannot remove old config file '%.250s' (= '%.250s')"
-msgstr ""
-"no es pot eliminar el fitxer de configuració antic «%.250s» (= «%.250s»)"
+msgid "cannot remove old config file '%s' (= '%s')"
+msgstr "no es pot eliminar el fitxer de configuració antic «%s» (= «%s»)"
 
 #: src/main/remove.c
 #, c-format
-msgid "cannot read config file directory '%.250s' (from '%.250s')"
+msgid "cannot read config file directory '%s' (from '%s')"
 msgstr ""
-"no es pot llegir el directori de fitxers de configuració «%.250s» (a partir "
-"de «%.250s»)"
+"no es pot llegir el directori de fitxers de configuració «%s» (a partir de "
+"«%s»)"
 
 #: src/main/remove.c
 #, c-format
-msgid "cannot remove old backup config file '%.250s' (of '%.250s')"
+msgid "cannot remove old backup config file '%s' (of '%s')"
 msgstr ""
 "no es pot eliminar l'antiga còpia de seguretat del fitxer de configuració "
-"«%.250s» (de «%.250s»)"
+"«%s» (de «%s»)"
 
 #: src/main/remove.c
 msgid "cannot remove old files list"
 msgstr "no es pot eliminar la llista de fitxers antiga"
 
 #: src/main/remove.c
-msgid "can't remove old postrm script"
+msgid "cannot remove old postrm script"
 msgstr "no es pot eliminar el guió postrm antic"
 
 #: src/main/script.c
 #, c-format
-msgid "unable to set execute permissions on '%.250s'"
-msgstr "no es poden establir els permisos d'execució en «%.250s»"
+msgid "unable to set execute permissions on '%s'"
+msgstr "no es poden establir els permisos d'execució en «%s»"
 
 #: src/main/script.c
 msgid "admindir must be inside instdir for dpkg to work properly"
@@ -6014,8 +6139,8 @@ msgstr ""
 
 #: src/main/script.c
 #, c-format
-msgid "failed to chroot to '%.250s'"
-msgstr "no s'ha pogut fer «chroot» a «%.250s»"
+msgid "failed to chroot to '%s'"
+msgstr "no s'ha pogut fer «chroot» a «%s»"
 
 #: src/main/script.c
 msgid "unable to setenv for maintainer script"
@@ -6029,36 +6154,34 @@ msgstr ""
 
 #: src/main/script.c
 #, c-format
-msgid "installed %s package %s script"
-msgstr "s'ha instal·lat el script %s del paquet %s"
+msgid "old %s package %s maintainer script"
+msgstr "guió de mantenidor «%2$s» de l'antic paquet %1$s"
 
 #: src/main/script.c
 #, c-format
-msgid "unable to stat %s '%.250s'"
-msgstr "no es pot fer «stat» a %s «%.250s»"
+msgid "unable to stat %s '%s'"
+msgstr "no es pot fer «stat» a %s «%s»"
 
 #: src/main/script.c
 #, c-format
-msgid "new %s package %s script"
-msgstr "guió «%s» nou del paquet %s"
+msgid "new %s package %s maintainer script"
+msgstr "guió de mantenidor «%2$s» del nou paquet %1$s"
 
 #: src/main/script.c
 #, c-format
-msgid "old %s package %s script"
-msgstr "guió de «%s» antic del paquet %s"
+msgid "unable to stat %s '%s': %s"
+msgstr "no es pot fer «stat» a %s «%s»: %s"
 
 #: src/main/script.c
 #, c-format
-msgid "unable to stat %s '%.250s': %s"
-msgstr "no es pot fer «stat» a %s «%.250s»: %s"
+msgid "trying %s maintainer script from the new %s package instead ..."
+msgstr ""
+"s'està provant el guió de mantenidor %s del paquet nou %s en el seu lloc…"
 
 #: src/main/script.c
-msgid "trying script from the new package instead ..."
-msgstr "s'està provant el guió del paquet nou en el seu lloc…"
-
-#: src/main/script.c
-msgid "there is no script in the new version of the package - giving up"
-msgstr "no hi ha cap guió en la versió nova del paquet - s'està abandonant"
+#, c-format
+msgid "missing %s maintainer script in new %s package, giving up"
+msgstr "no hi ha guió de mantenidor %s en el nou paquet %s; s'està abandonant"
 
 #: src/main/script.c
 msgid "... it looks like that went OK"
@@ -6097,21 +6220,22 @@ msgstr ""
 "s'han trobat dades inesperades després del paquet i selecció en la línia %d"
 
 #: src/main/select.c
-#, c-format
-msgid "illegal package name at line %d: %.250s"
-msgstr "s'ha trobat un nom de paquet il·legal en la línia %d: %.250s"
+#, fuzzy, c-format
+#| msgid "illegal package name at line %d: %s"
+msgid "invalid package name at line %d: %s"
+msgstr "s'ha trobat un nom de paquet il·legal en la línia %d: %s"
 
 #: src/main/select.c
 #, c-format
-msgid "package not in status nor available database at line %d: %.250s"
+msgid "package not in status nor available database at line %d: %s"
 msgstr ""
 "no s'ha trobat el paquet a les bases de dades d'estat o disponible en la "
-"línia %d: %.250s"
+"línia %d: %s"
 
 #: src/main/select.c
 #, c-format
-msgid "unknown wanted status at line %d: %.250s"
-msgstr "s'ha trobat un estat desitjat desconegut en la línia %d: %.250s"
+msgid "unknown wanted status at line %d: %s"
+msgstr "s'ha trobat un estat desitjat desconegut en la línia %d: %s"
 
 #: src/main/select.c
 msgid "read error on standard input"
@@ -6160,7 +6284,7 @@ msgstr ""
 
 #: src/main/trigproc.c
 msgid "dependency problems - leaving triggers unprocessed"
-msgstr "problemes de dependències - es deixen els activadors sense processar"
+msgstr "problemes de dependències; es deixen els activadors sense processar"
 
 #: src/main/trigproc.c
 #, c-format
@@ -6177,6 +6301,11 @@ msgstr ""
 msgid "Processing triggers for %s (%s) ...\n"
 msgstr "S'estan processant els activadors per a %s (%s)…\n"
 
+#. TRANSLATORS: This string represents a summarized pathname,
+#. were prefix directories get abbreviated with ".../", if the
+#. total length exceeds a limit. The three dots would usually
+#. be represented by «…/».
+#.
 #: src/main/unpack.c
 #, c-format
 msgid ".../%s"
@@ -6184,8 +6313,8 @@ msgstr "…/%s"
 
 #: src/main/unpack.c
 #, c-format
-msgid "error ensuring '%.250s' doesn't exist"
-msgstr "s'ha produït un error en assegurar-se de que «%.250s» no existeix"
+msgid "error ensuring '%s' does not exist"
+msgstr "s'ha produït un error en assegurar-se de que «%s» no existeix"
 
 #: src/main/unpack.c
 msgid "split package reassembly"
@@ -6238,12 +6367,12 @@ msgstr ""
 
 #: src/main/unpack.c
 #, c-format
-msgid "pre-dependency problem - not installing %.250s"
-msgstr "problema de predependència - no s'instal·larà %.250s"
+msgid "pre-dependency problem - not installing %s"
+msgstr "problema de predependència; no s'instal·larà %s"
 
 #: src/main/unpack.c
 msgid "ignoring pre-dependency problem!"
-msgstr "s'està ignorant el problema de predependència!"
+msgstr "s'està ignorant el problema de predependència"
 
 #: src/main/unpack.c
 #, c-format
@@ -6270,65 +6399,75 @@ msgstr "el fitxer «conffile» conté una línia buida"
 
 #: src/main/unpack.c utils/update-alternatives.c
 #, c-format
-msgid "read error in %.250s"
-msgstr "error de lectura en %.250s"
+msgid "read error in %s"
+msgstr "error de lectura en %s"
 
 #: src/main/unpack.c
 #, c-format
-msgid "error closing %.250s"
-msgstr "s'ha produït un error en tancar %.250s"
+msgid "error closing %s"
+msgstr "s'ha produït un error en tancar %s"
 
 #: src/main/unpack.c
-#, c-format
-msgid "old version of package has overly-long info file name starting '%.250s'"
+#, fuzzy, c-format
+#| msgid "old version of package has overly-long info file name starting '%s'"
+msgid ""
+"old version of package has overly-long metadata file name (starting with "
+"'%.*s')"
 msgstr ""
 "la versió antiga del paquet té un nom de fitxer d'informació llarguíssim que "
-"comença per «%.250s»"
+"comença per «%s»"
 
 #: src/main/unpack.c
-#, c-format
-msgid "unable to remove obsolete info file '%.250s'"
-msgstr "no es pot esborrar el fitxer d'informació obsolet «%.250s»"
+#, fuzzy, c-format
+#| msgid "unable to remove obsolete info file '%s'"
+msgid "unable to remove obsolete package metadata file '%s'"
+msgstr "no es pot esborrar el fitxer d'informació obsolet «%s»"
 
 #: src/main/unpack.c
-#, c-format
-msgid "unable to install (supposed) new info file '%.250s'"
-msgstr "no es pot instal·lar el (suposat) fitxer d'informació nou «%.250s»"
+#, fuzzy, c-format
+#| msgid "unable to install (supposed) new info file '%s'"
+msgid "unable to install (supposed) new package metadata file '%s'"
+msgstr "no es pot instal·lar el (suposat) fitxer d'informació nou «%s»"
 
 #: src/main/unpack.c
 msgid "unable to open temp control directory"
 msgstr "no es pot obrir el directori de control temporal"
 
 #: src/main/unpack.c
-#, c-format
-msgid "package contains overly-long control info file name (starting '%.50s')"
+#, fuzzy, c-format
+#| msgid ""
+#| "package contains overly-long control info file name (starting '%.50s')"
+msgid "package has overly-long metadata file name (starting with '%.*s')"
 msgstr ""
 "el paquet conté un nom de fitxer d'informació llarguíssim (comença per "
 "«%.50s»)"
 
 #: src/main/unpack.c
-#, c-format
-msgid "package control info contained directory '%.250s'"
-msgstr "la informació de control del paquet conté el directori «%.250s»"
+#, fuzzy, c-format
+#| msgid "package control info contained directory '%s'"
+msgid "package metadata contained directory '%s'"
+msgstr "la informació de control del paquet conté el directori «%s»"
 
 # FIXME: Què collons vol dir això, i què collons vol dir la traducció?! jm
 #: src/main/unpack.c
-#, c-format
-msgid "package control info rmdir of '%.250s' didn't say not a dir"
+#, fuzzy, c-format
+#| msgid "package control info rmdir of '%s' did not say not a dir"
+msgid "package metadata rmdir of '%s' did not say not a dir"
 msgstr ""
-"a l'esborrar el directori «%.250s» amb la informació de control del paquet "
+"a l'esborrar el directori «%s» amb la informació de control del paquet "
 "ocorregué un error diferent com de no ser un directori"
 
 #: src/main/unpack.c
-#, c-format
-msgid "package %s contained list as info file"
+#, fuzzy, c-format
+#| msgid "package %s contained list as info file"
+msgid "package %s contained '%s' as a metadata file"
 msgstr "el paquet %s conté «list» com a fitxer d'informació"
 
 #: src/main/unpack.c
-#, c-format
-msgid "unable to install new info file '%.250s' as '%.250s'"
-msgstr ""
-"no es pot instal·lar el fitxer d'informació nou «%.250s» com a «%.250s»"
+#, fuzzy, c-format
+#| msgid "unable to install new info file '%s' as '%s'"
+msgid "unable to install new metadata file '%s' as '%s'"
+msgstr "no es pot instal·lar el fitxer d'informació nou «%s» com a «%s»"
 
 #: src/main/unpack.c
 #, c-format
@@ -6352,38 +6491,34 @@ msgstr "%s: no es pot canviar el nom del conffile obsolet «%s» a «%s»: %s"
 
 #: src/main/unpack.c
 #, c-format
-msgid "could not stat old file '%.250s' so not deleting it: %s"
+msgid "could not stat old file '%s' so not deleting it: %s"
 msgstr ""
-"no es pot fer «stat» al fitxer antic «%.250s» així doncs no s'eliminarà: %s"
+"no es pot fer «stat» al fitxer antic «%s» així doncs no s'eliminarà: %s"
 
 #: src/main/unpack.c
 #, c-format
-msgid "unable to delete old directory '%.250s': %s"
-msgstr "no es pot esborrar el directori antic «%.250s»: %s"
+msgid "unable to delete old directory '%s': %s"
+msgstr "no es pot esborrar el directori antic «%s»: %s"
 
 #: src/main/unpack.c
 #, c-format
-msgid "old conffile '%.250s' was an empty directory (and has now been deleted)"
-msgstr "el conffile antic «%.250s» era un directori buit (i s'ha eliminat)"
+msgid "old conffile '%s' was an empty directory (and has now been deleted)"
+msgstr "el conffile antic «%s» era un directori buit (i s'ha eliminat)"
 
 #: src/main/unpack.c
 #, c-format
-msgid "unable to stat other new file '%.250s'"
-msgstr "no es pot fer «stat» al fitxer nou «%.250s»"
+msgid "unable to stat other new file '%s'"
+msgstr "no es pot fer «stat» al fitxer nou «%s»"
 
 #: src/main/unpack.c
 #, c-format
-msgid ""
-"old file '%.250s' is the same as several new files! (both '%.250s' and "
-"'%.250s')"
-msgstr ""
-"el fitxer antic «%.250s» és igual que diversos fitxers nous! («%.250s» i "
-"«%.250s»)"
+msgid "old file '%s' is the same as several new files! (both '%s' and '%s')"
+msgstr "el fitxer antic «%s» és igual que diversos fitxers nous! («%s» i «%s»)"
 
 #: src/main/unpack.c
 #, c-format
-msgid "unable to securely remove old file '%.250s': %s"
-msgstr "no es pot esborrar el fitxer antic «%.250s» de format segura: %s"
+msgid "unable to securely remove old file '%s': %s"
+msgstr "no es pot esborrar el fitxer antic «%s» de format segura: %s"
 
 #: src/main/unpack.c
 #, c-format
@@ -6391,8 +6526,10 @@ msgid "(Noting disappearance of %s, which has been completely replaced.)\n"
 msgstr "(Noteu la desaparició de %s, que ha estat completament reemplaçat.)\n"
 
 #: src/main/unpack.c
-msgid "package control information extraction"
-msgstr "extracció de la informació de control del paquet"
+#, fuzzy
+#| msgid "package field value extraction"
+msgid "package metadata files extraction"
+msgstr "extracció del valor del camp del paquet"
 
 #: src/main/unpack.c
 #, c-format
@@ -6443,6 +6580,10 @@ msgstr ""
 msgid "--%s takes at most one Packages-file argument"
 msgstr "--%s accepta com a molt un fitxer Packages com a argument"
 
+#: src/main/update.c utils/update-alternatives.c
+msgid "<standard input>"
+msgstr "<entrada estàndard>"
+
 #: src/main/update.c
 #, c-format
 msgid "unable to access dpkg database directory '%s' for bulk available update"
@@ -6460,13 +6601,15 @@ msgstr ""
 "dpkg per a una actualització d'«available»"
 
 #: src/main/update.c
-#, c-format
-msgid "Replacing available packages info, using %s.\n"
+#, fuzzy, c-format
+#| msgid "Replacing available packages info, using %s.\n"
+msgid "Replacing available packages information from %s.\n"
 msgstr "S'està reemplaçant la informació de paquets disponibles, emprant %s.\n"
 
 #: src/main/update.c
-#, c-format
-msgid "Updating available packages info, using %s.\n"
+#, fuzzy, c-format
+#| msgid "Updating available packages info, using %s.\n"
+msgid "Updating available packages information from %s.\n"
 msgstr ""
 "S'està actualitzant la informació de paquets disponibles, emprant %s.\n"
 
@@ -6495,7 +6638,7 @@ msgstr "%s versió %s.\n"
 msgid ""
 "Commands:\n"
 "  --install <link> <name> <path> <priority>\n"
-"    [--slave <link> <name> <path>] ...\n"
+"    [--slave <link> <name> <path>]...\n"
 "                           add a group of alternatives to the system.\n"
 "  --remove <name> <path>   remove <path> from the <name> group alternative.\n"
 "  --remove-all <name>      remove <name> group from the alternatives "
@@ -6638,8 +6781,8 @@ msgstr "no es pot obtenir el temps local per registrar a «%s»"
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "unable to read link '%s%.255s'"
-msgstr "no es pot llegir l'enllaç «%s%.255s»"
+msgid "unable to read link '%s%s'"
+msgstr "no es pot llegir l'enllaç «%s%s»"
 
 #: utils/update-alternatives.c
 #, c-format
@@ -6720,7 +6863,7 @@ msgstr "camí duplicat %s"
 #: utils/update-alternatives.c
 #, c-format
 msgid ""
-"alternative %s (part of link group %s) doesn't exist; removing from list of "
+"alternative %s (part of link group %s) does not exist; removing from list of "
 "alternatives"
 msgstr ""
 "l'alternativa %s (part del grup d'enllaços %s) no existeix; s'està eliminant "
@@ -6797,7 +6940,7 @@ msgstr "  l'enllaç està actualment absent"
 #: utils/update-alternatives.c
 #, c-format
 msgid "  link %s is %s"
-msgstr "  l'enllaç %.250s és %s"
+msgstr "  l'enllaç %s és %s"
 
 #: utils/update-alternatives.c
 #, c-format
@@ -6807,7 +6950,7 @@ msgstr "  l'esclau %s és %s"
 #: utils/update-alternatives.c
 #, c-format
 msgid "%s - priority %d"
-msgstr "%s - prioritat %d"
+msgstr "%s — prioritat %d"
 
 #: utils/update-alternatives.c
 #, c-format
@@ -6841,7 +6984,7 @@ msgstr "Estat"
 #, c-format
 msgid "Press <enter> to keep the current choice[*], or type selection number: "
 msgstr ""
-"Premeu retorn per a mantenir l'opció per defecte[*], o introduïu un número "
+"Premeu <Retorn> per a mantenir l'opció per defecte[*], o introduïu un número "
 "de selecció: "
 
 #: utils/update-alternatives.c
@@ -6865,13 +7008,13 @@ msgstr "no es pot crear el directori d'alternatives «%s»"
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "can't install unknown choice %s"
+msgid "cannot install unknown choice %s"
 msgstr "no es pot instal·lar la selecció %s desconeguda"
 
 #: utils/update-alternatives.c
 #, c-format
 msgid ""
-"skip creation of %s because associated file %s (of link group %s) doesn't "
+"skip creation of %s because associated file %s (of link group %s) does not "
 "exist"
 msgstr ""
 "s'omet la creació de %s perquè el fitxer associat «%s» (del grup d'enllaços "
@@ -6879,7 +7022,7 @@ msgstr ""
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "not removing %s since it's not a symlink"
+msgid "not removing %s since it is not a symlink"
 msgstr "no s'esborrarà %s ja que no és un enllaç simbòlic"
 
 #: utils/update-alternatives.c
@@ -6891,8 +7034,8 @@ msgstr "l'alternativa %s per a %s no està registrada; no s'està eliminant"
 #, c-format
 msgid "removing manually selected alternative - switching %s to auto mode"
 msgstr ""
-"s'està eliminant l'alternativa seleccionada manualment - s'està canviant %s "
-"a mode automàtic"
+"s'està eliminant l'alternativa seleccionada manualment; s'està canviant %s a "
+"mode automàtic"
 
 #: utils/update-alternatives.c
 #, c-format
@@ -7028,7 +7171,7 @@ msgstr "el camí de l'alternativa no és absolut com ho hauria de ser: %s"
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "alternative %s can't be master: it is a slave of %s"
+msgid "alternative %s cannot be master: it is a slave of %s"
 msgstr "l'alternativa %s no pot ser mestra: és una esclava de %s"
 
 #: utils/update-alternatives.c
@@ -7038,17 +7181,17 @@ msgstr "l'enllaç d'alternativa %s ja està gestionat per %s"
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "alternative path %s%s doesn't exist"
+msgid "alternative path %s%s does not exist"
 msgstr "el camí de l'alternativa %s%s no existeix"
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "alternative %s can't be slave of %s: it is a master alternative"
+msgid "alternative %s cannot be slave of %s: it is a master alternative"
 msgstr "l'alternativa %s no pot ser esclava de %s: és una alternativa mestra"
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "alternative %s can't be slave of %s: it is a slave of %s"
+msgid "alternative %s cannot be slave of %s: it is a slave of %s"
 msgstr "l'alternativa %s no pot ser esclava de %s: és una esclava de %s"
 
 #: utils/update-alternatives.c
@@ -7144,10 +7287,6 @@ msgstr ""
 msgid "no alternatives for %s"
 msgstr "no hi ha alternatives per a %s"
 
-#: utils/update-alternatives.c
-msgid "<standard input>"
-msgstr "<entrada estàndard>"
-
 #: utils/update-alternatives.polkit.in
 msgid "Run update-alternatives to modify system alternative selections"
 msgstr ""
@@ -7159,20 +7298,68 @@ msgid "Authentication is required to run update-alternatives"
 msgstr "Es requereix autenticació per a executar update-alternatives"
 
 #, c-format
+#~ msgid "architecture '%s' is illegal: %s"
+#~ msgstr "l'arquitectura «%s» és il·legal: %s"
+
+#, c-format
+#~ msgid "unable to delete control info file '%s'"
+#~ msgstr "no es pot eliminar el fitxer d'informació de control «%s»"
+
+#~ msgid "package control information extraction"
+#~ msgstr "extracció de la informació de control del paquet"
+
+#, c-format
+#~ msgid "%s subprocess returned error exit status %d"
+#~ msgstr "el subprocés «%s» retornà el codi d'eixida d'error %d"
+
+#, c-format
+#~ msgid "installed %s package %s script"
+#~ msgstr "s'ha instal·lat el script %s del paquet %s"
+
+#, c-format
+#~ msgid "open component '%s' (in %s) failed in an unexpected way"
+#~ msgstr ""
+#~ "l'obertura del component «%s» (dins de %s) ha fallat de forma inesperada"
+
+#, c-format
+#~ msgid "cannot stat '%s' (in '%s')"
+#~ msgstr "no es pot fer «stat» a «%s» (en «%s»)"
+
+#, c-format
+#~ msgid "cannot open '%s' (in '%s')"
+#~ msgstr "no es pot obrir «%s» (en «%s»)"
+
+#, c-format
+#~ msgid "failed to read '%s' (in '%s')"
+#~ msgstr "no s'ha pogut llegir «%s» (en «%s»)"
+
+#~ msgid "failed to open diversions file"
+#~ msgstr "no s'ha pogut obrir el fitxer de desviacions"
+
+#~ msgid "failed to fstat diversions file"
+#~ msgstr "no s'ha pogut fer «fstat» al fitxer de desviacions"
+
+#~ msgid "failed to open statoverride file"
+#~ msgstr "no s'ha pogut obrir el fitxer de statoverride"
+
+#~ msgid "failed to fstat statoverride file"
+#~ msgstr "no s'ha pogut fer «fstat» al fitxer de statoverride"
+
+#, c-format
 #~ msgid "There is only one alternative in link group %s (providing %s): %s"
 #~ msgstr ""
 #~ "Només hi ha una alternativa al grup d'enllaços %s (que proveeix %s): %s"
 
-#~ msgid "<link> and <path> can't be the same"
+#~ msgid "<link> and <path> cannot be the same"
 #~ msgstr "<enllaç> i <camí> no poden ser el mateix"
 
 #, c-format
-#~ msgid "removal of %.250s"
-#~ msgstr "desinstal·lació de %.250s"
+#~ msgid "removal of %s"
+#~ msgstr "desinstal·lació de %s"
 
 #, c-format
-#~ msgid "installation of %.250s"
-#~ msgstr "instal·lació de «%.255s»"
+#~ msgid "installation of %s"
+#~ msgstr "instal·lació de «%s»"
 
 # FIXME: wrong msgid
 #, c-format
@@ -7215,10 +7402,9 @@ msgstr "Es requereix autenticació per a executar update-alternatives"
 #~ "es necessita --display, --query, --list, --get-selections, --config, --"
 #~ "set, --set-selections, --install, --remove, --all, --remove-all o --auto"
 
-#~ msgid "unable to set ownership of triggers state directory '%.250s'"
+#~ msgid "unable to set ownership of triggers state directory '%s'"
 #~ msgstr ""
-#~ "no es pot establir el propietari del directori d'estat d'activadors "
-#~ "«%.250s»"
+#~ "no es pot establir el propietari del directori d'estat d'activadors «%s»"
 
 #~ msgid "unable to open lock file %s for testing"
 #~ msgstr "no es pot obrir el fitxer de blocatge %s per comprovar"
@@ -7232,20 +7418,20 @@ msgstr "Es requereix autenticació per a executar update-alternatives"
 #~ msgid "%s is missing"
 #~ msgstr "manca %s"
 
-#~ msgid "'%.50s' is not allowed for %s"
-#~ msgstr "no s'admet «%.50s» per a %s"
+#~ msgid "'%s' is not allowed for %s"
+#~ msgstr "no s'admet «%s» per a %s"
 
 #~ msgid "junk after %s"
 #~ msgstr "brossa després de %s"
 
-#~ msgid "invalid package name (%.250s)"
-#~ msgstr "el nom del paquet no és vàlid (%.250s)"
+#~ msgid "invalid package name (%s)"
+#~ msgstr "el nom del paquet no és vàlid (%s)"
 
 #~ msgid "yes/no in boolean field"
 #~ msgstr "sí/no en un camp booleà"
 
-#~ msgid "'%s' field, reference to '%.255s': error in version"
-#~ msgstr "en el camp «%s», que fa referència a «%.255s»: error en la versió"
+#~ msgid "'%s' field, reference to '%s': error in version"
+#~ msgstr "en el camp «%s», que fa referència a «%s»: error en la versió"
 
 #~ msgid "empty value for %s"
 #~ msgstr "valor buit per a %s"
@@ -7279,24 +7465,22 @@ msgstr "Es requereix autenticació per a executar update-alternatives"
 #~ msgid "cannot close control file '%s' for package '%s'"
 #~ msgstr "no es pot tancar el fitxer de control «%s» del paquet «%s»"
 
-#~ msgid "unable to open files list file for package '%.250s'"
-#~ msgstr ""
-#~ "no es pot obrir el fitxer de la llista de fitxers del paquet «%.250s»"
+#~ msgid "unable to open files list file for package '%s'"
+#~ msgstr "no es pot obrir el fitxer de la llista de fitxers del paquet «%s»"
 
-#~ msgid "unable to stat files list file for package '%.250s'"
+#~ msgid "unable to stat files list file for package '%s'"
 #~ msgstr ""
 #~ "no es pot fer «stat» sobre el fitxer de la llista de fitxers del paquet "
-#~ "«%.250s»"
+#~ "«%s»"
 
-#~ msgid "files list for package '%.250s' is not a regular file"
+#~ msgid "files list for package '%s' is not a regular file"
 #~ msgstr ""
-#~ "el fitxer de la llista de fitxers del paquet «%.250s» no és un fitxer "
-#~ "regular"
+#~ "el fitxer de la llista de fitxers del paquet «%s» no és un fitxer regular"
 
-#~ msgid "reading files list for package '%.250s'"
+#~ msgid "reading files list for package '%s'"
 #~ msgstr ""
 #~ "s'ha produït un error en llegir el fitxer de la llista de fitxers del "
-#~ "paquet «%.250s»"
+#~ "paquet «%s»"
 
 #~ msgid "failed to chdir to directory after creating it"
 #~ msgstr "no s'ha pogut canviar a un directori després de crear-lo"
@@ -7304,11 +7488,11 @@ msgstr "Es requereix autenticació per a executar update-alternatives"
 #~ msgid "control file '%s' missing value separator"
 #~ msgstr "al fitxer de control «%s» li manca un separador de valor"
 
-#~ msgid "unable to fstat part file '%.250s'"
-#~ msgstr "no es pot fer «fstat» sobre el fitxer trossejat «%.250s»"
+#~ msgid "unable to fstat part file '%s'"
+#~ msgstr "no es pot fer «fstat» sobre el fitxer trossejat «%s»"
 
-#~ msgid "unexpected end of file in %.250s"
-#~ msgstr "s'ha trobat una fi de fitxer inesperada en %.250s"
+#~ msgid "unexpected end of file in %s"
+#~ msgstr "s'ha trobat una fi de fitxer inesperada en %s"
 
 #~ msgid "%s: error: %s\n"
 #~ msgstr "%s: s'ha produït un error: %s\n"
@@ -7319,8 +7503,8 @@ msgstr "Es requereix autenticació per a executar update-alternatives"
 #~ msgid "%s: warning: %s\n"
 #~ msgstr "%s: avís: %s\n"
 
-#~ msgid "truncated triggers deferred file '%.250s'"
-#~ msgstr "el fitxer d'activadors ajornats «%.250s» és truncat"
+#~ msgid "truncated triggers deferred file '%s'"
+#~ msgstr "el fitxer d'activadors ajornats «%s» és truncat"
 
 #~ msgid "find for dpkg --recursive"
 #~ msgstr "«find» per a --recursive"
@@ -7337,8 +7521,8 @@ msgstr "Es requereix autenticació per a executar update-alternatives"
 #~ msgid "find for --recursive returned unhandled error %i"
 #~ msgstr "La recerca emprant --recursive ha tornat l'eixida no gestionada %i"
 
-#~ msgid "unable to stat file name '%.250s'"
-#~ msgstr "no es pot fer «stat» sobre el nom de fitxer «%.250s»"
+#~ msgid "unable to stat file name '%s'"
+#~ msgstr "no es pot fer «stat» sobre el nom de fitxer «%s»"
 
 #~ msgid "compressing control member"
 #~ msgstr "comprimint l'element de control"
@@ -7358,8 +7542,8 @@ msgstr "Es requereix autenticació per a executar update-alternatives"
 #~ msgid "unknown option `%s'"
 #~ msgstr "l'opció «%s» és desconeguda"
 
-#~ msgid "unexpected eof reading `%.250s'"
-#~ msgstr "s'ha trobat un fi de fitxer inesperat en llegir «%.250s»"
+#~ msgid "unexpected eof reading `%s'"
+#~ msgstr "s'ha trobat un fi de fitxer inesperat en llegir «%s»"
 
 #~ msgid "EOF on stdin at conffile prompt"
 #~ msgstr "EOF en l'entrada estàndard al preguntar sobre conffiles"
@@ -7371,8 +7555,8 @@ msgstr "Es requereix autenticació per a executar update-alternatives"
 #~ msgid "failed to chdir to `/' for cleanup"
 #~ msgstr "no s'ha pogut canviar a «/» per a la neteja"
 
-#~ msgid "file name '%.50s...' is too long"
-#~ msgstr "el nom del fitxer «%.50s…» és massa llarg"
+#~ msgid "file name '%s...' is too long"
+#~ msgstr "el nom del fitxer «%s…» és massa llarg"
 
 #~ msgid "'%s' contains user-defined field '%s'"
 #~ msgstr "«%s» conté un camp «%s» definit per l'usuari"

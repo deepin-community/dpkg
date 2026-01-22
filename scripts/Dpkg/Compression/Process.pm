@@ -29,8 +29,7 @@ compression/decompression processes.
 
 package Dpkg::Compression::Process 1.00;
 
-use strict;
-use warnings;
+use v5.36;
 
 use Carp;
 
@@ -45,18 +44,31 @@ use Dpkg::IPC;
 
 =item $proc = Dpkg::Compression::Process->new(%opts)
 
-Create a new instance of the object. Supported options are "compression"
-and "compression_level" (see corresponding set_* functions).
+Create a new instance of the object.
+
+Options:
+
+=over
+
+=item B<compression>
+
+See $proc->set_compression().
+
+=item B<compression_level>
+
+See $proc->set_compression_level().
+
+=back
 
 =cut
 
 sub new {
-    my ($this, %args) = @_;
+    my ($this, %opts) = @_;
     my $class = ref($this) || $this;
     my $self = {};
     bless $self, $class;
-    $self->set_compression($args{compression} || compression_get_default());
-    $self->set_compression_level($args{compression_level} ||
+    $self->set_compression($opts{compression} || compression_get_default());
+    $self->set_compression_level($opts{compression_level} ||
         compression_get_default_level());
     return $self;
 }
@@ -117,10 +129,10 @@ sub get_uncompress_cmdline {
 
 sub _check_opts {
     my ($self, %opts) = @_;
-    # Check for proper cleaning before new start
+    # Check for proper cleaning before new start.
     error(g_('Dpkg::Compression::Process can only start one subprocess at a time'))
         if $self->{pid};
-    # Check options
+    # Check options.
     my $to = my $from = 0;
     foreach my $thing (qw(file handle string pipe)) {
         $to++ if $opts{"to_$thing"};
@@ -141,6 +153,10 @@ C<from_*> as accepted by Dpkg::IPC::spawn().
 You must call wait_end_process() after having called this method to
 properly close the sub-process (and verify that it exited without error).
 
+Options:
+
+See Dpkg::IPC::spawn().
+
 =cut
 
 sub compress {
@@ -151,7 +167,8 @@ sub compress {
     $opts{exec} = \@prog;
     $self->{cmdline} = "@prog";
     $self->{pid} = spawn(%opts);
-    delete $self->{pid} if $opts{to_string}; # wait_child already done
+    # We already did wait_child().
+    delete $self->{pid} if $opts{to_string};
 }
 
 =item $proc->uncompress(%opts)
@@ -164,6 +181,10 @@ C<from_*> as accepted by Dpkg::IPC::spawn().
 You must call wait_end_process() after having called this method to
 properly close the sub-process (and verify that it exited without error).
 
+Options:
+
+See Dpkg::IPC::spawn().
+
 =cut
 
 sub uncompress {
@@ -174,16 +195,21 @@ sub uncompress {
     $opts{exec} = \@prog;
     $self->{cmdline} = "@prog";
     $self->{pid} = spawn(%opts);
-    delete $self->{pid} if $opts{to_string}; # wait_child already done
+    # We already did wait_child().
+    delete $self->{pid} if $opts{to_string};
 }
 
 =item $proc->wait_end_process(%opts)
 
 Call Dpkg::IPC::wait_child() to wait until the sub-process has exited
 and verify its return code. Any given option will be forwarded to
-the wait_child() function. Most notably you can use the "nocheck" option
+the wait_child() function. Most notably you can use the "no_check" option
 to verify the return code yourself instead of letting wait_child() do
 it for you.
+
+Options:
+
+See Dpkg::IPC::wait_child().
 
 =cut
 

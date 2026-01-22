@@ -13,8 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use strict;
-use warnings;
+use v5.36;
 
 use Test::More tests => 4;
 
@@ -30,12 +29,16 @@ my $datadir = "$srcdir/t/dpkg_mergechangelogs";
 sub test_merge {
     my ($expected_file, @options) = @_;
     my $fh = File::Temp->new();
-    spawn(exec => [ $ENV{PERL}, "$srcdir/dpkg-mergechangelogs.pl", @options ],
-	  to_handle => $fh, error_to_file => '/dev/null',
-	  wait_child => 1, nocheck => 1);
+    spawn(
+        exec => [ $ENV{PERL}, "$srcdir/dpkg-mergechangelogs.pl", @options ],
+        to_handle => $fh,
+        error_to_file => '/dev/null',
+        wait_child => 1,
+        no_check => 1,
+    );
     my $res = compare($expected_file, $fh->filename);
     if ($res) {
-	system('diff', '-u', $expected_file, $fh->filename);
+        system('diff', '-u', $expected_file, $fh->filename);
     }
     ok($res == 0, "merged changelog matches expected one ($expected_file)");
 }

@@ -34,7 +34,7 @@ Geeft het changelog-bestand op waaruit gelezen moet worden. Een ‘-’ kan gebr
 
 =item B<-F> I<changelog-indeling>
 
-Specifies the format of the changelog.  By default the format is read from a special line near the bottom of the changelog or failing that defaults to the B<debian> standard format.  See also L</CHANGELOG FORMATS>.
+Geeft de indeling van het changelog-bestand aan. Standaard wordt die indeling gelezen van een bijzondere regel onderaan het changelog-bestand, anders wordt er teruggevallen op de standaardindeling van B<debian>. Zie ook L<CHANGELOG-INDELINGEN>.
 
 =item B<-L> I<bibliotheekmap>
 

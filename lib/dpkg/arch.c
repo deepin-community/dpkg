@@ -35,10 +35,12 @@
 #include <dpkg/dpkg.h>
 #include <dpkg/dpkg-db.h>
 #include <dpkg/dir.h>
+#include <dpkg/fsys.h>
 #include <dpkg/varbuf.h>
 #include <dpkg/arch.h>
 
 #define DPKG_DB_ARCH_FILE "arch"
+#define DPKG_DB_ARCH_NATIVE_FILE "arch-native"
 
 /**
  * Verify if the architecture name is valid.
@@ -53,7 +55,7 @@
  * @param name The architecture name to verify.
  */
 const char *
-dpkg_arch_name_is_illegal(const char *name)
+dpkg_arch_name_is_invalid(const char *name)
 {
 	static char buf[150];
 	const char *p = name;
@@ -64,6 +66,7 @@ dpkg_arch_name_is_illegal(const char *name)
 		return _("may not be empty string");
 	if (!c_isalnum(*p))
 		return _("must start with an alphanumeric");
+
 	while (*++p != '\0')
 		if (!c_isalnum(*p) && *p != '-')
 			break;
@@ -73,6 +76,7 @@ dpkg_arch_name_is_illegal(const char *name)
 	snprintf(buf, sizeof(buf), _("character '%c' not allowed (only "
 	                             "letters, digits and characters '%s')"),
 	         *p, "-");
+
 	return buf;
 }
 
@@ -126,7 +130,7 @@ dpkg_arch_new(const char *name, enum dpkg_arch_type type)
  *
  * Create a new structure for the architecture if it is not yet known from
  * the system, in that case it will have type == DPKG_ARCH_UNKNOWN, if the
- * architecture is illegal it will have type == DPKG_ARCH_ILLEGAL, if name
+ * architecture is invalid it will have type == DPKG_ARCH_INVALID, if name
  * is an empty string it will have type == DPKG_ARCH_EMPTY, and if it is
  * NULL then it will have type == DPKG_ARCH_NONE.
  *
@@ -149,8 +153,8 @@ dpkg_arch_find(const char *name)
 		last_arch = arch;
 	}
 
-	if (dpkg_arch_name_is_illegal(name))
-		type = DPKG_ARCH_ILLEGAL;
+	if (dpkg_arch_name_is_invalid(name))
+		type = DPKG_ARCH_INVALID;
 	else
 		type = DPKG_ARCH_UNKNOWN;
 
@@ -180,7 +184,7 @@ dpkg_arch_get(enum dpkg_arch_type type)
 		return &arch_item_all;
 	case DPKG_ARCH_NATIVE:
 		return &arch_item_native;
-	case DPKG_ARCH_ILLEGAL:
+	case DPKG_ARCH_INVALID:
 	case DPKG_ARCH_FOREIGN:
 	case DPKG_ARCH_UNKNOWN:
 		internerr("architecture type %d is not unique", type);
@@ -279,6 +283,39 @@ dpkg_arch_unmark(const struct dpkg_arch *arch_remove)
 }
 
 /**
+ * Load the native architecture name for a non-default root directory.
+ */
+void
+dpkg_arch_load_native(void)
+{
+	struct varbuf arch_line = VARBUF_INIT;
+	struct dpkg_arch *arch;
+	char *archfile;
+	int rc;
+
+	/* We only honor this file on chroots, for the non-chroot case
+	 * the builtin arch is always honored. */
+	if (str_is_unset(dpkg_fsys_get_dir()))
+		return;
+
+	archfile = dpkg_db_get_path(DPKG_DB_ARCH_NATIVE_FILE);
+	rc = file_slurp(archfile, &arch_line, NULL);
+	free(archfile);
+	if (rc < 0)
+		return;
+
+	if (arch_line.used == 0)
+		return;
+
+	if (arch_line.buf[arch_line.used - 1] == '\n')
+		varbuf_trunc(&arch_line, arch_line.used - 1);
+
+	/* Override the native architecture name. */
+	arch = dpkg_arch_get(DPKG_ARCH_NATIVE);
+	arch->name = varbuf_detach(&arch_line);
+}
+
+/**
  * Load the architecture database.
  */
 void
@@ -287,6 +324,8 @@ dpkg_arch_load_list(void)
 	FILE *fp;
 	char *archfile;
 	char archname[_POSIX2_LINE_MAX];
+
+	dpkg_arch_load_native();
 
 	archfile = dpkg_db_get_path(DPKG_DB_ARCH_FILE);
 	fp = fopen(archfile, "r");

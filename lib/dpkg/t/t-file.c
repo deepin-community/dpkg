@@ -40,6 +40,74 @@ static const char ref_data[] =
 ;
 
 static void
+test_file_getcwd(void)
+{
+	char *env;
+	struct varbuf cwd = VARBUF_INIT;
+
+	env = getenv("abs_builddir");
+	file_getcwd(&cwd);
+
+	test_str(env, ==, cwd.buf);
+
+	varbuf_destroy(&cwd);
+}
+
+static void
+test_file_realpath(void)
+{
+	char *path;
+
+	path = file_realpath("/");
+	test_str(path, ==, "/");
+	free(path);
+
+	path = file_realpath("///");
+	test_str(path, ==, "/");
+	free(path);
+
+	path = file_realpath("//./..///../././..///..");
+	test_str(path, ==, "/");
+	free(path);
+}
+
+static void
+test_file_canonicalize(void)
+{
+	char *path;
+
+	/* Canonicalize filenames that exist. */
+	path = file_canonicalize("/");
+	test_str(path, ==, "/");
+	free(path);
+
+	path = file_canonicalize("///");
+	test_str(path, ==, "/");
+	free(path);
+
+	path = file_canonicalize("//./..///../././..///..");
+	test_str(path, ==, "/");
+	free(path);
+
+	/* Canonicalize filenames that do not exist. */
+	path = file_canonicalize("/./nonexistent/..///./bar///../././../..///end//.");
+	test_str(path, ==, "/end");
+	free(path);
+
+	path = file_canonicalize("foo/../bar/../quux////fox");
+	test_str(path, ==, "quux/fox");
+	free(path);
+
+	path = file_canonicalize(".//aa/../bb///cc/./../dd//");
+	test_str(path, ==, "bb/dd");
+	free(path);
+
+	path = file_canonicalize("..////../aa/../..///bb/../../cc/dd//");
+	test_str(path, ==, "cc/dd");
+	free(path);
+}
+
+static void
 test_file_slurp(void)
 {
 	struct varbuf vb = VARBUF_INIT;
@@ -100,7 +168,10 @@ test_file_slurp(void)
 
 TEST_ENTRY(test)
 {
-	test_plan(32);
+	test_plan(43);
 
+	test_file_getcwd();
+	test_file_realpath();
+	test_file_canonicalize();
 	test_file_slurp();
 }

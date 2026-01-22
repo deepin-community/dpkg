@@ -44,12 +44,14 @@
  */
 void
 write_filehash_except(struct pkginfo *pkg, struct pkgbin *pkgbin,
-                      struct fsys_namenode_list *list, enum fsys_namenode_flags mask)
+                      struct fsys_namenode_list *list,
+                      enum fsys_namenode_flags mask)
 {
 	struct atomic_file *file;
 	const char *hashfile;
 
-	debug(dbg_general, "generating infodb hashfile");
+	debug(dbg_general, "generating infodb digest file for %s",
+	      pkgbin_name(pkg, pkgbin, pnaw_always));
 
 	if (pkg_infodb_has_file(pkg, &pkg->available, HASHFILE))
 		return;

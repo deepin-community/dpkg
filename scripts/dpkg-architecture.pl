@@ -19,8 +19,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use strict;
-use warnings;
+use v5.36;
 
 use Dpkg ();
 use Dpkg::Gettext;
@@ -179,7 +178,7 @@ my $req_variable_to_print;
 my $action = 'list';
 my $force = 0;
 
-sub action_needs($) {
+sub action_needs {
     my $bits = shift;
     return (($req_info & $bits) == $bits);
 }
@@ -190,35 +189,35 @@ while (@ARGV) {
     my $arg = shift;
 
     if ($arg eq '-a' or $arg eq '--host-arch') {
-	$req_host_arch = shift;
+        $req_host_arch = shift;
     } elsif ($arg eq '-t' or $arg eq '--host-type') {
-	$req_host_gnu_type = shift;
+        $req_host_gnu_type = shift;
     } elsif ($arg eq '-A' or $arg eq '--target-arch') {
-	$req_target_arch = shift;
+        $req_target_arch = shift;
     } elsif ($arg eq '-T' or $arg eq '--target-type') {
-	$req_target_gnu_type = shift;
+        $req_target_gnu_type = shift;
     } elsif ($arg eq '-W' or $arg eq '--match-wildcard') {
-	$req_match_wildcard = shift;
+        $req_match_wildcard = shift;
     } elsif ($arg eq '-B' or $arg eq '--match-bits') {
-	$req_match_bits = shift;
+        $req_match_bits = shift;
     } elsif ($arg eq '-E' or $arg eq '--match-endian') {
-	$req_match_endian = shift;
+        $req_match_endian = shift;
     } elsif ($arg eq '-e' or $arg eq '--equal') {
-	$req_eq_arch = shift;
+        $req_eq_arch = shift;
         %req_vars = %arch_vars{DEB_HOST_ARCH};
-	$action = 'equal';
+        $action = 'equal';
     } elsif ($arg eq '-i' or $arg eq '--is') {
-	$req_is_arch = shift;
+        $req_is_arch = shift;
         %req_vars = %arch_vars{DEB_HOST_ARCH};
-	$action = 'is';
+        $action = 'is';
     } elsif ($arg eq '-u' or $arg eq '--print-unset') {
         %req_vars = ();
-	$action = 'print-unset';
+        $action = 'print-unset';
     } elsif ($arg eq '-l' or $arg eq '--list') {
-	$action = 'list';
+        $action = 'list';
     } elsif ($arg eq '-s' or $arg eq '--print-set') {
         %req_vars = %arch_vars;
-	$action = 'print-set';
+        $action = 'print-set';
     } elsif ($arg eq '--print-format') {
         $print_format = shift;
         error(g_('%s is not a supported print format'), $print_format)
@@ -226,10 +225,10 @@ while (@ARGV) {
     } elsif ($arg eq '-f' or $arg eq '--force') {
         $force = 1;
     } elsif ($arg eq '-q' or $arg eq '--query') {
-	my $varname = shift;
-	error(g_('%s is not a supported variable name'), $varname)
-	    unless (exists $arch_vars{$varname});
-	$req_variable_to_print = "$varname";
+        my $varname = shift;
+        error(g_('%s is not a supported variable name'), $varname)
+            unless (exists $arch_vars{$varname});
+        $req_variable_to_print = "$varname";
         %req_vars = %arch_vars{$varname};
         $action = 'query';
     } elsif ($arg eq '-c' or $arg eq '--command') {
@@ -240,10 +239,10 @@ while (@ARGV) {
         $action = 'list-known';
     } elsif ($arg eq '-?' or $arg eq '--help') {
         usage();
-       exit 0;
+        exit 0;
     } elsif ($arg eq '--version') {
         version();
-       exit 0;
+        exit 0;
     } else {
         usageerr(g_("unknown option '%s'"), $arg);
     }
@@ -262,27 +261,44 @@ foreach my $k (keys %req_vars) {
 }
 
 #
-# Set build variables
+# Set build variables.
 #
 
-$v{DEB_BUILD_ARCH} = get_raw_build_arch()
-    if (action_needs(INFO_BUILD_ARCH_NAME));
-($v{DEB_BUILD_ARCH_ABI}, $v{DEB_BUILD_ARCH_LIBC},
- $v{DEB_BUILD_ARCH_OS}, $v{DEB_BUILD_ARCH_CPU}) = debarch_to_debtuple($v{DEB_BUILD_ARCH})
-    if (action_needs(INFO_BUILD_ARCH_TUPLE));
-($v{DEB_BUILD_ARCH_BITS}, $v{DEB_BUILD_ARCH_ENDIAN}) = debarch_to_abiattrs($v{DEB_BUILD_ARCH})
-    if (action_needs(INFO_BUILD_ARCH_ATTR));
+if (action_needs(INFO_BUILD_ARCH_NAME)) {
+    $v{DEB_BUILD_ARCH} = get_raw_build_arch();
+}
+if (action_needs(INFO_BUILD_ARCH_TUPLE)) {
+    my %arch;
 
-$v{DEB_BUILD_MULTIARCH} = debarch_to_multiarch($v{DEB_BUILD_ARCH})
-    if (action_needs(INFO_BUILD_MULTIARCH));
+    @arch{qw(abi libc os cpu)} = debarch_to_debtuple($v{DEB_BUILD_ARCH});
+    $v{DEB_BUILD_ARCH_ABI} = $arch{abi};
+    $v{DEB_BUILD_ARCH_LIBC} = $arch{libc};
+    $v{DEB_BUILD_ARCH_OS} = $arch{os};
+    $v{DEB_BUILD_ARCH_CPU} = $arch{cpu};
+}
+if (action_needs(INFO_BUILD_ARCH_ATTR)) {
+    my %arch;
+
+    @arch{qw(bits endian)} = debarch_to_abiattrs($v{DEB_BUILD_ARCH});
+    $v{DEB_BUILD_ARCH_BITS} = $arch{bits};
+    $v{DEB_BUILD_ARCH_ENDIAN} = $arch{endian};
+}
+
+if (action_needs(INFO_BUILD_MULTIARCH)) {
+    $v{DEB_BUILD_MULTIARCH} = debarch_to_multiarch($v{DEB_BUILD_ARCH})
+}
 
 if (action_needs(INFO_BUILD_GNU_TUPLE)) {
-  $v{DEB_BUILD_GNU_TYPE} = debarch_to_gnutriplet($v{DEB_BUILD_ARCH});
-  ($v{DEB_BUILD_GNU_CPU}, $v{DEB_BUILD_GNU_SYSTEM}) = split(/-/, $v{DEB_BUILD_GNU_TYPE}, 2);
+    my %gnu;
+
+    $v{DEB_BUILD_GNU_TYPE} = debarch_to_gnutriplet($v{DEB_BUILD_ARCH});
+    @gnu{qw(cpu system)} = split /-/, $v{DEB_BUILD_GNU_TYPE}, 2;
+    $v{DEB_BUILD_GNU_CPU} = $gnu{cpu};
+    $v{DEB_BUILD_GNU_SYSTEM} = $gnu{system};
 }
 
 #
-# Set host variables
+# Set host variables.
 #
 
 # First perform some sanity checks on the host arguments passed.
@@ -291,24 +307,42 @@ if (action_needs(INFO_BUILD_GNU_TUPLE)) {
 
 # Proceed to compute the host variables if needed.
 
-$v{DEB_HOST_ARCH} = $req_host_arch || get_raw_host_arch()
-    if (action_needs(INFO_HOST_ARCH_NAME));
-($v{DEB_HOST_ARCH_ABI}, $v{DEB_HOST_ARCH_LIBC},
- $v{DEB_HOST_ARCH_OS}, $v{DEB_HOST_ARCH_CPU}) = debarch_to_debtuple($v{DEB_HOST_ARCH})
-    if (action_needs(INFO_HOST_ARCH_TUPLE));
-($v{DEB_HOST_ARCH_BITS}, $v{DEB_HOST_ARCH_ENDIAN}) = debarch_to_abiattrs($v{DEB_HOST_ARCH})
-    if (action_needs(INFO_HOST_ARCH_ATTR));
+if (action_needs(INFO_HOST_ARCH_NAME)) {
+    $v{DEB_HOST_ARCH} = $req_host_arch || get_raw_host_arch()
+}
+if (action_needs(INFO_HOST_ARCH_TUPLE)) {
+    my %arch;
 
-$v{DEB_HOST_MULTIARCH} = debarch_to_multiarch($v{DEB_HOST_ARCH})
-    if (action_needs(INFO_HOST_MULTIARCH));
+    @arch{qw(abi libc os cpu)} = debarch_to_debtuple($v{DEB_HOST_ARCH});
+    $v{DEB_HOST_ARCH_ABI} = $arch{abi};
+    $v{DEB_HOST_ARCH_LIBC} = $arch{libc};
+    $v{DEB_HOST_ARCH_OS} = $arch{os};
+    $v{DEB_HOST_ARCH_CPU} = $arch{cpu};
+}
+if (action_needs(INFO_HOST_ARCH_ATTR)) {
+    my %arch;
+
+    @arch{qw(bits endian)} = debarch_to_abiattrs($v{DEB_HOST_ARCH});
+    $v{DEB_HOST_ARCH_BITS} = $arch{bits};
+    $v{DEB_HOST_ARCH_ENDIAN} = $arch{endian};
+}
+
+if (action_needs(INFO_HOST_MULTIARCH)) {
+    $v{DEB_HOST_MULTIARCH} = debarch_to_multiarch($v{DEB_HOST_ARCH})
+}
 
 if (action_needs(INFO_HOST_GNU_TUPLE)) {
+    my %gnu;
+
     if ($req_host_gnu_type eq '') {
         $v{DEB_HOST_GNU_TYPE} = debarch_to_gnutriplet($v{DEB_HOST_ARCH});
     } else {
         $v{DEB_HOST_GNU_TYPE} = $req_host_gnu_type;
     }
-    ($v{DEB_HOST_GNU_CPU}, $v{DEB_HOST_GNU_SYSTEM}) = split(/-/, $v{DEB_HOST_GNU_TYPE}, 2);
+
+    @gnu{qw(cpu system)} = split /-/, $v{DEB_HOST_GNU_TYPE}, 2;
+    $v{DEB_HOST_GNU_CPU} = $gnu{cpu};
+    $v{DEB_HOST_GNU_SYSTEM} = $gnu{system};
 
     my $host_gnu_type = get_host_gnu_type();
 
@@ -319,7 +353,7 @@ if (action_needs(INFO_HOST_GNU_TUPLE)) {
 }
 
 #
-# Set target variables
+# Set target variables.
 #
 
 # First perform some sanity checks on the target arguments passed.
@@ -328,30 +362,48 @@ if (action_needs(INFO_HOST_GNU_TUPLE)) {
 
 # Proceed to compute the target variables if needed.
 
-$v{DEB_TARGET_ARCH} = $req_target_arch || $v{DEB_HOST_ARCH} || $req_host_arch || get_raw_host_arch()
-    if (action_needs(INFO_TARGET_ARCH_NAME));
-($v{DEB_TARGET_ARCH_ABI}, $v{DEB_TARGET_ARCH_LIBC},
- $v{DEB_TARGET_ARCH_OS}, $v{DEB_TARGET_ARCH_CPU}) = debarch_to_debtuple($v{DEB_TARGET_ARCH})
-    if (action_needs(INFO_TARGET_ARCH_TUPLE));
-($v{DEB_TARGET_ARCH_BITS}, $v{DEB_TARGET_ARCH_ENDIAN}) = debarch_to_abiattrs($v{DEB_TARGET_ARCH})
-    if (action_needs(INFO_TARGET_ARCH_ATTR));
+if (action_needs(INFO_TARGET_ARCH_NAME)) {
+    $v{DEB_TARGET_ARCH} = $req_target_arch || $v{DEB_HOST_ARCH} ||
+                          $req_host_arch || get_raw_host_arch();
+}
+if (action_needs(INFO_TARGET_ARCH_TUPLE)) {
+    my %arch;
+
+    @arch{qw(abi libc os cpu)} = debarch_to_debtuple($v{DEB_TARGET_ARCH});
+
+    $v{DEB_TARGET_ARCH_ABI} = $arch{abi};
+    $v{DEB_TARGET_ARCH_LIBC} = $arch{libc};
+    $v{DEB_TARGET_ARCH_OS} = $arch{os};
+    $v{DEB_TARGET_ARCH_CPU} = $arch{cpu};
+}
+if (action_needs(INFO_TARGET_ARCH_ATTR)) {
+    my %arch;
+
+    @arch{qw(bits endian)} = debarch_to_abiattrs($v{DEB_TARGET_ARCH});
+    $v{DEB_TARGET_ARCH_BITS} = $arch{bits};
+    $v{DEB_TARGET_ARCH_ENDIAN} = $arch{endian};
+}
 
 $v{DEB_TARGET_MULTIARCH} = debarch_to_multiarch($v{DEB_TARGET_ARCH})
     if (action_needs(INFO_TARGET_MULTIARCH));
 
 if (action_needs(INFO_TARGET_GNU_TUPLE)) {
+    my %gnu;
+
     if ($req_target_gnu_type eq '') {
         $v{DEB_TARGET_GNU_TYPE} = debarch_to_gnutriplet($v{DEB_TARGET_ARCH});
     } else {
         $v{DEB_TARGET_GNU_TYPE} = $req_target_gnu_type;
     }
-    ($v{DEB_TARGET_GNU_CPU}, $v{DEB_TARGET_GNU_SYSTEM}) = split(/-/, $v{DEB_TARGET_GNU_TYPE}, 2);
+    @gnu{qw(cpu system)} =  split /-/, $v{DEB_TARGET_GNU_TYPE}, 2;
+    $v{DEB_TARGET_GNU_CPU} = $gnu{cpu};
+    $v{DEB_TARGET_GNU_SYSTEM} = $gnu{system};
 }
 
 
 if ($action eq 'list') {
     foreach my $k (sort keys %arch_vars) {
-	print "$k=$v{$k}\n";
+        print "$k=$v{$k}\n";
     }
 } elsif ($action eq 'print-set') {
     if ($print_format eq 'shell') {
@@ -373,9 +425,9 @@ if ($action eq 'list') {
         }
     }
 } elsif ($action eq 'equal') {
-    exit !debarch_eq($v{DEB_HOST_ARCH}, $req_eq_arch);
+    exit ! debarch_eq($v{DEB_HOST_ARCH}, $req_eq_arch);
 } elsif ($action eq 'is') {
-    exit !debarch_is($v{DEB_HOST_ARCH}, $req_is_arch);
+    exit ! debarch_is($v{DEB_HOST_ARCH}, $req_is_arch);
 } elsif ($action eq 'command') {
     @ENV{keys %v} = values %v;
     ## no critic (TestingAndDebugging::ProhibitNoWarnings)

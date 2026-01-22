@@ -17,11 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use strict;
-use warnings;
+use v5.36;
 
 eval q{
-    use Dpkg; # Dummy import to require the presence of Dpkg::*.
+    # Dummy import to require the presence of Dpkg::*.
+    use Dpkg;
 };
 if ($@) {
     warn "Missing Dpkg modules required by the FTP access method.\n\n";
@@ -31,7 +31,7 @@ if ($@) {
 use Dselect::Method;
 use Dselect::Method::Ftp;
 
-# deal with arguments
+# Deal with arguments.
 my $vardir = $ARGV[0];
 my $method = $ARGV[1];
 my $option = $ARGV[2];
@@ -42,7 +42,7 @@ if ($option eq 'manual') {
 }
 #print "vardir: $vardir, method: $method, option: $option\n";
 
-#Defaults
+# Defaults.
 my $arch = qx(dpkg --print-architecture);
 $arch = 'i386' if $?;
 chomp $arch;
@@ -63,21 +63,22 @@ my $exit = 0;
 my $problem = 0;
 
 if (-f "$methdir/vars") {
-  read_config("$methdir/vars");
+    read_config("$methdir/vars");
 }
 
 chdir "$methdir";
 if (! -d 'debian') {
-    mkdir 'debian', 0755;
+    mkdir 'debian', 0o755;
 }
-# get info from user
+
+# Get info from user.
 
 $| = 1;
 
 print <<"EOM";
 
 You must supply an ftp site, use of passive mode, username, password,
-path to the debian directory,list of distributions you are interested
+path to the debian directory, list of distributions you are interested
 in and place to download the binary package files to (relative to
 /var/lib/dpkg/methods/ftp). You can add as much sites as you like. Later
 entries will always override older ones.
@@ -102,74 +103,79 @@ Eg:  use auth proxy: y
 EOM
 
 if (! $CONFIG{done}) {
-  view_mirrors() if (yesno('y', 'Would you like to see a list of ftp mirrors'));
-  add_site('ftp');
+    view_mirrors() if (yesno('y', 'Would you like to see a list of ftp mirrors'));
+    add_site('ftp');
 }
 edit_config('ftp', $methdir);
 
 my $ftp;
-sub download() {
- foreach (@{$CONFIG{site}}) {
-    $ftp = do_connect(ftpsite => $_->[0],
-                      ftpdir => $_->[1],
-                      passive => $_->[3],
-                      username => $_->[4],
-                      password => $_->[5],
-                      useproxy => $CONFIG{use_auth_proxy},
-                      proxyhost => $CONFIG{proxyhost},
-                      proxylogname => $CONFIG{proxylogname},
-                      proxypassword => $CONFIG{proxypassword});
+sub download {
+    foreach my $site (@{$CONFIG{site}}) {
+        $ftp = do_connect(
+            ftpsite => $site->[0],
+            ftpdir => $site->[1],
+            passive => $site->[3],
+            username => $site->[4],
+            password => $site->[5],
+            useproxy => $CONFIG{use_auth_proxy},
+            proxyhost => $CONFIG{proxyhost},
+            proxylogname => $CONFIG{proxylogname},
+            proxypassword => $CONFIG{proxypassword},
+        );
 
-    my @dists = @{$_->[2]};
+        my @dists = @{$site->[2]};
 
-    foreach my $dist (@dists) {
-	my $dir = "$dist/binary-$arch";
-	print "Checking $dir...\n";
-#	if (!$ftp->pasv()) { print $ftp->message . "\n"; die 'error'; }
-	my @dirlst = $ftp->ls("$dir/");
-	my $got_pkgfile = 0;
+        foreach my $dist (@dists) {
+            my $dir = "$dist/binary-$arch";
+            print "Checking $dir...\n";
+#           if (! $ftp->pasv()) {
+#               print $ftp->message . "\n";
+#               die 'error';
+#           }
+            my @dirlst = $ftp->ls("$dir/");
+            my $got_pkgfile = 0;
 
-	foreach my $line (@dirlst) {
-	    if($line =~ /Packages/) {
-		$got_pkgfile = 1;
-	    }
-	}
-	if( !$got_pkgfile) {
-	    print "Warning: Could not find a Packages file in $dir\n",
-	    "This may not be a problem if the directory is a symbolic link\n";
-	    $problem = 1;
-	}
+            foreach my $line (@dirlst) {
+                if ($line =~ /Packages/) {
+                    $got_pkgfile = 1;
+                }
+            }
+            if (! $got_pkgfile) {
+                print "warning: could not find a Packages file in $dir\n",
+                      "This may not be a problem if the directory is a symbolic link\n";
+                $problem = 1;
+            }
+        }
+        print "Closing ftp connection...\n";
+        $ftp->quit();
     }
-    print "Closing ftp connection...\n";
-    $ftp->quit();
-  }
 }
 
-# download stuff (protect from ^C)
-print "\nUsing FTP to check directories...(stop with ^C)\n\n";
+# Download stuff (protect from Ctrl+C).
+print "\nUsing FTP to check directories... (use Ctrl+C to stop)\n\n";
 eval {
     local $SIG{INT} = sub {
-	die "interrupted!\n";
+        die "interrupted!\n";
     };
     download();
 };
-if($@) {
+if ($@) {
     $ftp->quit();
     print 'FTP ERROR - ';
     if ($@ eq 'connect') {
-	print "config was untested\n";
+        print "config was untested\n";
     } else {
-	print "$@\n";
+        print "$@\n";
     }
     $exit = 1;
-};
+}
 
-# output new vars file
+# Output new vars file.
 $CONFIG{done} = 1;
 store_config("$methdir/vars");
-chmod  0600, "$methdir/vars";
+chmod 0o600, "$methdir/vars";
 
-if($exit || $problem) {
+if ($exit || $problem) {
     print "Press <enter> to continue\n";
     <STDIN>;
 }

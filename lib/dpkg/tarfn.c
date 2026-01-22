@@ -22,7 +22,7 @@
 #include <config.h>
 #include <compat.h>
 
-#if HAVE_SYS_SYSMACROS_H
+#ifdef HAVE_SYS_SYSMACROS_H
 #include <sys/sysmacros.h>
 #endif
 #include <sys/stat.h>
@@ -40,6 +40,7 @@
 #include <dpkg/dpkg.h>
 #include <dpkg/i18n.h>
 #include <dpkg/error.h>
+#include <dpkg/sysuser.h>
 #include <dpkg/tarfn.h>
 
 #define TAR_MAGIC_USTAR "ustar\0" "00"
@@ -209,7 +210,6 @@ tar_header_get_prefix_name(struct tar_header *h)
 	varbuf_add_strn(&path, h->prefix, sizeof(h->prefix));
 	varbuf_add_char(&path, '/');
 	varbuf_add_strn(&path, h->name, sizeof(h->name));
-	varbuf_end_str(&path);
 
 	return path.buf;
 }
@@ -277,7 +277,8 @@ tar_header_checksum(struct tar_header *h)
 }
 
 static int
-tar_header_decode(struct tar_header *h, struct tar_entry *d, struct dpkg_error *err)
+tar_header_decode(struct tar_header *h, struct tar_entry *d,
+                  struct dpkg_error *err)
 {
 	long checksum;
 
@@ -373,9 +374,9 @@ tar_gnu_long(struct tar_archive *tar, struct tar_entry *te, char **longp)
 		int copysize;
 
 		status = tar->ops->read(tar, buf, TARBLKSZ);
-		if (status == TARBLKSZ)
+		if (status == TARBLKSZ) {
 			status = 0;
-		else {
+		} else {
 			/* Read partial header record? */
 			if (status > 0) {
 				errno = 0;
@@ -438,12 +439,12 @@ tar_entry_update_from_system(struct tar_entry *te)
 	struct group *group;
 
 	if (te->stat.uname) {
-		passwd = getpwnam(te->stat.uname);
+		passwd = dpkg_sysuser_from_name(te->stat.uname);
 		if (passwd)
 			te->stat.uid = passwd->pw_uid;
 	}
 	if (te->stat.gname) {
-		group = getgrnam(te->stat.gname);
+		group = dpkg_sysgroup_from_name(te->stat.gname);
 		if (group)
 			te->stat.gid = group->gr_gid;
 	}

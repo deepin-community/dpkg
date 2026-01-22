@@ -18,8 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use strict;
-use warnings;
+use v5.36;
 
 use Scalar::Util qw(looks_like_number);
 
@@ -30,8 +29,10 @@ my (%over, %base, %name);
 open(my $override_fh, '<', $ARGV[0]) or die $!;
 while (<$override_fh>) {
     chomp;
-    /^#/ && next; # skip comments
-    /\S/ || next; # ignore blank lines
+    # Skip comments.
+    next if m{^#};
+    # Ignore blank lines.
+    next unless m{\S};
     if (/^(\w+)\s+(\S.*\S)\s*$/) {
         $over{$1} = $2;
         $base{$1} = '';
@@ -51,7 +52,7 @@ for my $i (1 .. 26) {
 open(my $header_fh, '<', $ARGV[1]) or die $!;
 while (<$header_fh>) {
     s/\s+$//;
-    m/#define KEY_(\w+)\s+\d+\s+/p || next;
+    next unless m{#define KEY_(\w+)\s+\d+\s+}p;
     my $rhs = ${^POSTMATCH};
     my $k = "KEY_$1";
     $base{$k} = capit($1);
@@ -79,12 +80,15 @@ printf(<<'END') or die $!;
 
 END
 
-my ($comma);
+my $comma;
 
 for my $i (33 .. 126) {
     my $k = $i;
     my $v = pack('C', $i);
-    if ($v eq ',') { $comma = $k; next; }
+    if ($v eq ',') {
+        $comma = $k;
+        next;
+    }
     p($k, $v);
 }
 

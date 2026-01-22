@@ -26,7 +26,7 @@ Cada pacote fonte Debian é composto de um ficheiro .dsc, o qual contém um núm
 
 Cada campo começa com uma etiqueta, tal como B<Source> ou B<Binary> (insensível a maiúsculas/minúsculas), seguida do símbolo dois pontos, e o corpo do campo (sensível a maiúsculas/minúsculas a menos que declarado o contrário). Os campos são delimitados apenas por etiquetas de campos. Por outras palavras, o texto do campo pode ter várias linhas de comprimento, mas as ferramentas de instalação irão geralmente juntar as linhas quando processam o corpo do campo (excepto no caso de B<Package-List>, B<Files>, B<Checksums-Sha1> e B<Checksums-Sha256> de múltiplos campos, ver abaixo).
 
-Os dados de controle podem estar inclusos numa assinatura OpenPGP ASCII Armored, como especificado em RFC4880.
+Os dados de controle podem estar inclusos numa assinatura OpenPGP ASCII Armored, como especificado em RFC9580.
 
 =head1 CAMPOS
 
@@ -50,15 +50,17 @@ Este campo está agora a ser suplantado pelo campo B<Package-List>, o qual forne
 
 =item B<Architecture:> I<arch-list> (recomendado)
 
-Uma lista de arquitecturas e wildcards de arquitecturas separadas por espaços que especificam o tipo de hardware para o qual este pacote por ser compilado. Nomes de arquitecturas comuns são B<amd64>, B<armel>, B<i386>, B<linux-any>, B<any-amd64>, etc.
+A lista de arquitecturas especifica em que tipo de máquina este pacote corre.  O valor deve ser uma lista de nomes de arquitectura e/ou wildcards separados por espaços.
 
-Note que o valor B<all> destina-se a pacotes que são independentes da arquitectura, e B<any> a pacotes que são dependentes da arquitectura. A lista pode incluir (ou consistir apenas de) o valor especial B<all>.  Quando a lista contem a wildcard de arquitectura B<any>, o outro único valor permitido na lista é B<all>.
+Nomes de arquitectura comuns e wildcards de arquitectura são B<amd64>, B<armel>, B<i386>, B<linux-any>, B<any-amd64>, etc.  Note que o valor B<all> destina-se a pacote independentes da arquitectura, e B<any> a pacotes que são dependentes da arquitectura. A lista pode incluir (ou consistir apenas de) o valor especial B<all>.  Quando a lista contem a wildcard de arquitectura B<any>, o outro único valor permitido na lista é B<all>.
 
 O valor do campo é geralmente gerado a partir de campos B<Architecture> a partir de I<debian/control> no pacote fonte.
 
 =item B<Version:>I< string-de-versão> (obrigatório)
 
-Tipicamente, isto é o número de versão do pacote original seja em que formato o autor do programa usa. Pode também incluir um número de revisão Debian (para pacotes não-nativos). O formato exacto e algoritmo de ordenação estão descritos em L<deb-version(7)>.
+Tipicamente, isto é o número de versão do pacote original seja em que formato o autor do programa usa.  Pode também incluir um número de revisão Debian (para pacotes não-nativos).  O formato exacto e algoritmo de ordenação estão descritos em L<deb-version(7)>.
+
+B<Nota>: Em alguns fornecedores, o dpkg foi feito para permitir fontes nativas com versões não-nativas, tornando isto incoerente e adicional à confusão do conceito, onde adicionalmente isto tende a ser uma armadilha para enganos acidentais.
 
 =item B<Origin:> I<name>
 
@@ -142,9 +144,9 @@ O I<package> é o nome do pacote binário.
 
 O I<package-type> é o tipo de pacote binário, normalmente B<deb>, outro valor comum é B<udeb>.
 
-I<section> e I<priority> correspondem aos campos do pacote binário do mesmo nome.
+I<section> e I<priority> correspondem aos campos do pacote binário do mesmo nome, ou se omitidos são predefinidos para B<unknown> e B<optional> respetivamente (desde dpkg 1.22.13).
 
-A I<key-value-list> é uma lista is de I<key>B<=>I<value> separados por espaços, a as chaves opcionais actualmente conhecidas são:
+A I<key-value-list> é uma lista is de I<chave>B<=>I<valor> separados por espaços, a as chaves opcionais actualmente conhecidas são:
 
 =over 
 
@@ -154,7 +156,15 @@ A restrição de arquitectura do campo B<Architecture> do pacote binário, com e
 
 =item B<profile>
 
-A fórmula de restrição do perfil-de-compilação normalizada a partir do campo B<Build-Profile> do pacote binário, com os ORs convertidos para ‘+’ e os ANDs para ‘,’.
+A fórmula de restrição do perfil-de-compilação normalizada a partir do campo B<Build-Profile> do pacote binário, com Es (espaço em branco dentro de colchetes angulares fechados) convertidos para ‘,’, e OUs (espaço em branco entre colchetes angulares a fechar) para ‘+’.  Todos as colchetes angulares são removidos durante a normalização.
+
+Descontinuado desde dpkg 1.23.0, substituído por B<profile:v1>.
+
+=item B<profile:v1>
+
+A fórmula de restrição do perfil-de-compilação normalizada a partir do campo B<Build-Profile> do pacote binário, com Es (espaço em branco dentro de colchetes angulares fechados) convertidos para ‘&’, e OUs (espaço em branco entre colchetes angulares a fechar) para ‘|’.  Todos as colchetes angulares são removidos durante a normalização.
+
+Suportado desde dpkg 1.23.0.
 
 =item B<protected>
 
@@ -168,11 +178,11 @@ Se o pacote binário for essencial,esta chave ir+a conter o valor do campo B<Ess
 
 =back
 
-=item B<Files:> (necessário)
+=item B<Files:> (necessário, fraco)
 
-=item B<Checksums-Sha1:> (necessário)
+=item B<Checksums-Sha1:> (necessário, fraco)
 
-=item B<Checksums-Sha256:> (necessário)
+=item B<Checksums-Sha256:> (necessário, forte)
 
 =item S< >I<checksum> I<size> I<filename>
 
@@ -181,6 +191,8 @@ Estes campos multi-linha contêm uma lista de ficheiros com um sumário de verif
 A primeira linha do campo valor (a parte na mesma linha que tem o campo nome seguido de dois pontos) é sempre vazia. O conteúdo do campo é expressado como linhas de continuação, uma linha por ficheiro. Cada linha consiste do checksum, um espaço, o tamanho do ficheiro, um espaço, e o nome do ficheiro.
 
 Estes campos listam todos os ficheiros que fazem o pacote fonte. A lista de ficheiros nestes campos tem de corresponder à lista de ficheiros nos outros campos relacionados.
+
+B<Nota>: Os sumários de verificação MD5 e SHA-1são considerados fracos, e nunca devem ser assumidos como suficientes para verificação de segurança.
 
 =back
 

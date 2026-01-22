@@ -49,7 +49,7 @@ pkg_infodb_has_file(struct pkginfo *pkg, struct pkgbin *pkgbin,
 	else if (errno == ENOENT)
 		return false;
 	else
-		ohshite(_("unable to check existence of '%.250s'"), filename);
+		ohshite(_("unable to check existence of '%s'"), filename);
 }
 
 void
@@ -73,7 +73,6 @@ pkg_infodb_foreach(struct pkginfo *pkg, struct pkgbin *pkgbin,
 		pkgname = pkgbin_name(pkg, pkgbin, pnaw_never);
 
 	varbuf_add_dir(&db_path, pkg_infodb_get_dir());
-	varbuf_end_str(&db_path);
 	varbuf_snapshot(&db_path, &db_path_state);
 
 	db_dir = opendir(db_path.buf);
@@ -84,7 +83,7 @@ pkg_infodb_foreach(struct pkginfo *pkg, struct pkgbin *pkgbin,
 	while ((db_de = readdir(db_dir)) != NULL) {
 		const char *filename, *filetype, *dot;
 
-		debug(dbg_veryverbose, "infodb foreach info file '%s'",
+		debug(dbg_veryverbose, "infodb foreach metadata file '%s'",
 		      db_de->d_name);
 
 		/* Ignore dotfiles, including ‘.’ and ‘..’. */
@@ -108,7 +107,6 @@ pkg_infodb_foreach(struct pkginfo *pkg, struct pkgbin *pkgbin,
 
 		varbuf_rollback(&db_path_state);
 		varbuf_add_str(&db_path, db_de->d_name);
-		varbuf_end_str(&db_path);
 		filename = db_path.buf;
 
 		func(filename, filetype);

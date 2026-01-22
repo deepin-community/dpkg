@@ -42,6 +42,8 @@ Dieses Feld definiert die Art des Pakets. B<udeb> ist für größenbegrenzte Pak
 
 Typischerweise ist das die Original-Paketversionsnummer, in der Form, die der Programmautor verwendet. Es kann auch eine Debian-Revisionsnummer enthalten (für nicht aus Debian stammende Pakete). Das genaue Format und der Sortieralgorithmus sind in L<deb-version(7)> beschrieben.
 
+B<Hinweis>: Bei einigen Lieferanten wurde L<dpkg> so gebaut, dass native Quellen mit nichtnativen Versionen erlaubt sind. Dadurch wird dies inkohärent und fügt Verwirrung zum Konzept hinzu, wo schon so dies eine Falle für versehentliche Fehler ist.
+
 =item B<Maintainer:> I<Vollständiger-Name-und-E-Mail> (empfohlen)
 
 Sollte in dem Format „Joe Bloggs E<lt>jbloggs@foo.comE<gt>“ sein und ist typischerweise die Person, die das Paket erstellt hat, im Gegensatz zum Autor der Software, die paketiert wurde.
@@ -56,15 +58,13 @@ Das Format der Paketbeschreibung ist eine kurze knappe Zusammenfassung auf der e
 
 Dies ist ein allgemeines Feld, das das Paket in eine Kategorie einordnet, basierend auf der Software, die es installiert. Einige übliche Sektionen sind B<utils>, B<net>, B<mail>, B<text>, B<x11> usw.
 
+Die akzeptierten Werte hängen von den jeweiligen Distributionsrichtlinien ab.
+
 =item B<Priority:> I<Priorität>
 
-Setzt die Bedeutung dieses Pakets in Bezug zu dem Gesamtsystem. Übliche Prioritäten sind B<required>, B<standard>, B<optional>, B<extra> usw.
+Setzt die Bedeutung dieses Pakets in Bezug zu dem Gesamtsystem. Die bekannten Prioritäten sind B<required>, B<important>, B<standard>, B<optional>, B<extra> und B<unknown>, es können aber auch andere Werte verwandt werden.
 
-=back
-
-Die Felder B<Section> und B<Priority> haben eine definierte Menge an Werten, abhängig von den jeweiligen Distributionsrichtlinien.
-
-=over 
+Wie diese Werte angewandt werden, hängt von den jeweiligen Distributionsrichtlinien ab.
 
 =item B<Installed-Size:> I<Größe>
 
@@ -84,9 +84,15 @@ Dieses Feld wird normalerweise nur benötigt, wenn die Antwort B<yes> lautet. Es
 
 Dieses Feld wird normalerweise nur benötigt, wenn die Antwort B<yes> lautet und es wird typischerweise durch die Archivsoftware eingefügt. Es vermerkt ein Paket, das zum Bau anderer Pakete benötigt wird.
 
-=item B<Architecture:> I<arch>|B<all> (verpflichtend)
+=item B<Architecture:> B<all>|I<arch> (required)
 
-Die Architektur spezifiziert den Hardwaretyp, für den dieses Paket kompiliert wurde. Geläufige Architekturen sind B<amd64>, B<armel>, B<i386>, B<powerpc> usw. Beachten Sie, dass der Wert B<all> für Pakete gedacht ist, die Architektur-unabhängig sind. Einige Beispiele hierfür sind Shell- und Perl-Skripte und Dokumentation.
+The architecture specifies on which type of machine this package runs.
+
+Common architectures are B<amd64>, B<armel>, B<i386>, B<powerpc>, etc.  Note that the special B<all> value is meant for packages that are architecture independent (such as shell and Perl scripts or documentation).
+
+B<Note:> Architecture wildcards are not allowed in this context.
+
+An architecture name must start with an alphanumeric character (“0-9a-zA-Z”), and then gets followed by alphanumeric and dash (‘-’) characters.
 
 =item B<Origin:> I<Name>
 
@@ -227,16 +233,19 @@ Das Format oder die Art, jede Baukennung zu berechnen, ist designbedingt nicht f
 =head1 BEISPIEL
 
  Package: grep
+ Version: 3.11-3
  Essential: yes
  Priority: required
- Section: base
- Maintainer: Wichert Akkerman <wakkerma@debian.org>
+ Section: utils
+ Maintainer: Anibal Monsalve Salazar <anibal@debian.org>
  Architecture: sparc
- Version: 2.4-1
- Pre-Depends: libc6 (>= 2.0.105)
+ Multi-Arch: foreign
+ Pre-Depends: libc6 (>= 2.34), libpcre2-8-0 (>= 10.32)
  Provides: rgrep
  Conflicts: rgrep
- Description: GNU grep, egrep und fgrep.
+ Installed-Size. 1267
+ Homepage: https://www.gnu.org/software/grep/
+ Description: GNU grep, egrep und fgrep
   Die GNU-Familie der Grep-Werkzeuge könnte die „schnellste im Westen“ sein.
   GNU Grep basiert auf einem schellen „lazy-state deterministic matcher“
   (rund zweimal so schnell wie der standardmäßige Unix-Egrep) hybridisiert 
@@ -258,7 +267,7 @@ L<deb822(5)>, L<deb-src-control(5)>, L<deb(5)>, L<deb-version(7)>, L<debtags(1)>
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

@@ -1,6 +1,6 @@
-# serial 1
+# serial 2
 # Copyright © 2004 Scott James Remnant <scott@netsplit.com>
-# Copyright © 2006, 2009-2011, 2013-2016 Guillem Jover <guillem@debian.org>
+# Copyright © 2006-2024 Guillem Jover <guillem@debian.org>
 
 # DPKG_CHECK_COMPILER_FLAG
 # ------------------------
@@ -28,7 +28,7 @@ AC_DEFUN([DPKG_CHECK_COMPILER_FLAG], [
     AS_VAR_COPY([dpkg_varname_save], [dpkg_varname])
     AS_VAR_SET([dpkg_varname], ["-Werror dpkg_check_flag"])
     AC_COMPILE_IFELSE([
-      AC_LANG_SOURCE([[]])
+      AC_LANG_SOURCE([[int function() { return 0; }]])
     ], [
       AS_VAR_SET([dpkg_varname_cache], [yes])
     ], [
@@ -42,6 +42,63 @@ AC_DEFUN([DPKG_CHECK_COMPILER_FLAG], [
   AS_VAR_POPDEF([dpkg_varname_cache])
 ])
 
+# DPKG_CHECK_COMPILER_DIALECT
+# ---------------------------
+# Add configure option to control the compiler language dialect to use.
+AC_DEFUN([DPKG_CHECK_COMPILER_DIALECT], [
+  DPKG_CHECK_COMPILER_FLAG([-fstrict-flex-arrays=3])
+])
+
+# DPKG_COMPILER_DIALECT
+# ---------------------
+# Add configure option to enable compiler language dialect support options.
+AC_DEFUN([DPKG_COMPILER_DIALECT], [
+  AC_ARG_ENABLE([compiler-dialect],
+    [AS_HELP_STRING([--disable-compiler-dialect],
+      [Disable (detected) compiler dialect support])],
+    [], [enable_compiler_dialect=yes])
+
+  AS_IF([test "$enable_compiler_dialect" = "yes"], [
+    DPKG_CHECK_COMPILER_DIALECT
+    AC_LANG_PUSH([C++])
+    DPKG_CHECK_COMPILER_DIALECT
+    AC_LANG_POP([C++])
+
+    CFLAGS="$DPKG_COMPILER_CFLAGS $CFLAGS"
+    CXXFLAGS="$DPKG_COMPILER_CXXFLAGS $CXXFLAGS"
+  ])
+])
+
+# DPKG_CHECK_COMPILER_HARDENING
+# -----------------------------
+# Add configure option to control the compiler hardening support.
+AC_DEFUN([DPKG_CHECK_COMPILER_HARDENING], [
+  DPKG_CHECK_COMPILER_FLAG([-fcf-protection=full])
+  DPKG_CHECK_COMPILER_FLAG([-fstack-clash-protection])
+  DPKG_CHECK_COMPILER_FLAG([-fstack-protector-strong])
+  DPKG_CHECK_COMPILER_FLAG([-mbranch-protection=standard])
+])
+
+# DPKG_COMPILER_HARDENING
+# -----------------------
+# Add configure option to enable compiler hardening support options.
+AC_DEFUN([DPKG_COMPILER_HARDENING], [
+  AC_ARG_ENABLE([compiler-hardening],
+    [AS_HELP_STRING([--disable-compiler-hardening],
+      [Disable (detected) compiler hardening])],
+    [], [enable_compiler_hardening=yes])
+
+  AS_IF([test "$enable_compiler_hardening" = "yes"], [
+    DPKG_CHECK_COMPILER_HARDENING
+    AC_LANG_PUSH([C++])
+    DPKG_CHECK_COMPILER_HARDENING
+    AC_LANG_POP([C++])
+
+    CFLAGS="$DPKG_COMPILER_CFLAGS $CFLAGS"
+    CXXFLAGS="$DPKG_COMPILER_CXXFLAGS $CXXFLAGS"
+  ])
+])
+
 # DPKG_CHECK_COMPILER_WARNINGS
 # ----------------------------
 # Add configure option to disable additional compiler warnings.
@@ -51,6 +108,7 @@ AC_DEFUN([DPKG_CHECK_COMPILER_WARNINGS], [
 
   DPKG_CHECK_COMPILER_FLAG([-Walloca])
   DPKG_CHECK_COMPILER_FLAG([-Walloc-zero])
+  DPKG_CHECK_COMPILER_FLAG([-Warray-bounds=3])
   DPKG_CHECK_COMPILER_FLAG([-Warray-bounds-pointer-arithmetic])
   DPKG_CHECK_COMPILER_FLAG([-Wassign-enum])
   DPKG_CHECK_COMPILER_FLAG([-Wbitfield-enum-conversion])
@@ -89,6 +147,7 @@ AC_DEFUN([DPKG_CHECK_COMPILER_WARNINGS], [
   DPKG_CHECK_COMPILER_FLAG([-Wshift-sign-overflow])
   DPKG_CHECK_COMPILER_FLAG([-Wsizeof-array-argument])
   DPKG_CHECK_COMPILER_FLAG([-Wstrict-overflow=2])
+  DPKG_CHECK_COMPILER_FLAG([-Wstrict-flex-arrays])
   DPKG_CHECK_COMPILER_FLAG([-Wswitch-bool])
   DPKG_CHECK_COMPILER_FLAG([-Wvla])
   DPKG_CHECK_COMPILER_FLAG([-Wwrite-strings])
@@ -111,12 +170,31 @@ AC_DEFUN([DPKG_CHECK_COMPILER_WARNINGS], [
     DPKG_CHECK_COMPILER_FLAG([-Wstrict-prototypes])
   ],
   [C++], [
-    DPKG_CHECK_COMPILER_FLAG([-Wc++11-compat])
-    DPKG_CHECK_COMPILER_FLAG([-Wc++11-compat-pedantic])
-    DPKG_CHECK_COMPILER_FLAG([-Wc++11-extensions])
+    AS_IF([test "$dpkg_cxx_std_version" -eq "_DPKG_CXX_CXX11_VERSION"], [
+      DPKG_CHECK_COMPILER_FLAG([-Wc++11-compat])
+      DPKG_CHECK_COMPILER_FLAG([-Wc++11-compat-pedantic])
+    ], [test "$dpkg_cxx_std_version" -ge "_DPKG_CXX_CXX14_VERSION"], [
+      DPKG_CHECK_COMPILER_FLAG([-Wc++14-compat])
+      DPKG_CHECK_COMPILER_FLAG([-Wc++14-compat-pedantic])
+    ])
+    AS_IF([test "$dpkg_cxx_std_version" -le "_DPKG_CXX_CXX11_VERSION"], [
+      DPKG_CHECK_COMPILER_FLAG([-Wc++14-extensions])
+    ])
+    AS_IF([test "$dpkg_cxx_std_version" -le "_DPKG_CXX_CXX14_VERSION"], [
+      DPKG_CHECK_COMPILER_FLAG([-Wc++17-extensions])
+    ])
+    AS_IF([test "$dpkg_cxx_std_version" -le "_DPKG_CXX_CXX17_VERSION"], [
+      DPKG_CHECK_COMPILER_FLAG([-Wc++20-extensions])
+    ])
+    AS_IF([test "$dpkg_cxx_std_version" -le "_DPKG_CXX_CXX20_VERSION"], [
+      DPKG_CHECK_COMPILER_FLAG([-Wc++23-extensions])
+    ])
+    AS_IF([test "$dpkg_cxx_std_version" -le "_DPKG_CXX_CXX23_VERSION"], [
+      DPKG_CHECK_COMPILER_FLAG([-Wc++26-extensions])
+    ])
     DPKG_CHECK_COMPILER_FLAG([-Wcast-qual])
     DPKG_CHECK_COMPILER_FLAG([-Wold-style-cast])
-    AS_IF([test "x$dpkg_cv_cxx11" = "xyes"], [
+    AS_IF([test "$dpkg_cxx_std_version" -ge "_DPKG_CXX_CXX11_VERSION"], [
       DPKG_CHECK_COMPILER_FLAG([-Wzero-as-null-pointer-constant])
     ])
   ])
@@ -131,7 +209,7 @@ AC_DEFUN([DPKG_COMPILER_WARNINGS], [
       [Disable (detected) additional compiler warnings])],
     [], [enable_compiler_warnings=yes])
 
-  AS_IF([test "x$enable_compiler_warnings" = "xyes"], [
+  AS_IF([test "$enable_compiler_warnings" = "yes"], [
     DPKG_CHECK_COMPILER_WARNINGS
     AC_LANG_PUSH([C++])
     DPKG_CHECK_COMPILER_WARNINGS
@@ -160,7 +238,7 @@ AC_DEFUN([DPKG_COMPILER_SANITIZER], [
       [Enable compiler sanitizer support])],
     [], [enable_compiler_sanitizer=no])
 
-  AS_IF([test "x$enable_compiler_sanitizer" = "xyes"], [
+  AS_IF([test "$enable_compiler_sanitizer" = "yes"], [
     DPKG_CHECK_COMPILER_SANITIZER
     AC_LANG_PUSH([C++])
     DPKG_CHECK_COMPILER_SANITIZER
@@ -184,7 +262,7 @@ AC_DEFUN([DPKG_COMPILER_ANALYZER], [
       [Enable compiler analyzer support])],
     [], [enable_compiler_analyzer=no])
 
-  AS_IF([test "x$enable_compiler_analyzer" = "xyes"], [
+  AS_IF([test "$enable_compiler_analyzer" = "yes"], [
     DPKG_CHECK_COMPILER_FLAG([-fanalyzer])
     AC_LANG_PUSH([C++])
     DPKG_CHECK_COMPILER_FLAG([-fanalyzer])
@@ -205,24 +283,29 @@ AC_DEFUN([DPKG_COMPILER_OPTIMIZATIONS], [
       [Disable (detected) compiler optimizations])],
     [], [enable_compiler_optimizations=yes])
 
-  AS_IF([test "x$enable_compiler_optimizations" = "xno"], [
+  AS_IF([test "$enable_compiler_optimizations" = "no"], [
     CFLAGS=$(echo "$CFLAGS" | $SED -e "s/ -O[[1-9]]*\b/ -O0/g")
   ])
 ])
 
-# DPKG_TRY_C99([ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
-# ------------------------------------------------------
-# Try compiling some C99 code to see whether it works
-AC_DEFUN([DPKG_TRY_C99], [
-  AC_COMPILE_IFELSE([
-    AC_LANG_PROGRAM([[
+# _DPKG_C_C99_VERSION
+# -------------------
+m4_define([_DPKG_C_C99_VERSION], [199901])
+
+# _DPKG_C_C99_PROLOGUE
+# -------------------
+m4_define([_DPKG_C_C99_PROLOGUE], [[
 #include <inttypes.h>
 #include <stdbool.h>
 #include <stdio.h>
 
 /* Variadic macro arguments. */
 #define variadic_macro(foo, ...) printf(foo, __VA_ARGS__)
-    ]], [[
+]])
+
+# _DPKG_C_C99_BODY
+# ----------------
+m4_define([_DPKG_C_C99_BODY], [[
 	int rc;
 
 	/* Designated initializers. */
@@ -253,87 +336,196 @@ AC_DEFUN([DPKG_TRY_C99], [
 
 	/* Magic __func__ variable. */
 	printf("%s", __func__);
-    ]])
-  ], [$1], [$2])dnl
-])# DPKG_TRY_C99
+]])
 
-# DPKG_C_C99
+# _DPKG_C_C99_OPTS
+# ----------------
+m4_define([_DPKG_C_C99_OPTS], [
+  -std=gnu99
+  -std=c99
+  -c99
+  -AC99
+  -xc99=all
+  -qlanglvl=extc99
+])
+
+# _DPKG_C_STD_VERSION
+# -------------------
+m4_define([_DPKG_C_STD_VERSION], [[
+#if __STDC_VERSION__ < ]]_DPKG_C_C$1_VERSION[[L
+#error "Requires C$1"
+#endif
+]])
+
+# _DPKG_C_STD_TRY([C-VERSION], [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
+# ---------------
+# Try compiling some C C-VERSION code to see whether it works.
+AC_DEFUN([_DPKG_C_STD_TRY], [
+  AC_COMPILE_IFELSE([
+    AC_LANG_PROGRAM([
+      _DPKG_C_C$1_PROLOGUE
+      _DPKG_C_STD_VERSION($1)
+    ], [
+      _DPKG_C_C$1_BODY
+    ])
+  ], [$2], [$3])dnl
+])
+
+# DPKG_C_STD([C-VERSION])
 # ----------
-# Check whether the compiler can do C99
-AC_DEFUN([DPKG_C_C99], [
-  AC_CACHE_CHECK([whether $CC supports C99 features], [dpkg_cv_c99], [
-    DPKG_TRY_C99([dpkg_cv_c99=yes], [dpkg_cv_c99=no])
+# Check whether the compiler can do C C-VERSION.
+#
+# This is a strict requirement, as the C codebase always needs to be built.
+#
+# Currently supported: C99.
+AC_DEFUN([DPKG_C_STD], [
+  AC_CACHE_CHECK([whether $CC supports C$1], [dpkg_cv_c_std], [
+    _DPKG_C_STD_TRY([$1], [dpkg_cv_c_std=yes], [dpkg_cv_c_std=no])
   ])
-  AS_IF([test "x$dpkg_cv_c99" != "xyes"], [
-    AC_CACHE_CHECK([for $CC option to accept C99 features], [dpkg_cv_c99_arg], [
-      dpkg_cv_c99_arg=none
+  AS_IF([test "$dpkg_cv_c_std" != "yes"], [
+    AC_CACHE_CHECK([for $CC option to accept C$1], [dpkg_cv_c_std_opt], [
+      dpkg_cv_c_std_opt=none
       dpkg_save_CC="$CC"
-      for arg in "-std=gnu99" "-std=c99" "-c99" "-AC99" "-xc99=all" \
-                 "-qlanglvl=extc99"; do
-        CC="$dpkg_save_CC $arg"
-        DPKG_TRY_C99([dpkg_arg_worked=yes], [dpkg_arg_worked=no])
+      for opt in m4_normalize(m4_defn([_DPKG_C_C$1_OPTS])); do
+        CC="$dpkg_save_CC $opt"
+        _DPKG_C_STD_TRY([$1], [dpkg_opt_worked=yes], [dpkg_opt_worked=no])
         CC="$dpkg_save_CC"
 
-        AS_IF([test "x$dpkg_arg_worked" = "xyes"], [
-          dpkg_cv_c99_arg="$arg"
-          break
+        AS_IF([test "$dpkg_opt_worked" = "yes"], [
+          dpkg_cv_c_std_opt="$opt"; break
         ])
       done
     ])
-    AS_IF([test "x$dpkg_cv_c99_arg" != "xnone"], [
-      CC="$CC $dpkg_cv_c99_arg"
-      dpkg_cv_c99=1
+    AS_IF([test "$dpkg_cv_c_std_opt" != "none"], [
+      CC="$CC $dpkg_cv_c_std_opt"
+      dpkg_cv_c_std=yes
     ])
   ])
-  AS_IF([test "x$dpkg_cv_c99" = "xyes"], [
-    AC_DEFINE([HAVE_C99], 1, [Define to 1 if the compiler supports C99.])
+  AS_IF([test "$dpkg_cv_c_std" = "yes"], [
+    dpkg_c_std_version="_DPKG_C_C$1_VERSION"
   ], [
-    AC_MSG_ERROR([unsupported required C99 extensions])
+    AC_MSG_ERROR([unsupported required C$1])
   ])
-])# DPKG_C_C99
+])
 
-# DPKG_TRY_CXX11([ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
-# --------------
-# Try compiling some C++11 code to see whether it works.
-AC_DEFUN([DPKG_TRY_CXX11], [
-  AC_LANG_PUSH([C++])
-  AC_COMPILE_IFELSE([
-    AC_LANG_PROGRAM([[
-    ]], [[
+# _DPKG_CXX_CXX11_VERSION
+# -----------------------
+m4_define([_DPKG_CXX_CXX11_VERSION], [201103])
+
+# _DPKG_CXX_CXX11_PROLOGUE
+# ------------------------
+m4_define([_DPKG_CXX_CXX11_PROLOGUE], [[]])
+
+# _DPKG_CXX_CXX11_BODY
+# --------------------
+m4_define([_DPKG_CXX_CXX11_BODY], [[
 	// Null pointer keyword.
 	void *ptr = nullptr;
-    ]])
-  ], [$1], [$2])
-  AC_LANG_POP([C++])dnl
-])# DPKG_TRY_CXX11
 
-# DPKG_CXX_CXX11
-# --------------
-# Check whether the compiler can do C++11.
-AC_DEFUN([DPKG_CXX_CXX11], [
-  AC_CACHE_CHECK([whether $CXX supports C++11], [dpkg_cv_cxx11], [
-    DPKG_TRY_CXX11([dpkg_cv_cxx11=yes], [dpkg_cv_cxx11=no])
+	// Function name.
+	const char *func_name = __func__;
+]])
+
+# _DPKG_CXX_CXX11_OPTS
+# --------------------
+m4_define([_DPKG_CXX_CXX11_OPTS], [
+  -std=gnu++11
+  -std=c++11
+])
+
+# _DPKG_CXX_CXX14_VERSION
+# -----------------------
+m4_define([_DPKG_CXX_CXX14_VERSION], [201402])
+
+# _DPKG_CXX_CXX14_PROLOGUE
+# ------------------------
+m4_define([_DPKG_CXX_CXX14_PROLOGUE], [[]])
+
+# _DPKG_CXX_CXX14_BODY
+# --------------------
+m4_define([_DPKG_CXX_CXX14_BODY], [
+  _DPKG_CXX_CXX11_BODY
+])
+
+# _DPKG_CXX_CXX14_OPTS
+# --------------------
+# Define the options to try for C++14.
+m4_define([_DPKG_CXX_CXX14_OPTS], [
+  -std=gnu++14
+  -std=c++14
+])
+
+# _DPKG_CXX_CXX17_VERSION
+# -----------------------
+m4_define([_DPKG_CXX_CXX17_VERSION], [201703])
+
+# _DPKG_CXX_CXX20_VERSION
+# -----------------------
+m4_define([_DPKG_CXX_CXX20_VERSION], [202002])
+
+# _DPKG_CXX_CXX23_VERSION
+# -----------------------
+m4_define([_DPKG_CXX_CXX23_VERSION], [202302])
+
+# _DPKG_CXX_STD_VERSION
+# ---------------------
+m4_define([_DPKG_CXX_STD_VERSION], [[
+#if __cplusplus < ]]_DPKG_CXX_CXX$1_VERSION[[L
+#error "Requires C++$1"
+#endif
+]])
+
+# _DPKG_CXX_STD_TRY([CXX-VERSION], [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
+# -----------------
+# Try compiling some C++ CXX-VERSION code to see whether it works.
+AC_DEFUN([_DPKG_CXX_STD_TRY], [
+  AC_LANG_PUSH([C++])
+  AC_COMPILE_IFELSE([
+    AC_LANG_PROGRAM([
+      _DPKG_CXX_CXX$1_PROLOGUE
+      _DPKG_CXX_STD_VERSION($1)
+    ], [
+      _DPKG_CXX_CXX$1_BODY
+    ])
+  ], [$2], [$3])
+  AC_LANG_POP([C++])dnl
+])
+
+# DPKG_CXX_STD([CXX-VERSION])
+# ------------
+# Check whether the compiler can do C++ CXX-VERSION.
+#
+# This is a strict requirement, because even if the C++ codebase can be
+# disabled with a configure option, we are still distributing C++ headers
+# that we need to support and test during build.
+#
+# Currently supported: C++11, C++14.
+AC_DEFUN([DPKG_CXX_STD], [
+  AC_CACHE_CHECK([whether $CXX supports C++$1], [dpkg_cv_cxx_std], [
+    _DPKG_CXX_STD_TRY([$1], [dpkg_cv_cxx_std=yes], [dpkg_cv_cxx_std=no])
   ])
-  AS_IF([test "x$dpkg_cv_cxx11" != "xyes"], [
-    AC_CACHE_CHECK([for $CXX option to accept C++11], [dpkg_cv_cxx11_arg], [
-      dpkg_cv_cxx11_arg=none
+  AS_IF([test "$dpkg_cv_cxx_std" != "yes"], [
+    AC_CACHE_CHECK([for $CXX option to accept C++$1], [dpkg_cv_cxx_std_opt], [
+      dpkg_cv_cxx_std_opt=none
       dpkg_save_CXX="$CXX"
-      for arg in "-std=gnu++11" "-std=c++11"; do
-        CXX="$dpkg_save_CXX $arg"
-        DPKG_TRY_CXX11([dpkg_arg_worked=yes], [dpkg_arg_worked=no])
+      for opt in m4_normalize(m4_defn([_DPKG_CXX_CXX$1_OPTS])); do
+        CXX="$dpkg_save_CXX $opt"
+        _DPKG_CXX_STD_TRY([$1], [dpkg_opt_worked=yes], [dpkg_opt_worked=no])
         CXX="$dpkg_save_CXX"
 
-        AS_IF([test "x$dpkg_arg_worked" = "xyes"], [
-          dpkg_cv_cxx11_arg="$arg"; break
+        AS_IF([test "$dpkg_opt_worked" = "yes"], [
+          dpkg_cv_cxx_std_opt="$opt"; break
         ])
       done
     ])
-    AS_IF([test "x$dpkg_cv_cxx11_arg" != "xnone"], [
-      CXX="$CXX $dpkg_cv_cxx11_arg"
-      dpkg_cv_cxx11=yes
+    AS_IF([test "$dpkg_cv_cxx_std_opt" != "none"], [
+      CXX="$CXX $dpkg_cv_cxx_std_opt"
+      dpkg_cv_cxx_std=yes
     ])
   ])
-  AS_IF([test "x$dpkg_cv_cxx11" = "xyes"], [
-    AC_DEFINE([HAVE_CXX11], 1, [Define to 1 if the compiler supports C++11.])
-  ])[]dnl
-])# DPKG_CXX_CXX11
+  AS_IF([test "$dpkg_cv_cxx_std" = "yes"], [
+    dpkg_cxx_std_version="_DPKG_CXX_CXX$1_VERSION"
+  ], [
+    AC_MSG_ERROR([unsupported required C++$1])
+  ])
+])

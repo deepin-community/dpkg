@@ -77,7 +77,7 @@ Det innebär att, om paketet menar att byta namn eller ta bort en konfigurations
 
 B<Observera>: Det här kan i de flesta fall ersättas av flaggan C<remove-on-upgrade> i F<DEBIAN/conffiles> (sedan dpkg 1.20.6), se L<deb-conffiles(5)>.
 
-If a conffile is completely removed, it should be removed from disk, unless the user has modified it.  If there are local modifications, they should be preserved.  If the package upgrade aborts, the newly obsolete conffile should not disappear.
+Om en konffil helt tas bort bör den tas bort från disk, såvida inte användaren har modifierat den. Om det finns lokala ändringar bör de bibehållas. Om paketuppgraderingen avbryts bör inte konffilen som just blev föråldrad försvinna.
 
 Allt detta implementeras genom att lägga in följande skalkod i paketskripten B<preinst>, B<postinst> och B<postrm>:
 
@@ -157,7 +157,7 @@ Aktuell implementation: I B<preinst> kontrolleras om katalogen finns, inte inneh
 
 När ett paketeringshjälpprogram används, kontrollera att det har direkt integrering med B<dpkg-maintscript-helper>, något som kan göra ditt liv enklare. Se till exempel L<dh_installdeb(1)>.
 
-Givet att B<dpkg-maintscript-helper> används i B<preinst> så innebär detta villkorslöst att ett förhandsberoende (”pre-dependency”) krävs för att försäkra att den nödvändiga versionen av B<dpkg> redan har packats upp. Den version som krävs beror på vilket kommando som används, för B<rm_conffile> och B<mv_conffile> är det 1.15.7.2, för B<symlink_to_dir> och B<dir_to_symlnk> är det 1.17.14:
+Given that B<dpkg-maintscript-helper> is used in the B<preinst>, using it unconditionally requires a versioned pre-dependency to ensure that the required version of B<dpkg> has been unpacked before, unless we know we are upgrading from a release where the required dpkg version is going to be satisfied.  The required version depends on the command used, for B<rm_conffile> and B<mv_conffile> it is 1.15.7.2, for B<symlink_to_dir> and B<dir_to_symlink> it is 1.17.14.  For example, if we required support for B<symlink_to_dir> when upgrading from a release that had a dpkg version earlier than 1.17.14, we would need to add:
 
 =over 
 

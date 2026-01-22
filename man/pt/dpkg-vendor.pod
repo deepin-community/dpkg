@@ -24,6 +24,12 @@ B<dpkg-vendor> [I<option>...] I<command>
 
 B<dpkg-vendor> é uma ferramenta para inquirir informação acerca dos fornecedores listados em B<%PKGCONFDIR%/origins>. B<%PKGCONFDIR%/origins/default> contém informação acerca do fornecedor actual.
 
+Os ficheiros origin fornecem metadados acerca de fornecedores específicos, tais coo o seu URL ou onde preencher relatórios de bug, e são geralmente usados tanto para determinar o comportamento de ferramentas e conteúdos resultantes durante compilações do pacote que visam um fornecedor específico, como para descrever a proveniência dos pacotes.
+
+Os pacotes podem explicitamente especificar o seu fornecedor ao incluir um campo B<Origin>, caso contrário o fornecedor para um pacote que não tenha tal campo é assumido que seja aquele apontado pelo link simbólico F<predefinido> origin.
+
+O link simbólico F<default> é também usado para denotar a origem da instalação actual gerida pelo B<dpkg>, seja uma distribuição completa ou uma sobreposição no topo de um sistema base existente que contém ou nenhum sistema de empacotamento ou um nativo.
+
 Este programa foi introduzido no dpkg 1.15.1.
 
 =head1 COMANDOS
@@ -77,6 +83,18 @@ Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B
 =item B<DPKG_NLS>
 
 Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nativa. Também como conhecido como suporte de internacionalização (ou i18n) (desde dpkg 1.19.0). Os valores aceites são B<0> e B<1> (predefinição).
+
+=back
+
+=head1 FICHEIROS
+
+=head2 Suporte a empacotamento
+
+=over 
+
+=item B<%PKGDATADIR%/vendor.mk>
+
+Fragmento do Makefile que define o fornecedor actual e o seu pai em variáveis, e fornece macros do make para verificar por derivativos (desde dpkg 1.16.1).
 
 =back
 

@@ -241,6 +241,16 @@ Show the version and exit.
 
 =over
 
+=item B<DEB_HOST_ARCH>
+
+Sets the host architecture.
+
+=item B<DEB_BUILD_PROFILES>
+
+If set, it will be used as the active build profile(s) to use when generating
+the .changes file.
+It is a space separated list of profile names.
+
 =item B<DPKG_COLORS>
 
 Sets the color mode (since dpkg 1.18.5).

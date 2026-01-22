@@ -30,11 +30,9 @@ to import specific symbol subsets.
 
 =cut
 
-package Dpkg::Arch 1.03;
+package Dpkg::Arch 1.04;
 
-use strict;
-use warnings;
-use feature qw(state);
+use v5.36;
 
 our @EXPORT_OK = qw(
     get_raw_build_arch
@@ -47,6 +45,7 @@ our @EXPORT_OK = qw(
     debarch_is
     debarch_is_wildcard
     debarch_is_illegal
+    debarch_is_invalid
     debarch_is_concerned
     debarch_to_abiattrs
     debarch_to_cpubits
@@ -89,6 +88,7 @@ our %EXPORT_TAGS = (
         debarch_is
         debarch_is_wildcard
         debarch_is_illegal
+        debarch_is_invalid
         debarch_is_concerned
     ) ],
 );
@@ -104,7 +104,7 @@ use Dpkg::BuildEnv;
 
 my (@cpu, @os);
 my (%cputable, %ostable);
-my (%cputable_re, %ostable_re);
+my (%cputable_regex, %ostable_regex);
 my (%cpubits, %cpuendian);
 my %abibits;
 
@@ -122,7 +122,7 @@ from the environment.
 
 =cut
 
-sub get_raw_build_arch()
+sub get_raw_build_arch
 {
     state $build_arch;
 
@@ -149,7 +149,7 @@ if available.
 
 =cut
 
-sub get_build_arch()
+sub get_build_arch
 {
     return Dpkg::BuildEnv::get('DEB_BUILD_ARCH') || get_raw_build_arch();
 }
@@ -157,7 +157,7 @@ sub get_build_arch()
 {
     my %cc_host_gnu_type;
 
-    sub get_host_gnu_type()
+    sub get_host_gnu_type
     {
         my $CC = $ENV{CC} || 'gcc';
 
@@ -166,11 +166,11 @@ sub get_build_arch()
         ## no critic (TestingAndDebugging::ProhibitNoWarnings)
         no warnings qw(exec);
         $cc_host_gnu_type{$CC} = qx($CC -dumpmachine);
-	if ($? >> 8) {
+        if ($? >> 8) {
             $cc_host_gnu_type{$CC} = '';
-	} else {
+        } else {
             chomp $cc_host_gnu_type{$CC};
-	}
+        }
 
         return $cc_host_gnu_type{$CC};
     }
@@ -191,7 +191,7 @@ from the environment.
 
 =cut
 
-sub get_raw_host_arch()
+sub get_raw_host_arch
 {
     state $host_arch;
 
@@ -203,7 +203,7 @@ sub get_raw_host_arch()
         warning(g_('cannot determine CC system type, falling back to ' .
                    'default (native compilation)'));
     } else {
-        my (@host_archtuple) = gnutriplet_to_debtuple($host_gnu_type);
+        my @host_archtuple = gnutriplet_to_debtuple($host_gnu_type);
         $host_arch = debtuple_to_debarch(@host_archtuple);
 
         if (defined $host_arch) {
@@ -216,7 +216,7 @@ sub get_raw_host_arch()
         set_host_gnu_type($host_gnu_type);
     }
 
-    if (!defined($host_arch)) {
+    if (! defined($host_arch)) {
         # Switch to native compilation.
         $host_arch = get_raw_build_arch();
     }
@@ -231,7 +231,7 @@ if available.
 
 =cut
 
-sub get_host_arch()
+sub get_host_arch
 {
     return Dpkg::BuildEnv::get('DEB_HOST_ARCH') || get_raw_host_arch();
 }
@@ -242,7 +242,7 @@ Get an array with all currently known Debian architectures.
 
 =cut
 
-sub get_valid_arches()
+sub get_valid_arches
 {
     _load_cputable();
     _load_ostable();
@@ -250,10 +250,10 @@ sub get_valid_arches()
     my @arches;
 
     foreach my $os (@os) {
-	foreach my $cpu (@cpu) {
-	    my $arch = debtuple_to_debarch(split(/-/, $os, 3), $cpu);
-	    push @arches, $arch if defined($arch);
-	}
+        foreach my $cpu (@cpu) {
+            my $arch = debtuple_to_debarch(split(/-/, $os, 3), $cpu);
+            push @arches, $arch if defined($arch);
+        }
     }
 
     return @arches;
@@ -270,9 +270,9 @@ sub _load_table
     local $/ = "\n";
 
     open my $table_fh, '<', "$Dpkg::DATADIR/$table"
-	or syserr(g_('cannot open %s'), $table);
+        or syserr(g_('cannot open %s'), $table);
     while (<$table_fh>) {
-	$loader->($_);
+        $loader->($_);
     }
     close $table_fh;
 
@@ -282,28 +282,28 @@ sub _load_table
 sub _load_cputable
 {
     _load_table('cputable', sub {
-	if (m/^(?!\#)(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)/) {
-	    $cputable{$1} = $2;
-	    $cputable_re{$1} = $3;
-	    $cpubits{$1} = $4;
-	    $cpuendian{$1} = $5;
-	    push @cpu, $1;
-	}
+        if (m/^(?!\#)(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)/) {
+            $cputable{$1} = $2;
+            $cputable_regex{$1} = $3;
+            $cpubits{$1} = $4;
+            $cpuendian{$1} = $5;
+            push @cpu, $1;
+        }
     });
 }
 
 sub _load_ostable
 {
     _load_table('ostable', sub {
-	if (m/^(?!\#)(\S+)\s+(\S+)\s+(\S+)/) {
-	    $ostable{$1} = $2;
-	    $ostable_re{$1} = $3;
-	    push @os, $1;
-	}
+        if (m/^(?!\#)(\S+)\s+(\S+)\s+(\S+)/) {
+            $ostable{$1} = $2;
+            $ostable_regex{$1} = $3;
+            push @os, $1;
+        }
     });
 }
 
-sub _load_abitable()
+sub _load_abitable
 {
     _load_table('abitable', sub {
         if (m/^(?!\#)(\S+)\s+(\S+)/) {
@@ -312,35 +312,35 @@ sub _load_abitable()
     });
 }
 
-sub _load_tupletable()
+sub _load_tupletable
 {
     _load_cputable();
 
     _load_table('tupletable', sub {
-	if (m/^(?!\#)(\S+)\s+(\S+)/) {
-	    my $debtuple = $1;
-	    my $debarch = $2;
+        if (m/^(?!\#)(\S+)\s+(\S+)/) {
+            my $debtuple = $1;
+            my $debarch = $2;
 
-	    if ($debtuple =~ /<cpu>/) {
-		foreach my $_cpu (@cpu) {
-		    (my $dt = $debtuple) =~ s/<cpu>/$_cpu/;
-		    (my $da = $debarch) =~ s/<cpu>/$_cpu/;
+            if ($debtuple =~ /<cpu>/) {
+                foreach my $_cpu (@cpu) {
+                    (my $dt = $debtuple) =~ s/<cpu>/$_cpu/;
+                    (my $da = $debarch) =~ s/<cpu>/$_cpu/;
 
-		    next if exists $debarch_to_debtuple{$da}
-		         or exists $debtuple_to_debarch{$dt};
+                    next if exists $debarch_to_debtuple{$da}
+                         or exists $debtuple_to_debarch{$dt};
 
-		    $debarch_to_debtuple{$da} = $dt;
-		    $debtuple_to_debarch{$dt} = $da;
-		}
-	    } else {
-		$debarch_to_debtuple{$2} = $1;
-		$debtuple_to_debarch{$1} = $2;
-	    }
-	}
+                    $debarch_to_debtuple{$da} = $dt;
+                    $debtuple_to_debarch{$dt} = $da;
+                }
+            } else {
+                $debarch_to_debtuple{$2} = $1;
+                $debtuple_to_debarch{$1} = $2;
+            }
+        }
     });
 }
 
-sub debtuple_to_gnutriplet(@)
+sub debtuple_to_gnutriplet
 {
     my ($abi, $libc, $os, $cpu) = @_;
 
@@ -353,7 +353,7 @@ sub debtuple_to_gnutriplet(@)
     return join('-', $cputable{$cpu}, $ostable{"$abi-$libc-$os"});
 }
 
-sub gnutriplet_to_debtuple($)
+sub gnutriplet_to_debtuple
 {
     my $gnu = shift;
     return unless defined($gnu);
@@ -366,20 +366,20 @@ sub gnutriplet_to_debtuple($)
     my ($os, $cpu);
 
     foreach my $_cpu (@cpu) {
-	if ($gnu_cpu =~ /^$cputable_re{$_cpu}$/) {
-	    $cpu = $_cpu;
-	    last;
-	}
+        if ($gnu_cpu =~ /^$cputable_regex{$_cpu}$/) {
+            $cpu = $_cpu;
+            last;
+        }
     }
 
     foreach my $_os (@os) {
-	if ($gnu_os =~ /^(.*-)?$ostable_re{$_os}$/) {
-	    $os = $_os;
-	    last;
-	}
+        if ($gnu_os =~ /^(.*-)?$ostable_regex{$_os}$/) {
+            $os = $_os;
+            last;
+        }
     }
 
-    return if !defined($cpu) || !defined($os);
+    return if ! defined($cpu) || ! defined($os);
     return (split(/-/, $os, 3), $cpu);
 }
 
@@ -389,15 +389,15 @@ Map a GNU triplet into a Debian multiarch triplet.
 
 =cut
 
-sub gnutriplet_to_multiarch($)
+sub gnutriplet_to_multiarch
 {
     my $gnu = shift;
     my ($cpu, $cdr) = split(/-/, $gnu, 2);
 
     if ($cpu =~ /^i[4567]86$/) {
-	return "i386-$cdr";
+        return "i386-$cdr";
     } else {
-	return $gnu;
+        return $gnu;
     }
 }
 
@@ -407,29 +407,29 @@ Map a Debian architecture into a Debian multiarch triplet.
 
 =cut
 
-sub debarch_to_multiarch($)
+sub debarch_to_multiarch
 {
     my $arch = shift;
 
     return gnutriplet_to_multiarch(debarch_to_gnutriplet($arch));
 }
 
-sub debtuple_to_debarch(@)
+sub debtuple_to_debarch
 {
     my ($abi, $libc, $os, $cpu) = @_;
 
     _load_tupletable();
 
-    if (!defined $abi || !defined $libc || !defined $os || !defined $cpu) {
-	return;
+    if (! defined $abi || ! defined $libc || ! defined $os || ! defined $cpu) {
+        return;
     } elsif (exists $debtuple_to_debarch{"$abi-$libc-$os-$cpu"}) {
-	return $debtuple_to_debarch{"$abi-$libc-$os-$cpu"};
+        return $debtuple_to_debarch{"$abi-$libc-$os-$cpu"};
     } else {
-	return;
+        return;
     }
 }
 
-sub debarch_to_debtuple($)
+sub debarch_to_debtuple
 {
     my $arch = shift;
 
@@ -438,8 +438,8 @@ sub debarch_to_debtuple($)
     _load_tupletable();
 
     if ($arch =~ /^linux-([^-]*)/) {
-	# XXX: Might disappear in the future, not sure yet.
-	$arch = $1;
+        # XXX: Might disappear in the future, not sure yet.
+        $arch = $1;
     }
 
     my $tuple = $debarch_to_debtuple{$arch};
@@ -454,7 +454,7 @@ sub debarch_to_debtuple($)
             cpu => $tuple[3],
         };
     } else {
-	return;
+        return;
     }
 }
 
@@ -464,7 +464,7 @@ Map a Debian architecture into a GNU triplet.
 
 =cut
 
-sub debarch_to_gnutriplet($)
+sub debarch_to_gnutriplet
 {
     my $arch = shift;
 
@@ -477,34 +477,34 @@ Map a GNU triplet into a Debian architecture.
 
 =cut
 
-sub gnutriplet_to_debarch($)
+sub gnutriplet_to_debarch
 {
     my $gnu = shift;
 
     return debtuple_to_debarch(gnutriplet_to_debtuple($gnu));
 }
 
-sub debwildcard_to_debtuple($)
+sub debwildcard_to_debtuple
 {
     my $arch = shift;
     my @tuple = split /-/, $arch, 4;
 
     if (any { $_ eq 'any' } @tuple) {
-	if (scalar @tuple == 4) {
-	    return @tuple;
-	} elsif (scalar @tuple == 3) {
-	    return ('any', @tuple);
-	} elsif (scalar @tuple == 2) {
-	    return ('any', 'any', @tuple);
-	} else {
-	    return ('any', 'any', 'any', 'any');
-	}
+        if (scalar @tuple == 4) {
+            return @tuple;
+        } elsif (scalar @tuple == 3) {
+            return ('any', @tuple);
+        } elsif (scalar @tuple == 2) {
+            return ('any', 'any', @tuple);
+        } else {
+            return ('any', 'any', 'any', 'any');
+        }
     } else {
-	return debarch_to_debtuple($arch);
+        return debarch_to_debtuple($arch);
     }
 }
 
-sub debarch_to_abiattrs($)
+sub debarch_to_abiattrs
 {
     my $arch = shift;
     my ($abi, $libc, $os, $cpu) = debarch_to_debtuple($arch);
@@ -518,7 +518,7 @@ sub debarch_to_abiattrs($)
     }
 }
 
-sub debarch_to_cpubits($)
+sub debarch_to_cpubits
 {
     my $arch = shift;
     my $cpu;
@@ -539,7 +539,7 @@ Debian architecture. No wildcard matching is performed.
 
 =cut
 
-sub debarch_eq($$)
+sub debarch_eq
 {
     my ($a, $b) = @_;
 
@@ -560,7 +560,7 @@ architecture wildcard.
 
 =cut
 
-sub debarch_is($$)
+sub debarch_is
 {
     my ($real, $alias) = @_;
 
@@ -575,7 +575,7 @@ sub debarch_is($$)
         ($alias[1] eq $real[1] || $alias[1] eq 'any') &&
         ($alias[2] eq $real[2] || $alias[2] eq 'any') &&
         ($alias[3] eq $real[3] || $alias[3] eq 'any')) {
-	return 1;
+        return 1;
     }
 
     return 0;
@@ -587,7 +587,7 @@ Evaluate whether a Debian architecture is an architecture wildcard.
 
 =cut
 
-sub debarch_is_wildcard($)
+sub debarch_is_wildcard
 {
     my $arch = shift;
 
@@ -600,25 +600,49 @@ sub debarch_is_wildcard($)
     return 0;
 }
 
-=item $bool = debarch_is_illegal($arch, %options)
+=item $bool = debarch_is_invalid($arch, %opts)
 
 Validate an architecture name.
 
-If the "positive" option is set to a true value, only positive architectures
-will be accepted, otherwise negated architectures are allowed.
+Options:
+
+=over
+
+=item B<positive>
+
+If set to a true value, only positive architectures will be accepted,
+otherwise negated architectures are allowed.
+
+=back
+
+=cut
+
+sub debarch_is_invalid
+{
+    my ($arch, %opts) = @_;
+    my $arch_regex = qr/[a-zA-Z0-9][a-zA-Z0-9-]*/;
+
+    if ($opts{positive}) {
+        return $arch !~ m/^$arch_regex$/;
+    } else {
+        return $arch !~ m/^!?$arch_regex$/;
+    }
+}
+
+=item $bool = debarch_is_illegal($arch, %opts)
+
+This is a deprecated alias for L<debarch_is_invalid>.
 
 =cut
 
 sub debarch_is_illegal
 {
     my ($arch, %opts) = @_;
-    my $arch_re = qr/[a-zA-Z0-9][a-zA-Z0-9-]*/;
 
-    if ($opts{positive}) {
-        return $arch !~ m/^$arch_re$/;
-    } else {
-        return $arch !~ m/^!?$arch_re$/;
-    }
+    warnings::warnif('deprecated',
+        'Dpkg::Arch::debarch_is_illegal() is deprecated, ' .
+        'use Dpkg::Arch::debarch_is_invalid() instead');
+    return debarch_is_invalid($arch, %opts);
 }
 
 =item $bool = debarch_is_concerned($arch, @arches)
@@ -644,8 +668,8 @@ sub debarch_is_concerned
                 $seen_arch = 0;
                 last;
             } else {
-                # !arch includes by default all other arches
-                # unless they also appear in a !otherarch
+                # «!arch» includes by default all other arches
+                # unless they also appear in a «!otherarch».
                 $seen_arch = 1;
             }
         } elsif (debarch_is($host_arch, $arch)) {
@@ -656,12 +680,20 @@ sub debarch_is_concerned
     return $seen_arch;
 }
 
-=item @array = debarch_list_parse($arch_list, %options)
+=item @array = debarch_list_parse($arch_list, %opts)
 
 Parse an architecture list.
 
-If the "positive" option is set to a true value, only positive architectures
-will be accepted, otherwise negated architectures are allowed.
+Options:
+
+=over
+
+=item B<positive>
+
+If set to a true value, only positive architectures will be accepted,
+otherwise negated architectures are allowed.
+
+=back
 
 =cut
 
@@ -671,8 +703,8 @@ sub debarch_list_parse
     my @arch_list = split ' ', $arch_list;
 
     foreach my $arch (@arch_list) {
-        if (debarch_is_illegal($arch, %opts)) {
-            error(g_("'%s' is not a legal architecture in list '%s'"),
+        if (debarch_is_invalid($arch, %opts)) {
+            error(g_("'%s' is not a valid architecture in list '%s'"),
                   $arch, $arch_list);
         }
     }
@@ -685,6 +717,12 @@ sub debarch_list_parse
 =back
 
 =head1 CHANGES
+
+=head2 Version 1.04 (dpkg 1.23.0)
+
+New functions: debarch_is_invalid().
+
+Deprecated functions: debarch_is_illegal().
 
 =head2 Version 1.03 (dpkg 1.19.1)
 

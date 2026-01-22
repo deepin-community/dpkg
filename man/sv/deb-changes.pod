@@ -26,7 +26,7 @@ Varje Debianinsändning består av en styrfil .changes, som innehåller ett anta
 
 Varje fält börjar med en etikett, såsom B<Source> eller B<Binary> (skiftlägesoberoende), följt av ett kolontecken och fältets kropp (skiftlägesberoende såvida inte annat anges). Fält avdelas endast av fältetiketter. Med andra ord kan texten i fälten spänna över flera rader, men installationsverktygen kommer oftast att slå samman rader när kroppen tolkas (förutom när det gäller flerradsfälten B<Description>, B<Changes>, B<Files>, B<Checksums-Sha1> och B<Checksums-Sha256>, se nedan).
 
-Styrinformationen kan omges av en OpenPGP-signatur i ASCII-skal, såsom beskrivs i RFC4880.
+Styrinformationen kan omges av en OpenPGP-signatur i ASCII-skal, såsom beskrivs i RFC9580.
 
 =head1 FÄLT
 
@@ -52,11 +52,17 @@ Det här flerdelade fältet är en blankstegsavdelad lista över binärpaket som
 
 =item B<Architecture:> I<arklista>>
 
-Listar arkitekturer för de filer som sänds in just nu. Vanliga arkitekturer är B<amd64>, B<armel>, B<i386>, osv. Observera att värdet B<all> är avsett för paket som är oberoende av arkitektur. Om källkoden för paketet också sänds in måste specialvädet B<source> också tas med. Arkitekturer med jokertecken är inte tillåtna i listan.
+Lists the architectures of the files currently being uploaded.
+
+Common architectures are B<amd64>, B<armel>, B<i386>, etc.  Note that the special B<all> value is meant for packages that are architecture independent (such as shell and Perl scripts or documentation).  If the source for the package is also being uploaded, the special entry B<source> is also present.
+
+B<Note:> Architecture wildcards are not allowed in this context.
 
 =item B<Version:> I<versionssträng> (krävs)
 
 Vanligtvis är detta det ursprungliga paketets versionsnummer på den form programmets författare använder. Den kan även innehålla ett Debianuppdateringsnummer (för paket vars källa är utanför Debian). Exakt format och sorteringsalgoritm beskrivs i L<deb-version(7)>.
+
+B<Note>: On some vendors, dpkg has been made to permit native sources with non-native versions, making this incoherent and adding to the confusion of the concept, where in addition this tends to be a trap for accidental mistakes.
 
 =item B<Distribution:> I<distribution>er (krävs)
 
@@ -106,11 +112,17 @@ Det här flerradiga fältet innehåller en lista över filer tillsammans med md5
 
 Första raden i fältvärdet (delen av på samma rad som fältnamnet följt av kolon) är alltid tom. Innehållet i fältet anges som fortsättningsrader, en rad per fil. Varje rad består av blankstegsavdelade fält som beskriver filen: md5-summan, filstorleken, filsektionen, filprioriteten och filnamnet.
 
+If the section is omitted in the source package template control file, it defaults to B<unknown> (since dpkg 1.22.13).
+
+If the priority is omitted in the source package template control file, it defaults to B<optional> (since dpkg 1.22.13).
+
 Det här fälten visar alla filer insändningen består av. Listan över filer i fältet måste motsvara listan över filer i de andra relaterade B<Checksums>-fälten.
 
-=item B<Checksums-Sha1:> (krävs)
+B<Observera>: MD5-kontrollsumman anses vara svag och bör aldrig anses vara tillräcklig för en säker bekräftelse, men fältet kan inte uteslutas eftersom det innehåller metadata som inte är tillgänglig någon annanstans.
 
-=item B<Checksums-Sha256:> (krävs)
+=item B<Checksums-Sha1:> (krävs, svag)
+
+=item B<Checksums-Sha256:> (krävs, stark)
 
 =item S< >I<kontrollsumma> I<storlek> I<filnamn>
 
@@ -119,6 +131,8 @@ De här flerradsfälteten innehåller en lista med filer med en kontrollsumma oc
 Första raden i fältvärdet (delen av på samma rad som fältnamnet följt av kolon) är alltid tom. Innehållet i fältet anges som fortsättningsrader, en rad per fil. Varje rad består av blankstegsavdelade fält som beskriver filen: kontrollsumman, filstorleken och filnamnet.
 
 De här fälten visar alla filer insändningen består av. Listan över filer i fälten måste motsvara listan över filer i fältet B<Files> och de andra relaterade B<Checksums>-fälten.
+
+B<Observera>: SHA-1-kontrollsumman anses vara svag och bör aldrig anses vara tillräcklig för en säker bekräftelse.
 
 =back
 

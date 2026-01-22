@@ -27,8 +27,7 @@ B<Note>: This is a private module, its API can change at any time.
 
 package Dselect::Method 0.01;
 
-use strict;
-use warnings;
+use v5.36;
 
 our @EXPORT = qw(
     %CONFIG
@@ -57,7 +56,7 @@ if ($@) {
 
 our %CONFIG;
 
-sub yesno($$) {
+sub yesno {
     my ($d, $msg) = @_;
 
     my ($res, $r);
@@ -68,9 +67,9 @@ sub yesno($$) {
     while (1) {
         print $msg, " [$d]: ";
         $res = <STDIN>;
-        $res =~ /^[Yy]/ and return 1;
-        $res =~ /^[Nn]/ and return 0;
-        $res =~ /^[ \t]*$/ and return $r;
+        return 1 if $res =~ /^[Yy]/;
+        return 0 if $res =~ /^[Nn]/;
+        return $r if $res =~ /^[ \t]*$/;
         print "Please enter one of the letters 'y' or 'n'\n";
     }
 }
@@ -101,10 +100,10 @@ sub read_config {
 
     my $VAR1; ## no critic (Variables::ProhibitUnusedVariables)
     $conf = eval $code;
-    die "couldn't eval $vars content: $@\n" if $@;
+    die "cannot eval $vars content: $@\n" if $@;
     if (ref($conf) =~ /HASH/) {
-        foreach (keys %{$conf}) {
-            $CONFIG{$_} = $conf->{$_};
+        foreach my $var (keys %{$conf}) {
+            $CONFIG{$var} = $conf->{$var};
         }
     } else {
         print "Bad $vars file : removing it.\n";
@@ -117,7 +116,7 @@ sub read_config {
 sub store_config {
     my $vars = shift;
 
-    # Check that config is completed
+    # Check that config is completed.
     return if not $CONFIG{done};
 
     file_dump($vars, Dumper(\%CONFIG));
@@ -134,28 +133,34 @@ sub edit_config {
     my ($method, $methdir) = @_;
     my $i;
 
-    # Get a config for the sites
+    # Get a config for the sites.
     while (1) {
         $i = 1;
         print "\n\nList of selected $method sites :\n";
-        foreach (@{$CONFIG{site}}) {
-            print "$i. $method://$_->[0]$_->[1] @{$_->[2]}\n";
+        foreach my $site (@{$CONFIG{site}}) {
+            print "$i. $method://$site->[0]$site->[1] @{$site->[2]}\n";
             $i++;
         }
         print "\nEnter a command (a=add e=edit d=delete q=quit m=mirror list) \n";
         print 'eventually followed by a site number : ';
         chomp($_ = <STDIN>);
-        /q/i && last;
-        /a/i && add_site($method);
-        /d\s*(\d+)/i && do {
+        if (/q/i) {
+            last;
+        }
+        if (/a/i) {
+            add_site($method);
+        }
+        if (/d\s*(\d+)/i) {
             splice(@{$CONFIG{site}}, $1 - 1, 1) if $1 <= @{$CONFIG{site}};
             next;
-        };
-        /e\s*(\d+)/i && do {
+        }
+        if (/e\s*(\d+)/i) {
             edit_site($method, $CONFIG{site}[$1 - 1]) if $1 <= @{$CONFIG{site}};
             next;
-        };
-        /m/i && view_mirrors();
+        }
+        if (/m/i) {
+            view_mirrors();
+        }
     }
 
     print "\n";
@@ -263,5 +268,3 @@ This is a private module.
 =cut
 
 1;
-
-__END__

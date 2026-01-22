@@ -24,7 +24,7 @@ B<DEBIAN/symbols>
 
 The symbol files are shipped in Debian binary packages, and its format is a subset of the template symbol files used by L<dpkg-gensymbols(1)> in Debian source packages, see L<deb-src-symbols(5)>.
 
-Le format pour une entrée d'information sur les dépendances étendues avec bibliothèques partagées dans ces fichiers est le S<suivant :>
+Le format pour une entrée d'information sur les dépendances étendues avec bibliothèques partagées dans ces fichiers est le suivant :
 
 Z<>
  I<soname-de-bibliothèque> I<modèle-principal-de-dépendance>
@@ -36,27 +36,23 @@ Z<>
 
 The I<library-soname> is exactly the value of the SONAME field as exported by L<objdump(1)>.  A I<dependency-template> is a dependency where I<#MINVER#> is dynamically replaced either by a version check like “(E<gt>= I<minimal-version>)” or by nothing (if an unversioned dependency is deemed sufficient).
 
-Chaque I<symbole> exporté (noté I<nom>@I<version>, avec I<version> réglé à S<« Base »> si la bibliothèque n'a pas de version) est associé à une I<version-minimale> dans son modèle de dépendance (le modèle principal de dépendance est toujours utilisé et se termine combiné avec le modèle de dépendance référencé par l'I<id-du-modèle-de-dépendance> si présent). La première alternative au modèle de dépendance est S<numérotée 1,> la S<seconde 2,> etc. Les colonnes sont séparées par exactement un seul espace.
+Chaque I<symbole> exporté (noté I<nom>@I<version>, avec I<version> réglé à « Base » si la bibliothèque n'a pas de version) est associé à une I<version-minimale> dans son modèle de dépendance (le modèle principal de dépendance est toujours utilisé et se termine combiné avec le modèle de dépendance référencé par l'I<id-du-modèle-de-dépendance> si présent). La première alternative au modèle de dépendance est numérotée 1, la seconde 2, etc. Les colonnes sont séparées par exactement un seul espace.
 
-Chaque entrée pour une bibliothèque peut aussi avoir des champs de méta-information. Ces champs sont enregistrés dans des lignes qui débutent par un astérisque S<(« * »).> Actuellement, le seul champ valable S<est :>
+Chaque entrée pour une bibliothèque peut aussi avoir des champs de méta-information. Ces champs sont enregistrés dans des lignes qui débutent par un astérisque (« * »). Actuellement, le seul champ valable est :
 
 =over 
 
 =item B<Build-Depends-Package>
 
-Il indique le nom du paquet S<« -dev »> associé à la bibliothèque et est utilisé par B<dpkg-shlibdeps> pour s'assurer que la dépendance produite est au moins aussi stricte que la dépendance de construction correspondante (depuis S<dpkg 1.14.13).>
+Il indique le nom du paquet « -dev » associé à la bibliothèque et est utilisé par B<dpkg-shlibdeps> pour s'assurer que la dépendance produite est au moins aussi stricte que la dépendance de construction correspondante (depuis dpkg 1.14.13).
 
 =item B<Build-Depends-Packages>
 
-C'est identique à B<Build-Depends-Package>, mais accepte une liste de noms de paquets séparés par des virgules (depuis S<dpkg 1.20.0).> Ce champ remplacera tout champ B<Build-Depends-Package> présent et est surtout utile avec les paquets S<« -dev »> et les métapaquets qui en dépendent, pour une période de transition.
+C'est identique à B<Build-Depends-Package>, mais accepte une liste de noms de paquets séparés par des virgules (depuis dpkg 1.20.0). Ce champ remplacera tout champ B<Build-Depends-Package> présent et est surtout utile avec les paquets « -dev » et les métapaquets qui en dépendent, pour une période de transition.
 
 =item B<Allow-Internal-Symbol-Groups>
 
-Il indique que les groupes de symboles internes seront ignorés, sous forme de liste séparée par des espaces, afin que les symboles contenus dans ces groupes soient inclus dans le fichier de sortie (depuis S<dpkg 1.20.1).> Cela sera seulement nécessaire pour les paquets de chaîne d'outils qui fournissent ces symboles internes. Les groupes disponibles dépendent des systèmes et, pour les systèmes basés sur ELF et GNU, ce sont B<aeabi> et B<gomp>.
-
-=item B<Ignore-Blacklist-Groups>
-
-Un alias obsolète pour B<Allow-Internal-Symbol-Groups> (depuis S<dpkg 1.20.1,> gérés depuis S<dpkg 1.17.6).>
+Il indique que les groupes de symboles internes seront ignorés, sous forme de liste séparée par des espaces, afin que les symboles contenus dans ces groupes soient inclus dans le fichier de sortie (depuis dpkg 1.20.1). Cela sera seulement nécessaire pour les paquets de chaîne d'outils qui fournissent ces symboles internes. Les groupes disponibles dépendent des systèmes et, pour les systèmes basés sur ELF et GNU, ce sont B<aeabi> et B<gomp>.
 
 =back
 

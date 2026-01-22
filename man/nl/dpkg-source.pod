@@ -138,7 +138,7 @@ B<-I> zelf voegt standaard B<--exclude>-opties toe die zorgen voor het uitfilter
 
 =back
 
-B<Opmerking>: hoewel zij vergelijkbare bedoelingen hebben, hebben B<-i> en B<-I> een heel verschillende syntaxis en semantiek. B<-i> kan slechts eenmaal opgegeven worden en verwacht een reguliere expressie die perl-compatibel is en die vergeleken wordt met het volledige relatieve pad van elk bestand. B<-I> kan meermaals opgegeven worden en verwacht een bestandsnaampatroon met shell-jokertekens. Het patroon wordt toegepast op het volledige relatieve pad maar ook op elk individueel onderdeel van het pad. De exacte semantiek van de optie B<--exclude> van tar is enigszins gecompliceerd. Zie voor een volledige documentatie L<https://www.gnu.org/software/tar/manual/tar.html#wildcards>.
+B<Opmerking>: hoewel zij vergelijkbare bedoelingen hebben, hebben B<-i> en B<-I> een heel verschillende syntaxis en semantiek. B<-i> kan slechts eenmaal opgegeven worden en verwacht een reguliere expressie die perl-compatibel is en die vergeleken wordt met het volledige relatieve pad van elk bestand. B<-I> kan meermaals opgegeven worden en verwacht een bestandsnaampatroon met shell-wildcards. Het patroon wordt toegepast op het volledige relatieve pad maar ook op elk individueel onderdeel van het pad. De exacte semantiek van de optie B<--exclude> van tar is enigszins gecompliceerd. Zie voor een volledige documentatie L<https://www.gnu.org/software/tar/manual/tar.html#wildcards>.
 
 De standaard reguliere expressies en patronen voor beide opties zijn te zien in de uitvoer van het commando B<--help>.
 
@@ -152,19 +152,33 @@ De originele tar-archieven bij het geëxtraheerde broncodepakket niet kopiëren 
 
 =item B<--no-check>
 
-Voor het uitpakken geen ondertekeningen en controlesommen controleren (sinds dpkg 1.14.17).
+Voor het uitpakken geen ondertekeningen en controlegetallen controleren (sinds dpkg 1.14.17).
 
 =item B<--no-overwrite-dir>
 
 De extractiemap niet overschrijven als ze al bestaat (sinds dpkg 1.18.8).
 
+=item B<--no-vendor-certs>
+
+Geen certificaatsleutelringen gebruiken die specifiek zijn voor de leverancier.
+
+Ondersteund sinds dpkg 1.23.0.
+
+=item B<--signer-certs=>I<sleutelring>
+
+Deze I<sleutelring> met ondertekeningscertificaten gebruiken tijdens de verificatie van de handtekeningen op bronpakketten.
+
+Deze optie kan meerdere keren worden herhaald om meerdere sleutelringen toe te voegen.
+
+Ondersteund sinds dpkg 1.23.0.
+
 =item B<--require-valid-signature>
 
-Weigeren het broncodepakket uit te pakken als het geen OpenPGP-ondertekening bevat die kan gecontroleerd worden (sinds dpkg 1.15.0) met ofwel de I<trustedkeys.gpg>-sleutelbos van de gebruiker, één van de leveranciersspecifieke sleutelbossen of met één van de officiële sleutelbossen van Debian (I</usr/share/keyrings/debian-keyring.gpg>, I</usr/share/keyrings/debian-nonupload.gpg> en I</usr/share/keyrings/debian-maintainers.gpg>).
+Weigeren het broncodepakket uit te pakken als het geen OpenPGP-ondertekening bevat die kan gecontroleerd worden (sinds dpkg 1.15.0), ofwel met de door de gebruiker geleverde B<--signer-certs>-sleutelringen, ofwel met een van de leverancierspecifieke sleutelringen, inclusief eventuele sleutelringen van de moederleverancier indien relevant.
 
 =item B<--require-strong-checksums>
 
-Weigeren het broncodepakket uit te pakken als het geen krachtige controlesommen bevat (sinds dpkg 1.18.7). Momenteel is B<SHA-256> de enige gekende controlesom die als krachtig aanzien wordt.
+Weigeren het broncodepakket uit te pakken als het geen krachtige controlegetallen bevat (sinds dpkg 1.18.7). Momenteel is B<SHA-256> het enige gekende controlegetal dat als krachtig aanzien wordt.
 
 =item B<--ignore-bad-version>
 
@@ -193,6 +207,8 @@ Indien u niet weet welke indeling te kiezen voor de broncode, zou u wellicht ofw
 =head2 Indeling: 1.0
 
 Een broncodepakket volgens deze indeling bestaat ofwel uit een B<.orig.tar.gz> gekoppeld aan een B<.diff.gz> of één enkele B<.tar.gz> (in dat geval wordt van het pakket gezegd dat het I<native> (eigen - van oorsprong van Debian) is). Optioneel mag bij het originele tar-archief een afzonderlijke handtekening van de toeleveraar B<.orig.tar.gz.asc> gevoegd zijn. De extractie ervan wordt ondersteund sinds dpkg 1.18.5.
+
+B<Opmerking>: Bij sommige leveranciers is dpkg zo aangepast dat authentieke bronnen samen met niet-authentieke versies zijn toegestaan. Dit maakt het inconsistent en draagt ​​bij aan de verwarring rond het concept. Bovendien vormt dit een valkuil voor onbedoelde fouten.
 
 B<Extracting>
 
@@ -286,13 +302,15 @@ Bij het bouwen van een nieuw broncodepakket worden eventuele wijzigingen aan de 
 
 Wordt ondersteund sinds dpkg 1.14.17. Deze indeling is een uitbreiding van de native pakketindeling, zoals gedefinieerd in de indeling 1.0. Ze ondersteunt alle compressiemethodes en negeert standaard eventuele VCS-specifieke bestanden en mappen (bestanden en mappen die verband houden met het versiebeheersysteem) evenals vele tijdelijke bestanden (zie de uitvoer van de optie B<--help> voor de standaardwaarde van de optie B<-I>).
 
+B<Opmerking>: Bij sommige leveranciers is dpkg zo aangepast dat authentieke bronnen samen met niet-authentieke versies zijn toegestaan. Dit maakt het inconsistent en draagt ​​bij aan de verwarring rond het concept. Bovendien vormt dit een valkuil voor onbedoelde fouten.
+
 =head2 Indeling: 3.0 (quilt)
 
-Wordt ondersteund sinds dpkg 1.14.17. Een broncodepakket volgens deze indeling bevat minstens een origineel tar-archief (B<.orig.tar.>I<ext> waarbij I<ext> B<gz>, B<bz2>, B<lzma> en B<xz> kan zijn) en een debian tar-archief (B<.debian.tar.>I<ext>). Het kan ook bijkomende originele tar-archieven bevatten (B<.orig->I<component>B<.tar.>I<ext>). I<component> mag enkel alfanumerieke tekens (‘a-zA-Z0-9’) en koppeltekens (‘-’) bevatten. Optioneel mag bij elk origineel tar-archief een afzonderlijke handtekening van de toeleveraar (B<.orig.tar.>I<ext>B<.asc> en B<.orig->I<component>B<.tar.>I<ext>B<.asc>), gevoegd worden. De extractie ervan wordt ondersteund sinds dpkg 1.17.20 en het bouwen sinds dpkg 1.18.5.
+Wordt ondersteund sinds dpkg 1.14.17. Een broncodepakket volgens deze indeling bevat minstens een origineel tar-archief (B<.orig.tar.>I<ext> waarbij I<ext> B<gz>, B<bz2>, B<lzma> en B<xz> kan zijn) en een debian tar-archief (B<.debian.tar.>I<ext>). Het kan ook bijkomende originele tar-archieven bevatten (B<.orig->I<add-on>B<.tar.>I<ext>). I<add-on> mag enkel alfanumerieke tekens (‘a-zA-Z0-9’) en koppeltekens (‘-’) bevatten. Optioneel mag bij elk origineel tar-archief een afzonderlijke handtekening van de toeleveraar (B<.orig.tar.>I<ext>B<.asc> en B<.orig->I<add-on>B<.tar.>I<ext>B<.asc>), gevoegd worden. De extractie ervan wordt ondersteund sinds dpkg 1.17.20 en het bouwen sinds dpkg 1.18.5.
 
 B<Extracting>
 
-Eerst wordt het belangrijkste originele tar-archief uitgepakt en nadien worden alle bijkomende originele tar-archieven uitgepakt in onderliggende mappen die genoemd worden naar het I<component>-gedeelte van hun bestandsnaam (een eventuele reeds bestaande map wordt vervangen). Het debian tar-archief wordt bovenop de broncodemap geëxtraheerd nadat eerst een eventuele reeds bestaande B<debian>-map verwijderd werd. Merk op dat het debian tar-archief een onderliggende map B<debian> moet bevatten, maar dat het ook binaire bestanden kan bevatten buiten die map (zie de optie B<--include-binaries>).
+Eerst wordt het belangrijkste originele tar-archief uitgepakt en nadien worden alle bijkomende originele tar-archieven uitgepakt in onderliggende mappen die genoemd worden naar het I<add-on>-gedeelte van hun bestandsnaam (een eventuele reeds bestaande map wordt vervangen). Het debian tar-archief wordt bovenop de broncodemap geëxtraheerd nadat eerst een eventuele reeds bestaande B<debian>-map verwijderd werd. Merk op dat het debian tar-archief een onderliggende map B<debian> moet bevatten, maar dat het ook binaire bestanden kan bevatten buiten die map (zie de optie B<--include-binaries>).
 
 Vervolgens worden alle patches toegepast die vermeld zijn in B<debian/patches/>I<leverancier>B<.series> of B<debian/patches/series>, waarbij I<leverancier> de naam is in kleine letters van de huidige leverancier, of B<debian> als geen leverancier gedefinieerd is. Indien het eerste bestand gebruikt wordt en het laatste niet bestaat (of een symbolische koppeling is), dan zal het laatste vervangen worden door een symbolische koppeling naar het eerste. Dit is bedoeld om het gebruik van B<quilt> bij het beheer van het geheel van patches te vereenvoudigen. Leveranciersspecifieke series-bestanden hebben tot doel het serialiseren van meerdere leveranciersgebonden ontwikkelingstakken op een declaratieve manier mogelijk te maken, wat verkieslijker is boven een open codering van deze aanpak in B<debian/rules>. Dit is in het bijzonder nuttig wanneer de broncode voorwaardelijk gepatched moet worden omdat de betrokken bestanden geen ingebouwde ondersteuning hebben voor conditionele occlusie. Merk nochtans op dat hoewel B<dpkg-source> op correcte wijze de ontleding uitvoert van series-bestanden met expliciete opties die gebruikt worden voor het toepassen van patches (op elke regel opgeslagen na de bestandsnaam van de patch en één of meer spaties), het deze opties negeert en steeds patches verwacht die kunnen toegepast worden met de optie B<-p1> van B<patch>. Het zal dus een waarschuwing geven als het dergelijke opties tegenkomt en het bouwen zal waarschijnlijk mislukken.
 
@@ -501,7 +519,7 @@ Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het active
 
 Indien dit ingesteld werd, zal het gebruikt worden als de tijdsaanduiding (timestamp) (in seconden sinds de epoch) om de mtime vast te zetten op de items uit het L<tar(5)>-bestand.
 
-Since dpkg 1.18.11.
+Sinds dpkg 1.18.11.
 
 =item B<VISUAL>
 

@@ -148,11 +148,13 @@ Chdir naar I<pad> voordat het proces gestart wordt. Dit gebeurt na het chrooten 
 
 Wordt meestal gebruikt bij programma's die zich niet uit zichzelf afsplitsen. Deze optie dwingt B<start-stop-daemon> om een nieuw proces (fork) te beginnen voordat het proces wordt gestart, en dwingt het naar de achtergrond.
 
-B<Waarschuwing>: B<start-stop-daemon> kan de afsluitstatus van het proces niet opvolgen mocht de uitvoering ervan om B<een of andere> reden mislukken. Dit is een laatste toevlucht en is enkel bedoeld voor programma's waarvoor het ofwel geen zin heeft om uit zichzelf een nieuw proces (fork) te beginnen, of waarvoor het ondoenbaar is om code toe te voegen waardoor ze dat uit zichzelf zouden doen.
+B<Note>: The exit status from a late unexpected failure during the process initialization cannot be checked, unless the B<--notify-await> option is used.  It is intended for use with programs that either make no sense daemonizing on their own, or where it is not feasible or desired to add the daemonizing and notification code for them to do this themselves.
 
 =item B<--notify-await>
 
-Wachten tot het achtergrondproces een kennisgeving zendt dat het gereed is, vooraleer de dienst als opgestart beschouwd wordt (sinds versie 1.19.3). Dit past elementen van het 'readiness protocol' van systemd toe, zoals dit in de man-pagina L<sd_notify(3)> gespecificeerd wordt. De volgende variabelen worden ondersteund:
+Wait for the background process to send a readiness notification before considering the service started (since version 1.19.3).  This option can only be used with B<--background>.
+
+This implements parts of the systemd readiness protocol, as specified in the L<sd_notify(3)> manual page.  The following variables are supported:
 
 =over 
 

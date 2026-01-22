@@ -22,7 +22,7 @@ B<dselect> [I<option>...] [I<commande>...]
 
 =head1 DESCRIPTION
 
-B<dselect> est une des principales interfaces de gestion des paquets sur un système Debian. À partir du menu principal de B<dselect>, l'administrateur système S<peut :>
+B<dselect> est une des principales interfaces de gestion des paquets sur un système Debian. À partir du menu principal de B<dselect>, l'administrateur système peut :
 
 =over 
 
@@ -50,21 +50,21 @@ Normalement, B<dselect> est appelé sans paramètre. Un menu interactif est pré
 
 =head1 OPTIONS
 
-On peut spécifier une option à la fois sur la ligne de commande et dans le fichier de configuration de B<dselect>, I<%PKGCONFDIR%/dselect.cfg> ou dans les fichiers du répertoire de configuration I<%PKGCONFDIR%/dselect.cfg.d/>. Chaque ligne de ce fichier est soit une option (identique à une option en ligne de commande mais sans tiret), soit un commentaire (si il commence par S<« B<#> »).>
+On peut spécifier une option à la fois sur la ligne de commande et dans le fichier de configuration de B<dselect>, I<%PKGCONFDIR%/dselect.cfg> ou dans les fichiers du répertoire de configuration I<%PKGCONFDIR%/dselect.cfg.d/>. Chaque ligne de ce fichier est soit une option (identique à une option en ligne de commande mais sans tiret), soit un commentaire (si il commence par « B<#> »).
 
 =over 
 
 =item B<--admindir> I<répertoire>
 
-Change le répertoire où les fichiers S<« I<status> »,> S<« I<available> »> et autres de dpkg sont situés. Le répertoire par défaut est I<%ADMINDIR%> et il ne devrait pas y avoir besoin de le modifier.
+Change le répertoire où les fichiers « I<status> », « I<available> » et autres de dpkg sont situés. Le répertoire par défaut est I<%ADMINDIR%> et il ne devrait pas y avoir besoin de le modifier.
 
 =item B<--instdir> I<répertoire>
 
-Définit le répertoire d'installation qui désigne le répertoire où les paquets sont installés (depuis S<dpkg 1.19.2).> Par défaut c'est S<« I</> »> siB<DPKG_ROOT> n'a pas été défini.
+Définit le répertoire d'installation qui désigne le répertoire où les paquets sont installés (depuis dpkg 1.19.2). Par défaut c'est « I</> » siB<DPKG_ROOT> n'a pas été défini.
 
 =item B<--root> I<répertoire>
 
-Définit le répertoire root à B<directory>, ce qui définit le répertoire d'installation à S<« I<répertoire> »> et le répertoire d'administration à S<« I<répertoire>B<%ADMINDIR%> »> (depuis S<dpkg 1.21.0).>
+Définit le répertoire root à B<directory>, ce qui définit le répertoire d'installation à « I<répertoire> » et le répertoire d'administration à « I<répertoire>B<%ADMINDIR%> » (depuis dpkg 1.21.0).
 
 =item B<-D>I<fichier>, B<--debug> I<fichier>
 
@@ -80,7 +80,7 @@ I<partie_écran:>[I<premier_plan>],[I<arrière_plan>][I<:attr>[I<+attr>]...]
 =item B<--colour>
 I<partie_écran:>[I<premier_plan>],[I<arrière_plan>][I<:attr>[I<+attr>]...]
 
-Configure les couleurs des écrans. Cela ne fonctionne que si votre terminal gère les couleurs. Cette option peut-être utilisée plusieurs fois (et il est préférable de l'utiliser dans I<dselect.cfg>). Chaque utilisation change la couleur (et, en option, d'autres attributs) d'une partie de l'écran. Les parties de l'écran (de haut en bas) S<sont :>
+Configure les couleurs des écrans. Cela ne fonctionne que si votre terminal gère les couleurs. Cette option peut-être utilisée plusieurs fois (et il est préférable de l'utiliser dans I<dselect.cfg>). Chaque utilisation change la couleur (et, en option, d'autres attributs) d'une partie de l'écran. Les parties de l'écran (de haut en bas) sont :
 
 =over 
 
@@ -136,7 +136,7 @@ La couleur des écrans d'aide.
 
 Après la partie de l'écran concernée, vient un signe deux-points et la spécification des couleurs. Pour surcharger les valeurs des couleurs compilées, vous pouvez indiquer la couleur du premier plan, de l'arrière-plan, ou les deux. Utilisez les noms standard de couleurs curses.
 
-En option, les spécifications des couleurs peuvent être suivies d'un signe deux-points et de la spécification d'un attribut. Il s'agit d'une liste d'attributs, séparés par des caractères plus S<(« + »).> Parmi les attributs disponibles, on trouve (tous ne fonctionnent pas sur tous les S<terminaux) :> B<normal>, B<standout>, B<underline>, B<reverse>, B<blink>, B<bright>, B<dim>, B<bold>.
+En option, les spécifications des couleurs peuvent être suivies d'un signe deux-points et de la spécification d'un attribut. Il s'agit d'une liste d'attributs, séparés par des caractères plus (« + »). Parmi les attributs disponibles, on trouve (tous ne fonctionnent pas sur tous les terminaux) : B<normal>, B<standout>, B<underline>, B<reverse>, B<blink>, B<bright>, B<dim>, B<bold>.
 
 =item B<-?>, B<--help>
 
@@ -150,7 +150,7 @@ Affiche la version et se termine normalement.
 
 =head1 COMMANDES
 
-Quand B<dselect> est démarré, il peut effectuer les actions suivantes, soit directement si elles sont indiquées dans la ligne de commande, soit interactivement avec un menu de commandes S<possibles :>
+Quand B<dselect> est démarré, il peut effectuer les actions suivantes, soit directement si elles sont indiquées dans la ligne de commande, soit interactivement avec un menu de commandes possibles :
 
 =head2 Accéder (access)
 
@@ -208,17 +208,17 @@ Quitte le programme avec un code d'erreur de B<0> (succès).
 
 B<dselect> directly exposes the administrator to some of the complexities involved with managing large sets of packages with many interdependencies. For a user who is unfamiliar with the concepts and the ways of the Debian package management system, it can be quite overwhelming.  Although B<dselect> is aimed at easing package management and administration, it is only instrumental in doing so and cannot be assumed to be a sufficient substitute for administrator skill and understanding.  The user is required to be familiar with the concepts underlying the Debian packaging system.  In case of doubt, consult the L<dpkg(1)> manual page and the distribution policy.
 
-À moins que B<dselect> ne soit lancé en mode expert ou intermédiaire, un message d'aide est d'abord affiché lorsque cette action est choisie dans le menu. Il est B<fortement> conseillé à l'utilisateur d'étudier toutes les informations dans ces écrans d'aide lorsqu'ils apparaissent. Les écrans d'aide peuvent être affichés à tout moment à l'aide de la touche S<« B<?> ».>
+À moins que B<dselect> ne soit lancé en mode expert ou intermédiaire, un message d'aide est d'abord affiché lorsque cette action est choisie dans le menu. Il est B<fortement> conseillé à l'utilisateur d'étudier toutes les informations dans ces écrans d'aide lorsqu'ils apparaissent. Les écrans d'aide peuvent être affichés à tout moment à l'aide de la touche « B<?> ».
 
 =head2 Disposition de l'écran
 
 L'écran de sélection est découpé par défaut en une moitié supérieure et une moitié inférieure. La moitié supérieure affiche une liste de paquets. Un curseur permet de sélectionner un paquet, ou un groupe de paquets en sélectionnant le titre du groupe, si ça s'applique. La moitié inférieure de l'écran affiche les détails du paquet sélectionné dans la moitié supérieure. Le type de détail affiché peut varier.
 
-Appuyez sur la touche S<« B<I> »> pour passer d'un affichage de la liste des paquets en mode plein-écran, à un affichage plus important des détails des paquets ou à un mode partagé équitablement.
+Appuyez sur la touche « B<I> » pour passer d'un affichage de la liste des paquets en mode plein-écran, à un affichage plus important des détails des paquets ou à un mode partagé équitablement.
 
 =head2 Vue des détails d'un paquet
 
-La vue des détails d'un paquet affiche par défaut la description longue du paquet sélectionné dans la liste des paquets. Le type de détail peut être modifié en pressant la touche S<« B<i> ».> Cela permet d'alterner S<entre :>
+La vue des détails d'un paquet affiche par défaut la description longue du paquet sélectionné dans la liste des paquets. Le type de détail peut être modifié en pressant la touche « B<i> ». Cela permet d'alterner entre :
 
 =over 
 
@@ -242,54 +242,54 @@ Dans un écran de résolution des dépendances, on peut également voir les dép
 
 L'écran principal de sélection affiche une liste de tous les paquets connus par le système de gestion des paquets Debian. Cela inclut les paquets installés sur le système et les paquets connus par la base de données des paquets disponibles.
 
-Pour tous les paquets, la liste affiche sur une ligne l'état du paquet, sa priorité, sa section, les architectures installée et disponible, les versions installée et disponible, le nom du paquet et sa description courte. En appuyant sur la touche S<« B<A> »,> on peut activer ou désactiver l'affichage des architectures installée et disponible. En appuyant sur la touche S<« B<V> »,> on peut activer ou désactiver l'affichage des versions installée et disponible. En appuyant sur la touche S<« B<v> »,> l'affichage de l'état passe d'un mode bavard à un mode raccourci. Par défaut, l'état raccourci est utilisé.
+Pour tous les paquets, la liste affiche sur une ligne l'état du paquet, sa priorité, sa section, les architectures installée et disponible, les versions installée et disponible, le nom du paquet et sa description courte. En appuyant sur la touche « B<A> », on peut activer ou désactiver l'affichage des architectures installée et disponible. En appuyant sur la touche « B<V> », on peut activer ou désactiver l'affichage des versions installée et disponible. En appuyant sur la touche « B<v> », l'affichage de l'état passe d'un mode bavard à un mode raccourci. Par défaut, l'état raccourci est utilisé.
 
-L'état raccourci consiste en 4 S<parties :> un drapeau d'erreur, qui est habituellement vide, l'état courant, l'état de sélection précédent et l'état de sélection actuel. Les deux premiers donnent des indications sur l'état courant du paquet, les deux suivants concernent les sélections définies par l'utilisateur.
+L'état raccourci consiste en 4 parties : un drapeau d'erreur, qui est habituellement vide, l'état courant, l'état de sélection précédent et l'état de sélection actuel. Les deux premiers donnent des indications sur l'état courant du paquet, les deux suivants concernent les sélections définies par l'utilisateur.
 
-Voici la signification des codes d'indication des états de S<paquets :>
+Voici la signification des codes d'indication des états de paquets :
 
 =over 
 
-Drapeau S<d'erreur :>
+Drapeau d'erreur :
 
 =over 
 
 =item I<vide> pas d'erreur
 
-=item B<R> erreur sérieuse, réinstallation S<nécessaire ;>
+=item B<R> erreur sérieuse, réinstallation nécessaire ;
 
 =back
 
-État S<d'installation :>
+État d'installation :
 
 =over 
 
-=item I<vide> pas S<installé ;>
+=item I<vide> pas installé ;
 
-=item B<*>complètement installé et S<configuré ;>
+=item B<*>complètement installé et configuré ;
 
-=item B<-> pas installé, mais des fichiers de configuration S<existent ;>
+=item B<-> pas installé, mais des fichiers de configuration existent ;
 
-=item B<U> dépaqueté, mais toujours pas S<configuré ;>
+=item B<U> dépaqueté, mais toujours pas configuré ;
 
-=item B<C> à moitié configuré (il y a eu une S<erreur) ;>
+=item B<C> à moitié configuré (il y a eu une erreur) ;
 
 =item B<I> à moitié installé (il y a eu une erreur).
 
 =back
 
-Sélections actuelle et S<demandée :>
+Sélections actuelle et demandée :
 
 =over 
 
-=item B<*> marqué comme étant à installer ou à mettre à S<niveau ;>
+=item B<*> marqué comme étant à installer ou à mettre à niveau ;
 
-=item B<-> marqué comme étant à retirer, en conservant la S<configuration ;>
+=item B<-> marqué comme étant à retirer, en conservant la configuration ;
 
-=item B<=> marqué comme étant à S<conserver :> le paquet ne sera pas S<traité ;>
+=item B<=> marqué comme étant à conserver : le paquet ne sera pas traité ;
 
 =item B<_> marqué comme étant à nettoyer, la configuration sera retirée
-S<également ;>
+également ;
 
 =item B<n> nouveau paquet, n'a toujours pas été marqué.
 
@@ -299,7 +299,7 @@ S<également ;>
 
 =head2 Déplacement du curseur et de l'écran
 
-Vous pouvez naviguer dans la liste de sélection des paquets et dans l'écran de résolution des dépendances et des conflits à l'aide des touches S<suivantes :>
+Vous pouvez naviguer dans la liste de sélection des paquets et dans l'écran de résolution des dépendances et des conflits à l'aide des touches suivantes :
 
 =over 
 
@@ -345,7 +345,7 @@ Vous pouvez naviguer dans la liste de sélection des paquets et dans l'écran de
 
 The list of packages can be searched by package name.  This is done by pressing ‘B</>’, and typing a simple search string.  The string is interpreted as a L<regex(7)> regular expression.  If you add ‘B</d>’ to the search expression, dselect will also search in descriptions.  If you add ‘B</i>’ the search will be case insensitive.  You may combine these two suffixes like this: ‘B</id>’.  Repeated searching is accomplished by repeatedly pressing the ‘B<n>’ or ‘B<\>’ keys, until the wanted package is found.  If the search reaches the bottom of the list, it wraps to the top and continues searching from there.
 
-On peut changer l'ordre du tri en appuyant sur la touche S<« B<o> »> ou S<« B<O> ».> Les neuf systèmes de tris suivants S<existent :>
+On peut changer l'ordre du tri en appuyant sur la touche « B<o> » ou « B<O> ». Les neuf systèmes de tris suivants existent :
 
 =over 
 
@@ -377,7 +377,7 @@ Lorsqu'il n'est pas indiqué, l'ordre alphabétique est utilisé comme dernier c
 
 =head2 Modifier les sélections
 
-L'état de sélection requis des paquets individuels peut être modifié avec les commandes S<suivantes :>
+L'état de sélection requis des paquets individuels peut être modifié avec les commandes suivantes :
 
 =over 
 
@@ -387,7 +387,7 @@ L'état de sélection requis des paquets individuels peut être modifié avec le
 
 =item B<=, H> conserver l'état et la version actuels
 
-=item B<:, G> ne plus S<garder :> ne pas mettre à niveau ou laisser non installé
+=item B<:, G> ne plus garder : ne pas mettre à niveau ou laisser non installé
 
 =item B<-, Delete> supprimer, mais conserver la configuration
 
@@ -401,7 +401,7 @@ Lorsque la demande de modification entraîne des dépendances non satisfaites ou
 
 Il est également possible d'appliquer ces commandes à des groupes de sélections de paquets en plaçant le curseur sur le titre d'un groupe. Le regroupement des paquets dépend de la façon dont les paquets sont triés dans la liste.
 
-Une attention particulière doit être prise lors de la modification de grands groupes de sélections, parce qu'ils peuvent créer rapidement un nombre important de dépendances non résolues ou de conflits, qui seraient tous listés dans un écran de résolution de dépendances, le rendant difficile à utiliser. En pratique, seules les opérations S<« à> S<garder »> et S<« ne> plus S<garder »> sont utiles pour les groupes.
+Une attention particulière doit être prise lors de la modification de grands groupes de sélections, parce qu'ils peuvent créer rapidement un nombre important de dépendances non résolues ou de conflits, qui seraient tous listés dans un écran de résolution de dépendances, le rendant difficile à utiliser. En pratique, seules les opérations « à garder » et « ne plus garder » sont utiles pour les groupes.
 
 =head2 Résoudre les dépendances et les conflits
 
@@ -411,17 +411,17 @@ La moitié supérieure de cet écran liste tous les paquets ayant des dépendanc
 
 Quand la sous-liste de paquets est affichée pour la première fois, B<dselect> peut avoir déjà fixé les états demandés pour certains des paquets listés, cela afin de résoudre les dépendances ou les conflits qui ont causé l'apparition de l'écran de résolution des dépendances. Il est habituellement recommandé de suivre les suggestions de B<dselect>.
 
-L'état de sélection des paquets listés peut être remis dans son état précédent, avant que le problème de dépendance ou le conflit ne soit créé, en appuyant sur la touche S<« B<R> ».> La touche S<« B<D> »> permet de remettre à zéro les suggestions automatiques, tout en conservant les modifications qui ont causé l'apparition de l'écran de résolution des dépendances. Enfin, la touche S<« B<U> »> permet de rétablir les suggestions automatiques.
+L'état de sélection des paquets listés peut être remis dans son état précédent, avant que le problème de dépendance ou le conflit ne soit créé, en appuyant sur la touche « B<R> ». La touche « B<D> » permet de remettre à zéro les suggestions automatiques, tout en conservant les modifications qui ont causé l'apparition de l'écran de résolution des dépendances. Enfin, la touche « B<U> » permet de rétablir les suggestions automatiques.
 
 =head2 Établir les sélections demandées
 
 En appuyant sur B<Entrée>, les sélections affichées sont acceptées. Si B<dselect> ne détecte pas de dépendances non résolues du fait de ces sélections, les nouvelles sélections sont établies. Cependant, si des dépendances non résolues sont trouvées, B<dselect> affichera de nouveau un écran de résolution des dépendances.
 
-Pour modifier un jeu de sélections qui causent des dépendances non résolues ou des conflits, et forcer B<dselect> à l'accepter, appuyez sur la touche S<« B<Q> ».> Cela fixe les sélections telles qu'elles sont définies par l'utilisateur, sans condition. En général, ne faites pas cela, sauf si vous avez bien lu ce qu'il y a d'écrit.
+Pour modifier un jeu de sélections qui causent des dépendances non résolues ou des conflits, et forcer B<dselect> à l'accepter, appuyez sur la touche « B<Q> ». Cela fixe les sélections telles qu'elles sont définies par l'utilisateur, sans condition. En général, ne faites pas cela, sauf si vous avez bien lu ce qu'il y a d'écrit.
 
-L'effet inverse, qui consiste à oublier les demandes de modification des sélections et revenir à la liste précédente de sélections, peut être obtenu en appuyant sur la touche S<« B<X> »> ou S<« B<Echap> ».> En répétant l'opération, on peut complètement revenir à la dernière configuration établie.
+L'effet inverse, qui consiste à oublier les demandes de modification des sélections et revenir à la liste précédente de sélections, peut être obtenu en appuyant sur la touche « B<X> » ou « B<Echap> ». En répétant l'opération, on peut complètement revenir à la dernière configuration établie.
 
-Si vous avez fixé certains paramètres de façon erronée et que vous souhaitez revenir en arrière sur ce qui est actuellement installé sur le système, appuyez sur la touche S<« B<C> ».> C'est un peu comme utiliser la commande de déblocage sur tous les paquets, mais cela offre un bouton panique plus évident pour les cas où l'utilisateur a appuyé sur B<entrée> accidentellement.
+Si vous avez fixé certains paramètres de façon erronée et que vous souhaitez revenir en arrière sur ce qui est actuellement installé sur le système, appuyez sur la touche « B<C> ». C'est un peu comme utiliser la commande de déblocage sur tous les paquets, mais cela offre un bouton panique plus évident pour les cas où l'utilisateur a appuyé sur B<entrée> accidentellement.
 
 =head1 CODE DE SORTIE
 
@@ -443,11 +443,11 @@ Erreur fatale ou irrécupérable due à l'utilisation d'une ligne de commande no
 
 =item B<DPKG_ROOT>
 
-Si cette variable est positionnée et que les options B<--instdir> ou B<--root> ne sont pas précisées, ce répertoire sera utilisé comme répertoire racine du système de fichiers (depuis S<dpkg 1.21.0).>
+Si cette variable est positionnée et que les options B<--instdir> ou B<--root> ne sont pas précisées, ce répertoire sera utilisé comme répertoire racine du système de fichiers (depuis dpkg 1.21.0).
 
 =item B<DPKG_ADMINDIR>
 
-Si cette variable est positionnée et que les options B<--admindir> ou B<--root> ne sont pas précisées, ce répertoire sera utilisé comme répertoire de données pour B<dpkg> (depuis S<dpkg 1.21.0).>
+Si cette variable est positionnée et que les options B<--admindir> ou B<--root> ne sont pas précisées, ce répertoire sera utilisé comme répertoire de données pour B<dpkg> (depuis dpkg 1.21.0).
 
 =item B<HOME>
 

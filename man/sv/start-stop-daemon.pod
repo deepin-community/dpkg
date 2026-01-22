@@ -148,11 +148,13 @@ Byt katalog till I<sökväg> innan processen startas. Detta görs efter byte av 
 
 Används typiskt med program som inte kopplar loss sig av sig själva. Flaggan tvingar B<start-stop-daemon> att förgrena sig (fork) innan processen startar, och tvinga den grenen att köra i bakgrunden.
 
-B<Varning>: B<start-stop-daemon> kan inte kontrollera felstatus för processer som av B<någon som helst> anledning misslyckas med att exekvera. Detta är en sista utväg, och är endast avsett för program som det antingen inte är någon mening att förgrena på egen hand, eller där det inte är möjligt att lägga till kod för det på egen hand.
+B<Note>: The exit status from a late unexpected failure during the process initialization cannot be checked, unless the B<--notify-await> option is used.  It is intended for use with programs that either make no sense daemonizing on their own, or where it is not feasible or desired to add the daemonizing and notification code for them to do this themselves.
 
 =item B<--notify-await>
 
-Vänta på att bakgrundsprocessen sänder en bekräftelse på att den är redo innan tjänsten anses vara startad (sedan version 1.19.3). Detta implementar delar av systemd:s beredskapsprotokoll, så som det anges i manualsidan L<sd_notify(3)>. Följande variabler stöds:
+Wait for the background process to send a readiness notification before considering the service started (since version 1.19.3).  This option can only be used with B<--background>.
+
+This implements parts of the systemd readiness protocol, as specified in the L<sd_notify(3)> manual page.  The following variables are supported:
 
 =over 
 

@@ -34,7 +34,7 @@ A segunda linha é uma string decimal (sem zeros à esquerda) fornecendo o compr
 
 Cada uma destas linhas é terminada com um único caractere de nova-linha.
 
-O primeiro ficheiro tar contem a informação de controlo, numa série de ficheiros normais. O ficheiro B<control> tem de estar presente, pois ele contem o núcleo da informação de controle.
+O primeiro ficheiro tar contem os metadados do pacote, numa série de ficheiros normais. O ficheiro B<control> tem de estar presente, pois ele contem a informação de controle do pacote.
 
 Em alguns arquivos muito antigos, os ficheiros no ficheiro tar de controlo podem opcionalmente estar num sub-directório B<DEBIAN>. Nesse caso o sub-directório B<DEBIAN> irá estar também no ficheiro tar de controlo, e o ficheiro tar de controlo terá apenas ficheiros nesse directório. Opcionalmente o ficheiro tar de controlo pode conter uma entrada para ‘B<.>’, que é, o directório actual.
 

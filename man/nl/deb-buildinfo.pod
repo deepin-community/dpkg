@@ -26,7 +26,7 @@ Van elke bouw van een Debian broncodepakket kan de bouwinformatie opgeslagen wor
 
 Ieder veld begint met een markering, zoals B<Source> of B<Binary> (niet hoofdlettergevoelig), gevolgd door een dubbele punt en de tekstinhoud van het veld (hoofdlettergevoelig tenzij anders vermeld). Velden worden enkel door veldmarkeringen begrensd. De tekstinhoud van het veld kan met andere woorden verschillende regels lang zijn, maar de installatiegereedschappen zullen bij het verwerken van de tekstinhoud de regels gewoonlijk samenvoegen (behalve in het geval van de multiregel-velden B<Binary-Only-Changes>, B<Installed-Build-Depends>, B<Environment>, B<Checksums-Md5>, B<Checksums-Sha1> en B<Checksums-Sha256>; zie hierna)
 
-De controle-data mogen ingesloten liggen in een OpenPGP-handtekening met ASCII-harnas volgens de specificatie RFC4880.
+De controle-data mogen ingesloten liggen in een OpenPGP-handtekening met ASCII-harnas volgens de specificatie RFC9580.
 
 De naam van het B<.buildinfo>-bestand zal afhangen van het type bouw en zal zo specifiek zijn als nodig, maar niet meer dan dat; die naam zal zijn:
 
@@ -64,11 +64,17 @@ Dit samengevouwen veld is een met een spatie gescheiden lijst van gebouwde binai
 
 =item B<Architecture:> I<arch-lijst> (verplicht)
 
-Dit veld met spaties als scheidingsteken, somt de architecturen op van de bestanden die momenteel gebouwd worden. Gebruikelijke architecturen zijn B<amd64>, B<armel>, B<i386>, enz. Merk op dat de waarde B<all> bedoeld is voor pakketten die architectuuronafhankelijk zijn. Indien ook de broncode voor het pakket gebouwd wordt, is ook de bijzondere vermelding B<source> aanwezig. Jokertekens voor architecturen mogen nooit voorkomen in de lijst.
+De architectuurlijst geeft aan op welk type machine dit pakket draait. De waarde moet een lijst met architectuurnamen zijn, gescheiden door spaties.
+
+Gebruikelijke architecturen zijn B<amd64>, B<armel>, B<i386>, enz. Merk op dat de bijzondere waarde B<all> bedoeld is voor pakketten die architectuuronafhankelijk zijn (zoals shell- en Perlscripts of documentatie). Indien ook de broncode voor het pakket gebouwd wordt, is tevens de bijzondere vermelding B<source> aanwezig.
+
+B<Opmerking:> Architectuurwildcards zijn in deze context niet toegestaan.
 
 =item B<Version:> I<versie-tekenreeks> (verplicht)
 
 Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de auteur van het programma er ook voor gebruikt. Het kan ook een Debian-revisienummer bevatten (voor niet uit Debian stammende pakketten). De exacte indeling en het sorteringsalgoritme worden beschreven in L<deb-version(7)>.
+
+B<Opmerking>: Bij sommige leveranciers is dpkg zo aangepast dat authentieke bronnen samen met niet-authentieke versies zijn toegestaan. Dit maakt het inconsistent en draagt ​​bij aan de verwarring rond het concept. Bovendien vormt dit een valkuil voor onbedoelde fouten.
 
 =item B<Binary-Only-Changes:>
 
@@ -76,17 +82,19 @@ Gewoonlijk is dit het originele versienummer van het pakket, welke vorm de auteu
 
 Dit multiregel-veld bevat in voorkomend geval de samengevoegde tekst van het changelog-item voor een uitsluitend binaire upload die niet door de beheerder uitgevoerd wordt (een binary-only non-maintainer upload - binNMU). Om van dit veld een geldig multiregel-veld te maken, worden lege regels vervangen door één enkel punt (‘.’) en springen alle regels in met één spatie. De exacte inhoud hangt af van de changelog-indeling.
 
-=item B<Checksums-Md5:> (verplicht)
+=item B<Checksums-Md5:> (verplicht, zwak)
 
-=item B<Checksums-Sha1:> (verplicht)
+=item B<Checksums-Sha1:> (verplicht, zwak)
 
-=item B<Checksums-Sha256:> (verplicht)
+=item B<Checksums-Sha256:> (verplicht, sterk)
 
-=item S< >I<controlesom> I<grootte> I<bestandsnaam>
+=item S< >I<controlegetal> I<grootte> I<bestandsnaam>
 
-Deze multiregel-velden bevatten een lijst van bestanden met voor elk van hen een controlesom en een grootte. Deze velden hebben een identieke syntaxis en verschillen onderling enkel inzake het gebruikte algoritme voor de controlesom: MD5 voor B<Checksums-Md5>, SHA-1 voor B<Checksums-Sha1> en SHA-256 voor B<Checksums-Sha256>.
+Deze multiregel-velden bevatten een lijst van bestanden met voor elk van hen een controlegetal en een grootte. Deze velden hebben een identieke syntaxis en verschillen onderling enkel inzake het gebruikte algoritme voor het controlegetal: MD5 voor B<Checksums-Md5>, SHA-1 voor B<Checksums-Sha1> en SHA-256 voor B<Checksums-Sha256>.
 
-De eerste regel van de veldwaarde (het deel dat op dezelfde regel staat als de door een dubbele punt gevolgde veldnaam) is steeds leeg. De inhoud van het veld wordt in de vervolgregels verwoord, één regel per bestand. Elke regel bestaat uit elementen die onderling door een spatie gescheiden zijn en het bestand beschrijven: zijn controlesom, zijn bestandsgrootte en zijn naam.
+B<Opmerking>: De controlegetallen MD5 en SHA-1 worden als zwak beschouwd en mogen nooit worden beschouwd als zijnde voldoende voor een veilige verificatie.
+
+De eerste regel van de veldwaarde (het deel dat op dezelfde regel staat als de door een dubbele punt gevolgde veldnaam) is steeds leeg. De inhoud van het veld wordt in de vervolgregels verwoord, één regel per bestand. Elke regel bestaat uit elementen die onderling door een spatie gescheiden zijn en het bestand beschrijven: zijn controlegetal, zijn bestandsgrootte en zijn naam.
 
 Deze velden sommen alle bestanden die de bouw vormen.
 
@@ -121,10 +129,6 @@ Dit gevouwen veld bevat een niet-exhaustieve lijst, met spatie als scheidingstek
 Op Debian en zijn derivaten kunnen de volgende reden-labels gegeven worden:
 
 =over 
-
-=item B<merged-usr-via-aliased-dirs>
-
-Het systeem heeft een via aliassen samengevoegde map I</usr> (vroeger gekend als B<merged-usr-via-symlinks>). Dit sticht verwarring bij B<dpkg-query>, B<dpkg-statoverride>, B<dpkg-trigger>, B<update-alternatives> en elk ander hulpmiddel dat in zijn databank gebruik maakt van padnamen als sleutel, omdat het zorgt voor problemen met aliassen in het bestandssysteem en knoeit met het overzicht van het bestandssysteem dat B<dpkg> in zijn databank opgeslagen heeft. Met bouwsystemen die in de door hen gemaakte objecten gebruik maken van vaste padnamen naar specifieke uitvoerbare bestanden of bibliotheken, kan dit ook leiden tot pakketten die niet compatibel zijn met bestandssystemen zonder samengevoegde /usr-map.
 
 =item B<usr-local-has-configs>
 

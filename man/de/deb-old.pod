@@ -34,7 +34,7 @@ Die zweite Zeile ist eine dezimale Zeichenkette (ohne führende Nullen), die die
 
 Jede dieser Zeilen wird durch ein einzelnes Zeilenvorschubzeichen abgeschlossen.
 
-Die erste Tar-Datei enthält die Steuerinformationen als eine Serie von normalen Dateien. Die Datei B<control> muss vorhanden sein, da sie die Kern-Steuerinformationen enthält.
+The first tarfile contains the package metadata, as a series of ordinary files.  The file B<control> must be present, as it contains the package control information.
 
 In einigen sehr alten Archiven können die Dateien in der Steuer-Tar-Datei optional in einem B<DEBIAN>-Unterverzeichnis sein. In diesem Fall ist das B<DEBIAN>-Unterverzeichnis auch in der Steuer-Tar-Datei, und die Steuer-Tar-Datei hat nur Dateien in diesem Verzeichnis. Optional kann die Steuer-Tar-Datei einen Eintrag für ‚B<.>’ enthalten, d.h. für das aktuelle Verzeichnis.
 
@@ -47,7 +47,7 @@ L<deb(5)>, L<deb-control(5)>, L<dpkg-deb(1)>.
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

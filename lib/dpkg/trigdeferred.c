@@ -56,7 +56,6 @@ constructfn(struct varbuf *vb, const char *dir, const char *tail)
 	varbuf_reset(vb);
 	varbuf_add_dir(vb, dir);
 	varbuf_add_str(vb, tail);
-	varbuf_end_str(vb);
 }
 
 /**
@@ -78,12 +77,12 @@ trigdef_update_start(enum trigdef_update_flags uf)
 
 	if (uf & TDUF_WRITE) {
 		constructfn(&fn, triggersdir, TRIGGERSLOCKFILE);
-		if (lock_fd == -1) {
+		if (lock_fd < 0) {
 			lock_fd = open(fn.buf, O_RDWR | O_CREAT | O_TRUNC, 0600);
-			if (lock_fd == -1) {
+			if (lock_fd < 0) {
 				if (!(errno == ENOENT && (uf & TDUF_NO_LOCK_OK)))
 					ohshite(_("unable to open/create "
-					          "triggers lock file '%.250s'"),
+					          "triggers lock file '%s'"),
 					        fn.buf);
 				return TDUS_ERROR_NO_DIR;
 			}
@@ -100,7 +99,7 @@ trigdef_update_start(enum trigdef_update_flags uf)
 	old_deferred = fopen(fn.buf, "r");
 	if (!old_deferred) {
 		if (errno != ENOENT)
-			ohshite(_("unable to open triggers deferred file '%.250s'"),
+			ohshite(_("unable to open triggers deferred file '%s'"),
 			        fn.buf);
 		if (!(uf & TDUF_WRITE_IF_ENOENT)) {
 			if (uf & TDUF_WRITE)
@@ -115,7 +114,7 @@ trigdef_update_start(enum trigdef_update_flags uf)
 
 		rc = fstat(fileno(old_deferred), &stab);
 		if (rc < 0)
-			ohshite(_("unable to stat triggers deferred file '%.250s'"),
+			ohshite(_("unable to stat triggers deferred file '%s'"),
 			        fn.buf);
 
 		if (stab.st_size == 0 && !(uf & TDUF_WRITE_IF_EMPTY)) {
@@ -131,7 +130,7 @@ trigdef_update_start(enum trigdef_update_flags uf)
 			fclose(trig_new_deferred);
 		trig_new_deferred = fopen(newfn.buf, "w");
 		if (!trig_new_deferred)
-			ohshite(_("unable to open/create new triggers deferred file '%.250s'"),
+			ohshite(_("unable to open/create new triggers deferred file '%s'"),
 			        newfn.buf);
 
 		setcloexec(fileno(trig_new_deferred), newfn.buf);
@@ -154,6 +153,9 @@ trigdef_update_printf(const char *format, ...)
 {
 	va_list ap;
 
+	if (trig_new_deferred == NULL)
+		return;
+
 	va_start(ap, format);
 	vfprintf(trig_new_deferred, format, ap);
 	va_end(ap);
@@ -162,7 +164,7 @@ trigdef_update_printf(const char *format, ...)
 static void
 trigdef_parse_error(int line_num, const char *line, const char *ptr)
 {
-	ohshit(_("syntax error in triggers deferred file '%.250s' at "
+	ohshit(_("syntax error in triggers deferred file '%s' at "
 	         "line %d character %zd '%s'"),
 	       fn.buf, line_num, ptr - line + 1, ptr);
 }
@@ -221,9 +223,12 @@ trigdef_parse(void)
 				trigdef_parse_error(line_num, line, ptr);
 
 			while (*++ptr) {
-				if (!c_isdigit(*ptr) && !c_islower(*ptr) &&
-				    *ptr != '-' && *ptr != ':' &&
-				    *ptr != '+' && *ptr != '.')
+				if (!c_isdigit(*ptr) &&
+				    !c_islower(*ptr) &&
+				    *ptr != '-' &&
+				    *ptr != ':' &&
+				    *ptr != '+' &&
+				    *ptr != '.')
 					break;
 			}
 
@@ -232,8 +237,8 @@ trigdef_parse(void)
 			*ptr++ = '\0';
 
 			if (ptr_ini[0] == '-' && ptr_ini[1])
-				ohshit(_("invalid package name '%.250s' in "
-				         "triggers deferred file '%.250s'"),
+				ohshit(_("invalid package name '%s' in "
+				         "triggers deferred file '%s'"),
 				       ptr_ini, fn.buf);
 
 			/* Set the package name. */
@@ -251,7 +256,7 @@ trigdef_process_done(void)
 {
 	if (old_deferred) {
 		if (ferror(old_deferred))
-			ohshite(_("error reading triggers deferred file '%.250s'"),
+			ohshite(_("error reading triggers deferred file '%s'"),
 			        fn.buf);
 		fclose(old_deferred);
 		old_deferred = NULL;
@@ -262,16 +267,16 @@ trigdef_process_done(void)
 
 		if (ferror(trig_new_deferred))
 			ohshite(_("unable to write new triggers deferred "
-			          "file '%.250s'"), newfn.buf);
+			          "file '%s'"), newfn.buf);
 		rc = fclose(trig_new_deferred);
 		trig_new_deferred = NULL;
 		if (rc)
 			ohshite(_("unable to close new triggers deferred "
-			          "file '%.250s'"), newfn.buf);
+			          "file '%s'"), newfn.buf);
 
 		if (rename(newfn.buf, fn.buf))
 			ohshite(_("unable to install new triggers deferred "
-			          "file '%.250s'"), fn.buf);
+			          "file '%s'"), fn.buf);
 
 		dir_sync_path(triggersdir);
 	}

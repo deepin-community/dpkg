@@ -26,7 +26,7 @@ Cada envio Debian é composto de um ficheiro de controle .changes, o qual conté
 
 Cada campo começa com uma etiqueta, tal como B<Source> ou B<Binary> (insensível a maiúsculas/minúsculas), seguida do símbolo dois pontos, e o corpo do campo (sensível a maiúsculas/minúsculas a menos que declarado o contrário). Os campos são delimitados apenas por etiquetas de campos. Por outras palavras, o texto do campo pode ter várias linhas de comprimento, mas as ferramentas de instalação irão geralmente juntar as linhas quando processam o corpo do campo (excepto no caso de B<Description>, B<Changes>, B<Files>, B<Checksums-Sha1> e B<Checksums-Sha256> de múltiplos campos, ver abaixo).
 
-Os dados de controle podem estar inclusos numa assinatura OpenPGP ASCII Armored, como especificado em RFC4880.
+Os dados de controle podem estar inclusos numa assinatura OpenPGP ASCII Armored, como especificado em RFC9580.
 
 =head1 CAMPOS
 
@@ -52,11 +52,17 @@ Este campo dobrado é uma lista de pacotes binários separados por espaços para
 
 =item B<Architecture:> I<arch-list>
 
-Lista as arquitecturas dos ficheiros actualmente a serem enviados ao arquivo. Arquitecturas comuns são B<amd64>, B<armel>, B<i386>, etc.  Note que o valor B<all> destina-se a pacotes que são independentes da arquitectura. Se a fonte do pacote estiver também a ser enviada, a entrada especial B<source> está também presente. Wildcards de arquitectura nunca devem estar presentes na lista.
+Lista as arquitecturas dos ficheiros atualmente a serem enviados.
+
+Arquitecturas comuns são B<amd64>, B<armel>, B<i386>, etc.  Note que o valor especial B<all> destina-se a pacotes que são independentes da arquitectura (tais como scripts de shell e Perl ou documentação). Se a fonte do pacote estiver também a ser enviada, a entrada especial B<source> está também presente.
+
+B<Nota:> Os wildcards de arquitectura não são permitidos neste contexto.
 
 =item B<Version:>I< string-de-versão> (obrigatório)
 
-Tipicamente, isto é o número de versão do pacote original seja em que formato o autor do programa usa. Pode também incluir um número de revisão Debian (para pacotes não-nativos). O formato exacto e algoritmo de ordenação estão descritos em L<deb-version(7)>.
+Tipicamente, isto é o número de versão do pacote original seja em que formato o autor do programa usa.  Pode também incluir um número de revisão Debian (para pacotes não-nativos).  O formato exacto e algoritmo de ordenação estão descritos em L<deb-version(7)>.
+
+B<Nota>: Em alguns fornecedores, o dpkg foi feito para permitir fontes nativas com versões não-nativas, tornando isto incoerente e adicional à confusão do conceito, onde adicionalmente isto tende a ser uma armadilha para enganos acidentais.
 
 =item B<Distribution:> I<distribution>s (necessário)
 
@@ -106,11 +112,17 @@ Este campo multi-linha contem uma lista de ficheiros com um md5sum, tamanho, sec
 
 A primeira linha do campo valor (a parte na mesma linha que tem o campo nome seguido de dois pontos) é sempre vazia. O conteúdo do campo é expressado como linhas de continuação, uma linha por ficheiro. Cada linha consiste de entradas separadas por espaços que descrevem o ficheiro: o md5sum, o tamanho do ficheiro, a secção do ficheiro, a prioridade do ficheiro, e o nome do ficheiro.
 
+Se a secção for omitida no ficheiro de controle modelo do pacote fonte, é predefinida para B<unknown> (desde dpkg 1.22.13).
+
+Se a prioridade for omitida no ficheiro de controle modelo do pacote fonte, é predefinida para B<optional> (desde dpkg 1.22.13).
+
 Este campo lista todos os ficheiros que fizeram o envio. A lista de ficheiros neste campo tem de corresponder à lista de ficheiros nos outros campos B<Checksums> relacionados.
 
-=item B<Checksums-Sha1:> (necessário)
+B<Nota>: O sumário de verificação MD5 é considerado fraco, e nunca deve ser assumido como suficiente para verificação de segurança, mas este campo não pode ser omitido pois fornece metadados não disponíveis em mais nenhum lado.
 
-=item B<Checksums-Sha256:> (necessário)
+=item B<Checksums-Sha1:> (necessário, fraco)
+
+=item B<Checksums-Sha256:> (necessário, forte)
 
 =item S< >I<checksum> I<size> I<filename>
 
@@ -119,6 +131,8 @@ Estes campos multi-linha contêm uma lista de ficheiros com um sumário de verif
 A primeira linha do campo valor (a parte na mesma linha que tem o campo nome seguido de dois pontos) é sempre vazia. O conteúdo do campo é expressado como linhas de continuação, uma linha por ficheiro. Cada linha consiste de entradas separadas por espaços que descrevem o ficheiro: o sumário de verificação (checksum), o tamanho do ficheiro, e o nome do ficheiro.
 
 Estes campos listam todos os ficheiros que fizeram o envio. A lista de ficheiros nestes campos tem de corresponder à lista de ficheiros no campo B<Files> e aos outros campos B<Checksums> relacionados.
+
+B<Nota>: O sumário de verificação SHA-1 é considerado fraco, e nunca deve ser assumido com suficiente para verificação de segurança.
 
 =back
 

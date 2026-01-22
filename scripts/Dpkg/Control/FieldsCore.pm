@@ -1,4 +1,5 @@
 # Copyright © 2007-2009 Raphaël Hertzog <hertzog@debian.org>
+# Copyright © 2012-2025 Guillem Jover <guillem@debian.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,10 +28,9 @@ CTRL_* constants exported by L<Dpkg::Control>.
 
 =cut
 
-package Dpkg::Control::FieldsCore 1.02;
+package Dpkg::Control::FieldsCore 1.05;
 
-use strict;
-use warnings;
+use v5.36;
 
 our @EXPORT = qw(
     field_capitalize
@@ -38,11 +38,14 @@ our @EXPORT = qw(
     field_is_allowed_in
     field_transfer_single
     field_transfer_all
+    field_parse_maintainer
+    field_parse_uploaders
     field_parse_binary_source
     field_list_src_dep
     field_list_pkg_dep
     field_get_dep_type
     field_get_sep_type
+    field_get_default_value
     field_ordered_list
     field_register
     field_insert_after
@@ -173,6 +176,10 @@ our %FIELDS = (
         separator => FIELD_SEP_COMMA,
         dependency => 'normal',
         dep_order => 3,
+    },
+    'build-driver' => {
+        name => 'Build-Driver',
+        allowed => CTRL_TMPL_SRC,
     },
     'build-essential' => {
         name => 'Build-Essential',
@@ -429,6 +436,7 @@ our %FIELDS = (
     'priority' => {
         name => 'Priority',
         allowed => CTRL_TMPL_SRC | CTRL_REPO_SRC | ALL_PKG,
+        default => 'optional',
     },
     'protected' => {
         name => 'Protected',
@@ -468,6 +476,7 @@ our %FIELDS = (
     'section' => {
         name => 'Section',
         allowed => CTRL_TMPL_SRC | CTRL_REPO_SRC | ALL_PKG,
+        default => 'unknown',
     },
     'sha1' => {
         # XXX: Wrong capitalization due to historical reasons.
@@ -971,7 +980,7 @@ our %FIELD_ORDER = (
         ),
     ],
     CTRL_FILE_STATUS() => [
-        # Same as fieldinfos in lib/dpkg/parse.c
+        # Same as fieldinfos in «lib/dpkg/parse.c».
         qw(
             package
             essential
@@ -1043,13 +1052,13 @@ except the first of each word (words are separated by a hyphen in field names).
 
 =cut
 
-sub field_capitalize($) {
+sub field_capitalize {
     my $field = lc(shift);
 
     # Use known fields first.
     return $FIELDS{$field}{name} if exists $FIELDS{$field};
 
-    # Generic case
+    # Generic case.
     return join '-', map { ucfirst } split /-/, $field;
 }
 
@@ -1059,7 +1068,7 @@ Returns true if the field is official and known.
 
 =cut
 
-sub field_is_official($) {
+sub field_is_official {
     my $field = lc shift;
 
     return exists $FIELDS{$field};
@@ -1078,7 +1087,7 @@ Undef is returned for non-official fields.
 
 =cut
 
-sub field_is_allowed_in($@) {
+sub field_is_allowed_in {
     my ($field, @types) = @_;
     $field = lc $field;
 
@@ -1086,7 +1095,8 @@ sub field_is_allowed_in($@) {
 
     return 0 if not scalar(@types);
     foreach my $type (@types) {
-        next if $type == CTRL_UNKNOWN; # Always allowed
+        # Unknown control type is always allowed.
+        next if $type == CTRL_UNKNOWN;
         return 0 unless $FIELDS{$field}{allowed} & $type;
     }
     return 1;
@@ -1112,14 +1122,8 @@ added to $to otherwise.
 
 =cut
 
-sub field_transfer_single($$;$) {
+sub field_transfer_single {
     my ($from, $to, $field) = @_;
-    if (not defined $field) {
-        warnings::warnif('deprecated',
-            'using Dpkg::Control::Fields::field_transfer_single() with an ' .
-            'an implicit field argument is deprecated');
-        $field = $_;
-    }
     my ($from_type, $to_type) = ($from->get_type(), $to->get_type());
     $field = field_capitalize($field);
 
@@ -1128,6 +1132,12 @@ sub field_transfer_single($$;$) {
         return $field;
     } elsif ($field =~ /^X([SBC]*)-/i) {
         my $dest = $1;
+
+        if ($dest =~ /SC/i and $from_type == CTRL_TMPL_PKG) {
+            warning(g_('non-sensical field export rules (%s) in field %s in ' .
+                       'binary stanza from source package template control file'),
+                    $dest, $field);
+        }
         if (($dest =~ /B/i and $to_type == CTRL_DEB) or
             ($dest =~ /S/i and $to_type == CTRL_DSC) or
             ($dest =~ /C/i and $to_type == CTRL_FILE_CHANGES))
@@ -1137,12 +1147,12 @@ sub field_transfer_single($$;$) {
             $to->{$new} = $from->{$field};
             return $new;
         } elsif ($to_type != CTRL_DEB and
-		 $to_type != CTRL_DSC and
-		 $to_type != CTRL_FILE_CHANGES)
-	{
-	    $to->{$field} = $from->{$field};
-	    return $field;
-	}
+                 $to_type != CTRL_DSC and
+                 $to_type != CTRL_FILE_CHANGES)
+        {
+            $to->{$field} = $from->{$field};
+            return $field;
+        }
     } elsif (not field_is_allowed_in($field, $from_type)) {
         warning(g_("unknown information field '%s' in input data in %s"),
                 $field, $from->get_option('name') || g_('control information'));
@@ -1159,7 +1169,7 @@ Returns the list of fields that have been added to $to.
 
 =cut
 
-sub field_transfer_all($$) {
+sub field_transfer_all {
     my ($from, $to) = @_;
     my (@res, $res);
     foreach my $k (keys %$from) {
@@ -1177,13 +1187,50 @@ The list might be empty for types where the order does not matter much.
 
 =cut
 
-sub field_ordered_list($) {
+sub field_ordered_list {
     my $type = shift;
 
     if (exists $FIELD_ORDER{$type}) {
         return map { $FIELDS{$_}{name} } @{$FIELD_ORDER{$type}};
     }
     return ();
+}
+
+=item $email = field_parse_maintainer($ctrl)
+
+Parses the C<Maintainer> field from the Dpkg::Control $ctrl object, and
+returns a Dpkg::Email::Address object.
+
+=cut
+
+sub field_parse_maintainer($ctrl)
+{
+    my $maint = $ctrl->{'Maintainer'};
+
+    # XXX: Catch and remove bogus trailing comma for a transitory period.
+    if ($maint =~ s{,\s*$}{}) {
+         warning(g_('unexpected trailing comma in %s field with value "%s"'),
+                 'Maintainer', $maint);
+    }
+
+    require Dpkg::Email::Address;
+    return Dpkg::Email::Address->new($maint);
+}
+
+=item $email_list = field_parse_uploaders($ctrl)
+
+Parses the C<Uploaders> field from the Dpkg::Control $ctrl object, and
+returns a Dpkg::Email::AddressList object, containing the list of
+Dpkg::Email::Address for each uploader.
+
+=cut
+
+sub field_parse_uploaders($ctrl)
+{
+    my $uploaders = $ctrl->{'Uploaders'};
+
+    require Dpkg::Email::AddressList;
+    return Dpkg::Email::AddressList->new($uploaders);
 }
 
 =item ($source, $version) = field_parse_binary_source($ctrl)
@@ -1196,11 +1243,11 @@ from the binary version.
 Returns a list with the $source name, and the source $version, or undef
 or an empty list when $ctrl does not contain a binary package control stanza.
 Neither $source nor $version are validated, but that can be done with
-Dpkg::Package::pkg_name_is_illegal() and Dpkg::Version::version_check().
+Dpkg::Package::pkg_name_is_invalid() and Dpkg::Version::version_check().
 
 =cut
 
-sub field_parse_binary_source($) {
+sub field_parse_binary_source {
     my $ctrl = shift;
     my $ctrl_type = $ctrl->get_type();
 
@@ -1239,7 +1286,7 @@ Debian package.
 
 =cut
 
-sub field_list_src_dep() {
+sub field_list_src_dep {
     my @list = map {
         $FIELDS{$_}{name}
     } sort {
@@ -1259,7 +1306,7 @@ the stronger to the weaker.
 
 =cut
 
-sub field_list_pkg_dep() {
+sub field_list_pkg_dep {
     my @list = map {
         $FIELDS{$_}{name}
     } sort {
@@ -1280,11 +1327,11 @@ Breaks, ...). Returns undef for fields which are not dependencies.
 
 =cut
 
-sub field_get_dep_type($) {
+sub field_get_dep_type {
     my $field = lc shift;
 
-    return unless exists $FIELDS{$field};
-    return $FIELDS{$field}{dependency} if exists $FIELDS{$field}{dependency};
+    return $FIELDS{$field}{dependency}
+        if exists $FIELDS{$field} && exists $FIELDS{$field}{dependency};
     return;
 }
 
@@ -1295,11 +1342,27 @@ FIELD_SEP_SPACE, FIELD_SEP_COMMA or FIELD_SEP_LINE.
 
 =cut
 
-sub field_get_sep_type($) {
+sub field_get_sep_type {
     my $field = lc shift;
 
-    return $FIELDS{$field}{separator} if exists $FIELDS{$field}{separator};
+    return $FIELDS{$field}{separator}
+        if exists $FIELDS{$field} && exists $FIELDS{$field}{separator};
     return FIELD_SEP_UNKNOWN;
+}
+
+=item $value = field_get_default_value($field)
+
+Return the default value (if any) for the field. If there is no default value
+then it returns "undef".
+
+=cut
+
+sub field_get_default_value {
+    my $field = lc shift;
+
+    return $FIELDS{$field}{default}
+        if exists $FIELDS{$field} && exists $FIELDS{$field}{default};
+    return;
 }
 
 =item field_register($field, $allowed_types, %opts)
@@ -1309,7 +1372,7 @@ types. %opts is optional.
 
 =cut
 
-sub field_register($$;@) {
+sub field_register {
     my ($field, $types, %opts) = @_;
 
     $field = lc $field;
@@ -1331,7 +1394,7 @@ Return true if the field was inserted, otherwise false.
 
 =cut
 
-sub field_insert_after($$@) {
+sub field_insert_after {
     my ($type, $field, @fields) = @_;
 
     return 0 if not exists $FIELD_ORDER{$type};
@@ -1353,7 +1416,7 @@ Return true if the field was inserted, otherwise false.
 
 =cut
 
-sub field_insert_before($$@) {
+sub field_insert_before {
     my ($type, $field, @fields) = @_;
 
     return 0 if not exists $FIELD_ORDER{$type};
@@ -1369,6 +1432,18 @@ sub field_insert_before($$@) {
 =back
 
 =head1 CHANGES
+
+=head2 Version 1.05 (dpkg 1.23.4)
+
+New functions: field_parse_maintainer(), field_parse_uploaders().
+
+=head2 Version 1.04 (dpkg 1.23.0)
+
+Remove argument: field_transfer_single() implicit argument usage.
+
+=head2 Version 1.03 (dpkg 1.22.12)
+
+New function: field_get_default_value().
 
 =head2 Version 1.02 (dpkg 1.22.0)
 

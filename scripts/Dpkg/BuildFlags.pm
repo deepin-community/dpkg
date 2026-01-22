@@ -29,8 +29,7 @@ to query the same information.
 
 package Dpkg::BuildFlags 1.06;
 
-use strict;
-use warnings;
+use v5.36;
 
 use Dpkg ();
 use Dpkg::Gettext;
@@ -42,13 +41,21 @@ use Dpkg::Vendor qw(run_vendor_hook);
 
 =over 4
 
-=item $bf = Dpkg::BuildFlags->new()
+=item $bf = Dpkg::BuildFlags->new(%opts)
 
 Create a new Dpkg::BuildFlags object. It will be initialized based
 on the value of several configuration files and environment variables.
 
-If the option B<vendor_defaults> is set to false, then no vendor defaults are
-initialized (it defaults to true).
+Options:
+
+=over
+
+=item B<vendor_defaults>
+
+If set to false, then no vendor defaults are initialized
+(it defaults to true).
+
+=back
 
 =cut
 
@@ -158,22 +165,22 @@ sub load_environment_config {
     my $self = shift;
 
     foreach my $flag (keys %{$self->{flags}}) {
-	my $envvar = 'DEB_' . $flag . '_SET';
-	if (Dpkg::BuildEnv::has($envvar)) {
-	    $self->set($flag, Dpkg::BuildEnv::get($envvar), 'env');
-	}
-	$envvar = 'DEB_' . $flag . '_STRIP';
-	if (Dpkg::BuildEnv::has($envvar)) {
-	    $self->strip($flag, Dpkg::BuildEnv::get($envvar), 'env');
-	}
-	$envvar = 'DEB_' . $flag . '_APPEND';
-	if (Dpkg::BuildEnv::has($envvar)) {
-	    $self->append($flag, Dpkg::BuildEnv::get($envvar), 'env');
-	}
-	$envvar = 'DEB_' . $flag . '_PREPEND';
-	if (Dpkg::BuildEnv::has($envvar)) {
-	    $self->prepend($flag, Dpkg::BuildEnv::get($envvar), 'env');
-	}
+        my $envvar = 'DEB_' . $flag . '_SET';
+        if (Dpkg::BuildEnv::has($envvar)) {
+            $self->set($flag, Dpkg::BuildEnv::get($envvar), 'env');
+        }
+        $envvar = 'DEB_' . $flag . '_STRIP';
+        if (Dpkg::BuildEnv::has($envvar)) {
+            $self->strip($flag, Dpkg::BuildEnv::get($envvar), 'env');
+        }
+        $envvar = 'DEB_' . $flag . '_APPEND';
+        if (Dpkg::BuildEnv::has($envvar)) {
+            $self->append($flag, Dpkg::BuildEnv::get($envvar), 'env');
+        }
+        $envvar = 'DEB_' . $flag . '_PREPEND';
+        if (Dpkg::BuildEnv::has($envvar)) {
+            $self->prepend($flag, Dpkg::BuildEnv::get($envvar), 'env');
+        }
     }
 }
 
@@ -188,22 +195,22 @@ sub load_maintainer_config {
     my $self = shift;
 
     foreach my $flag (keys %{$self->{flags}}) {
-	my $envvar = 'DEB_' . $flag . '_MAINT_SET';
-	if (Dpkg::BuildEnv::has($envvar)) {
-	    $self->set($flag, Dpkg::BuildEnv::get($envvar), undef, 1);
-	}
-	$envvar = 'DEB_' . $flag . '_MAINT_STRIP';
-	if (Dpkg::BuildEnv::has($envvar)) {
-	    $self->strip($flag, Dpkg::BuildEnv::get($envvar), undef, 1);
-	}
-	$envvar = 'DEB_' . $flag . '_MAINT_APPEND';
-	if (Dpkg::BuildEnv::has($envvar)) {
-	    $self->append($flag, Dpkg::BuildEnv::get($envvar), undef, 1);
-	}
-	$envvar = 'DEB_' . $flag . '_MAINT_PREPEND';
-	if (Dpkg::BuildEnv::has($envvar)) {
-	    $self->prepend($flag, Dpkg::BuildEnv::get($envvar), undef, 1);
-	}
+        my $envvar = 'DEB_' . $flag . '_MAINT_SET';
+        if (Dpkg::BuildEnv::has($envvar)) {
+            $self->set($flag, Dpkg::BuildEnv::get($envvar), undef, 1);
+        }
+        $envvar = 'DEB_' . $flag . '_MAINT_STRIP';
+        if (Dpkg::BuildEnv::has($envvar)) {
+            $self->strip($flag, Dpkg::BuildEnv::get($envvar), undef, 1);
+        }
+        $envvar = 'DEB_' . $flag . '_MAINT_APPEND';
+        if (Dpkg::BuildEnv::has($envvar)) {
+            $self->append($flag, Dpkg::BuildEnv::get($envvar), undef, 1);
+        }
+        $envvar = 'DEB_' . $flag . '_MAINT_PREPEND';
+        if (Dpkg::BuildEnv::has($envvar)) {
+            $self->prepend($flag, Dpkg::BuildEnv::get($envvar), undef, 1);
+        }
     }
 }
 
@@ -431,8 +438,10 @@ sub update_from_conffile {
     open(my $conf_fh, '<', $file) or syserr(g_('cannot read %s'), $file);
     while (<$conf_fh>) {
         chomp;
-        next if /^\s*#/; # Skip comments
-        next if /^\s*$/; # Skip empty lines
+        # Skip comments.
+        next if /^\s*#/;
+        # Skip empty lines.
+        next if /^\s*$/;
         if (/^(append|prepend|set|strip)\s+(\S+)\s+(\S.*\S)\s*$/i) {
             my ($op, $flag, $value) = ($1, $2, $3);
             unless (exists $self->{flags}->{$flag}) {

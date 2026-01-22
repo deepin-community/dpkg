@@ -54,12 +54,23 @@ enum DPKG_ATTR_ENUM_FLAGS debugflags {
 	dbg_triggersstupid = 040000,
 };
 
-void dpkg_debug_init(void);
-void debug_set_output(FILE *output, const char *filename);
-void debug_set_mask(int mask);
-int debug_parse_mask(const char *str);
-bool debug_has_flag(int flag);
-void debug(int flag, const char *fmt, ...) DPKG_ATTR_PRINTF(2);
+void
+dpkg_debug_init(void);
+void
+debug_set_output(FILE *output, const char *filename);
+void
+debug_set_mask(int mask);
+int
+debug_parse_mask(const char *str);
+bool
+debug_has_flag(int flag);
+void
+debug_print(int flag, const char *fn, const char *fmt, ...)
+	DPKG_ATTR_PRINTF(3);
+#define debug(flag, ...) \
+	debug_print(flag, DPKG_NULL, __VA_ARGS__)
+#define debug_at(flag, ...) \
+	debug_print(flag, __func__, __VA_ARGS__)
 
 /** @} */
 

@@ -28,9 +28,21 @@ Symbolfilmallar medföljer Debiankällkodspaket och dess format är en övermän
 
 Kommentarer stöds i symbolmallfilerna. Alla rader med ”#” som första tecken är kommentarer, såvida inte det börjar med ”#include” (se stycket L</Använda inkluderingar>). Rader som börjar med ”#MISSING:” är speciella kommentarer som dokumenterar symboler som har försvunnit.
 
-=head2 Använda #PACKAGE#-substituering
+=head2 Using metavariable substitutions
 
-I några sällsynta fall skiljer sig namnet på biblioteket mellan arkitekturer. För att undvika att hårdkoda namnet på paketet i symbolfilen kan du använda markören I<#PACKAGE#>. Den ersätts av det faktiska paketnamnet när symbolfilen installeras. Till skillnad från I<#MINVER#>-markören kommer I<#PACKAGE#> aldrig att dyka upp i en symbolfil i ett binärpaket.
+In some cases instead of hardcoding some variable text, we can use metavariables that will be replaced either when generating the symbols file shipped in the binary package, or during dependency generation.
+
+Contrary to the I<#MINVER#> metavariable, the following metavariables will never appear in a symbols file inside a binary package.
+
+=head3 Using the #PACKAGE# metavariable
+
+In some rare cases, the name of the library varies between architectures. To avoid hardcoding the name of the package in the symbols file, you can use the I<#PACKAGE#> metavariable.  It will be replaced by the real package name during installation of the symbols files.
+
+=head2 Using the #CURVER# metavariable
+
+In some cases, a symbol with an unstable ABI will require a strict dependency on the current package version.  To avoid hardcoding the current version in the symbols file, you can use the I<#CURVER#> metavariable.  It will be replaced by a dependency version constraint in the form of “(= I<binary-version>)”, where this would be generally be used in combination with I<#PACKAGE#>.
+
+Supported since dpkg 1.23.4.
 
 =head2 Använda symboltaggar
 
@@ -66,9 +78,9 @@ Dessaa taggar gör det möjligt att begränsa vilken uppsättning arkitekturer s
 
 I det vanliga icke-mall-läget skrivs endast de arkitekturspecifika symboler som motsvarar den aktuella värdarkitekturen till symbolfilen. Å andra sidan skrivs alla arkitekturspecifika symboler (inklusive de från andra arkitekturer) till symbolfilen i mall-läget.
 
-Formatet på I<arkitekturlista> är detsamma som det som används i B<Build-Depends>-fältet i I<debian/control> (bortsett från de omslutande hakparenteserna []). Den första symbolen från listan nedan, till exempel, kommer endast att tas med på arkitekturerna alpha, valfri-amd64, ia64, den andra bara på linux-arkitekturer medan den tredje tas med överallt förutom på armel.
+Formatet på I<arkitekturlista> är detsamma som det som används i B<Build-Depends>-fältet i I<debian/control> (bortsett från de omslutande hakparenteserna []). Den första symbolen från listan nedan, till exempel, kommer endast att tas med på arkitekturerna arm64, any-amd64 och riscv64, den andra bara på linux-arkitekturer medan den tredje tas med överallt förutom på armel.
 
-  (arch=alpha any-amd64 ia64)64bitarsspecifik_symbol@Base 1.0
+  (arch=arm64 any-amd64 riscv64)64bitarsspecifik_symbol@Base 1.0
   (arch=linux-any)linuxspecifik_symbol@Base 1.0
   (arch=!armel)symbol_armel_inte_har@Base 1.0
 I<architecture-bits> är antingen B<32> eller B<64>.
@@ -88,10 +100,6 @@ Flera begränsningar kan kedjas samman
 =item B<allow-internal>
 
 dpkg-gensymbols har en intern svartlista över symboler som inte ska förekomma i symbolfiler eftersom de oftast bara är sidoeffekter från implementationsdetaljer i verktygskedjan (sedan dpkg 1.20.1). Om du, av någon orsak, verkligen vill att en av dessa symboler ska tas med i symbolfilen måste du tagga symbolen med B<allow-internal>. Det kan vara nödvändigt för lågnivå-verktygskedjebibliotek som ”libgcc”.
-
-=item B<ignore-blacklist>
-
-Ett alias för B<allow-internal> som avråds från (sedan dpkg 1.20.1, stöds sedan dpkg 1.15.3).
 
 =item B<c++>
 
@@ -188,8 +196,8 @@ Inkluderingsdirektivet kan även taggas som alla andra symboler:
 Alla symboler som inkluderas från I<fil-att-inkludera> kommer att anses som standard vara taggade med I<tagg> ... I<taggN>. Du kan använda denna funktion för att skapa en gemensam I<paket>.symbols-fil som inkluderar arkitekturspecifika filer:
 
   gemensam_symbol1@Base 1.0
- (arch=amd64 ia64 alpha)#include "package.symbols.64-bit"
- (arch=!amd64 !ia64 !alpha)#include "package.symbols.32-bit"
+ (arch-bits=64)#include "package.symbols.64-bit"
+ (arch-bits=32)#include "package.symbols.32-bit"
   gemensam_symbol2@Base 1.0
 
 =back

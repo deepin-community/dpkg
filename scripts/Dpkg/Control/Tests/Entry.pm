@@ -27,8 +27,7 @@ This class represents a test suite entry.
 
 package Dpkg::Control::Tests::Entry 1.00;
 
-use strict;
-use warnings;
+use v5.36;
 
 use Dpkg::Gettext;
 use Dpkg::ErrorHandling;
@@ -43,10 +42,12 @@ either new or overridden with a different behavior.
 
 =over 4
 
-=item $entry = Dpkg::Control::Tests::Entry->new()
+=item $entry = Dpkg::Control::Tests::Entry->new(%opts)
 
 Creates a new object. It does not represent a real control test entry
 until one has been successfully parsed or built from scratch.
+
+The options are passed through to the Dpkg::Control->new() constructor.
 
 =cut
 
@@ -54,7 +55,10 @@ sub new {
     my ($this, %opts) = @_;
     my $class = ref($this) || $this;
 
-    my $self = Dpkg::Control->new(type => CTRL_TESTS, %opts);
+    my $self = Dpkg::Control->new(
+        type => CTRL_TESTS,
+        %opts,
+    );
     bless $self, $class;
     return $self;
 }

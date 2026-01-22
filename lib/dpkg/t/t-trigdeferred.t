@@ -15,14 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use strict;
-use warnings;
+use v5.36;
 use version;
 
-use Test::More;
+use Test::More tests => 21;
 use Cwd;
 use File::Path qw(make_path remove_tree);
-use File::Temp qw(tempdir);
 use File::Basename;
 use File::Find;
 
@@ -54,7 +52,7 @@ TEXT
     }, {
         exitcode => 2,
         original => <<"TEXT",
-\b # invalid character
+\b # Invalid character.
 TEXT
     }, {
         exitcode => 2,
@@ -82,8 +80,6 @@ TEXT
     }
 );
 
-plan tests => scalar(@deferred) * 3;
-
 # Set a known umask.
 umask 0022;
 
@@ -98,8 +94,12 @@ sub test_trigdeferred {
     foreach my $test (@deferred) {
         file_dump("$admindir/triggers/Unincorp", $test->{original});
 
-        spawn(exec => [ "$builddir/t/c-trigdeferred", $admindir ],
-              nocheck => 1, to_string => \$stdout, error_to_string => \$stderr);
+        spawn(
+            exec => [ "$builddir/t/c-trigdeferred", $admindir ],
+            no_check => 1,
+            to_string => \$stdout,
+            error_to_string => \$stderr,
+        );
         my $exitcode = $? >> 8;
 
         is($exitcode, $test->{exitcode}, 'trigger deferred expected exitcode');
