@@ -1,3 +1,11 @@
+dpkg (1.22.6deepin10) unstable; urgency=medium
+
+  * Do not use DPKG_AR_EXTRACT and DPKG_AR_GEN as they're introduced in
+    1.22.7. Use ar x and ar qSc instead.
+    https://git.dpkg.org/cgit/dpkg/dpkg.git/commit/?id=9b2f0100fe89477bbbda060e324d0bdc83532633
+
+ -- Tianyu Chen <sweetyfish@deepin.org>  Thu, 26 Mar 2026 16:51:27 +0800
+
 dpkg (1.22.6deepin9) unstable; urgency=medium
 
   * fix CVE-2026-2219 
