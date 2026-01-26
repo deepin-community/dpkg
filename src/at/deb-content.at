@@ -134,7 +134,7 @@ AT_KEYWORDS([dpkg-deb deb extraction])
 DPKG_GEN_CONTROL([pkg-ctrl-dir-perms])
 AT_CHECK([
 dpkg-deb --root-owner-group -Znone -b pkg-ctrl-dir-perms
-DPKG_AR_EXTRACT([pkg-ctrl-dir-perms.deb])
+ar x pkg-ctrl-dir-perms.deb
 dpkg-deb -R pkg-ctrl-dir-perms.deb pkg-ctrl-dir-perms-bad
 mkdir -p pkg-ctrl-dir-perms-bad/DEBIAN/rx-subdir/inner
 touch pkg-ctrl-dir-perms-bad/DEBIAN/rx-subdir/inner/file
@@ -142,7 +142,7 @@ chmod 0555 pkg-ctrl-dir-perms-bad/DEBIAN
 chmod 0555 pkg-ctrl-dir-perms-bad/DEBIAN/rx-subdir
 chmod 0555 pkg-ctrl-dir-perms-bad/DEBIAN/rx-subdir/inner
 $TAR cf control.tar --format=gnu --mtime @0 --clamp-mtime --owner root:0 --group root:0 -C pkg-ctrl-dir-perms-bad/DEBIAN .
-DPKG_AR_GEN([pkg-ctrl-dir-perms.deb], [debian-binary control.tar data.tar])
+ar qSc pkg-ctrl-dir-perms.deb debian-binary control.tar data.tar
 ], [0], [dpkg-deb: building package 'pkg-ctrl-dir-perms' in 'pkg-ctrl-dir-perms.deb'.
 ])
 AT_CHECK([
