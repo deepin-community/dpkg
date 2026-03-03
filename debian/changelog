@@ -1,3 +1,9 @@
+dpkg (1.23.4deepin2) unstable; urgency=medium
+
+  * set rva23 baseline
+
+ -- Chang Yang <yangchang@deepin.org>  Tue, 03 Mar 2026 15:35:46 +0800
+
 dpkg (1.23.4deepin1) unstable; urgency=medium
 
   * revert perl 5.38 feature
