@@ -1,3 +1,9 @@
+dpkg (1.22.6deepin9) unstable; urgency=medium
+
+  * fix CVE-2026-2219 
+
+ -- zengwei <zengwei1@uniontech.com>  Thu, 12 Mar 2026 15:03:45 +0800
+
 dpkg (1.22.6deepin8) unstable; urgency=medium
 
   * dpkg-deb: Fix cleanup for control member with restricted directories.
