@@ -1037,7 +1037,7 @@ tarobject(struct tar_archive *tar, struct tar_entry *ti)
       /* One of the two is a directory - can't do atomic install. */
       debug(dbg_eachfiledetail,"tarobject directory, nonatomic");
       nifd->namenode->flags |= FNNF_NO_ATOMIC_OVERWRITE;
-      if (rename(fnamevb.buf,fnametmpvb.buf))
+      if (path_rename(fnamevb.buf,fnametmpvb.buf))
         ohshite(_("unable to move aside '%.255s' to install new version"),
                 ti->name);
     } else if (S_ISLNK(stab.st_mode)) {

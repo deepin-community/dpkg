@@ -48,6 +48,8 @@ int secure_remove(const char *pathname);
 
 void path_remove_tree(const char *pathname);
 
+int path_rename(const char *oldpath, const char *newpath);
+
 /** @} */
 
 DPKG_END_DECLS

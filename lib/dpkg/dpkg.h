@@ -107,6 +107,7 @@ DPKG_BEGIN_DECLS
 #define DEBSIGVERIFY	"debsig-verify"
 
 #define RM		"rm"
+#define MV		"mv"
 #define CAT		"cat"
 #define DIFF		"diff"
 
