@@ -1,3 +1,9 @@
+
+dpkg (1.22.6deepin11) unstable; urgency=medium
+
+  * lib/dpkg: Make the pre-allocated update file size be a power of two
+
+ -- deepin-ci-robot <packages@deepin.org>  Tue, 09 Jun 2026 09:35:00 +0800
 dpkg (1.22.6deepin10) unstable; urgency=medium
 
   * Do not use DPKG_AR_EXTRACT and DPKG_AR_GEN as they're introduced in

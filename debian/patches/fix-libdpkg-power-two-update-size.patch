@@ -1,0 +1,13 @@
+diff --git a/lib/dpkg/dbmodify.c b/lib/dpkg/dbmodify.c
+index f38bece..3ac335e 100644
+--- a/lib/dpkg/dbmodify.c
++++ b/lib/dpkg/dbmodify.c
+@@ -138,7 +138,7 @@ static void createimptmp(void) {
+   if (!importanttmp)
+     ohshite(_("unable to create '%.255s'"), importanttmpfile);
+   setcloexec(fileno(importanttmp),importanttmpfile);
+-  for (i=0; i<512; i++) fputs("#padding\n",importanttmp);
++  for (i=0; i<512; i++) fputs("#padded\n",importanttmp);
+   if (ferror(importanttmp))
+     ohshite(_("unable to fill %.250s with padding"),importanttmpfile);
+   if (fflush(importanttmp))
