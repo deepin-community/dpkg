@@ -27,6 +27,9 @@ DPKG_ENV = \
 
 # eatmydata confuses ASAN link order check.
 export ASAN_OPTIONS = verify_asan_link_order=0
+# Do not fail due to leaks, as the code is still using lots of
+# static variables and error variables.
+export LSAN_OPTIONS = exitcode=0
 
 ifdef DPKG_BUILDTREE
 export DPKG_DATADIR := $(DPKG_BUILDTREE)/src
@@ -89,7 +92,7 @@ DPKG_DIVERT = dpkg-divert $(DPKG_COMMON_OPTIONS) $(DPKG_DIVERT_OPTIONS)
 DPKG_DIVERT_ADD = $(BEROOT) $(DPKG_DIVERT) --add
 DPKG_DIVERT_DEL = $(BEROOT) $(DPKG_DIVERT) --remove
 DPKG_SPLIT = dpkg-split $(DPKG_SPLIT_OPTIONS)
-DPKG_BUILD_DEB = $(DPKG_DEB) -b
+DPKG_BUILD_DEB = $(DPKG_DEB) --root-owner-group -b
 DPKG_QUERY = dpkg-query $(DPKG_COMMON_OPTIONS) $(DPKG_QUERY_OPTIONS)
 DPKG_TRIGGER = dpkg-trigger $(DPKG_COMMON_OPTIONS) $(DPKG_TRIGGER_OPTIONS)
 

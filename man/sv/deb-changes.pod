@@ -26,7 +26,7 @@ Varje Debianinsändning består av en styrfil .changes, som innehåller ett anta
 
 Varje fält börjar med en etikett, såsom B<Source> eller B<Binary> (skiftlägesoberoende), följt av ett kolontecken och fältets kropp (skiftlägesberoende såvida inte annat anges). Fält avdelas endast av fältetiketter. Med andra ord kan texten i fälten spänna över flera rader, men installationsverktygen kommer oftast att slå samman rader när kroppen tolkas (förutom när det gäller flerradsfälten B<Description>, B<Changes>, B<Files>, B<Checksums-Sha1> och B<Checksums-Sha256>, se nedan).
 
-Styrinformationen kan omges av en OpenPGP-signatur i ASCII-skal, såsom beskrivs i RFC4880.
+Styrinformationen kan omges av en OpenPGP-signatur i ASCII-skal, såsom beskrivs i RFC9580.
 
 =head1 FÄLT
 
@@ -106,11 +106,15 @@ Det här flerradiga fältet innehåller en lista över filer tillsammans med md5
 
 Första raden i fältvärdet (delen av på samma rad som fältnamnet följt av kolon) är alltid tom. Innehållet i fältet anges som fortsättningsrader, en rad per fil. Varje rad består av blankstegsavdelade fält som beskriver filen: md5-summan, filstorleken, filsektionen, filprioriteten och filnamnet.
 
+Om sektion och prioritet utelämnas från paketet sätts de till förvalet B<unknown> respektive B<optional> (sedan dpkg 1.22.13).
+
 Det här fälten visar alla filer insändningen består av. Listan över filer i fältet måste motsvara listan över filer i de andra relaterade B<Checksums>-fälten.
 
-=item B<Checksums-Sha1:> (krävs)
+B<Observera>: MD5-kontrollsumman anses vara svag och bör aldrig anses vara tillräcklig för en säker bekräftelse, men fältet kan inte uteslutas eftersom det innehåller metadata som inte är tillgänglig någon annanstans.
 
-=item B<Checksums-Sha256:> (krävs)
+=item B<Checksums-Sha1:> (krävs, svag)
+
+=item B<Checksums-Sha256:> (krävs, stark)
 
 =item S< >I<kontrollsumma> I<storlek> I<filnamn>
 
@@ -119,6 +123,8 @@ De här flerradsfälteten innehåller en lista med filer med en kontrollsumma oc
 Första raden i fältvärdet (delen av på samma rad som fältnamnet följt av kolon) är alltid tom. Innehållet i fältet anges som fortsättningsrader, en rad per fil. Varje rad består av blankstegsavdelade fält som beskriver filen: kontrollsumman, filstorleken och filnamnet.
 
 De här fälten visar alla filer insändningen består av. Listan över filer i fälten måste motsvara listan över filer i fältet B<Files> och de andra relaterade B<Checksums>-fälten.
+
+B<Observera>: SHA-1-kontrollsumman anses vara svag och bör aldrig anses vara tillräcklig för en säker bekräftelse.
 
 =back
 

@@ -169,7 +169,7 @@ file_treewalk_feed(const char *dir, int fd_out)
 
     nodename = str_fmt("./%s", virtname);
 
-    if (!opt_nocheck && strchr(nodename, '\n'))
+    if (opt_check && strchr(nodename, '\n'))
       ohshit(_("newline not allowed in pathname '%s'"), nodename);
 
     /* We need to reorder the files so we can make sure that symlinks
@@ -206,13 +206,13 @@ static const char *const maintainerscripts[] = {
  * Check control directory and file permissions.
  */
 static void
-check_file_perms(const char *ctrldir)
+check_ctrl_perms(const char *ctrldir)
 {
   struct varbuf path = VARBUF_INIT;
   const char *const *mscriptp;
   struct stat mscriptstab;
 
-  varbuf_printf(&path, "%s/", ctrldir);
+  varbuf_add_fmt(&path, "%s/", ctrldir);
   if (lstat(path.buf, &mscriptstab))
     ohshite(_("unable to stat control directory"));
   if (!S_ISDIR(mscriptstab.st_mode))
@@ -223,8 +223,7 @@ check_file_perms(const char *ctrldir)
            (unsigned long)(mscriptstab.st_mode & 07777));
 
   for (mscriptp = maintainerscripts; *mscriptp; mscriptp++) {
-    varbuf_reset(&path);
-    varbuf_printf(&path, "%s/%s", ctrldir, *mscriptp);
+    varbuf_set_fmt(&path, "%s/%s", ctrldir, *mscriptp);
     if (!lstat(path.buf, &mscriptstab)) {
       if (S_ISLNK(mscriptstab.st_mode))
         continue;
@@ -255,7 +254,7 @@ check_conffiles(const char *ctrldir, const char *rootdir)
   struct file_info *conffiles_head = NULL;
   struct file_info *conffiles_tail = NULL;
 
-  varbuf_printf(&controlfile, "%s/%s", ctrldir, CONFFILESFILE);
+  varbuf_add_fmt(&controlfile, "%s/%s", ctrldir, CONFFILESFILE);
 
   cf = fopen(controlfile.buf, "r");
   if (cf == NULL) {
@@ -321,8 +320,7 @@ check_conffiles(const char *ctrldir, const char *rootdir)
         ohshit(_("unknown flag '%s' for conffile '%s'"), flag, conffilename);
     }
 
-    varbuf_reset(&controlfile);
-    varbuf_printf(&controlfile, "%s%s", rootdir, conffilename);
+    varbuf_set_fmt(&controlfile, "%s%s", rootdir, conffilename);
     if (lstat(controlfile.buf, &controlstab)) {
       if (errno == ENOENT) {
         if ((n > 1) && c_isspace(conffilename[n - 1]))
@@ -364,7 +362,7 @@ check_conffiles(const char *ctrldir, const char *rootdir)
  * @return The pkginfo struct from the parsed control file.
  */
 static struct pkginfo *
-check_control_file(const char *ctrldir)
+check_ctrl_control(const char *ctrldir)
 {
   struct pkginfo *pkg;
   char *controlfile;
@@ -388,20 +386,46 @@ check_control_file(const char *ctrldir)
 }
 
 /**
- * Perform some sanity checks on the to-be-built package control area.
+ * Check fsys permissions.
+ */
+static void
+check_fsys_perms(const char *rootdir)
+{
+  struct stat st;
+
+  if (opt_root_owner_group)
+    return;
+
+  if (lstat(rootdir, &st))
+    ohshite(_("cannot get root directory %s metadata"), rootdir);
+  if (!S_ISDIR(st.st_mode))
+    ohshit(_("root pathname %s is not a directory"), rootdir);
+  if (st.st_uid != 0 || st.st_gid != 0) {
+    warning(_("root directory %s has unusual owner or group %u:%u"),
+            rootdir, st.st_uid, st.st_gid);
+    hint(_("you might need to pass --root-owner-group, "
+           "see <%s> for further details"),
+         "https://wiki.debian.org/Teams/Dpkg/RootlessBuilds");
+  }
+}
+
+/**
+ * Perform some sanity checks on the to-be-built package.
  *
- * @param ctrldir The directory from where to build the binary package.
+ * @param ctrldir The control directory from where to build the binary package.
+ * @param rootdir The root directory from where to build the binary package.
  * @return The pkginfo struct from the parsed control file.
  */
 static struct pkginfo *
-check_control_area(const char *ctrldir, const char *rootdir)
+check_build_files(const char *ctrldir, const char *rootdir)
 {
   struct pkginfo *pkg;
   int warns;
 
   /* Start by reading in the control file so we can check its contents. */
-  pkg = check_control_file(ctrldir);
-  check_file_perms(ctrldir);
+  pkg = check_ctrl_control(ctrldir);
+  check_ctrl_perms(ctrldir);
+  check_fsys_perms(rootdir);
   check_conffiles(ctrldir, rootdir);
 
   warns = warning_get_count();
@@ -544,7 +568,9 @@ parse_timestamp(const char *value)
 
   errno = 0;
   timestamp = strtoimax(value, &end, 10);
-  if (value == end || *end || errno != 0)
+  if (value == end || *end)
+    ohshit(_("unable to parse timestamp '%.255s'"), value);
+  else if (errno != 0)
     ohshite(_("unable to parse timestamp '%.255s'"), value);
 
   return timestamp;
@@ -581,7 +607,7 @@ do_build(const char *const *argv)
   ctrldir = str_fmt("%s/%s", dir, BUILDCONTROLDIR);
 
   /* Perform some sanity checks on the to-be-build package. */
-  if (opt_nocheck) {
+  if (!opt_check) {
     if (debar == NULL)
       ohshit(_("target is directory - cannot skip control file check"));
     warning(_("not checking contents of control area"));
@@ -589,7 +615,7 @@ do_build(const char *const *argv)
   } else {
     struct pkginfo *pkg;
 
-    pkg = check_control_area(ctrldir, dir);
+    pkg = check_build_files(ctrldir, dir);
     if (debar == NULL)
       debar = gen_dest_pathname_from_pkg(dest, pkg);
     info(_("building package '%s' in '%s'."), pkg->set->name, debar);
@@ -597,7 +623,7 @@ do_build(const char *const *argv)
   m_output(stdout, _("<standard output>"));
 
   timestamp_str = getenv("SOURCE_DATE_EPOCH");
-  if (timestamp_str)
+  if (str_is_set(timestamp_str))
     timestamp = parse_timestamp(timestamp_str);
   else
     timestamp = time(NULL);
@@ -614,7 +640,7 @@ do_build(const char *const *argv)
    * unlink our temporary file so others can't mess with it. */
   tfbuf = path_make_temp_template("dpkg-deb");
   gzfd = mkstemp(tfbuf);
-  if (gzfd == -1)
+  if (gzfd < 0)
     ohshite(_("failed to make temporary file (%s)"), _("control member"));
   /* Make sure it's gone, the fd will remain until we close it. */
   if (unlink(tfbuf))
@@ -652,7 +678,7 @@ do_build(const char *const *argv)
 
     if (fstat(gzfd, &controlstab))
       ohshite(_("failed to stat temporary file (%s)"), _("control member"));
-    sprintf(versionbuf, "%-8s\n%jd\n", OLDARCHIVEVERSION,
+    snprintf(versionbuf, sizeof(versionbuf), "%-8s\n%jd\n", OLDARCHIVEVERSION,
             (intmax_t)controlstab.st_size);
     if (fd_write(ar->fd, versionbuf, strlen(versionbuf)) < 0)
       ohshite(_("error writing '%s'"), debar);
@@ -663,7 +689,7 @@ do_build(const char *const *argv)
     const char deb_magic[] = ARCHIVEVERSION "\n";
     char adminmember[16 + 1];
 
-    sprintf(adminmember, "%s%s", ADMINMEMBER,
+    snprintf(adminmember, sizeof(adminmember), "%s%s", ADMINMEMBER,
             compressor_get_extension(control_compress_params.type));
 
     dpkg_ar_put_magic(ar);
@@ -686,7 +712,7 @@ do_build(const char *const *argv)
      * temporary file so others can't mess with it. */
     tfbuf = path_make_temp_template("dpkg-deb");
     gzfd = mkstemp(tfbuf);
-    if (gzfd == -1)
+    if (gzfd < 0)
       ohshite(_("failed to make temporary file (%s)"), _("data member"));
     /* Make sure it's gone, the fd will remain until we close it. */
     if (unlink(tfbuf))
@@ -707,7 +733,7 @@ do_build(const char *const *argv)
   if (deb_format.major == 2) {
     char datamember[16 + 1];
 
-    sprintf(datamember, "%s%s", DATAMEMBER,
+    snprintf(datamember, sizeof(datamember), "%s%s", DATAMEMBER,
             compressor_get_extension(compress_params.type));
 
     if (lseek(gzfd, 0, SEEK_SET))

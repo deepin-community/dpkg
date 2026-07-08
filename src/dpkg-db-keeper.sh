@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-PROGNAME=$(basename "$0")
 ADMINDIR=/var/lib/dpkg
 
 PKGDATADIR_DEFAULT=src
@@ -24,14 +23,12 @@ PKGDATADIR="${DPKG_DATADIR:-$PKGDATADIR_DEFAULT}"
 # shellcheck source=src/sh/dpkg-error.sh
 . "$PKGDATADIR/sh/dpkg-error.sh"
 
-setup_colors
-
 # This script is used to track any change in the dpkg database for later
 # inspection, either as a matter of record tracking or to aid in debugging
 # dpkg behavior. It can be installed as a post-invoke hook such as:
 #
 # ,--- /etc/dpkg/dpkg.cfg.d/db-keeper ---
-# post-invoke "/usr/libexec/dpkg-db-keeper"
+# post-invoke "/usr/libexec/dpkg/dpkg-db-keeper"
 # `---
 
 if [ -n "$DPKG_ROOT" ]; then

@@ -693,6 +693,8 @@ Seit Dpkg 1.21.10 wird auch die Architektur berücksichtigt. Dadurch ist es mög
 
 Setzt einen Aufruf-Hook I<Befehl>, der via „%DPKG_DEFAULT_SHELL% -c“ vor oder nach dem B<dpkg>-Aufruf der B<dpkg>-Aktionen I<unpack>, I<configure>, I<install>, I<triggers-only>, I<remove> und I<purge> (seit Dpkg 1.15.4;) und Aktionen I<add-architecture> Und I<remove-architecture> (seit Dpkg 1.17.19). Diese Option kann mehrfach angegeben werden. Die Reihenfolge der Optionen bleibt erhalten, wobei Einträge aus den Konfigurationsdateien Vorrang haben. Die Umgebungsvariable B<DPKG_HOOK_ACTION> wird für die Hooks auf die aktuelle B<dpkg>-Aktion gesetzt.
 
+Die Aufruf-Hooks werden nicht ausgeführt, wenn B<--no-act> angegeben ist oder als Benutzer, der nicht Root ist, ohne B<--force-not-root> ausgeführt wird.
+
 B<Hinweis>: Oberflächen könnten B<dpkg> mehrere Male pro Ausführung aufrufen, wodurch die Hooks öfter als erwartet ausgeführt werden könnten.
 
 =item B<--path-exclude=>I<Glob-Muster>
@@ -726,7 +728,7 @@ Derzeit wird nur das Ausgabeformat B<rpm> unterstützt. Es besteht aus einer Zei
 
 Z<>
  B<missing  > [B<c>] I<Pfadname> [B<(>I<Fehlermeldung>B<)>]
- B<??5??????> [B<c>] I<Pfadname>
+ B<?M5??????> [B<c>] I<Pfadname>
 
 Die ersten 9 Zeichen werden zum Berichten des Überprüfungsergebnisses verwandt, entweder ein wörtliches B<missing>, wenn die Datei nicht vorhanden ist oder seine Metadaten nicht abgerufen werden können, oder eines der folgenden besonderen Zeichen, das das Ergebnis für jede Überprüfung berichtet:
 
@@ -808,6 +810,8 @@ Wird genau bevor eine Verarbeitungsstufe beginnt versandt. I<Stufe> ist eine der
 =item B<--status-logger>=I<Befehl>
 
 Schickt maschinenlesbare Paketstatus- und Fortschrittsinformationen an die Standardeingabe des I<Befehl>s der Shell, was dann mittels „DPKG_DEFAULT_SHELL% -c“ ausgeführt wird (seit Dpkg 1.16.0). Diese Option kann mehrfach angegeben werden. Das verwandte Ausgabeformat ist identisch zu dem in B<--status-fd>.
+
+Die Statusprotokollierer werden nicht ausgeführt, wenn B<--no-act> angegeben ist oder als Benutzer, der nicht Root ist, ohne B<--force-not-root> ausgeführt wird.
 
 =item B<--log=>I<Dateiname>
 
@@ -902,11 +906,17 @@ Das Programm, das B<dpkg> ausführen wird, wenn es eine neue interaktive Shell s
 
 =item B<DPKG_PAGER>
 
-Das Programm, das B<dpkg> ausführen wird, wenn es einen Pager mit „B<$SHELL -c>“ ausführt, beispielsweise zur Anzeige von Conffile-Dateiunterschieden. Falls B<SHELL> nicht gesetzt ist, wird stattdessen „B<%DPKG_DEFAULT_SHELL%>“ verwandt. B<DPKG_PAGER> setzt die Umgebungsvariable B<PAGER> außer Kraft (seit Dpkg 1.19.2).
+Das Programm, das B<dpkg> ausführen wird, wenn es einen Pager mit „B<$SHELL -c>“ ausführt, beispielsweise zur Anzeige von Conffile-Dateiunterschieden. Falls B<SHELL> nicht gesetzt ist, wird stattdessen „B<%DPKG_DEFAULT_SHELL%>“ verwandt.
+
+B<DPKG_PAGER> setzt die Umgebungsvariable B<PAGER> außer Kraft (seit Dpkg 1.19.2). Falls keines der Programme, auf die B<DPKG_PAGER> oder B<PAGER> zeigen, vorhanden ist, werden die folgenden Programme in dieser Reihenfolge ausprobiert (seit Dpkg 1.22.12): das Standardseitenanzeigeprogramm B<%DPKG_DEFAULT_PAGER%>, dann B<less>(1), B<more>(1) und schließlich B<cat>(1).
 
 =item B<DPKG_COLORS>
 
 Setzt den Farbmodus (seit Dpkg 1.18.5). Die derzeit unterstützten Werte sind: B<auto> (Vorgabe), B<always> und B<never>.
+
+=item B<DPKG_NLS>
+
+Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language Support, auch als Unterstützung für Internationalisierung (oder i18n) bekannt, aktiviert wird (seit Dpkg 1.22.7). Die akzeptierten Werte sind: B<0> und B<1> (Vorgabe).
 
 =item B<DPKG_DEBUG>
 
@@ -923,6 +933,18 @@ Falls gesetzt und die Option B<--admindir> oder B<--root> nicht verwandt wurde, 
 =item B<DPKG_FRONTEND_LOCKED>
 
 Wird von einer Paketverwalterprogrammoberfläche gesetzt, um Dpkg zu informieren, dass es nicht die Sperre der Oberfläche erlangen soll (seit Dpkg 1.19.1).
+
+=item B<DPKG_PATH_PASSWD>
+
+Setzt den Pfadnamen für die F<passwd>-Datei des Systems. Dieser Pfad ist relativ zum Verzeichnis B<--root>. Die Vorgabe ist F</etc/passwd>.
+
+Seit Dpkg 1.22.16.
+
+=item B<DPKG_PATH_GROUP>
+
+Setzt den Pfadnamen für die F<group>-Datei des Systems. Dieser Pfad ist relativ zum Verzeichnis B<--root>. Die Vorgabe ist F</etc/group>.
+
+Seit Dpkg 1.22.16.
 
 =back
 
@@ -1150,7 +1172,7 @@ Lesen Sie I<%PKGDOCDIR%/THANKS> für die Liste der Leute, die zu B<dpkg> beigetr
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

@@ -97,7 +97,7 @@ buffer_md5_done(struct buffer_data *data)
 	hash = ctx->hash;
 	MD5Final(digest, &ctx->ctx);
 	for (i = 0; i < 16; ++i) {
-		sprintf(hash, "%02x", *p++);
+		snprintf(hash, 3, "%02x", *p++);
 		hash += 2;
 	}
 	*hash = '\0';
@@ -184,7 +184,7 @@ buffer_copy(struct buffer_data *read_data,
 	off_t bytesread = 0, byteswritten = 0;
 	off_t totalread = 0, totalwritten = 0;
 
-	if ((limit != -1) && (limit < bufsize))
+	if ((limit >= 0) && (limit < bufsize))
 		bufsize = limit;
 	if (bufsize == 0)
 		buf = NULL;
@@ -202,7 +202,7 @@ buffer_copy(struct buffer_data *read_data,
 
 		totalread += bytesread;
 
-		if (limit != -1) {
+		if (limit >= 0) {
 			limit -= bytesread;
 			if (limit < bufsize)
 				bufsize = limit;
@@ -267,7 +267,7 @@ buffer_skip(struct buffer_data *input, off_t limit, struct dpkg_error *err)
 
 	switch (input->type) {
 	case BUFFER_READ_FD:
-		if (lseek(input->arg.i, limit, SEEK_CUR) != -1)
+		if (lseek(input->arg.i, limit, SEEK_CUR) >= 0)
 			return limit;
 		if (errno != ESPIPE)
 			return dpkg_put_errno(err, _("failed to seek"));

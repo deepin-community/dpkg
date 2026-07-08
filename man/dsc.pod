@@ -45,7 +45,7 @@ B<Package-List>, B<Files>, B<Checksums-Sha1> and B<Checksums-Sha256>,
 see below).
 
 The control data might be enclosed in an OpenPGP ASCII Armored signature,
-as specified in RFC4880.
+as specified in RFC9580.
 
 =head1 FIELDS
 
@@ -216,7 +216,9 @@ The I<package-type> is the binary package type, usually B<deb>, another
 common value is B<udeb>.
 
 The I<section> and I<priority> match the binary package fields of the
-same name.
+same name,
+or if omitted default to B<unknown> and B<optional> respectively
+(since dpkg 1.22.13).
 
 The I<key-value-list> is a space separated I<key>B<=>I<value> list,
 and the currently known optional keys are:
@@ -248,11 +250,11 @@ B<Essential> field, that is a B<yes> value.
 
 =back
 
-=item B<Files:> (required)
+=item B<Files:> (required, weak)
 
-=item B<Checksums-Sha1:> (required)
+=item B<Checksums-Sha1:> (required, weak)
 
-=item B<Checksums-Sha256:> (required)
+=item B<Checksums-Sha256:> (required, strong)
 
 =item S< >I<checksum> I<size> I<filename>
 
@@ -271,6 +273,9 @@ file name.
 These fields list all files that make up the source package.
 The list of files in these fields must match the list of files in the
 other related fields.
+
+B<Note>: The MD5 and SHA-1 checksums are considered weak,
+and should never be assumed to be sufficient for secure verification.
 
 =back
 

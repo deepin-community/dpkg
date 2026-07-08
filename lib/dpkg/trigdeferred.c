@@ -56,7 +56,6 @@ constructfn(struct varbuf *vb, const char *dir, const char *tail)
 	varbuf_reset(vb);
 	varbuf_add_dir(vb, dir);
 	varbuf_add_str(vb, tail);
-	varbuf_end_str(vb);
 }
 
 /**
@@ -78,9 +77,9 @@ trigdef_update_start(enum trigdef_update_flags uf)
 
 	if (uf & TDUF_WRITE) {
 		constructfn(&fn, triggersdir, TRIGGERSLOCKFILE);
-		if (lock_fd == -1) {
+		if (lock_fd < 0) {
 			lock_fd = open(fn.buf, O_RDWR | O_CREAT | O_TRUNC, 0600);
-			if (lock_fd == -1) {
+			if (lock_fd < 0) {
 				if (!(errno == ENOENT && (uf & TDUF_NO_LOCK_OK)))
 					ohshite(_("unable to open/create "
 					          "triggers lock file '%.250s'"),
@@ -153,6 +152,9 @@ void
 trigdef_update_printf(const char *format, ...)
 {
 	va_list ap;
+
+	if (trig_new_deferred == NULL)
+		return;
 
 	va_start(ap, format);
 	vfprintf(trig_new_deferred, format, ap);

@@ -26,9 +26,9 @@ Le format B<.deb> en plusieurs parties (multi-part) permet de découper de gros 
 
 =head1 FORMAT
 
-Le fichier est une archive B<ar> avec un numéro magique de B<!E<lt>archE<gt>.>. Les noms de fichiers peuvent comporter un caractère S<« / »> final (depuis S<dpkg 1.15.6).>
+Le fichier est une archive B<ar> avec un numéro magique de B<!E<lt>archE<gt>.>. Les noms de fichiers peuvent comporter un caractère « / » final (depuis dpkg 1.15.6).
 
-Le premier membre est appelé B<debian-split> et contient un ensemble de lignes, séparées par des retours à la ligne. Actuellement, huit lignes sont S<présentes :>
+Le premier membre est appelé B<debian-split> et contient un ensemble de lignes, séparées par des retours à la ligne. Actuellement, huit lignes sont présentes :
 
 =over 
 
@@ -62,7 +62,7 @@ Numéro du membre courant, suivi d'une barre oblique (/) et du nombre total de m
 
 =item *
 
-Architecture du paquet (depuis S<dpkg 1.16.1)>
+Architecture du paquet (depuis dpkg 1.16.1)
 
 =back
 

@@ -24,7 +24,7 @@ B<DEBIAN/prerm>
 
 Un paquet peut réaliser plusieurs actions de pré-retrait à l'aide de scripts du responsable, en incluant un fichier I<prerm> exécutable dans son archive de contrôle (c'est-à-dire I<DEBIAN/prerm> au moment de la création du paquet).
 
-Le script peut être appelé de diverses S<manières :>
+Le script peut être appelé de diverses manières :
 
 =over 
 
@@ -40,7 +40,7 @@ Avant une mise à niveau.
 
 Si le B<upgrade> ci-dessus échoue.
 
-La I<nouvelle_version> est passée depuis S<dpkg 1.18.5.>
+La I<nouvelle_version> est passée depuis dpkg 1.18.5.
 
 =item I<prerm> B<deconfigure> B<in-favour> I<nouveau-paquet> I<nouvelle-version>
 

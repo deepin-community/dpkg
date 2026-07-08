@@ -143,13 +143,13 @@ while (@ARGV) {
 }
 
 umask 0022; # ensure sane default permissions for created files
-my %options = (file => $changelogfile);
-$options{changelogformat} = $changelogformat if $changelogformat;
-my $changelog = changelog_parse(%options);
+my %changelog_opts = (file => $changelogfile);
+$changelog_opts{changelogformat} = $changelogformat if $changelogformat;
+my $changelog = changelog_parse(%changelog_opts);
 if ($changelog->{'Binary-Only'}) {
-    $options{count} = 1;
-    $options{offset} = 1;
-    my $prev_changelog = changelog_parse(%options);
+    $changelog_opts{count} = 1;
+    $changelog_opts{offset} = 1;
+    my $prev_changelog = changelog_parse(%changelog_opts);
     $sourceversion = $prev_changelog->{'Version'};
 } else {
     $sourceversion = $changelog->{'Version'};
@@ -312,6 +312,16 @@ for my $f (qw(Maintainer Description)) {
     warning(g_('missing information for output field %s'), $f)
         unless defined $fields->{$f};
 }
+for my $f (qw(Section)) {
+    next if defined $fields->{$f};
+
+    $fields->{$f} = field_get_default_value($f);
+    warning(g_('missing information for output field %s; ' .
+               'using default value "%s"'), $f, $fields->{$f});
+}
+for my $f (qw(Priority)) {
+    $fields->{$f} //= field_get_default_value($f);
+}
 
 my $pkg_type = $pkg->{'Package-Type'} ||
                $pkg->get_custom_field('Package-Type') || 'deb';
@@ -389,8 +399,11 @@ if ($stdout) {
     $sversion =~ s/^\d+://;
     $forcefilename //= sprintf('%s_%s_%s.%s', $fields->{'Package'}, $sversion,
                                $fields->{'Architecture'}, $pkg_type);
-    my $section = $fields->{'Section'} || '-';
-    my $priority = $fields->{'Priority'} || '-';
+
+    my %fileprop;
+    foreach my $f (qw(Section Priority)) {
+        $fileprop{lc $f} = $fields->{$f};
+    }
 
     # Obtain a lock on debian/control to avoid simultaneous updates
     # of debian/files when parallel building is in use
@@ -418,7 +431,7 @@ if ($stdout) {
     my %fileattrs;
     $fileattrs{automatic} = 'yes' if $fields->{'Auto-Built-Package'};
 
-    $dist->add_file($forcefilename, $section, $priority, %fileattrs);
+    $dist->add_file($forcefilename, @fileprop{qw(section priority)}, %fileattrs);
     $dist->save("$fileslistfile.new");
 
     rename "$fileslistfile.new", $fileslistfile

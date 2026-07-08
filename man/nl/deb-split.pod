@@ -46,7 +46,7 @@ De pakketversie.
 
 =item *
 
-De MD5-controlesom van het pakket.
+Het MD5-controlegetal van het pakket.
 
 =item *
 

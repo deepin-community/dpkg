@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.21.20\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2024-03-10 20:20+0100\n"
+"POT-Creation-Date: 2026-03-06 04:00+0100\n"
 "PO-Revision-Date: 2023-02-06 00:01+0100\n"
 "Last-Translator: Yuri Kozlov <yuray@komyakino.ru>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
@@ -356,6 +356,191 @@ msgstr "неправильная степень сжатия %d"
 msgid "unknown compression strategy"
 msgstr "неизвестный принцип сжатия"
 
+#: lib/dpkg/db-ctrl-access.c
+#, c-format
+msgid "unable to check existence of '%.250s'"
+msgstr "не удалось проверить существование файла «%.250s»"
+
+#: lib/dpkg/db-ctrl-access.c lib/dpkg/db-ctrl-upgrade.c
+msgid "cannot read info directory"
+msgstr "ошибка чтения информационного каталога"
+
+#: lib/dpkg/db-ctrl-format.c src/main/unpack.c
+#, c-format
+msgid "error trying to open %.250s"
+msgstr "ошибка при попытке открыть файл %.250s"
+
+#: lib/dpkg/db-ctrl-format.c
+#, c-format
+msgid "corrupt info database format file '%s'"
+msgstr "повреждение информационного файла формата базы данных «%s»"
+
+#: lib/dpkg/db-ctrl-format.c
+#, c-format
+msgid "info database format (%d) is bogus or too new; try getting a newer dpkg"
+msgstr ""
+"формат информационной базы данных (%d) поддельный или слишком новый; "
+"попробуйте обновить версию dpkg"
+
+#: lib/dpkg/db-ctrl-upgrade.c
+#, c-format
+msgid "info file %s/%s not associated to any package"
+msgstr "информационный файл %s/%s не связан ни с одним пакетом"
+
+#: lib/dpkg/db-ctrl-upgrade.c src/main/archives.c
+#, c-format
+msgid "error creating hard link '%.255s'"
+msgstr "ошибка создания жёсткой ссылки «%.255s»"
+
+#: lib/dpkg/db-ctrl-upgrade.c
+#, c-format
+msgid "error while writing '%s'"
+msgstr "ошибка во время записи «%s»"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing final newline"
+msgstr "в конце управляющего файла «%s» пакета «%s» нет символа новой строки"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing value"
+msgstr "в управляющем файле «%s» для пакета «%s» отсутствует значение"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing value separator"
+msgstr ""
+"в управляющем файле «%s» для пакета «%s» отсутствует значение разделителя"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' contains empty filename"
+msgstr "в управляющем файле «%s» для пакета «%s» содержится пустое имя файла"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "loading control file '%s' for package '%s'"
+msgstr "загрузка управляющего файла «%s» для пакета «%s»"
+
+#: lib/dpkg/db-fsys-divert.c
+#, c-format
+msgid "conflicting diversions involving '%.250s' or '%.250s'"
+msgstr "конфликт файлов diversions из пакетов «%.250s» и «%.250s»"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "files list file for package '%.250s' is missing final newline"
+msgstr ""
+"в списке файлов пакета «%.250s» отсутствует завершающий символ новой строки"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "files list file for package '%.250s' contains empty filename"
+msgstr "список файлов пакета «%.250s» содержит пустое имя файла"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "loading files list file for package '%s'"
+msgstr "загрузка файла списка файлов пакета «%s»"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid ""
+"files list file for package '%.250s' missing; assuming package has no files "
+"currently installed"
+msgstr ""
+"список файлов пакета «%.250s» отсутствует; предполагаем, что на данный "
+"момент у пакета нет установленных файлов"
+
+#: lib/dpkg/db-fsys-files.c
+msgid "(Reading database ... "
+msgstr "(Чтение базы данных … "
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "%d file or directory currently installed.)\n"
+msgid_plural "%d files and directories currently installed.)\n"
+msgstr[0] "на данный момент установлен %d файл и каталог.)\n"
+msgstr[1] "на данный момент установлено %d файла и каталога.)\n"
+msgstr[2] "на данный момент установлено %d файлов и каталогов.)\n"
+
+#: lib/dpkg/db-fsys-load.c
+#, fuzzy, c-format
+#| msgid "cannot open %s"
+msgid "cannot open %s file"
+msgstr "не удалось открыть %s"
+
+#: lib/dpkg/db-fsys-load.c
+#, fuzzy, c-format
+#| msgid "unable to get file '%s%s' metadata"
+msgid "cannot get %s file metadata"
+msgstr "не удалось получить метаданные файла «%s%s»"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "invalid statoverride uid %s"
+msgstr "неправильный statoverride uid %s"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "invalid statoverride gid %s"
+msgstr "неправильный statoverride gid %s"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "invalid statoverride mode %s"
+msgstr "неправильный режим statoverride %s"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "reading statoverride file '%.250s'"
+msgstr "выполняется чтение файла statoverride «%.250s»"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "statoverride file is missing final newline"
+msgstr "в файле statoverride отсутствует завершающий символ новой строки"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "statoverride file contains empty line"
+msgstr "файл statoverride содержит пустую строку"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "syntax error in statoverride file"
+msgstr "синтаксическая ошибка в файле statoverride"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid ""
+"unknown system user '%s' in statoverride file; the system user got removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
+"в файле statoverride неизвестный системный пользователь «%s»; системный\n"
+"пользователь был удалён перед замещением, что, вероятно указывает на ошибку\n"
+"в пакете; для восстановления вы можете удалить замещение вручную с помощью %s"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "unexpected end of line in statoverride file"
+msgstr "неожиданный конец строки в файле statoverride"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid ""
+"unknown system group '%s' in statoverride file; the system group got "
+"removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
+"в файле statoverride неизвестная системная группа «%s»; системная группа\n"
+"была удалена перед замещением, что, вероятно указывает на ошибку\n"
+"в пакете; для восстановления вы можете удалить замещение вручную с помощью %s"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "multiple statoverrides present for file '%.250s'"
+msgstr "для файла «%.250s» есть несколько statoverrides"
+
 #: lib/dpkg/dbmodify.c
 #, c-format
 msgid ""
@@ -485,195 +670,6 @@ msgstr "не удалось закрыть обновлённый файл со�
 #, c-format
 msgid "unable to install updated status of '%.250s'"
 msgstr "не удалось установить обновлённый файл состояния пакета «%.250s»"
-
-#: lib/dpkg/db-ctrl-access.c
-#, c-format
-msgid "unable to check existence of '%.250s'"
-msgstr "не удалось проверить существование файла «%.250s»"
-
-#: lib/dpkg/db-ctrl-access.c lib/dpkg/db-ctrl-upgrade.c
-msgid "cannot read info directory"
-msgstr "ошибка чтения информационного каталога"
-
-#: lib/dpkg/db-ctrl-format.c src/main/unpack.c
-#, c-format
-msgid "error trying to open %.250s"
-msgstr "ошибка при попытке открыть файл %.250s"
-
-#: lib/dpkg/db-ctrl-format.c
-#, c-format
-msgid "corrupt info database format file '%s'"
-msgstr "повреждение информационного файла формата базы данных «%s»"
-
-#: lib/dpkg/db-ctrl-format.c
-#, c-format
-msgid "info database format (%d) is bogus or too new; try getting a newer dpkg"
-msgstr ""
-"формат информационной базы данных (%d) поддельный или слишком новый; "
-"попробуйте обновить версию dpkg"
-
-#: lib/dpkg/db-ctrl-upgrade.c
-#, c-format
-msgid "info file %s/%s not associated to any package"
-msgstr "информационный файл %s/%s не связан ни с одним пакетом"
-
-#: lib/dpkg/db-ctrl-upgrade.c src/main/archives.c
-#, c-format
-msgid "error creating hard link '%.255s'"
-msgstr "ошибка создания жёсткой ссылки «%.255s»"
-
-#: lib/dpkg/db-ctrl-upgrade.c
-#, c-format
-msgid "error while writing '%s'"
-msgstr "ошибка во время записи «%s»"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing final newline"
-msgstr "в конце управляющего файла «%s» пакета «%s» нет символа новой строки"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing value"
-msgstr "в управляющем файле «%s» для пакета «%s» отсутствует значение"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing value separator"
-msgstr ""
-"в управляющем файле «%s» для пакета «%s» отсутствует значение разделителя"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' contains empty filename"
-msgstr "в управляющем файле «%s» для пакета «%s» содержится пустое имя файла"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "loading control file '%s' for package '%s'"
-msgstr "загрузка управляющего файла «%s» для пакета «%s»"
-
-#: lib/dpkg/db-fsys-divert.c
-msgid "failed to open diversions file"
-msgstr "не удалось открыть файл diversions"
-
-#: lib/dpkg/db-fsys-divert.c
-msgid "failed to fstat diversions file"
-msgstr "не удалось выполнить fstat на файл diversions"
-
-#: lib/dpkg/db-fsys-divert.c
-#, c-format
-msgid "conflicting diversions involving '%.250s' or '%.250s'"
-msgstr "конфликт файлов diversions из пакетов «%.250s» и «%.250s»"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "loading files list file for package '%s'"
-msgstr "загрузка файла списка файлов пакета «%s»"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid ""
-"files list file for package '%.250s' missing; assuming package has no files "
-"currently installed"
-msgstr ""
-"список файлов пакета «%.250s» отсутствует; предполагаем, что на данный "
-"момент у пакета нет установленных файлов"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "files list file for package '%.250s' is missing final newline"
-msgstr ""
-"в списке файлов пакета «%.250s» отсутствует завершающий символ новой строки"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "files list file for package '%.250s' contains empty filename"
-msgstr "список файлов пакета «%.250s» содержит пустое имя файла"
-
-#: lib/dpkg/db-fsys-files.c
-msgid "(Reading database ... "
-msgstr "(Чтение базы данных … "
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "%d file or directory currently installed.)\n"
-msgid_plural "%d files and directories currently installed.)\n"
-msgstr[0] "на данный момент установлен %d файл и каталог.)\n"
-msgstr[1] "на данный момент установлено %d файла и каталога.)\n"
-msgstr[2] "на данный момент установлено %d файлов и каталогов.)\n"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "invalid statoverride uid %s"
-msgstr "неправильный statoverride uid %s"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "invalid statoverride gid %s"
-msgstr "неправильный statoverride gid %s"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "invalid statoverride mode %s"
-msgstr "неправильный режим statoverride %s"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "failed to open statoverride file"
-msgstr "не удалось открыть файл statoverride"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "failed to fstat statoverride file"
-msgstr "не удалось выполнить fstat на файл statoverride"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "reading statoverride file '%.250s'"
-msgstr "выполняется чтение файла statoverride «%.250s»"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "statoverride file is missing final newline"
-msgstr "в файле statoverride отсутствует завершающий символ новой строки"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "statoverride file contains empty line"
-msgstr "файл statoverride содержит пустую строку"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "syntax error in statoverride file"
-msgstr "синтаксическая ошибка в файле statoverride"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid ""
-"unknown system user '%s' in statoverride file; the system user got removed\n"
-"before the override, which is most probably a packaging bug, to recover you\n"
-"can remove the override manually with %s"
-msgstr ""
-"в файле statoverride неизвестный системный пользователь «%s»; системный\n"
-"пользователь был удалён перед замещением, что, вероятно указывает на ошибку\n"
-"в пакете; для восстановления вы можете удалить замещение вручную с помощью %s"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "unexpected end of line in statoverride file"
-msgstr "неожиданный конец строки в файле statoverride"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid ""
-"unknown system group '%s' in statoverride file; the system group got "
-"removed\n"
-"before the override, which is most probably a packaging bug, to recover you\n"
-"can remove the override manually with %s"
-msgstr ""
-"в файле statoverride неизвестная системная группа «%s»; системная группа\n"
-"была удалена перед замещением, что, вероятно указывает на ошибку\n"
-"в пакете; для восстановления вы можете удалить замещение вручную с помощью %s"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "multiple statoverrides present for file '%.250s'"
-msgstr "для файла «%.250s» есть несколько statoverrides"
 
 #: lib/dpkg/deb-version.c
 msgid "format version with too big major component"
@@ -1021,6 +1017,12 @@ msgid "duplicate awaited trigger package '%.255s'"
 msgstr "повтор ожидающего триггера пакета «%.250s»"
 
 #: lib/dpkg/file.c
+#, fuzzy, c-format
+#| msgid "cannot stat pathname '%s'"
+msgid "cannot canonicalize pathname %s"
+msgstr "не удалось выполнить функцию stat «%s»"
+
+#: lib/dpkg/file.c
 #, c-format
 msgid "unable to stat source file '%.250s'"
 msgstr "не удалось выполнить stat для файла источника «%.250s»"
@@ -1089,13 +1091,24 @@ msgstr ""
 "%s"
 
 #: lib/dpkg/file.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "%s was locked by another process with pid %d\n"
+#| "%s"
 msgid ""
-"%s was locked by another process with pid %d\n"
+"%s was locked by %s process with pid %d\n"
 "%s"
 msgstr ""
 "%s заблокирована другим процессом c pid %d\n"
 "%s"
+
+#: lib/dpkg/file.c
+#, fuzzy
+#| msgctxt "architecture"
+#| msgid "<unknown>"
+msgctxt "process"
+msgid "<unknown>"
+msgstr "<неизвестен>"
 
 #: lib/dpkg/file.c
 #, c-format
@@ -1600,6 +1613,17 @@ msgstr ""
 msgid "warning"
 msgstr "предупреждение"
 
+#: lib/dpkg/report.c
+msgid "hint"
+msgstr ""
+
+#: lib/dpkg/strvec.c
+#, fuzzy, c-format
+#| msgid "cannot grow varbuf to size %zu; it would overflow"
+msgid "cannot grow strvec to size %zu; it would overflow"
+msgstr ""
+"не удалось расширить varbuf до размера %zu; это бы вызвало переполнение"
+
 #: lib/dpkg/strwide.c
 #, c-format
 msgid "cannot convert multibyte string '%s' to a wide-character string"
@@ -2063,11 +2087,11 @@ msgstr ""
 "ПРЕДУПРЕЖДЕНИЕ: Использование параметров, отмеченных [!], может серьёзно\n"
 "повредить систему. Параметры, отмеченные [*], задействованы по умолчанию.\n"
 
-#: src/common/force.c src/deb/build.c src/deb/extract.c src/deb/info.c
-#: src/deb/main.c src/split/info.c src/split/main.c src/split/queue.c
-#: src/divert/main.c src/statoverride/main.c src/trigger/main.c
-#: src/query/main.c src/main/archives.c src/main/enquiry.c src/main/main.c
-#: src/main/packages.c src/main/select.c src/main/verify.c
+#: src/common/force.c src/realpath/main.c src/deb/build.c src/deb/extract.c
+#: src/deb/info.c src/deb/main.c src/split/info.c src/split/main.c
+#: src/split/queue.c src/divert/main.c src/statoverride/main.c
+#: src/trigger/main.c src/query/main.c src/main/archives.c src/main/enquiry.c
+#: src/main/main.c src/main/packages.c src/main/select.c src/main/verify.c
 msgid "<standard output>"
 msgstr "<стандартный вывод>"
 
@@ -2108,6 +2132,80 @@ msgstr "невозможно получить описатель маркиро�
 #, c-format
 msgid "cannot set security context for file object '%s'"
 msgstr "невозможно назначить контекст безопасности объекту файла «%s»"
+
+#: src/realpath/main.c
+#, fuzzy
+#| msgid "Type dpkg-trigger --help for help about this utility."
+msgid "Use --help for help about this utility."
+msgstr "Чтобы получить справку, введите dpkg-trigger --help."
+
+#: src/realpath/main.c src/divert/main.c src/statoverride/main.c
+#, c-format
+msgid "Debian %s version %s.\n"
+msgstr "Debian %s, версия %s.\n"
+
+#: src/realpath/main.c src/deb/main.c src/split/main.c src/divert/main.c
+#: src/statoverride/main.c src/trigger/main.c src/query/main.c src/main/main.c
+#: utils/update-alternatives.c
+#, c-format
+msgid ""
+"This is free software; see the GNU General Public License version 2 or\n"
+"later for copying conditions. There is NO warranty.\n"
+msgstr ""
+"Это свободное программное обеспечение. См. условия распространения в\n"
+"Универсальной общественной лицензии GNU версии 2 или более поздней.\n"
+"НИКАКИЕ гарантии не предоставляются.\n"
+
+#: src/realpath/main.c
+#, fuzzy, c-format
+#| msgid ""
+#| "Usage: %s [<option>...] <command>\n"
+#| "\n"
+msgid ""
+"Usage: %s [<option>...] <pathname>\n"
+"\n"
+msgstr ""
+"Использование: %s [<параметр>…] <команда>\n"
+"\n"
+
+#: src/realpath/main.c
+#, c-format
+msgid ""
+"Options:\n"
+"  -z, --zero                   end output line with NUL, not newline.\n"
+"      --instdir <directory>    set the root directory.\n"
+"      --root <directory>       set the root directory.\n"
+"      --version                show the version.\n"
+"      --help                   show this help message.\n"
+"\n"
+msgstr ""
+
+#: src/realpath/main.c
+msgid "too many levels of symbolic links"
+msgstr ""
+
+#: src/realpath/main.c
+#, fuzzy, c-format
+#| msgid "cannot read %s"
+msgid "cannot read link '%s'"
+msgstr "не удалось прочитать %s"
+
+#: src/realpath/main.c
+#, fuzzy, c-format
+#| msgid "symbolic link '%.250s' size has changed from %jd to %zd"
+msgid "symbolic link '%s' size has changed from %jd to %zd"
+msgstr "размер символьной ссылки «%.250s» изменён с %jd на %zd"
+
+#: src/realpath/main.c
+#, fuzzy
+#| msgid "--%s needs a <package> argument"
+msgid "need a pathname argument"
+msgstr "для --%s требуется аргумент <пакет>"
+
+#: src/realpath/main.c
+#, c-format
+msgid "link '%s' includes root prefix '%s'"
+msgstr ""
 
 #: src/deb/build.c
 #, c-format
@@ -2250,6 +2348,28 @@ msgstr "отсутствует или пустая архитектура пак
 #, c-format
 msgid "'%s' contains user-defined Priority value '%s'"
 msgstr "«%s» содержит определённое пользователем значение приоритета «%s»"
+
+#: src/deb/build.c
+#, fuzzy, c-format
+#| msgid "unable to get file '%s%s' metadata"
+msgid "cannot get root directory %s metadata"
+msgstr "не удалось получить метаданные файла «%s%s»"
+
+#: src/deb/build.c
+#, fuzzy, c-format
+#| msgid "treewalk root %s is not a directory"
+msgid "root pathname %s is not a directory"
+msgstr "корень treewalk %s не является каталогом"
+
+#: src/deb/build.c
+#, c-format
+msgid "root directory %s has unusual owner or group %u:%u"
+msgstr ""
+
+#: src/deb/build.c
+#, c-format
+msgid "you might need to pass --root-owner-group, see <%s> for further details"
+msgstr ""
 
 #: src/deb/build.c
 #, c-format
@@ -2533,6 +2653,11 @@ msgstr ""
 msgid "--%s does not support (yet) reading the .deb from standard input"
 msgstr "--%s не поддерживает (пока) чтение .deb со стандартного ввода"
 
+#: src/deb/info.c src/statoverride/main.c src/main/archives.c
+#, c-format
+msgid "error setting permissions of '%.255s'"
+msgstr "ошибка при установке прав доступа к «%.255s»"
+
 #: src/deb/info.c src/main/unpack.c
 msgid "unable to create temporary directory"
 msgstr "не удалось создать временный каталог"
@@ -2548,10 +2673,10 @@ msgid "'%.255s' contains no control component '%.255s'"
 msgstr "«%.255s» не содержит управляющего компонента «%.255s»"
 
 #: src/deb/info.c
-#, c-format
-msgid "open component '%.255s' (in %.255s) failed in an unexpected way"
-msgstr ""
-"по непонятной причине не удалось открыть компонент «%.255s» (каталог %.255s)"
+#, fuzzy, c-format
+#| msgid "cannot open file %s"
+msgid "cannot open file '%.255s'"
+msgstr "не удалось открыть файл %s"
 
 #: src/deb/info.c
 #, c-format
@@ -2567,19 +2692,16 @@ msgid "cannot scan directory '%.255s'"
 msgstr "не удалось просмотреть каталог «%.255s»"
 
 #: src/deb/info.c
-#, c-format
-msgid "cannot stat '%.255s' (in '%.255s')"
-msgstr "не удалось получить информацию о файле «%.255s» (в «%.255s»)"
+#, fuzzy, c-format
+#| msgid "unable to get file '%s%s' metadata"
+msgid "cannot get file '%.255s' metadata"
+msgstr "не удалось получить метаданные файла «%s%s»"
 
 #: src/deb/info.c
-#, c-format
-msgid "cannot open '%.255s' (in '%.255s')"
-msgstr "не удалось открыть файл «%.255s» (в «%.255s»)"
-
-#: src/deb/info.c
-#, c-format
-msgid "failed to read '%.255s' (in '%.255s')"
-msgstr "ошибка чтения файла «%.255s» (в «%.255s»)"
+#, fuzzy, c-format
+#| msgid "cannot read %s"
+msgid "cannot read file '%.255s'"
+msgstr "не удалось прочитать %s"
 
 #: src/deb/info.c
 #, c-format
@@ -2615,18 +2737,6 @@ msgstr "параметр --%s принимает ровно один аргум�
 #, c-format
 msgid "Debian '%s' package archive backend version %s.\n"
 msgstr "Программа работы с архивами пакетов Debian «%s», версия %s.\n"
-
-#: src/deb/main.c src/split/main.c src/divert/main.c src/statoverride/main.c
-#: src/trigger/main.c src/query/main.c src/main/main.c
-#: utils/update-alternatives.c
-#, c-format
-msgid ""
-"This is free software; see the GNU General Public License version 2 or\n"
-"later for copying conditions. There is NO warranty.\n"
-msgstr ""
-"Это свободное программное обеспечение. См. условия распространения в\n"
-"Универсальной общественной лицензии GNU версии 2 или более поздней.\n"
-"НИКАКИЕ гарантии не предоставляются.\n"
 
 #: src/deb/main.c src/divert/main.c src/query/main.c src/main/main.c
 #, c-format
@@ -2701,7 +2811,35 @@ msgstr ""
 "\n"
 
 #: src/deb/main.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Options:\n"
+#| "  -v, --verbose                    Enable verbose output.\n"
+#| "  -D, --debug                      Enable debugging output.\n"
+#| "      --showformat=<format>        Use alternative format for --show.\n"
+#| "      --deb-format=<format>        Select archive format.\n"
+#| "                                     Allowed values: 0.939000, 2.0 "
+#| "(default).\n"
+#| "      --nocheck                    Suppress control file check (build "
+#| "bad\n"
+#| "                                     packages).\n"
+#| "      --root-owner-group           Forces the owner and groups to root.\n"
+#| "      --threads-max=<threads>      Use at most <threads> with "
+#| "compressor.\n"
+#| "      --[no-]uniform-compression   Use the compression params on all "
+#| "members.\n"
+#| "  -z#                              Set the compression level when "
+#| "building.\n"
+#| "  -Z<type>                         Set the compression type used when "
+#| "building.\n"
+#| "                                     Allowed types: gzip, xz, zstd, "
+#| "none.\n"
+#| "  -S<strategy>                     Set the compression strategy when "
+#| "building.\n"
+#| "                                     Allowed values: none; extreme (xz);\n"
+#| "                                     filtered, huffman, rle, fixed "
+#| "(gzip).\n"
+#| "\n"
 msgid ""
 "Options:\n"
 "  -v, --verbose                    Enable verbose output.\n"
@@ -2710,18 +2848,18 @@ msgid ""
 "      --deb-format=<format>        Select archive format.\n"
 "                                     Allowed values: 0.939000, 2.0 "
 "(default).\n"
-"      --nocheck                    Suppress control file check (build bad\n"
-"                                     packages).\n"
+"      --no-check                   Suppress all checks (build bad "
+"packages).\n"
+"      --nocheck                    Alias for --no-check.\n"
 "      --root-owner-group           Forces the owner and groups to root.\n"
 "      --threads-max=<threads>      Use at most <threads> with compressor.\n"
 "      --[no-]uniform-compression   Use the compression params on all "
 "members.\n"
-"  -z#                              Set the compression level when building.\n"
-"  -Z<type>                         Set the compression type used when "
-"building.\n"
+"  -Z, --compression=<compressor>   Set build compression type.\n"
 "                                     Allowed types: gzip, xz, zstd, none.\n"
-"  -S<strategy>                     Set the compression strategy when "
-"building.\n"
+"  -z, --compression-level=<level>  Set build compression level.\n"
+"  -S, --compression-strategy=<name>\n"
+"                                   Set build compression strategy.\n"
 "                                     Allowed values: none; extreme (xz);\n"
 "                                     filtered, huffman, rle, fixed (gzip).\n"
 "\n"
@@ -2759,8 +2897,8 @@ msgid ""
 "  A format is a string that will be output for each package. The format\n"
 "  can include the standard escape sequences \\n (newline), \\r (carriage\n"
 "  return) or \\\\ (plain backslash). Package information can be included\n"
-"  by inserting variable references to package fields using the ${var[;"
-"width]}\n"
+"  by inserting variable references to package fields using the $"
+"{var[;width]}\n"
 "  syntax. Fields will be right-aligned unless the width is negative in "
 "which\n"
 "  case left alignment will be used.\n"
@@ -3154,8 +3292,8 @@ msgstr ""
 "  -S|--partsize <размер>              в КиБ, используется командой -s\n"
 "                                      (по умолчанию 450)\n"
 "  -o|--output <файл>                  используется командой -j,\n"
-"                                      (по умолч. <пакет>_<версия>_<арх>."
-"deb)\n"
+"                                      (по умолч. "
+"<пакет>_<версия>_<арх>.deb)\n"
 "  -Q|--npquiet                        не предупреждать, если в -a указан\n"
 "                                      файл, не являющийся частью\n"
 "  --msdos                             генерировать имена файлов вида 8.3\n"
@@ -3370,11 +3508,6 @@ msgstr ""
 "Используйте параметр --help для вывода справки по отклонённым (diverting) "
 "файлам."
 
-#: src/divert/main.c src/statoverride/main.c
-#, c-format
-msgid "Debian %s version %s.\n"
-msgstr "Debian %s, версия %s.\n"
-
 #: src/divert/main.c
 #, c-format
 msgid ""
@@ -3439,8 +3572,8 @@ msgid ""
 "Package preinst/postrm scripts should always specify --package and --"
 "divert.\n"
 msgstr ""
-"При добавлении, значения по умолчанию --local и --divert <original>."
-"distrib.\n"
+"При добавлении, значения по умолчанию --local и --divert "
+"<original>.distrib.\n"
 "При удалении, если заданы --package или --local, то они должны\n"
 " совпадать с --divert. В сценариях пакетов preinst/postrm всегда нужно\n"
 "указывать --package и --divert.\n"
@@ -3697,11 +3830,6 @@ msgstr "группа «%s» не существует"
 #, c-format
 msgid "error setting ownership of '%.255s'"
 msgstr "ошибка при установке владельца «%.255s»"
-
-#: src/statoverride/main.c src/main/archives.c
-#, c-format
-msgid "error setting permissions of '%.255s'"
-msgstr "ошибка при установке прав доступа к «%.255s»"
 
 #: src/statoverride/main.c
 #, c-format
@@ -4156,8 +4284,8 @@ msgstr "conffile «%s» помечен для удаления при обнов
 #: src/main/archives.c
 #, c-format
 msgid ""
-"trying to overwrite '%.250s', which is the diverted version of "
-"'%.250s' (package: %.100s)"
+"trying to overwrite '%.250s', which is the diverted version of '%.250s' "
+"(package: %.100s)"
 msgstr ""
 "попытка переписать «%.250s», являющийся отклонённой версией «%.250s» (пакет: "
 "%.100s)"
@@ -4204,17 +4332,21 @@ msgid "Replaced by files in installed package %s (%s) ...\n"
 msgstr "Заменено файлами из установленного пакета %s (%s) …\n"
 
 #: src/main/archives.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "trying to overwrite directory '%.250s' in package %.250s %.250s with "
+#| "nondirectory"
 msgid ""
-"trying to overwrite directory '%.250s' in package %.250s %.250s with "
+"trying to overwrite directory '%.250s' in package %.250s (%.250s) with "
 "nondirectory"
 msgstr ""
 "попытка переписать каталог «%.250s» в пакете %.250s %.250s файлом, не "
 "являющимся каталогом"
 
 #: src/main/archives.c
-#, c-format
-msgid "trying to overwrite '%.250s', which is also in package %.250s %.250s"
+#, fuzzy, c-format
+#| msgid "trying to overwrite '%.250s', which is also in package %.250s %.250s"
+msgid "trying to overwrite '%.250s', which is also in package %.250s (%.250s)"
 msgstr ""
 "попытка перезаписать «%.250s», который уже имеется в пакете %.250s %.250s"
 
@@ -4447,18 +4579,21 @@ msgid "Skipping unselected package %s.\n"
 msgstr "Пропуск не выбранного пакета %s.\n"
 
 #: src/main/archives.c
-#, c-format
-msgid "version %.250s of %.250s already installed, skipping"
+#, fuzzy, c-format
+#| msgid "version %.250s of %.250s already installed, skipping"
+msgid "package %.250s (%.250s) with same version already installed, skipping"
 msgstr "версия %.250s пакета %.250s уже установлена, пропускаем"
 
 #: src/main/archives.c
-#, c-format
-msgid "downgrading %.250s from %.250s to %.250s"
+#, fuzzy, c-format
+#| msgid "downgrading %.250s from %.250s to %.250s"
+msgid "downgrading %.250s (%.250s) to (%.250s)"
 msgstr "снижение версии %.250s с %.250s до %.250s"
 
 #: src/main/archives.c
-#, c-format
-msgid "will not downgrade %.250s from %.250s to %.250s, skipping"
+#, fuzzy, c-format
+#| msgid "will not downgrade %.250s from %.250s to %.250s, skipping"
+msgid "will not downgrade %.250s (%.250s) to (%.250s), skipping"
 msgstr "версия %.250s не будет снижена с %.250s до %.250s, пропускаем"
 
 #: src/main/cleanup.c
@@ -4711,9 +4846,13 @@ msgstr ""
 "«%s»)"
 
 #: src/main/configure.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "package %s %s cannot be configured because %s is at a different version "
+#| "(%s)"
 msgid ""
-"package %s %s cannot be configured because %s is at a different version (%s)"
+"package %s (%s) cannot be configured because %s is at a different version "
+"(%s)"
 msgstr "пакет %s %s не может быть настроен, так как %s другой версии (%s)"
 
 #: src/main/configure.c
@@ -5397,8 +5536,8 @@ msgid ""
 "on archives (type %s --help).\n"
 "\n"
 msgstr ""
-"К архивам применяются команды: -b, --build, -c, --contents, -e, --control, -"
-"I, --info,\n"
+"К архивам применяются команды: -b, --build, -c, --contents, -e, --control, "
+"-I, --info,\n"
 "  -f, --field, -x, --extract, -X, --vextract, --ctrl-tarfile, --fsys-"
 "tarfile\n"
 "(см. %s --help).\n"
@@ -7070,6 +7209,36 @@ msgid "Authentication is required to run update-alternatives"
 msgstr "Для запуска update-alternatives требуется аутентификация"
 
 #, c-format
+#~ msgid "open component '%.255s' (in %.255s) failed in an unexpected way"
+#~ msgstr ""
+#~ "по непонятной причине не удалось открыть компонент «%.255s» (каталог "
+#~ "%.255s)"
+
+#, c-format
+#~ msgid "cannot stat '%.255s' (in '%.255s')"
+#~ msgstr "не удалось получить информацию о файле «%.255s» (в «%.255s»)"
+
+#, c-format
+#~ msgid "cannot open '%.255s' (in '%.255s')"
+#~ msgstr "не удалось открыть файл «%.255s» (в «%.255s»)"
+
+#, c-format
+#~ msgid "failed to read '%.255s' (in '%.255s')"
+#~ msgstr "ошибка чтения файла «%.255s» (в «%.255s»)"
+
+#~ msgid "failed to open diversions file"
+#~ msgstr "не удалось открыть файл diversions"
+
+#~ msgid "failed to fstat diversions file"
+#~ msgstr "не удалось выполнить fstat на файл diversions"
+
+#~ msgid "failed to open statoverride file"
+#~ msgstr "не удалось открыть файл statoverride"
+
+#~ msgid "failed to fstat statoverride file"
+#~ msgstr "не удалось выполнить fstat на файл statoverride"
+
+#, c-format
 #~ msgid "There is only one alternative in link group %s (providing %s): %s"
 #~ msgstr ""
 #~ "Есть только одна альтернатива в группе ссылок %s (предоставляющая %s): %s"
@@ -7882,9 +8051,6 @@ msgstr "Для запуска update-alternatives требуется аутен�
 
 #~ msgid "--%s needs a divert-to argument"
 #~ msgstr "для --%s требуется аргумент divert-to"
-
-#~ msgid "--%s needs a <package> argument"
-#~ msgstr "для --%s требуется аргумент <пакет>"
 
 #~ msgid "rename: rename `%s' to `%s': %s"
 #~ msgstr "rename: переименование `%s' в `%s': %s"

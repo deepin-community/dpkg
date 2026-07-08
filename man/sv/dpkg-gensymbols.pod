@@ -188,6 +188,10 @@ Visar version och avslutar.
 
 =over 
 
+=item B<DEB_HOST_ARCH>
+
+Anger värdarkitekturen om flaggan B<--arch> inte har angivits.
+
 =item B<DPKG_GENSYMBOLS_CHECK_LEVEL>
 
 Överstyr kommandokontrollnivån, även om kommandoradsflaggan B<-c> gavs (observera att detta går mot den normala konventionen att kommandoardsflaggor har företräde över miljövariabler).

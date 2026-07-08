@@ -5,14 +5,14 @@
 # Antoni Bella <bella5@teleline.es>, 2001-2002.
 # Jordi Mallach <jordi@debian.org>, 2002-2006, 2008-2010, 2015.
 # Jordà Polo <jorda@ettin.org>, 2006.
-# Guillem Jover <guillem@debian.org>, 2006-2023.
+# Guillem Jover <guillem@debian.org>, 2006-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.21.18\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2024-03-10 20:20+0100\n"
-"PO-Revision-Date: 2023-12-17 20:02+0100\n"
+"POT-Creation-Date: 2026-03-06 04:00+0100\n"
+"PO-Revision-Date: 2025-06-03 11:18+0200\n"
 "Last-Translator: Guillem Jover <guillem@debian.org>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
 "Language: ca\n"
@@ -361,6 +361,195 @@ msgstr "el nivell de compressió %d no és vàlid"
 msgid "unknown compression strategy"
 msgstr "el tipus d'estratègia de compressió és desconegut"
 
+#: lib/dpkg/db-ctrl-access.c
+#, c-format
+msgid "unable to check existence of '%.250s'"
+msgstr "no es pot comprovar l'existència de «%.250s»"
+
+#: lib/dpkg/db-ctrl-access.c lib/dpkg/db-ctrl-upgrade.c
+msgid "cannot read info directory"
+msgstr "no es pot llegir el directori «info»"
+
+#: lib/dpkg/db-ctrl-format.c src/main/unpack.c
+#, c-format
+msgid "error trying to open %.250s"
+msgstr "s'ha produït un error en intentar obrir %.250s"
+
+#: lib/dpkg/db-ctrl-format.c
+#, c-format
+msgid "corrupt info database format file '%s'"
+msgstr "el fitxer de format «%s» de la base de dades «info» està corromput"
+
+#: lib/dpkg/db-ctrl-format.c
+#, c-format
+msgid "info database format (%d) is bogus or too new; try getting a newer dpkg"
+msgstr ""
+"el format (%d) de la base de dades «info» és erroni o massa nou; proveu amb "
+"una versió més nova de dpkg"
+
+#: lib/dpkg/db-ctrl-upgrade.c
+#, c-format
+msgid "info file %s/%s not associated to any package"
+msgstr "el fitxer d'informació %s/%s no està associat a cap paquet"
+
+#: lib/dpkg/db-ctrl-upgrade.c src/main/archives.c
+#, c-format
+msgid "error creating hard link '%.255s'"
+msgstr "s'ha produït un error en crear l'enllaç dur «%.255s»"
+
+#: lib/dpkg/db-ctrl-upgrade.c
+#, c-format
+msgid "error while writing '%s'"
+msgstr "s'ha produït un error en escriure «%s»"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing final newline"
+msgstr ""
+"al fitxer de control «%s» del paquet «%.250s» li manca una línia nova final"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing value"
+msgstr "el fitxer de control «%s» del paquet «%.250s» manca un valor"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing value separator"
+msgstr ""
+"el fitxer de control «%s» del paquet «%.250s» manca un separador de valor"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' contains empty filename"
+msgstr ""
+"el fitxer de control «%s» del paquet «%.250s» conté un nom de fitxer buit"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "loading control file '%s' for package '%s'"
+msgstr "no es pot carregar el fitxer de control «%s» del paquet «%s»"
+
+#: lib/dpkg/db-fsys-divert.c
+#, c-format
+msgid "conflicting diversions involving '%.250s' or '%.250s'"
+msgstr "hi ha desviacions en conflicte en «%.250s» o «%.250s»"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "files list file for package '%.250s' is missing final newline"
+msgstr ""
+"al fitxer de la llista de fitxers del paquet «%.250s» li manca una línia "
+"nova final"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "files list file for package '%.250s' contains empty filename"
+msgstr ""
+"el fitxer de la llista de fitxers del paquet «%.250s» conté un nom de fitxer "
+"buit"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "loading files list file for package '%s'"
+msgstr "s'esta carregant el fitxer de la llista de fitxers del paquet «%s»"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid ""
+"files list file for package '%.250s' missing; assuming package has no files "
+"currently installed"
+msgstr ""
+"manca el fitxer de la llista de fitxers del paquet «%.250s», s'assumirà que "
+"el paquet no té cap fitxer actualment instal·lat"
+
+#: lib/dpkg/db-fsys-files.c
+msgid "(Reading database ... "
+msgstr "(S'està llegint la base de dades… "
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "%d file or directory currently installed.)\n"
+msgid_plural "%d files and directories currently installed.)\n"
+msgstr[0] "hi ha %d fitxer o directori instal·lat actualment.)\n"
+msgstr[1] "hi ha %d fitxers i directoris instal·lats actualment.)\n"
+
+#: lib/dpkg/db-fsys-load.c
+#, c-format
+msgid "cannot open %s file"
+msgstr "no es pot obrir el fitxer «%s»"
+
+#: lib/dpkg/db-fsys-load.c
+#, c-format
+msgid "cannot get %s file metadata"
+msgstr "no es poden obtenir les metadades del fitxer «%s»"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "invalid statoverride uid %s"
+msgstr "l'uid %s de statoverride no és vàlid"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "invalid statoverride gid %s"
+msgstr "el gid %s de statoverride no és vàlid"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "invalid statoverride mode %s"
+msgstr "el mode %s de statoverride no és vàlid "
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "reading statoverride file '%.250s'"
+msgstr "s'ha produït un error en llegir el fitxer de statoverride «%.250s»"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "statoverride file is missing final newline"
+msgstr "al fitxer de statoverride li manca una línia nova final"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "statoverride file contains empty line"
+msgstr "el fitxer de statoverride conté una línia buida"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "syntax error in statoverride file"
+msgstr "error de sintaxi al fitxer de statoverride"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid ""
+"unknown system user '%s' in statoverride file; the system user got removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
+"usuari de sistema «%s» desconegut en el fitxer statoverride; l'usuari de "
+"sistema s'ha eliminat abans de la substitució, que és probablement un error "
+"en l'empaquetat, per a recuperar-ho podeu eliminar manualment la substitució "
+"amb %s"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "unexpected end of line in statoverride file"
+msgstr "s'ha trobat una fi de línia inesperada al fitxer de statoverride"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid ""
+"unknown system group '%s' in statoverride file; the system group got "
+"removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
+"grup de sistema «%s» desconegut en el fitxer statoverride; el grup de "
+"sistema s'ha eliminat abans de la substitució, que és probablement un error "
+"en l'empaquetat, per a recuperar-ho podeu eliminar manualment la substitució "
+"amb %s"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "multiple statoverrides present for file '%.250s'"
+msgstr "hi ha múltiples statoverrides per al fitxer «%.250s»"
+
 #: lib/dpkg/dbmodify.c
 #, c-format
 msgid ""
@@ -499,201 +688,6 @@ msgstr "no es pot tancar l'estat d'actualització de «%.250s»"
 #, c-format
 msgid "unable to install updated status of '%.250s'"
 msgstr "no es pot instal·lar l'estat actualització de «%.250s»"
-
-#: lib/dpkg/db-ctrl-access.c
-#, c-format
-msgid "unable to check existence of '%.250s'"
-msgstr "no es pot comprovar l'existència de «%.250s»"
-
-#: lib/dpkg/db-ctrl-access.c lib/dpkg/db-ctrl-upgrade.c
-msgid "cannot read info directory"
-msgstr "no es pot llegir el directori «info»"
-
-#: lib/dpkg/db-ctrl-format.c src/main/unpack.c
-#, c-format
-msgid "error trying to open %.250s"
-msgstr "s'ha produït un error en intentar obrir %.250s"
-
-#: lib/dpkg/db-ctrl-format.c
-#, c-format
-msgid "corrupt info database format file '%s'"
-msgstr "el fitxer de format «%s» de la base de dades «info» està corromput"
-
-#: lib/dpkg/db-ctrl-format.c
-#, c-format
-msgid "info database format (%d) is bogus or too new; try getting a newer dpkg"
-msgstr ""
-"el format (%d) de la base de dades «info» és erroni o massa nou; proveu amb "
-"una versió més nova de dpkg"
-
-#: lib/dpkg/db-ctrl-upgrade.c
-#, c-format
-msgid "info file %s/%s not associated to any package"
-msgstr "el fitxer d'informació %s/%s no està associat a cap paquet"
-
-#: lib/dpkg/db-ctrl-upgrade.c src/main/archives.c
-#, c-format
-msgid "error creating hard link '%.255s'"
-msgstr "s'ha produït un error en crear l'enllaç dur «%.255s»"
-
-#: lib/dpkg/db-ctrl-upgrade.c
-#, c-format
-msgid "error while writing '%s'"
-msgstr "s'ha produït un error en escriure «%s»"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing final newline"
-msgstr ""
-"al fitxer de control «%s» del paquet «%.250s» li manca una línia nova final"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing value"
-msgstr "el fitxer de control «%s» del paquet «%.250s» manca un valor"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing value separator"
-msgstr ""
-"el fitxer de control «%s» del paquet «%.250s» manca un separador de valor"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' contains empty filename"
-msgstr ""
-"el fitxer de control «%s» del paquet «%.250s» conté un nom de fitxer buit"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "loading control file '%s' for package '%s'"
-msgstr "no es pot carregar el fitxer de control «%s» del paquet «%s»"
-
-#: lib/dpkg/db-fsys-divert.c
-msgid "failed to open diversions file"
-msgstr "no s'ha pogut obrir el fitxer de desviacions"
-
-#: lib/dpkg/db-fsys-divert.c
-msgid "failed to fstat diversions file"
-msgstr "no s'ha pogut fer «fstat» al fitxer de desviacions"
-
-#: lib/dpkg/db-fsys-divert.c
-#, c-format
-msgid "conflicting diversions involving '%.250s' or '%.250s'"
-msgstr "hi ha desviacions en conflicte en «%.250s» o «%.250s»"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "loading files list file for package '%s'"
-msgstr "s'esta carregant el fitxer de la llista de fitxers del paquet «%s»"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid ""
-"files list file for package '%.250s' missing; assuming package has no files "
-"currently installed"
-msgstr ""
-"manca el fitxer de la llista de fitxers del paquet «%.250s», s'assumirà que "
-"el paquet no té cap fitxer actualment instal·lat"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "files list file for package '%.250s' is missing final newline"
-msgstr ""
-"al fitxer de la llista de fitxers del paquet «%.250s» li manca una línia "
-"nova final"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "files list file for package '%.250s' contains empty filename"
-msgstr ""
-"el fitxer de la llista de fitxers del paquet «%.250s» conté un nom de fitxer "
-"buit"
-
-#: lib/dpkg/db-fsys-files.c
-msgid "(Reading database ... "
-msgstr "(S'està llegint la base de dades… "
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "%d file or directory currently installed.)\n"
-msgid_plural "%d files and directories currently installed.)\n"
-msgstr[0] "hi ha %d fitxer o directori instal·lat actualment.)\n"
-msgstr[1] "hi ha %d fitxers i directoris instal·lats actualment.)\n"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "invalid statoverride uid %s"
-msgstr "l'uid %s de statoverride no és vàlid"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "invalid statoverride gid %s"
-msgstr "el gid %s de statoverride no és vàlid"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "invalid statoverride mode %s"
-msgstr "el mode %s de statoverride no és vàlid "
-
-#: lib/dpkg/db-fsys-override.c
-msgid "failed to open statoverride file"
-msgstr "no s'ha pogut obrir el fitxer de statoverride"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "failed to fstat statoverride file"
-msgstr "no s'ha pogut fer «fstat» al fitxer de statoverride"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "reading statoverride file '%.250s'"
-msgstr "s'ha produït un error en llegir el fitxer de statoverride «%.250s»"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "statoverride file is missing final newline"
-msgstr "al fitxer de statoverride li manca una línia nova final"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "statoverride file contains empty line"
-msgstr "el fitxer de statoverride conté una línia buida"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "syntax error in statoverride file"
-msgstr "error de sintaxi al fitxer de statoverride"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid ""
-"unknown system user '%s' in statoverride file; the system user got removed\n"
-"before the override, which is most probably a packaging bug, to recover you\n"
-"can remove the override manually with %s"
-msgstr ""
-"usuari de sistema «%s» desconegut en el fitxer statoverride; l'usuari de "
-"sistema s'ha eliminat abans de la substitució, que és probablement un error "
-"en l'empaquetat, per a recuperar-ho podeu eliminar manualment la substitució "
-"amb %s"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "unexpected end of line in statoverride file"
-msgstr "s'ha trobat una fi de línia inesperada al fitxer de statoverride"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid ""
-"unknown system group '%s' in statoverride file; the system group got "
-"removed\n"
-"before the override, which is most probably a packaging bug, to recover you\n"
-"can remove the override manually with %s"
-msgstr ""
-"grup de sistema «%s» desconegut en el fitxer statoverride; el grup de "
-"sistema s'ha eliminat abans de la substitució, que és probablement un error "
-"en l'empaquetat, per a recuperar-ho podeu eliminar manualment la substitució "
-"amb %s"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "multiple statoverrides present for file '%.250s'"
-msgstr "hi ha múltiples statoverrides per al fitxer «%.250s»"
 
 #: lib/dpkg/deb-version.c
 msgid "format version with too big major component"
@@ -1053,6 +1047,11 @@ msgstr "el paquet de l'activador esperat «%.255s» és duplicat"
 
 #: lib/dpkg/file.c
 #, c-format
+msgid "cannot canonicalize pathname %s"
+msgstr "no es pot canonintzar el nom de camí «%s»"
+
+#: lib/dpkg/file.c
+#, c-format
 msgid "unable to stat source file '%.250s'"
 msgstr "no es pot fer «stat» al fitxer origen «%.250s»"
 
@@ -1122,11 +1121,16 @@ msgstr ""
 #: lib/dpkg/file.c
 #, c-format
 msgid ""
-"%s was locked by another process with pid %d\n"
+"%s was locked by %s process with pid %d\n"
 "%s"
 msgstr ""
-"%s estava blocada per un altre procés amb pid %d\n"
+"%s estava blocada per el procés %s amb pid %d\n"
 "%s"
+
+#: lib/dpkg/file.c
+msgctxt "process"
+msgid "<unknown>"
+msgstr "<desconegut>"
 
 #: lib/dpkg/file.c
 #, c-format
@@ -1632,6 +1636,16 @@ msgstr "%d%%"
 msgid "warning"
 msgstr "avís"
 
+#: lib/dpkg/report.c
+msgid "hint"
+msgstr "consell"
+
+#: lib/dpkg/strvec.c
+#, c-format
+msgid "cannot grow strvec to size %zu; it would overflow"
+msgstr ""
+"no es pot augmentar la mida del “strvec” a %zu; es produiria desbordament"
+
 #: lib/dpkg/strwide.c
 #, c-format
 msgid "cannot convert multibyte string '%s' to a wide-character string"
@@ -2096,11 +2110,11 @@ msgstr ""
 "seriosament la instal·lació. Les opcions de forçat marcades amb [*] estan\n"
 "activades per defecte.\n"
 
-#: src/common/force.c src/deb/build.c src/deb/extract.c src/deb/info.c
-#: src/deb/main.c src/split/info.c src/split/main.c src/split/queue.c
-#: src/divert/main.c src/statoverride/main.c src/trigger/main.c
-#: src/query/main.c src/main/archives.c src/main/enquiry.c src/main/main.c
-#: src/main/packages.c src/main/select.c src/main/verify.c
+#: src/common/force.c src/realpath/main.c src/deb/build.c src/deb/extract.c
+#: src/deb/info.c src/deb/main.c src/split/info.c src/split/main.c
+#: src/split/queue.c src/divert/main.c src/statoverride/main.c
+#: src/trigger/main.c src/query/main.c src/main/archives.c src/main/enquiry.c
+#: src/main/main.c src/main/packages.c src/main/select.c src/main/verify.c
 msgid "<standard output>"
 msgstr "<eixida estàndard>"
 
@@ -2142,6 +2156,77 @@ msgstr "no es pot obtenir l'identificador d'etiquetatge de seguretat"
 msgid "cannot set security context for file object '%s'"
 msgstr ""
 "no es pot establir el context de seguretat per a l'objecte de fitxer «%s»"
+
+#: src/realpath/main.c
+msgid "Use --help for help about this utility."
+msgstr "Empreu --help per a obtenir ajuda sobre aquesta utilitat."
+
+#: src/realpath/main.c src/divert/main.c src/statoverride/main.c
+#, c-format
+msgid "Debian %s version %s.\n"
+msgstr "Debian %s versió %s.\n"
+
+#: src/realpath/main.c src/deb/main.c src/split/main.c src/divert/main.c
+#: src/statoverride/main.c src/trigger/main.c src/query/main.c src/main/main.c
+#: utils/update-alternatives.c
+#, c-format
+msgid ""
+"This is free software; see the GNU General Public License version 2 or\n"
+"later for copying conditions. There is NO warranty.\n"
+msgstr ""
+"Això és programari lliure, vegeu la Llicència Pública General GNU versió 2\n"
+"o posterior per a les condicions de còpia. No hi ha CAP garantia.\n"
+
+#: src/realpath/main.c
+#, c-format
+msgid ""
+"Usage: %s [<option>...] <pathname>\n"
+"\n"
+msgstr ""
+"Forma d'ús: %s [<opció>…] <nom-de-camí>\n"
+"\n"
+
+#: src/realpath/main.c
+#, c-format
+msgid ""
+"Options:\n"
+"  -z, --zero                   end output line with NUL, not newline.\n"
+"      --instdir <directory>    set the root directory.\n"
+"      --root <directory>       set the root directory.\n"
+"      --version                show the version.\n"
+"      --help                   show this help message.\n"
+"\n"
+msgstr ""
+"Opcions:\n"
+"  -z, --zero                   acaba la línia amb NUL, i no línia nova.\n"
+"      --instdir <directori>    estableix el directori arrel.\n"
+"      --root <directory>       estableix el directori arrel.\n"
+"      --version                mostra la versió.\n"
+"      --help                   mostra aquest missatge d'ajuda.\n"
+"\n"
+
+#: src/realpath/main.c
+msgid "too many levels of symbolic links"
+msgstr "massa nivells d'enllaços simbòlics"
+
+#: src/realpath/main.c
+#, c-format
+msgid "cannot read link '%s'"
+msgstr "no es pot llegir l'enllaç «%s»"
+
+#: src/realpath/main.c
+#, c-format
+msgid "symbolic link '%s' size has changed from %jd to %zd"
+msgstr "la mida de l'enllaç simbòlic «%s» ha canviat de %jd a %zd"
+
+#: src/realpath/main.c
+msgid "need a pathname argument"
+msgstr "necessita un paràmetre de nom del camí"
+
+#: src/realpath/main.c
+#, c-format
+msgid "link '%s' includes root prefix '%s'"
+msgstr "l'enllaç «%s» inclou el prefix arrel «%s»"
 
 #: src/deb/build.c
 #, c-format
@@ -2281,6 +2366,28 @@ msgstr "l'arquitectura del paquet manca o és buida"
 #, c-format
 msgid "'%s' contains user-defined Priority value '%s'"
 msgstr "«%s» conté un valor Priority «%s» definit per l'usuari"
+
+#: src/deb/build.c
+#, c-format
+msgid "cannot get root directory %s metadata"
+msgstr "no es poden obtenir les metadades del directori arrel «%s»"
+
+#: src/deb/build.c
+#, c-format
+msgid "root pathname %s is not a directory"
+msgstr "el nom de cami arrel «%s» no és un directori"
+
+#: src/deb/build.c
+#, c-format
+msgid "root directory %s has unusual owner or group %u:%u"
+msgstr "el directori arrel %s té un propietari o group inusual %u:%u"
+
+#: src/deb/build.c
+#, c-format
+msgid "you might need to pass --root-owner-group, see <%s> for further details"
+msgstr ""
+"es possible que hagueu de passar --root-owner-group, vegeu <%s> per a més "
+"detalls"
 
 #: src/deb/build.c
 #, c-format
@@ -2567,6 +2674,11 @@ msgid "--%s does not support (yet) reading the .deb from standard input"
 msgstr ""
 "--%s no suporta (encara) la lectura del .deb des de l'entrada estàndard"
 
+#: src/deb/info.c src/statoverride/main.c src/main/archives.c
+#, c-format
+msgid "error setting permissions of '%.255s'"
+msgstr "s'ha produït un error en establir els permisos de «%.255s»"
+
 #: src/deb/info.c src/main/unpack.c
 msgid "unable to create temporary directory"
 msgstr "no s'ha pogut crear el directori temporal"
@@ -2583,10 +2695,8 @@ msgstr "«%.255s» no conté cap component de control «%.255s»"
 
 #: src/deb/info.c
 #, c-format
-msgid "open component '%.255s' (in %.255s) failed in an unexpected way"
-msgstr ""
-"l'obertura del component «%.255s» (dins de %.255s) ha fallat de forma "
-"inesperada"
+msgid "cannot open file '%.255s'"
+msgstr "no es pot obrir el fitxer «%.255s»"
 
 #: src/deb/info.c
 #, c-format
@@ -2602,18 +2712,13 @@ msgstr "no es pot examinar el directori «%.255s»"
 
 #: src/deb/info.c
 #, c-format
-msgid "cannot stat '%.255s' (in '%.255s')"
-msgstr "no es pot fer «stat» a «%.255s» (en «%.255s»)"
+msgid "cannot get file '%.255s' metadata"
+msgstr "no es poden obtenir les metadades del fitxer «%.255s»"
 
 #: src/deb/info.c
 #, c-format
-msgid "cannot open '%.255s' (in '%.255s')"
-msgstr "no es pot obrir «%.255s» (en «%.255s»)"
-
-#: src/deb/info.c
-#, c-format
-msgid "failed to read '%.255s' (in '%.255s')"
-msgstr "no s'ha pogut llegir «%.255s» (en «%.255s»)"
+msgid "cannot read file '%.255s'"
+msgstr "no es pot llegir el fitxer «%.255s»"
 
 #: src/deb/info.c
 #, c-format
@@ -2648,17 +2753,6 @@ msgstr "--%s accepta exactament un argument"
 #, c-format
 msgid "Debian '%s' package archive backend version %s.\n"
 msgstr "Rerefons d'arxius de paquets «%s» de Debian versió %s.\n"
-
-#: src/deb/main.c src/split/main.c src/divert/main.c src/statoverride/main.c
-#: src/trigger/main.c src/query/main.c src/main/main.c
-#: utils/update-alternatives.c
-#, c-format
-msgid ""
-"This is free software; see the GNU General Public License version 2 or\n"
-"later for copying conditions. There is NO warranty.\n"
-msgstr ""
-"Això és programari lliure, vegeu la Llicència Pública General GNU versió 2\n"
-"o posterior per a les condicions de còpia. No hi ha CAP garantia.\n"
 
 #: src/deb/main.c src/divert/main.c src/query/main.c src/main/main.c
 #, c-format
@@ -2740,18 +2834,18 @@ msgid ""
 "      --deb-format=<format>        Select archive format.\n"
 "                                     Allowed values: 0.939000, 2.0 "
 "(default).\n"
-"      --nocheck                    Suppress control file check (build bad\n"
-"                                     packages).\n"
+"      --no-check                   Suppress all checks (build bad "
+"packages).\n"
+"      --nocheck                    Alias for --no-check.\n"
 "      --root-owner-group           Forces the owner and groups to root.\n"
 "      --threads-max=<threads>      Use at most <threads> with compressor.\n"
 "      --[no-]uniform-compression   Use the compression params on all "
 "members.\n"
-"  -z#                              Set the compression level when building.\n"
-"  -Z<type>                         Set the compression type used when "
-"building.\n"
+"  -Z, --compression=<compressor>   Set build compression type.\n"
 "                                     Allowed types: gzip, xz, zstd, none.\n"
-"  -S<strategy>                     Set the compression strategy when "
-"building.\n"
+"  -z, --compression-level=<level>  Set build compression level.\n"
+"  -S, --compression-strategy=<name>\n"
+"                                   Set build compression strategy.\n"
 "                                     Allowed values: none; extreme (xz);\n"
 "                                     filtered, huffman, rle, fixed (gzip).\n"
 "\n"
@@ -2763,17 +2857,20 @@ msgstr ""
 "      --deb-format=<format>  Selecciona el format d'arxiu.\n"
 "                               Valors permesos: 0.939000, 2.0 "
 "(predeterminat).\n"
-"      --nocheck              Suprimeix la comprovació del fitxer de control\n"
+"      --no-check             Suprimeix la comprovació del fitxer de control\n"
 "                               (construeix un paquet erroni).\n"
+"      --nocheck              Alies de --no-check.\n"
 "      --root-owner-group     Força el propietari i el grup a «root».\n"
 "      --threads-max=<fils>   Empra com a mínim <fils> amb el compressor.\n"
 "      --[no-]uniform-compression\n"
 "                             Empra els paràmetres de compressió en tots els\n"
 "                               elements.\n"
-"  -z#                        Estableix el nivell de compressió.\n"
-"  -Z<tipus>                  Estableix el tipus de compressió.\n"
+"  -Z, --compression=<tipus>  Estableix el tipus de compressió.\n"
 "                               Tipus permesos: gzip, xz, zstd, none.\n"
-"  -S<estratègia>             Estableix l'estratègia de compressió.\n"
+"  -z, --compression-level=<nivell>\n"
+"                             Estableix el nivell de compressió.\n"
+"  -S, --compression-strategy=<nom>\n"
+"                             Estableix l'estratègia de compressió.\n"
 "                               Valors permesos: none; extreme (xz);\n"
 "                               filtered, huffman, rle, fixed (gzip).\n"
 "\n"
@@ -2785,8 +2882,8 @@ msgid ""
 "  A format is a string that will be output for each package. The format\n"
 "  can include the standard escape sequences \\n (newline), \\r (carriage\n"
 "  return) or \\\\ (plain backslash). Package information can be included\n"
-"  by inserting variable references to package fields using the ${var[;"
-"width]}\n"
+"  by inserting variable references to package fields using the $"
+"{var[;width]}\n"
 "  syntax. Fields will be right-aligned unless the width is negative in "
 "which\n"
 "  case left alignment will be used.\n"
@@ -3397,11 +3494,6 @@ msgstr "--split pren com molt un nom de fitxer origen i un prefix de destí"
 msgid "Use --help for help about diverting files."
 msgstr "Empreu --help per a obtenir ajuda sobre la desviació de fitxers."
 
-#: src/divert/main.c src/statoverride/main.c
-#, c-format
-msgid "Debian %s version %s.\n"
-msgstr "Debian %s versió %s.\n"
-
 #: src/divert/main.c
 #, c-format
 msgid ""
@@ -3469,8 +3561,8 @@ msgid ""
 "Package preinst/postrm scripts should always specify --package and --"
 "divert.\n"
 msgstr ""
-"En afegir, les opcions per defecte són --local i --divert <original>."
-"distrib.\n"
+"En afegir, les opcions per defecte són --local i --divert "
+"<original>.distrib.\n"
 "En eliminar, --package o --local i --divert han de coincidir en cas\n"
 "d'especificar-se.\n"
 "Els guions de preinst/postrm sempre haurien d'especificar --package i --"
@@ -3736,11 +3828,6 @@ msgstr "el grup «%s» no existeix"
 #, c-format
 msgid "error setting ownership of '%.255s'"
 msgstr "s'ha produït un error en establir el propietari de «%.255s»"
-
-#: src/statoverride/main.c src/main/archives.c
-#, c-format
-msgid "error setting permissions of '%.255s'"
-msgstr "s'ha produït un error en establir els permisos de «%.255s»"
 
 #: src/statoverride/main.c
 #, c-format
@@ -4200,8 +4287,8 @@ msgstr ""
 #: src/main/archives.c
 #, c-format
 msgid ""
-"trying to overwrite '%.250s', which is the diverted version of "
-"'%.250s' (package: %.100s)"
+"trying to overwrite '%.250s', which is the diverted version of '%.250s' "
+"(package: %.100s)"
 msgstr ""
 "s'està intentant sobreescriure «%.250s», que és la versió desviada de "
 "«%.250s» (paquet: %.100s)"
@@ -4251,18 +4338,18 @@ msgstr "Reemplaçat pels fitxers al paquet instal·lat %s (%s)…\n"
 #: src/main/archives.c
 #, c-format
 msgid ""
-"trying to overwrite directory '%.250s' in package %.250s %.250s with "
+"trying to overwrite directory '%.250s' in package %.250s (%.250s) with "
 "nondirectory"
 msgstr ""
 "s'està intentant sobreescriure el directori «%.250s» del paquet %.250s "
-"%.250s amb un no directori"
+"(%.250s) amb un no directori"
 
 #: src/main/archives.c
 #, c-format
-msgid "trying to overwrite '%.250s', which is also in package %.250s %.250s"
+msgid "trying to overwrite '%.250s', which is also in package %.250s (%.250s)"
 msgstr ""
 "s'està intentant sobreescriure «%.250s», que també està en el paquet %.250s "
-"%.250s"
+"(%.250s)"
 
 #: src/main/archives.c
 #, c-format
@@ -4473,8 +4560,8 @@ msgstr "--%s --recursive necessita almenys un camí com a argument"
 #: src/main/archives.c
 msgid "searched, but found no packages (files matching *.deb)"
 msgstr ""
-"s'ha buscat, però no s'han trobat paquets (fitxers que coincidisquen amb *."
-"deb)"
+"s'ha buscat, però no s'han trobat paquets (fitxers que coincidisquen amb "
+"*.deb)"
 
 #: src/main/archives.c
 #, c-format
@@ -4503,18 +4590,19 @@ msgstr "S'està ometent el paquet no seleccionat %s.\n"
 
 #: src/main/archives.c
 #, c-format
-msgid "version %.250s of %.250s already installed, skipping"
-msgstr "la versió %.250s de %.250s ja és instal·lada, es descarta"
+msgid "package %.250s (%.250s) with same version already installed, skipping"
+msgstr ""
+"el paquet %.250s (%.250s) amb la mateixa versió ja és instal·lat, es descarta"
 
 #: src/main/archives.c
 #, c-format
-msgid "downgrading %.250s from %.250s to %.250s"
-msgstr "s'està desactualitzant %.250s de %.250s a %.250s"
+msgid "downgrading %.250s (%.250s) to (%.250s)"
+msgstr "s'està desactualitzant %.250s (%.250s) a (%.250s)"
 
 #: src/main/archives.c
 #, c-format
-msgid "will not downgrade %.250s from %.250s to %.250s, skipping"
-msgstr "no es desactualitzarà %.250s de %.250s a %.250s, es descarta"
+msgid "will not downgrade %.250s (%.250s) to (%.250s), skipping"
+msgstr "no es desactualitzarà %.250s (%.250s) a (%.250s), es descarta"
 
 #: src/main/cleanup.c
 #, c-format
@@ -4775,9 +4863,11 @@ msgstr ""
 #: src/main/configure.c
 #, c-format
 msgid ""
-"package %s %s cannot be configured because %s is at a different version (%s)"
+"package %s (%s) cannot be configured because %s is at a different version "
+"(%s)"
 msgstr ""
-"el paquet %s %s no es pot configurar perquè %s és en una versió (%s) diferent"
+"el paquet %s (%s) no es pot configurar perquè %s és en una versió (%s) "
+"diferent"
 
 #: src/main/configure.c
 #, c-format
@@ -7157,6 +7247,36 @@ msgstr ""
 #: utils/update-alternatives.polkit.in
 msgid "Authentication is required to run update-alternatives"
 msgstr "Es requereix autenticació per a executar update-alternatives"
+
+#, c-format
+#~ msgid "open component '%.255s' (in %.255s) failed in an unexpected way"
+#~ msgstr ""
+#~ "l'obertura del component «%.255s» (dins de %.255s) ha fallat de forma "
+#~ "inesperada"
+
+#, c-format
+#~ msgid "cannot stat '%.255s' (in '%.255s')"
+#~ msgstr "no es pot fer «stat» a «%.255s» (en «%.255s»)"
+
+#, c-format
+#~ msgid "cannot open '%.255s' (in '%.255s')"
+#~ msgstr "no es pot obrir «%.255s» (en «%.255s»)"
+
+#, c-format
+#~ msgid "failed to read '%.255s' (in '%.255s')"
+#~ msgstr "no s'ha pogut llegir «%.255s» (en «%.255s»)"
+
+#~ msgid "failed to open diversions file"
+#~ msgstr "no s'ha pogut obrir el fitxer de desviacions"
+
+#~ msgid "failed to fstat diversions file"
+#~ msgstr "no s'ha pogut fer «fstat» al fitxer de desviacions"
+
+#~ msgid "failed to open statoverride file"
+#~ msgstr "no s'ha pogut obrir el fitxer de statoverride"
+
+#~ msgid "failed to fstat statoverride file"
+#~ msgstr "no s'ha pogut fer «fstat» al fitxer de statoverride"
 
 #, c-format
 #~ msgid "There is only one alternative in link group %s (providing %s): %s"

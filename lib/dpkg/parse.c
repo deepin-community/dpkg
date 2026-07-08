@@ -555,7 +555,7 @@ parsedb_open(const char *filename, enum parsedbflags flags)
     return parsedb_new(filename, STDIN_FILENO, flags);
 
   fd = open(filename, O_RDONLY);
-  if (fd == -1 && !(errno == ENOENT && (flags & pdb_allow_empty)))
+  if (fd < 0 && !(errno == ENOENT && (flags & pdb_allow_empty)))
     ohshite(_("failed to open package info file '%.255s' for reading"),
             filename);
 
@@ -577,7 +577,7 @@ parsedb_load(struct parsedb_state *ps)
   if (ps->fd < 0 && (ps->flags & pdb_allow_empty))
       return;
 
-  if (fstat(ps->fd, &st) == -1)
+  if (fstat(ps->fd, &st) < 0)
     ohshite(_("can't stat package info file '%.255s'"), ps->filename);
 
   if (S_ISFIFO(st.st_mode)) {
@@ -589,7 +589,6 @@ parsedb_load(struct parsedb_state *ps)
     if (size < 0)
       ohshit(_("reading package info file '%s': %s"), ps->filename, err.str);
 
-    varbuf_end_str(&buf);
 
     ps->dataptr = varbuf_detach(&buf);
     ps->endptr = ps->dataptr + size;
@@ -685,14 +684,10 @@ parse_stanza(struct parsedb_state *ps, struct field_state *fs,
     fs->valuestart = ps->dataptr - 1;
     for (;;) {
       if (c == '\n' || c == MSDOS_EOF_CHAR) {
-        if (blank_line) {
-          if (ps->flags & pdb_lax_stanza_parser)
-            parse_warn(ps, _("blank line in value of field '%.*s'"),
-                       fs->fieldlen, fs->fieldstart);
-          else
-            parse_error(ps, _("blank line in value of field '%.*s'"),
-                        fs->fieldlen, fs->fieldstart);
-        }
+        if (blank_line)
+          parse_lax_problem(ps, pdb_lax_stanza_parser,
+                            _("blank line in value of field '%.*s'"),
+                            fs->fieldlen, fs->fieldstart);
         ps->lno++;
 
         if (parse_at_eof(ps))

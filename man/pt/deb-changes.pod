@@ -26,7 +26,7 @@ Cada envio Debian é composto de um ficheiro de controle .changes, o qual conté
 
 Cada campo começa com uma etiqueta, tal como B<Source> ou B<Binary> (insensível a maiúsculas/minúsculas), seguida do símbolo dois pontos, e o corpo do campo (sensível a maiúsculas/minúsculas a menos que declarado o contrário). Os campos são delimitados apenas por etiquetas de campos. Por outras palavras, o texto do campo pode ter várias linhas de comprimento, mas as ferramentas de instalação irão geralmente juntar as linhas quando processam o corpo do campo (excepto no caso de B<Description>, B<Changes>, B<Files>, B<Checksums-Sha1> e B<Checksums-Sha256> de múltiplos campos, ver abaixo).
 
-Os dados de controle podem estar inclusos numa assinatura OpenPGP ASCII Armored, como especificado em RFC4880.
+Os dados de controle podem estar inclusos numa assinatura OpenPGP ASCII Armored, como especificado em RFC9580.
 
 =head1 CAMPOS
 
@@ -106,11 +106,15 @@ Este campo multi-linha contem uma lista de ficheiros com um md5sum, tamanho, sec
 
 A primeira linha do campo valor (a parte na mesma linha que tem o campo nome seguido de dois pontos) é sempre vazia. O conteúdo do campo é expressado como linhas de continuação, uma linha por ficheiro. Cada linha consiste de entradas separadas por espaços que descrevem o ficheiro: o md5sum, o tamanho do ficheiro, a secção do ficheiro, a prioridade do ficheiro, e o nome do ficheiro.
 
+Se a secção ou prioridade forem omitidos do pacote, estes usam por predefinição B<unknown> e B<optional> respetivamente (desde dpkg 1.22.13).
+
 Este campo lista todos os ficheiros que fizeram o envio. A lista de ficheiros neste campo tem de corresponder à lista de ficheiros nos outros campos B<Checksums> relacionados.
 
-=item B<Checksums-Sha1:> (necessário)
+B<Nota>: O sumário de verificação MD5 é considerado fraco, e nunca deve ser assumido como suficiente para verificação de segurança, mas este campo não pode ser omitido pois fornece metadados não disponíveis em mais nenhum lado.
 
-=item B<Checksums-Sha256:> (necessário)
+=item B<Checksums-Sha1:> (necessário, fraco)
+
+=item B<Checksums-Sha256:> (necessário, forte)
 
 =item S< >I<checksum> I<size> I<filename>
 
@@ -119,6 +123,8 @@ Estes campos multi-linha contêm uma lista de ficheiros com um sumário de verif
 A primeira linha do campo valor (a parte na mesma linha que tem o campo nome seguido de dois pontos) é sempre vazia. O conteúdo do campo é expressado como linhas de continuação, uma linha por ficheiro. Cada linha consiste de entradas separadas por espaços que descrevem o ficheiro: o sumário de verificação (checksum), o tamanho do ficheiro, e o nome do ficheiro.
 
 Estes campos listam todos os ficheiros que fizeram o envio. A lista de ficheiros nestes campos tem de corresponder à lista de ficheiros no campo B<Files> e aos outros campos B<Checksums> relacionados.
+
+B<Nota>: O sumário de verificação SHA-1 é considerado fraco, e nunca deve ser assumido com suficiente para verificação de segurança.
 
 =back
 

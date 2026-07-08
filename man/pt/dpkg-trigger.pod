@@ -118,6 +118,10 @@ Define a máscara de depuração (desde dpkg 1.21.10) a partir dum valor octal. 
 
 Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B<auto> (predefinido), B<always> e B<never>.
 
+=item B<DPKG_NLS>
+
+Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nativa. Também como conhecido como suporte de internacionalização (ou i18n) (desde dpkg 1.22.7). Os valores aceites são B<0> e B<1> (predefinição).
+
 =back
 
 =head1 VEJA TAMBÉM

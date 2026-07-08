@@ -56,15 +56,13 @@ Formatet för paketbeskrivningen är en kortfattad sammanfattning på den först
 
 Detta är ett generellt fält som ger paketet en kategori baserat på programvara som det installerar. Några vanliga sektioner är B<utils>, B<net>, B<mail>, B<text>, B<x11>, osv.
 
+Godtagna värden baseras på den specifika distributionens policy.
+
 =item B<Priority:> I<prioritet>
 
-Ställer in hur viktigt paketet är jämfört med systemet som helhet. Vanliga prioriteter är B<required> (nödvändig), B<standard> (normal), B<optional> (valfritt), B<extra> (extra), osv.
+Ställer in hur viktigt paketet är jämfört med systemet som helhet. Kända prioriteter är B<required> (nödvändig), B<important> (viktig), B<standard> (normal), B<optional> (valfritt), B<extra> (extra), och B<unknown> (okänd), men andra värden kan också användas.
 
-=back
-
-Gälten B<Section> och B<Priority> har vanligtvis en definierad uppsättning accepterade värden baserade på den specifika distributionens policy.
-
-=over 
+Hur dessa värden ska användas beror på den specifika distributionens policy.
 
 =item B<Installed-Size:> I<storlek>
 

@@ -498,7 +498,7 @@ Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nati
 
 Se definido, será usado como marca temporal (em segundos desde a época) para engatar o mtime nas entradas do ficheiro L<tar(5)>.
 
-Since dpkg 1.18.11.
+Desde dpkg 1.18.11.
 
 =item B<VISUAL>
 

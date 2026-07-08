@@ -50,7 +50,7 @@ Door een pakket verstrekte informatie over afhankelijkheidsrelaties tot gedeelde
 
 Tijdens het doorzoeken van de door al de programma's gebruikte symbolen, onthoudt B<dpkg-shlibdeps> van elke bibliotheek de (hoogste) minimale versie die nodig is. Op het eind van het proces is het in staat voor elke gebruikte bibliotheek uit te schrijven wat de minimale vereiste is (in de veronderstelling dat de informatie uit de I<symbols>-bestanden accuraat is).
 
-As a safe-guard measure, a symbols file can provide a B<Build-Depends-Package> or B<Build-Depends-Packages> meta-information field and B<dpkg-shlibdeps> will extract the minimal version required by the corresponding package in the B<Build-Depends> field and use this version if it's higher than the minimal version computed by scanning symbols.
+Bij wijze van beschermende maatregel kan een symbols-bestand een meta-informatieveld B<Build-Depends-Package> of B<Build-Depends-Packages> bevatten. Dan zal B<dpkg-shlibdeps> de door het corresponderende pakket vereiste minimale versie halen uit het veld B<Build-Depends> en deze versie gebruiken als ze hoger is dan de minimale versie die berekend werd via het doorzoeken van symbolen.
 
 =head2 Shlibs-bestanden
 
@@ -108,6 +108,16 @@ De optie B<-d>I<afhankelijkheidsveld> heeft uitwerking voor alle programma's na 
 
 Indien hetzelfde afhankelijkheidsitem (of set van alternatieven) te vinden is in meer dan een van de herkende namen voor afhankelijkheidsvelden B<Pre-Depends>, B<Depends>, B<Recommends>, B<Enhances> of B<Suggests>, zal B<dpkg-shlibdeps> de afhankelijkheid automatisch uit alle velden verwijderen, behalve uit het veld dat de belangrijkste afhankelijkheid vertegenwoordigt.
 
+=item B<--package=>I<pakket>
+
+De pakketnaam definiëren.
+
+Indie gespecificeerd, zal de pakketnaam worden gebruikt voor het wijzigen van standaardinstellingen op basis van de metadata van het binaire pakket in F<debian/control>.
+
+Als het pakket B<Essential: yes> is, dan is het standaard vereistenveld B<Pre-Depends>, ​​anders B<Depends>. Het standaard pakkettype wordt ingesteld vanuit het veld B<Package-Type>. Het pakket wordt toegevoegd aan de set pakketten die zijn uitgesloten door B<-x>.
+
+Optie ondersteund sinds dpkg 1.22.7.
+
 =item B<-p>I<variabelenaamprefix>
 
 Substitutievariabelen beginnen met I<variabelenaamprefix>B<:> in plaats van met B<shlibs:>. Op dezelfde wijze worden eventuele substitutievariabelen die beginnen met I<variabelenaamprefix>B<:> (in plaats van met B<shlibs:>), verwijderd uit het bestand met substitutievariabelen.
@@ -148,9 +158,31 @@ I<pakketbouwmap> overslaan bij het zoeken naar shlibs-, symbolen- en gedeelde bi
 
 Het niet als een mislukking beschouwen als voor een gedeelde bibliotheek geen afhankelijkheidsinformatie gevonden kan worden (sinds dpkg 1.14.8). Het wordt afgeraden om deze optie te gebruiken. Alle bibliotheken zouden afhankelijkheidsinformatie moeten verschaffen (ofwel via shlibs-bestanden of via symboolbestanden), zelfs als die nog niet door andere pakketten gebruikt wordt.
 
-=item B<--warnings=>I<waarde>
+=item B<--warnings=>[I<waarde>|I<tekenreeks>[,...]]
 
-I<waarde> is een bit-veld dat aangeeft welke set waarschuwingen B<dpkg-shlibdeps> kan geven (sinds dpkg 1.14.17). Bit 0 (waarde=1) activeert de waarschuwing “symbool I<sym> dat door I<binair-bestand> gebruikt wordt, werd in geen enkele bibliotheek aangetroffen”, bit 1 (waarde=2) activeert de waarschuwing “pakket zou een nutteloze afhankelijkheid kunnen vermijden” en bit 2 (waarde=4) activeert de waarschuwing “I<binair-bestand> zou niet gelinkt moeten worden met I<bibliotheek>”. De standaard-I<waarde> is 3: standaard zijn de eerste twee waarschuwingen geactiveerd, de laatste niet. Stel de I<waarde> in op 7 indien u wilt dat alle waarschuwingen geactiveerd worden.
+De set waarschuwingen selecteren die door B<dpkg-shlibdeps> kunnen worden uitgezonden (sinds dpkg 1.14.17).
+
+De waarschuwingen kunnen worden geselecteerd uit een door komma's gescheiden lijst met symbolische namen (sinds dpkg 1.22.12) of uit een I<waarde> die een bitveld voor deze waarschuwingen aangeeft.
+
+=over 
+
+=item symbol-not-found (bit 0, waarde 1)
+
+Selecteert de waarschuwing “symbool I<sym>, gebruikt door I<binair-bestand>, niet gevonden in een van de bibliotheken”.
+
+Standaard ingeschakeld.
+
+=item avoidable-dependency (bit 1, waarde 2)
+
+Selecteert de waarschuwing “pakket kan een nutteloze vereiste vermijden”.
+
+Standaard ingeschakeld.
+
+=item useless-linkage (bit 2, waarde 4)
+
+Selecteer de waarschuwing “I<binair-bestand> mag niet worden gelinkt met I<bibliotheek>”.
+
+=back
 
 =item B<--admindir=>I<map>
 
@@ -169,6 +201,10 @@ De versie tonen en afsluiten.
 =head1 OMGEVING
 
 =over 
+
+=item B<DEB_HOST_ARCH>
+
+Stelt de computerarchitectuur in. Dit heeft invloed op het gezochte objecten- en symbolenbestand en hun standaard zoekpadnaam.
 
 =item B<DPKG_COLORS>
 

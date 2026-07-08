@@ -64,6 +64,10 @@ Om satt och flaggan B<--instdir> eller B<-root> inte har angivits kommer det anv
 
 Väljer färgläge. För närvarande godtas följande värden: B<auto> (förval), B<always> och B<never>.
 
+=item B<DPKG_NLS>
+
+Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även känt som internationaliseringsstöd (eller i18n) (sedan dpkg 1.22.7). Tillåtna värden är: B<0> och B<1> (förval).
+
 =back
 
 =head1 SE ÄVEN

@@ -61,10 +61,8 @@ my $changes_format = '1.8';
 
 # Package to file map, has entries for "packagename".
 my %pkg2file;
-# Package to section map, from control file.
-my %file2ctrlsec;
-# Package to priority map, from control file.
-my %file2ctrlpri;
+# Package to section/priority field map, from control file.
+my %file2ctrlfield;
 # Default values taken from source (used for Section, Priority and Maintainer).
 my %sourcedefault;
 
@@ -213,15 +211,15 @@ if (not defined $outputfile) {
 }
 
 # Retrieve info from the current changelog entry
-my %options = (file => $changelogfile);
-$options{changelogformat} = $changelogformat if $changelogformat;
-$options{since} = $since if defined($since);
-my $changelog = changelog_parse(%options);
+my %changelog_opts = (file => $changelogfile);
+$changelog_opts{changelogformat} = $changelogformat if $changelogformat;
+$changelog_opts{since} = $since if defined($since);
+my $changelog = changelog_parse(%changelog_opts);
 # Change options to retrieve info of the former changelog entry
-delete $options{since};
-$options{count} = 1;
-$options{offset} = 1;
-my $prev_changelog = changelog_parse(%options);
+delete $changelog_opts{since};
+$changelog_opts{count} = 1;
+$changelog_opts{offset} = 1;
+my $prev_changelog = changelog_parse(%changelog_opts);
 # Other initializations
 my $control = Dpkg::Control::Info->new($controlfile);
 my $fields = Dpkg::Control->new(type => CTRL_FILE_CHANGES);
@@ -264,15 +262,14 @@ foreach my $f (keys %{$src_fields}) {
     }
 }
 
+foreach my $f (qw(Section Priority)) {
+    $sourcedefault{$f} //= field_get_default_value($f);
+}
+
 my $dist = Dpkg::Dist::Files->new();
 my $origsrcmsg;
 
 if (build_has_any(BUILD_SOURCE)) {
-    my $sec = $sourcedefault{'Section'} // '-';
-    my $pri = $sourcedefault{'Priority'} // '-';
-    warning(g_('missing Section for source files')) if $sec eq '-';
-    warning(g_('missing Priority for source files')) if $pri eq '-';
-
     my $spackage = get_source_name();
     (my $sversion = $substvars->get('source:Version')) =~ s/^\d+://;
 
@@ -323,7 +320,7 @@ if (build_has_any(BUILD_SOURCE)) {
 
     # Only add attributes for files being distributed.
     for my $fn ($checksums->get_files()) {
-        $dist->add_file($fn, $sec, $pri);
+        $dist->add_file($fn, @sourcedefault{qw(Section Priority)});
     }
 } elsif (build_is(BUILD_ARCH_DEP)) {
     $origsrcmsg = g_('binary-only arch-specific upload ' .
@@ -411,9 +408,9 @@ foreach my $pkg ($control->get_packages()) {
         my $v = $pkg->{$f};
 
         if ($f eq 'Section') {
-            $file2ctrlsec{$_} = $v foreach @files;
+            $file2ctrlfield{$_}{$f} = $v foreach @files;
         } elsif ($f eq 'Priority') {
-            $file2ctrlpri{$_} = $v foreach @files;
+            $file2ctrlfield{$_}{$f} = $v foreach @files;
         } elsif ($f eq 'Architecture') {
 	    if (build_has_any(BUILD_ARCH_DEP) and
 	        (any { debarch_is($host_arch, $_) } debarch_list_parse($v, positive => 1))) {
@@ -463,23 +460,14 @@ for my $p (keys %pkg2file) {
     foreach my $fn (@{$pkg2file{$p}}) {
         my $file = $dist->get_file($fn);
 
-        my $sec = $file2ctrlsec{$fn} || $sourcedefault{'Section'} // '-';
-	if ($sec eq '-') {
-	    warning(g_("missing Section for binary package %s; using '-'"), $p);
-	}
-	if ($sec ne $file->{section}) {
-	    error(g_('package %s has section %s in control file but %s in ' .
-	             'files list'), $p, $sec, $file->{section});
-	}
+        foreach my $f (qw(Section Priority)) {
+            my $v = $file2ctrlfield{$fn}{$f} || $sourcedefault{$f};
 
-        my $pri = $file2ctrlpri{$fn} || $sourcedefault{'Priority'} // '-';
-	if ($pri eq '-') {
-	    warning(g_("missing Priority for binary package %s; using '-'"), $p);
-	}
-	if ($pri ne $file->{priority}) {
-	    error(g_('package %s has priority %s in control file but %s in ' .
-	             'files list'), $p, $pri, $file->{priority});
-	}
+            if ($v ne $file->{lc $f}) {
+                error(g_("package %s has value '%s' in %s field in control file " .
+                         "but '%s' in files list"), $p, $v, $f, $file->{lc $f});
+            }
+        }
     }
 }
 

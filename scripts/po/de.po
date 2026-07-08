@@ -1,13 +1,13 @@
 # Translation of dpkg-dev to German
-# (C) Helge Kreutzmann <debian@helgefjell.de>, 2007-2024.
+# (C) Helge Kreutzmann <debian@helgefjell.de>, 2007-2025.
 # This file is distributed under the same license as the dpkg package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dpkg-dev 1.22.5\n"
+"Project-Id-Version: dpkg-dev 1.22.18\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2024-03-10 20:21+0100\n"
-"PO-Revision-Date: 2024-01-25 17:45+0100\n"
+"POT-Creation-Date: 2026-03-06 04:01+0100\n"
+"PO-Revision-Date: 2025-05-21 19:10+0200\n"
 "Last-Translator: Helge Kreutzmann <debian@helgefjell.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -267,12 +267,10 @@ msgstr "zwei Befehle angegeben: --%s und --%s"
 msgid "%s needs a parameter"
 msgstr "%s benötigt einen Parameter"
 
-#: scripts/dpkg-buildpackage.pl scripts/dpkg-genbuildinfo.pl
-#: scripts/dpkg-genchanges.pl scripts/dpkg-gencontrol.pl
-#: scripts/dpkg-gensymbols.pl scripts/dpkg-parsechangelog.pl
+#: scripts/dpkg-buildpackage.pl
 #, perl-format
-msgid "Usage: %s [<option>...]"
-msgstr "Aufruf: %s [<Option> …]"
+msgid "Usage: %s [<option>...] [--] [<filename.dsc>|<directory>]"
+msgstr "Aufruf: %s [<Option>…] [--] [<Dateiname.dsc>|<Verzeichnis>]"
 
 #: scripts/dpkg-buildpackage.pl
 msgid ""
@@ -569,6 +567,31 @@ msgid "sign-command '%s' not found"
 msgstr "Signierbefehl »%s« nicht gefunden"
 
 #: scripts/dpkg-buildpackage.pl
+#, perl-format
+msgid "cannot change directory to %s"
+msgstr "Verzeichnis kann nicht nach %s geändert werden"
+
+#: scripts/dpkg-buildpackage.pl
+#, perl-format
+msgid "building source package would overwrite input source %s"
+msgstr "Bauen des Quellpakets würde Eingabequellen %s überschreiben"
+
+#: scripts/dpkg-buildpackage.pl
+#, perl-format
+msgid "source package %s is expected in the current directory"
+msgstr "Quellpaket %s wird im aktuellen Verzeichnis erwartet"
+
+#: scripts/dpkg-buildpackage.pl
+#, perl-format
+msgid "source directory %s exists already, aborting"
+msgstr "Quellverzeichnis %s existiert bereits, Abbruch"
+
+#: scripts/dpkg-buildpackage.pl
+#, perl-format
+msgid "extracting source package %s"
+msgstr "Quellpaket wird extrahiert (%s)"
+
+#: scripts/dpkg-buildpackage.pl
 msgid "source package"
 msgstr "Quellpaket"
 
@@ -589,16 +612,12 @@ msgid "host architecture"
 msgstr "Host-Architektur"
 
 #: scripts/dpkg-buildpackage.pl
-msgid "debian/rules is not executable; fixing that"
-msgstr "debian/rules ist nicht ausführbar: wird korrigiert"
-
-#: scripts/dpkg-buildpackage.pl
 msgid "build dependencies/conflicts unsatisfied; aborting"
 msgstr "Bauabhängigkeiten/-konflikte nicht erfüllt; Abbruch"
 
 #: scripts/dpkg-buildpackage.pl
-msgid "(Use -d flag to override.)"
-msgstr "(Verwenden Sie -d, um sich darüber hinwegzusetzen.)"
+msgid "satisfy build dependencies with your package manager frontend"
+msgstr "Bauabhängigkeiten mit Ihrer Paketverwalter-Oberfläche erfüllen"
 
 #: scripts/dpkg-buildpackage.pl
 msgid ""
@@ -619,65 +638,13 @@ msgstr ""
 
 #: scripts/dpkg-buildpackage.pl
 #, perl-format
+msgid "removing extracted source directory %s"
+msgstr "extrahiertes Quellverzeichnis %s wird entfernt"
+
+#: scripts/dpkg-buildpackage.pl
+#, perl-format
 msgid "unable to determine %s"
 msgstr "%s kann nicht bestimmt werden"
-
-#: scripts/dpkg-buildpackage.pl
-msgid "using a gain-root-command while being root"
-msgstr "Verwendung eines root-werde-Befehls, obwohl bereits root"
-
-#: scripts/dpkg-buildpackage.pl
-msgid ""
-"fakeroot not found, either install the fakeroot\n"
-"package, specify a command with the -r option, or run this as root"
-msgstr ""
-"Fakeroot nicht gefunden; installieren Sie entweder das Fakeroot-Paket,\n"
-"geben Sie einen Befehl mit der Option -r an oder führen Sie dies als root aus"
-
-#: scripts/dpkg-buildpackage.pl
-#, perl-format
-msgid "gain-root-command '%s' not found"
-msgstr "root-werde-Befehl »%s« nicht gefunden"
-
-#: scripts/dpkg-buildpackage.pl
-#, perl-format
-msgid "disallowed target in %s field keyword \"%s\""
-msgstr "nicht erlaubtes Ziel im %s-Feld-Schlüsselwort »%s«"
-
-#: scripts/dpkg-buildpackage.pl
-#, perl-format
-msgid "%s field keyword \"%s\" is unknown in dpkg namespace"
-msgstr "%s-Feld-Schlüsselwort »%s« ist im Dpkg-Namensraum unbekannt"
-
-#: scripts/dpkg-buildpackage.pl
-#, perl-format
-msgid "%s field keyword \"%s\" is uppercase; use \"%s\" instead"
-msgstr ""
-"%s-Feld-Schlüsselwort »%s« ist großgeschrieben; verwenden Sie stattdessen "
-"»%s«"
-
-#: scripts/dpkg-buildpackage.pl
-#, perl-format
-msgid "%s field keyword \"%s\" is invalid; use \"%s\" instead"
-msgstr ""
-"%s-Feld-Schlüsselwort »%s« ist ungültig; verwenden Sie stattdessen »%s«"
-
-#: scripts/dpkg-buildpackage.pl
-#, perl-format
-msgid "%s field keyword \"%s\" is unknown"
-msgstr "%s-Feldschlüsselwort »%s« ist unbekannt"
-
-#: scripts/dpkg-buildpackage.pl
-#, perl-format
-msgid "field %s contains duplicate keyword \"%s\""
-msgstr "Feld %s enthält doppeltes Schlüsselwort »%s«"
-
-#: scripts/dpkg-buildpackage.pl
-#, perl-format
-msgid "%s field contains both global and implementation specific keywords"
-msgstr ""
-"Feld %s enthält sowohl globale als auch implementierungsspezifische "
-"Schlüsselwörter"
 
 #: scripts/dpkg-buildpackage.pl
 #, perl-format
@@ -701,21 +668,6 @@ msgid ""
 msgstr ""
 "von langen OpenPGP-Schlüsselkennungen wird klar abgeraten; bitte verwenden "
 "Sie stattdessen Fingerabdrücke in %s oder %s"
-
-#: scripts/dpkg-buildpackage.pl scripts/dpkg-checkbuilddeps.pl
-#: scripts/dpkg-genbuildinfo.pl scripts/dpkg-name.pl scripts/Dpkg/Arch.pm
-#: scripts/Dpkg/IPC.pm scripts/Dpkg/Shlibs.pm
-#, perl-format
-msgid "cannot open %s"
-msgstr "%s kann nicht geöffnet werden"
-
-#: scripts/dpkg-buildpackage.pl scripts/dpkg-distaddfile.pl
-#: scripts/dpkg-genbuildinfo.pl scripts/dpkg-gencontrol.pl
-#: scripts/Dpkg/Interface/Storable.pm scripts/Dpkg/Source/Package/V2.pm
-#: scripts/Dpkg/Source/Patch.pm
-#, perl-format
-msgid "cannot close %s"
-msgstr "%s kann nicht geschlossen werden"
 
 #: scripts/dpkg-buildpackage.pl scripts/Dpkg/Source/Archive.pm
 #, perl-format
@@ -755,24 +707,18 @@ msgstr "Binärpakete(e) und Diff hochzuladen (Originalquellen NICHT enthalten)"
 msgid "full upload (original source is included)"
 msgstr "Alles hochzuladen (Originalquellen enthalten)"
 
-#: scripts/dpkg-buildpackage.pl
-#, perl-format
-msgid ""
-"%s must be updated to support the 'build-arch' and 'build-indep' targets (at "
-"least '%s' seems to be missing)"
-msgstr ""
-"%s muss aktualisiert werden, um die Ziele »build-arch« und »build-indep« zu "
-"unterstützen (zumindest »%s« scheint zu fehlen)."
-
 #: scripts/dpkg-buildtree.pl
 msgid ""
 "Commands:\n"
 "  clean              clean dpkg generated artifacts from the build tree.\n"
+"  is-rootless        checks whether the build tree needs root to build.\n"
 "  --help             show this help message.\n"
 "  --version          show the version.\n"
 msgstr ""
 "Befehle:\n"
 "  clean              Dpkg-erstellte Artefakte aus dem Baubaum bereinigen.\n"
+"  is-rootless        prüfen, ob der Baubaum Root-Privilegien zum Bau "
+"benötigt.\n"
 "  --help             diese Hilfemeldung anzeigen\n"
 "  --version          die Version anzeigen\n"
 
@@ -838,13 +784,20 @@ msgstr "das Feld %s kann nicht ausgewertet werden"
 
 #: scripts/dpkg-checkbuilddeps.pl
 #, perl-format
-msgid "Unmet build dependencies: %s"
-msgstr "Nicht erfüllte Bauabhängigkeiten: %s"
+msgid "unmet build dependencies: %s"
+msgstr "nicht erfüllte Bauabhängigkeiten: %s"
 
 #: scripts/dpkg-checkbuilddeps.pl
 #, perl-format
-msgid "Build conflicts: %s"
-msgstr "Baukonflikte: %s"
+msgid "unmet build conflicts: %s"
+msgstr "nicht erfüllte Baukonflikte: %s"
+
+#: scripts/dpkg-checkbuilddeps.pl scripts/dpkg-genbuildinfo.pl
+#: scripts/dpkg-name.pl scripts/Dpkg/Arch.pm scripts/Dpkg/IPC.pm
+#: scripts/Dpkg/OpenPGP/Backend/GnuPG.pm scripts/Dpkg/Shlibs.pm
+#, perl-format
+msgid "cannot open %s"
+msgstr "%s kann nicht geöffnet werden"
 
 #: scripts/dpkg-distaddfile.pl
 #, perl-format
@@ -886,6 +839,21 @@ msgstr "%s kann nicht geschrieben werden"
 #: scripts/dpkg-gencontrol.pl
 msgid "install new files list file"
 msgstr "neue Dateilistendatei installieren"
+
+#: scripts/dpkg-distaddfile.pl scripts/dpkg-genbuildinfo.pl
+#: scripts/dpkg-gencontrol.pl scripts/Dpkg/Interface/Storable.pm
+#: scripts/Dpkg/OpenPGP/Backend/GnuPG.pm scripts/Dpkg/Source/Package/V2.pm
+#: scripts/Dpkg/Source/Patch.pm
+#, perl-format
+msgid "cannot close %s"
+msgstr "%s kann nicht geschlossen werden"
+
+#: scripts/dpkg-genbuildinfo.pl scripts/dpkg-genchanges.pl
+#: scripts/dpkg-gencontrol.pl scripts/dpkg-gensymbols.pl
+#: scripts/dpkg-parsechangelog.pl
+#, perl-format
+msgid "Usage: %s [<option>...]"
+msgstr "Aufruf: %s [<Option> …]"
 
 #: scripts/dpkg-genbuildinfo.pl
 msgid ""
@@ -1005,15 +973,8 @@ msgstr ""
 msgid "the current version (%s) is earlier than the previous one (%s)"
 msgstr "die aktuelle Version (%s) ist älter als die vorhergehende (%s)"
 
-#: scripts/dpkg-genchanges.pl
-msgid "missing Section for source files"
-msgstr "fehlende Sektion für Quelldateien"
-
-#: scripts/dpkg-genchanges.pl
-msgid "missing Priority for source files"
-msgstr "fehlende Priorität für Quelldateien"
-
-#: scripts/dpkg-genchanges.pl scripts/Dpkg/Vendor.pm
+#: scripts/dpkg-genchanges.pl scripts/Dpkg/Source/Format.pm
+#: scripts/Dpkg/Vendor.pm
 #, perl-format
 msgid "%s is empty"
 msgstr "%s ist leer"
@@ -1066,23 +1027,9 @@ msgstr "Paket %s in Dateienliste, aber nicht in der Steuer-Info aufgeführt"
 
 #: scripts/dpkg-genchanges.pl
 #, perl-format
-msgid "missing Section for binary package %s; using '-'"
-msgstr "fehlende Sektion für Binärpaket %s; »-« wird verwendet"
-
-#: scripts/dpkg-genchanges.pl
-#, perl-format
-msgid "package %s has section %s in control file but %s in files list"
-msgstr "Paket %s hat Sektion %s in der Steuerdatei, aber %s in der Dateiliste"
-
-#: scripts/dpkg-genchanges.pl
-#, perl-format
-msgid "missing Priority for binary package %s; using '-'"
-msgstr "fehlende Priorität für Binärpaket %s; »-« wird verwendet"
-
-#: scripts/dpkg-genchanges.pl
-#, perl-format
-msgid "package %s has priority %s in control file but %s in files list"
-msgstr "Paket %s hat Priorität %s in Steuerdatei, aber %s in Dateienliste"
+msgid ""
+"package %s has value '%s' in %s field in control file but '%s' in files list"
+msgstr "Paket %s hat Wert »%s« in Feld %s, aber »%s« in der Dateiliste"
 
 #: scripts/dpkg-genchanges.pl scripts/Dpkg/Source/Package.pm
 #, perl-format
@@ -1138,11 +1085,12 @@ msgstr ""
 "      --version           die Version anzeigen\n"
 
 #: scripts/dpkg-gencontrol.pl scripts/dpkg-gensymbols.pl
+#: scripts/dpkg-shlibdeps.pl
 #, perl-format
 msgid "illegal package name '%s': %s"
 msgstr "Ungültiger Paketname »%s«: %s"
 
-#: scripts/dpkg-gencontrol.pl
+#: scripts/dpkg-gencontrol.pl scripts/dpkg-shlibdeps.pl
 #, perl-format
 msgid "package %s not in control info"
 msgstr "Paket %s nicht in Steuer-Info"
@@ -1190,6 +1138,12 @@ msgid ""
 msgstr ""
 "das Feld %s enthält eine architekturspezifische Abhängigkeit, aber das Paket "
 "»%s« ist »architecture all«"
+
+#: scripts/dpkg-gencontrol.pl
+#, perl-format
+msgid "missing information for output field %s; using default value \"%s\""
+msgstr ""
+"fehlende Informationen für Ausgabefeld %s; Standardwert »%s« wird verwandt"
 
 #: scripts/dpkg-gencontrol.pl
 #, perl-format
@@ -1791,12 +1745,12 @@ msgstr "%s hat einen unerwarteten SONAME (%s)"
 
 #: scripts/dpkg-shlibdeps.pl
 #, perl-format
-msgid ""
-"no dependency information found for %s (used by %s)\n"
-"Hint: check if the library actually comes from a package."
-msgstr ""
-"keine Abhängigkeitsinformationen für %s (verwendet von %s) gefunden\n"
-"Tipp: Prüfen Sie, ob die Bibliothek tatsächlich aus einem Paket stammt."
+msgid "no dependency information found for %s (used by %s)"
+msgstr "keine Abhängigkeitsinformationen für %s (verwendet von %s) gefunden"
+
+#: scripts/dpkg-shlibdeps.pl
+msgid "check if the library actually comes from a package"
+msgstr "Prüfen Sie, ob die Bibliothek tatsächlich aus einem Paket stammt."
 
 #: scripts/dpkg-shlibdeps.pl
 msgid ""
@@ -1901,6 +1855,8 @@ msgstr ""
 #: scripts/dpkg-shlibdeps.pl
 msgid ""
 "Options:\n"
+"  --package=<package>      generate substvars for <package> (default is "
+"unset).\n"
 "  -l<library-dir>          add directory to private shared library search "
 "list.\n"
 "  -p<varname-prefix>       set <varname-prefix>:* instead of shlibs:*.\n"
@@ -1924,6 +1880,8 @@ msgid ""
 "      --version            show the version."
 msgstr ""
 "Optionen:\n"
+"  --package=<Paket>        Substvars für <Paket> erstellen (standardmäßig\n"
+"                             nicht gesetzt).\n"
 "  -l<Bibl-Verz>            Verzeichnis zur privaten Suchliste für gemeinsam\n"
 "                             benutzte Bibliotheken hinzufügen\n"
 "  -p<Varnamepräfix>        <Varnamepräfix>:* setzen statt shlibs:*\n"
@@ -2144,8 +2102,8 @@ msgstr "Teststeuerdatei %s ist keine gewöhnliche Datei."
 
 #: scripts/dpkg-source.pl
 #, perl-format
-msgid "%s field contains value %s, but no tests control file %s"
-msgstr "%s-Feld enthält Wert %s, aber keine Teststeuerdatei %s"
+msgid "%s field contains value '%s', but no tests control file %s"
+msgstr "%s-Feld enthält Wert »%s«, aber keine Teststeuerdatei %s"
 
 #: scripts/dpkg-source.pl
 #, perl-format
@@ -2353,6 +2311,117 @@ msgstr ""
 msgid "'%s' is not a legal architecture in list '%s'"
 msgstr "»%s« ist keine gültige Architektur in der Liste »%s«"
 
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "cannot get archive %s size"
+msgstr "Größe des Archivs %s kann nicht ermittelt werden"
+
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "cannot open or create archive %s"
+msgstr "Archiv %s kann nicht geöffnet oder erstellt werden"
+
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "cannot write magic into archive %s"
+msgstr "Signatur kann nicht in Archiv %s geschrieben werden"
+
+#. TRANSLATORS: The first %s string is either "the archive magic" or
+#. "a file header".
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "cannot read %s; archive %s at offset %d"
+msgstr "%s kann nicht gelesen werden: Archiv %s bei Versatz %d"
+
+#. TRANSLATORS: The first %s string is either "the archive magic" or
+#. "a file header".
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "cannot read %s; archive %s is truncated at offset %d"
+msgstr ""
+"%s kann nicht gelesen werden: Archiv %s ist bei Versatz %d abgeschnitten"
+
+#: scripts/Dpkg/Archive/Ar.pm
+msgid "the archive magic"
+msgstr "die Archivsignatur"
+
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "archive %s contains no magic"
+msgstr "Archiv %s enthält keine Signatur"
+
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "archive %s contains bad magic"
+msgstr "Archiv %s enthält fehlerhafte Signatur"
+
+#: scripts/Dpkg/Archive/Ar.pm
+msgid "a file header"
+msgstr "Dateikopfzeilen"
+
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "file header at offset %d in archive %s contains bad magic"
+msgstr ""
+"Dateikopfzeilen bei Versatz %d in Archiv %s enthält fehlerhafte Signatur"
+
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "cannot seek into next file header at offset %d from archive %s"
+msgstr ""
+"kann nicht zu den nächsten Dateikopfzeilen bei Versatz %d aus Archiv %s "
+"suchen"
+
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "cannot seek into beginning of archive %s"
+msgstr "kann nicht in den Anfang des Archivs %s suchen"
+
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "cannot read file %s"
+msgstr "Datei %s kann nicht gelesen werden"
+
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "cannot write file %s"
+msgstr "Datei %s kann nicht geschrieben werden"
+
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "cannot create file %s to extract from archive %s"
+msgstr "Datei %s kann nicht zum Extrahieren aus Archiv %s erstellt werden"
+
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "cannot write file %s to the filesystem"
+msgstr "Datei %s kann nicht in das Dateisystem geschrieben werden"
+
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "cannot write file header into archive %s"
+msgstr "Datei-Kopfzeilen können nicht in Archiv %s geschrieben werden"
+
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "filename %s is too long"
+msgstr "Dateiname %s ist zu lang"
+
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "cannot open file %s to append to archive %s"
+msgstr "Datei %s kann nicht zum Anhängen an Archiv %s geöffnet werden"
+
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "cannot get file %s size"
+msgstr "Größe der Datei %s kann nicht ermittelt werden"
+
+#: scripts/Dpkg/Archive/Ar.pm
+#, perl-format
+msgid "cannot write file %s padding to archive %s"
+msgstr "Auffüllung für Datei %s in Archiv %s kann nicht geschrieben werden"
+
 #: scripts/Dpkg/BuildAPI.pm
 msgid "dpkg build API level needs an exact version"
 msgstr "Dpkg-Bau-API-Stufe benötigt eine genaue Version"
@@ -2371,6 +2440,73 @@ msgstr "Ungültige Dpkg-Bau-API-Stufe »%s«"
 #, perl-format
 msgid "dpkg build API level '%s' greater than max '%s'"
 msgstr "Dpkg-Bau-API-Stufe »%s« größer als Maximum »%s«"
+
+#: scripts/Dpkg/BuildDriver.pm
+#, perl-format
+msgid "build driver %s is unknown: %s"
+msgstr "Bautreiber %s ist unbekannt: %s"
+
+#: scripts/Dpkg/BuildDriver/DebianRules.pm
+msgid "using a gain-root-command while being root"
+msgstr "Verwendung eines root-werde-Befehls, obwohl bereits root"
+
+#: scripts/Dpkg/BuildDriver/DebianRules.pm
+msgid ""
+"fakeroot not found, either install the fakeroot\n"
+"package, specify a command with the -r option, or run this as root"
+msgstr ""
+"Fakeroot nicht gefunden; installieren Sie entweder das Fakeroot-Paket,\n"
+"geben Sie einen Befehl mit der Option -r an oder führen Sie dies als root aus"
+
+#: scripts/Dpkg/BuildDriver/DebianRules.pm
+#, perl-format
+msgid "gain-root-command '%s' not found"
+msgstr "root-werde-Befehl »%s« nicht gefunden"
+
+#: scripts/Dpkg/BuildDriver/DebianRules.pm
+#, perl-format
+msgid "disallowed target in %s field keyword %s"
+msgstr "nicht erlaubtes Ziel im %s-Feld-Schlüsselwort %s"
+
+#: scripts/Dpkg/BuildDriver/DebianRules.pm
+#, perl-format
+msgid "%s field keyword \"%s\" is unknown in dpkg namespace"
+msgstr "%s-Feld-Schlüsselwort »%s« ist im Dpkg-Namensraum unbekannt"
+
+#: scripts/Dpkg/BuildDriver/DebianRules.pm
+#, perl-format
+msgid "%s field keyword \"%s\" is uppercase; use \"%s\" instead"
+msgstr ""
+"%s-Feld-Schlüsselwort »%s« ist großgeschrieben; verwenden Sie stattdessen "
+"»%s«"
+
+#: scripts/Dpkg/BuildDriver/DebianRules.pm
+#, perl-format
+msgid "%s field keyword \"%s\" is invalid; use \"%s\" instead"
+msgstr ""
+"%s-Feld-Schlüsselwort »%s« ist ungültig; verwenden Sie stattdessen »%s«"
+
+#: scripts/Dpkg/BuildDriver/DebianRules.pm
+#, perl-format
+msgid "%s field keyword \"%s\" is unknown"
+msgstr "%s-Feldschlüsselwort »%s« ist unbekannt"
+
+#: scripts/Dpkg/BuildDriver/DebianRules.pm
+#, perl-format
+msgid "field %s contains duplicate keyword %s"
+msgstr "Feld %s enthält doppeltes Schlüsselwort %s"
+
+#: scripts/Dpkg/BuildDriver/DebianRules.pm
+#, perl-format
+msgid "%s field contains both global and implementation specific keywords"
+msgstr ""
+"Feld %s enthält sowohl globale als auch implementierungsspezifische "
+"Schlüsselwörter"
+
+#: scripts/Dpkg/BuildDriver/DebianRules.pm
+#, perl-format
+msgid "%s is not executable; fixing that"
+msgstr "%s ist nicht ausführbar: wird korrigiert"
 
 #: scripts/Dpkg/BuildFlags.pm scripts/Dpkg/Compression/FileHandle.pm
 #: scripts/Dpkg/File.pm scripts/Dpkg/Interface/Storable.pm
@@ -2596,7 +2732,7 @@ msgstr "der Abspann passte nicht auf den erwarteten regulären Ausdruck"
 #: scripts/Dpkg/Changelog/Parse.pm
 #, perl-format
 msgid "cannot seek into file %s"
-msgstr "auf die Datei %s kann nicht mit seek zugegriffen werden"
+msgstr "in Datei %s kann nicht gesucht werden"
 
 #: scripts/Dpkg/Changelog/Parse.pm
 #, perl-format
@@ -2843,6 +2979,10 @@ msgid "invalid filename %s"
 msgstr "ungültiger Dateiname %s"
 
 #: scripts/Dpkg/ErrorHandling.pm
+msgid "hint"
+msgstr "Tipp"
+
+#: scripts/Dpkg/ErrorHandling.pm
 msgid "info"
 msgstr "Information"
 
@@ -2945,6 +3085,30 @@ msgstr "OpenPGP-Backend %s kann nicht geladen werden"
 msgid "unknown OpenPGP backend %s"
 msgstr "unbekanntes OpenPGP-Backend %s"
 
+#: scripts/Dpkg/OpenPGP/Backend.pm
+#, perl-format
+msgid ""
+"multiple concatenated ASCII Armor blocks in %s, which is not an "
+"interoperable construct, see <%s>"
+msgstr ""
+"mehrere aneinandergehängte ASCII-geschützte Blöcke in %s, was kein "
+"interoperables Konstrukt ist, siehe <%s>"
+
+#: scripts/Dpkg/OpenPGP/Backend.pm
+#, perl-format
+msgid "sq keyring merge --overwrite --output %s %s"
+msgstr "sq keyring merge --overwrite --output %s %s"
+
+#: scripts/Dpkg/OpenPGP/Backend/Sequoia.pm
+msgid "imported own keys might be missing ownership information, try:"
+msgstr ""
+"dem importierten eigenen Schüssel können die Eigentümerschaftsinformationen "
+"fehlen, versuchen Sie folgendes:"
+
+#: scripts/Dpkg/OpenPGP/Backend/Sequoia.pm
+msgid "  sq pki link authorize --cert FINGERPRINT --all --unconstrained"
+msgstr "  sq pki link authorize --cert FINGERPRINT --all --unconstrained"
+
 #: scripts/Dpkg/OpenPGP/ErrorCodes.pm
 msgid "success"
 msgstr "Erfolg"
@@ -2986,8 +3150,33 @@ msgid "unsupported subcommand"
 msgstr "nicht unterstützter Unterbefehl"
 
 #: scripts/Dpkg/OpenPGP/ErrorCodes.pm
+msgid "unknown special designator in indirect parameter"
+msgstr "unbekannter besonderer Bezeichner in indirektem Parameter"
+
+#: scripts/Dpkg/OpenPGP/ErrorCodes.pm
+msgid "special designator in indirect parameter is an existing file"
+msgstr ""
+"besonderer Bezeichner in indirektem Parameter in einer bestehenden Datei"
+
+#: scripts/Dpkg/OpenPGP/ErrorCodes.pm
 msgid "key is not signature-capable"
 msgstr "Schlüssel kann nicht zum Signieren verwandt werden"
+
+#: scripts/Dpkg/OpenPGP/ErrorCodes.pm
+msgid "mutually exclusive options"
+msgstr "gegenseitig ausschließende Optionen"
+
+#: scripts/Dpkg/OpenPGP/ErrorCodes.pm
+msgid "cannot identify hardware device for hardware-backed secret keys"
+msgstr ""
+"Hardware-Geräte für Hardware-basierende geheime Schlüssel können nicht "
+"identifiziert werden"
+
+#: scripts/Dpkg/OpenPGP/ErrorCodes.pm
+msgid "cannot perform operation on hardware-backed secret key"
+msgstr ""
+"Aktion auf Hardware-basierendem geheimen Schlüssel kann nicht durchgeführt "
+"werden"
 
 #: scripts/Dpkg/OpenPGP/ErrorCodes.pm
 msgid "missing OpenPGP implementation"
@@ -3166,6 +3355,36 @@ msgstr "Verzeichnis %s kann nicht geöffnet werden"
 msgid "unable to rename %s to %s"
 msgstr "%s kann nicht in %s umbenannt werden"
 
+#: scripts/Dpkg/Source/BinaryFiles.pm
+#, perl-format
+msgid "adding %s to %s"
+msgstr "%s wird zu %s hinzugefügt"
+
+#: scripts/Dpkg/Source/BinaryFiles.pm
+#, perl-format
+msgid "unwanted binary file: %s"
+msgstr "unerwünschte Binärdatei: %s"
+
+#: scripts/Dpkg/Source/BinaryFiles.pm
+#, perl-format
+msgid ""
+"detected %d unwanted binary file (add it in debian/source/include-binaries "
+"to allow its inclusion)."
+msgid_plural ""
+"detected %d unwanted binary files (add them in debian/source/include-"
+"binaries to allow their inclusion)."
+msgstr[0] ""
+"erkannte %d unerwünschte Binärdatei (fügen Sie sie zu debian/source/include-"
+"binaries hinzu, um ihre Aufnahme zu erlauben)."
+msgstr[1] ""
+"erkannte %d unerwünschte Binärdateien (fügen Sie sie zu debian/source/"
+"include-binaries hinzu, um ihre Aufnahme zu erlauben)."
+
+#: scripts/Dpkg/Source/Format.pm
+#, perl-format
+msgid "source package format '%s' is invalid"
+msgstr "Quellpaketformat »%s« ist ungültig"
+
 #: scripts/Dpkg/Source/Functions.pm
 #, perl-format
 msgid "cannot stat directory %s (before removal)"
@@ -3195,31 +3414,6 @@ msgstr "Zeitstempel für %s kann nicht gelesen werden"
 #, perl-format
 msgid "cannot open file %s for binary detection"
 msgstr "kann Datei %s nicht zur Binärerkennung öffnen"
-
-#: scripts/Dpkg/Source/BinaryFiles.pm
-#, perl-format
-msgid "adding %s to %s"
-msgstr "%s wird zu %s hinzugefügt"
-
-#: scripts/Dpkg/Source/BinaryFiles.pm
-#, perl-format
-msgid "unwanted binary file: %s"
-msgstr "unerwünschte Binärdatei: %s"
-
-#: scripts/Dpkg/Source/BinaryFiles.pm
-#, perl-format
-msgid ""
-"detected %d unwanted binary file (add it in debian/source/include-binaries "
-"to allow its inclusion)."
-msgid_plural ""
-"detected %d unwanted binary files (add them in debian/source/include-"
-"binaries to allow their inclusion)."
-msgstr[0] ""
-"erkannte %d unerwünschte Binärdatei (fügen Sie sie zu debian/source/include-"
-"binaries hinzu, um ihre Aufnahme zu erlauben)."
-msgstr[1] ""
-"erkannte %d unerwünschte Binärdateien (fügen Sie sie zu debian/source/"
-"include-binaries hinzu, um ihre Aufnahme zu erlauben)."
 
 #: scripts/Dpkg/Source/Package.pm
 #, perl-format
@@ -3445,8 +3639,8 @@ msgstr "Originalargument %s kann nicht mit stat abgefragt werden"
 #: scripts/Dpkg/Source/Package/V1.pm
 #, perl-format
 msgid ""
-"orig argument is unpacked but source handling style -s%s calls for packed (."
-"orig.tar.<ext>)"
+"orig argument is unpacked but source handling style -s%s calls for packed "
+"(.orig.tar.<ext>)"
 msgstr ""
 "Originalargument ist ungepackt, aber bei Quellenhandhabungsstil -s%s wird "
 "ein gepacktes Argument verlangt (.orig.tar.<endung>)"
@@ -3454,8 +3648,8 @@ msgstr ""
 #: scripts/Dpkg/Source/Package/V1.pm
 #, perl-format
 msgid ""
-"orig argument is packed but source handling style -s%s calls for unpacked (."
-"orig/)"
+"orig argument is packed but source handling style -s%s calls for unpacked "
+"(.orig/)"
 msgstr ""
 "Originalargument ist gepackt, aber bei Quellenhandhabungsstil -s%s wird ein "
 "ungepacktes Argument verlangt (.orig/)"
@@ -3468,8 +3662,8 @@ msgstr "Originalargument %s ist keine gewöhnliche Datei oder Verzeichnis"
 #: scripts/Dpkg/Source/Package/V1.pm
 #, perl-format
 msgid ""
-"orig argument is empty (means no orig, no diff) but source handling style -"
-"s%s wants something"
+"orig argument is empty (means no orig, no diff) but source handling style "
+"-s%s wants something"
 msgstr ""
 "Originalargument ist leer (bedeutet kein Orig., kein Diff), aber bei "
 "Quellenhandhabungsstil -s%s wird etwas verlangt"
@@ -3710,10 +3904,9 @@ msgstr ""
 
 #: scripts/Dpkg/Source/Package/V2.pm
 msgid ""
-"Hint: make sure the version in debian/changelog matches the unpacked source "
-"tree"
+"make sure the version in debian/changelog matches the unpacked source tree"
 msgstr ""
-"Tipp: Die Version in debian/changelog muss mit dem entpackten Quellbaum "
+"die Version in debian/changelog muss mit dem entpackten Quellbaum "
 "übereinstimmen"
 
 #: scripts/Dpkg/Source/Package/V2.pm
@@ -4251,26 +4444,13 @@ msgstr "Substitutionsvariable ${%s} verwandt, aber nicht definiert"
 
 #: scripts/Dpkg/Substvars.pm
 #, perl-format
+msgid "required substitution variable ${%s} not used"
+msgstr "benötigte Substitutionsvariable ${%s} wird nicht verwandt"
+
+#: scripts/Dpkg/Substvars.pm
+#, perl-format
 msgid "substitution variable ${%s} unused, but is defined"
 msgstr "Substitutionsvariable ${%s} unbenutzt, aber definiert"
-
-#: scripts/Dpkg/Vendor.pm
-#, perl-format
-msgid ""
-"%s origin filename is deprecated; it should have only alphanumeric or dash "
-"characters"
-msgstr ""
-"%s-Quell-Dateiname ist veraltet; er sollte nur alphanumerische Zeichen oder "
-"den Bindestrich enthalten"
-
-#: scripts/Dpkg/Vendor.pm
-#, perl-format
-msgid ""
-"%s module name is deprecated; it should be capitalized with only "
-"alphanumeric characters"
-msgstr ""
-"%s-Modulname ist veraltet; er sollte nur aus alphanumerischen Großbuchstaben "
-"bestehen"
 
 #: scripts/Dpkg/Vendor/Debian.pm
 #, perl-format
@@ -4281,6 +4461,14 @@ msgstr "unbekannte Host-Architektur »%s«"
 #, perl-format
 msgid "unknown abi attributes for architecture '%s'"
 msgstr "unbekannte ABI-Attribute für Architektur »%s«"
+
+#: scripts/Dpkg/Vendor/PureOS.pm
+msgid ""
+"Version number suggests PureOS changes, but there is no XSBC-Original-"
+"Maintainer field"
+msgstr ""
+"Versionsnummer lässt PureOS-Änderungen vermuten, aber es gibt kein Feld XSBC-"
+"Original-Maintainer"
 
 #: scripts/Dpkg/Vendor/Ubuntu.pm
 msgid ""
@@ -4333,6 +4521,56 @@ msgstr "Versionsnummer enthält ungültiges Zeichen »%s«"
 msgid "epoch part of the version number is not a number: '%s'"
 msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
 
+#~ msgid "(Use -d flag to override.)"
+#~ msgstr "(Verwenden Sie -d, um sich darüber hinwegzusetzen.)"
+
+#~ msgid "missing Section for source files"
+#~ msgstr "fehlende Sektion für Quelldateien"
+
+#~ msgid "missing Priority for source files"
+#~ msgstr "fehlende Priorität für Quelldateien"
+
+#, perl-format
+#~ msgid "missing Section for binary package %s; using '-'"
+#~ msgstr "fehlende Sektion für Binärpaket %s; »-« wird verwendet"
+
+#, perl-format
+#~ msgid "missing Priority for binary package %s; using '-'"
+#~ msgstr "fehlende Priorität für Binärpaket %s; »-« wird verwendet"
+
+#, perl-format
+#~ msgid "package %s has priority %s in control file but %s in files list"
+#~ msgstr "Paket %s hat Priorität %s in Steuerdatei, aber %s in Dateienliste"
+
+#, perl-format
+#~ msgid ""
+#~ "%s origin filename is deprecated; it should have only alphanumeric or "
+#~ "dash characters"
+#~ msgstr ""
+#~ "%s-Quell-Dateiname ist veraltet; er sollte nur alphanumerische Zeichen "
+#~ "oder den Bindestrich enthalten"
+
+#, perl-format
+#~ msgid ""
+#~ "%s module name is deprecated; it should be capitalized with only "
+#~ "alphanumeric characters"
+#~ msgstr ""
+#~ "%s-Modulname ist veraltet; er sollte nur aus alphanumerischen "
+#~ "Großbuchstaben bestehen"
+
+#, fuzzy, perl-format
+#~| msgid "cannot read timestamp from %s"
+#~ msgid "cannot read %s at offset %d from archive %s"
+#~ msgstr "Zeitstempel für %s kann nicht gelesen werden"
+
+#, perl-format
+#~ msgid ""
+#~ "%s must be updated to support the 'build-arch' and 'build-indep' targets "
+#~ "(at least '%s' seems to be missing)"
+#~ msgstr ""
+#~ "%s muss aktualisiert werden, um die Ziele »build-arch« und »build-indep« "
+#~ "zu unterstützen (zumindest »%s« scheint zu fehlen)."
+
 #, perl-format
 #~ msgid "Usage: %s [<option>...]\n"
 #~ msgstr "Aufruf: %s [<Option>…]\n"
@@ -4368,10 +4606,6 @@ msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
 #, perl-format
 #~ msgid "cannot execute %s program"
 #~ msgstr "Programm %s kann nicht ausgeführt werden"
-
-#, perl-format
-#~ msgid "cannot write signature file %s"
-#~ msgstr "Signaturdatei %s kann nicht geschrieben werden"
 
 #~ msgid "cannot OpenPGP ASCII armor signature file due to missing gpg"
 #~ msgstr ""
@@ -4432,9 +4666,6 @@ msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
 #~ msgid "unknown substitution variable ${%s}"
 #~ msgstr "unbekannte Substitutionsvariable ${%s}"
 
-#~ msgid "cannot create pipe for %s"
-#~ msgstr "Pipe für %s kann nicht angelegt werden"
-
 #~ msgid "tail of %s"
 #~ msgstr "Ende von %s"
 
@@ -4456,9 +4687,6 @@ msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
 
 #~ msgid "cannot open new output control file '%s'"
 #~ msgstr "neue Ausgabe-Steuerdatei »%s« kann nicht geöffnet werden"
-
-#~ msgid "deprecated substitution variable ${%s}"
-#~ msgstr "veraltete Substitutionsvariable ${%s}"
 
 #~ msgid "Usage: %s [<option>...] [<changelog-file>]"
 #~ msgstr "Aufruf: %s [<Option> …] [<Changelog-Datei>]"
@@ -4700,9 +4928,6 @@ msgstr "Epoch-Teil der Versionsnummer ist keine Zahl: »%s«"
 
 #~ msgid "close new files list file"
 #~ msgstr "neue Dateilistendatei schließen"
-
-#~ msgid "cannot read files list file"
-#~ msgstr "Dateilistendatei kann nicht gelesen werden"
 
 #~ msgid "duplicate files list entry for package %s (line %d)"
 #~ msgstr "doppelter Dateilisteneintrag für Paket %s (Zeile %d)"

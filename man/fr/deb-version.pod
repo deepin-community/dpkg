@@ -22,7 +22,7 @@ deb-version - Format du numéro de version des paquets Debian
 
 =head1 DESCRIPTION
 
-Les numéros de version utilisés pour les paquets sources et binaires se composent de trois parties. Celles-ci S<sont :>
+Les numéros de version utilisés pour les paquets sources et binaires se composent de trois parties. Celles-ci sont :
 
 =over 
 
@@ -34,19 +34,19 @@ Cette valeur est destinée à permettre de gérer des erreurs dans les anciens n
 
 =item I<version_amont>
 
-La partie principale du numéro de version. Cela correspond normalement au numéro de version du paquet d'origine S<(« upstream »)> qui a servi à créer le fichier I<.deb>, si cela peut s'appliquer. Le format d'origine spécifié par l'auteur est généralement conservé ; cependant, il arrive qu'il soit nécessaire d'adapter ce numéro pour qu'il se conforme au format du système de gestion de paquet et du procédé de comparaison des numéros de version.
+La partie principale du numéro de version. Cela correspond normalement au numéro de version du paquet d'origine (« upstream ») qui a servi à créer le fichier I<.deb>, si cela peut s'appliquer. Le format d'origine spécifié par l'auteur est généralement conservé ; cependant, il arrive qu'il soit nécessaire d'adapter ce numéro pour qu'il se conforme au format du système de gestion de paquet et du procédé de comparaison des numéros de version.
 
 Le principe de comparaison du système de gestion de paquets en ce qui concerne la I<version_amont> est décrit ci-dessous. La partie I<version_amont> du numéro de version est obligatoire.
 
-La I<version_amont> ne doit contenir que des caractères alphanumériques S<(« A-Za-z0-9 »)> et les caractères B<.> B<+> B<-> B<:> B<~> (point, plus, tiret, deux-points, tilde) et devrait commencer par un chiffre. S'il n'y a pas de partie I<révision_Debian> alors le tiret n'est pas autorisé ; s'il n'y a pas d'I<epoch>, alors c'est le caractère deux-points qui n'est pas autorisé.
+La I<version_amont> ne doit contenir que des caractères alphanumériques (« A-Za-z0-9 ») et les caractères B<.> B<+> B<-> B<:> B<~> (point, plus, tiret, deux-points, tilde) et devrait commencer par un chiffre. S'il n'y a pas de partie I<révision_Debian> alors le tiret n'est pas autorisé ; s'il n'y a pas d'I<epoch>, alors c'est le caractère deux-points qui n'est pas autorisé.
 
 =item I<révision_Debian>
 
 Cette partie du numéro de version indique la version du paquet Debian à partir du numéro de la version amont. Elle ne doit contenir que des symboles alphanumériques et les caractères B<+> B<.> B<~> (plus, point, tilde). Elle est analysée de la même façon que la I<version_amont>.
 
-Cette partie est facultative ; si elle n'est pas présente, la I<version_amont> ne doit pas contenir de tiret. Ce format est prévu pour le cas où un logiciel a été directement conçu comme paquet Debian, il n'y a donc qu'une seule S<« debianisation »> et donc par la suite pas besoin d'indication de révision.
+Cette partie est facultative ; si elle n'est pas présente, la I<version_amont> ne doit pas contenir de tiret. Ce format est prévu pour le cas où un logiciel a été directement conçu comme paquet Debian, il n'y a donc qu'une seule « debianisation » et donc par la suite pas besoin d'indication de révision.
 
-Il est convenu de repartir à S<« 1 »> pour la I<révision_Debian> à chaque fois que la I<version_amont> est incrémentée.
+Il est convenu de repartir à « 1 » pour la I<révision_Debian> à chaque fois que la I<version_amont> est incrémentée.
 
 Dpkg s'arrêtera au dernier tiret du numéro de version (s'il y en a un) pour déterminer la partie I<version_amont> et la I<révision_Debian>. L'absence de I<révision_Debian> est comparée avant sa présence, mais il faut noter que la I<révision_Debian> est la partie la moins significative du numéro de version.
 
@@ -54,21 +54,21 @@ Dpkg s'arrêtera au dernier tiret du numéro de version (s'il y en a un) pour d�
 
 =head2 Algorithme de tri
 
-Les parties I<version_amont> et I<révision_Debian> sont comparées par le système de gestion de paquet en utilisant le même S<algorithme :>
+Les parties I<version_amont> et I<révision_Debian> sont comparées par le système de gestion de paquet en utilisant le même algorithme :
 
 Les chaînes sont comparées de la gauche vers la droite.
 
-Pour commencer, la première partie de chaque chaîne composée uniquement de caractères non numériques est déterminée. Puis ces deux parties (l'une peut être vide) sont comparées lexicalement. Si une différence est trouvée, elle est renvoyée. La comparaison lexicale est effectuée sur une version modifiée des valeurs ASCII afin que les lettres passent avant les autres caractères et que les tildes ("~") passent avant tous les caractères, même la fin d'une partie. Par exemple, les éléments suivants sont ordonnés S<ainsi :> S<« ~~ »,> S<« ~~a »,> S<« ~ »,> partie vide, S<« a ».>
+Pour commencer, la première partie de chaque chaîne composée uniquement de caractères non numériques est déterminée. Puis ces deux parties (l'une peut être vide) sont comparées lexicalement. Si une différence est trouvée, elle est renvoyée. La comparaison lexicale est effectuée sur une version modifiée des valeurs ASCII afin que les lettres passent avant les autres caractères et que les tildes ("~") passent avant tous les caractères, même la fin d'une partie. Par exemple, les éléments suivants sont ordonnés ainsi : « ~~ », « ~~a », « ~ », partie vide, « a ».
 
 Puis, le début de ce qui reste des chaînes de caractères qui ne doivent plus contenir que des chiffres est déterminé. Ces valeurs numériques sont comparées et les différences sont remontées. Dans le cas d'une chaîne vide (ce qui peut arriver si une chaîne est plus longue que l'autre lors de la comparaison) elle compte pour un zéro.
 
 Ces deux étapes (comparaison et suppression des caractères non numériques puis de suppression des caractères numériques dans le début de la chaîne) sont répétées jusqu'à ce qu'une différence soit trouvée ou la fin des chaînes atteinte.
 
-Notez que le rôle de epoch est de permettre de se sortir des problèmes de numérotation de version, et de faire face à des situations de changement de logique de numérotation. Cela n'est B<pas> destiné à faire face à des numéros de version qui contiennent des chaînes de lettres que le système de gestion de paquet ne sait pas interpréter (comme S<« ALPHA »,> S<« pre- »)> ou d'autres choses stupides.
+Notez que le rôle de epoch est de permettre de se sortir des problèmes de numérotation de version, et de faire face à des situations de changement de logique de numérotation. Cela n'est B<pas> destiné à faire face à des numéros de version qui contiennent des chaînes de lettres que le système de gestion de paquet ne sait pas interpréter (comme « ALPHA », « pre- ») ou d'autres choses stupides.
 
 =head1 NOTES
 
-Le caractère tilde S<(« ~ »)> et sa propriété spéciale pour les comparaisons ont été introduites dans la version 1.10 de dpkg. Ce n'est qu'à partir des versions supérieures (1.10.x) que certaines parties des scripts de construction de dpkg ont commencé à gérer ce système.
+Le caractère tilde (« ~ ») et sa propriété spéciale pour les comparaisons ont été introduites dans la version 1.10 de dpkg. Ce n'est qu'à partir des versions supérieures (1.10.x) que certaines parties des scripts de construction de dpkg ont commencé à gérer ce système.
 
 =head1 VOIR AUSSI
 

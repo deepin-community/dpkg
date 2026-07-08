@@ -99,7 +99,9 @@ parse_timestamp(const char *value)
 
 	errno = 0;
 	timestamp = strtoimax(value, &end, 10);
-	if (value == end || *end || errno != 0)
+	if (value == end || *end)
+		ohshit(_("unable to parse timestamp '%.255s'"), value);
+	else if (errno != 0)
 		ohshite(_("unable to parse timestamp '%.255s'"), value);
 
 	return timestamp;
@@ -162,7 +164,7 @@ mksplit(const char *file_src, const char *prefix, off_t maxpartsize,
 	version = versiondescribe(&pkg->available.version, vdew_nonambig);
 
 	timestamp_str = getenv("SOURCE_DATE_EPOCH");
-	if (timestamp_str)
+	if (str_is_set(timestamp_str))
 		timestamp = parse_timestamp(timestamp_str);
 	else
 		timestamp = time(NULL);
@@ -191,7 +193,6 @@ mksplit(const char *file_src, const char *prefix, off_t maxpartsize,
 	for (curpart = 1; curpart <= nparts; curpart++) {
 		struct dpkg_ar *ar;
 
-		varbuf_reset(&file_dst);
 		/* Generate output filename. */
 		if (msdos) {
 			char *refname;
@@ -199,12 +200,12 @@ mksplit(const char *file_src, const char *prefix, off_t maxpartsize,
 
 			refname = str_fmt("%dof%d", curpart, nparts);
 			prefix_max = max(8 - strlen(refname), 0);
-			varbuf_printf(&file_dst, "%s/%.*s%.8s" DEBEXT,
-			              prefixdir, prefix_max, prefix, refname);
+			varbuf_set_fmt(&file_dst, "%s/%.*s%.8s" DEBEXT,
+			               prefixdir, prefix_max, prefix, refname);
 			free(refname);
 		} else {
-			varbuf_printf(&file_dst, "%s.%dof%d" DEBEXT,
-			              prefix, curpart, nparts);
+			varbuf_set_fmt(&file_dst, "%s.%dof%d" DEBEXT,
+			               prefix, curpart, nparts);
 		}
 
 		if (curpart == nparts)
@@ -227,20 +228,18 @@ mksplit(const char *file_src, const char *prefix, off_t maxpartsize,
 		dpkg_ar_put_magic(ar);
 
 		/* Write the debian-split part. */
-		varbuf_printf(&partmagic,
-		              "%s\n%s\n%s\n%s\n%jd\n%jd\n%d/%d\n%s\n",
-		              SPLITVERSION, pkg->set->name, version, hash,
-		              (intmax_t)st.st_size, (intmax_t)partsize,
-		              curpart, nparts, pkg->available.arch->name);
+		varbuf_set_fmt(&partmagic,
+		               "%s\n%s\n%s\n%s\n%jd\n%jd\n%d/%d\n%s\n",
+		               SPLITVERSION, pkg->set->name, version, hash,
+		               (intmax_t)st.st_size, (intmax_t)partsize,
+		               curpart, nparts, pkg->available.arch->name);
 		dpkg_ar_member_put_mem(ar, PARTMAGIC,
 		                       partmagic.buf, partmagic.used);
-		varbuf_reset(&partmagic);
 
 		/* Write the data part. */
-		varbuf_printf(&partname, "data.%d", curpart);
+		varbuf_set_fmt(&partname, "data.%d", curpart);
 		dpkg_ar_member_put_file(ar, partname.buf,
 		                        fd_src, cur_partsize);
-		varbuf_reset(&partname);
 
 		dpkg_ar_close(ar);
 

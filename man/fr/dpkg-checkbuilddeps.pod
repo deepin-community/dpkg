@@ -50,7 +50,7 @@ Ignore les dépendances et les conflits de construction internes (depuis dpkg 1.
 
 =item B<-c> I<chaîne-des-conflits-de-construction>
 
-Utilise les dépendances et conflits de construction donnés au lieu de ceux indiqués dans le fichier I<debian/control> (depuis S<dpkg 1.14.17).>
+Utilise les dépendances et conflits de construction donnés au lieu de ceux indiqués dans le fichier I<debian/control> (depuis dpkg 1.14.17).
 
 =item B<-a> I<arch>
 
@@ -58,7 +58,7 @@ Vérifie les dépendances et conflits de construction en supposant que le paquet
 
 =item B<-P> I<profil>[B<,>...]
 
-Vérifie les dépendances et conflits de construction en supposant que le paquet décrit dans le fichier de contrôle doit être construit pour le ou les profils donnés (depuis S<dpkg 1.17.2).> L'argument est une liste séparée par des virgules des noms de profil.
+Vérifie les dépendances et conflits de construction en supposant que le paquet décrit dans le fichier de contrôle doit être construit pour le ou les profils donnés (depuis dpkg 1.17.2). L'argument est une liste séparée par des virgules des noms de profil.
 
 =item B<-?>, B<--help>
 
@@ -74,17 +74,21 @@ Afficher le numéro de version puis quitter.
 
 =over 
 
+=item B<DEB_HOST_ARCH>
+
+Sets the host architecture.  This affects the dependency resolution logic, which might then not match what the system dpkg considers satisfiable.
+
 =item B<DEB_BUILD_PROFILES>
 
 Si cette option est utilisée, elle sera utilisée comme profil(s) de construction actif(s) pour le paquet à construire. C'est une liste séparée par des espaces de noms de profil. Cette option est outrepassée par l'option B<-P>.
 
 =item B<DPKG_COLORS>
 
-Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
+Définit le mode de couleur (depuis dpkg 1.18.5). Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis dpkg 1.19.0). Les valeurs permises sont : B<0> et B<1> (par défaut).
 
 =back
 

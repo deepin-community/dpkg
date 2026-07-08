@@ -28,7 +28,7 @@
 
 #include <errno.h>
 #include <limits.h>
-#if HAVE_LOCALE_H
+#ifdef HAVE_LOCALE_H
 #include <locale.h>
 #endif
 #include <ctype.h>
@@ -382,16 +382,16 @@ display_menu_entry(int i, int so)
   const menuentry *me= &menuentries[i];
 
   varbuf buf;
-  buf.fmt(" %c %d. %-11.11s %-80.80s ",
-          so ? '*' : ' ', i,
-          gettext(me->option),
-          gettext(me->menuent));
+  buf.add_fmt(" %c %d. %-11.11s %-80.80s ",
+              so ? '*' : ' ', i,
+              gettext(me->option),
+              gettext(me->menuent));
 
   int x, y DPKG_ATTR_UNUSED;
   getmaxyx(stdscr,y,x);
 
   attrset(so ? A_REVERSE : A_NORMAL);
-  mvaddnstr(i + 2, 0, buf.string(), x - 1);
+  mvaddnstr(i + 2, 0, buf.str(), x - 1);
   attrset(A_NORMAL);
 }
 
@@ -404,11 +404,11 @@ refreshmenu(void)
   getmaxyx(stdscr,y,x);
 
   varbuf buf;
-  buf.fmt(gettext(programdesc), DSELECT, PACKAGE_RELEASE);
+  buf.add_fmt(gettext(programdesc), DSELECT, PACKAGE_RELEASE);
 
   clear();
   attrset(A_BOLD);
-  mvaddnstr(0, 0, buf.string(), x - 1);
+  mvaddnstr(0, 0, buf.str(), x - 1);
 
   attrset(A_NORMAL);
   const struct menuentry *mep; int i;

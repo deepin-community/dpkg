@@ -64,6 +64,10 @@ Se definido e as opções B<--instdir> ou B<--root> não foram especificadas, se
 
 Define o modo de cor. Os valores actualmente aceites são: B<auto> (predefinido), B<always> e B<never>.
 
+=item B<DPKG_NLS>
+
+Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nativa. Também como conhecido como suporte de internacionalização (ou i18n) (desde dpkg 1.22.7). Os valores aceites são B<0> e B<1> (predefinição).
+
 =back
 
 =head1 VEJA TAMBÉM

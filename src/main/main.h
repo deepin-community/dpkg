@@ -22,6 +22,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <stdbool.h>
+
 #include <dpkg/debug.h>
 #include <dpkg/pkg-list.h>
 
@@ -69,9 +71,14 @@ struct perpackagestate {
 
 extern const char *const statusstrings[];
 
+extern int f_act;
+extern int f_alsoselect;
+extern int f_autodeconf;
+extern int f_debsig;
+extern int f_pending;
+extern int f_recursive;
 extern int f_robot;
-extern int f_pending, f_recursive, f_alsoselect, f_skipsame, f_noact;
-extern int f_autodeconf, f_nodebsig;
+extern int f_skipsame;
 extern int f_triggers;
 
 extern bool abort_processing;
@@ -220,6 +227,8 @@ bool ignore_depends(const struct pkginfo *pkg);
 bool force_breaks(struct deppossi *possi);
 bool force_depends(struct deppossi *possi);
 bool force_conflicts(struct deppossi *possi);
+bool
+conffile_is_disappearing(struct conffile *conff);
 void
 conffile_mark_obsolete(struct pkginfo *pkg, struct fsys_namenode *namenode);
 void pkg_conffiles_mark_old(struct pkginfo *pkg);

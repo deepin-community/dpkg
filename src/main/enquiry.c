@@ -319,7 +319,7 @@ unpackchk(const char *const *argv)
     pkg_hash_iter_free(iter);
   } else if (sects <= 12) {
     for (se= sectionentries; se; se= se->next) {
-      sprintf(buf,"%d",se->count);
+      snprintf(buf, sizeof(buf), "%d", se->count);
       printf(_(" %d in %s: "),se->count,se->name);
       width= 70-strlen(se->name)-strlen(buf);
       while (width > 59) { putchar(' '); width--; }
@@ -344,7 +344,7 @@ unpackchk(const char *const *argv)
            totalcount);
     width= 0;
     for (se= sectionentries; se; se= se->next) {
-      sprintf(buf,"%d",se->count);
+      snprintf(buf, sizeof(buf), "%d", se->count);
       width -= (6 + strlen(se->name) + strlen(buf));
       if (width < 0) { putchar('\n'); width= 73 - strlen(se->name) - strlen(buf); }
       printf("   %s (%d)",se->name,se->count);
@@ -565,7 +565,6 @@ predeppackage(const char *const *argv)
     if (!pkg) {
       varbuf_reset(&vb);
       describedepcon(&vb,dep);
-      varbuf_end_str(&vb);
       notice(_("cannot see how to satisfy pre-dependency:\n %s"), vb.buf);
       ohshit(_("cannot satisfy pre-dependencies for %.250s (wanted due to %.250s)"),
              pkgbin_name(dep->up, &dep->up->available, pnaw_nonambig),
@@ -594,6 +593,8 @@ printarch(const char *const *argv)
 {
   if (*argv)
     badusage(_("--%s takes no arguments"), cipaction->olong);
+
+  dpkg_arch_load_native();
 
   printf("%s\n", dpkg_arch_get(DPKG_ARCH_NATIVE)->name);
 

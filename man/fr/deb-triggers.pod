@@ -24,9 +24,9 @@ B<debian/triggers>, B<debian/>I<paquet-binaire>B<.triggers>, B<DEBIAN/triggers>
 
 Un paquet déclare ses relations avec des actions différées en incluant un fichier I<triggers> dans son archive de contrôle (c'est-à-dire I<DEBIAN/triggers> au moment de la création du paquet).
 
-Ce fichier contient des directives, une par ligne. Les espaces de début et fin de ligne et tout ce qui suit le premier caractère S<« B<#> »> sont supprimés, et les lignes vides seront ignorées.
+Ce fichier contient des directives, une par ligne. Les espaces de début et fin de ligne et tout ce qui suit le premier caractère « B<#> » sont supprimés, et les lignes vides seront ignorées.
 
-Les directives actuellement gérées S<sont :>
+Les directives actuellement gérées sont :
 
 =over 
 
@@ -38,7 +38,7 @@ Les directives actuellement gérées S<sont :>
 
 Indique que le paquet est concerné par l'action différée indiquée. Toutes les actions différées associées au paquet doivent être listées en utilisant cette directive depuis le fichier de contrôle des actions différées.
 
-Les variantes S<« await »> placent le paquet qui provoque l'action différée dans l'état S<« triggers-awaited »> (actions différées attendues) selon la manière dont l'action différée est activée. La variante S<« noawait »> ne place pas les paquets qui provoquent cette action différée dans l'état S<« triggers-awaited »> même si le paquet déclenchant a déclaré une activation S<« await »> (par soit une directive B<activate-await> ou B<activate>, soit en utilisant l'option en ligne de commande B<dpkg-trigger> B<--no-await>. La variante S<« await »> ne devrait être utilisée que lorsque la fonctionnalité fournie par l'action différée n'est pas critique.
+Les variantes « await » placent le paquet qui provoque l'action différée dans l'état « triggers-awaited » (actions différées attendues) selon la manière dont l'action différée est activée. La variante « noawait » ne place pas les paquets qui provoquent cette action différée dans l'état « triggers-awaited » même si le paquet déclenchant a déclaré une activation « await » (par soit une directive B<activate-await> ou B<activate>, soit en utilisant l'option en ligne de commande B<dpkg-trigger> B<--no-await>. La variante « await » ne devrait être utilisée que lorsque la fonctionnalité fournie par l'action différée n'est pas critique.
 
 =item B<activate> I<nom-action-différée>
 
@@ -46,9 +46,9 @@ Les variantes S<« await »> placent le paquet qui provoque l'action différée 
 
 =item B<activate-noawait> I<nom-action-différée>
 
-Cette directive permet que tout changement dans l'état de ce paquet active l'action différée spécifiée. L'action différée sera activée au début des opérations S<suivantes :> dépaquetage, configuration, suppression (y compris en cas de remplacement par un paquet conflictuel), purge et déconfiguration.
+Cette directive permet que tout changement dans l'état de ce paquet active l'action différée spécifiée. L'action différée sera activée au début des opérations suivantes : dépaquetage, configuration, suppression (y compris en cas de remplacement par un paquet conflictuel), purge et déconfiguration.
 
-Les variantes S<« await »> ne placent le paquet qui provoque cette action différée dans l'état S<« triggers-awaited »> que si la directive concernée est aussi S<« await ».> La variante S<« noawait »> ne place jamais les paquets qui provoquent cette action différée dans l'état S<« triggers-awaited ».> Elle ne devrait être utilisée que lorsque la fonctionnalité fournie par l'action différée n'est pas critique.
+Les variantes « await » ne placent le paquet qui provoque cette action différée dans l'état « triggers-awaited » que si la directive concernée est aussi « await ». La variante « noawait » ne place jamais les paquets qui provoquent cette action différée dans l'état « triggers-awaited ». Elle ne devrait être utilisée que lorsque la fonctionnalité fournie par l'action différée n'est pas critique.
 
 Si ce paquet disparaît durant le dépaquetage d'un autre paquet, l'action différée sera activée lorsque la disparition est constatée vers la fin du dépaquetage. L'exécution d'une action différée, et donc le passage du statut triggers-awaited (action-différée-attendue) à installed (installé), ne provoquera pas l'activation. Dans le cas d'un dépaquetage, les actions différées listées dans l'ancienne et la nouvelle version du paquet seront activées.
 
@@ -56,13 +56,13 @@ Si ce paquet disparaît durant le dépaquetage d'un autre paquet, l'action diff�
 
 Les directives inconnues sont des erreurs qui empêcheront l'installation du paquet.
 
-Les variantes S<« -noawait »> doivent toujours être privilégiées quand c'est possible dans la mesure où les paquets provoquant une action différée ne sont pas placés en état S<« triggers-awaited »> (actions différées attendues), et peuvent donc être immédiatement configurés sans recourir à l'exécution de l'action différée. Si les paquets provoquant l'action différée sont des dépendances d'autres paquets mis à jour, cela évitera le lancement de l'action différée et rendra possible l'exécution de l'action différée une seule fois au cours des étapes finales de la mise à jour.
+Les variantes « -noawait » doivent toujours être privilégiées quand c'est possible dans la mesure où les paquets provoquant une action différée ne sont pas placés en état « triggers-awaited » (actions différées attendues), et peuvent donc être immédiatement configurés sans recourir à l'exécution de l'action différée. Si les paquets provoquant l'action différée sont des dépendances d'autres paquets mis à jour, cela évitera le lancement de l'action différée et rendra possible l'exécution de l'action différée une seule fois au cours des étapes finales de la mise à jour.
 
-Les variantes S<« -noawait »> ne sont gérées qu'à partir de dpkg 1.16.1 et provoqueront des erreurs avec les versions plus anciennes.
+Les variantes « -noawait » ne sont gérées qu'à partir de dpkg 1.16.1 et provoqueront des erreurs avec les versions plus anciennes.
 
-Les alias de variantes S<« -await »> ne sont gérés qu'à partir de dpkg 1.17.21 et provoqueront des erreurs avec les versions plus anciennes.
+Les alias de variantes « -await » ne sont gérés qu'à partir de dpkg 1.17.21 et provoqueront des erreurs avec les versions plus anciennes.
 
-Si un paquet fournit une directive B<interest-noawait>, toute activation mettra le paquet provoquant l'action différée en mode S<« noawait »,> indépendamment du mode d'attente demandé par l'activation (soit S<« await »,> soit S<« noawait »).> Si un paquet fournit une directive B<interest> ou B<interest-await>, toute activation mettra le paquet provoquant l'action différée en mode S<« await »> ou S<« noawait »> selon la manière dont il a été activé.
+Si un paquet fournit une directive B<interest-noawait>, toute activation mettra le paquet provoquant l'action différée en mode « noawait », indépendamment du mode d'attente demandé par l'activation (soit « await », soit « noawait »). Si un paquet fournit une directive B<interest> ou B<interest-await>, toute activation mettra le paquet provoquant l'action différée en mode « await » ou « noawait » selon la manière dont il a été activé.
 
 =head1 VOIR AUSSI
 

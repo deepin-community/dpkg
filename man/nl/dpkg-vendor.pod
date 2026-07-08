@@ -24,6 +24,12 @@ B<dpkg-vendor> [I<optie>...] I<commando>
 
 B<dpkg-vendor> is gereedschap om informatie op te vragen over leveranciers die opgesomd worden in B<%PKGCONFDIR%/origins>. B<%PKGCONFDIR%/origins/default> bevat informatie over de huidige leverancier.
 
+De bestanden origin bevatten metagegevens over specifieke leveranciers, zoals hun URL of waar bugrapporten kunnen worden ingediend. Ze worden doorgaans gebruikt om zowel het gedrag van hulpmiddelen te bepalen als de resulterende inhoud tijdens het bouwen van een pakket dat gericht is op een specifieke leverancier, en om de herkomst van het pakket te beschrijven.
+
+In pakketten kan de leverancier ervan expliciet aangeven worden door een veld B<Origin> op te nemen. Anders wordt aangenomen dat de leverancier van een pakket zonder een dergelijk veld de leverancier is waarnaar wordt verwezen door de F<default> symbolische koppeling origin.
+
+De symbolische koppeling F<default> wordt ook gebruikt om de oorsprong aan te duiden van de huidige installatie die wordt beheerd door B<dpkg>. Dit kan een volledige distributie zijn of een laag bovenop een bestaand basissysteem dat geen pakketsysteem bevat of een specifiek eigen pakketsysteem.
+
 Dit programma werd geïntroduceerd in dpkg 1.15.1.
 
 =head1 COMMANDO'S
@@ -77,6 +83,18 @@ Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen
 =item B<DPKG_NLS>
 
 Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het activeren van moedertaalondersteuning, ook gekend als internationaliseringsondersteuning (of i18n) (sinds dpkg 1.19.0). Geldige waarden zijn: B<0> and B<1> (standaard).
+
+=back
+
+=head1 BESTANDEN
+
+=head2 Ondersteuning bij het maken van een pakket
+
+=over 
+
+=item B<%PKGDATADIR%/vendor.mk>
+
+Makefile-fragment dat de huidige leverancier en de bovenliggende leverancier instelt in variabelen en make-macro's biedt om te controleren op afgeleiden (sinds dpkg 1.16.1).
 
 =back
 

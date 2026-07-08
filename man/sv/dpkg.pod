@@ -655,7 +655,7 @@ Ignorera beroendekontroll för angivna paket (i verkligheten utförs kontrollen,
 
 Gör allting som efterfrågas, men skriv inte några ändringar. Detta används för att se vad som skulle ha hänt med åtgärden utan att faktiskt ändra något.
 
-Be sure to give B<--no-act> before the action-parameter, or you might end up with undesirable results (e.g. B<dpkg --purge foo --no-act> will first purge package “foo” and then try to purge package ”--no-act”, even though you probably expected it to actually do nothing).
+Se till att du anger B<--no-act> före åtgärdsflaggan, annars kan du få oönskade biverkningar (t.ex så kommer B<dpkg --purge foo --no-act> först att rensa ut paketet ”foo” för att sedan försöka rensa ut paketet ”--no-act”, trots att du troligen förväntade dig att ingenting skulle utföras).
 
 =item B<-R>, B<--recursive>
 
@@ -691,7 +691,9 @@ Sedan dpkg 1.21.10 tar även arkitekturen med i beräkningen, vilket gör det m�
 
 =item B<--post-invoke=>I<kommando>
 
-Sätter en anropskrok I<kommando> som körs via ”%DPKG_DEFAULT_SHELL% -c” före eller efter B<dpkg> körs för åtgärderna I<unpack>, I<configure>, I<install>, I<triggers-only>, I<remove> och I<purge> (sedan dpkg 1.15.4) samt I<add-architecture> och I<remove-architecture> (sedan dpkg 1.17.19). Flaggan kan anges flera gånger. Ordningen på flaggorna som anges behålls och de som anges i konfigurationsfilen har företräde. Miljövariabeln B<DPKG_HOOK_ACTION> sätts för hakar i den nuvarande B<dpkg>-åtgärden. 
+Ange en anropskrok I<kommando> som körs via ”%DPKG_DEFAULT_SHELL% -c” före eller efter B<dpkg> körs för åtgärderna I<unpack>, I<configure>, I<install>, I<triggers-only>, I<remove> och I<purge> (sedan dpkg 1.15.4) samt I<add-architecture> och I<remove-architecture> (sedan dpkg 1.17.19). Flaggan kan anges flera gånger. Ordningen på flaggorna som anges behålls och de som anges i konfigurationsfilen har företräde. Miljövariabeln B<DPKG_HOOK_ACTION> sätts för hakar i den nuvarande B<dpkg>-åtgärden. 
+
+Anropskrokarna körs inte när B<--no-act> anges, eller vid körning som icke-root utan B<--force-not-root>.
 
 B<Observera>: Skal kan anropa B<dpkg> flera gånger per körning, vilket kan göra att hakarna körs fler gånger än förväntat.
 
@@ -726,7 +728,7 @@ Det enda utdataformatet som stöds är för närvarande B<rpm>, som består av e
 
 Z<>
  B<missing  > [B<c>] I<sökvägsnamn> [B<(>I<felmeddelande>B<)>]
- B<??5??????> [B<c>] I<sökvägsnamn>
+ B<?M5??????> [B<c>] I<sökvägsnamn>
 
 De första 9 tecknen används för att rapportera resultaten från testerna, antingen ett bokstavligt B<missing> (saknas) om filen inte finns eller dess metadata inte kan hämtas, eller ett av följande specialtecken som rapporterar resultatet från varje enskilt test:
 
@@ -808,6 +810,8 @@ Sänds precis innan ett hanteringsskede påbörjas. I<Skede> är något av B<upg
 =item B<--status-logger>=I<kommando>
 
 Sänd maskinläsbar paketstatus och förloppsinformation till skal-I<kommando>ts standard in, som körs via ”%DPKG_DEFAULT_SHELL% -c” (sedan dpkg 1.16.0). Flaggan kan anges flera gånger. Utdataformatet som används är detsamma som för B<--status-fd>.
+
+Statusloggarna körs inte när B<--no-act> anges, eller när det körs som icke-root utan B<--force-non-root>
 
 =item B<--log=>I<filnamn>
 
@@ -902,11 +906,17 @@ Programmet B<dpkg> kommer att exekveras när ett nytt skal startas, eller när e
 
 =item B<DPKG_PAGER>
 
-Programmet B<dpkg> kommer att köra när en bläddrare körs, vilken kommer att köras med ”B<$SHELL -c>”, till exempel när skillnader i konffiler ska visas. Om B<SHELL> inte är satt kommer ”B<%DPKG_DEFAULT_SHELL%>” att användas istället. B<DPKG_PAGER> överstyr miljövariabeln B<PAGER> (sedan dpkg 1.19.2).
+Programmet B<dpkg> kommer att köra när en bläddrare körs, vilken kommer att köras med ”B<$SHELL -c>”, till exempel när skillnader i konffiler ska visas. Om B<SHELL> inte är satt kommer ”B<%DPKG_DEFAULT_SHELL%>” att användas istället.
+
+B<DPKG_PAGER> överstyr miljövariabeln B<PAGER> (sedan dpkg 1.19.2). Om inget av programmen som pekas på av B<DPKG_PAGER> eller B<PAGER> finns kommer följande program att försöka användas, i ordning (sedan dpkg 1.22.12): standardbläddraren B<%DPKG_DEFAULT_PAGER>, så B<less>, B<more>, och slutligen B<cat>.
 
 =item B<DPKG_COLORS>
 
 Väljer färgläge (sedan dpkg 1.18.5). För närvarande godtas följande värden: B<auto> (förval), B<always> och B<never>.
+
+=item B<DPKG_NLS>
+
+Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även känt som internationaliseringsstöd (eller i18n) (sedan dpkg 1.22.7). Tillåtna värden är: B<0> och B<1> (förval).
 
 =item B<DPKG_DEBUG>
 
@@ -923,6 +933,18 @@ Om satt, och flaggorna B<--admindir> och B<-root> inte har angivits, används v�
 =item B<DPKG_FRONTEND_LOCKED>
 
 Ställer in ett pakethanterarskal att meddela dpkg att det inte ska ta skal-låset (sedan dpkg 1.19.1).
+
+=item B<DPKG_PATH_PASSWD>
+
+Anger sökvägsnamnet för systemets F<passwd>-fil. Sökvägen är relativ till katalogen som angavs med B<--root>. Förval är F</etc/passwd>.
+
+Sedan dpkg 1.22.16.
+
+=item B<DPKG_PATH_GROUP>
+
+Anger sökvägsnamnet för systemets F<group>-fil. Sökvägen är relativ till katalogen som angavs med B<--root>. Förval är F</etc/group>.
+
+Sedan dpkg 1.22.16.
 
 =back
 

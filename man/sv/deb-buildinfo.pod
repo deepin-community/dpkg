@@ -26,7 +26,7 @@ Alla Debian-källkodspaket kan lagra bygginformation i en B<.buildinfo>-styrfil,
 
 Varje fält börjar med en etikett, såsom B<Source> eller B<Binary> (skiftlägesoberoende), följt av ett kolontecken och fältets kropp (skiftlägesberoende såvida inte annat anges). Fält avdelas endast av fältetiketter. Med andra ord kan texten i fälten spänna över flera rader, men installationsverktygen kommer oftast att slå samman rader när kroppen tolkas (förutom när det gäller flerradsfälten B<Binary-Only-Changes>, B<Installed-Build-Depends>, B<Environment>, B<Checksums-Md5>, B<Checksums-Sha1> och B<Checksums-Sha256>, se nedan).
 
-Styrinformationen kan omges av en OpenPGP-signatur i ASCII-skal, såsom beskrivs i RFC4880.
+Styrinformationen kan omges av en OpenPGP-signatur i ASCII-skal, såsom beskrivs i RFC9580.
 
 Namnet på B<.buildinfo>-filen kommer att bero på byggtypen och kommer att vara så specifik som möjligt, men inte mer; namnet kommer att vara:
 
@@ -76,15 +76,17 @@ Vanligtvis är detta det ursprungliga paketets versionsnummer på den form progr
 
 Det här flerradiga fältet innehåller den sammanslagna texten från ändringsloggposter för en insändning av enbart binärer från någon annan än paketansvarige (”binary-only non-maintainer upload”, binNMU) om detta är tillfället. För att göra fältet till ett giltigt flerradsfält ersätts tomma rader med en ensam punkt (”.”) och alla rader får ett teckens indrag. Exakt innehåll beror på formatet på ändringsloggen.
 
-=item B<Checksums-Md5:> (krävs)
+=item B<Checksums-Md5:> (krävs, svag)
 
-=item B<Checksums-Sha1:> (krävs)
+=item B<Checksums-Sha1:> (krävs, svag)
 
-=item B<Checksums-Sha256:> (krävs)
+=item B<Checksums-Sha256:> (krävs, stark)
 
 =item S< >I<kontrollsumma> I<storlek> I<filnamn>
 
 De här flerradsfälteten innehåller en lista med filer med en kontrollsumma och storlek för var och en. Fälten har samma syntax och skiljer sig bara vad gäller vilken kontrollsummealgoritm som används: MD5 för B<Checksums-Md5>, SHA-1 för B<Checksums-Sha1> och SHA-256 för B<Checksums-Sha256>.
+
+B<Observera>: MD5- och SHA1-kontrollsummorna anses vara svaga och bör aldrig anses vara tillräckliga för en säker bekräftelse.
 
 Första raden i fältvärdet (delen av på samma rad som fältnamnet följt av kolon) är alltid tom. Innehållet i fältet anges som fortsättningsrader, en rad per fil. Varje rad består av blankstegsavdelade fält som beskriver filen: kontrollsumman, filstorleken och filnamnet.
 
@@ -121,10 +123,6 @@ Det här flerdelade fältet innehåller en blankstegsavdelad lista över ofullst
 På Debian och dess derivat kan följande orsakstaggar skapas:
 
 =over 
-
-=item B<merged-usr-via-aliased-dirs>
-
-Systemet har en sammanslagen I</usr> via aliaskataloger (tidigare känt som B<merged-usr-via-symlinks>). Detta kommer förvirra B<dpkg-query>, B<dpkg-statoverride>, B<dpkg-trigger>, B<update-alternatives> och andra verktyg som använder sökvägsnamn som nyckel i sina databaser, eftersom det skapar filsystemaliasproblem och stör förståelsen av filsystemet som B<dpkg> har lagrat i sin databas. För byggsystem som hårdkodar sökvägar till specifika binärer eller bibliotek i de resulterande artefakterna kan det också skapa paket som är inkompatibla med system som inte har /usr-sammanslagna filsystem.
 
 =item B<usr-local-has-configs>
 

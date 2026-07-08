@@ -240,7 +240,7 @@ md5hash_prev_conffile(struct pkginfo *pkg, char *oldhash, const char *oldname,
                              &otherpkg->configversion) != 0)
       continue;
     for (conff = otherpkg->installed.conffiles; conff; conff = conff->next) {
-      if (conff->obsolete || conff->remove_on_upgrade)
+      if (conffile_is_disappearing(conff))
         continue;
       if (strcmp(conff->name, namenode->name) == 0)
         break;
@@ -431,7 +431,6 @@ tarobject_extract(struct tarcontext *tc, struct tar_entry *te,
                    namenodetouse(linknode, tc->pkg, &tc->pkg->available)->name);
     if (linknode->flags & (FNNF_DEFERRED_RENAME | FNNF_NEW_CONFF))
       varbuf_add_str(&hardlinkfn, DPKGNEWEXT);
-    varbuf_end_str(&hardlinkfn);
     if (link(hardlinkfn.buf, path))
       ohshite(_("error creating hard link '%.255s'"), te->name);
     namenode->newhash = linknode->newhash;
@@ -598,17 +597,14 @@ tarobject_matches(struct tarcontext *tc,
 void setupfnamevbs(const char *filename) {
   varbuf_rollback(&fname_state);
   varbuf_add_str(&fnamevb, filename);
-  varbuf_end_str(&fnamevb);
 
   varbuf_rollback(&fnametmp_state);
   varbuf_add_str(&fnametmpvb, filename);
   varbuf_add_str(&fnametmpvb, DPKGTEMPEXT);
-  varbuf_end_str(&fnametmpvb);
 
   varbuf_rollback(&fnamenew_state);
   varbuf_add_str(&fnamenewvb, filename);
   varbuf_add_str(&fnamenewvb, DPKGNEWEXT);
-  varbuf_end_str(&fnamenewvb);
 
   debug(dbg_eachfiledetail, "setupvnamevbs main='%s' tmp='%s' new='%s'",
         fnamevb.buf, fnametmpvb.buf, fnamenewvb.buf);
@@ -643,7 +639,6 @@ linktosameexistingdir(const struct tar_entry *ti, const char *fname,
     varbuf_set_buf(symlinkfn, fname, (lastslash - fname) + 1);
   }
   varbuf_add_str(symlinkfn, ti->linkname);
-  varbuf_end_str(symlinkfn);
 
   statr= stat(symlinkfn->buf, &newstab);
   if (statr) {
@@ -892,7 +887,7 @@ tarobject(struct tar_archive *tar, struct tar_entry *ti)
         for (conff = otherpkg->installed.conffiles;
              conff;
              conff = conff->next) {
-          if (!conff->obsolete)
+          if (!(conff->flags & CONFFILE_OBSOLETE))
             continue;
           if (strcmp(conff->name, nifd->namenode->name) == 0)
             break;
@@ -923,14 +918,14 @@ tarobject(struct tar_archive *tar, struct tar_entry *ti)
         if (!statr && S_ISDIR(stab.st_mode)) {
           forcibleerr(FORCE_OVERWRITE_DIR,
                       _("trying to overwrite directory '%.250s' "
-                        "in package %.250s %.250s with nondirectory"),
+                        "in package %.250s (%.250s) with nondirectory"),
                       nifd->namenode->name, pkg_name(otherpkg, pnaw_nonambig),
                       versiondescribe(&otherpkg->installed.version,
                                       vdew_nonambig));
         } else {
           forcibleerr(FORCE_OVERWRITE,
                       _("trying to overwrite '%.250s', "
-                        "which is also in package %.250s %.250s"),
+                        "which is also in package %.250s (%.250s)"),
                       nifd->namenode->name, pkg_name(otherpkg, pnaw_nonambig),
                       versiondescribe(&otherpkg->installed.version,
                                       vdew_nonambig));
@@ -1322,7 +1317,6 @@ void check_breaks(struct dependency *dep, struct pkginfo *pkg,
     return;
   }
 
-  varbuf_end_str(&why);
 
   if (fixbydeconf && f_autodeconf) {
     ensure_package_clientdata(fixbydeconf);
@@ -1336,7 +1330,7 @@ void check_breaks(struct dependency *dep, struct pkginfo *pkg,
            pkg_name(fixbydeconf, pnaw_nonambig),
            pkgbin_name(pkg, &pkg->available, pnaw_nonambig));
 
-    ok = try_deconfigure_can(fixbydeconf, dep->list, pkg, why.buf);
+    ok = try_deconfigure_can(fixbydeconf, dep->list, pkg, varbuf_str(&why));
     if (ok == 1) {
       notice(_("yes, will deconfigure %s (broken by %s)"),
              pkg_name(fixbydeconf, pnaw_nonambig),
@@ -1344,7 +1338,8 @@ void check_breaks(struct dependency *dep, struct pkginfo *pkg,
     }
   } else {
     notice(_("regarding %s containing %s:\n%s"), pfilename,
-           pkgbin_name(pkg, &pkg->available, pnaw_nonambig), why.buf);
+           pkgbin_name(pkg, &pkg->available, pnaw_nonambig),
+           varbuf_str(&why));
     ok= 0;
   }
   varbuf_destroy(&why);
@@ -1415,8 +1410,7 @@ void check_conflict(struct dependency *dep, struct pkginfo *pkg,
             continue;
           if (depisok(pdep->up, &removalwhy, NULL, NULL, false))
             continue;
-          varbuf_end_str(&removalwhy);
-          if (!try_remove_can(pdep,fixbyrm,removalwhy.buf))
+          if (!try_remove_can(pdep, fixbyrm, varbuf_str(&removalwhy)))
             break;
         }
         if (!pdep) {
@@ -1432,11 +1426,10 @@ void check_conflict(struct dependency *dep, struct pkginfo *pkg,
                 continue;
               if (depisok(pdep->up, &removalwhy, NULL, NULL, false))
                 continue;
-              varbuf_end_str(&removalwhy);
               notice(_("may have trouble removing %s, as it provides %s ..."),
                      pkg_name(fixbyrm, pnaw_nonambig),
                      providecheck->list->ed->name);
-              if (!try_remove_can(pdep,fixbyrm,removalwhy.buf))
+              if (!try_remove_can(pdep, fixbyrm, varbuf_str(&removalwhy)))
                 goto break_from_both_loops_at_once;
             }
           }
@@ -1470,9 +1463,9 @@ void check_conflict(struct dependency *dep, struct pkginfo *pkg,
       fixbyrm->clientdata->istobe = PKG_ISTOBE_NORMAL;
     }
   }
-  varbuf_end_str(&conflictwhy);
   notice(_("regarding %s containing %s:\n%s"), pfilename,
-         pkgbin_name(pkg, &pkg->available, pnaw_nonambig), conflictwhy.buf);
+         pkgbin_name(pkg, &pkg->available, pnaw_nonambig),
+         varbuf_str(&conflictwhy));
   if (!force_conflicts(dep->list))
     ohshit(_("conflicting packages - not installing %.250s"),
            pkgbin_name(pkg, &pkg->available, pnaw_nonambig));
@@ -1505,7 +1498,7 @@ archivefiles(const char *const *argv)
 
   trigproc_install_hooks();
 
-  if (f_noact)
+  if (!f_act)
     msdbflags = msdbrw_readonly;
   else if (cipaction->arg_int == act_avail)
     msdbflags = msdbrw_readonly | msdbrw_available_write;
@@ -1580,13 +1573,9 @@ archivefiles(const char *const *argv)
 
   /* Initialize fname variables contents. */
 
-  varbuf_reset(&fnamevb);
-  varbuf_reset(&fnametmpvb);
-  varbuf_reset(&fnamenewvb);
-
-  varbuf_add_str(&fnamevb, dpkg_fsys_get_dir());
-  varbuf_add_str(&fnametmpvb, dpkg_fsys_get_dir());
-  varbuf_add_str(&fnamenewvb, dpkg_fsys_get_dir());
+  varbuf_set_str(&fnamevb, dpkg_fsys_get_dir());
+  varbuf_set_str(&fnametmpvb, dpkg_fsys_get_dir());
+  varbuf_set_str(&fnamenewvb, dpkg_fsys_get_dir());
 
   varbuf_snapshot(&fnamevb, &fname_state);
   varbuf_snapshot(&fnametmpvb, &fnametmp_state);
@@ -1679,21 +1668,21 @@ wanttoinstall(struct pkginfo *pkg)
   } else if (rc == 0) {
     /* Same version fully installed. */
     if (f_skipsame && pkg->available.arch == pkg->installed.arch) {
-      notice(_("version %.250s of %.250s already installed, skipping"),
-             versiondescribe(&pkg->installed.version, vdew_nonambig),
-             pkg_name(pkg, pnaw_nonambig));
+      notice(_("package %.250s (%.250s) with same version already installed, skipping"),
+             pkg_name(pkg, pnaw_nonambig),
+             versiondescribe(&pkg->installed.version, vdew_nonambig));
       return false;
     } else {
       return true;
     }
   } else if (in_force(FORCE_DOWNGRADE)) {
-    warning(_("downgrading %.250s from %.250s to %.250s"),
+    warning(_("downgrading %.250s (%.250s) to (%.250s)"),
             pkg_name(pkg, pnaw_nonambig),
             versiondescribe(&pkg->installed.version, vdew_nonambig),
             versiondescribe(&pkg->available.version, vdew_nonambig));
     return true;
   } else {
-    notice(_("will not downgrade %.250s from %.250s to %.250s, skipping"),
+    notice(_("will not downgrade %.250s (%.250s) to (%.250s), skipping"),
            pkg_name(pkg, pnaw_nonambig),
            versiondescribe(&pkg->installed.version, vdew_nonambig),
            versiondescribe(&pkg->available.version, vdew_nonambig));

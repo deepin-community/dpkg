@@ -28,7 +28,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#if HAVE_LOCALE_H
+#ifdef HAVE_LOCALE_H
 #include <locale.h>
 #endif
 #include <errno.h>
@@ -355,7 +355,6 @@ searchfiles(const char *const *argv)
       varbuf_add_char(&vb, '*');
       varbuf_add_str(&vb, thisarg);
       varbuf_add_char(&vb, '*');
-      varbuf_end_str(&vb);
       thisarg= vb.buf;
     }
     if (!strpbrk(thisarg, "*[?\\")) {
@@ -364,7 +363,7 @@ searchfiles(const char *const *argv)
       varbuf_set_str(&path, thisarg);
       varbuf_trunc(&path, path_trim_slash_slashdot(path.buf));
 
-      namenode = fsys_hash_find_node(path.buf, FHFF_NONE);
+      namenode = fsys_hash_find_node(varbuf_str(&path), FHFF_NONE);
       found += searchoutput(namenode);
     } else {
       struct fsys_hash_iter *iter;

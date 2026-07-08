@@ -85,8 +85,8 @@ test_varbuf_grow(void)
 {
 	struct varbuf vb;
 	jmp_buf grow_jump;
-	size_t old_size;
-	bool grow_overflow;
+	volatile size_t old_size;
+	volatile bool grow_overflow;
 	int i;
 
 	varbuf_init(&vb, 10);
@@ -238,19 +238,15 @@ test_varbuf_add_str(void)
 	varbuf_init(&vb, 5);
 
 	varbuf_add_str(&vb, "1234567890");
-	varbuf_end_str(&vb);
 	test_str(vb.buf, ==, "1234567890");
 
 	varbuf_add_str(&vb, "abcd");
-	varbuf_end_str(&vb);
 	test_str(vb.buf, ==, "1234567890abcd");
 
 	varbuf_add_strn(&vb, "1234567890", 5);
-	varbuf_end_str(&vb);
 	test_str(vb.buf, ==, "1234567890abcd12345");
 
 	varbuf_add_strn(&vb, "abcd", 0);
-	varbuf_end_str(&vb);
 	test_str(vb.buf, ==, "1234567890abcd12345");
 
 	varbuf_destroy(&vb);
@@ -331,34 +327,26 @@ test_varbuf_add_dir(void)
 	varbuf_init(&vb, 10);
 
 	varbuf_add_dir(&vb, "");
-	varbuf_end_str(&vb);
 	test_str(vb.buf, ==, "/");
 	varbuf_add_dir(&vb, "");
-	varbuf_end_str(&vb);
 	test_str(vb.buf, ==, "/");
 	varbuf_add_dir(&vb, "aa");
-	varbuf_end_str(&vb);
 	test_str(vb.buf, ==, "/aa/");
 	varbuf_add_dir(&vb, "");
-	varbuf_end_str(&vb);
 	test_str(vb.buf, ==, "/aa/");
 
 	varbuf_reset(&vb);
 
 	varbuf_add_dir(&vb, "/foo/bar");
-	varbuf_end_str(&vb);
 	test_str(vb.buf, ==, "/foo/bar/");
 
 	varbuf_reset(&vb);
 
 	varbuf_add_dir(&vb, "/foo/bar/");
-	varbuf_end_str(&vb);
 	test_str(vb.buf, ==, "/foo/bar/");
 	varbuf_add_dir(&vb, "quux");
-	varbuf_end_str(&vb);
 	test_str(vb.buf, ==, "/foo/bar/quux/");
 	varbuf_add_dir(&vb, "zoo");
-	varbuf_end_str(&vb);
 	test_str(vb.buf, ==, "/foo/bar/quux/zoo/");
 
 	varbuf_destroy(&vb);
@@ -378,7 +366,6 @@ test_varbuf_end_str(void)
 
 	varbuf_trunc(&vb, 10);
 
-	varbuf_end_str(&vb);
 	test_pass(vb.used == 10);
 	test_pass(vb.size >= vb.used + 1);
 	test_pass(vb.buf[10] == '\0');
@@ -388,7 +375,7 @@ test_varbuf_end_str(void)
 }
 
 static void
-test_varbuf_get_str(void)
+test_varbuf_str(void)
 {
 	struct varbuf vb;
 	const char *str;
@@ -396,7 +383,7 @@ test_varbuf_get_str(void)
 	varbuf_init(&vb, 10);
 
 	varbuf_add_buf(&vb, "1234567890", 10);
-	str = varbuf_get_str(&vb);
+	str = varbuf_str(&vb);
 	test_pass(vb.buf == str);
 	test_pass(vb.used == 10);
 	test_pass(vb.buf[vb.used] == '\0');
@@ -405,7 +392,7 @@ test_varbuf_get_str(void)
 	test_str(str, ==, "1234567890");
 
 	varbuf_add_buf(&vb, "abcde", 5);
-	str = varbuf_get_str(&vb);
+	str = varbuf_str(&vb);
 	test_pass(vb.buf == str);
 	test_pass(vb.used == 15);
 	test_pass(vb.buf[vb.used] == '\0');
@@ -417,14 +404,81 @@ test_varbuf_get_str(void)
 }
 
 static void
-test_varbuf_printf(void)
+test_varbuf_has(void)
+{
+	struct varbuf vb = VARBUF_OBJECT;
+	struct varbuf vb_prefix = VARBUF_OBJECT;
+	struct varbuf vb_suffix = VARBUF_OBJECT;
+
+	test_pass(varbuf_has_prefix(&vb, &vb_prefix));
+	test_pass(varbuf_has_suffix(&vb, &vb_suffix));
+
+	varbuf_set_str(&vb_prefix, "prefix");
+	varbuf_set_str(&vb_suffix, "suffix");
+
+	test_fail(varbuf_has_prefix(&vb, &vb_prefix));
+	test_fail(varbuf_has_suffix(&vb, &vb_suffix));
+
+	varbuf_set_str(&vb, "prefix and some text");
+	test_pass(varbuf_has_prefix(&vb, &vb_prefix));
+	test_fail(varbuf_has_prefix(&vb, &vb_suffix));
+	test_fail(varbuf_has_suffix(&vb, &vb_prefix));
+	test_fail(varbuf_has_suffix(&vb, &vb_suffix));
+
+	varbuf_set_str(&vb, "some text with suffix");
+	test_fail(varbuf_has_prefix(&vb, &vb_prefix));
+	test_fail(varbuf_has_prefix(&vb, &vb_suffix));
+	test_fail(varbuf_has_suffix(&vb, &vb_prefix));
+	test_pass(varbuf_has_suffix(&vb, &vb_suffix));
+
+	varbuf_set_str(&vb, "prefix and some text with suffix");
+	test_pass(varbuf_has_prefix(&vb, &vb_prefix));
+	test_fail(varbuf_has_prefix(&vb, &vb_suffix));
+	test_fail(varbuf_has_suffix(&vb, &vb_prefix));
+	test_pass(varbuf_has_suffix(&vb, &vb_suffix));
+
+	varbuf_destroy(&vb_prefix);
+	varbuf_destroy(&vb_suffix);
+	varbuf_destroy(&vb);
+}
+
+static void
+test_varbuf_trim(void)
+{
+	struct varbuf vb = VARBUF_OBJECT;
+	struct varbuf vb_prefix = VARBUF_OBJECT;
+	struct varbuf vb_suffix = VARBUF_OBJECT;
+
+	varbuf_set_str(&vb_prefix, "prefix");
+	varbuf_set_str(&vb_suffix, "suffix");
+
+	varbuf_set_str(&vb, "some text");
+	varbuf_trim_varbuf_prefix(&vb, &vb_prefix);
+	varbuf_trim_char_prefix(&vb, 'a');
+	test_str(vb.buf, ==, "some text");
+
+	varbuf_set_str(&vb, "prefix and some text");
+	varbuf_trim_varbuf_prefix(&vb, &vb_prefix);
+	test_str(vb.buf, ==, " and some text");
+
+	varbuf_set_str(&vb, "       and some text");
+	varbuf_trim_char_prefix(&vb, ' ');
+	test_str(vb.buf, ==, "and some text");
+
+	varbuf_destroy(&vb_prefix);
+	varbuf_destroy(&vb_suffix);
+	varbuf_destroy(&vb);
+}
+
+static void
+test_varbuf_add_fmt(void)
 {
 	struct varbuf vb;
 
 	varbuf_init(&vb, 5);
 
 	/* Test normal format printing. */
-	varbuf_printf(&vb, "format %s number %d", "string", 10);
+	varbuf_add_fmt(&vb, "format %s number %d", "string", 10);
 	test_pass(vb.used == strlen("format string number 10"));
 	test_pass(vb.size >= vb.used);
 	test_str(vb.buf, ==, "format string number 10");
@@ -432,8 +486,8 @@ test_varbuf_printf(void)
 	varbuf_reset(&vb);
 
 	/* Test concatenated format printing. */
-	varbuf_printf(&vb, "format %s number %d", "string", 10);
-	varbuf_printf(&vb, " extra %s", "string");
+	varbuf_add_fmt(&vb, "format %s number %d", "string", 10);
+	varbuf_add_fmt(&vb, " extra %s", "string");
 	test_pass(vb.used == strlen("format string number 10 extra string"));
 	test_pass(vb.size >= vb.used);
 	test_str(vb.buf, ==, "format string number 10 extra string");
@@ -475,39 +529,34 @@ test_varbuf_snapshot(void)
 	test_pass(vb.used == 0);
 	test_pass(vb.used == vbs.used);
 	test_pass(varbuf_rollback_len(&vbs) == 0);
-	test_str(varbuf_rollback_start(&vbs), ==, "");
+	test_str(varbuf_rollback_end(&vbs), ==, "");
 
 	varbuf_add_buf(&vb, "1234567890", 10);
-	varbuf_end_str(&vb);
 	test_pass(vb.used == 10);
 	test_pass(varbuf_rollback_len(&vbs) == 10);
-	test_str(varbuf_rollback_start(&vbs), ==, "1234567890");
+	test_str(varbuf_rollback_end(&vbs), ==, "1234567890");
 	varbuf_rollback(&vbs);
-	varbuf_end_str(&vb);
 	test_pass(vb.used == 0);
 	test_pass(varbuf_rollback_len(&vbs) == 0);
-	test_str(varbuf_rollback_start(&vbs), ==, "");
+	test_str(varbuf_rollback_end(&vbs), ==, "");
 
 	varbuf_add_buf(&vb, "1234567890", 10);
-	varbuf_end_str(&vb);
 	test_pass(vb.used == 10);
 	test_pass(varbuf_rollback_len(&vbs) == 10);
-	test_str(varbuf_rollback_start(&vbs), ==, "1234567890");
+	test_str(varbuf_rollback_end(&vbs), ==, "1234567890");
 	varbuf_snapshot(&vb, &vbs);
 	test_pass(vb.used == 10);
 	test_pass(varbuf_rollback_len(&vbs) == 0);
-	test_str(varbuf_rollback_start(&vbs), ==, "");
+	test_str(varbuf_rollback_end(&vbs), ==, "");
 
 	varbuf_add_buf(&vb, "1234567890", 10);
-	varbuf_end_str(&vb);
 	test_pass(vb.used == 20);
 	test_pass(varbuf_rollback_len(&vbs) == 10);
-	test_str(varbuf_rollback_start(&vbs), ==, "1234567890");
+	test_str(varbuf_rollback_end(&vbs), ==, "1234567890");
 	varbuf_rollback(&vbs);
-	varbuf_end_str(&vb);
 	test_pass(vb.used == 10);
 	test_pass(varbuf_rollback_len(&vbs) == 0);
-	test_str(varbuf_rollback_start(&vbs), ==, "");
+	test_str(varbuf_rollback_end(&vbs), ==, "");
 
 	varbuf_destroy(&vb);
 }
@@ -519,22 +568,41 @@ test_varbuf_detach(void)
 	char *str;
 
 	varbuf_init(&vb, 0);
-
-	varbuf_add_buf(&vb, "1234567890", 10);
-
+	test_pass(vb.used == 0);
+	test_pass(vb.size == 0);
+	test_pass(vb.buf == NULL);
 	str = varbuf_detach(&vb);
+	test_str(str, ==, "");
+	test_pass(vb.used == 0);
+	test_pass(vb.size == 0);
+	test_pass(vb.buf == NULL);
+	free(str);
 
+	varbuf_init(&vb, 0);
+	varbuf_add_buf(&vb, NULL, 0);
+	test_pass(vb.used == 0);
+	test_pass(vb.size == 0);
+	test_pass(vb.buf == NULL);
+	str = varbuf_detach(&vb);
+	test_str(str, ==, "");
+	test_pass(vb.used == 0);
+	test_pass(vb.size == 0);
+	test_pass(vb.buf == NULL);
+	free(str);
+
+	varbuf_init(&vb, 0);
+	varbuf_add_buf(&vb, "1234567890", 10);
+	str = varbuf_detach(&vb);
 	test_mem(str, ==, "1234567890", 10);
 	test_pass(vb.used == 0);
 	test_pass(vb.size == 0);
 	test_pass(vb.buf == NULL);
-
 	free(str);
 }
 
 TEST_ENTRY(test)
 {
-	test_plan(172);
+	test_plan(205);
 
 	test_varbuf_init();
 	test_varbuf_prealloc();
@@ -550,8 +618,10 @@ TEST_ENTRY(test)
 	test_varbuf_map_char();
 	test_varbuf_add_dir();
 	test_varbuf_end_str();
-	test_varbuf_get_str();
-	test_varbuf_printf();
+	test_varbuf_str();
+	test_varbuf_has();
+	test_varbuf_trim();
+	test_varbuf_add_fmt();
 	test_varbuf_reset();
 	test_varbuf_snapshot();
 	test_varbuf_detach();

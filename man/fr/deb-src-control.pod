@@ -24,7 +24,7 @@ B<debian/control>
 
 Each Debian source package contains the «B<debian/control>» template source control file, and its L<deb822(5)> format is a superset of the B<control> file shipped in Debian binary packages, see L<deb-control(5)>.
 
-This file contains at least 2 stanzas, separated by a blank line.  The first stanza is called the source package stanza and lists all information about the source package in general, while each following stanzas are called the binary package stanzas and describe exactly one binary package per stanza. Each stanza consists of at least one field.  A field starts with a field name, such as B<Package> or B<Section> (case insensitive), followed by a colon, the body of the field (case sensitive unless stated otherwise) and a newline.  Multi-line fields are also allowed, but each supplementary line, without a field name, should start with at least one space.  The content of the multi-line fields is generally joined to a single line by the tools (except in the case of the B<Description> field, see below).  To insert empty lines into a multi-line field, insert a dot after the space.  Lines starting with a ‘B<#>’ are treated as comments.
+This file contains at least 2 stanzas, separated by a blank line.  The first stanza is called the source package stanza and lists all information about the source package in general, while each following stanzas are called the binary package stanzas and describe exactly one binary package per stanza. Each stanza consists of at least one field.  A field starts with a field name, such as B<Package> or B<Section> (case insensitive), followed by a colon, the body of the field (case sensitive unless stated otherwise) and a newline.  Multi-line fields are also allowed, but each supplementary line, without a field name, must start with at least one space.  The content of the multi-line fields is generally joined to a single line by the tools (except in the case of the B<Description> field, see below).  To insert empty lines into a multi-line field, insert a dot after the space.  Lines starting with a ‘B<#>’ are treated as comments.
 
 =head1 LES CHAMPS SOURCE
 
@@ -32,11 +32,11 @@ This file contains at least 2 stanzas, separated by a blank line.  The first sta
 
 =item B<Source:> I<nom-du-paquet-source> (requis)
 
-La valeur de ce champ est le nom du paquet source et doit correspondre au nom du paquet source dans le fichier debian/changelog. Un nom de paquet doit être constitué uniquement de lettres minuscules (a-z), de chiffres (0-9), des caractères plus (+) et moins (-) et de points (.). Les noms de paquets doivent comporter au moins deux caractères et doivent commencer par un caractère alphanumérique (a-z0-9) en minuscule.
+The value of this field is the name of the source package, and must match the name of the source package in the debian/changelog file.  A package name must consist only of lowercase letters (a-z), digits (0-9), plus (+) and minus (-) signs, and periods (.).  Package names must be at least two characters long and must start with a lowercase alphanumeric character (a-z0-9).
 
 =item B<Maintainer:> I<nom-complet-et-adresse-électronique> (recommandé)
 
-Le format de ce champ sera S<« Jean> Dupont S<E<lt>jdupont@foo.comE<gt> »> ; il indique le responsable actuel du paquet, par opposition à l'auteur du logiciel ou au responsable originel.
+Le format de ce champ sera « Jean Dupont E<lt>jdupont@foo.comE<gt> » ; il indique le responsable actuel du paquet, par opposition à l'auteur du logiciel ou au responsable originel.
 
 =item B<Uploaders:> I<nom-complet-et-adresse-électronique>
 
@@ -50,7 +50,7 @@ Ce champ indique la version la plus récente des normes de la charte de la distr
 
 =item S< >I<description-longue>
 
-Le format de la description du paquet est un résumé bref sur la première ligne (après le champ B<Description>). Les lignes suivantes peuvent servir à une description plus longue et plus détaillée. Chaque ligne de cette description longue doit être précédée d'une espace ; quand c'est une ligne blanche, elle doit contenir un seul S<« B<.> »> après cette espace.
+Le format de la description du paquet est un résumé bref sur la première ligne (après le champ B<Description>). Les lignes suivantes peuvent servir à une description plus longue et plus détaillée. Chaque ligne de cette description longue doit être précédée d'une espace ; quand c'est une ligne blanche, elle doit contenir un seul « B<.> » après cette espace.
 
 =item B<Homepage:> I<URL>
 
@@ -60,6 +60,12 @@ URL de la page d'accueil du projet amont.
 
 L'I<URL> du système de suivi de bogues (BTS) de ce paquet. Le format utilisé est I<type_de_bts>B<://>I<adresse_du_btsE>, par exemple B<debbugs://bugs.debian.org>. Ce champ est en général inutile.
 
+=item B<Build-Driver:> I<driver-name>
+
+This experimental field specifies the name of the build driver to use to build this package.  When omitted the I<driver-name> defaults to B<debian-rules>.
+
+This field is supported since dpkg 1.22.7.
+
 =item B<Rules-Requires-Root:> B<no>|B<binary-targets>|I<mots-clés-implémentation>
 
 Ce champ est utilisé pour indiquer si le fichier B<debian/rules> exige des droits (fake)root pour exécuter certaines de ses cibles et quand, si c'est le cas.
@@ -68,21 +74,21 @@ Ce champ est utilisé pour indiquer si le fichier B<debian/rules> exige des droi
 
 =item B<no>
 
-The binary targets will not require (fake)root at all.  This is the default in B<dpkg-build-api> level >= 1.
+The binary targets will not require (fake)root at all.  This is the default in B<dpkg-build-api> level >= 1, or since dpkg 1.22.13.
 
 =item B<binary-targets>
 
-The binary targets must always be run under (fake)root.  This value is the default in B<dpkg-build-api> level 0, when the field is omitted; adding the field with an explicit B<binary-targets>, while not strictly needed, marks it as having been analyzed for this requirement.
+The binary targets must always be run under (fake)root.  This value is the default in B<dpkg-build-api> level 0 until dpkg 1.22.13, when the field is omitted; adding the field with an explicit B<binary-targets>, while not strictly needed, marks it as having been analyzed for this requirement.
 
 =item I<mots-clés-implémentation>
 
 Il s'agit d'une liste, séparée par des espaces, de mots-clés qui définissent quand (fake)root est exigé.
 
-Les mots-clés sont composés de I<espace-de-nommage>/I<cas>. La partie I<espace-de-nommage> ne peut pas inclure de S<« / »> ou d'espace. La partie I<cas> ne peut pas inclure d'espace. Par ailleurs, les deux parties doivent être entièrement composées de caractères ASCII imprimables.
+Les mots-clés sont composés de I<espace-de-nommage>/I<cas>. La partie I<espace-de-nommage> ne peut pas inclure de « / » ou d'espace. La partie I<cas> ne peut pas inclure d'espace. Par ailleurs, les deux parties doivent être entièrement composées de caractères ASCII imprimables.
 
-Chaque outil ou paquet définira un espace de nommage nommé d'après lui-même et fournira le nombre des cas où (fake)root est exigé. (Voir S<« Mots-clés> fournis par S<l'implémentation »> dans I<rootless-builds.txt>).
+Chaque outil ou paquet définira un espace de nommage nommé d'après lui-même et fournira le nombre des cas où (fake)root est exigé. (Voir « Mots-clés fournis par l'implémentation » dans I<rootless-builds.txt>).
 
-Quand le champ est défini pour un des I<mots-clés-implémentation>, le constructeur exposera une interface qui est utilisée pour exécuter une commande avec les droits (fake)root. (Voir S<« API> pour obtenir les droits S<root »> dans I<rootless-builds.txt>).
+Quand le champ est défini pour un des I<mots-clés-implémentation>, le constructeur exposera une interface qui est utilisée pour exécuter une commande avec les droits (fake)root. (Voir « API pour obtenir les droits root » dans I<rootless-builds.txt>).
 
 =back
 
@@ -108,7 +114,7 @@ These fields are described in the L<dsc(5)> manual page, as they are generated f
 
 =item B<Vcs-Svn:> I<URL>
 
-Ce champ indique l'I<URL> du système de gestion de version utilisé pour la gestion du paquet. Les systèmes gérés sont B<Arch>, B<Bzr> (Bazaar), B<Cvs>, B<Darcs>, B<Git>, B<Hg> (Mercurial), B<Mtn> (Monotone) et B<Svn> (Subversion). En général, ce champ fait référence à la dernière version du paquet, c'est-à-dire la branche principale ou le S<« trunk ».>
+Ce champ indique l'I<URL> du système de gestion de version utilisé pour la gestion du paquet. Les systèmes gérés sont B<Arch>, B<Bzr> (Bazaar), B<Cvs>, B<Darcs>, B<Git>, B<Hg> (Mercurial), B<Mtn> (Monotone) et B<Svn> (Subversion). En général, ce champ fait référence à la dernière version du paquet, c'est-à-dire la branche principale ou le « trunk ».
 
 =item B<Vcs-Browser:> I<URL>
 
@@ -122,11 +128,17 @@ Indique le nom de la distribution dont le paquet provient. Ce champ n'est souven
 
 Champ général qui indique la catégorie d'un paquet ; cette catégorie est fondée sur le programme que ce paquet installe. B<utils>, B<net>, B<mail>, B<text>, B<x11>, etc., représentent quelques catégories habituelles.
 
+When omitted, the I<section> defaults to B<unknown> (since dpkg 1.22.13).
+
+The accepted values are based on the specific distribution policy.
+
 =item B<Priority:> I<priorité>
 
-Définit l'importance du paquet à l'intérieur du système général. B<required>, B<standard>, B<optional>, B<extra>, etc., représentent des priorités habituelles.
+Sets the importance of this package in relation to the system as a whole. The known priorities are B<required>, B<important>, B<standard>, B<optional>, B<extra>, and B<unknown>, but other values can be used as well.
 
-Les champs B<Section> et B<Priority> possèdent un ensemble défini de valeurs acceptées, tiré de la Charte particulière de la distribution.
+When omitted, the I<priority> defaults to B<optional> (since dpkg 1.22.13).
+
+How to apply these values depends on the specific distribution policy.
 
 =item B<Build-Depends:> I<liste-de-paquets>
 
@@ -142,7 +154,7 @@ Liste analogue à B<Build-Depends>, mais restreinte aux paquets nécessaires pou
 
 =item B<Build-Conflicts:> I<liste de paquets>
 
-Liste de paquets qui ne doivent pas être installés lors de la construction du paquet, par exemple s'ils interfèrent avec le système de construction utilisé. Si une dépendance est ajoutée à cette liste, l'effet sera le même que si elle était ajoutée à la fois dans B<Build-Conflicts-Arch> et B<Build-Conflicts-Indep>, en ayant de plus l'effet d'être prise en compte pour les constructions de paquets uniquement source S<(« source-only> S<builds »).>
+Liste de paquets qui ne doivent pas être installés lors de la construction du paquet, par exemple s'ils interfèrent avec le système de construction utilisé. Si une dépendance est ajoutée à cette liste, l'effet sera le même que si elle était ajoutée à la fois dans B<Build-Conflicts-Arch> et B<Build-Conflicts-Indep>, en ayant de plus l'effet d'être prise en compte pour les constructions de paquets uniquement source (« source-only builds »).
 
 =item B<Build-Conflicts-Arch:> I<liste-de-paquets>
 
@@ -158,13 +170,13 @@ The syntax of the B<Build-Depends>, B<Build-Depends-Arch> and B<Build-Depends-In
 
 The syntax of the B<Build-Conflicts>, B<Build-Conflicts-Arch> and B<Build-Conflicts-Indep> fields is a list of comma-separated package names, where the comma is read as an “AND”, and where the list can end with a trailing comma that will be eliminated when generating the fields for L<deb-control(5)> (since dpkg 1.10.14).  Specifying alternative packages using a “pipe” is not supported.  Each package name is optionally followed by a version number specification in parentheses, an architecture specification in square brackets, and a restriction formula consisting of one or more lists of profile names in angle brackets.
 
-Un nom de type d'architecture peut être un nom d'architecture réelle de Debian (depuis S<dpkg 1.16.5),> B<any> (depuis S<dpkg 1.16.2)> ou B<native> (depuis S<dpkg 1.16.5).> S'il est omis, la valeur par défaut des champs B<Build-Depends> est l'architecture de l'hôte actuel, la valeur par défaut des champs B<Build-Conflicts> est B<any>. Un nom d'architecture réelle de Debian correspondra exactement à l'architecture pour ce nom de paquet, B<any> correspondra à toute architecture pour ce nom de paquet si le paquet a été marqué B<Multi-Arch: allowed>, et B<native> correspondra à l'architecture de construction actuelle si le paquet n'a pas été marqué B<Multi-Arch: foreign>.
+Un nom de type d'architecture peut être un nom d'architecture réelle de Debian (depuis dpkg 1.16.5), B<any> (depuis dpkg 1.16.2) ou B<native> (depuis dpkg 1.16.5). S'il est omis, la valeur par défaut des champs B<Build-Depends> est l'architecture de l'hôte actuel, la valeur par défaut des champs B<Build-Conflicts> est B<any>. Un nom d'architecture réelle de Debian correspondra exactement à l'architecture pour ce nom de paquet, B<any> correspondra à toute architecture pour ce nom de paquet si le paquet a été marqué B<Multi-Arch: allowed>, et B<native> correspondra à l'architecture de construction actuelle si le paquet n'a pas été marqué B<Multi-Arch: foreign>.
 
-Une contrainte sur le numéro de version peut commencer par S<« B<E<gt>E<gt>> »,> et dans ce cas toute version supérieure correspondra, et il peut indiquer (ou pas) le numéro de révision pour le paquet Debian (les deux numéros étant séparés par un trait d'union). Voici les relations acceptées pour les S<versions :> S<« B<E<gt>E<gt>> »> pour supérieur à, S<« B<E<lt>E<lt>> »> pour inférieur à, S<« B<E<gt>=> »> pour supérieur ou égal, S<« B<E<lt>=> »> pour inférieur ou égal, et S<« B<=> »> pour égal à.
+Une contrainte sur le numéro de version peut commencer par « B<E<gt>E<gt>> », et dans ce cas toute version supérieure correspondra, et il peut indiquer (ou pas) le numéro de révision pour le paquet Debian (les deux numéros étant séparés par un trait d'union). Voici les relations acceptées pour les versions : « B<E<gt>E<gt>> » pour supérieur à, « B<E<lt>E<lt>> » pour inférieur à, « B<E<gt>=> » pour supérieur ou égal, « B<E<lt>=> » pour inférieur ou égal, et « B<=> » pour égal à.
 
-Une indication d'architecture consiste en un ou plusieurs noms d'architectures, séparés par des espaces. Un nom d'architecture peut être précédé d'un point d'exclamation qui correspond alors au S<« NON »> logique.
+Une indication d'architecture consiste en un ou plusieurs noms d'architectures, séparés par des espaces. Un nom d'architecture peut être précédé d'un point d'exclamation qui correspond alors au « NON » logique.
 
-Une formule de restriction consiste en une ou plusieurs listes de restriction séparées par des espaces. Chaque liste de restriction est incluse entre chevrons. Les éléments des listes de restriction sont des noms de profils de construction séparés par des espaces et pouvant être préfixés d'un point d'exclamation représentant un S<« NON »> logique. Une formule de restriction représente une forme normale disjonctive.
+Une formule de restriction consiste en une ou plusieurs listes de restriction séparées par des espaces. Chaque liste de restriction est incluse entre chevrons. Les éléments des listes de restriction sont des noms de profils de construction séparés par des espaces et pouvant être préfixés d'un point d'exclamation représentant un « NON » logique. Une formule de restriction représente une forme normale disjonctive.
 
 Veuillez noter que les dépendances des paquets du jeu B<build-essential> peuvent être omises et qu'il n'est pas possible de déclarer des conflits avec ces paquets. La liste des paquets concernés est fournie par le paquet build-essential.
 
@@ -244,7 +256,7 @@ Ces champs sont utilisés par l'installateur dans les B<udeb> et ne sont en gén
 
 =head1 LES CHAMPS UTILISATEUR
 
-Il est autorisé d'ajouter au fichier de contrôle des champs supplémentaires définis par l'utilisateur. L'outil ignorera ces champs. Si vous souhaitez que ces champs soient copiés dans ces fichiers de sortie, tels que les paquets binaires, vous devez utiliser un schéma de nommage S<personnalisé :> les champs démarreront par un B<X>, suivi de zéro ou plusieurs des lettres B<SBC> et un trait d'union.
+Il est autorisé d'ajouter au fichier de contrôle des champs supplémentaires définis par l'utilisateur. L'outil ignorera ces champs. Si vous souhaitez que ces champs soient copiés dans ces fichiers de sortie, tels que les paquets binaires, vous devez utiliser un schéma de nommage personnalisé : les champs démarreront par un B<X>, suivi de zéro ou plusieurs des lettres B<SBC> et un trait d'union.
 
 =over 
 
@@ -264,7 +276,7 @@ The field will appear in the upload control (.changes) file, see L<deb-changes(5
 
 Veuillez noter que les préfixes B<X>[B<SBC>]B<-> sont retirés quand les champs sont copiés dans les fichiers de sortie. Un champ B<XC-Approved-By> apparaîtra sous la forme B<Approved-By> dans le fichier des modifications et n'apparaîtra pas dans les fichiers de contrôle des paquets binaires ou source.
 
-Il faut prendre en compte le fait que ces champs définis par l'utilisateur se serviront de l'espace de nommage global, lequel pourrait, dans le futur, entrer en conflit avec des champs officiellement reconnus. Pour éviter de telles situations, il est conseillé de les préfixer avec B<Private-> S<(exemple :> B<XB-Private-New-Field>).
+Il faut prendre en compte le fait que ces champs définis par l'utilisateur se serviront de l'espace de nommage global, lequel pourrait, dans le futur, entrer en conflit avec des champs officiellement reconnus. Pour éviter de telles situations, il est conseillé de les préfixer avec B<Private-> (exemple : B<XB-Private-New-Field>).
 
 =head1 EXEMPLE
 
@@ -273,33 +285,53 @@ Il faut prendre en compte le fait que ces champs définis par l'utilisateur se s
  Section: admin
  Priority: required
  Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
- # this field is copied to the binary and source packages
+ # This field is copied to the binary and source packages.
  XBS-Upstream-Release-Status: stable
  Homepage: https://wiki.debian.org/Teams/Dpkg
  Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
  Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git
- Standards-Version: 3.7.3
- Build-Depends: pkgconf, debhelper (>= 4.1.81),
-  libselinux1-dev (>= 1.28-4) [!linux-any]
+ Standards-Version: 4.7.0
+ Build-Depends:
+  debhelper-compat (= 13),
+  debhelper (>= 13.10~),
+  pkgconf,
+  libselinux1-dev (>= 1.28-4) [!linux-any],
 
-Package: dpkg-dev
-Section: utils
-Priority: optional
-Architecture: all
-# champ personnalisé dans le paquet binaire
-XB-Mentoring-Contact: Raphael Hertzog <hertzog@debian.org>
-Depends: dpkg (>= 1.14.6), perl5, perl-modules, cpio (>= 2.4.2-2), 
- bzip2, lzma, patch (>= 2.2-1), make, binutils, libtimedate-perl
-Recommends: gcc | c-compiler, build-essential
-Suggests: gnupg, debian-keyring
-Conflicts: dpkg-cross (<< 2.0.0), devscripts (<< 2.10.26)
-Replaces: manpages-pl (<= 20051117-1)
-Description: Debian package development tools
- This package provides the development tools (including dpkg-source)
- required to unpack, build and upload Debian source packages.
- .
- Most Debian source packages will require additional tools to build;
- for example, most packages need make and the C compiler gcc.
+ Package: dpkg-dev
+ Section: utils
+ Priority: optional
+ Architecture: all
+ # This is a custom field in the binary package.
+ XB-Mentoring-Contact: Raphael Hertzog <hertzog@debian.org>
+ Depends:
+  binutils,
+  bzip2,
+  cpio (>= 2.4.2-2),
+ # This is a comment in the middle of a field value.
+  dpkg (>= 1.14.6),
+  libtimedate-perl,
+  lzma,
+  make,
+  patch (>= 2.2-1),
+  perl-modules,
+  perl5,
+ Recommends:
+  gcc | c-compiler,
+  build-essential,
+ Suggests:
+  gnupg,
+  debian-keyring,
+ Conflicts:
+  dpkg-cross (<< 2.0.0),
+  devscripts (<< 2.10.26),
+ Replaces:
+  manpages-pl (<= 20051117-1),
+ Description: Debian package development tools
+  This package provides the development tools (including dpkg-source)
+  required to unpack, build and upload Debian source packages.
+  .
+  Most Debian source packages will require additional tools to build;
+  for example, most packages need make and the C compiler gcc.
 
 =head1 VOIR AUSSI
 

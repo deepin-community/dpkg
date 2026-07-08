@@ -56,15 +56,13 @@ Das Format der Paketbeschreibung ist eine kurze knappe Zusammenfassung auf der e
 
 Dies ist ein allgemeines Feld, das das Paket in eine Kategorie einordnet, basierend auf der Software, die es installiert. Einige übliche Sektionen sind B<utils>, B<net>, B<mail>, B<text>, B<x11> usw.
 
+Die akzeptierten Werte hängen von den jeweiligen Distributionsrichtlinien ab.
+
 =item B<Priority:> I<Priorität>
 
-Setzt die Bedeutung dieses Pakets in Bezug zu dem Gesamtsystem. Übliche Prioritäten sind B<required>, B<standard>, B<optional>, B<extra> usw.
+Setzt die Bedeutung dieses Pakets in Bezug zu dem Gesamtsystem. Die bekannten Prioritäten sind B<required>, B<important>, B<standard>, B<optional>, B<extra> und B<unknown>, es können aber auch andere Werte verwandt werden.
 
-=back
-
-Die Felder B<Section> und B<Priority> haben eine definierte Menge an Werten, abhängig von den jeweiligen Distributionsrichtlinien.
-
-=over 
+Wie diese Werte angewandt werden, hängt von den jeweiligen Distributionsrichtlinien ab.
 
 =item B<Installed-Size:> I<Größe>
 
@@ -258,7 +256,7 @@ L<deb822(5)>, L<deb-src-control(5)>, L<deb(5)>, L<deb-version(7)>, L<debtags(1)>
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

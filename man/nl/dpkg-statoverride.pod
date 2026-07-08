@@ -162,6 +162,22 @@ Indien dit ingesteld is en geen enkele van de opties B<--force->I<...> opgegeven
 
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen worden zijn: B<auto> (standaard), B<always> en B<never>.
 
+=item B<DPKG_NLS>
+
+Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het activeren van moedertaalondersteuning, ook gekend als internationaliseringsondersteuning (of i18n) (sinds dpkg 1.22.7). Geldige waarden zijn: B<0> and B<1> (standaard).
+
+=item B<DPKG_PATH_PASSWD>
+
+Stelt de padnaam in voor het systeembestand F<passwd>. Dit pad is relatief ten opzichte van de map B<--root>. De standaardwaarde is F</etc/passwd>.
+
+Sinds dpkg 1.22.16.
+
+=item B<DPKG_PATH_GROUP>
+
+Stelt de padnaam in voor het systeembestand F<group>. Dit pad is relatief ten opzichte van de map B<--root>. De standaardwaarde is F</etc/group>.
+
+Sinds dpkg 1.22.16.
+
 =back
 
 =head1 BESTANDEN

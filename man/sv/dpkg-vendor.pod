@@ -24,6 +24,12 @@ B<dpkg-vendor> [I<flaggor>...] I<åtgärd>
 
 B<dpkg-vendor> är ett verktyg för att fråga efter återförsäljare som finns i I<%PKGCONFDIR%/origins>. B<%PKGCONFDIR%/origins/default> innehåller information om den aktuella återförsäljaren.
 
+Ursprungsfilerna innehåller metadata om specifika återförsäljare, såsom deras webbadress eller var felrapporter ska sändas, och används vanligvis både för att bestämma beteendet för verktyg och det slutliga innehåller i paket som byggs för en specifik återförsäljare, samt för att beskriva paketens proveniens.
+
+Paket kan deklarera återförsäljare explicit genom att inkludera ett B<Origin>-fält, annars antas återförsäljaren för ett paket utan ett sådant fält att vara det ursprung som pekas på med den symboliska länken F<default>.
+
+Den symboliska länken F<default> används också för att ange ursprunget för den aktuella installation som hanteras av B<dpkg>, antingen om det är en full distribution eller ett överbygg ovanpå ett befintligt bassystem som antingen inte innehåller något paketsystem eller har ett eget.
+
 Kommandot introducerades i dpkg 1.15.1.
 
 =head1 KOMMANDON
@@ -77,6 +83,18 @@ Väljer färgläge (sedan dpkg 1.18.5). För närvarande godtas följande värde
 =item B<DPKG_NLS>
 
 Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även känt som internationaliseringsstöd (eller i18n) (sedan dpkg 1.19.0). Tillåtna värden är: B<0> och B<1> (förval).
+
+=back
+
+=head1 FILER
+
+=head2 Paketeringsstöd
+
+=over 
+
+=item B<%PKGDATADIR%/vendor.mk>
+
+Makefile-klipp som läser in aktuell återförsäljare och dess förälder till variabler, och tillhandahåller makron för att se efter derivat (sedan dpkg 1.16.1).
 
 =back
 

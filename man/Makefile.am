@@ -40,7 +40,6 @@ man_MANS = \
 	dpkg-deb.1 \
 	dpkg-distaddfile.1 \
 	dpkg-divert.1 \
-	dpkg-fsys-usrunmess.8 \
 	dpkg-genbuildinfo.1 \
 	dpkg-genchanges.1 \
 	dpkg-gencontrol.1 \
@@ -62,6 +61,7 @@ man_MANS = \
 	dpkg.1 \
 	dpkg.cfg.5 \
 	dsc.5 \
+	libdpkg.7 \
 	# EOL
 
 if BUILD_DSELECT
@@ -128,7 +128,6 @@ EXTRA_DIST += \
 	dpkg-deb.pod \
 	dpkg-distaddfile.pod \
 	dpkg-divert.pod \
-	dpkg-fsys-usrunmess.pod \
 	dpkg-genbuildinfo.pod \
 	dpkg-genchanges.pod \
 	dpkg-gencontrol.pod \
@@ -152,6 +151,7 @@ EXTRA_DIST += \
 	dsc.pod \
 	dselect.cfg.pod \
 	dselect.pod \
+	libdpkg.pod \
 	start-stop-daemon.pod \
 	update-alternatives.pod \
 	# EOL
@@ -266,7 +266,7 @@ MANGEN = $(POD2MAN_V) filename='$@'; \
 	  $(PODSUBST) $< | \
 	  $(POD2MAN) $(POD2MAN_OPTS) \
 	  --name="$$(basename $${filename%.*})" \
-	  --section="$${filename\#\#*.}" | \
+	  --section="$$($(PERL) -E 'say((split /\./, shift)[-1])' $$filename)" | \
 	  $(MANFIXUP) >$@
 endif
 

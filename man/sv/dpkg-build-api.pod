@@ -51,7 +51,7 @@ B<dpkg-shlibdeps> använder inte längre miljövariabeln B<LD_LIBRARY_PATH>. Fla
 
 =item *
 
-B<dpkg-buildpackage> har som förval B<Rules-Requires-Root> med värdet B<no> (nej). För att återställa B<v0>-beteendet måste B<Rules-Requires-Root> sättas till B<binary-targets>.
+B<dpkg-buildpackage> har som förval B<Rules-Requires-Root> med värdet B<no> (nej). För att återställa B<v0>-beteendet (från innan dpkg 1.22.13) måste B<Rules-Requires-Root> sättas till B<binary-targets>.
 
 =item *
 

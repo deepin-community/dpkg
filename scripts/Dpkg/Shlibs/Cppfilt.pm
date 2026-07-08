@@ -96,8 +96,16 @@ sub cppfilt_demangle {
 	my $demangled = readline($filt->{to});
 	chop $demangled;
 
-	# If the symbol was not demangled, return undef
-	$demangled = undef if $symbol eq $demangled;
+        # If the symbol was not demangled, return undef. Otherwise normalize
+        # it as llvm packs ending angle brackets with no intermediate spaces
+        # as allowed by C++11, contrary to GNU binutils.
+        if ($symbol eq $demangled) {
+            $demangled = undef;
+        } elsif ($demangled =~ m{operator>>}) {
+            # Special case operator>> and operator>>=.
+        } else {
+            $demangled =~ s{(?<=>)(?=>)}{ }g;
+        }
 
 	# Remember the last result
 	$filt->{last_symbol} = $symbol;

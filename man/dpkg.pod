@@ -1042,6 +1042,9 @@ is preserved, with the ones from the configuration files taking precedence.
 The environment variable B<DPKG_HOOK_ACTION> is set for the hooks to the
 current B<dpkg> action.
 
+The invoke hooks are not executed when B<--no-act> is specified,
+or when running as non-root without B<--force-not-root>.
+
 B<Note>: Front-ends might call B<dpkg> several
 times per invocation, which might run the hooks more times than expected.
 
@@ -1108,7 +1111,7 @@ These lines have the following format:
 
 Z<>
  B<missing  > [B<c>] I<pathname> [B<(>I<error-message>B<)>]
- B<??5??????> [B<c>] I<pathname>
+ B<?M5??????> [B<c>] I<pathname>
 
 The first 9 characters are used to report the checks result,
 either a literal B<missing> when the file is not present or its metadata
@@ -1219,6 +1222,9 @@ shell I<command>'s standard input, to be run via “%DPKG_DEFAULT_SHELL% -c”
 (since dpkg 1.16.0).
 This option can be specified multiple times.
 The output format used is the same as in B<--status-fd>.
+
+The status loggers are not executed when B<--no-act> is specified,
+or when running as non-root without B<--force-not-root>.
 
 =item B<--log=>I<filename>
 
@@ -1347,14 +1353,27 @@ The program B<dpkg> will execute when running a pager,
 which will be executed with «B<$SHELL -c>»,
 for example when displaying the conffile differences.
 If B<SHELL> is not set, «B<%DPKG_DEFAULT_SHELL%>» will be used instead.
+
 The B<DPKG_PAGER> overrides the B<PAGER> environment variable
 (since dpkg 1.19.2).
+If none of the programs pointed by B<DPKG_PAGER> or B<PAGER> are present,
+the following programs will be tried in order (since dpkg 1.22.12):
+the default pager B<%DPKG_DEFAULT_PAGER%>,
+then B<less>,
+B<more>,
+and finally B<cat>.
 
 =item B<DPKG_COLORS>
 
 Sets the color mode (since dpkg 1.18.5).
 The currently accepted values are: B<auto> (default), B<always> and
 B<never>.
+
+=item B<DPKG_NLS>
+
+If set, it will be used to decide whether to activate Native Language Support,
+also known as internationalization (or i18n) support (since dpkg 1.22.7).
+The accepted values are: B<0> and B<1> (default).
 
 =item B<DPKG_DEBUG>
 
@@ -1377,6 +1396,22 @@ specified, it will be used as the B<dpkg> administrative directory
 
 Set by a package manager frontend to notify dpkg that it should not acquire
 the frontend lock (since dpkg 1.19.1).
+
+=item B<DPKG_PATH_PASSWD>
+
+Sets the pathname for the system F<passwd> file.
+This path is relative to the B<--root> directory.
+The default is F</etc/passwd>.
+
+Since dpkg 1.22.16.
+
+=item B<DPKG_PATH_GROUP>
+
+Sets the pathname for the system F<group> file.
+This path is relative to the B<--root> directory.
+The default is F</etc/group>.
+
+Since dpkg 1.22.16.
 
 =back
 

@@ -28,8 +28,15 @@ B<%PKGCONFDIR%/origins/>I<filename>
 
 =head1 DESCRIPTION
 
-The files in B<%PKGCONFDIR%/origins> can provide information about
-various vendors who are providing Debian packages.
+The files in B<%PKGCONFDIR%/origins> can provide information about various
+vendors that are providing Debian packages.
+These files are usually used both to determine the behavior of tools and
+resulting contents during package builds targeting a specific vendor,
+and to describe the provenance of packages.
+
+Packages can explicitly declare their vendor by including an B<Origin> field,
+otherwise the vendor for a package without such field is assumed to be the
+one pointed to by the F<default> origin symbolic link.
 
 They contain a number of fields, or comments when the line starts with
 ‘B<#>’.
@@ -49,17 +56,6 @@ Namely (since dpkg 1.21.10), first, non-alphanumeric characters
 name will be tried in sequence by lower-casing it, keeping it as is,
 lower-casing then capitalizing it (that is upper-casing the first character),
 and only capitalizing it.
-
-In addition, for historical and backwards compatibility, the name will
-be tried keeping it as is without non-alphanumeric characters remapping,
-then the resulting name will be tried in sequence by lower-casing it,
-keeping it as is, lower-casing then capitalizing it, and only capitalizing it.
-And finally the name will be tried by remapping spaces to dashes (‘B<->’),
-then the resulting name will be tried in sequence by lower-casing it,
-keeping it as is, lower-casing then capitalizing it, and only capitalizing it.
-
-But these backwards compatible module lookups will be removed during the
-dpkg 1.22.x release cycle.
 
 =head1 FIELDS
 

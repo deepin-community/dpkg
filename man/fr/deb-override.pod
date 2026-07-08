@@ -22,9 +22,9 @@ B<override>
 
 =head1 DESCRIPTION
 
-Bien que l'on puisse trouver dans le fichier S<« control »> la plupart des informations concernant un paquet, certaines doivent être inscrites par les responsables de la distribution plutôt que par le responsable du paquet afin de garantir une cohérence globale. Ces informations se trouvent dans le fichier S<« override ».>
+Bien que l'on puisse trouver dans le fichier « control » la plupart des informations concernant un paquet, certaines doivent être inscrites par les responsables de la distribution plutôt que par le responsable du paquet afin de garantir une cohérence globale. Ces informations se trouvent dans le fichier « override ».
 
-Les éléments du fichier S<« override »> sont séparés simplement par des espaces. Les commentaires commencent par un caractère S<« B<#> ».>
+Les éléments du fichier « override » sont séparés simplement par des espaces. Les commentaires commencent par un caractère « B<#> ».
 
 =over 
 
@@ -32,13 +32,13 @@ I<paquet> I<priorité> I<section> [I<responsable>]
 
 =back
 
-I<paquet> est le nom du paquet. Les entrées du fichier S<« override »> concernant des paquets qui ne sont pas dans l'arborescence des paquets binaires sont ignorées.
+I<paquet> est le nom du paquet. Les entrées du fichier « override » concernant des paquets qui ne sont pas dans l'arborescence des paquets binaires sont ignorées.
 
 I<priority> et I<section> correspondent respectivement aux champs de contrôle présents dans le fichier .deb. Les valeurs autorisées sont distinctes pour l'archive de chaque distribution.
 
 L'élément I<responsable>, quand il existe, peut représenter soit le nom du responsable quand il s'agit d'un remplacement sans condition, soit la chaîne I<ancien-responsable> B<=E<gt>> I<nouveau-responsable> pour un changement de responsable.
 
-On peut trouver les fichiers S<« override »,> dont on se sert pour établir les fichiers officiels S<« Packages »,> dans le répertoire I<indices> des miroirs Debian.
+On peut trouver les fichiers « override », dont on se sert pour établir les fichiers officiels « Packages », dans le répertoire I<indices> des miroirs Debian.
 
 =head1 VOIR AUSSI
 
