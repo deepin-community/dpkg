@@ -77,7 +77,7 @@ Det innebär att, om paketet menar att byta namn eller ta bort en konfigurations
 
 B<Observera>: Det här kan i de flesta fall ersättas av flaggan C<remove-on-upgrade> i F<DEBIAN/conffiles> (sedan dpkg 1.20.6), se L<deb-conffiles(5)>.
 
-If a conffile is completely removed, it should be removed from disk, unless the user has modified it.  If there are local modifications, they should be preserved.  If the package upgrade aborts, the newly obsolete conffile should not disappear.
+Om en konffil helt tas bort bör den tas bort från disk, såvida inte användaren har modifierat den. Om det finns lokala ändringar bör de bibehållas. Om paketuppgraderingen avbryts bör inte konffilen som just blev föråldrad försvinna.
 
 Allt detta implementeras genom att lägga in följande skalkod i paketskripten B<preinst>, B<postinst> och B<postrm>:
 

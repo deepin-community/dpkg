@@ -116,7 +116,11 @@ sub parse_status {
         }
 
         if (/^Provides: (.*)$/m) {
-            my $provides = deps_parse($1, reduce_arch => 1, union => 1);
+            my $provides = deps_parse($1,
+                reduce_arch => 1,
+                virtual => 1,
+                union => 1,
+            );
 
             next if not defined $provides;
 
@@ -420,14 +424,14 @@ my $fields = Dpkg::Control->new(type => CTRL_FILE_BUILDINFO);
 my $dist = Dpkg::Dist::Files->new();
 
 # Retrieve info from the current changelog entry.
-my %options = (file => $changelogfile);
-$options{changelogformat} = $changelogformat if $changelogformat;
-my $changelog = changelog_parse(%options);
+my %changelog_opts = (file => $changelogfile);
+$changelog_opts{changelogformat} = $changelogformat if $changelogformat;
+my $changelog = changelog_parse(%changelog_opts);
 
 # Retrieve info from the former changelog entry to handle binNMUs.
-$options{count} = 1;
-$options{offset} = 1;
-my $prev_changelog = changelog_parse(%options);
+$changelog_opts{count} = 1;
+$changelog_opts{offset} = 1;
+my $prev_changelog = changelog_parse(%changelog_opts);
 
 my $sourceversion = Dpkg::Version->new($changelog->{'Binary-Only'} ?
                     $prev_changelog->{'Version'} : $changelog->{'Version'});
@@ -554,8 +558,10 @@ if ($stdout) {
 if ($stdout) {
     $fields->output(\*STDOUT);
 } else {
-    my $section = $control->get_source->{'Section'} || '-';
-    my $priority = $control->get_source->{'Priority'} || '-';
+    my %fileprop;
+    foreach my $f (qw(Section Priority)) {
+        $fileprop{lc $f} = $control->get_source->{$f} || field_get_default_value($f);
+    }
 
     # Obtain a lock on debian/control to avoid simultaneous updates
     # of debian/files when parallel building is in use
@@ -581,7 +587,7 @@ if ($stdout) {
         }
     }
 
-    $dist->add_file($buildinfo, $section, $priority);
+    $dist->add_file($buildinfo, @fileprop{qw(section priority)});
     $dist->save("$fileslistfile.new");
 
     rename "$fileslistfile.new", $fileslistfile

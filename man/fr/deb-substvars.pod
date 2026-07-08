@@ -26,11 +26,11 @@ Avant que B<dpkg-source>, B<dpkg-gencontrol> et B<dpkg-genchanges> n'écrivent l
 
 =head2 Syntaxe des variables
 
-Une substitution de variable est de la S<forme :> B<${>I<nom-variable>B<}>. Les noms de variable consistent en caractères alphanumériques (a-zA-Z0-9), traits d'union (-) et S<« deux> S<points »> (:) ; ils commencent par une lettre ou un chiffre et sont sensibles à la casse même si ils se réfèrent à d'autres entités qui préservent la casse. La substitution se fait répétitivement jusqu'à ce qu'il n'en reste aucune à faire ; le texte entier du champ après la substitution est réexaminé pour chercher d'autres substitutions.
+Une substitution de variable est de la forme : B<${>I<nom-variable>B<}>. Les noms de variable consistent en caractères alphanumériques (a-zA-Z0-9), traits d'union (-) et « deux points » (:) ; ils commencent par une lettre ou un chiffre et sont sensibles à la casse même si ils se réfèrent à d'autres entités qui préservent la casse. La substitution se fait répétitivement jusqu'à ce qu'il n'en reste aucune à faire ; le texte entier du champ après la substitution est réexaminé pour chercher d'autres substitutions.
 
 =head2 Syntaxe des fichiers
 
-Les variables de substitution peuvent être spécifiées dans un fichier. Ces fichiers consistent en lignes de forme I<nom>B<=>I<valeur> ou I<nom>B<?=>I<valeur>. L'opérateur B<=> assigne une variable de substitution normale, alors que l'opérateur B<?=> (depuis S<dpkg 1.21.8)> assigne une variable de substitution optionnelle qui n'émettra pas d'avertissement même si elle n'est pas utilisée. Les espaces vides à la fin de chaque ligne, les lignes vides et les lignes commençant par le symbole B<#> (les commentaires) sont ignorés.
+Substitution variables can be specified in a file.  These files consist of lines of the form I<name>B<=>I<value>, I<name>B<?=>I<value>, or I<name>B<!=>I<value>.  The B<=> operator assigns a normal substitution variable, the B<?=> operator (since dpkg 1.21.8) assigns an optional substitution variable which will emit no warnings even if unused, and the B<!=> operator (since dpkg 1.22.7) assigns a required substitution variable which will error out if unused.  Trailing whitespace on each line, blank lines, and lines starting with a B<#> symbol (comments) are ignored.
 
 =head2 Substitution
 
@@ -42,14 +42,14 @@ Quand une variable est référencée mais n'est pas définie, cela produit un av
 
 Alors que le remplacement de variables est effectué sur tous les champs de contrôle, certains de ces champs sont utilisés et nécessaires pendant la construction alors même que la substitution n'a pas encore pu être effectuée. Cela explique pourquoi il n'est pas possible d'utiliser de variables dans les champs B<Package>, B<Source> et B<Architecture>.
 
-La substitution de variables se fait dans le contenu des champs après leur analyse. En conséquence, si vous souhaitez qu'une variable soit remplacée sur plusieurs lignes, il n'est pas nécessaire de placer une espace après le retour à la ligne. Cela se fait implicitement quand le champ est affiché. Par exemple, si la variable B<${Description}> est positionnée sur S<« toto> est truc.${Newline}toto est S<super. »> et si vous avez le champ S<suivant :>
+La substitution de variables se fait dans le contenu des champs après leur analyse. En conséquence, si vous souhaitez qu'une variable soit remplacée sur plusieurs lignes, il n'est pas nécessaire de placer une espace après le retour à la ligne. Cela se fait implicitement quand le champ est affiché. Par exemple, si la variable B<${Description}> est positionnée sur « toto est truc.${Newline}toto est super. » et si vous avez le champ suivant :
 
  Description: application toto
   ${Description}
   .
   Encore du texte.
 
-Le résultat final S<sera :>
+Le résultat final sera :
 
  Description: application toto
   toto est truc.
@@ -59,7 +59,7 @@ Le résultat final S<sera :>
 
 =head2 Variables internes
 
-En outre, les variables standard suivantes sont toujours S<disponibles :>
+En outre, les variables standard suivantes sont toujours disponibles :
 
 =over 
 
@@ -73,19 +73,19 @@ The current vendor name (since dpkg 1.20.0).  This value comes from the B<Vendor
 
 =item B<vendor:Id>
 
-L'identifiant du fabricant actuel (depuis S<dpkg 1.20.0).> C'est simplement la variante en bas de casse de B<vendor:Name>.
+L'identifiant du fabricant actuel (depuis dpkg 1.20.0). C'est simplement la variante en bas de casse de B<vendor:Name>.
 
 =item B<source:Version>
 
-Version du paquet source (depuis S<dpkg 1.13.19).>
+Version du paquet source (depuis dpkg 1.13.19).
 
 =item B<source:Upstream-Version>
 
-La version amont du paquet source, avec éventuellement S<l'« epoch »> de la version Debian (depuis S<dpkg 1.13.19).>
+La version amont du paquet source, avec éventuellement l'« epoch » de la version Debian (depuis dpkg 1.13.19).
 
 =item B<binary:Version>
 
-La version du paquet binaire (qui peut être différente de B<source:Version> dans un binNMU par exemple ; depuis S<dpkg 1.13.19).>
+La version du paquet binaire (qui peut être différente de B<source:Version> dans un binNMU par exemple ; depuis dpkg 1.13.19).
 
 =item B<Source-Version>
 
@@ -93,21 +93,21 @@ La version du paquet source, selon le fichier changelog. Cette variable est main
 
 =item B<source:Synopsis>
 
-Le synopsis du paquet source, extrait du champ B<Description> du paragraphe source, s'il existe (depuis S<dpkg 1.19.0).>
+Le synopsis du paquet source, extrait du champ B<Description> du paragraphe source, s'il existe (depuis dpkg 1.19.0).
 
 =item B<source:Extended-Description>
 
-La description étendue du paquet source, extraite du champ B<Description> du paragraphe source, s'il existe (depuis S<dpkg 1.19.0).>
+La description étendue du paquet source, extraite du champ B<Description> du paragraphe source, s'il existe (depuis dpkg 1.19.0).
 
 =item B<Installed-Size>
 
-La taille approximative de tous les fichiers installés du paquet. Cette valeur est copiée dans le champ adéquat du fichier S<« control »> ; quand on fixe cette variable, cela modifie la valeur de ce champ. Quand elle est indéterminée, B<dpkg-gencontrol> calcule la valeur par défaut en additionnant la taille de chaque fichier ordinaire et lien symbolique arrondie en unité d'un kio utilisée et sur la base d'un kio pour n'importe quel type d'objet du système de fichiers, les liens physiques étant comptés une seule fois comme des fichiers ordinaires.
+La taille approximative de tous les fichiers installés du paquet. Cette valeur est copiée dans le champ adéquat du fichier « control » ; quand on fixe cette variable, cela modifie la valeur de ce champ. Quand elle est indéterminée, B<dpkg-gencontrol> calcule la valeur par défaut en additionnant la taille de chaque fichier ordinaire et lien symbolique arrondie en unité d'un kio utilisée et sur la base d'un kio pour n'importe quel type d'objet du système de fichiers, les liens physiques étant comptés une seule fois comme des fichiers ordinaires.
 
 B<Note>: Take into account that this can only ever be an approximation, as the actual size used on the installed system will depend greatly on the filesystem used and its parameters, which might end up using either more or less space than the specified in this field.
 
 =item B<Extra-Size>
 
-L'espace disque supplémentaire utilisé pour l'installation du paquet. Quand on fixe cette variable, on ajoute sa valeur à la valeur de la variable B<Installed-Size> (qu'elle soit définie explicitement ou calculée par défaut) avant qu'elle soit copiée dans le champ B<Installed-Size> du fichier S<« control ».>
+L'espace disque supplémentaire utilisé pour l'installation du paquet. Quand on fixe cette variable, on ajoute sa valeur à la valeur de la variable B<Installed-Size> (qu'elle soit définie explicitement ou calculée par défaut) avant qu'elle soit copiée dans le champ B<Installed-Size> du fichier « control ».
 
 =item B<S:>I<field-name>
 
@@ -131,11 +131,11 @@ Les variables déterminées de cette façon sont produites par B<dpkg-shlibdeps>
 
 =item B<dpkg:Upstream-Version>
 
-La version amont de dpkg (depuis S<dpkg 1.13.19).>
+La version amont de dpkg (depuis dpkg 1.13.19).
 
 =item B<dpkg:Version>
 
-La version complète de dpkg (depuis S<dpkg 1.13.19).>
+La version complète de dpkg (depuis dpkg 1.13.19).
 
 =back
 

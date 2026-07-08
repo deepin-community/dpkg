@@ -234,7 +234,7 @@ Zal triggers verwerken, tenzij B<--no-triggers> werd opgegeven.
 
 Controleert de integriteit van I<pakketnaam> of van alle pakketten indien er geen naam opgegeven werd. De controle gebeurt door een vergelijking te maken van informatie uit de bestanden die door een pakket geïnstalleerd worden met de metadata-informatie over die bestanden die in de database van B<dpkg> opgeslagen is (sinds dpkg 1.17.2). De metadata-informatie over die bestanden in de database is afkomstig van het binaire pakket zelf. Die metadata worden verzameld tijdens het installatieproces op het moment van het uitpakken van het pakket.
 
-Momenteel is de enige functionele toets die uitgevoerd wordt, een verificatie van de md5-controlesom van de inhoud van het bestand tegenover de opgeslagen waarde in de bestandsdatabase. De toets wordt enkel uitgevoerd als de database de md5-controlesom van het bestand bevat. Om na te gaan of er eventueel metadata ontbreken in de database, kan het commando B<--audit> gebruikt worden. Dit is slechts een integriteitscontrole en mag niet worden beschouwd als enige vorm van veiligheidsverificatie.
+Momenteel is de enige functionele toets die uitgevoerd wordt, een verificatie van het md5-controlegetal van de inhoud van het bestand tegenover de opgeslagen waarde in de bestandsdatabase. De toets wordt enkel uitgevoerd als de database het md5-controlegetal van het bestand bevat. Om na te gaan of er eventueel metadata ontbreken in de database, kan het commando B<--audit> gebruikt worden. Dit is slechts een integriteitscontrole en mag niet worden beschouwd als enige vorm van veiligheidsverificatie.
 
 De indeling van de uitvoer kan met de optie B<--verify-format> gekozen worden. Standaard wordt de indeling B<rpm> gebruikt, maar dit kan in de toekomst veranderen en om die reden zouden programma's die de uitvoer van dit commando ontleden, expliciet moeten aangeven welke indeling zij verwachten.
 
@@ -691,7 +691,9 @@ Sinds dpkg 1.21.10 wordt ook rekening gehouden met de architectuur, wat het moge
 
 =item B<--post-invoke=>I<commando>
 
-Instellen dat een uitbreiding (hook) I<commando> via "%DPKG_DEFAULT_SHELL% -c" moet uitgevoerd worden voor of na het uitvoeren van B<dpkg> bij de acties I<unpack>, I<configure>, I<install>, I<triggers-only>, I<remove>, I<purge> (sinds dpkg 1.15.4) en de acties I<add-architecture> en I<remove-architecture> (sinds dpkg 1.17.19) van B<dpkg>. Deze optie kan meermaals opgegeven worden. De volgorde waarin de opties opgegeven worden, wordt behouden, waarbij deze uit de configuratiebestanden voorrang hebben. De omgevingsvariabele B<DPKG_HOOK_ACTION> wordt ingesteld voor de uitbreidingen (hooks) bij de huidige actie van B<dpkg>.
+Instellen dat een aanroepuitbreiding (invoke hook) I<commando> via "%DPKG_DEFAULT_SHELL% -c" moet uitgevoerd worden voor of na het uitvoeren van B<dpkg> bij de acties I<unpack>, I<configure>, I<install>, I<triggers-only>, I<remove>, I<purge> (sinds dpkg 1.15.4) en de acties I<add-architecture> en I<remove-architecture> (sinds dpkg 1.17.19) van B<dpkg>. Deze optie kan meermaals opgegeven worden. De volgorde waarin de opties opgegeven worden, wordt behouden, waarbij deze uit de configuratiebestanden voorrang hebben. De omgevingsvariabele B<DPKG_HOOK_ACTION> wordt ingesteld voor de uitbreidingen (hooks) bij de huidige actie van B<dpkg>.
+
+De aanroepuitbreidingen worden niet uitgevoerd als B<--no-act> werd gespecificeerd, of wanneer dit uitgevoerd wordt als niet-root zonder without B<--force-not-root>.
 
 B<Opmerking>: frontends kunnen B<dpkg> meerdere keren per aanroep aanroepen, waardoor de uitbreidingen meer keren dan verwacht uitgevoerd kunnen worden.
 
@@ -726,7 +728,7 @@ De enige momenteel ondersteunde indeling van de uitvoer is B<rpm>, die bestaat u
 
 Z<>
  B<missing  > [B<c>] I<padnaam> [B<(>I<foutmelding>B<)>]
- B<??5??????> [B<c>] I<padnaam>
+ B<?M5??????> [B<c>] I<padnaam>
 
 De eerste 9 tekens worden gebruikt om het resultaat van de controle te rapporteren, ofwel een letterlijke B<missing> wanneer het bestand niet aanwezig is of de metagegevens ervan niet kunnen worden opgehaald, ofwel een van de volgende speciale tekens die het resultaat voor elke controle aangeven:
 
@@ -808,6 +810,8 @@ Verzonden juist voor het begin van een verwerkingsfase. I<fase> is een van de vo
 =item B<--status-logger>=I<commando>
 
 Door een machine te lezen informatie over pakketstatus en voortgang versturen naar de standaardinvoer van het shell-commando I<commando> dat via "%DPKG_DEFAULT_SHELL% -c" moet uitgevoerd worden (sinds dpkg 1.16.0). Deze optie kan meermaals opgegeven worden. De indeling van de uitvoer is dezelfde als bij B<--status-fd>.
+
+De statusloggers worden niet uitgevoerd wanneer B<--no-act> is opgegeven, of wanneer het commando wordt uitgevoerd als niet-root zonder B<--force-not-root>.
 
 =item B<--log=>I<bestandsnaam>
 
@@ -902,11 +906,17 @@ Het programma dat B<dpkg> zal uitvoeren bij het starten van een nieuwe interacti
 
 =item B<DPKG_PAGER>
 
-Het programma dat B<dpkg> zal uitvoeren als het gebruik maakt van een pagineringsprogramma, dat uitgevoerd zal worden met «B<$SHELL -c>», bijvoorbeeld voor het tonen van de verschillen tussen de configuratiebestanden. Indien B<SHELL> niet ingesteld is, dan zal «B<%DPKG_DEFAULT_SHELL%>» gebruikt worden. B<DPKG_PAGER> overschrijft de omgevingsvariabele B<PAGER> (sinds dpkg 1.19.2).
+Het programma dat B<dpkg> zal uitvoeren als het gebruik maakt van een pagineringsprogramma, dat uitgevoerd zal worden met «B<$SHELL -c>», bijvoorbeeld voor het tonen van de verschillen tussen de configuratiebestanden. Indien B<SHELL> niet ingesteld is, dan zal «B<%DPKG_DEFAULT_SHELL%>» gebruikt worden.
+
+De B<DPKG_PAGER> overschrijft de omgevingsvariabele B<PAGER> (sinds dpkg 1.19.2). Als geen van de programma's waarnaar wordt verwezen door B<DPKG_PAGER> of B<PAGER> aanwezig is, worden de volgende programma's in volgorde geprobeerd (sinds dpkg 1.22.12): het standaardpagineringsprogramma B<%DPKG_DEFAULT_PAGER%>, vervolgens B<less>, B<more> en ten slotte B<cat>.
 
 =item B<DPKG_COLORS>
 
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen worden zijn: B<auto> (standaard), B<always> en B<never>.
+
+=item B<DPKG_NLS>
+
+Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het activeren van moedertaalondersteuning, ook gekend als internationaliseringsondersteuning (of i18n) (sinds dpkg 1.22.7). Geldige waarden zijn: B<0> and B<1> (standaard).
 
 =item B<DPKG_DEBUG>
 
@@ -923,6 +933,18 @@ Indien dit ingesteld is en de opties B<--admindir> of B<--root> niet opgegeven w
 =item B<DPKG_FRONTEND_LOCKED>
 
 Ingesteld door een frontend voor pakketbeheer om dpkg te informeren dat het de frontendgrendel niet mag bemachtigen (since dpkg 1.19.1).
+
+=item B<DPKG_PATH_PASSWD>
+
+Stelt de padnaam in voor het systeembestand F<passwd>. Dit pad is relatief ten opzichte van de map B<--root>. De standaardwaarde is F</etc/passwd>.
+
+Sinds dpkg 1.22.16.
+
+=item B<DPKG_PATH_GROUP>
+
+Stelt de padnaam in voor het systeembestand F<group>. Dit pad is relatief ten opzichte van de map B<--root>. De standaardwaarde is F</etc/group>.
+
+Sinds dpkg 1.22.16.
 
 =back
 

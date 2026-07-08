@@ -102,7 +102,7 @@ void deferred_remove(struct pkginfo *pkg) {
     else
       pkg_set_want(pkg, PKG_WANT_DEINSTALL);
 
-    if (!f_noact)
+    if (f_act)
       modstatdb_note(pkg);
   }
 
@@ -151,14 +151,12 @@ void deferred_remove(struct pkginfo *pkg) {
     return;
   } else if (rok == DEP_CHECK_HALT) {
     sincenothing= 0;
-    varbuf_end_str(&raemsgs);
     notice(_("dependency problems prevent removal of %s:\n%s"),
-            pkg_name(pkg, pnaw_nonambig), raemsgs.buf);
+            pkg_name(pkg, pnaw_nonambig), varbuf_str(&raemsgs));
     ohshit(_("dependency problems - not removing"));
   } else if (raemsgs.used) {
-    varbuf_end_str(&raemsgs);
     notice(_("%s: dependency problems, but removing anyway as you requested:\n%s"),
-            pkg_name(pkg, pnaw_nonambig), raemsgs.buf);
+            pkg_name(pkg, pnaw_nonambig), varbuf_str(&raemsgs));
   }
   varbuf_destroy(&raemsgs);
   sincenothing= 0;
@@ -171,7 +169,7 @@ void deferred_remove(struct pkginfo *pkg) {
   ensure_allinstfiles_available();
   fsys_hash_init();
 
-  if (f_noact) {
+  if (!f_act) {
     printf(_("Would remove or purge %s (%s) ...\n"),
            pkg_name(pkg, pnaw_nonambig),
            versiondescribe(&pkg->installed.version, vdew_nonambig));
@@ -290,7 +288,6 @@ removal_bulk_remove_files(struct pkginfo *pkg)
 
       varbuf_set_str(&fnvb, dpkg_fsys_get_dir());
       varbuf_add_str(&fnvb, usenode->name);
-      varbuf_end_str(&fnvb);
       varbuf_snapshot(&fnvb, &fnvb_state);
 
       is_dir = stat(fnvb.buf, &stab) == 0 && S_ISDIR(stab.st_mode);
@@ -335,18 +332,15 @@ removal_bulk_remove_files(struct pkginfo *pkg)
 
       varbuf_rollback(&fnvb_state);
       varbuf_add_str(&fnvb, DPKGTEMPEXT);
-      varbuf_end_str(&fnvb);
       debug(dbg_eachfiledetail, "removal_bulk cleaning temp '%s'", fnvb.buf);
       path_remove_tree(fnvb.buf);
 
       varbuf_rollback(&fnvb_state);
       varbuf_add_str(&fnvb, DPKGNEWEXT);
-      varbuf_end_str(&fnvb);
       debug(dbg_eachfiledetail, "removal_bulk cleaning new '%s'", fnvb.buf);
       path_remove_tree(fnvb.buf);
 
       varbuf_rollback(&fnvb_state);
-      varbuf_end_str(&fnvb);
 
       debug(dbg_eachfiledetail, "removal_bulk removing '%s'", fnvb.buf);
       if (!rmdir(fnvb.buf) || errno == ENOENT || errno == ELOOP) continue;
@@ -419,7 +413,6 @@ static void removal_bulk_remove_leftover_dirs(struct pkginfo *pkg) {
 
     varbuf_set_str(&fnvb, dpkg_fsys_get_dir());
     varbuf_add_str(&fnvb, usenode->name);
-    varbuf_end_str(&fnvb);
 
     if (!stat(fnvb.buf,&stab) && S_ISDIR(stab.st_mode)) {
       debug(dbg_eachfiledetail, "removal_bulk is a directory");
@@ -535,16 +528,20 @@ static void removal_bulk_remove_configfiles(struct pkginfo *pkg) {
     static struct varbuf fnvb, removevb;
       struct varbuf_state removevb_state;
 
-      if (conff->obsolete) {
+      if (conff->flags & CONFFILE_OBSOLETE) {
 	debug(dbg_conffdetail, "removal_bulk conffile obsolete %s",
 	      conff->name);
       }
       varbuf_reset(&fnvb);
       rc = conffderef(pkg, &fnvb, conff->name);
-      debug(dbg_conffdetail, "removal_bulk conffile '%s' (= '%s')",
-            conff->name, rc == -1 ? "<rc == -1>" : fnvb.buf);
-      if (rc == -1)
+      if (rc < 0) {
+        debug(dbg_conffdetail, "removal_bulk conffile '%s' (rc < %d)",
+              conff->name, rc);
         continue;
+      } else {
+        debug(dbg_conffdetail, "removal_bulk conffile '%s' (deref '%s')",
+              conff->name, fnvb.buf);
+      }
 
       namenode = fsys_hash_find_node(conff->name, FHFF_NONE);
       usenode = namenodetouse(namenode, pkg, &pkg->installed);
@@ -559,7 +556,6 @@ static void removal_bulk_remove_configfiles(struct pkginfo *pkg) {
       *p = '\0';
       varbuf_reset(&removevb);
       varbuf_add_dir(&removevb, fnvb.buf);
-      varbuf_end_str(&removevb);
       varbuf_snapshot(&removevb, &removevb_state);
 
       dsd= opendir(removevb.buf);
@@ -602,7 +598,6 @@ static void removal_bulk_remove_configfiles(struct pkginfo *pkg) {
       yes_remove:
         varbuf_rollback(&removevb_state);
         varbuf_add_str(&removevb, de->d_name);
-        varbuf_end_str(&removevb);
         debug(dbg_conffdetail, "removal_bulk conffile dsd entry removing '%s'",
               removevb.buf);
         if (unlink(removevb.buf) && errno != ENOENT && errno != ENOTDIR)

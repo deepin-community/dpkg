@@ -26,7 +26,7 @@ Jedes Debian-Quellpaket besteht aus einer .dsc-Steuerdatei, die eine Reihe von F
 
 Jedes Feld beginnt mit einer Markierung, wie B<Source> oder B<Binary> (Groß-/Kleinschreibung egal), gefolgt von einem Doppelpunkt und dem Inhalt des Feldes (Groß-/Kleinschreibung ist relevant, außer anders angegeben). Felder werden nur durch die Feldmarkierungen abgegrenzt. Mit anderen Worten, Feldtexte können mehrere Zeilen überspannen, aber die Installationswerkzeuge werden im Allgemeinen die Zeilen bei der Verarbeitung des Feldinhaltes zusammenfassen (mit Ausnahme der mehrzeiligen Felder B<Package-List>, B<Files>, B<Checksums-Sha1> und B<Checksums-Sha256>, sehen Sie dazu unten).
 
-Die Steuerdaten können in eine Signatur mit einer wie in RFC4880 spezifizierten OpenPGP-ASCII-Hülle eingeschlossen sein.
+Die Steuerdaten können in eine Signatur mit einer wie in RFC 9580 spezifizierten OpenPGP-ASCII-Hülle eingeschlossen sein.
 
 =head1 FELDER
 
@@ -142,7 +142,7 @@ Das I<Paket> ist der Name des Binärpakets.
 
 Der I<Pakettyp> ist der binäre Pakettyp, normalerweise B<deb>, B<udeb> ist ein anderer häufig vorkommender Wert.
 
-I<Sektion> und I<Priorität> entsprechen den Feldern I<section> und I<priority> des Binärpakets.
+I<Sektion> und I<Priorität> entsprechen den Feldern I<section> und I<priority> des Binärpakets; falls sie fehlen, ist die Vorgabe B<unknown> bzw. B<optional> (seit Dpkg 1.22.13).
 
 Die I<Schlüssel-Wert-Liste> ist eine durch Leerzeichen getrennte I<Schlüssel>B<=>I<Wert>-Liste und die derzeit erkannten optionalen Schlüssel sind:
 
@@ -168,11 +168,11 @@ Falls das Binärpaket „essential“ ist, wird der Schlüssel den Wert des Feld
 
 =back
 
-=item B<Files:> (verpflichtend)
+=item B<Files:> (verpflichtend, schwach)
 
-=item B<Checksums-Sha1:> (verpflichtend)
+=item B<Checksums-Sha1:> (verpflichtend, schwach)
 
-=item B<Checksums-Sha256:> (verpflichtend)
+=item B<Checksums-Sha256:> (verpflichtend, stark)
 
 =item S< >I<Prüfsumme> I<Größe> I<Dateiname>
 
@@ -181,6 +181,8 @@ Diese mehrzeiligen Felder enthalten eine Liste von Dateien mit einer Prüfsumme 
 Die erste Zeile des Feldwertes (der Teil auf dem durch einen Doppelpunkt gefolgten Feldnamen) ist immer leer. Der Inhalt des Feldes wird durch Fortsetzungszeilen ausgedrückt, eine Zeile pro Datei. Jede Zeile besteht aus der Prüfsumme, einem Leerzeichen, der Dateigröße, einem Leerzeichen und dem Dateinamen.
 
 Diese Felder führen alle Dateien auf, die das Quellpaket darstellen. Die Liste der Dateien in diesen Feldern muss auf die Liste der Dateien in den anderen dazugehörigen Feldern passen.
+
+B<Hinweis>: Die MD5- und SHA-1-Prüfsummen werden als schwach betrachtet und sollten niemals für die sichere Überprüfung als ausreichend betrachtet werden.
 
 =back
 
@@ -195,7 +197,7 @@ L<deb822(5)>, L<deb-src-control(5)>, L<deb-version(7)>, L<dpkg-source(1)>.
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

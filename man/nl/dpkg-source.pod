@@ -152,7 +152,7 @@ De originele tar-archieven bij het geëxtraheerde broncodepakket niet kopiëren 
 
 =item B<--no-check>
 
-Voor het uitpakken geen ondertekeningen en controlesommen controleren (sinds dpkg 1.14.17).
+Voor het uitpakken geen ondertekeningen en controlegetallen controleren (sinds dpkg 1.14.17).
 
 =item B<--no-overwrite-dir>
 
@@ -164,7 +164,7 @@ Weigeren het broncodepakket uit te pakken als het geen OpenPGP-ondertekening bev
 
 =item B<--require-strong-checksums>
 
-Weigeren het broncodepakket uit te pakken als het geen krachtige controlesommen bevat (sinds dpkg 1.18.7). Momenteel is B<SHA-256> de enige gekende controlesom die als krachtig aanzien wordt.
+Weigeren het broncodepakket uit te pakken als het geen krachtige controlegetallen bevat (sinds dpkg 1.18.7). Momenteel is B<SHA-256> het enige gekende controlegetal dat als krachtig aanzien wordt.
 
 =item B<--ignore-bad-version>
 
@@ -501,7 +501,7 @@ Indien dit ingesteld is, zal het gebruikt worden om te beslissen over het active
 
 Indien dit ingesteld werd, zal het gebruikt worden als de tijdsaanduiding (timestamp) (in seconden sinds de epoch) om de mtime vast te zetten op de items uit het L<tar(5)>-bestand.
 
-Since dpkg 1.18.11.
+Sinds dpkg 1.18.11.
 
 =item B<VISUAL>
 

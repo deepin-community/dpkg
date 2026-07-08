@@ -44,7 +44,7 @@ O I<upstream-version> apenas pode conter alfanuméricos (“A-Za-z0-9”) e os c
 
 Esta parte do número de versão especifica a versão do pacote Debian baseada na versão do autor. Só pode conter alfanuméricos e os caracteres B<+> B<.> B<~> (mais, ponto, til) e é comparado do mesmo modo que I<upstream-version> é.
 
-É opcional; se não estiver presente então o I<upstream-version> não pode conter um hífen. Este formato representa o caso onde um pedaço de software foi escrito especificamente para ser tornado num pacote Debian, e assim há apenas uma “debianizaçao” dele e assim sendo não é requerido nenhuma indicação de revisão.
+É opcional; se não estiver presente então o I<upstream-version> não pode conter um hífen. Este formato representa o caso onde um pedaço de software foi escrito especificamente para ser tornado num pacote Debian, e assim há apenas uma “debianização” dele e assim sendo não é requerido nenhuma indicação de revisão.
 
 É convencional reiniciar a I<revisão-debian> a ‘1’ cada vez que a I<versão-do-autor> é incrementada.
 

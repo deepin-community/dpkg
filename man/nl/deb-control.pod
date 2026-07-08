@@ -56,15 +56,13 @@ De indeling van een pakketbeschrijving bestaat uit een beknopte korte samenvatti
 
 Dit is een veld van algemene aard dat het pakket in een categorie onderbrengt op basis van de software die het installeert. Enkele gebruikelijke secties zijn B<utils>, B<net>, B<mail>, B<text>, B<x11>, enz.
 
+De geaccepteerde waarden zijn gebaseerd op het specifieke distributiebeleid.
+
 =item B<Priority:> I<prioriteit>
 
-Duidt het belang van dit pakket aan in verhouding tot het gehele systeem. Gebruikelijke prioriteiten zijn B<required>, B<standard>, B<optional>, B<extra>, enz.
+Duidt het belang van dit pakket aan in verhouding tot het gehele systeem. De bekende prioriteiten zijn B<required>, B<important>, B<standard>, B<optional>, B<extra> en B<unknown>, maar ook andere waarden kunnen gebruikt worden.
 
-=back
-
-De velden B<Section> en B<Priority> hebben gewoonlijk een welbepaalde set mogelijke waarden, afhankelijk van de richtlijnen van de distributie.
-
-=over 
+Hoe deze waarden worden toegepast, hangt af van het specifieke distributiebeleid.
 
 =item B<Installed-Size:> I<grootte>
 

@@ -24,7 +24,7 @@ B<DEBIAN/preinst>
 
 Un paquet peut réaliser plusieurs actions pré-installation à l'aide de scripts du responsable, en incluant un fichier I<preinst> exécutable dans son archive de contrôle (c'est-à-dire I<DEBIAN/preinst> au moment de la création du paquet).
 
-Le script peut être appelé de diverses S<manières :>
+Le script peut être appelé de diverses manières :
 
 =over 
 
@@ -36,13 +36,13 @@ Avant que le paquet ne soit installé.
 
 Avant qu'un paquet supprimé ne soit mis à niveau.
 
-La I<nouvelle_version> est passée depuis S<dpkg 1.18.5.>
+La I<nouvelle_version> est passée depuis dpkg 1.18.5.
 
 =item I<nouveau-preinst> B<upgrade> I<ancienne-version> I<nouvelle-version>
 
 Avant qu'un paquet ne soit mis à niveau.
 
-La I<nouvelle_version> est passée depuis S<dpkg 1.18.5.>
+La I<nouvelle_version> est passée depuis dpkg 1.18.5.
 
 =item I<ancien-preinst> B<abort-upgrade> I<nouvelle-version>
 

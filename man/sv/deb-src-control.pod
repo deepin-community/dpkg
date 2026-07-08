@@ -24,7 +24,7 @@ B<debian/control>
 
 Varje Debiankällkodspaket innehåller mallstyrfilen ”B<debian/control>”, och dess L<deb822(5)>-format är en övermängd av B<control>-filen som medföljer Debianbinärpaket, se B<deb-control>(5).
 
-Filen innehåller åtminstone två stycken, avdelade med en tomrad. Det första stycket kallas källkodspaketstycket och innehåller all generell information om källkodspaketet, medan de följande styckena kallas binärpaketstycken och beskriver exakt ett binärpaket per stycke. Varje stycke består av åtminstone ett fält. Ett fält inleds med ett fältnamn, till exempel B<Package> eller B<Section> (skiftlägesokänsligt), följt av ett kolon, fältinnehållet (skiftlägekänsligt om inte annat anges) och ett nyradstecken. Flerradiga fält är också tillåtna, men varje ytterligare rad som inte innehåller ett fältnamn, bör starta med minst ett blanksteg. Innehållet i flerradsfält slås normalt samman till en enda rad av verktygen (förutom i fallet fältet B<Description>, se nedan). För att sätta in tomma rader i ett flerradsfält, skriver du en punkt efter blanksteget. Rader som börjar med ett ”B<#>” tolkas som kommentarer.
+Filen innehåller åtminstone två stycken, avdelade med en tomrad. Det första stycket kallas källkodspaketstycket och innehåller all generell information om källkodspaketet, medan de följande styckena kallas binärpaketstycken och beskriver exakt ett binärpaket per stycke. Varje stycke består av åtminstone ett fält. Ett fält inleds med ett fältnamn, till exempel B<Package> eller B<Section> (skiftlägesokänsligt), följt av ett kolon, fältinnehållet (skiftlägekänsligt om inte annat anges) och ett nyradstecken. Flerradiga fält är också tillåtna, men varje ytterligare rad som inte innehåller ett fältnamn, måste starta med minst ett blanksteg. Innehållet i flerradsfält slås normalt samman till en enda rad av verktygen (förutom i fallet fältet B<Description>, se nedan). För att sätta in tomma rader i ett flerradsfält, skriver du en punkt efter blanksteget. Rader som börjar med ett ”B<#>” tolkas som kommentarer.
 
 =head1 KÄLLKODSFÄLT
 
@@ -60,6 +60,12 @@ URL till uppströmsprojektets hemsida.
 
 I<Url>:en till felrapporteringssystemet för detta paket. Det nuvarande formatet är I<systemtyp>://I<address>, till exempel B<debbugs://bugs.debian.org>. Det här fältet är normalt sett inte nödvändigt.
 
+=item B<Build-Driver:> I<drivrutinsnamn>
+
+Det här experimentella fältet anger namnet på byggdrivrutinen som används för att bygga paketet. Om det inte anges är standardvärdet för I<driver-name> B<debian-rules>.
+
+Fältet stöds sedan dpkg 1.22.7.
+
 =item B<Rules-Requires-Root:> B<no>|B<binary-targets>|I<impl-nyckelord>
 
 Det här fältet används för att ange om filen B<debian/rules> kräver (fake)root-privilegier för att köra några av sina mål, och i så fall när.
@@ -68,11 +74,11 @@ Det här fältet används för att ange om filen B<debian/rules> kräver (fake)r
 
 =item B<no> (nej)
 
-Binärmålen kommer inte kräva (fake)root överhuvudtaget. Detta är förval om B<dpkg-build-api>-nivån är ≥ 1.
+Binärmålen kommer inte kräva (fake)root överhuvudtaget. Detta är förval om B<dpkg-build-api>-nivån är ≥ 1, eller sedan dpkg 1.22.13.
 
 =item B<binary-targets>
 
-Binärmålen måste alltid köras under (fake)root. Detta är förvalet i B<dpkg-build-api>-nivå 0, om fältet inte anges; även om det inte är strikt nödvändigt att lägga till fältet med värdet B<binary-targets> så anger det att paketet har analyserats för det här kravet.
+Binärmålen måste alltid köras under (fake)root. Detta är förvalet i B<dpkg-build-api>-nivå 0 till och med dpkg 1.22.13, om fältet inte anges; även om det inte är strikt nödvändigt att lägga till fältet med värdet B<binary-targets> så anger det att paketet har analyserats för det här kravet.
 
 =item I<impl-nyckelord>
 
@@ -122,11 +128,17 @@ Namnet på den distribution paketet härstammar från. Det här fältet är norm
 
 Detta är ett generellt fält som ger paketet en kategori baserat på programvara som det installerar. Några vanliga sektioner är B<utils>, B<net>, B<mail>, B<text>, B<x11>, osv.
 
+Om det utelämnas sätts I<section> till förvalet B<unknown> (sedan dpkg 1.22.13).
+
+Godtagna värden baseras på den specifika distributionens policy.
+
 =item B<Priority:> I<prioritet>
 
-Ställer in hur viktigt paketet är jämfört med systemet som helhet. Vanliga prioriteter är B<required> (nödvändig), B<standard> (normal), B<optional> (valfritt), B<extra> (extra), osv.
+Ställer in hur viktigt paketet är jämfört med systemet som helhet. Kända prioriteter är B<required> (nödvändig), B<important> (viktig), B<standard> (normal), B<optional> (valfritt), B<extra> (extra), och B<unknown> (okänd), men andra värden kan också användas.
 
-Gälten B<Section> och B<Priority> har vanligtvis en definierad uppsättning accepterade värden baserade på den specifika distributionens policy.
+Om det utelämnas sätts I<priority> till förvalet B<optional> (sedan dpkg 1.22.13).
+
+Hur dessa värden ska användas beror på den specifika distributionens policy.
 
 =item B<Build-Depends:> I<paketlista>
 
@@ -273,26 +285,47 @@ Tänk på att dess användardefinierade fält använder den globala namnrymden, 
  Section: admin
  Priority: required
  Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
- # det här fältet kopieras till binär- och källkodspaketen
+ # det här fältet kopieras till binär- och källkodspaketen.
  XBS-Upstream-Release-Status: stable
  Homepage: https://wiki.debian.org/Teams/Dpkg
  Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
  Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git
- Standards-Version: 3.7.3
- Build-Depends: pkgconf, debhelper (>= 4.1.81),
-  libselinux1-dev (>= 1.28-4) [!linux-any]
+ Standards-Version: 4.7.0
+ Build-Depends:
+  debhelper-compat (= 13),
+  debhelper (>= 13.10~),
+  pkgconf,
+  libselinux1-dev (>= 1.28-4) [!linux-any],
 
  Package: dpkg-dev
  Section: utils
  Priority: optional
  Architecture: all
- # det här är ett skräddarsytt fält i binärpaketet
+ # det här är ett skräddarsytt fält i binärpaketet.
  XB-Mentoring-Contact: Raphael Hertzog <hertzog@debian.org>
- Depends: dpkg (>= 1.14.6), perl5, perl-modules, cpio (>= 2.4.2-2),
-  bzip2, lzma, patch (>= 2.2-1), make, binutils, libtimedate-perl
- Recommends: gcc | c-compiler, build-essential
- Suggests: gnupg, debian-keyring
- Conflicts: dpkg-cross (<< 2.0.0), devscripts (<< 2.10.26)
+ Depends:
+  binutils,
+  bzip2,
+  cpio (>= 2.4.2-2),
+ # Det här är en kommentar mitt i ett fältvärde.
+  dpkg (>= 1.14.6),
+  libtimedate-perl,
+  lzma,
+  make,
+  patch (>= 2.2-1),
+  perl-modules,
+  perl5,
+ Recommends:
+  gcc | c-compiler,
+  build-essential,
+ Suggests:
+  gnupg,
+  debian-keyring,
+ Conflicts:
+  dpkg-cross (<< 2.0.0),
+  devscripts (<< 2.10.26),
+ Replaces:
+  manpages-pl (<= 20051117-1),
  Replaces: manpages-pl (<= 20051117-1)
  Description: Debian package development tools
   This package provides the development tools (including dpkg-source)

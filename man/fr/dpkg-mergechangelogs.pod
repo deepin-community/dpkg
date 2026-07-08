@@ -22,9 +22,9 @@ B<dpkg-mergechangelogs> [I<option>...] I<ancien> I<nouveau-a> I<nouveau-b> [I<so
 
 =head1 DESCRIPTION
 
-Ce programme utilise les 3 versions fournies de journal des modifications S<(« changelog »)> Debian pour créer un fichier de journalisation fusionné. Le résultat est placé dans le fichier I<sortie> ou affiché sur la sortie standard si ce paramètre est omis.
+Ce programme utilise les 3 versions fournies de journal des modifications (« changelog ») Debian pour créer un fichier de journalisation fusionné. Le résultat est placé dans le fichier I<sortie> ou affiché sur la sortie standard si ce paramètre est omis.
 
-Chaque entrée est identifiée par son numéro de version. Les entrées ne sont pas censées entrer en conflit, mais sont simplement fusionnées dans le bon ordre (par numéro de version décroissant). Si l'option B<--merge-prereleases> est utilisée, la partie de numéro de version qui suit le dernier caractère tilde est omise ; les versions 1.0-1~exp1 et 1.0-1~exp5 sont ainsi considérées comme la même entrée. Quand la même version est mentionnée dans I<nouveau-a> et I<nouveau-b>, une fusion S<« 3-way »> standard est tentée (sous réserve que le module Algorithm::Merge soit disponible — il est fourni par le paquet libalgorithm-merge-perl. Dans le cas contraire, un conflit global est créé dans le contexte de cette entrée.
+Chaque entrée est identifiée par son numéro de version. Les entrées ne sont pas censées entrer en conflit, mais sont simplement fusionnées dans le bon ordre (par numéro de version décroissant). Si l'option B<--merge-prereleases> est utilisée, la partie de numéro de version qui suit le dernier caractère tilde est omise ; les versions 1.0-1~exp1 et 1.0-1~exp5 sont ainsi considérées comme la même entrée. Quand la même version est mentionnée dans I<nouveau-a> et I<nouveau-b>, une fusion « 3-way » standard est tentée (sous réserve que le module Algorithm::Merge soit disponible — il est fourni par le paquet libalgorithm-merge-perl. Dans le cas contraire, un conflit global est créé dans le contexte de cette entrée.
 
 This program was introduced in dpkg 1.15.7.
 
@@ -34,9 +34,9 @@ This program was introduced in dpkg 1.15.7.
 
 =item B<--merge-unreleased>
 
-Ignorer le numéro de version quand les entrées sont marquées B<UNRELEASED> (depuis S<dpkg 1.21.0).>
+Ignorer le numéro de version quand les entrées sont marquées B<UNRELEASED> (depuis dpkg 1.21.0).
 
-C'est utile lorsqu'il y a des développements divergents pour des versions qui n'ont pas encore été publiées. Par exemple, une fois 2.1-1 publiée, le développement de la nouvelle version 2.2-1 arrive puis celui de la version 2.3-1, alors il est raisonnable d'aboutir finalement à une entrée consolidée de 2.3-1 intégrant tout le développement effectué S<dans 2.2-1.>
+C'est utile lorsqu'il y a des développements divergents pour des versions qui n'ont pas encore été publiées. Par exemple, une fois 2.1-1 publiée, le développement de la nouvelle version 2.2-1 arrive puis celui de la version 2.3-1, alors il est raisonnable d'aboutir finalement à une entrée consolidée de 2.3-1 intégrant tout le développement effectué dans 2.2-1.
 
 =item B<-m>, B<--merge-prereleases>
 
@@ -60,11 +60,11 @@ Afficher le numéro de version puis quitter.
 
 =item B<DPKG_COLORS>
 
-Définit le mode de couleur (depuis S<dpkg 1.18.5).> Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
+Définit le mode de couleur (depuis dpkg 1.18.5). Les valeurs actuellement acceptées sont B<auto> (par défaut), B<always> et B<never>.
 
 =item B<DPKG_NLS>
 
-Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis S<dpkg 1.19.0).> Les valeurs permises S<sont :> B<0> et B<1> (par défaut).
+Si cette variable est définie, elle sera utilisée pour décider l'activation de la prise en charge des langues (NLS – Native Language Support), connu aussi comme la gestion de l'internationalisation (ou i18n) (depuis dpkg 1.19.0). Les valeurs permises sont : B<0> et B<1> (par défaut).
 
 =back
 
@@ -74,13 +74,13 @@ Anything that is not parsed by L<Dpkg::Changelog> is lost during the merge. This
 
 =head1 INTÉGRATION AVEC GIT
 
-Si vous souhaitez utiliser ce programme pour fusionner des journaux de modifications Debian dans un dépôt git, vous devez tout d'abord enregistrer un nouveau pilote de fusion dans B<.git/config> ou S<B<~/.gitconfig> :>
+Si vous souhaitez utiliser ce programme pour fusionner des journaux de modifications Debian dans un dépôt git, vous devez tout d'abord enregistrer un nouveau pilote de fusion dans B<.git/config> ou B<~/.gitconfig> :
 
  [merge "dpkg-mergechangelogs"]
     name = debian/changelog merge driver
     driver = dpkg-mergechangelogs -m %O %A %B %A
 
-Vous devez ensuite configurer l'attribut de fusion pour le fichier debian/changelog, soit dans B<.gitattributes> du dépôt lui-même, soit dans S<B<.git/info/attributes> :>
+Vous devez ensuite configurer l'attribut de fusion pour le fichier debian/changelog, soit dans B<.gitattributes> du dépôt lui-même, soit dans B<.git/info/attributes> :
 
  debian/changelog merge=dpkg-mergechangelogs
 

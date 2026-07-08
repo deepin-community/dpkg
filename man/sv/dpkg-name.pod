@@ -66,6 +66,10 @@ Visar version och avslutar.
 
 =over 
 
+=item B<DEB_HOST_ARCH>
+
+Sätter värdarkitekturen. Detta påverkar arkitekturnamnet som används i paketfilnamnet.
+
 =item B<DPKG_COLORS>
 
 Väljer färgläge (sedan dpkg 1.18.5). För närvarande godtas följande värden: B<auto> (förval), B<always> och B<never>.

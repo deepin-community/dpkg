@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.17.0\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2024-03-10 20:20+0100\n"
+"POT-Creation-Date: 2026-03-06 04:00+0100\n"
 "PO-Revision-Date: 2015-04-07 09:48+0200\n"
 "Last-Translator: Tshewang Norbu <bumthap2006@hotmail.com>\n"
 "Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
@@ -391,6 +391,191 @@ msgstr "--%s: `%.250s' གི་དོན་ལུ་ནུས་མེད་ཧ
 msgid "unknown compression strategy"
 msgstr "མ་ཤེས་པའི་ཨེབ་བཙུགས་ཀྱི་དབྱེ་བ་ `%s'!"
 
+#: lib/dpkg/db-ctrl-access.c
+#, c-format
+msgid "unable to check existence of '%.250s'"
+msgstr "`%.250s' གི་གནས་ས་ཞིབ་དཔྱད་འབད་མ་ཚུགས།"
+
+#: lib/dpkg/db-ctrl-access.c lib/dpkg/db-ctrl-upgrade.c
+msgid "cannot read info directory"
+msgstr "བརྡ་དོན་སྣོད་ཐོ་ལྷག་མི་ཚུགས།"
+
+#: lib/dpkg/db-ctrl-format.c src/main/unpack.c
+#, c-format
+msgid "error trying to open %.250s"
+msgstr "%.250s ཁ་ཕྱེ་ནིའ་འབད་རྩོལ་བསྐྱེདཔ་ད་འཛོལ་བ།"
+
+#: lib/dpkg/db-ctrl-format.c
+#, fuzzy, c-format
+msgid "corrupt info database format file '%s'"
+msgstr "འབྱུང་ཁུངས་ཡིག་སྣོད་ `%.250s' ཁ་ཕྱེ་མ་ཚུགས།"
+
+#: lib/dpkg/db-ctrl-format.c
+#, c-format
+msgid "info database format (%d) is bogus or too new; try getting a newer dpkg"
+msgstr ""
+
+#: lib/dpkg/db-ctrl-upgrade.c
+#, fuzzy, c-format
+#| msgid "conffile `%.250s' does not appear in package"
+msgid "info file %s/%s not associated to any package"
+msgstr "ཀཱོན་ཕ་ཡིལ་`%.250s' འདི་ ཐུམ་སྒྲིལ་ནང་མི་འབྱུང་།"
+
+#: lib/dpkg/db-ctrl-upgrade.c src/main/archives.c
+#, c-format
+msgid "error creating hard link '%.255s'"
+msgstr "ཧརཌི་ལིངཀ་ `%.255s' གསར་བསྐྲུན་འབདཝ་ད་འཛོལ་བ།"
+
+#: lib/dpkg/db-ctrl-upgrade.c
+#, fuzzy, c-format
+#| msgid "error writing `%s'"
+msgid "error while writing '%s'"
+msgstr "`%s' འབྲིཝ་ད་འཛོལ་བ།"
+
+#: lib/dpkg/db-fsys-digest.c
+#, fuzzy, c-format
+msgid "control file '%s' for package '%s' is missing final newline"
+msgstr "ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་ཡིག་སྣོད་ཚུའི་ཐོ་ཡིག་སྣོད་ཀྱི་ནང་ན་ཡིག་སྣོད་མིང་སྟོངམ་འདུག"
+
+#: lib/dpkg/db-fsys-digest.c
+#, fuzzy, c-format
+msgid "control file '%s' for package '%s' is missing value"
+msgstr "ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་ཡིག་སྣོད་ཚུའི་ཐོ་ཡིག་སྣོད་ཀྱི་ནང་ན་ཡིག་སྣོད་མིང་སྟོངམ་འདུག"
+
+#: lib/dpkg/db-fsys-digest.c
+#, fuzzy, c-format
+msgid "control file '%s' for package '%s' is missing value separator"
+msgstr "ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་ཡིག་སྣོད་ཚུའི་ཐོ་ཡིག་སྣོད་ཀྱི་ནང་ན་ཡིག་སྣོད་མིང་སྟོངམ་འདུག"
+
+#: lib/dpkg/db-fsys-digest.c
+#, fuzzy, c-format
+#| msgid "files list file for package `%.250s' contains empty filename"
+msgid "control file '%s' for package '%s' contains empty filename"
+msgstr "ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་ཡིག་སྣོད་ཚུའི་ཐོ་ཡིག་སྣོད་ཀྱི་ནང་ན་ཡིག་སྣོད་མིང་སྟོངམ་འདུག"
+
+#: lib/dpkg/db-fsys-digest.c
+#, fuzzy, c-format
+#| msgid "cannot read config file dir `%.250s' (from `%.250s')"
+msgid "loading control file '%s' for package '%s'"
+msgstr "རིམ་སྒྲིག་ཡིག་སྣོད་ སྣོད་ཐོ་`%.250s'(`%.250s' ལས་)ལྷག་མ་ཚུགས།"
+
+#: lib/dpkg/db-fsys-divert.c
+#, c-format
+msgid "conflicting diversions involving '%.250s' or '%.250s'"
+msgstr "`%.250s' ཡང་ན་ `%.250s' འབྲེལ་བ་ཡོད་མི་མི་མཐུན་པའི་ཁ་སྒྱུར་ཚུ།"
+
+#: lib/dpkg/db-fsys-files.c
+#, fuzzy, c-format
+msgid "files list file for package '%.250s' is missing final newline"
+msgstr "ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་ཡིག་སྣོད་ཚུའི་ཐོ་ཡིག་སྣོད་ཀྱི་ནང་ན་ཡིག་སྣོད་མིང་སྟོངམ་འདུག"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "files list file for package '%.250s' contains empty filename"
+msgstr "ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་ཡིག་སྣོད་ཚུའི་ཐོ་ཡིག་སྣོད་ཀྱི་ནང་ན་ཡིག་སྣོད་མིང་སྟོངམ་འདུག"
+
+#: lib/dpkg/db-fsys-files.c
+#, fuzzy, c-format
+#| msgid "error closing files list file for package '%.250s'"
+msgid "loading files list file for package '%s'"
+msgstr "ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་ཡིག་སྣོད་ཚུའི་ཐོ་ཡིག་ཡིག་སྣོད་ཁ་བསྡམ་ད་འཛོལ་བ།"
+
+#: lib/dpkg/db-fsys-files.c
+#, fuzzy, c-format
+msgid ""
+"files list file for package '%.250s' missing; assuming package has no files "
+"currently installed"
+msgstr ""
+"dpkg: འཚུབ་ཅན་ཉེན་བརྡ་: ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་ཡིག་སྣོད་ཚུའི་ཐོ་ཡིག་ཡིག་སྣོད་བརླག་སྟོར་ཞུགས་"
+"ནུག་ ཐུམ་སྒྲིལ་ལུ་ད་ལྟོ་གཞི་བཙུགས་འབད་མི་ཡིག་སྣོད་ཚུ་མེདཔ་སྦེ་ཚོད་དཔག་སྟེ།\n"
+
+#: lib/dpkg/db-fsys-files.c
+msgid "(Reading database ... "
+msgstr "(གནད་སྡུད་གཞི་རྟེན་ལྷག་དོ་..."
+
+#: lib/dpkg/db-fsys-files.c
+#, fuzzy, c-format
+#| msgid "%d files and directories currently installed.)\n"
+msgid "%d file or directory currently installed.)\n"
+msgid_plural "%d files and directories currently installed.)\n"
+msgstr[0] "%d ཡིག་སྣོད་ཚུ་དང་སྣོད་ཐོ་ཚུ་ད་ལྟོ་གཞི་བཙུགས་འབད་ཡོད།)\n"
+msgstr[1] "%d ཡིག་སྣོད་ཚུ་དང་སྣོད་ཐོ་ཚུ་ད་ལྟོ་གཞི་བཙུགས་འབད་ཡོད།)\n"
+
+#: lib/dpkg/db-fsys-load.c
+#, fuzzy, c-format
+#| msgid "%s: can't open %s: %s"
+msgid "cannot open %s file"
+msgstr "%s: %s ཁ་ཕྱེ་མི་ཚུགས་: %s"
+
+#: lib/dpkg/db-fsys-load.c
+#, fuzzy, c-format
+msgid "cannot get %s file metadata"
+msgstr "འབྱུང་ཁུངས་ཡིག་སྣོད་ `%.250s' ཁ་ཕྱེ་མ་ཚུགས།"
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy, c-format
+msgid "invalid statoverride uid %s"
+msgstr "ནུས་མེད་དུས་མཐུནམ་བཟོ་ནི་ཐབས་ལམ"
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy, c-format
+#| msgid "dpkg-statoverride: %s"
+msgid "invalid statoverride gid %s"
+msgstr "ཌི་པི་ཀེ་ཇི་-སི་ཊེཊི་ཟུར་བཞག: %s"
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy, c-format
+#| msgid "dpkg-statoverride: %s"
+msgid "invalid statoverride mode %s"
+msgstr "ཌི་པི་ཀེ་ཇི་-སི་ཊེཊི་ཟུར་བཞག: %s"
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy, c-format
+#| msgid "statoverride file `%.250s'"
+msgid "reading statoverride file '%.250s'"
+msgstr "སི་ཊེཊི་ཟུར་བཞག་ཡིག་སྣོད་ `%.250s'"
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy
+msgid "statoverride file is missing final newline"
+msgstr "སི་ཊེཊི་ཟུར་བཞག་ཡིག་སྣོད་ཀྱི་ནང་ན་གྲལ་ཐིག་སྟོངམ་འདུག"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "statoverride file contains empty line"
+msgstr "སི་ཊེཊི་ཟུར་བཞག་ཡིག་སྣོད་ཀྱི་ནང་ན་གྲལ་ཐིག་སྟོངམ་འདུག"
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy
+msgid "syntax error in statoverride file"
+msgstr "སི་ཊེཊི་ཟུར་བཞག་ཡིག་སྣོད་ཁ་ཕྱེ་ནི་འཐུས་ཤོར་བྱུང་ཡོད།"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid ""
+"unknown system user '%s' in statoverride file; the system user got removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy
+msgid "unexpected end of line in statoverride file"
+msgstr "གྲལ་ཐིག་ %d གུ་ལུ་ཐུམ་སྒྲིལ་མིང་ནང་ལུ་རེ་བ་མེད་པའི་གྲལ་ཐིག་གི་མཇུག"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid ""
+"unknown system group '%s' in statoverride file; the system group got "
+"removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy, c-format
+msgid "multiple statoverrides present for file '%.250s'"
+msgstr "སི་ཊེཊི་ཟུར་བཞག་ཡིག་སྣོད་ `%.250s'"
+
 #: lib/dpkg/dbmodify.c
 #, c-format
 msgid ""
@@ -530,196 +715,6 @@ msgstr " `%.250s' གི་དུས་མཐུན་བཟོ་ཡོད་�
 #, c-format
 msgid "unable to install updated status of '%.250s'"
 msgstr " `%.250s' གི་དུས་མཐུན་བཟོ་ཡོད་པའི་གནས་ཚད་ཀྱི་དོན་ལུ་ གཞི་བཙུགས་འབད་མ་ཚུགས།"
-
-#: lib/dpkg/db-ctrl-access.c
-#, c-format
-msgid "unable to check existence of '%.250s'"
-msgstr "`%.250s' གི་གནས་ས་ཞིབ་དཔྱད་འབད་མ་ཚུགས།"
-
-#: lib/dpkg/db-ctrl-access.c lib/dpkg/db-ctrl-upgrade.c
-msgid "cannot read info directory"
-msgstr "བརྡ་དོན་སྣོད་ཐོ་ལྷག་མི་ཚུགས།"
-
-#: lib/dpkg/db-ctrl-format.c src/main/unpack.c
-#, c-format
-msgid "error trying to open %.250s"
-msgstr "%.250s ཁ་ཕྱེ་ནིའ་འབད་རྩོལ་བསྐྱེདཔ་ད་འཛོལ་བ།"
-
-#: lib/dpkg/db-ctrl-format.c
-#, fuzzy, c-format
-msgid "corrupt info database format file '%s'"
-msgstr "འབྱུང་ཁུངས་ཡིག་སྣོད་ `%.250s' ཁ་ཕྱེ་མ་ཚུགས།"
-
-#: lib/dpkg/db-ctrl-format.c
-#, c-format
-msgid "info database format (%d) is bogus or too new; try getting a newer dpkg"
-msgstr ""
-
-#: lib/dpkg/db-ctrl-upgrade.c
-#, fuzzy, c-format
-#| msgid "conffile `%.250s' does not appear in package"
-msgid "info file %s/%s not associated to any package"
-msgstr "ཀཱོན་ཕ་ཡིལ་`%.250s' འདི་ ཐུམ་སྒྲིལ་ནང་མི་འབྱུང་།"
-
-#: lib/dpkg/db-ctrl-upgrade.c src/main/archives.c
-#, c-format
-msgid "error creating hard link '%.255s'"
-msgstr "ཧརཌི་ལིངཀ་ `%.255s' གསར་བསྐྲུན་འབདཝ་ད་འཛོལ་བ།"
-
-#: lib/dpkg/db-ctrl-upgrade.c
-#, fuzzy, c-format
-#| msgid "error writing `%s'"
-msgid "error while writing '%s'"
-msgstr "`%s' འབྲིཝ་ད་འཛོལ་བ།"
-
-#: lib/dpkg/db-fsys-digest.c
-#, fuzzy, c-format
-msgid "control file '%s' for package '%s' is missing final newline"
-msgstr "ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་ཡིག་སྣོད་ཚུའི་ཐོ་ཡིག་སྣོད་ཀྱི་ནང་ན་ཡིག་སྣོད་མིང་སྟོངམ་འདུག"
-
-#: lib/dpkg/db-fsys-digest.c
-#, fuzzy, c-format
-msgid "control file '%s' for package '%s' is missing value"
-msgstr "ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་ཡིག་སྣོད་ཚུའི་ཐོ་ཡིག་སྣོད་ཀྱི་ནང་ན་ཡིག་སྣོད་མིང་སྟོངམ་འདུག"
-
-#: lib/dpkg/db-fsys-digest.c
-#, fuzzy, c-format
-msgid "control file '%s' for package '%s' is missing value separator"
-msgstr "ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་ཡིག་སྣོད་ཚུའི་ཐོ་ཡིག་སྣོད་ཀྱི་ནང་ན་ཡིག་སྣོད་མིང་སྟོངམ་འདུག"
-
-#: lib/dpkg/db-fsys-digest.c
-#, fuzzy, c-format
-#| msgid "files list file for package `%.250s' contains empty filename"
-msgid "control file '%s' for package '%s' contains empty filename"
-msgstr "ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་ཡིག་སྣོད་ཚུའི་ཐོ་ཡིག་སྣོད་ཀྱི་ནང་ན་ཡིག་སྣོད་མིང་སྟོངམ་འདུག"
-
-#: lib/dpkg/db-fsys-digest.c
-#, fuzzy, c-format
-#| msgid "cannot read config file dir `%.250s' (from `%.250s')"
-msgid "loading control file '%s' for package '%s'"
-msgstr "རིམ་སྒྲིག་ཡིག་སྣོད་ སྣོད་ཐོ་`%.250s'(`%.250s' ལས་)ལྷག་མ་ཚུགས།"
-
-#: lib/dpkg/db-fsys-divert.c
-msgid "failed to open diversions file"
-msgstr "ཁ་སྒྱུར་ཡིག་སྣོད་ཁ་ཕྱེ་ནི་འཐུས་ཤོར་བྱུང་ཡོད།"
-
-#: lib/dpkg/db-fsys-divert.c
-msgid "failed to fstat diversions file"
-msgstr "ཁ་སྒྱུར་ཡིག་སྣོད་ཨེཕ་སི་ཊེཊི་འབད་ནི་ལུ་འཐུས་ཤོར་བྱུང་ཡོད།"
-
-#: lib/dpkg/db-fsys-divert.c
-#, c-format
-msgid "conflicting diversions involving '%.250s' or '%.250s'"
-msgstr "`%.250s' ཡང་ན་ `%.250s' འབྲེལ་བ་ཡོད་མི་མི་མཐུན་པའི་ཁ་སྒྱུར་ཚུ།"
-
-#: lib/dpkg/db-fsys-files.c
-#, fuzzy, c-format
-#| msgid "error closing files list file for package '%.250s'"
-msgid "loading files list file for package '%s'"
-msgstr "ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་ཡིག་སྣོད་ཚུའི་ཐོ་ཡིག་ཡིག་སྣོད་ཁ་བསྡམ་ད་འཛོལ་བ།"
-
-#: lib/dpkg/db-fsys-files.c
-#, fuzzy, c-format
-msgid ""
-"files list file for package '%.250s' missing; assuming package has no files "
-"currently installed"
-msgstr ""
-"dpkg: འཚུབ་ཅན་ཉེན་བརྡ་: ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་ཡིག་སྣོད་ཚུའི་ཐོ་ཡིག་ཡིག་སྣོད་བརླག་སྟོར་ཞུགས་"
-"ནུག་ ཐུམ་སྒྲིལ་ལུ་ད་ལྟོ་གཞི་བཙུགས་འབད་མི་ཡིག་སྣོད་ཚུ་མེདཔ་སྦེ་ཚོད་དཔག་སྟེ།\n"
-
-#: lib/dpkg/db-fsys-files.c
-#, fuzzy, c-format
-msgid "files list file for package '%.250s' is missing final newline"
-msgstr "ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་ཡིག་སྣོད་ཚུའི་ཐོ་ཡིག་སྣོད་ཀྱི་ནང་ན་ཡིག་སྣོད་མིང་སྟོངམ་འདུག"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "files list file for package '%.250s' contains empty filename"
-msgstr "ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་ཡིག་སྣོད་ཚུའི་ཐོ་ཡིག་སྣོད་ཀྱི་ནང་ན་ཡིག་སྣོད་མིང་སྟོངམ་འདུག"
-
-#: lib/dpkg/db-fsys-files.c
-msgid "(Reading database ... "
-msgstr "(གནད་སྡུད་གཞི་རྟེན་ལྷག་དོ་..."
-
-#: lib/dpkg/db-fsys-files.c
-#, fuzzy, c-format
-#| msgid "%d files and directories currently installed.)\n"
-msgid "%d file or directory currently installed.)\n"
-msgid_plural "%d files and directories currently installed.)\n"
-msgstr[0] "%d ཡིག་སྣོད་ཚུ་དང་སྣོད་ཐོ་ཚུ་ད་ལྟོ་གཞི་བཙུགས་འབད་ཡོད།)\n"
-msgstr[1] "%d ཡིག་སྣོད་ཚུ་དང་སྣོད་ཐོ་ཚུ་ད་ལྟོ་གཞི་བཙུགས་འབད་ཡོད།)\n"
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy, c-format
-msgid "invalid statoverride uid %s"
-msgstr "ནུས་མེད་དུས་མཐུནམ་བཟོ་ནི་ཐབས་ལམ"
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy, c-format
-#| msgid "dpkg-statoverride: %s"
-msgid "invalid statoverride gid %s"
-msgstr "ཌི་པི་ཀེ་ཇི་-སི་ཊེཊི་ཟུར་བཞག: %s"
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy, c-format
-#| msgid "dpkg-statoverride: %s"
-msgid "invalid statoverride mode %s"
-msgstr "ཌི་པི་ཀེ་ཇི་-སི་ཊེཊི་ཟུར་བཞག: %s"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "failed to open statoverride file"
-msgstr "སི་ཊེཊི་ཟུར་བཞག་ཡིག་སྣོད་ཁ་ཕྱེ་ནི་འཐུས་ཤོར་བྱུང་ཡོད།"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "failed to fstat statoverride file"
-msgstr "སི་ཊེཊི་ཟུར་བཞག་ཡིག་སྣོད་ཨེཕ་སི་ཊེཊི་འབད་ནི་ལུ་འཐུས་ཤོར་བྱུང་ཡོད།"
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy, c-format
-#| msgid "statoverride file `%.250s'"
-msgid "reading statoverride file '%.250s'"
-msgstr "སི་ཊེཊི་ཟུར་བཞག་ཡིག་སྣོད་ `%.250s'"
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy
-msgid "statoverride file is missing final newline"
-msgstr "སི་ཊེཊི་ཟུར་བཞག་ཡིག་སྣོད་ཀྱི་ནང་ན་གྲལ་ཐིག་སྟོངམ་འདུག"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "statoverride file contains empty line"
-msgstr "སི་ཊེཊི་ཟུར་བཞག་ཡིག་སྣོད་ཀྱི་ནང་ན་གྲལ་ཐིག་སྟོངམ་འདུག"
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy
-msgid "syntax error in statoverride file"
-msgstr "སི་ཊེཊི་ཟུར་བཞག་ཡིག་སྣོད་ཁ་ཕྱེ་ནི་འཐུས་ཤོར་བྱུང་ཡོད།"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid ""
-"unknown system user '%s' in statoverride file; the system user got removed\n"
-"before the override, which is most probably a packaging bug, to recover you\n"
-"can remove the override manually with %s"
-msgstr ""
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy
-msgid "unexpected end of line in statoverride file"
-msgstr "གྲལ་ཐིག་ %d གུ་ལུ་ཐུམ་སྒྲིལ་མིང་ནང་ལུ་རེ་བ་མེད་པའི་གྲལ་ཐིག་གི་མཇུག"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid ""
-"unknown system group '%s' in statoverride file; the system group got "
-"removed\n"
-"before the override, which is most probably a packaging bug, to recover you\n"
-"can remove the override manually with %s"
-msgstr ""
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy, c-format
-msgid "multiple statoverrides present for file '%.250s'"
-msgstr "སི་ཊེཊི་ཟུར་བཞག་ཡིག་སྣོད་ `%.250s'"
 
 #: lib/dpkg/deb-version.c
 #, fuzzy
@@ -1104,6 +1099,12 @@ msgstr "ཐུམ་སྒྲིལ་ `%.250s' གི་དོན་ལུ་�
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
+#| msgid "cannot stat old name `%s': %s"
+msgid "cannot canonicalize pathname %s"
+msgstr "མིང་རྙིངམ་ `%s' སི་ཊེཊི་འབད་མ་ཚུགས: %s"
+
+#: lib/dpkg/file.c
+#, fuzzy, c-format
 msgid "unable to stat source file '%.250s'"
 msgstr "འབྱུང་ཁུངས་ཡིག་སྣོད་ `%.250s' ཁ་ཕྱེ་མ་ཚུགས།"
 
@@ -1175,9 +1176,16 @@ msgstr "གནས་ཚད་གནད་སྡུད་གཞི་རྟེན
 #, fuzzy, c-format
 #| msgid "status database area is locked by another process"
 msgid ""
-"%s was locked by another process with pid %d\n"
+"%s was locked by %s process with pid %d\n"
 "%s"
 msgstr "གནས་ཚད་གནད་སྡུད་གཞི་རྟེན་མངའ་ཁོངས་འདི་ ལས་སྦྱོར་གཞན་མི་ཅིག་གིས་ལྡེ་མིག་རྐྱབས་ཡོདཔ་ཨིན།"
+
+#: lib/dpkg/file.c
+#, fuzzy
+#| msgid "<unknown>"
+msgctxt "process"
+msgid "<unknown>"
+msgstr "<མ་ཤེསཔ་>"
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
@@ -1700,6 +1708,15 @@ msgstr ""
 msgid "warning"
 msgstr "ཉེན་བརྡ།"
 
+#: lib/dpkg/report.c
+msgid "hint"
+msgstr ""
+
+#: lib/dpkg/strvec.c
+#, c-format
+msgid "cannot grow strvec to size %zu; it would overflow"
+msgstr ""
+
 #: lib/dpkg/strwide.c
 #, c-format
 msgid "cannot convert multibyte string '%s' to a wide-character string"
@@ -2149,11 +2166,11 @@ msgid ""
 "Forcing options marked [*] are enabled by default.\n"
 msgstr ""
 
-#: src/common/force.c src/deb/build.c src/deb/extract.c src/deb/info.c
-#: src/deb/main.c src/split/info.c src/split/main.c src/split/queue.c
-#: src/divert/main.c src/statoverride/main.c src/trigger/main.c
-#: src/query/main.c src/main/archives.c src/main/enquiry.c src/main/main.c
-#: src/main/packages.c src/main/select.c src/main/verify.c
+#: src/common/force.c src/realpath/main.c src/deb/build.c src/deb/extract.c
+#: src/deb/info.c src/deb/main.c src/split/info.c src/split/main.c
+#: src/split/queue.c src/divert/main.c src/statoverride/main.c
+#: src/trigger/main.c src/query/main.c src/main/archives.c src/main/enquiry.c
+#: src/main/main.c src/main/packages.c src/main/select.c src/main/verify.c
 msgid "<standard output>"
 msgstr ""
 
@@ -2196,6 +2213,78 @@ msgstr ""
 #| msgid "cannot read config file dir `%.250s' (from `%.250s')"
 msgid "cannot set security context for file object '%s'"
 msgstr "རིམ་སྒྲིག་ཡིག་སྣོད་ སྣོད་ཐོ་`%.250s'(`%.250s' ལས་)ལྷག་མ་ཚུགས།"
+
+#: src/realpath/main.c
+#, fuzzy
+msgid "Use --help for help about this utility."
+msgstr "དབྱེ་བ་ ཌི་པི་ཀེ་ཇི་-བཤག་ --གྲོགས་རམ་གྱི་དོན་ལུ་གྲོགས་རམ།"
+
+#: src/realpath/main.c src/divert/main.c src/statoverride/main.c
+#, c-format
+msgid "Debian %s version %s.\n"
+msgstr "ཌེ་བི་ཡཱན་ %s ཐོན་རིམ་ %s\n"
+
+#: src/realpath/main.c src/deb/main.c src/split/main.c src/divert/main.c
+#: src/statoverride/main.c src/trigger/main.c src/query/main.c src/main/main.c
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+msgid ""
+"This is free software; see the GNU General Public License version 2 or\n"
+"later for copying conditions. There is NO warranty.\n"
+msgstr ""
+"\n"
+"འ་ནི་འདི་རང་དབང་མཉེན་ཆས་ཨིན། ཇི་ཨེན་ཡུ་ ཡོངས་ཁྱབ་མི་མང་ཆོག་ཐམ་ཐོན་རིམ་ ༢ ཡང་ན་\n"
+"ཤུལ་མམ་འདི་ གནས་སྟངས་ཚུ་འདྲ་བཤུས་རྐྱབས་ནིའི་དོན་ལུ་ བལྟ། ཉེན་ལེན་ག་ནི་ཡང་མེད།\n"
+
+#: src/realpath/main.c
+#, fuzzy, c-format
+#| msgid ""
+#| "Usage: %s [<option> ...] <command>\n"
+#| "\n"
+msgid ""
+"Usage: %s [<option>...] <pathname>\n"
+"\n"
+msgstr ""
+"ལག་ལེན་: %s [<option> ...] <command>\n"
+"\n"
+
+#: src/realpath/main.c
+#, c-format
+msgid ""
+"Options:\n"
+"  -z, --zero                   end output line with NUL, not newline.\n"
+"      --instdir <directory>    set the root directory.\n"
+"      --root <directory>       set the root directory.\n"
+"      --version                show the version.\n"
+"      --help                   show this help message.\n"
+"\n"
+msgstr ""
+
+#: src/realpath/main.c
+msgid "too many levels of symbolic links"
+msgstr ""
+
+#: src/realpath/main.c
+#, fuzzy, c-format
+#| msgid "write %s: %s"
+msgid "cannot read link '%s'"
+msgstr "%s: %s འབྲི།"
+
+#: src/realpath/main.c
+#, c-format
+msgid "symbolic link '%s' size has changed from %jd to %zd"
+msgstr ""
+
+#: src/realpath/main.c
+#, fuzzy
+#| msgid "--%s needs a <package> argument"
+msgid "need a pathname argument"
+msgstr "--%s་ལུ་ <ཐུམ་སྒྲིལ་>སྒྲུབ་རྟགས་ཅིག་དགོཔ་འདུག"
+
+#: src/realpath/main.c
+#, c-format
+msgid "link '%s' includes root prefix '%s'"
+msgstr ""
 
 #: src/deb/build.c
 #, fuzzy, c-format
@@ -2342,6 +2431,26 @@ msgstr "(ཐུམ་སྒྲིལ:"
 msgid "'%s' contains user-defined Priority value '%s'"
 msgstr ""
 "ཉེན་བརྡ་  `%s' གི་ནང་ན་ ལག་ལེན་པ་-ངེས་འཛིན་འབད་ཡོད་པའི་གཙོ་རིམ་གནས་གོང་ `%s' ཡོད།\n"
+
+#: src/deb/build.c
+#, fuzzy, c-format
+msgid "cannot get root directory %s metadata"
+msgstr "འབྱུང་ཁུངས་ཡིག་སྣོད་ `%.250s' ཁ་ཕྱེ་མ་ཚུགས།"
+
+#: src/deb/build.c
+#, fuzzy, c-format
+msgid "root pathname %s is not a directory"
+msgstr "བརྡ་དོན་སྣོད་ཐོ་ལྷག་མི་ཚུགས།"
+
+#: src/deb/build.c
+#, c-format
+msgid "root directory %s has unusual owner or group %u:%u"
+msgstr ""
+
+#: src/deb/build.c
+#, c-format
+msgid "you might need to pass --root-owner-group, see <%s> for further details"
+msgstr ""
 
 #: src/deb/build.c
 #, fuzzy, c-format
@@ -2660,6 +2769,11 @@ msgstr ""
 msgid "--%s does not support (yet) reading the .deb from standard input"
 msgstr ""
 
+#: src/deb/info.c src/statoverride/main.c src/main/archives.c
+#, c-format
+msgid "error setting permissions of '%.255s'"
+msgstr "`%.255s' གི་གནང་བ་གཞི་སྒྲིག་གི་འཛོལ་བ།"
+
 #: src/deb/info.c src/main/unpack.c
 #, fuzzy
 msgid "unable to create temporary directory"
@@ -2678,11 +2792,10 @@ msgid "'%.255s' contains no control component '%.255s'"
 msgstr "ཌི་པི་ཀེ་ཇི་-ཌེབ་: `%.255s' ནང་ལུ་ཚད་འཛིན་ཆ་ཤས་ `%.255s' མེད།\n"
 
 #: src/deb/info.c
-#, c-format
-msgid "open component '%.255s' (in %.255s) failed in an unexpected way"
-msgstr ""
-"ཁ་ཕྱེ་ཡོད་མི་ཆ་ཤས་ `%.255s' (%.255s ནང་ལུ་) འདི་ རེ་བ་མེད་པའི་ཐབས་ལམ་ཅིག་ནང་ལུ་འཐུས་ཤོར་"
-"འབྱུང་ཡོདཔ།"
+#, fuzzy, c-format
+#| msgid "%s: can't open %s: %s"
+msgid "cannot open file '%.255s'"
+msgstr "%s: %s ཁ་ཕྱེ་མི་ཚུགས་: %s"
 
 #: src/deb/info.c
 #, fuzzy, c-format
@@ -2698,19 +2811,15 @@ msgid "cannot scan directory '%.255s'"
 msgstr "སྣོད་ཐོ་ `%.255s' ཞིབ་ལྟ་འབད་མི་ཚུགས།"
 
 #: src/deb/info.c
-#, c-format
-msgid "cannot stat '%.255s' (in '%.255s')"
-msgstr "cannot stat `%.255s' སི་ཊེཊི་འབད་མི་ཚུགས་(`%.255s' ནང་ལུ་)"
+#, fuzzy, c-format
+msgid "cannot get file '%.255s' metadata"
+msgstr "འབྱུང་ཁུངས་ཡིག་སྣོད་ `%.250s' ཁ་ཕྱེ་མ་ཚུགས།"
 
 #: src/deb/info.c
-#, c-format
-msgid "cannot open '%.255s' (in '%.255s')"
-msgstr "`%.255s' ཁ་ཕྱེ་མི་ཚུགས་(`%.255s' ནང་ལུ་)"
-
-#: src/deb/info.c
-#, c-format
-msgid "failed to read '%.255s' (in '%.255s')"
-msgstr "`%.255s' ལྷག་ནི་ལུ་འཐུས་ཤོར་འབྱུང་ཡོད་(`%.255s' ནང་ལུ་)"
+#, fuzzy, c-format
+#| msgid "write %s: %s"
+msgid "cannot read file '%.255s'"
+msgstr "%s: %s འབྲི།"
 
 #: src/deb/info.c
 #, fuzzy, c-format
@@ -2751,18 +2860,6 @@ msgstr "--ནང་དོན་གྱིས་སྒྲུབ་རྟགས་�
 #, c-format
 msgid "Debian '%s' package archive backend version %s.\n"
 msgstr "ཌི་བི་ཡཱན་ `%s' ཐུམ་སྒྲིལ་ཡིག་མཛོད་ཀྱིས་ཐོན་རིམ་ %s རྒྱབ་མཐའ་འབད་ཡོད།\n"
-
-#: src/deb/main.c src/split/main.c src/divert/main.c src/statoverride/main.c
-#: src/trigger/main.c src/query/main.c src/main/main.c
-#: utils/update-alternatives.c
-#, fuzzy, c-format
-msgid ""
-"This is free software; see the GNU General Public License version 2 or\n"
-"later for copying conditions. There is NO warranty.\n"
-msgstr ""
-"\n"
-"འ་ནི་འདི་རང་དབང་མཉེན་ཆས་ཨིན། ཇི་ཨེན་ཡུ་ ཡོངས་ཁྱབ་མི་མང་ཆོག་ཐམ་ཐོན་རིམ་ ༢ ཡང་ན་\n"
-"ཤུལ་མམ་འདི་ གནས་སྟངས་ཚུ་འདྲ་བཤུས་རྐྱབས་ནིའི་དོན་ལུ་ བལྟ། ཉེན་ལེན་ག་ནི་ཡང་མེད།\n"
 
 #: src/deb/main.c src/divert/main.c src/query/main.c src/main/main.c
 #, fuzzy, c-format
@@ -2854,18 +2951,18 @@ msgid ""
 "      --deb-format=<format>        Select archive format.\n"
 "                                     Allowed values: 0.939000, 2.0 "
 "(default).\n"
-"      --nocheck                    Suppress control file check (build bad\n"
-"                                     packages).\n"
+"      --no-check                   Suppress all checks (build bad "
+"packages).\n"
+"      --nocheck                    Alias for --no-check.\n"
 "      --root-owner-group           Forces the owner and groups to root.\n"
 "      --threads-max=<threads>      Use at most <threads> with compressor.\n"
 "      --[no-]uniform-compression   Use the compression params on all "
 "members.\n"
-"  -z#                              Set the compression level when building.\n"
-"  -Z<type>                         Set the compression type used when "
-"building.\n"
+"  -Z, --compression=<compressor>   Set build compression type.\n"
 "                                     Allowed types: gzip, xz, zstd, none.\n"
-"  -S<strategy>                     Set the compression strategy when "
-"building.\n"
+"  -z, --compression-level=<level>  Set build compression level.\n"
+"  -S, --compression-strategy=<name>\n"
+"                                   Set build compression strategy.\n"
 "                                     Allowed values: none; extreme (xz);\n"
 "                                     filtered, huffman, rle, fixed (gzip).\n"
 "\n"
@@ -2892,8 +2989,8 @@ msgid ""
 "  A format is a string that will be output for each package. The format\n"
 "  can include the standard escape sequences \\n (newline), \\r (carriage\n"
 "  return) or \\\\ (plain backslash). Package information can be included\n"
-"  by inserting variable references to package fields using the ${var[;"
-"width]}\n"
+"  by inserting variable references to package fields using the $"
+"{var[;width]}\n"
 "  syntax. Fields will be right-aligned unless the width is negative in "
 "which\n"
 "  case left alignment will be used.\n"
@@ -3309,8 +3406,8 @@ msgstr ""
 #| "Options:\n"
 #| "  --depotdir <directory>           Use <directory> instead of %s/%s.\n"
 #| "  -S|--partsize <size>             In KiB, for -s (default is 450).\n"
-#| "  -o|--output <file>               For -j (default is <package>-<version>."
-#| "deb).\n"
+#| "  -o|--output <file>               For -j (default is <package>-"
+#| "<version>.deb).\n"
 #| "  -Q|--npquiet                     Be quiet when -a is not a part.\n"
 #| "  --msdos                          Generate 8.3 filenames.\n"
 #| "\n"
@@ -3540,11 +3637,6 @@ msgstr "--བཤག་ནི་འདི་གིས་ འབྱུང་ཁུ
 #, fuzzy
 msgid "Use --help for help about diverting files."
 msgstr "དབྱེ་བ་ ཌི་པི་ཀེ་ཇི་-བཤག་ --གྲོགས་རམ་གྱི་དོན་ལུ་གྲོགས་རམ།"
-
-#: src/divert/main.c src/statoverride/main.c
-#, c-format
-msgid "Debian %s version %s.\n"
-msgstr "ཌེ་བི་ཡཱན་ %s ཐོན་རིམ་ %s\n"
 
 #: src/divert/main.c
 #, c-format
@@ -3877,11 +3969,6 @@ msgstr "མིང་རྙིངམ་ `%s' སི་ཊེཊི་འབད་
 msgid "error setting ownership of '%.255s'"
 msgstr "`%.255s' གི་བདག་པོ་གཞི་སྒྲིག་གི་འཛོལ་བ།"
 
-#: src/statoverride/main.c src/main/archives.c
-#, c-format
-msgid "error setting permissions of '%.255s'"
-msgstr "`%.255s' གི་གནང་བ་གཞི་སྒྲིག་གི་འཛོལ་བ།"
-
 #: src/statoverride/main.c
 #, fuzzy, c-format
 #| msgid "--add needs four arguments"
@@ -3961,8 +4048,8 @@ msgstr ""
 #| "Options:\n"
 #| "  --depotdir <directory>           Use <directory> instead of %s/%s.\n"
 #| "  -S|--partsize <size>             In KiB, for -s (default is 450).\n"
-#| "  -o|--output <file>               For -j (default is <package>-<version>."
-#| "deb).\n"
+#| "  -o|--output <file>               For -j (default is <package>-"
+#| "<version>.deb).\n"
 #| "  -Q|--npquiet                     Be quiet when -a is not a part.\n"
 #| "  --msdos                          Generate 8.3 filenames.\n"
 #| "\n"
@@ -4041,8 +4128,8 @@ msgstr ""
 "རེ་འདུན་ཡོདཔ་=མ་ཤེསཔ་/གཞི་བཙུགས་/རྩ་བསྐྲད་/ཕྱིར་བསྐྲད་/འཆང་\n"
 "| གནས་ཚད་=མེན་/གཞི་བཙུགས་འབད་ཡོདཔ་/རིམ་སྒྲིག་-ཡིག་སྣོད་ཚུ་/བཤུབ་ཡོདཔ་/འཐུས་ཤོར་བྱུང་མི་-རིམ་སྒྲིག་/"
 "ཕྱེད་ཀ་-གཞི་བཙུགས་འབད་ཡོདཔ\n"
-"|/ Err?=(ཅི་མེད་)/འཆང་/ལོག་གཞི་བཙུགས་/དགོ་མི་/X=གཉིས་ཆ་ར་-དཀའ་ངལ་(གནས་ཚད་ ཨི་ཨར་ཨར་:"
-"ཚུགས་ཡིག་-བྱང་ཉེས་)\n"
+"|/ Err?=(ཅི་མེད་)/འཆང་/ལོག་གཞི་བཙུགས་/དགོ་མི་/X=གཉིས་ཆ་ར་-དཀའ་ངལ་(གནས་ཚད་ ཨི་ཨར་"
+"ཨར་:ཚུགས་ཡིག་-བྱང་ཉེས་)\n"
 
 #: src/query/main.c
 msgid "Name"
@@ -4355,8 +4442,8 @@ msgstr "ཀཱོན་ཕ་ཡིལ་`%.250s' འདི་ ཐུམ་ས�
 #: src/main/archives.c
 #, fuzzy, c-format
 msgid ""
-"trying to overwrite '%.250s', which is the diverted version of "
-"'%.250s' (package: %.100s)"
+"trying to overwrite '%.250s', which is the diverted version of '%.250s' "
+"(package: %.100s)"
 msgstr ""
 "`%.250s'%.10s%.100s%.10s གི་ཁ་ཕྱོགས་སྒྱུར་ཡོད་པའི་ཐོན་རིམ་ཨིན་མི་ `%.250s' འདི་ཚབ་སྲུང་འབད་"
 "ནི་ལུ་འབད་རྩོལ་བསྐྱེད་དོ།"
@@ -4410,7 +4497,7 @@ msgstr "གཞི་བཙུགས་འབད་ཡོད་པའི་ཐུ
 #: src/main/archives.c
 #, fuzzy, c-format
 msgid ""
-"trying to overwrite directory '%.250s' in package %.250s %.250s with "
+"trying to overwrite directory '%.250s' in package %.250s (%.250s) with "
 "nondirectory"
 msgstr ""
 "སྣོད་ཐོ་མིན་པ་དང་ཅིག་ཁར་ ཐུམ་སྒྲིལ་ %.250s ནང་ལུ་སྣོད་ཐོ་ `%.250s' ཚབ་སྲུང་འབད་ནི་ལུ་འབད་རྩོལ་"
@@ -4418,7 +4505,7 @@ msgstr ""
 
 #: src/main/archives.c
 #, fuzzy, c-format
-msgid "trying to overwrite '%.250s', which is also in package %.250s %.250s"
+msgid "trying to overwrite '%.250s', which is also in package %.250s (%.250s)"
 msgstr "ཐུམ་སྒྲིལ་ %.250s ནང་ལུ་ཡང་ཡོད་མི་  `%.250s' ཚབ་སྲུང་འབད་ནི་ལུ་འབད་རྩོལ་བསྐྱེད་དོ།"
 
 #: src/main/archives.c
@@ -4658,18 +4745,18 @@ msgstr "སེལ་འཐུ་མ་འབད་བའི་ཐུམ་སྒ
 #: src/main/archives.c
 #, fuzzy, c-format
 #| msgid "Version %.250s of %.250s already installed, skipping.\n"
-msgid "version %.250s of %.250s already installed, skipping"
+msgid "package %.250s (%.250s) with same version already installed, skipping"
 msgstr "%.250s གི་ཐོན་རིམ་ %.250s ཧེ་མ་ལས་རང་ཡོད་ གོམ་འགྱོ་དོ།\n"
 
 #: src/main/archives.c
 #, fuzzy, c-format
-msgid "downgrading %.250s from %.250s to %.250s"
+msgid "downgrading %.250s (%.250s) to (%.250s)"
 msgstr "%s - ཉེན་བརྡ་:  %.250s འདི་  %.250s ལས་ %.250s ལུ་མར་སྐྱེད་འབད་དོ།\n"
 
 #: src/main/archives.c
 #, fuzzy, c-format
 #| msgid "Will not downgrade %.250s from version %.250s to %.250s, skipping.\n"
-msgid "will not downgrade %.250s from %.250s to %.250s, skipping"
+msgid "will not downgrade %.250s (%.250s) to (%.250s), skipping"
 msgstr "%.250s འདི་ཐོན་རིམ་ %.250s ལས་ %.250s ལུ་མར་སྐྱེད་མི་འབད་ གོམ་འགྱོ་དོ།\n"
 
 #: src/main/cleanup.c
@@ -4961,10 +5048,16 @@ msgstr ""
 " རིམ་སྒྲིག་འབད་མི་ཚུགས་(ད་ལྟའི་གནས་ཚད་ `%.250s')"
 
 #: src/main/configure.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "package %.250s is not ready for configuration\n"
+#| " cannot configure (current status `%.250s')"
 msgid ""
-"package %s %s cannot be configured because %s is at a different version (%s)"
+"package %s (%s) cannot be configured because %s is at a different version "
+"(%s)"
 msgstr ""
+"ཐུམ་སྒྲིལ་ %.250s འདི་རིམ་སྒྲིག་གི་དོན་ལུ་གྲ་སྒྲིག་མེད།\n"
+" རིམ་སྒྲིག་འབད་མི་ཚུགས་(ད་ལྟའི་གནས་ཚད་ `%.250s')"
 
 #: src/main/configure.c
 #, fuzzy, c-format
@@ -7348,6 +7441,36 @@ msgstr ""
 msgid "Authentication is required to run update-alternatives"
 msgstr ""
 
+#, c-format
+#~ msgid "open component '%.255s' (in %.255s) failed in an unexpected way"
+#~ msgstr ""
+#~ "ཁ་ཕྱེ་ཡོད་མི་ཆ་ཤས་ `%.255s' (%.255s ནང་ལུ་) འདི་ རེ་བ་མེད་པའི་ཐབས་ལམ་ཅིག་ནང་ལུ་འཐུས་"
+#~ "ཤོར་འབྱུང་ཡོདཔ།"
+
+#, c-format
+#~ msgid "cannot stat '%.255s' (in '%.255s')"
+#~ msgstr "cannot stat `%.255s' སི་ཊེཊི་འབད་མི་ཚུགས་(`%.255s' ནང་ལུ་)"
+
+#, c-format
+#~ msgid "cannot open '%.255s' (in '%.255s')"
+#~ msgstr "`%.255s' ཁ་ཕྱེ་མི་ཚུགས་(`%.255s' ནང་ལུ་)"
+
+#, c-format
+#~ msgid "failed to read '%.255s' (in '%.255s')"
+#~ msgstr "`%.255s' ལྷག་ནི་ལུ་འཐུས་ཤོར་འབྱུང་ཡོད་(`%.255s' ནང་ལུ་)"
+
+#~ msgid "failed to open diversions file"
+#~ msgstr "ཁ་སྒྱུར་ཡིག་སྣོད་ཁ་ཕྱེ་ནི་འཐུས་ཤོར་བྱུང་ཡོད།"
+
+#~ msgid "failed to fstat diversions file"
+#~ msgstr "ཁ་སྒྱུར་ཡིག་སྣོད་ཨེཕ་སི་ཊེཊི་འབད་ནི་ལུ་འཐུས་ཤོར་བྱུང་ཡོད།"
+
+#~ msgid "failed to open statoverride file"
+#~ msgstr "སི་ཊེཊི་ཟུར་བཞག་ཡིག་སྣོད་ཁ་ཕྱེ་ནི་འཐུས་ཤོར་བྱུང་ཡོད།"
+
+#~ msgid "failed to fstat statoverride file"
+#~ msgstr "སི་ཊེཊི་ཟུར་བཞག་ཡིག་སྣོད་ཨེཕ་སི་ཊེཊི་འབད་ནི་ལུ་འཐུས་ཤོར་བྱུང་ཡོད།"
+
 #, fuzzy, c-format
 #~ msgid "removal of %.250s"
 #~ msgstr "%.250s ནང་ལྷག་པའི་འཛོལ་བ།"
@@ -8192,9 +8315,6 @@ msgstr ""
 
 #~ msgid "--%s needs a divert-to argument"
 #~ msgstr "སྒྲུབ་རྟགས་སྟོན་ནི་ལུ་--%s ལུ་ཁ་ཕྱོགས་བསྒྱུར་བ་ཅིག་དགོཔ་ཨིན།"
-
-#~ msgid "--%s needs a <package> argument"
-#~ msgstr "--%s་ལུ་ <ཐུམ་སྒྲིལ་>སྒྲུབ་རྟགས་ཅིག་དགོཔ་འདུག"
 
 #~ msgid "rename: rename `%s' to `%s': %s"
 #~ msgstr "བསྐྱར་མིང་བཏགས་:  `%s' འདི་ `%s' ལུ་བསྐྱར་མིང་བཏགས་: %s"

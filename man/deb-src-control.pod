@@ -2,7 +2,7 @@
 #
 # Copyright © 2010 Oxan van Leeuwen <oxan@oxanvanleeuwen.nl>
 # Copyright © 2011 Raphaël Hertzog <hertzog@debian.org>
-# Copyright © 2011-2015 Guillem Jover <guillem@debian.org>
+# Copyright © 2011-2024 Guillem Jover <guillem@debian.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ A field starts with a field name, such as B<Package> or B<Section>
 (case insensitive), followed by a colon, the body of the field
 (case sensitive unless stated otherwise) and a newline.
 Multi-line fields are also allowed, but each supplementary line, without a
-field name, should start with at least one space.
+field name, must start with at least one space.
 The content of the multi-line
 fields is generally joined to a single line by the tools (except in the case of
 the
@@ -60,8 +60,8 @@ Lines starting with a ‘B<#>’ are treated as comments.
 
 =item B<Source:> I<source-package-name> (required)
 
-The value of this field is the name of the source package, and should
-match the name of the source package in the debian/changelog file.
+The value of this field is the name of the source package,
+and must match the name of the source package in the debian/changelog file.
 A package
 name must consist only of lowercase letters (a-z), digits (0-9), plus (+) and
 minus (-) signs, and periods (.).
@@ -108,6 +108,14 @@ used format is I<bts-type>B<://>I<bts-address>, like
 B<debbugs://bugs.debian.org>.
 This field is usually not needed.
 
+=item B<Build-Driver:> I<driver-name>
+
+This experimental field specifies the name of the build driver to use to
+build this package.
+When omitted the I<driver-name> defaults to B<debian-rules>.
+
+This field is supported since dpkg 1.22.7.
+
 =item B<Rules-Requires-Root:> B<no>|B<binary-targets>|I<impl-keywords>
 
 This field is used to indicate whether the B<debian/rules> file requires
@@ -118,12 +126,13 @@ This field is used to indicate whether the B<debian/rules> file requires
 =item B<no>
 
 The binary targets will not require (fake)root at all.
-This is the default in B<dpkg-build-api> level >= 1.
+This is the default in B<dpkg-build-api> level >= 1,
+or since dpkg 1.22.13.
 
 =item B<binary-targets>
 
 The binary targets must always be run under (fake)root.
-This value is the default in B<dpkg-build-api> level 0,
+This value is the default in B<dpkg-build-api> level 0 until dpkg 1.22.13,
 when the field is omitted;
 adding the field with an explicit B<binary-targets>,
 while not strictly needed,
@@ -200,18 +209,23 @@ software that it installs.
 Some common sections are B<utils>, B<net>, B<mail>, B<text>,
 B<x11>, etc.
 
+When omitted,
+the I<section> defaults to B<unknown>
+(since dpkg 1.22.13).
+
+The accepted values are based on the specific distribution policy.
+
 =item B<Priority:> I<priority>
 
 Sets the importance of this package in relation to the system as a whole.
-Common priorities are B<required>, B<standard>, B<optional>,
-B<extra>, etc.
+The known priorities are B<required>, B<important>, B<standard>, B<optional>,
+B<extra>, and B<unknown>, but other values can be used as well.
 
-The
-B<Section>
-and
-B<Priority>
-fields usually have a defined set of accepted values based on the specific
-distribution policy.
+When omitted,
+the I<priority> defaults to B<optional>
+(since dpkg 1.22.13).
+
+How to apply these values depends on the specific distribution policy.
 
 =item B<Build-Depends:> I<package-list>
 
@@ -504,27 +518,47 @@ fields with B<Private->, such as B<XB-Private-New-Field>.
  Section: admin
  Priority: required
  Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
- # this field is copied to the binary and source packages
+ # This field is copied to the binary and source packages.
  XBS-Upstream-Release-Status: stable
  Homepage: https://wiki.debian.org/Teams/Dpkg
  Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
  Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git
- Standards-Version: 3.7.3
- Build-Depends: pkgconf, debhelper (>= 4.1.81),
-  libselinux1-dev (>= 1.28-4) [!linux-any]
+ Standards-Version: 4.7.0
+ Build-Depends:
+  debhelper-compat (= 13),
+  debhelper (>= 13.10~),
+  pkgconf,
+  libselinux1-dev (>= 1.28-4) [!linux-any],
 
  Package: dpkg-dev
  Section: utils
  Priority: optional
  Architecture: all
- # this is a custom field in the binary package
+ # This is a custom field in the binary package.
  XB-Mentoring-Contact: Raphael Hertzog <hertzog@debian.org>
- Depends: dpkg (>= 1.14.6), perl5, perl-modules, cpio (>= 2.4.2-2),
-  bzip2, lzma, patch (>= 2.2-1), make, binutils, libtimedate-perl
- Recommends: gcc | c-compiler, build-essential
- Suggests: gnupg, debian-keyring
- Conflicts: dpkg-cross (<< 2.0.0), devscripts (<< 2.10.26)
- Replaces: manpages-pl (<= 20051117-1)
+ Depends:
+  binutils,
+  bzip2,
+  cpio (>= 2.4.2-2),
+ # This is a comment in the middle of a field value.
+  dpkg (>= 1.14.6),
+  libtimedate-perl,
+  lzma,
+  make,
+  patch (>= 2.2-1),
+  perl-modules,
+  perl5,
+ Recommends:
+  gcc | c-compiler,
+  build-essential,
+ Suggests:
+  gnupg,
+  debian-keyring,
+ Conflicts:
+  dpkg-cross (<< 2.0.0),
+  devscripts (<< 2.10.26),
+ Replaces:
+  manpages-pl (<= 20051117-1),
  Description: Debian package development tools
   This package provides the development tools (including dpkg-source)
   required to unpack, build and upload Debian source packages.

@@ -29,7 +29,7 @@
 
 #include <errno.h>
 #include <limits.h>
-#if HAVE_LOCALE_H
+#ifdef HAVE_LOCALE_H
 #include <locale.h>
 #endif
 #include <string.h>
@@ -193,9 +193,14 @@ static const char printforhelp[] = N_(
 "\n"
 "Options marked [*] produce a lot of output - pipe it through 'less' or 'more' !");
 
+int f_act = 1;
+int f_alsoselect = 1;
+int f_autodeconf = 0;
+int f_debsig = 1;
+int f_pending = 0;
+int f_recursive = 0;
 int f_robot = 0;
-int f_pending=0, f_recursive=0, f_alsoselect=1, f_skipsame=0, f_noact=0;
-int f_autodeconf=0, f_nodebsig=0;
+int f_skipsame = 0;
 int f_triggers = 0;
 
 int errabort = 50;
@@ -335,6 +340,24 @@ is_invoke_action(enum action action)
   default:
     return false;
   }
+}
+
+static bool
+can_invoke_hooks(enum action action)
+{
+  if (!is_invoke_action(action))
+    return false;
+
+  if (!f_act)
+    return false;
+
+  if (in_force(FORCE_NON_ROOT))
+    return true;
+
+  if (getuid() || geteuid())
+    return false;
+
+  return true;
 }
 
 static struct invoke_list pre_invoke_hooks = {
@@ -566,11 +589,11 @@ static const struct cmdinfo cmdinfos[]= {
   { "log",               0,   1, NULL,          &log_file, NULL,    0 },
   { "pending",           'a', 0, &f_pending,    NULL,      NULL,    1 },
   { "recursive",         'R', 0, &f_recursive,  NULL,      NULL,    1 },
-  { "no-act",            0,   0, &f_noact,      NULL,      NULL,    1 },
-  { "dry-run",           0,   0, &f_noact,      NULL,      NULL,    1 },
-  { "simulate",          0,   0, &f_noact,      NULL,      NULL,    1 },
+  { "no-act",            0,   0, &f_act,        NULL,      NULL,    0 },
+  { "dry-run",           0,   0, &f_act,        NULL,      NULL,    0 },
+  { "simulate",          0,   0, &f_act,        NULL,      NULL,    0 },
   { "no-pager",          0,   0, NULL,          NULL,      set_no_pager,  0 },
-  { "no-debsig",         0,   0, &f_nodebsig,   NULL,      NULL,    1 },
+  { "no-debsig",         0,   0, &f_debsig,     NULL,      NULL,    0 },
   /* Alias ('G') for --refuse. */
   {  NULL,               'G', 0, NULL,          NULL,      reset_force_option, FORCE_DOWNGRADE },
   { "selected-only",     'O', 0, &f_alsoselect, NULL,      NULL,    0 },
@@ -672,7 +695,6 @@ commandfd(const char *const *argv)
     if (c == EOF)
       ohshit(_("unexpected end of file before end of line %d"), lno);
     if (!argc) continue;
-    varbuf_end_str(&linevb);
     newargs = m_realloc(newargs, sizeof(const char *) * (argc + 1));
     argc= 1;
     ptr= linevb.buf;
@@ -761,14 +783,14 @@ int main(int argc, const char *const *argv) {
   if (!f_triggers)
     f_triggers = (cipaction->arg_int == act_triggers && *argv) ? -1 : 1;
 
-  if (is_invoke_action(cipaction->arg_int)) {
+  if (can_invoke_hooks(cipaction->arg_int)) {
     run_invoke_hooks(cipaction->olong, &pre_invoke_hooks);
     run_status_loggers(&status_loggers);
   }
 
   ret = cipaction->action(argv);
 
-  if (is_invoke_action(cipaction->arg_int))
+  if (can_invoke_hooks(cipaction->arg_int))
     run_invoke_hooks(cipaction->olong, &post_invoke_hooks);
 
   free_invoke_hooks(&pre_invoke_hooks);

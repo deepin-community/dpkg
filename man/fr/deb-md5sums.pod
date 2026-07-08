@@ -24,11 +24,11 @@ B<DEBIAN/md5sums>
 
 Un fichier déclare les sommes de contrôle MD5 pour le contenu du fichier du paquet en incluant un fichier I<md5sums> dans son archive de contrôle (c'est-à-dire I<DEBIAN/md5sums> au moment de la création du paquet). Ce fichier est utilisé pour une vérification d'intégrité et afin d'éviter les doublons et non pour un quelconque objectif de sécurité.
 
-Ce fichier comprend une liste des sommes de contrôle MD5 (sous la forme de S<32 caractères> hexadécimaux insensibles à la casse) suivies par deux espaces (U+0020 B<ESPACE>) et le nom de chemin d'un fichier simple, une par lignes.
+Ce fichier comprend une liste des sommes de contrôle MD5 (sous la forme de 32 caractères hexadécimaux insensibles à la casse) suivies par deux espaces (U+0020 B<ESPACE>) et le nom de chemin d'un fichier simple, une par lignes.
 
 Les barres obliques finales (U+002F B</>) dans les noms de chemin seront supprimés. Ni les espaces en fin de ligne, ni les lignes vides ou composées uniquement d'espaces ne sont acceptées'
 
-Si le fichier de contrôle n'existe pas dans le paquet binaire, L<dpkg(1)> créera l'information correspondante au moment du dépaquetage (depuis S<B<dpkg> 1.16.3).>
+Si le fichier de contrôle n'existe pas dans le paquet binaire, L<dpkg(1)> créera l'information correspondante au moment du dépaquetage (depuis B<dpkg> 1.16.3).
 
 =head1 EXEMPLE
 

@@ -80,8 +80,7 @@ const packagelist::infotype *const packagelist::baseinfo= infoinfos;
 
 void packagelist::severalinfoblurb()
 {
-  varbuf vb;
-  vb(_("The line you have highlighted represents many packages; "
+  varbuf vb(_("The line you have highlighted represents many packages; "
      "if you ask to install, remove, hold, etc. it you will affect all "
      "the packages which match the criterion shown.\n"
      "\n"
@@ -90,23 +89,23 @@ void packagelist::severalinfoblurb()
      "\n"
      "You can use 'o' and 'O' to change the sort order and give yourself "
      "the opportunity to mark packages in different kinds of groups."));
-  wordwrapinfo(0,vb.string());
+  wordwrapinfo(0, vb.str());
 }
 
 void packagelist::itd_relations() {
-  whatinfovb(_("Interrelationships"));
+  whatinfovb += _("Interrelationships");
 
   if (table[cursorline]->pkg->set->name) {
     debug(dbg_general, "packagelist[%p]::idt_relations(); '%s'",
-          this, table[cursorline]->relations.string());
-    waddstr(infopad,table[cursorline]->relations.string());
+          this, table[cursorline]->relations.str());
+    waddstr(infopad, table[cursorline]->relations.str());
   } else {
     severalinfoblurb();
   }
 }
 
 void packagelist::itd_description() {
-  whatinfovb(_("Description"));
+  whatinfovb += _("Description");
 
   if (table[cursorline]->pkg->set->name) {
     const char *m= table[cursorline]->pkg->available.description;
@@ -132,7 +131,7 @@ void packagelist::itd_description() {
 }
 
 void packagelist::itd_statuscontrol() {
-  whatinfovb(_("Installed control file information"));
+  whatinfovb += _("Installed control file information");
 
   werase(infopad);
   if (!table[cursorline]->pkg->set->name) {
@@ -142,13 +141,13 @@ void packagelist::itd_statuscontrol() {
     varbuf_stanza(&vb, table[cursorline]->pkg,
                   &table[cursorline]->pkg->installed);
     debug(dbg_general, "packagelist[%p]::idt_statuscontrol(); '%s'",
-          this, vb.string());
-    waddstr(infopad,vb.string());
+          this, vb.str());
+    waddstr(infopad, vb.str());
   }
 }
 
 void packagelist::itd_availablecontrol() {
-  whatinfovb(_("Available control file information"));
+  whatinfovb += _("Available control file information");
 
   werase(infopad);
   if (!table[cursorline]->pkg->set->name) {
@@ -158,8 +157,8 @@ void packagelist::itd_availablecontrol() {
     varbuf_stanza(&vb, table[cursorline]->pkg,
                   &table[cursorline]->pkg->available);
     debug(dbg_general, "packagelist[%p]::idt_availablecontrol(); '%s'",
-          this, vb.string());
-    waddstr(infopad,vb.string());
+          this, vb.str());
+    waddstr(infopad, vb.str());
   }
 }
 

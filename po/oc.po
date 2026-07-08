@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.21.20\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2024-03-10 20:20+0100\n"
+"POT-Creation-Date: 2026-03-06 04:00+0100\n"
 "PO-Revision-Date: 2023-02-05 23:42+0100\n"
 "Last-Translator: Quentin PAGÈS <quentinantonin@free.fr>\n"
 "Language-Team: Occitan\n"
@@ -360,6 +360,192 @@ msgstr "nivèl de compression invalid %d"
 msgid "unknown compression strategy"
 msgstr "tipe d'estrategia de compression desconegut"
 
+#: lib/dpkg/db-ctrl-access.c
+#, c-format
+msgid "unable to check existence of '%.250s'"
+msgstr "impossible de verificar l'existéncia de « %.250s »"
+
+#: lib/dpkg/db-ctrl-access.c lib/dpkg/db-ctrl-upgrade.c
+msgid "cannot read info directory"
+msgstr "pòt pas legir lo repertòri info"
+
+#: lib/dpkg/db-ctrl-format.c src/main/unpack.c
+#, c-format
+msgid "error trying to open %.250s"
+msgstr "error que s'es producha en ensajant de dobrir %.250s"
+
+#: lib/dpkg/db-ctrl-format.c
+#, c-format
+msgid "corrupt info database format file '%s'"
+msgstr ""
+"informacions corrompudas dins lo fichièr de format de basa de donadas « %s »"
+
+#: lib/dpkg/db-ctrl-format.c
+#, c-format
+msgid "info database format (%d) is bogus or too new; try getting a newer dpkg"
+msgstr ""
+"lo format de basa de donadas (%d) conten d’avarias o es tròp recent ; "
+"ensajatz d’obténer un dpkg mai recent"
+
+#: lib/dpkg/db-ctrl-upgrade.c
+#, c-format
+msgid "info file %s/%s not associated to any package"
+msgstr "lo fichièr d'informacions %s/%s es pas ligat a cap de paquet"
+
+#: lib/dpkg/db-ctrl-upgrade.c src/main/archives.c
+#, c-format
+msgid "error creating hard link '%.255s'"
+msgstr "error en creant lo ligam fisic « %.255s »"
+
+#: lib/dpkg/db-ctrl-upgrade.c
+#, c-format
+msgid "error while writing '%s'"
+msgstr "error en escrivent « %s »"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing final newline"
+msgstr ""
+"manca una linha novèla al contraròtle de fichièr « %s » pel paquet « %s »"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing value"
+msgstr "manca una valor al fichièr de contraròtle « %s » pel paquet « %s »"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing value separator"
+msgstr ""
+"manca un separador de valor al fichièr de contraròtle « %s » pel paquet "
+"« %s »"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' contains empty filename"
+msgstr ""
+"lo fichièr de contraròtle « %s » pel paquet « %s » conten un nom de fichièr "
+"void"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "loading control file '%s' for package '%s'"
+msgstr "cargament del fichièr de contraròtle « %s » pel paquet « %s »"
+
+#: lib/dpkg/db-fsys-divert.c
+#, c-format
+msgid "conflicting diversions involving '%.250s' or '%.250s'"
+msgstr ""
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "files list file for package '%.250s' is missing final newline"
+msgstr ""
+"la lista dels fichièrs pel paquet « %.250s » a pas de retorn a la linha en "
+"fin de fichièr"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "files list file for package '%.250s' contains empty filename"
+msgstr ""
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "loading files list file for package '%s'"
+msgstr "cargament del fichièr de la lista dels fichièrs pel paquet « %s »"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid ""
+"files list file for package '%.250s' missing; assuming package has no files "
+"currently installed"
+msgstr ""
+
+#: lib/dpkg/db-fsys-files.c
+msgid "(Reading database ... "
+msgstr "(Lectura de la basa de donadas... "
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "%d file or directory currently installed.)\n"
+msgid_plural "%d files and directories currently installed.)\n"
+msgstr[0] "%d fichièr o repertòri actualament installat.)\n"
+msgstr[1] "%d fichièrs o repertòris actualament installats.)\n"
+
+#: lib/dpkg/db-fsys-load.c
+#, fuzzy, c-format
+#| msgid "cannot open %s"
+msgid "cannot open %s file"
+msgstr "impossible de dobrir %s"
+
+#: lib/dpkg/db-fsys-load.c
+#, fuzzy, c-format
+#| msgid "unable to get file '%s%s' metadata"
+msgid "cannot get %s file metadata"
+msgstr "impossible d'obténer las metadonadas del fichièr « %s%s »"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "invalid statoverride uid %s"
+msgstr ""
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "invalid statoverride gid %s"
+msgstr "lo fichièr de las autorizacions amb lo gid %s es pas valable"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "invalid statoverride mode %s"
+msgstr "lo mòde %s del fichièr de las autorizacions es pas valable"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "reading statoverride file '%.250s'"
+msgstr "lectura del fichièr de las autorizacions « %.250s »"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "statoverride file is missing final newline"
+msgstr ""
+"lo fichièr de las permissions (« statoverride ») conten una linha finala "
+"voida"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "statoverride file contains empty line"
+msgstr ""
+"lo fichièr de las permissions (« statoverride ») conten una linha voida"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "syntax error in statoverride file"
+msgstr "impossible de dobrir lo fichièr de las permissions (« statoverride »)"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid ""
+"unknown system user '%s' in statoverride file; the system user got removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
+
+#: lib/dpkg/db-fsys-override.c
+msgid "unexpected end of line in statoverride file"
+msgstr ""
+"fin de linha inesperada dins lo fichièr de las permissions (« statoverride »)"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid ""
+"unknown system group '%s' in statoverride file; the system group got "
+"removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "multiple statoverrides present for file '%.250s'"
+msgstr ""
+
 #: lib/dpkg/dbmodify.c
 #, c-format
 msgid ""
@@ -492,196 +678,6 @@ msgstr "impossible de tampar l’estat novèl « %.250s »"
 #, c-format
 msgid "unable to install updated status of '%.250s'"
 msgstr "impossible d'installar l’estat novèl de « %.250s »"
-
-#: lib/dpkg/db-ctrl-access.c
-#, c-format
-msgid "unable to check existence of '%.250s'"
-msgstr "impossible de verificar l'existéncia de « %.250s »"
-
-#: lib/dpkg/db-ctrl-access.c lib/dpkg/db-ctrl-upgrade.c
-msgid "cannot read info directory"
-msgstr "pòt pas legir lo repertòri info"
-
-#: lib/dpkg/db-ctrl-format.c src/main/unpack.c
-#, c-format
-msgid "error trying to open %.250s"
-msgstr "error que s'es producha en ensajant de dobrir %.250s"
-
-#: lib/dpkg/db-ctrl-format.c
-#, c-format
-msgid "corrupt info database format file '%s'"
-msgstr ""
-"informacions corrompudas dins lo fichièr de format de basa de donadas « %s »"
-
-#: lib/dpkg/db-ctrl-format.c
-#, c-format
-msgid "info database format (%d) is bogus or too new; try getting a newer dpkg"
-msgstr ""
-"lo format de basa de donadas (%d) conten d’avarias o es tròp recent ; "
-"ensajatz d’obténer un dpkg mai recent"
-
-#: lib/dpkg/db-ctrl-upgrade.c
-#, c-format
-msgid "info file %s/%s not associated to any package"
-msgstr "lo fichièr d'informacions %s/%s es pas ligat a cap de paquet"
-
-#: lib/dpkg/db-ctrl-upgrade.c src/main/archives.c
-#, c-format
-msgid "error creating hard link '%.255s'"
-msgstr "error en creant lo ligam fisic « %.255s »"
-
-#: lib/dpkg/db-ctrl-upgrade.c
-#, c-format
-msgid "error while writing '%s'"
-msgstr "error en escrivent « %s »"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing final newline"
-msgstr ""
-"manca una linha novèla al contraròtle de fichièr « %s » pel paquet « %s »"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing value"
-msgstr "manca una valor al fichièr de contraròtle « %s » pel paquet « %s »"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing value separator"
-msgstr ""
-"manca un separador de valor al fichièr de contraròtle « %s » pel paquet "
-"« %s »"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' contains empty filename"
-msgstr ""
-"lo fichièr de contraròtle « %s » pel paquet « %s » conten un nom de fichièr "
-"void"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "loading control file '%s' for package '%s'"
-msgstr "cargament del fichièr de contraròtle « %s » pel paquet « %s »"
-
-#: lib/dpkg/db-fsys-divert.c
-msgid "failed to open diversions file"
-msgstr "impossible de dobrir lo fichièr dels detornaments"
-
-#: lib/dpkg/db-fsys-divert.c
-msgid "failed to fstat diversions file"
-msgstr "fracàs de « fstat » sul fichièr dels detornaments"
-
-#: lib/dpkg/db-fsys-divert.c
-#, c-format
-msgid "conflicting diversions involving '%.250s' or '%.250s'"
-msgstr ""
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "loading files list file for package '%s'"
-msgstr "cargament del fichièr de la lista dels fichièrs pel paquet « %s »"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid ""
-"files list file for package '%.250s' missing; assuming package has no files "
-"currently installed"
-msgstr ""
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "files list file for package '%.250s' is missing final newline"
-msgstr ""
-"la lista dels fichièrs pel paquet « %.250s » a pas de retorn a la linha en "
-"fin de fichièr"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "files list file for package '%.250s' contains empty filename"
-msgstr ""
-
-#: lib/dpkg/db-fsys-files.c
-msgid "(Reading database ... "
-msgstr "(Lectura de la basa de donadas... "
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "%d file or directory currently installed.)\n"
-msgid_plural "%d files and directories currently installed.)\n"
-msgstr[0] "%d fichièr o repertòri actualament installat.)\n"
-msgstr[1] "%d fichièrs o repertòris actualament installats.)\n"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "invalid statoverride uid %s"
-msgstr ""
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "invalid statoverride gid %s"
-msgstr "lo fichièr de las autorizacions amb lo gid %s es pas valable"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "invalid statoverride mode %s"
-msgstr "lo mòde %s del fichièr de las autorizacions es pas valable"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "failed to open statoverride file"
-msgstr "impossible de dobrir lo fichièr de las permissions (statoverride)"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "failed to fstat statoverride file"
-msgstr "fracàs de « fstat » sul fichièr de las permissions (statoverride)"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "reading statoverride file '%.250s'"
-msgstr "lectura del fichièr de las autorizacions « %.250s »"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "statoverride file is missing final newline"
-msgstr ""
-"lo fichièr de las permissions (« statoverride ») conten una linha finala "
-"voida"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "statoverride file contains empty line"
-msgstr ""
-"lo fichièr de las permissions (« statoverride ») conten una linha voida"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "syntax error in statoverride file"
-msgstr "impossible de dobrir lo fichièr de las permissions (« statoverride »)"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid ""
-"unknown system user '%s' in statoverride file; the system user got removed\n"
-"before the override, which is most probably a packaging bug, to recover you\n"
-"can remove the override manually with %s"
-msgstr ""
-
-#: lib/dpkg/db-fsys-override.c
-msgid "unexpected end of line in statoverride file"
-msgstr ""
-"fin de linha inesperada dins lo fichièr de las permissions (« statoverride »)"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid ""
-"unknown system group '%s' in statoverride file; the system group got "
-"removed\n"
-"before the override, which is most probably a packaging bug, to recover you\n"
-"can remove the override manually with %s"
-msgstr ""
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "multiple statoverrides present for file '%.250s'"
-msgstr ""
 
 #: lib/dpkg/deb-version.c
 msgid "format version with too big major component"
@@ -1015,6 +1011,12 @@ msgid "duplicate awaited trigger package '%.255s'"
 msgstr "accion diferida en doble « %.255s »"
 
 #: lib/dpkg/file.c
+#, fuzzy, c-format
+#| msgid "cannot open file %s"
+msgid "cannot canonicalize pathname %s"
+msgstr "impossible de dobrir lo fichièr %s"
+
+#: lib/dpkg/file.c
 #, c-format
 msgid "unable to stat source file '%.250s'"
 msgstr "impossible de dobrir lo fichièr font « %.250s »"
@@ -1080,9 +1082,17 @@ msgstr ""
 #: lib/dpkg/file.c
 #, c-format
 msgid ""
-"%s was locked by another process with pid %d\n"
+"%s was locked by %s process with pid %d\n"
 "%s"
 msgstr ""
+
+#: lib/dpkg/file.c
+#, fuzzy
+#| msgctxt "architecture"
+#| msgid "<unknown>"
+msgctxt "process"
+msgid "<unknown>"
+msgstr "<desconeguda>"
 
 #: lib/dpkg/file.c
 #, c-format
@@ -1575,6 +1585,15 @@ msgstr ""
 msgid "warning"
 msgstr "avertiment"
 
+#: lib/dpkg/report.c
+msgid "hint"
+msgstr ""
+
+#: lib/dpkg/strvec.c
+#, c-format
+msgid "cannot grow strvec to size %zu; it would overflow"
+msgstr ""
+
 #: lib/dpkg/strwide.c
 #, c-format
 msgid "cannot convert multibyte string '%s' to a wide-character string"
@@ -2004,11 +2023,11 @@ msgid ""
 "Forcing options marked [*] are enabled by default.\n"
 msgstr ""
 
-#: src/common/force.c src/deb/build.c src/deb/extract.c src/deb/info.c
-#: src/deb/main.c src/split/info.c src/split/main.c src/split/queue.c
-#: src/divert/main.c src/statoverride/main.c src/trigger/main.c
-#: src/query/main.c src/main/archives.c src/main/enquiry.c src/main/main.c
-#: src/main/packages.c src/main/select.c src/main/verify.c
+#: src/common/force.c src/realpath/main.c src/deb/build.c src/deb/extract.c
+#: src/deb/info.c src/deb/main.c src/split/info.c src/split/main.c
+#: src/split/queue.c src/divert/main.c src/statoverride/main.c
+#: src/trigger/main.c src/query/main.c src/main/archives.c src/main/enquiry.c
+#: src/main/main.c src/main/packages.c src/main/select.c src/main/verify.c
 msgid "<standard output>"
 msgstr "<sortida estandarda>"
 
@@ -2048,6 +2067,79 @@ msgstr ""
 #: src/common/selinux.c
 #, c-format
 msgid "cannot set security context for file object '%s'"
+msgstr ""
+
+#: src/realpath/main.c
+#, fuzzy
+#| msgid "Type dpkg-trigger --help for help about this utility."
+msgid "Use --help for help about this utility."
+msgstr "Picar « dpkg-trigger --help » per obténer d'ajuda."
+
+#: src/realpath/main.c src/divert/main.c src/statoverride/main.c
+#, c-format
+msgid "Debian %s version %s.\n"
+msgstr "Debian %s version %s.\n"
+
+#: src/realpath/main.c src/deb/main.c src/split/main.c src/divert/main.c
+#: src/statoverride/main.c src/trigger/main.c src/query/main.c src/main/main.c
+#: utils/update-alternatives.c
+#, c-format
+msgid ""
+"This is free software; see the GNU General Public License version 2 or\n"
+"later for copying conditions. There is NO warranty.\n"
+msgstr ""
+"Aquò's un logicial liure ; reportatz-vos a la segonda version o\n"
+"posteriora per las condicions de còpia. I a PAS CAP de garantida.\n"
+
+#: src/realpath/main.c
+#, fuzzy, c-format
+#| msgid ""
+#| "Usage: %s [<option>...] <command>\n"
+#| "\n"
+msgid ""
+"Usage: %s [<option>...] <pathname>\n"
+"\n"
+msgstr ""
+"Sintaxi : %s [<opcion> ...] <comanda>\n"
+"\n"
+
+#: src/realpath/main.c
+#, c-format
+msgid ""
+"Options:\n"
+"  -z, --zero                   end output line with NUL, not newline.\n"
+"      --instdir <directory>    set the root directory.\n"
+"      --root <directory>       set the root directory.\n"
+"      --version                show the version.\n"
+"      --help                   show this help message.\n"
+"\n"
+msgstr ""
+
+#: src/realpath/main.c
+msgid "too many levels of symbolic links"
+msgstr ""
+
+#: src/realpath/main.c
+#, fuzzy, c-format
+#| msgid "cannot read %s"
+msgid "cannot read link '%s'"
+msgstr "impossible de legir %s"
+
+#: src/realpath/main.c
+#, fuzzy, c-format
+#| msgid "symbolic link '%.250s' size has changed from %jd to %zd"
+msgid "symbolic link '%s' size has changed from %jd to %zd"
+msgstr "la talha del ligam simbolic '%.250s' es passada de %jd a %zd"
+
+#: src/realpath/main.c
+#, fuzzy
+#| msgid "--%s needs a single argument"
+msgid "need a pathname argument"
+msgstr "--%s demanda un sol paramètre"
+
+#: src/realpath/main.c
+#, c-format
+msgid "link '%s' includes root prefix '%s'"
 msgstr ""
 
 #: src/deb/build.c
@@ -2183,6 +2275,28 @@ msgstr "l'arquitectura del paquet es mancanta o voida"
 #, c-format
 msgid "'%s' contains user-defined Priority value '%s'"
 msgstr "« %s » conten una valor « Priority » « %s » definida per l'utilizaire"
+
+#: src/deb/build.c
+#, fuzzy, c-format
+#| msgid "unable to get file '%s%s' metadata"
+msgid "cannot get root directory %s metadata"
+msgstr "impossible d'obténer las metadonadas del fichièr « %s%s »"
+
+#: src/deb/build.c
+#, fuzzy, c-format
+#| msgid "control directory is not a directory"
+msgid "root pathname %s is not a directory"
+msgstr "lo repertòri « control » es pas un repertòri"
+
+#: src/deb/build.c
+#, c-format
+msgid "root directory %s has unusual owner or group %u:%u"
+msgstr ""
+
+#: src/deb/build.c
+#, c-format
+msgid "you might need to pass --root-owner-group, see <%s> for further details"
+msgstr ""
 
 #: src/deb/build.c
 #, c-format
@@ -2452,6 +2566,11 @@ msgstr ""
 msgid "--%s does not support (yet) reading the .deb from standard input"
 msgstr ""
 
+#: src/deb/info.c src/statoverride/main.c src/main/archives.c
+#, c-format
+msgid "error setting permissions of '%.255s'"
+msgstr "error de parametratge de las autorizacions de « %.255s »"
+
 #: src/deb/info.c src/main/unpack.c
 msgid "unable to create temporary directory"
 msgstr ""
@@ -2467,9 +2586,10 @@ msgid "'%.255s' contains no control component '%.255s'"
 msgstr ""
 
 #: src/deb/info.c
-#, c-format
-msgid "open component '%.255s' (in %.255s) failed in an unexpected way"
-msgstr ""
+#, fuzzy, c-format
+#| msgid "cannot open file %s"
+msgid "cannot open file '%.255s'"
+msgstr "impossible de dobrir lo fichièr %s"
 
 #: src/deb/info.c
 #, c-format
@@ -2484,19 +2604,16 @@ msgid "cannot scan directory '%.255s'"
 msgstr "analisi impossibla del repertòri « %.255s »"
 
 #: src/deb/info.c
-#, c-format
-msgid "cannot stat '%.255s' (in '%.255s')"
-msgstr ""
+#, fuzzy, c-format
+#| msgid "unable to get file '%s%s' metadata"
+msgid "cannot get file '%.255s' metadata"
+msgstr "impossible d'obténer las metadonadas del fichièr « %s%s »"
 
 #: src/deb/info.c
-#, c-format
-msgid "cannot open '%.255s' (in '%.255s')"
-msgstr "impossible de dobrir « %.255s » (dins « %.255s »)"
-
-#: src/deb/info.c
-#, c-format
-msgid "failed to read '%.255s' (in '%.255s')"
-msgstr ""
+#, fuzzy, c-format
+#| msgid "cannot read %s"
+msgid "cannot read file '%.255s'"
+msgstr "impossible de legir %s"
 
 #: src/deb/info.c
 #, c-format
@@ -2531,17 +2648,6 @@ msgstr "--%s a besonh d'exactament un paramètre"
 #, c-format
 msgid "Debian '%s' package archive backend version %s.\n"
 msgstr ""
-
-#: src/deb/main.c src/split/main.c src/divert/main.c src/statoverride/main.c
-#: src/trigger/main.c src/query/main.c src/main/main.c
-#: utils/update-alternatives.c
-#, c-format
-msgid ""
-"This is free software; see the GNU General Public License version 2 or\n"
-"later for copying conditions. There is NO warranty.\n"
-msgstr ""
-"Aquò's un logicial liure ; reportatz-vos a la segonda version o\n"
-"posteriora per las condicions de còpia. I a PAS CAP de garantida.\n"
 
 #: src/deb/main.c src/divert/main.c src/query/main.c src/main/main.c
 #, c-format
@@ -2599,18 +2705,18 @@ msgid ""
 "      --deb-format=<format>        Select archive format.\n"
 "                                     Allowed values: 0.939000, 2.0 "
 "(default).\n"
-"      --nocheck                    Suppress control file check (build bad\n"
-"                                     packages).\n"
+"      --no-check                   Suppress all checks (build bad "
+"packages).\n"
+"      --nocheck                    Alias for --no-check.\n"
 "      --root-owner-group           Forces the owner and groups to root.\n"
 "      --threads-max=<threads>      Use at most <threads> with compressor.\n"
 "      --[no-]uniform-compression   Use the compression params on all "
 "members.\n"
-"  -z#                              Set the compression level when building.\n"
-"  -Z<type>                         Set the compression type used when "
-"building.\n"
+"  -Z, --compression=<compressor>   Set build compression type.\n"
 "                                     Allowed types: gzip, xz, zstd, none.\n"
-"  -S<strategy>                     Set the compression strategy when "
-"building.\n"
+"  -z, --compression-level=<level>  Set build compression level.\n"
+"  -S, --compression-strategy=<name>\n"
+"                                   Set build compression strategy.\n"
 "                                     Allowed values: none; extreme (xz);\n"
 "                                     filtered, huffman, rle, fixed (gzip).\n"
 "\n"
@@ -2623,8 +2729,8 @@ msgid ""
 "  A format is a string that will be output for each package. The format\n"
 "  can include the standard escape sequences \\n (newline), \\r (carriage\n"
 "  return) or \\\\ (plain backslash). Package information can be included\n"
-"  by inserting variable references to package fields using the ${var[;"
-"width]}\n"
+"  by inserting variable references to package fields using the $"
+"{var[;width]}\n"
 "  syntax. Fields will be right-aligned unless the width is negative in "
 "which\n"
 "  case left alignment will be used.\n"
@@ -3164,11 +3270,6 @@ msgstr ""
 msgid "Use --help for help about diverting files."
 msgstr ""
 
-#: src/divert/main.c src/statoverride/main.c
-#, c-format
-msgid "Debian %s version %s.\n"
-msgstr "Debian %s version %s.\n"
-
 #: src/divert/main.c
 #, c-format
 msgid ""
@@ -3429,11 +3530,6 @@ msgstr "Lo grop « %s » existís pas"
 #, c-format
 msgid "error setting ownership of '%.255s'"
 msgstr "error de parametratge dels freches de « %.255s »"
-
-#: src/statoverride/main.c src/main/archives.c
-#, c-format
-msgid "error setting permissions of '%.255s'"
-msgstr "error de parametratge de las autorizacions de « %.255s »"
 
 #: src/statoverride/main.c
 #, c-format
@@ -3834,8 +3930,8 @@ msgstr ""
 #: src/main/archives.c
 #, c-format
 msgid ""
-"trying to overwrite '%.250s', which is the diverted version of "
-"'%.250s' (package: %.100s)"
+"trying to overwrite '%.250s', which is the diverted version of '%.250s' "
+"(package: %.100s)"
 msgstr ""
 
 #: src/main/archives.c
@@ -3876,17 +3972,21 @@ msgid "Replaced by files in installed package %s (%s) ...\n"
 msgstr ""
 
 #: src/main/archives.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "trying to overwrite directory '%.250s' in package %.250s %.250s with "
+#| "nondirectory"
 msgid ""
-"trying to overwrite directory '%.250s' in package %.250s %.250s with "
+"trying to overwrite directory '%.250s' in package %.250s (%.250s) with "
 "nondirectory"
 msgstr ""
 "tempta d'espotir lo repertòri '%.250s' dins lo paquet %.250s %.250s amb un "
 "element qu'es pas un repertòri"
 
 #: src/main/archives.c
-#, c-format
-msgid "trying to overwrite '%.250s', which is also in package %.250s %.250s"
+#, fuzzy, c-format
+#| msgid "trying to overwrite '%.250s', which is also in package %.250s %.250s"
+msgid "trying to overwrite '%.250s', which is also in package %.250s (%.250s)"
 msgstr ""
 "temptativa d'espotiment de '%.250s', qu'es tanben dins lo paquet %.250s "
 "%.250s"
@@ -4104,18 +4204,19 @@ msgid "Skipping unselected package %s.\n"
 msgstr ""
 
 #: src/main/archives.c
+#, fuzzy, c-format
+#| msgid "package %.250s is already installed and configured"
+msgid "package %.250s (%.250s) with same version already installed, skipping"
+msgstr "lo paquet %.250s ja es installat e configurat"
+
+#: src/main/archives.c
 #, c-format
-msgid "version %.250s of %.250s already installed, skipping"
+msgid "downgrading %.250s (%.250s) to (%.250s)"
 msgstr ""
 
 #: src/main/archives.c
 #, c-format
-msgid "downgrading %.250s from %.250s to %.250s"
-msgstr ""
-
-#: src/main/archives.c
-#, c-format
-msgid "will not downgrade %.250s from %.250s to %.250s, skipping"
+msgid "will not downgrade %.250s (%.250s) to (%.250s), skipping"
 msgstr ""
 
 #: src/main/cleanup.c
@@ -4359,7 +4460,8 @@ msgstr ""
 #: src/main/configure.c
 #, c-format
 msgid ""
-"package %s %s cannot be configured because %s is at a different version (%s)"
+"package %s (%s) cannot be configured because %s is at a different version "
+"(%s)"
 msgstr ""
 
 #: src/main/configure.c
@@ -6452,6 +6554,22 @@ msgstr ""
 #: utils/update-alternatives.polkit.in
 msgid "Authentication is required to run update-alternatives"
 msgstr ""
+
+#, c-format
+#~ msgid "cannot open '%.255s' (in '%.255s')"
+#~ msgstr "impossible de dobrir « %.255s » (dins « %.255s »)"
+
+#~ msgid "failed to open diversions file"
+#~ msgstr "impossible de dobrir lo fichièr dels detornaments"
+
+#~ msgid "failed to fstat diversions file"
+#~ msgstr "fracàs de « fstat » sul fichièr dels detornaments"
+
+#~ msgid "failed to open statoverride file"
+#~ msgstr "impossible de dobrir lo fichièr de las permissions (statoverride)"
+
+#~ msgid "failed to fstat statoverride file"
+#~ msgstr "fracàs de « fstat » sul fichièr de las permissions (statoverride)"
 
 #~ msgid "removal of %.250s"
 #~ msgstr "la supression de %.250s"

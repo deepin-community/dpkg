@@ -406,8 +406,7 @@ sub check_patches_applied {
 sub _generate_patch {
     my ($self, $dir, %opts) = @_;
     my ($dirname, $updir) = fileparse($dir);
-    my $basedirname = $self->get_basename();
-    $basedirname =~ s/_/-/;
+    my $basedirname = $self->get_basedirname();
 
     # Identify original tarballs
     my ($tarfile, %addonfile);
@@ -571,9 +570,9 @@ sub do_build {
                                         skip_auto => $self->{options}{auto_commit},
                                         usage => 'build');
     unless (-z $tmpdiff or $self->{options}{auto_commit}) {
-        info(g_('Hint: make sure the version in debian/changelog matches ' .
+        hint(g_('make sure the version in debian/changelog matches ' .
                 'the unpacked source tree'));
-        info(g_('you can integrate the local changes with %s'),
+        hint(g_('you can integrate the local changes with %s'),
              'dpkg-source --commit');
         error(g_('aborting due to unexpected upstream changes, see %s'),
               $tmpdiff);

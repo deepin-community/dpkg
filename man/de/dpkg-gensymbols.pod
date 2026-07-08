@@ -188,6 +188,10 @@ Gibt die Version aus und beendet das Programm.
 
 =over 
 
+=item B<DEB_HOST_ARCH>
+
+Setzt die Host-Architektur, falls die Option B<--arch> nicht angegeben wurde.
+
 =item B<DPKG_GENSYMBOLS_CHECK_LEVEL>
 
 Setzt die Befehlsüberprüfungsstufe außer Kraft, selbst wenn das Befehlszeilenargument B<-c> übergeben wurde (beachten Sie, dass dies der üblichen Konvention widerspricht, demnach Befehlszeilenargumente Vorrang gegenüber Umgebungsvariablen haben).
@@ -209,7 +213,7 @@ L<https://people.redhat.com/drepper/symbol-versioning>, L<https://people.redhat.
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

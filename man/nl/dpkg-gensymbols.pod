@@ -188,6 +188,10 @@ De versie tonen en afsluiten.
 
 =over 
 
+=item B<DEB_HOST_ARCH>
+
+Stelt de computerarchitectuur in als de optie B<--arch> niet werd gespecificeerd.
+
 =item B<DPKG_GENSYMBOLS_CHECK_LEVEL>
 
 Overschrijft het controleniveau van het commando, zelfs als het argument B<-c> opgegeven werd aan de commandoregel (merk op dat dit ingaat tegen de algemeen geldende afspraak dat commandoregel-argumenten voorrang hebben op omgevingsvariabelen).

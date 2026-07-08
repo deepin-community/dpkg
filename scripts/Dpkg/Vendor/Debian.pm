@@ -1,5 +1,5 @@
 # Copyright © 2009-2011 Raphaël Hertzog <hertzog@debian.org>
-# Copyright © 2009, 2011-2017 Guillem Jover <guillem@debian.org>
+# Copyright © 2009-2024 Guillem Jover <guillem@debian.org>
 #
 # Hardening build flags handling derived from work of:
 # Copyright © 2009-2011 Kees Cook <kees@debian.org>
@@ -52,6 +52,7 @@ sub run_hook {
 
     if ($hook eq 'package-keyrings') {
         return ('/usr/share/keyrings/debian-keyring.gpg',
+                '/usr/share/keyrings/debian-tag2upload.pgp',
                 '/usr/share/keyrings/debian-nonupload.gpg',
                 '/usr/share/keyrings/debian-maintainers.gpg');
     } elsif ($hook eq 'archive-keyrings') {
@@ -88,7 +89,21 @@ sub run_hook {
         # Reset umask to a sane default.
         umask 0022;
         # Reset locale to a sane default.
+        #
+        # We ignore the LANGUAGE GNU extension, as that only affects
+        # LC_MESSAGES which will use LC_CTYPE for its codeset. We need to
+        # move the high priority LC_ALL catch-all into the low-priority
+        # LANG catch-all so that we can override LC_* variables, and remove
+        # any existing LC_* variables which would have been ignored anyway,
+        # and would now take precedence over LANG.
+        if (length $ENV{LC_ALL}) {
+            $ENV{LANG} = delete $ENV{LC_ALL};
+            foreach my $lc (grep { m/^LC_/ } keys %ENV) {
+                delete $ENV{$lc};
+            }
+        }
         $ENV{LC_COLLATE} = 'C.UTF-8';
+        $ENV{LC_CTYPE} = 'C.UTF-8';
     } elsif ($hook eq 'backport-version-regex') {
         return qr/~(bpo|deb)/;
     } else {
@@ -117,7 +132,7 @@ sub set_build_features {
             time64 => undef,
         },
         qa => {
-            bug => 0,
+            bug => undef,
             'bug-implicit-func' => undef,
             canary => 0,
         },
@@ -297,10 +312,6 @@ sub set_build_features {
     if ($use_feature{abi}{time64} && ! $builtin_feature{abi}{time64}) {
         # On glibc 64-bit time_t support requires LFS.
         $use_feature{abi}{lfs} = 1 if $libc eq 'gnu';
-
-        # Require -Werror=implicit-function-declaration, to avoid linking
-        # against the wrong symbol.
-        $use_feature{qa}{'bug-implicit-func'} = 1;
     }
 
     # XXX: Handle lfs alias from future abi feature area.
@@ -311,7 +322,14 @@ sub set_build_features {
 
     ## Area: qa
 
-    $use_feature{qa}{'bug-implicit-func'} //= $use_feature{qa}{bug};
+    # For time64 we require -Werror=implicit-function-declaration, to avoid
+    # linking against the wrong symbol. Instead of enabling this conditionally
+    # on time64 being enabled, do it unconditionally so that the effects are
+    # uniform and visible on all architectures. Unless it has been set
+    # explicitly.
+    $use_feature{qa}{'bug-implicit-func'} //= $use_feature{qa}{bug} // 1;
+
+    $use_feature{qa}{bug} //= 0;
 
     ## Area: reproducible
 
@@ -358,13 +376,13 @@ sub set_build_features {
 
     # Mask features that are not available on certain architectures.
     if (none { $os eq $_ } qw(linux kfreebsd hurd) or
-        any { $cpu eq $_ } qw(alpha hppa ia64 sw64)) {
+        any { $cpu eq $_ } qw(alpha hppa ia64)) {
 	# Disabled on non-(linux/kfreebsd/hurd).
-        # Disabled on alpha, hppa, ia64 sw64.
+        # Disabled on alpha, hppa, ia64.
 	$use_feature{hardening}{pie} = 0;
     }
-    if (any { $cpu eq $_ } qw(ia64 alpha hppa nios2 sw64) or $arch eq 'arm') {
-	# Stack protector disabled on ia64, alpha, hppa, nios2 sw64.
+    if (any { $cpu eq $_ } qw(ia64 alpha hppa nios2) or $arch eq 'arm') {
+	# Stack protector disabled on ia64, alpha, hppa, nios2.
 	#   "warning: -fstack-protector not supported for this target"
 	# Stack protector disabled on arm (ok on armel).
 	#   compiler supports it incorrectly (leads to SEGV)
@@ -443,25 +461,10 @@ sub add_build_flags {
         $default_d_flags = '-fdebug';
     } else {
         $default_d_flags = '-frelease';
-        # loong64: Enable 128-bit vector extension.
-        # As noted in Loongson's "Software Development and Build Convention
-        # for LoongArch Architectures," section 7.3:
-        #
-        # "Vector instruction support: Desktop and server chips default to
-        # supporting 128-bit vector instructions."
-        #
-        # Ref: https://github.com/loongson/la-softdev-convention/blob/master/la-softdev-convention.adoc#vector-instruction-support
-        require Dpkg::Arch;
-        my $arch = Dpkg::Arch::get_host_arch();
-        if ($arch eq 'loong64') {
-            $default_flags = "$default_flags -mlsx";
-        }
     }
 
     $flags->append($_, $default_flags) foreach @compile_flags;
-    $flags->append($_ . '_FOR_BUILD', $default_flags) foreach @compile_flags;
     $flags->append('DFLAGS', $default_d_flags);
-    $flags->append('DFLAGS_FOR_BUILD', $default_d_flags);
 
     ## Area: abi
 
@@ -489,6 +492,8 @@ sub add_build_flags {
     # Warnings that detect actual bugs.
     if ($flags->use_feature('qa', 'bug-implicit-func')) {
         $flags->append('CFLAGS', '-Werror=implicit-function-declaration');
+    } else {
+        $flags->append('CFLAGS', '-Wno-error=implicit-function-declaration');
     }
     if ($flags->use_feature('qa', 'bug')) {
         # C/C++ flags
@@ -642,21 +647,28 @@ sub add_build_flags {
             $flags->append($_, $flag) foreach @compile_flags;
         }
     }
+
+    # XXX: Handle *_FOR_BUILD flags here until we can properly initialize them.
+    require Dpkg::Arch;
+
+    my $host_arch = Dpkg::Arch::get_host_arch();
+    my $build_arch = Dpkg::Arch::get_build_arch();
+
+    if ($host_arch eq $build_arch) {
+        foreach my $flag ($flags->list()) {
+            next if $flag =~ m/_FOR_BUILD$/;
+            my $value = $flags->get($flag);
+            $flags->append($flag . '_FOR_BUILD', $value);
+        }
+    } else {
+        $flags->append($_ . '_FOR_BUILD', $default_flags) foreach @compile_flags;
+        $flags->append('DFLAGS_FOR_BUILD', $default_d_flags);
+    }
 }
 
 sub _build_tainted_by {
     my $self = shift;
     my %tainted;
-
-    foreach my $pathname (qw(/bin /sbin /lib /lib32 /libo32 /libx32 /lib64)) {
-        next unless -l $pathname;
-
-        my $linkname = readlink $pathname;
-        if ($linkname eq "usr$pathname" or $linkname eq "/usr$pathname") {
-            $tainted{'merged-usr-via-aliased-dirs'} = 1;
-            last;
-        }
-    }
 
     require File::Find;
     my %usr_local_types = (

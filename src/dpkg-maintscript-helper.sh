@@ -1,9 +1,9 @@
 #!/bin/sh
 #
+# Copyright © 2005 Scott James Remnant
+# Copyright © 2008 Joey Hess <joeyh@debian.org>
 # Copyright © 2007, 2011-2015 Guillem Jover <guillem@debian.org>
 # Copyright © 2010 Raphaël Hertzog <hertzog@debian.org>
-# Copyright © 2008 Joey Hess <joeyh@debian.org>
-# Copyright © 2005 Scott James Remnant (original implementation on www.dpkg.org)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -591,7 +591,6 @@ END
 # Main code
 set -e
 
-PROGNAME=$(basename "$0")
 version="unknown"
 DPKG_ROOT=${DPKG_ROOT:+$(realpath "$DPKG_ROOT")}
 # Remove default root dir.
@@ -605,8 +604,6 @@ PKGDATADIR="${DPKG_DATADIR:-$PKGDATADIR_DEFAULT}"
 
 # shellcheck source=src/sh/dpkg-error.sh
 . "$PKGDATADIR/sh/dpkg-error.sh"
-
-setup_colors
 
 command="$1"
 [ $# -gt 0 ] || badusage "missing command"

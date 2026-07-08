@@ -1,5 +1,5 @@
 # Translation of dpkg to Romanian
-# Copyright © 2005-2023 Dpkg Developers
+# Copyright © 2005-2025 Dpkg Developers
 # This file is distributed under the same license as the dpkg package.
 #
 # Rușeț Zeno <rzeno@cwazy.co.uk>, 2005.
@@ -7,7 +7,7 @@
 # Sorin Batariuc <sorin@bonbon.net>, 2005, 2006.
 # Andrei POPESCU <andreimpopescu@gmail.com>, 2010.
 # ioan-eugen STAN <stan.ieugen@gmail.com>, 2011 (dpkg 1.17.0).
-# Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, feb-2023.
+# Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 2023-2025.
 #
 # Explicații legate de modul de traducere:
 # - la mesajele emise în urma acțiunilor programului se folosește forma impersonală,
@@ -15,16 +15,16 @@
 # - se păstrează denumirile în engleză pentru:
 #   - numele funcților și a argumentelor acestora
 #   - numele și opțiunile programelor
-# - failed to = eșec la
+# - failed to = eșec la / acțiunea/operația a eșuat
 # - unable to stat/sync/... = stat/sync/ imposibil pentru...
 # - unable to do foobar = nu se poate face/drege
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dpkg 1.22.0\n"
+"Project-Id-Version: dpkg 1.22.18\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2024-03-10 20:20+0100\n"
-"PO-Revision-Date: 2023-10-04 11:08+0200\n"
+"POT-Creation-Date: 2026-03-06 04:00+0100\n"
+"PO-Revision-Date: 2025-03-29 08:49+0100\n"
 "Last-Translator: Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>\n"
 "Language-Team: Romanian <debian-l10n-romanian@lists.debian.org>\n"
 "Language: ro\n"
@@ -34,7 +34,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
 "X-Bugs: Report translation errors to the Language-Team address.\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #: lib/dpkg/ar.c
 msgid "failed to fstat archive"
@@ -376,6 +376,225 @@ msgstr "nivel de comprimare nevalid %d"
 msgid "unknown compression strategy"
 msgstr "strategie de comprimare necunoscută"
 
+#: lib/dpkg/db-ctrl-access.c
+#, c-format
+msgid "unable to check existence of '%.250s'"
+msgstr "nu se poate verifica existența fișierului „%.250s”"
+
+#: lib/dpkg/db-ctrl-access.c lib/dpkg/db-ctrl-upgrade.c
+msgid "cannot read info directory"
+msgstr "nu se poate citi directorul info"
+
+#: lib/dpkg/db-ctrl-format.c src/main/unpack.c
+#, c-format
+msgid "error trying to open %.250s"
+msgstr "eroare la încercarea de a deschide %.250s"
+
+# R-GC, scrie:
+# - notă pentru autori
+#: lib/dpkg/db-ctrl-format.c
+#, c-format
+msgid "corrupt info database format file '%s'"
+msgstr "formatul fișierului „%s” al bazei de date „info” este corupt"
+
+#: lib/dpkg/db-ctrl-format.c
+#, c-format
+msgid "info database format (%d) is bogus or too new; try getting a newer dpkg"
+msgstr ""
+"formatul (%d) al bazei de date „info” este greșit sau prea nou; încercați o "
+"versiune mai nouă de «dpkg»"
+
+#: lib/dpkg/db-ctrl-upgrade.c
+#, c-format
+msgid "info file %s/%s not associated to any package"
+msgstr "fișierul info %s/%s nu este asociat cu niciun pachet"
+
+# hard link este un alt nume pentru un target și spre
+# deosebire de symbolic link, target obligatoriu trebuie
+# să existe
+# ====================================-
+# R-GC, scrie:
+# nu știu cui îi aparține textul de mai sus, lui:
+# RZ, EP, SB, AP sau lui I-ES, dar este
+# complet eronat,
+# ***********************************************************
+# target = o țintă, un obiectiv, o destinație
+# hard link = o legătură la un fișier sau director
+# (deci în esență, este un fișier sau director, exact precum obiectul de care este legat) și care are
+# exact același număr de nod-i ca cel al obiectului
+# de care este legat, dar al cărui conținut poate să fie diferit de cel al obiectului sursă; spre deosebire de legătura simbolică ce este „o oglindă” a obiectului
+# de care este legată, dar care are un număr de
+# nod-i diferit.
+# --------------------------------------------------------------------------
+# În traducerile făcute pînă acum, am tradus:
+# «hard link» ca „legătură dură”, ceea ce voi face
+#  și aici
+#: lib/dpkg/db-ctrl-upgrade.c src/main/archives.c
+#, c-format
+msgid "error creating hard link '%.255s'"
+msgstr "eroare la crearea legăturii dure „%.255s”"
+
+#: lib/dpkg/db-ctrl-upgrade.c
+#, c-format
+msgid "error while writing '%s'"
+msgstr "eroare la scrierea „%s”"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing final newline"
+msgstr ""
+"din fișierul de control „%s” pentru pachetul „%s” lipsește linia nouă finală"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing value"
+msgstr "din fișierul de control „%s” pentru pachetul „%s” lipsește o valoare"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' is missing value separator"
+msgstr ""
+"din fișierul de control „%s” pentru pachetul „%s” lipsește un separator de "
+"valoare"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "control file '%s' for package '%s' contains empty filename"
+msgstr ""
+"fișierul de control „%s” pentru pachetul „%s” conține un nume de fișier gol"
+
+#: lib/dpkg/db-fsys-digest.c
+#, c-format
+msgid "loading control file '%s' for package '%s'"
+msgstr "se încarcă fișierul de control „%s” pentru pachetul „%s”"
+
+#: lib/dpkg/db-fsys-divert.c
+#, c-format
+msgid "conflicting diversions involving '%.250s' or '%.250s'"
+msgstr "redirecționări conflictuale care implică „%.250s” sau „%.250s”"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "files list file for package '%.250s' is missing final newline"
+msgstr ""
+"din fișierul cu lista fișierelor pachetului „%.250s” lipsește linia nouă "
+"finală"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "files list file for package '%.250s' contains empty filename"
+msgstr ""
+"fișierul cu lista fișierelor pachetului „%.250s” conține nume de fișier goale"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "loading files list file for package '%s'"
+msgstr "se încarcă fișierul cu lista fișierelor pachetului „%s”"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid ""
+"files list file for package '%.250s' missing; assuming package has no files "
+"currently installed"
+msgstr ""
+"fișierul cu lista fișierelor pachetului „%.250s” lipsește: se presupune că "
+"pachetul nu are nici un fișier instalat"
+
+#: lib/dpkg/db-fsys-files.c
+msgid "(Reading database ... "
+msgstr "(Se citește baza de date ... "
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "%d file or directory currently installed.)\n"
+msgid_plural "%d files and directories currently installed.)\n"
+msgstr[0] "%d fișier sau director actualmente instalat.)\n"
+msgstr[1] "%d fișiere și directoare actualmente instalate.)\n"
+msgstr[2] "%d de fișiere și directoare actualmente instalate.)\n"
+
+#: lib/dpkg/db-fsys-load.c
+#, c-format
+msgid "cannot open %s file"
+msgstr "nu se poate deschide fișierul %s"
+
+#: lib/dpkg/db-fsys-load.c
+#, c-format
+msgid "cannot get %s file metadata"
+msgstr "nu se pot obține metadatele fișierului %s"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "invalid statoverride uid %s"
+msgstr "uid-ul fișierului „statoverride” nu este valid: «%s»"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "invalid statoverride gid %s"
+msgstr "gid-ul fișierului „statoverride” nu este valid: «%s»"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "invalid statoverride mode %s"
+msgstr "modul de permisiuni al fișierului „statoverride” nu este valid: «%s»"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "reading statoverride file '%.250s'"
+msgstr "eroare la citirea fișierului „statoverride” „%.250s”"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "statoverride file is missing final newline"
+msgstr "din fișierul „statoverride” lipsește linia nouă finală"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "statoverride file contains empty line"
+msgstr "fișierul „statoverride” conține o linie goală"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "syntax error in statoverride file"
+msgstr "eroare de sintaxă în fișierul statoverride"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid ""
+"unknown system user '%s' in statoverride file; the system user got removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
+"utilizator de sistem necunoscut, „%s” în fișierul „statoverride”; "
+"utilizatorul\n"
+"de sistem a fost eliminat înainte de înlocuire, ceea ce este cel mai "
+"probabil\n"
+"o eroare de împachetare, pentru al recupera, puteți elimina manual "
+"înlocuirea\n"
+"cu comanda: «%s»"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "unexpected end of line in statoverride file"
+msgstr "sfârșit de linie neașteptat în fișierul „statoverride”"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid ""
+"unknown system group '%s' in statoverride file; the system group got "
+"removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
+"grup de sistem necunoscut, „%s” în fișierul „statoverride”; grupul de "
+"sistem\n"
+"a fost eliminat înainte de înlocuire, ceea ce este cel mai probabil o "
+"eroare\n"
+"de împachetare, pentru al recupera, puteți elimina manual înlocuirea cu\n"
+"comanda: «%s»"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "multiple statoverrides present for file '%.250s'"
+msgstr ""
+"există multiple definiții de înlocuire de stare (statoverrides) pentru "
+"fișierul „%.250s”"
+
 #: lib/dpkg/dbmodify.c
 #, c-format
 msgid ""
@@ -529,231 +748,6 @@ msgstr "nu se poate închide starea actualizată a fișierului „%.250s”"
 #, c-format
 msgid "unable to install updated status of '%.250s'"
 msgstr "nu se poate instala starea actualizată a fișierului „%.250s”"
-
-#: lib/dpkg/db-ctrl-access.c
-#, c-format
-msgid "unable to check existence of '%.250s'"
-msgstr "nu se poate verifica existența fișierului „%.250s”"
-
-#: lib/dpkg/db-ctrl-access.c lib/dpkg/db-ctrl-upgrade.c
-msgid "cannot read info directory"
-msgstr "nu se poate citi directorul info"
-
-#: lib/dpkg/db-ctrl-format.c src/main/unpack.c
-#, c-format
-msgid "error trying to open %.250s"
-msgstr "eroare la încercarea de a deschide %.250s"
-
-# R-GC, scrie:
-# - notă pentru autori
-#: lib/dpkg/db-ctrl-format.c
-#, c-format
-msgid "corrupt info database format file '%s'"
-msgstr "formatul fișierului „%s” al bazei de date „info” este corupt"
-
-#: lib/dpkg/db-ctrl-format.c
-#, c-format
-msgid "info database format (%d) is bogus or too new; try getting a newer dpkg"
-msgstr ""
-"formatul (%d) al bazei de date „info” este greșit sau prea nou; încercați o "
-"versiune mai nouă de «dpkg»"
-
-#: lib/dpkg/db-ctrl-upgrade.c
-#, c-format
-msgid "info file %s/%s not associated to any package"
-msgstr "fișierul info %s/%s nu este asociat cu niciun pachet"
-
-# hard link este un alt nume pentru un target și spre
-# deosebire de symbolic link, target obligatoriu trebuie
-# să existe
-# ====================================-
-# R-GC, scrie:
-# nu știu cui îi aparține textul de mai sus, lui:
-# RZ, EP, SB, AP sau lui I-ES, dar este
-# complet eronat,
-# ***********************************************************
-# target = o țintă, un obiectiv, o destinație
-# hard link = o legătură la un fișier sau director
-# (deci în esență, este un fișier sau director, exact precum obiectul de care este legat) și care are
-# exact același număr de nod-i ca cel al obiectului
-# de care este legat, dar al cărui conținut poate să fie diferit de cel al obiectului sursă; spre deosebire de legătura simbolică ce este „o oglindă” a obiectului
-# de care este legată, dar care are un număr de
-# nod-i diferit.
-# --------------------------------------------------------------------------
-# În traducerile făcute pînă acum, am tradus:
-# «hard link» ca „legătură dură”, ceea ce voi face
-#  și aici
-#: lib/dpkg/db-ctrl-upgrade.c src/main/archives.c
-#, c-format
-msgid "error creating hard link '%.255s'"
-msgstr "eroare la crearea legăturii dure „%.255s”"
-
-#: lib/dpkg/db-ctrl-upgrade.c
-#, c-format
-msgid "error while writing '%s'"
-msgstr "eroare la scrierea „%s”"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing final newline"
-msgstr ""
-"din fișierul de control „%s” pentru pachetul „%s” lipsește linia nouă finală"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing value"
-msgstr "din fișierul de control „%s” pentru pachetul „%s” lipsește o valoare"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' is missing value separator"
-msgstr ""
-"din fișierul de control „%s” pentru pachetul „%s” lipsește un separator de "
-"valoare"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "control file '%s' for package '%s' contains empty filename"
-msgstr ""
-"fișierul de control „%s” pentru pachetul „%s” conține un nume de fișier gol"
-
-#: lib/dpkg/db-fsys-digest.c
-#, c-format
-msgid "loading control file '%s' for package '%s'"
-msgstr "se încarcă fișierul de control „%s” pentru pachetul „%s”"
-
-#: lib/dpkg/db-fsys-divert.c
-msgid "failed to open diversions file"
-msgstr "eșec la deschiderea fișierului de redirecționări"
-
-#: lib/dpkg/db-fsys-divert.c
-msgid "failed to fstat diversions file"
-msgstr "nu s-a putut obține starea fișierului de redirecționări"
-
-#: lib/dpkg/db-fsys-divert.c
-#, c-format
-msgid "conflicting diversions involving '%.250s' or '%.250s'"
-msgstr "redirecționări conflictuale care implică „%.250s” sau „%.250s”"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "loading files list file for package '%s'"
-msgstr "se încarcă fișierul cu lista fișierelor pachetului „%s”"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid ""
-"files list file for package '%.250s' missing; assuming package has no files "
-"currently installed"
-msgstr ""
-"fișierul cu lista fișierelor pachetului „%.250s” lipsește: se presupune că "
-"pachetul nu are nici un fișier instalat"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "files list file for package '%.250s' is missing final newline"
-msgstr ""
-"din fișierul cu lista fișierelor pachetului „%.250s” lipsește linia nouă "
-"finală"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "files list file for package '%.250s' contains empty filename"
-msgstr ""
-"fișierul cu lista fișierelor pachetului „%.250s” conține nume de fișier goale"
-
-#: lib/dpkg/db-fsys-files.c
-msgid "(Reading database ... "
-msgstr "(Se citește baza de date ... "
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "%d file or directory currently installed.)\n"
-msgid_plural "%d files and directories currently installed.)\n"
-msgstr[0] "%d fișier sau director actualmente instalat.)\n"
-msgstr[1] "%d fișiere și directoare actualmente instalate.)\n"
-msgstr[2] "%d de fișiere și directoare actualmente instalate.)\n"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "invalid statoverride uid %s"
-msgstr "uid-ul fișierului „statoverride” nu este valid: «%s»"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "invalid statoverride gid %s"
-msgstr "gid-ul fișierului „statoverride” nu este valid: «%s»"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "invalid statoverride mode %s"
-msgstr "modul de permisiuni al fișierului „statoverride” nu este valid: «%s»"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "failed to open statoverride file"
-msgstr "eșec la deschiderea fișierului „statoverride”"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "failed to fstat statoverride file"
-msgstr "eșec la obținerea stării pentru fișierul „statoverride”"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "reading statoverride file '%.250s'"
-msgstr "eroare la citirea fișierului „statoverride” „%.250s”"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "statoverride file is missing final newline"
-msgstr "din fișierul „statoverride” lipsește linia nouă finală"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "statoverride file contains empty line"
-msgstr "fișierul „statoverride” conține o linie goală"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "syntax error in statoverride file"
-msgstr "eroare de sintaxă în fișierul statoverride"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid ""
-"unknown system user '%s' in statoverride file; the system user got removed\n"
-"before the override, which is most probably a packaging bug, to recover you\n"
-"can remove the override manually with %s"
-msgstr ""
-"utilizator de sistem necunoscut, „%s” în fișierul „statoverride”; "
-"utilizatorul\n"
-"de sistem a fost eliminat înainte de înlocuire, ceea ce este cel mai "
-"probabil\n"
-"o eroare de împachetare, pentru al recupera, puteți elimina manual "
-"înlocuirea\n"
-"cu comanda: «%s»"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "unexpected end of line in statoverride file"
-msgstr "sfârșit de linie neașteptat în fișierul „statoverride”"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid ""
-"unknown system group '%s' in statoverride file; the system group got "
-"removed\n"
-"before the override, which is most probably a packaging bug, to recover you\n"
-"can remove the override manually with %s"
-msgstr ""
-"grup de sistem necunoscut, „%s” în fișierul „statoverride”; grupul de "
-"sistem\n"
-"a fost eliminat înainte de înlocuire, ceea ce este cel mai probabil o "
-"eroare\n"
-"de împachetare, pentru al recupera, puteți elimina manual înlocuirea cu\n"
-"comanda: «%s»"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "multiple statoverrides present for file '%.250s'"
-msgstr ""
-"există multiple definiții de înlocuire de stare (statoverrides) pentru "
-"fișierul „%.250s”"
 
 #: lib/dpkg/deb-version.c
 msgid "format version with too big major component"
@@ -1113,6 +1107,11 @@ msgstr "pachet declanșator așteptat duplicat „%.255s”"
 
 #: lib/dpkg/file.c
 #, c-format
+msgid "cannot canonicalize pathname %s"
+msgstr "nu s-a putut canoniza numele rutei „%s”"
+
+#: lib/dpkg/file.c
+#, c-format
 msgid "unable to stat source file '%.250s'"
 msgstr "nu se poate obține starea fișierului sursă „%.250s”"
 
@@ -1192,11 +1191,16 @@ msgstr ""
 #: lib/dpkg/file.c
 #, c-format
 msgid ""
-"%s was locked by another process with pid %d\n"
+"%s was locked by %s process with pid %d\n"
 "%s"
 msgstr ""
-"%s a fost blocată de un alt proces cu pid %d\n"
+"%s a fost blocată de procesul %s cu pid %d\n"
 "%s"
+
+#: lib/dpkg/file.c
+msgctxt "process"
+msgid "<unknown>"
+msgstr "<necunoscut>"
 
 #: lib/dpkg/file.c
 #, c-format
@@ -1267,7 +1271,7 @@ msgstr "nu se pot citi fanioanele descriptorului de fișier pentru %.250s"
 #: lib/dpkg/mustlib.c
 #, c-format
 msgid "unable to set close-on-exec flag for %.250s"
-msgstr "nu se poate activa fanionul close-on-exec pentru %.250s"
+msgstr "nu se poate activa fanionul „close-on-exec” pentru %.250s"
 
 #: lib/dpkg/options-parsers.c
 #, c-format
@@ -1719,6 +1723,17 @@ msgstr "%d%%"
 #: lib/dpkg/report.c utils/update-alternatives.c
 msgid "warning"
 msgstr "avertisment"
+
+#: lib/dpkg/report.c
+msgid "hint"
+msgstr "sugestie"
+
+#: lib/dpkg/strvec.c
+#, c-format
+msgid "cannot grow strvec to size %zu; it would overflow"
+msgstr ""
+"nu se poate crește dimensiunea lui „strvec” la %zu; aceasta ar produce "
+"debordare"
 
 #: lib/dpkg/strwide.c
 #, c-format
@@ -2262,11 +2277,11 @@ msgstr ""
 "sistemul dumneavoastră.\n"
 "Opțiunile de forțare marcate cu [*] sunt activate în mod implicit.\n"
 
-#: src/common/force.c src/deb/build.c src/deb/extract.c src/deb/info.c
-#: src/deb/main.c src/split/info.c src/split/main.c src/split/queue.c
-#: src/divert/main.c src/statoverride/main.c src/trigger/main.c
-#: src/query/main.c src/main/archives.c src/main/enquiry.c src/main/main.c
-#: src/main/packages.c src/main/select.c src/main/verify.c
+#: src/common/force.c src/realpath/main.c src/deb/build.c src/deb/extract.c
+#: src/deb/info.c src/deb/main.c src/split/info.c src/split/main.c
+#: src/split/queue.c src/divert/main.c src/statoverride/main.c
+#: src/trigger/main.c src/query/main.c src/main/archives.c src/main/enquiry.c
+#: src/main/main.c src/main/packages.c src/main/select.c src/main/verify.c
 msgid "<standard output>"
 msgstr "<ieșire standard>"
 
@@ -2316,6 +2331,79 @@ msgstr "nu poate obține gestionarul de etichetare de securitate"
 msgid "cannot set security context for file object '%s'"
 msgstr ""
 "nu se poate stabilii contextul de securitate pentru obiectul fișier „%s”"
+
+#: src/realpath/main.c
+msgid "Use --help for help about this utility."
+msgstr "Utilizați opțiunea „--help” pentru ajutor despre acest instrument."
+
+#: src/realpath/main.c src/divert/main.c src/statoverride/main.c
+#, c-format
+msgid "Debian %s version %s.\n"
+msgstr "Debian %s versiunea %s.\n"
+
+#: src/realpath/main.c src/deb/main.c src/split/main.c src/divert/main.c
+#: src/statoverride/main.c src/trigger/main.c src/query/main.c src/main/main.c
+#: utils/update-alternatives.c
+#, c-format
+msgid ""
+"This is free software; see the GNU General Public License version 2 or\n"
+"later for copying conditions. There is NO warranty.\n"
+msgstr ""
+"Acest program este software liber; consultați Licența publică generală GNU\n"
+"versiunea 2 sau ulterioară pentru condițiile de copiere. NU există NICIO\n"
+"garanție.\n"
+
+#: src/realpath/main.c
+#, c-format
+msgid ""
+"Usage: %s [<option>...] <pathname>\n"
+"\n"
+msgstr ""
+"Utilizare: %s [<opțiune>...] <nume-rută>\n"
+"\n"
+
+#: src/realpath/main.c
+#, c-format
+msgid ""
+"Options:\n"
+"  -z, --zero                   end output line with NUL, not newline.\n"
+"      --instdir <directory>    set the root directory.\n"
+"      --root <directory>       set the root directory.\n"
+"      --version                show the version.\n"
+"      --help                   show this help message.\n"
+"\n"
+msgstr ""
+"Opțiuni:\n"
+"  -z, --zero                   încheie linia de ieșire cu NUL, nu linie "
+"nouă\n"
+"      --instdir <director>     stabilește directorul rădăcină\n"
+"      --root <director>        stabilește directorul rădăcină\n"
+"      --version                afișează versiunea\n"
+"      --help                   afișează acest mesaj de ajutor\n"
+"\n"
+
+#: src/realpath/main.c
+msgid "too many levels of symbolic links"
+msgstr "prea multe niveluri de legături simbolice"
+
+#: src/realpath/main.c
+#, c-format
+msgid "cannot read link '%s'"
+msgstr "nu se poate citi legătura „%s”"
+
+#: src/realpath/main.c
+#, c-format
+msgid "symbolic link '%s' size has changed from %jd to %zd"
+msgstr "dimensiunea legăturii simbolice „%s” s-a schimbat de la %jd la %zd"
+
+#: src/realpath/main.c
+msgid "need a pathname argument"
+msgstr "necesită un nume de rută ca argument"
+
+#: src/realpath/main.c
+#, c-format
+msgid "link '%s' includes root prefix '%s'"
+msgstr "legătura „%s” include prefixul rădăcină „%s”"
 
 #: src/deb/build.c
 #, c-format
@@ -2461,6 +2549,45 @@ msgstr "arhitectura pachetului lipsește sau este goală"
 #, c-format
 msgid "'%s' contains user-defined Priority value '%s'"
 msgstr "„%s” conține o valoare definită de utilizator pentru Priority „%s”"
+
+#: src/deb/build.c
+#, c-format
+msgid "cannot get root directory %s metadata"
+msgstr "nu se pot obține metadatele directorului rădăcină %s"
+
+# R-GC, scrie:
+# complet ca la nebuni, asta e „găselnița”
+# ce-am putut inventa, pentru traducerea
+# acestui mesaj, situată pe undeva, pe la
+# jumătatea drumului între traducerea
+# acestui mesaj din engleză, respectiv
+# din catalană; n-am reușit să găsesc
+# ceva mai bun.
+# în catalană,
+# treewalk devine treewalker
+# ========================
+# într-o versiune anterioară, acest mesaj,
+# era: „control directory is not a directory”
+# -----------------------------------------------
+# în această versiune (1.22.18) parcă s-a
+# revenit la normal:
+# „root pathname %s is not a directory”
+#: src/deb/build.c
+#, c-format
+msgid "root pathname %s is not a directory"
+msgstr "numele rutei rădăcină %s nu este un director"
+
+#: src/deb/build.c
+#, c-format
+msgid "root directory %s has unusual owner or group %u:%u"
+msgstr "directorul rădăcină %s are proprietar sau grup neobișnuit %u:%u"
+
+#: src/deb/build.c
+#, c-format
+msgid "you might need to pass --root-owner-group, see <%s> for further details"
+msgstr ""
+"s-ar putea să fie necesar să introduceți „--root-owner-group”, consultați "
+"<%s> pentru mai multe detalii"
 
 #: src/deb/build.c
 #, c-format
@@ -2742,6 +2869,11 @@ msgstr ""
 msgid "--%s does not support (yet) reading the .deb from standard input"
 msgstr "--%s nu acceptă (încă) citirea fișierului .deb din intrarea standard"
 
+#: src/deb/info.c src/statoverride/main.c src/main/archives.c
+#, c-format
+msgid "error setting permissions of '%.255s'"
+msgstr "eroare la stabilirea permisiunilor pentru „%.255s”"
+
 #: src/deb/info.c src/main/unpack.c
 msgid "unable to create temporary directory"
 msgstr "nu se poate crea directorul temporar"
@@ -2758,9 +2890,8 @@ msgstr "„%.255s” nu conține nicio componentă de control „%.255s”"
 
 #: src/deb/info.c
 #, c-format
-msgid "open component '%.255s' (in %.255s) failed in an unexpected way"
-msgstr ""
-"deschiderea componentei „%.255s” (în %.255s) a eșuat într-un mod neașteptat"
+msgid "cannot open file '%.255s'"
+msgstr "nu se poate deschide fișierul „%.255s”"
 
 #: src/deb/info.c
 #, c-format
@@ -2777,18 +2908,13 @@ msgstr "nu se poate examina directorul „%.255s”"
 
 #: src/deb/info.c
 #, c-format
-msgid "cannot stat '%.255s' (in '%.255s')"
-msgstr "nu se poate efectua stat() asupra „%.255s” (în „%.255s”)"
+msgid "cannot get file '%.255s' metadata"
+msgstr "nu se pot obține metadatele fișierului „%.255s”"
 
 #: src/deb/info.c
 #, c-format
-msgid "cannot open '%.255s' (in '%.255s')"
-msgstr "nu se poate deschide „%.255s” (în „%.255s”)"
-
-#: src/deb/info.c
-#, c-format
-msgid "failed to read '%.255s' (in '%.255s')"
-msgstr "eșec la citirea lui „%.255s” (în „%.255s”)"
+msgid "cannot read file '%.255s'"
+msgstr "nu se poate citi fișierul „%.255s”"
 
 #: src/deb/info.c
 #, c-format
@@ -2824,18 +2950,6 @@ msgstr "„--%s” acceptă exact un argument"
 msgid "Debian '%s' package archive backend version %s.\n"
 msgstr ""
 "Instrumentul de gestionare a arhivelor de pachete Debian %s, versiunea %s.\n"
-
-#: src/deb/main.c src/split/main.c src/divert/main.c src/statoverride/main.c
-#: src/trigger/main.c src/query/main.c src/main/main.c
-#: utils/update-alternatives.c
-#, c-format
-msgid ""
-"This is free software; see the GNU General Public License version 2 or\n"
-"later for copying conditions. There is NO warranty.\n"
-msgstr ""
-"Acest program este software liber; consultați Licența publică generală GNU\n"
-"versiunea 2 sau ulterioară pentru condițiile de copiere. NU există NICIO\n"
-"garanție.\n"
 
 #: src/deb/main.c src/divert/main.c src/query/main.c src/main/main.c
 #, c-format
@@ -2918,18 +3032,18 @@ msgid ""
 "      --deb-format=<format>        Select archive format.\n"
 "                                     Allowed values: 0.939000, 2.0 "
 "(default).\n"
-"      --nocheck                    Suppress control file check (build bad\n"
-"                                     packages).\n"
+"      --no-check                   Suppress all checks (build bad "
+"packages).\n"
+"      --nocheck                    Alias for --no-check.\n"
 "      --root-owner-group           Forces the owner and groups to root.\n"
 "      --threads-max=<threads>      Use at most <threads> with compressor.\n"
 "      --[no-]uniform-compression   Use the compression params on all "
 "members.\n"
-"  -z#                              Set the compression level when building.\n"
-"  -Z<type>                         Set the compression type used when "
-"building.\n"
+"  -Z, --compression=<compressor>   Set build compression type.\n"
 "                                     Allowed types: gzip, xz, zstd, none.\n"
-"  -S<strategy>                     Set the compression strategy when "
-"building.\n"
+"  -z, --compression-level=<level>  Set build compression level.\n"
+"  -S, --compression-strategy=<name>\n"
+"                                   Set build compression strategy.\n"
 "                                     Allowed values: none; extreme (xz);\n"
 "                                     filtered, huffman, rle, fixed (gzip).\n"
 "\n"
@@ -2937,14 +3051,15 @@ msgstr ""
 "Opțiuni:\n"
 "  -v|--verbose                      activează generarea de mesaje detaliate\n"
 "  -D|--debug                        activează informațiile de depanare\n"
-"     --showformat=<format>          folosește formatul alternativ pentru --"
-"show\n"
+"     --showformat=<format>          folosește formatul alternativ pentru „--"
+"show”\n"
 "     --deb-format=<format>          selectează formatul de arhivă\n"
 "                                    valori permise: 0,939000, 2,0 "
 "(implicit)\n"
 "     --nocheck                      suprimă verificarea fișierului de "
 "control\n"
 "                                    (construiește pachete eronate)\n"
+"      --nocheck                    alias pentru „--no-check”\n"
 "     --root-owner-group             forțează proprietarul și grupurile la "
 "root\n"
 "     --threads-max=<fire>           utilizează cel mult <fire> la "
@@ -2952,14 +3067,15 @@ msgstr ""
 "     --[no-]uniform-compression     utilizează parametrii de comprimare pe "
 "toți\n"
 "                                    membrii arhivei\n"
-"  -z#                               stabilește nivelul de comprimare atunci "
-"când\n"
-"                                    se construiește\n"
-"  -Z<tip>                           stabilește tipul de comprimare folosit "
+"  -Z, --compression=<comprimare>    stabilește tipul de comprimare folosit "
 "la\n"
 "                                    construire; valorile permise sunt: \n"
-"                                    gzip, xz, bzip2, lzma, none\n"
-"  -S<strategia>                     stabilește strategia de comprimare "
+"                                    gzip, xz, zstd, none\n"
+"  -z, --compression-level=<nivel>   stabilește nivelul de comprimare atunci "
+"când\n"
+"                                    se construiește\n"
+"  -S, --compression-strategy=<nume> \n"
+"                                    stabilește strategia de comprimare "
 "atunci\n"
 "                                    când se construiește;\n"
 "                                    valorile permise sunt: none; extreme "
@@ -2974,8 +3090,8 @@ msgid ""
 "  A format is a string that will be output for each package. The format\n"
 "  can include the standard escape sequences \\n (newline), \\r (carriage\n"
 "  return) or \\\\ (plain backslash). Package information can be included\n"
-"  by inserting variable references to package fields using the ${var[;"
-"width]}\n"
+"  by inserting variable references to package fields using the $"
+"{var[;width]}\n"
 "  syntax. Fields will be right-aligned unless the width is negative in "
 "which\n"
 "  case left alignment will be used.\n"
@@ -3012,8 +3128,8 @@ msgid ""
 "Type dpkg-deb --help for help about manipulating *.deb files;\n"
 "Type dpkg --help for help about installing and deinstalling packages."
 msgstr ""
-"Tastați «dpkg-deb --help» pentru ajutor despre manipularea fișierelor *."
-"deb;\n"
+"Tastați «dpkg-deb --help» pentru ajutor despre manipularea fișierelor "
+"*.deb;\n"
 "Tastați «dpkg --help» pentru ajutor despre instalarea și dezinstalarea "
 "pachetelor."
 
@@ -3053,10 +3169,9 @@ msgid "need an action option"
 msgstr "este necesară o opțiune de acțiune"
 
 #: src/deb/main.c
-#, fuzzy, c-format
-#| msgid "unsupported compression type '%s' with uniform compression"
+#, c-format
 msgid "unsupported deb format '%d.%d' with non-uniform compression"
-msgstr "tip de comprimare neacceptat „%s” cu comprimarea uniformă"
+msgstr "format deb neacceptat „%d.%d” cu comprimarea neuniformă"
 
 #: src/deb/main.c
 #, c-format
@@ -3593,11 +3708,6 @@ msgid "Use --help for help about diverting files."
 msgstr ""
 "Utilizați opțiunea „--help” pentru ajutor despre redirecționarea fișierelor."
 
-#: src/divert/main.c src/statoverride/main.c
-#, c-format
-msgid "Debian %s version %s.\n"
-msgstr "Debian %s versiunea %s.\n"
-
 #: src/divert/main.c
 #, c-format
 msgid ""
@@ -3933,11 +4043,6 @@ msgstr "grupul „%s” nu există"
 #, c-format
 msgid "error setting ownership of '%.255s'"
 msgstr "eroare la stabilirea proprietarului pentru „%.255s”"
-
-#: src/statoverride/main.c src/main/archives.c
-#, c-format
-msgid "error setting permissions of '%.255s'"
-msgstr "eroare la stabilirea permisiunilor pentru „%.255s”"
 
 #: src/statoverride/main.c
 #, c-format
@@ -4421,8 +4526,8 @@ msgstr ""
 #: src/main/archives.c
 #, c-format
 msgid ""
-"trying to overwrite '%.250s', which is the diverted version of "
-"'%.250s' (package: %.100s)"
+"trying to overwrite '%.250s', which is the diverted version of '%.250s' "
+"(package: %.100s)"
 msgstr ""
 "se încearcă suprascrierea lui „%.250s”, care este o versiune redirecționată "
 "a lui „%.250s” (pachetul: %.100s)"
@@ -4473,18 +4578,18 @@ msgstr "Înlocuite de fișierele din pachetul instalat %s (%s) ...\n"
 #: src/main/archives.c
 #, c-format
 msgid ""
-"trying to overwrite directory '%.250s' in package %.250s %.250s with "
+"trying to overwrite directory '%.250s' in package %.250s (%.250s) with "
 "nondirectory"
 msgstr ""
-"se încearcă suprascrierea directorului „%.250s” din pachetul %.250s %.250s "
+"se încearcă suprascrierea directorului „%.250s” din pachetul %.250s (%.250s) "
 "cu un non-director"
 
 #: src/main/archives.c
 #, c-format
-msgid "trying to overwrite '%.250s', which is also in package %.250s %.250s"
+msgid "trying to overwrite '%.250s', which is also in package %.250s (%.250s)"
 msgstr ""
 "se încearcă suprascrierea lui „%.250s”, care este și în pachetul %.250s "
-"%.250s"
+"(%.250s)"
 
 #: src/main/archives.c
 #, c-format
@@ -4723,20 +4828,20 @@ msgstr "Se omite pachetul neselectat %s.\n"
 
 #: src/main/archives.c
 #, c-format
-msgid "version %.250s of %.250s already installed, skipping"
-msgstr "versiunea %.250s a lui %.250s este deja instalată, se omite"
+msgid "package %.250s (%.250s) with same version already installed, skipping"
+msgstr "pachetul %.250s (%.250s) cu aceeași versiune deja instalată, se omite"
 
 #: src/main/archives.c
 #, c-format
-msgid "downgrading %.250s from %.250s to %.250s"
-msgstr "se retrogradează %.250s de la %.250s la %.250s"
+msgid "downgrading %.250s (%.250s) to (%.250s)"
+msgstr "se retrogradează %.250s de la versiunea (%.250s) la versiunea (%.250s)"
 
 #: src/main/archives.c
 #, c-format
-msgid "will not downgrade %.250s from %.250s to %.250s, skipping"
+msgid "will not downgrade %.250s (%.250s) to (%.250s), skipping"
 msgstr ""
-"nu se va retrograda %.250s de la versiunea %.250s la versiunea %.250s, se "
-"omite"
+"nu se va retrograda %.250s de la versiunea (%.250s) la versiunea (%.250s), "
+"se omite"
 
 #: src/main/cleanup.c
 #, c-format
@@ -4996,9 +5101,10 @@ msgstr ""
 #: src/main/configure.c
 #, c-format
 msgid ""
-"package %s %s cannot be configured because %s is at a different version (%s)"
+"package %s (%s) cannot be configured because %s is at a different version "
+"(%s)"
 msgstr ""
-"pachetul %s %s nu poate fi configurat deoarece versiunea de %s este diferită "
+"pachetul %s (%s) nu poate fi configurat deoarece %s are o versiune diferită "
 "(%s)"
 
 #: src/main/configure.c
@@ -5847,8 +5953,8 @@ msgstr ""
 "Tastați «dpkg -Dhelp» pentru o listă a valorilor fanioanelor de depanare ale "
 "lui «dpkg»;\n"
 "Tastați «dpkg --force-help» pentru o listă a opțiunilor de forțare;\n"
-"Tastați «dpkg-deb --help» pentru ajutor privind manipularea fișierelor *."
-"deb;\n"
+"Tastați «dpkg-deb --help» pentru ajutor privind manipularea fișierelor "
+"*.deb;\n"
 "\n"
 "Opțiunile marcate cu [*] produc foarte mult text - redirectați prin «less» "
 "sau «more» !"
@@ -6736,10 +6842,9 @@ msgstr ""
 "curățate automat."
 
 #: utils/update-alternatives.c
-#, fuzzy, c-format
-#| msgid "Debian %s version %s.\n"
+#, c-format
 msgid "%s version %s.\n"
-msgstr "Debian %s versiunea %s.\n"
+msgstr "%s versiunea %s.\n"
 
 #: utils/update-alternatives.c
 #, c-format
@@ -6938,8 +7043,8 @@ msgstr "%s corupt: %s"
 #, c-format
 msgid "newlines prohibited in update-alternatives files (%s)"
 msgstr ""
-"caracterele de linie nouă sunt interzise în fișierele „update-"
-"alternatives” (%s)"
+"caracterele de linie nouă sunt interzise în fișierele „update-alternatives” "
+"(%s)"
 
 #: utils/update-alternatives.c
 msgid "slave name"
@@ -7409,6 +7514,36 @@ msgstr ""
 #: utils/update-alternatives.polkit.in
 msgid "Authentication is required to run update-alternatives"
 msgstr "Autentificarea este necesară pentru a rula «update-alternatives»"
+
+#, c-format
+#~ msgid "open component '%.255s' (in %.255s) failed in an unexpected way"
+#~ msgstr ""
+#~ "deschiderea componentei „%.255s” (în %.255s) a eșuat într-un mod "
+#~ "neașteptat"
+
+#, c-format
+#~ msgid "cannot stat '%.255s' (in '%.255s')"
+#~ msgstr "nu se poate efectua stat() asupra „%.255s” (în „%.255s”)"
+
+#, c-format
+#~ msgid "cannot open '%.255s' (in '%.255s')"
+#~ msgstr "nu se poate deschide „%.255s” (în „%.255s”)"
+
+#, c-format
+#~ msgid "failed to read '%.255s' (in '%.255s')"
+#~ msgstr "eșec la citirea lui „%.255s” (în „%.255s”)"
+
+#~ msgid "failed to open diversions file"
+#~ msgstr "eșec la deschiderea fișierului de redirecționări"
+
+#~ msgid "failed to fstat diversions file"
+#~ msgstr "nu s-a putut obține starea fișierului de redirecționări"
+
+#~ msgid "failed to open statoverride file"
+#~ msgstr "eșec la deschiderea fișierului „statoverride”"
+
+#~ msgid "failed to fstat statoverride file"
+#~ msgstr "eșec la obținerea stării pentru fișierul „statoverride”"
 
 #, fuzzy, c-format
 #~| msgid "There is only one alternative in link group %s: %s"

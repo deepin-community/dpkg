@@ -32,8 +32,9 @@ my @cppcheck_opts = (qw(
   --force
   --error-exitcode=2
   --inline-suppr
+  --check-level=exhaustive
   --suppressions-list=t/cppcheck/cppcheck.supp
-  --std=c99 --std=c++03
+  --std=c99 --std=c++14
   -Ilib
   -Ilib/compat
   -Isrc/common

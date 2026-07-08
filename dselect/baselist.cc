@@ -280,11 +280,11 @@ baselist::baselist(keybindings *kb) {
   ldrawnend = 0;
   showinfo= 1;
 
-  searchstring[0]= 0;
+  searchstring.reset();
 }
 
 void baselist::itd_keys() {
-  whatinfovb(_("Keybindings"));
+  whatinfovb += _("Keybindings");
 
   const int givek= xmax/3;
   bindings->describestart();
@@ -308,7 +308,7 @@ void baselist::itd_keys() {
 void baselist::dosearch() {
   int offset, index;
   debug(dbg_general, "baselist[%p]::dosearch(); searchstring='%s'",
-        this, searchstring);
+        this, searchstring.str());
   for (offset = 1, index = max(topofscreen, cursorline + 1);
        offset<nitems;
        offset++, index++) {
@@ -331,16 +331,16 @@ void baselist::refreshinfo() {
 
   if (whatinfo_height) {
     mywerase(whatinfowin);
-    mvwaddstr(whatinfowin,0,0, whatinfovb.string());
+    mvwaddstr(whatinfowin,0,0, whatinfovb.str());
     if (infolines > info_height) {
       wprintw(whatinfowin,_("  -- %d%%, press "),
               (infotopofscreen + info_height) * 100 / infolines);
       if (infotopofscreen + info_height < infolines) {
-        wprintw(whatinfowin,_("%s for more"), bindings->find("iscrollon"));
+        wprintw(whatinfowin, _("%s for more"), bindings->find("iscrollon").str());
         if (infotopofscreen) waddstr(whatinfowin, ", ");
       }
       if (infotopofscreen)
-        wprintw(whatinfowin, _("%s to go back"),bindings->find("iscrollback"));
+        wprintw(whatinfowin, _("%s to go back"), bindings->find("iscrollback").str());
       waddch(whatinfowin,'.');
     }
     wnoutrefresh(whatinfowin);

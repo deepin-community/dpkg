@@ -24,7 +24,7 @@ B<DEBIAN/postinst>
 
 Un paquet peut réaliser plusieurs actions post-installation à l'aide de scripts du responsable, en incluant un fichier I<postinst> exécutable dans son archive de contrôle (c'est-à-dire I<DEBIAN/postinst> au moment de la création du paquet).
 
-Le script peut être appelé de diverses S<manières :>
+Le script peut être appelé de diverses manières :
 
 =over 
 

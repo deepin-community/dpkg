@@ -50,21 +50,19 @@ Deverá estar no formato "Joe Bloggs E<lt>jbloggs@foo.comE<gt>", e é tipicament
 
 =item S< >I<long-description>
 
-O formato da descrição do pacote é um sumário breve e curto an primeira linha (após o campo B<Description>). As linhas seguintes devem ser usadas para uma descrição longa e mais detalhada. Cada linha da descrição longa tem de ser precedida com um espaço, e as linhas em branco na descrição longa têm de conter um único ‘B<.>’ a seguir ao espaço que precede.
+O formato da descrição do pacote é um sumário breve e curto na primeira linha (após o campo B<Description>). As linhas seguintes devem ser usadas para uma descrição longa e mais detalhada. Cada linha da descrição longa tem de ser precedida com um espaço, e as linhas em branco na descrição longa têm de conter um único ‘B<.>’ a seguir ao espaço que precede.
 
 =item B<Section:> I<section>
 
 Este é um campo geral que dá ao pacote uma categoria baseada no software que ele instala. Algumas secções comuns são B<utils>, B<net>, B<mail>, B<text>, B<x11>, etc.
 
+Os valores aceites são baseados na política específica da distribuição.
+
 =item B<Priority:> I<priority>
 
-Define a importância deste pacote relativamente ao sistema como um todo. Prioridades comuns são B<required>, B<standard>, B<optional>, B<extra>, etc.
+Define a importância deste pacote relativamente ao sistema como um todo. As prioridades conhecidas são B<required>, B<important>, B<standard>, B<optional>, B<extra>, e B<unknown>, mas pode-se também usar outros valores.
 
-=back
-
-Os campos B<Section> e B<Priority> têm geralmente um conjunto definido de valores aceites baseados na política específica da distribuição.
-
-=over 
+Como aplicar estes valores depende da política específica da distribuição.
 
 =item B<Installed-Size:> I<size>
 

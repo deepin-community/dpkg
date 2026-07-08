@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.17.0\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2024-03-10 20:20+0100\n"
+"POT-Creation-Date: 2026-03-06 04:00+0100\n"
 "PO-Revision-Date: 2015-04-07 09:51+0200\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -389,6 +389,191 @@ msgstr "--%s का लागि इन्जिटर अवैध: `%.250s'   
 msgid "unknown compression strategy"
 msgstr "अज्ञात सङ्कुचन प्रकार `%s'!"
 
+#: lib/dpkg/db-ctrl-access.c
+#, c-format
+msgid "unable to check existence of '%.250s'"
+msgstr "`%.250s'को अवस्थिति जाँच गर्न अक्षम"
+
+#: lib/dpkg/db-ctrl-access.c lib/dpkg/db-ctrl-upgrade.c
+msgid "cannot read info directory"
+msgstr "सूचना डाइरेक्टरी पढ्न सक्दैन"
+
+#: lib/dpkg/db-ctrl-format.c src/main/unpack.c
+#, c-format
+msgid "error trying to open %.250s"
+msgstr "%.250s खोल्न प्रयास गर्दा त्रुटि"
+
+#: lib/dpkg/db-ctrl-format.c
+#, fuzzy, c-format
+msgid "corrupt info database format file '%s'"
+msgstr "स्रोत फाइल `%.250s' खोल्न अक्षम"
+
+#: lib/dpkg/db-ctrl-format.c
+#, c-format
+msgid "info database format (%d) is bogus or too new; try getting a newer dpkg"
+msgstr ""
+
+#: lib/dpkg/db-ctrl-upgrade.c
+#, fuzzy, c-format
+#| msgid "conffile `%.250s' does not appear in package"
+msgid "info file %s/%s not associated to any package"
+msgstr "कन्फफाइल `%.250s' प्याकेजमा देखा पर्दैन"
+
+#: lib/dpkg/db-ctrl-upgrade.c src/main/archives.c
+#, c-format
+msgid "error creating hard link '%.255s'"
+msgstr "हार्ड लिङ्क `%.255s' सिर्जना गर्दा त्रुटि"
+
+#: lib/dpkg/db-ctrl-upgrade.c
+#, fuzzy, c-format
+#| msgid "error writing `%s'"
+msgid "error while writing '%s'"
+msgstr "लेख्दै गर्दा त्रुटि `%s'"
+
+#: lib/dpkg/db-fsys-digest.c
+#, fuzzy, c-format
+msgid "control file '%s' for package '%s' is missing final newline"
+msgstr "रित्तो फाइलनाम समाहित गर्ने प्याकेज `%.250s' का लागि फाइलको सूची फाइल"
+
+#: lib/dpkg/db-fsys-digest.c
+#, fuzzy, c-format
+msgid "control file '%s' for package '%s' is missing value"
+msgstr "रित्तो फाइलनाम समाहित गर्ने प्याकेज `%.250s' का लागि फाइलको सूची फाइल"
+
+#: lib/dpkg/db-fsys-digest.c
+#, fuzzy, c-format
+msgid "control file '%s' for package '%s' is missing value separator"
+msgstr "रित्तो फाइलनाम समाहित गर्ने प्याकेज `%.250s' का लागि फाइलको सूची फाइल"
+
+#: lib/dpkg/db-fsys-digest.c
+#, fuzzy, c-format
+#| msgid "files list file for package `%.250s' contains empty filename"
+msgid "control file '%s' for package '%s' contains empty filename"
+msgstr "रित्तो फाइलनाम समाहित गर्ने प्याकेज `%.250s' का लागि फाइलको सूची फाइल"
+
+#: lib/dpkg/db-fsys-digest.c
+#, fuzzy, c-format
+#| msgid "cannot read config file dir `%.250s' (from `%.250s')"
+msgid "loading control file '%s' for package '%s'"
+msgstr "कन्फिग फाइल डाइरेक्टरी `%.250s' (from `%.250s') पढ्न सक्दैन"
+
+#: lib/dpkg/db-fsys-divert.c
+#, c-format
+msgid "conflicting diversions involving '%.250s' or '%.250s'"
+msgstr "द्धन्दात्मक diversionsले`%.250s' or `%.250s' संलग्र गर्दै"
+
+#: lib/dpkg/db-fsys-files.c
+#, fuzzy, c-format
+msgid "files list file for package '%.250s' is missing final newline"
+msgstr "रित्तो फाइलनाम समाहित गर्ने प्याकेज `%.250s' का लागि फाइलको सूची फाइल"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "files list file for package '%.250s' contains empty filename"
+msgstr "रित्तो फाइलनाम समाहित गर्ने प्याकेज `%.250s' का लागि फाइलको सूची फाइल"
+
+#: lib/dpkg/db-fsys-files.c
+#, fuzzy, c-format
+#| msgid "error closing files list file for package '%.250s'"
+msgid "loading files list file for package '%s'"
+msgstr "प्याकेज `%.250s' का लागि फाइलको सूची फाइल बन्द गर्दा त्रुटि"
+
+#: lib/dpkg/db-fsys-files.c
+#, fuzzy, c-format
+msgid ""
+"files list file for package '%.250s' missing; assuming package has no files "
+"currently installed"
+msgstr ""
+"dpkg: गम्भिर चेतावनी: प्याकेज`%.250s'का लगि फाइलको सूची फाइल हराइरहेको छ, मानिएको "
+"प्याकेज सँग हालमा स्थापित फाइलहरू छैन ।\n"
+
+#: lib/dpkg/db-fsys-files.c
+msgid "(Reading database ... "
+msgstr "(डेटावेश पढ्दै ... "
+
+#: lib/dpkg/db-fsys-files.c
+#, fuzzy, c-format
+#| msgid "%d files and directories currently installed.)\n"
+msgid "%d file or directory currently installed.)\n"
+msgid_plural "%d files and directories currently installed.)\n"
+msgstr[0] "%d फाइलहरू र डाइरेक्टरीहरू हालैमा स्थापना भयो ।)\n"
+msgstr[1] "%d फाइलहरू र डाइरेक्टरीहरू हालैमा स्थापना भयो ।)\n"
+
+#: lib/dpkg/db-fsys-load.c
+#, fuzzy, c-format
+#| msgid "cannot open diversions: %s"
+msgid "cannot open %s file"
+msgstr "diversions खोल्न असफल: %s"
+
+#: lib/dpkg/db-fsys-load.c
+#, fuzzy, c-format
+msgid "cannot get %s file metadata"
+msgstr "स्रोत फाइल `%.250s' खोल्न अक्षम"
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy, c-format
+msgid "invalid statoverride uid %s"
+msgstr "अवैध अद्यावधिक मोड"
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy, c-format
+#| msgid "statoverride file `%.250s'"
+msgid "invalid statoverride gid %s"
+msgstr "statoverride फाइल `%.250s'"
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy, c-format
+#| msgid "statoverride file `%.250s'"
+msgid "invalid statoverride mode %s"
+msgstr "statoverride फाइल `%.250s'"
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy, c-format
+#| msgid "statoverride file `%.250s'"
+msgid "reading statoverride file '%.250s'"
+msgstr "statoverride फाइल `%.250s'"
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy
+msgid "statoverride file is missing final newline"
+msgstr "statoverride फाइलले रित्तो लाइन समावेश गर्दछ"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "statoverride file contains empty line"
+msgstr "statoverride फाइलले रित्तो लाइन समावेश गर्दछ"
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy
+msgid "syntax error in statoverride file"
+msgstr "statoverride फाइल खोल्न असफल"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid ""
+"unknown system user '%s' in statoverride file; the system user got removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy
+msgid "unexpected end of line in statoverride file"
+msgstr "लाइन %d को प्याकेजमा अप्रत्यासित लाइनको समाप्ती"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid ""
+"unknown system group '%s' in statoverride file; the system group got "
+"removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy, c-format
+msgid "multiple statoverrides present for file '%.250s'"
+msgstr "statoverride फाइल `%.250s'"
+
 #: lib/dpkg/dbmodify.c
 #, c-format
 msgid ""
@@ -525,196 +710,6 @@ msgstr "`%.250s'को अद्यावधिक वस्तुस्थि�
 #, c-format
 msgid "unable to install updated status of '%.250s'"
 msgstr "`%.250s'को अद्यावधिक वस्तुस्थिति स्थापना गर्न अक्षम"
-
-#: lib/dpkg/db-ctrl-access.c
-#, c-format
-msgid "unable to check existence of '%.250s'"
-msgstr "`%.250s'को अवस्थिति जाँच गर्न अक्षम"
-
-#: lib/dpkg/db-ctrl-access.c lib/dpkg/db-ctrl-upgrade.c
-msgid "cannot read info directory"
-msgstr "सूचना डाइरेक्टरी पढ्न सक्दैन"
-
-#: lib/dpkg/db-ctrl-format.c src/main/unpack.c
-#, c-format
-msgid "error trying to open %.250s"
-msgstr "%.250s खोल्न प्रयास गर्दा त्रुटि"
-
-#: lib/dpkg/db-ctrl-format.c
-#, fuzzy, c-format
-msgid "corrupt info database format file '%s'"
-msgstr "स्रोत फाइल `%.250s' खोल्न अक्षम"
-
-#: lib/dpkg/db-ctrl-format.c
-#, c-format
-msgid "info database format (%d) is bogus or too new; try getting a newer dpkg"
-msgstr ""
-
-#: lib/dpkg/db-ctrl-upgrade.c
-#, fuzzy, c-format
-#| msgid "conffile `%.250s' does not appear in package"
-msgid "info file %s/%s not associated to any package"
-msgstr "कन्फफाइल `%.250s' प्याकेजमा देखा पर्दैन"
-
-#: lib/dpkg/db-ctrl-upgrade.c src/main/archives.c
-#, c-format
-msgid "error creating hard link '%.255s'"
-msgstr "हार्ड लिङ्क `%.255s' सिर्जना गर्दा त्रुटि"
-
-#: lib/dpkg/db-ctrl-upgrade.c
-#, fuzzy, c-format
-#| msgid "error writing `%s'"
-msgid "error while writing '%s'"
-msgstr "लेख्दै गर्दा त्रुटि `%s'"
-
-#: lib/dpkg/db-fsys-digest.c
-#, fuzzy, c-format
-msgid "control file '%s' for package '%s' is missing final newline"
-msgstr "रित्तो फाइलनाम समाहित गर्ने प्याकेज `%.250s' का लागि फाइलको सूची फाइल"
-
-#: lib/dpkg/db-fsys-digest.c
-#, fuzzy, c-format
-msgid "control file '%s' for package '%s' is missing value"
-msgstr "रित्तो फाइलनाम समाहित गर्ने प्याकेज `%.250s' का लागि फाइलको सूची फाइल"
-
-#: lib/dpkg/db-fsys-digest.c
-#, fuzzy, c-format
-msgid "control file '%s' for package '%s' is missing value separator"
-msgstr "रित्तो फाइलनाम समाहित गर्ने प्याकेज `%.250s' का लागि फाइलको सूची फाइल"
-
-#: lib/dpkg/db-fsys-digest.c
-#, fuzzy, c-format
-#| msgid "files list file for package `%.250s' contains empty filename"
-msgid "control file '%s' for package '%s' contains empty filename"
-msgstr "रित्तो फाइलनाम समाहित गर्ने प्याकेज `%.250s' का लागि फाइलको सूची फाइल"
-
-#: lib/dpkg/db-fsys-digest.c
-#, fuzzy, c-format
-#| msgid "cannot read config file dir `%.250s' (from `%.250s')"
-msgid "loading control file '%s' for package '%s'"
-msgstr "कन्फिग फाइल डाइरेक्टरी `%.250s' (from `%.250s') पढ्न सक्दैन"
-
-#: lib/dpkg/db-fsys-divert.c
-msgid "failed to open diversions file"
-msgstr "diversions फाइल खोल्न असफल"
-
-#: lib/dpkg/db-fsys-divert.c
-msgid "failed to fstat diversions file"
-msgstr "diversions फाइल fstat गर्न असफल"
-
-#: lib/dpkg/db-fsys-divert.c
-#, c-format
-msgid "conflicting diversions involving '%.250s' or '%.250s'"
-msgstr "द्धन्दात्मक diversionsले`%.250s' or `%.250s' संलग्र गर्दै"
-
-#: lib/dpkg/db-fsys-files.c
-#, fuzzy, c-format
-#| msgid "error closing files list file for package '%.250s'"
-msgid "loading files list file for package '%s'"
-msgstr "प्याकेज `%.250s' का लागि फाइलको सूची फाइल बन्द गर्दा त्रुटि"
-
-#: lib/dpkg/db-fsys-files.c
-#, fuzzy, c-format
-msgid ""
-"files list file for package '%.250s' missing; assuming package has no files "
-"currently installed"
-msgstr ""
-"dpkg: गम्भिर चेतावनी: प्याकेज`%.250s'का लगि फाइलको सूची फाइल हराइरहेको छ, मानिएको "
-"प्याकेज सँग हालमा स्थापित फाइलहरू छैन ।\n"
-
-#: lib/dpkg/db-fsys-files.c
-#, fuzzy, c-format
-msgid "files list file for package '%.250s' is missing final newline"
-msgstr "रित्तो फाइलनाम समाहित गर्ने प्याकेज `%.250s' का लागि फाइलको सूची फाइल"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "files list file for package '%.250s' contains empty filename"
-msgstr "रित्तो फाइलनाम समाहित गर्ने प्याकेज `%.250s' का लागि फाइलको सूची फाइल"
-
-#: lib/dpkg/db-fsys-files.c
-msgid "(Reading database ... "
-msgstr "(डेटावेश पढ्दै ... "
-
-#: lib/dpkg/db-fsys-files.c
-#, fuzzy, c-format
-#| msgid "%d files and directories currently installed.)\n"
-msgid "%d file or directory currently installed.)\n"
-msgid_plural "%d files and directories currently installed.)\n"
-msgstr[0] "%d फाइलहरू र डाइरेक्टरीहरू हालैमा स्थापना भयो ।)\n"
-msgstr[1] "%d फाइलहरू र डाइरेक्टरीहरू हालैमा स्थापना भयो ।)\n"
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy, c-format
-msgid "invalid statoverride uid %s"
-msgstr "अवैध अद्यावधिक मोड"
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy, c-format
-#| msgid "statoverride file `%.250s'"
-msgid "invalid statoverride gid %s"
-msgstr "statoverride फाइल `%.250s'"
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy, c-format
-#| msgid "statoverride file `%.250s'"
-msgid "invalid statoverride mode %s"
-msgstr "statoverride फाइल `%.250s'"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "failed to open statoverride file"
-msgstr "statoverride फाइल खोल्न असफल"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "failed to fstat statoverride file"
-msgstr "statoverride फाइल fstat गर्न असफल"
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy, c-format
-#| msgid "statoverride file `%.250s'"
-msgid "reading statoverride file '%.250s'"
-msgstr "statoverride फाइल `%.250s'"
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy
-msgid "statoverride file is missing final newline"
-msgstr "statoverride फाइलले रित्तो लाइन समावेश गर्दछ"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "statoverride file contains empty line"
-msgstr "statoverride फाइलले रित्तो लाइन समावेश गर्दछ"
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy
-msgid "syntax error in statoverride file"
-msgstr "statoverride फाइल खोल्न असफल"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid ""
-"unknown system user '%s' in statoverride file; the system user got removed\n"
-"before the override, which is most probably a packaging bug, to recover you\n"
-"can remove the override manually with %s"
-msgstr ""
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy
-msgid "unexpected end of line in statoverride file"
-msgstr "लाइन %d को प्याकेजमा अप्रत्यासित लाइनको समाप्ती"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid ""
-"unknown system group '%s' in statoverride file; the system group got "
-"removed\n"
-"before the override, which is most probably a packaging bug, to recover you\n"
-"can remove the override manually with %s"
-msgstr ""
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy, c-format
-msgid "multiple statoverrides present for file '%.250s'"
-msgstr "statoverride फाइल `%.250s'"
 
 #: lib/dpkg/deb-version.c
 #, fuzzy
@@ -1096,6 +1091,12 @@ msgstr "प्याकेज `%.250s' का लागि फाइलको �
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
+#| msgid "cannot stat old name `%s': %s"
+msgid "cannot canonicalize pathname %s"
+msgstr "पुरानो नाम `%s' तोक्न सकिदैन: %s"
+
+#: lib/dpkg/file.c
+#, fuzzy, c-format
 msgid "unable to stat source file '%.250s'"
 msgstr "स्रोत फाइल `%.250s' खोल्न अक्षम"
 
@@ -1167,9 +1168,16 @@ msgstr "अन्य प्रक्रियाद्धारा वस्त�
 #, fuzzy, c-format
 #| msgid "status database area is locked by another process"
 msgid ""
-"%s was locked by another process with pid %d\n"
+"%s was locked by %s process with pid %d\n"
 "%s"
 msgstr "अन्य प्रक्रियाद्धारा वस्तुस्थिति डेटावेश क्षेत्रमा ताल्चा लगाइन्छ ।"
+
+#: lib/dpkg/file.c
+#, fuzzy
+#| msgid "<unknown>"
+msgctxt "process"
+msgid "<unknown>"
+msgstr "<unknown>"
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
@@ -1692,6 +1700,15 @@ msgstr ""
 msgid "warning"
 msgstr "चेतावनी"
 
+#: lib/dpkg/report.c
+msgid "hint"
+msgstr ""
+
+#: lib/dpkg/strvec.c
+#, c-format
+msgid "cannot grow strvec to size %zu; it would overflow"
+msgstr ""
+
 #: lib/dpkg/strwide.c
 #, c-format
 msgid "cannot convert multibyte string '%s' to a wide-character string"
@@ -2140,11 +2157,11 @@ msgid ""
 "Forcing options marked [*] are enabled by default.\n"
 msgstr ""
 
-#: src/common/force.c src/deb/build.c src/deb/extract.c src/deb/info.c
-#: src/deb/main.c src/split/info.c src/split/main.c src/split/queue.c
-#: src/divert/main.c src/statoverride/main.c src/trigger/main.c
-#: src/query/main.c src/main/archives.c src/main/enquiry.c src/main/main.c
-#: src/main/packages.c src/main/select.c src/main/verify.c
+#: src/common/force.c src/realpath/main.c src/deb/build.c src/deb/extract.c
+#: src/deb/info.c src/deb/main.c src/split/info.c src/split/main.c
+#: src/split/queue.c src/divert/main.c src/statoverride/main.c
+#: src/trigger/main.c src/query/main.c src/main/archives.c src/main/enquiry.c
+#: src/main/main.c src/main/packages.c src/main/select.c src/main/verify.c
 msgid "<standard output>"
 msgstr ""
 
@@ -2186,6 +2203,79 @@ msgstr ""
 #| msgid "cannot read config file dir `%.250s' (from `%.250s')"
 msgid "cannot set security context for file object '%s'"
 msgstr "कन्फिग फाइल डाइरेक्टरी `%.250s' (from `%.250s') पढ्न सक्दैन"
+
+#: src/realpath/main.c
+#, fuzzy
+msgid "Use --help for help about this utility."
+msgstr "मद्दतको लागि dpkg-split --help टाइप गर्नुहोस्"
+
+#: src/realpath/main.c src/divert/main.c src/statoverride/main.c
+#, c-format
+msgid "Debian %s version %s.\n"
+msgstr "डेबियन %s संस्करण %s \n"
+
+#: src/realpath/main.c src/deb/main.c src/split/main.c src/divert/main.c
+#: src/statoverride/main.c src/trigger/main.c src/query/main.c src/main/main.c
+#: utils/update-alternatives.c
+#, fuzzy, c-format
+msgid ""
+"This is free software; see the GNU General Public License version 2 or\n"
+"later for copying conditions. There is NO warranty.\n"
+msgstr ""
+"\n"
+"यो निशुल्क सफ्टवेयर हो;  प्रतिलिपि सर्तका लागि जी एन यू साधारण सार्वजनिक इजाजतपत्रको "
+"संस्करण २ वा\n"
+"पछिल्लो हेर्नुहोस् । कुनै पनि वारेन्टी छैन ।\n"
+
+#: src/realpath/main.c
+#, fuzzy, c-format
+#| msgid ""
+#| "Usage: %s [<option> ...] <command>\n"
+#| "\n"
+msgid ""
+"Usage: %s [<option>...] <pathname>\n"
+"\n"
+msgstr ""
+"उपयोग: %s [<option> ...] <command>\n"
+"\n"
+
+#: src/realpath/main.c
+#, c-format
+msgid ""
+"Options:\n"
+"  -z, --zero                   end output line with NUL, not newline.\n"
+"      --instdir <directory>    set the root directory.\n"
+"      --root <directory>       set the root directory.\n"
+"      --version                show the version.\n"
+"      --help                   show this help message.\n"
+"\n"
+msgstr ""
+
+#: src/realpath/main.c
+msgid "too many levels of symbolic links"
+msgstr ""
+
+#: src/realpath/main.c
+#, fuzzy, c-format
+#| msgid "unable to write %s: %s"
+msgid "cannot read link '%s'"
+msgstr "%s लेख्न अक्षम: %s"
+
+#: src/realpath/main.c
+#, c-format
+msgid "symbolic link '%s' size has changed from %jd to %zd"
+msgstr ""
+
+#: src/realpath/main.c
+#, fuzzy
+#| msgid "--%s needs a <package> argument"
+msgid "need a pathname argument"
+msgstr "--%s लाई <package> आवश्यक पर्दछ"
+
+#: src/realpath/main.c
+#, c-format
+msgid "link '%s' includes root prefix '%s'"
+msgstr ""
 
 #: src/deb/build.c
 #, fuzzy, c-format
@@ -2330,6 +2420,26 @@ msgstr " (प्याकेज: "
 #, fuzzy, c-format
 msgid "'%s' contains user-defined Priority value '%s'"
 msgstr "चेतावनी, `%s' ले प्रयोग-परिभाषित प्राथमिकता मान `%s' समावेश गर्दछ \n"
+
+#: src/deb/build.c
+#, fuzzy, c-format
+msgid "cannot get root directory %s metadata"
+msgstr "स्रोत फाइल `%.250s' खोल्न अक्षम"
+
+#: src/deb/build.c
+#, fuzzy, c-format
+msgid "root pathname %s is not a directory"
+msgstr "सूचना डाइरेक्टरी पढ्न सक्दैन"
+
+#: src/deb/build.c
+#, c-format
+msgid "root directory %s has unusual owner or group %u:%u"
+msgstr ""
+
+#: src/deb/build.c
+#, c-format
+msgid "you might need to pass --root-owner-group, see <%s> for further details"
+msgstr ""
 
 #: src/deb/build.c
 #, fuzzy, c-format
@@ -2647,6 +2757,11 @@ msgstr ""
 msgid "--%s does not support (yet) reading the .deb from standard input"
 msgstr ""
 
+#: src/deb/info.c src/statoverride/main.c src/main/archives.c
+#, c-format
+msgid "error setting permissions of '%.255s'"
+msgstr "`%.255s'को सेटिङ् अनुमति त्रुटि"
+
 #: src/deb/info.c src/main/unpack.c
 #, fuzzy
 msgid "unable to create temporary directory"
@@ -2665,9 +2780,10 @@ msgid "'%.255s' contains no control component '%.255s'"
 msgstr "dpkg-deb: `%.255s' ले नियन्त्रण अवयव `%.255s'समावेश गर्दछ\n"
 
 #: src/deb/info.c
-#, c-format
-msgid "open component '%.255s' (in %.255s) failed in an unexpected way"
-msgstr "अवयव`%.255s' (in %.255s)खोल्न अप्रत्यासित रुपले असफल"
+#, fuzzy, c-format
+#| msgid "cannot open diversions: %s"
+msgid "cannot open file '%.255s'"
+msgstr "diversions खोल्न असफल: %s"
 
 #: src/deb/info.c
 #, fuzzy, c-format
@@ -2683,19 +2799,15 @@ msgid "cannot scan directory '%.255s'"
 msgstr "डाइरेक्टरी `%.255s' स्क्यान गर्न सकिदैन"
 
 #: src/deb/info.c
-#, c-format
-msgid "cannot stat '%.255s' (in '%.255s')"
-msgstr "`%.255s'लाई (`%.255s'मा) सुरू गर्न सकिदैन"
+#, fuzzy, c-format
+msgid "cannot get file '%.255s' metadata"
+msgstr "स्रोत फाइल `%.250s' खोल्न अक्षम"
 
 #: src/deb/info.c
-#, c-format
-msgid "cannot open '%.255s' (in '%.255s')"
-msgstr "`%.255s'लाई (`%.255s'मा) खोल्न सकिदैन"
-
-#: src/deb/info.c
-#, c-format
-msgid "failed to read '%.255s' (in '%.255s')"
-msgstr "`%.255s'लाई (`%.255s'मा ) पढ्न असफल"
+#, fuzzy, c-format
+#| msgid "unable to write %s: %s"
+msgid "cannot read file '%.255s'"
+msgstr "%s लेख्न अक्षम: %s"
 
 #: src/deb/info.c
 #, fuzzy, c-format
@@ -2736,19 +2848,6 @@ msgstr "--सामग्रिहरुले यथार्थमा एउ�
 #, c-format
 msgid "Debian '%s' package archive backend version %s.\n"
 msgstr "डेबियन `%s' प्याकेज सङ्ग्रह ब्याकइन्ड संस्करण %s ।\n"
-
-#: src/deb/main.c src/split/main.c src/divert/main.c src/statoverride/main.c
-#: src/trigger/main.c src/query/main.c src/main/main.c
-#: utils/update-alternatives.c
-#, fuzzy, c-format
-msgid ""
-"This is free software; see the GNU General Public License version 2 or\n"
-"later for copying conditions. There is NO warranty.\n"
-msgstr ""
-"\n"
-"यो निशुल्क सफ्टवेयर हो;  प्रतिलिपि सर्तका लागि जी एन यू साधारण सार्वजनिक इजाजतपत्रको "
-"संस्करण २ वा\n"
-"पछिल्लो हेर्नुहोस् । कुनै पनि वारेन्टी छैन ।\n"
 
 #: src/deb/main.c src/divert/main.c src/query/main.c src/main/main.c
 #, fuzzy, c-format
@@ -2841,18 +2940,18 @@ msgid ""
 "      --deb-format=<format>        Select archive format.\n"
 "                                     Allowed values: 0.939000, 2.0 "
 "(default).\n"
-"      --nocheck                    Suppress control file check (build bad\n"
-"                                     packages).\n"
+"      --no-check                   Suppress all checks (build bad "
+"packages).\n"
+"      --nocheck                    Alias for --no-check.\n"
 "      --root-owner-group           Forces the owner and groups to root.\n"
 "      --threads-max=<threads>      Use at most <threads> with compressor.\n"
 "      --[no-]uniform-compression   Use the compression params on all "
 "members.\n"
-"  -z#                              Set the compression level when building.\n"
-"  -Z<type>                         Set the compression type used when "
-"building.\n"
+"  -Z, --compression=<compressor>   Set build compression type.\n"
 "                                     Allowed types: gzip, xz, zstd, none.\n"
-"  -S<strategy>                     Set the compression strategy when "
-"building.\n"
+"  -z, --compression-level=<level>  Set build compression level.\n"
+"  -S, --compression-strategy=<name>\n"
+"                                   Set build compression strategy.\n"
 "                                     Allowed values: none; extreme (xz);\n"
 "                                     filtered, huffman, rle, fixed (gzip).\n"
 "\n"
@@ -2877,8 +2976,8 @@ msgid ""
 "  A format is a string that will be output for each package. The format\n"
 "  can include the standard escape sequences \\n (newline), \\r (carriage\n"
 "  return) or \\\\ (plain backslash). Package information can be included\n"
-"  by inserting variable references to package fields using the ${var[;"
-"width]}\n"
+"  by inserting variable references to package fields using the $"
+"{var[;width]}\n"
 "  syntax. Fields will be right-aligned unless the width is negative in "
 "which\n"
 "  case left alignment will be used.\n"
@@ -2886,8 +2985,8 @@ msgstr ""
 "ढाँचाबद्ध वाक्य संरचना:\n"
 "  ढाँचा स्ट्रिङ हो जो प्रत्येक प्याकेजको लागि निर्गात हुनेछ । ढाँचाले\n"
 "   छोडिएका मानक अनुक्रमहरू \\n (newline), \\r (carriage\n"
-"  return) वा \\\\ (plain backslash) समावेश गर्न सक्छ । प्याकेज फाँटहरुमा ${var[;"
-"width]} वाक्यसंरचना प्रयोग गरेर चल सन्दर्भहरू घुसाएर सूचनाहरू समावेश गर्न सकिन्छ ।\n"
+"  return) वा \\\\ (plain backslash) समावेश गर्न सक्छ । प्याकेज फाँटहरुमा $"
+"{var[;width]} वाक्यसंरचना प्रयोग गरेर चल सन्दर्भहरू घुसाएर सूचनाहरू समावेश गर्न सकिन्छ ।\n"
 "चौडा नकारात्मक भएता पनि फाँटहरू सही संलग्न छन् जुन केसमा छोडिएका रेखाहरू प्रयोग हुनेछन् "
 "। \n"
 "\n"
@@ -3284,8 +3383,8 @@ msgstr ""
 #| "Options:\n"
 #| "  --depotdir <directory>           Use <directory> instead of %s/%s.\n"
 #| "  -S|--partsize <size>             In KiB, for -s (default is 450).\n"
-#| "  -o|--output <file>               For -j (default is <package>-<version>."
-#| "deb).\n"
+#| "  -o|--output <file>               For -j (default is <package>-"
+#| "<version>.deb).\n"
 #| "  -Q|--npquiet                     Be quiet when -a is not a part.\n"
 #| "  --msdos                          Generate 8.3 filenames.\n"
 #| "\n"
@@ -3516,11 +3615,6 @@ msgstr "--विभाजनले बढीमा स्रोत फाइल�
 #, fuzzy
 msgid "Use --help for help about diverting files."
 msgstr "मद्दतको लागि dpkg-split --help टाइप गर्नुहोस्"
-
-#: src/divert/main.c src/statoverride/main.c
-#, c-format
-msgid "Debian %s version %s.\n"
-msgstr "डेबियन %s संस्करण %s \n"
 
 #: src/divert/main.c
 #, c-format
@@ -3845,11 +3939,6 @@ msgstr "पुरानो नाम `%s' तोक्न सकिदैन: %s
 msgid "error setting ownership of '%.255s'"
 msgstr "`%.255s' को स्यामित्व सेट गर्दा त्रुटि"
 
-#: src/statoverride/main.c src/main/archives.c
-#, c-format
-msgid "error setting permissions of '%.255s'"
-msgstr "`%.255s'को सेटिङ् अनुमति त्रुटि"
-
 #: src/statoverride/main.c
 #, fuzzy, c-format
 #| msgid "--add needs four arguments"
@@ -3929,8 +4018,8 @@ msgstr ""
 #| "Options:\n"
 #| "  --depotdir <directory>           Use <directory> instead of %s/%s.\n"
 #| "  -S|--partsize <size>             In KiB, for -s (default is 450).\n"
-#| "  -o|--output <file>               For -j (default is <package>-<version>."
-#| "deb).\n"
+#| "  -o|--output <file>               For -j (default is <package>-"
+#| "<version>.deb).\n"
 #| "  -Q|--npquiet                     Be quiet when -a is not a part.\n"
 #| "  --msdos                          Generate 8.3 filenames.\n"
 #| "\n"
@@ -4317,8 +4406,8 @@ msgstr "कन्फफाइल `%.250s' प्याकेजमा देख�
 #: src/main/archives.c
 #, fuzzy, c-format
 msgid ""
-"trying to overwrite '%.250s', which is the diverted version of "
-"'%.250s' (package: %.100s)"
+"trying to overwrite '%.250s', which is the diverted version of '%.250s' "
+"(package: %.100s)"
 msgstr ""
 "`%.250s' अधिलेखन गर्न प्रयास गर्दै, जुन `%.250s'%.10s%.100s%.10s को फेरिएको संस्करण "
 "हो ।"
@@ -4368,13 +4457,13 @@ msgstr "स्थापना गरिएको प्याकेजमा फ
 #: src/main/archives.c
 #, fuzzy, c-format
 msgid ""
-"trying to overwrite directory '%.250s' in package %.250s %.250s with "
+"trying to overwrite directory '%.250s' in package %.250s (%.250s) with "
 "nondirectory"
 msgstr "डाइरेक्टरी बिनाको प्याकेज`%.250s'मा डाइरेक्टरी %.250s अधावधिक गर्न प्रयास गर्दै"
 
 #: src/main/archives.c
 #, fuzzy, c-format
-msgid "trying to overwrite '%.250s', which is also in package %.250s %.250s"
+msgid "trying to overwrite '%.250s', which is also in package %.250s (%.250s)"
 msgstr "`%.250s'अधावधिक गर्न प्रयास गर्दै, जुन प्याकेज %.250s मा पनि छ"
 
 #: src/main/archives.c
@@ -4613,18 +4702,18 @@ msgstr "चयन हटाएको प्याकेज %s फड्काउ
 #: src/main/archives.c
 #, fuzzy, c-format
 #| msgid "Version %.250s of %.250s already installed, skipping.\n"
-msgid "version %.250s of %.250s already installed, skipping"
+msgid "package %.250s (%.250s) with same version already installed, skipping"
 msgstr "संस्करण %.250s of %.250s पहिल्यै स्थापित छ, फड्काउदै\n"
 
 #: src/main/archives.c
 #, fuzzy, c-format
-msgid "downgrading %.250s from %.250s to %.250s"
+msgid "downgrading %.250s (%.250s) to (%.250s)"
 msgstr "%s - चेतावनी: %.250s बाट %.250s सम्म %.250s स्तरन्युन गर्दैछ ।\n"
 
 #: src/main/archives.c
 #, fuzzy, c-format
 #| msgid "Will not downgrade %.250s from version %.250s to %.250s, skipping.\n"
-msgid "will not downgrade %.250s from %.250s to %.250s, skipping"
+msgid "will not downgrade %.250s (%.250s) to (%.250s), skipping"
 msgstr "%.250s बाट संस्करण %.250s सम्म %.250s स्तरन्युन हुने छैन, फड्काउदै ।\n"
 
 #: src/main/cleanup.c
@@ -4910,10 +4999,16 @@ msgstr ""
 "कन्फिगर गर्न सकिदैन  (हालको स्थिति `%.250s')"
 
 #: src/main/configure.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "package %.250s is not ready for configuration\n"
+#| " cannot configure (current status `%.250s')"
 msgid ""
-"package %s %s cannot be configured because %s is at a different version (%s)"
+"package %s (%s) cannot be configured because %s is at a different version "
+"(%s)"
 msgstr ""
+"प्याकेज %.250s कन्फिगरका लागि तयार छैन\n"
+"कन्फिगर गर्न सकिदैन  (हालको स्थिति `%.250s')"
 
 #: src/main/configure.c
 #, fuzzy, c-format
@@ -7286,6 +7381,34 @@ msgstr ""
 msgid "Authentication is required to run update-alternatives"
 msgstr ""
 
+#, c-format
+#~ msgid "open component '%.255s' (in %.255s) failed in an unexpected way"
+#~ msgstr "अवयव`%.255s' (in %.255s)खोल्न अप्रत्यासित रुपले असफल"
+
+#, c-format
+#~ msgid "cannot stat '%.255s' (in '%.255s')"
+#~ msgstr "`%.255s'लाई (`%.255s'मा) सुरू गर्न सकिदैन"
+
+#, c-format
+#~ msgid "cannot open '%.255s' (in '%.255s')"
+#~ msgstr "`%.255s'लाई (`%.255s'मा) खोल्न सकिदैन"
+
+#, c-format
+#~ msgid "failed to read '%.255s' (in '%.255s')"
+#~ msgstr "`%.255s'लाई (`%.255s'मा ) पढ्न असफल"
+
+#~ msgid "failed to open diversions file"
+#~ msgstr "diversions फाइल खोल्न असफल"
+
+#~ msgid "failed to fstat diversions file"
+#~ msgstr "diversions फाइल fstat गर्न असफल"
+
+#~ msgid "failed to open statoverride file"
+#~ msgstr "statoverride फाइल खोल्न असफल"
+
+#~ msgid "failed to fstat statoverride file"
+#~ msgstr "statoverride फाइल fstat गर्न असफल"
+
 #, fuzzy, c-format
 #~ msgid "removal of %.250s"
 #~ msgstr "%.250s मा त्रुटि पढ्नुहोस्"
@@ -8105,9 +8228,6 @@ msgstr ""
 
 #~ msgid "--%s needs a divert-to argument"
 #~ msgstr "--%s लाई तर्कमा फेर्ने आवश्यक पर्दछ"
-
-#~ msgid "--%s needs a <package> argument"
-#~ msgstr "--%s लाई <package> आवश्यक पर्दछ"
 
 #~ msgid "rename: rename `%s' to `%s': %s"
 #~ msgstr "पुन: नामकरण: `%s' लाई `%s' मा पुन: नामकरण गर्नुहोस्: %s"

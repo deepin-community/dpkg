@@ -1,6 +1,8 @@
 # dpkg manual page - deb-control(5)
 #
-# Copyright © 1995 Raul Miller, Ian Jackson, Ian Murdock
+# Copyright © 1995 Raul Miller
+# Copyright © 1995 Ian Jackson
+# Copyright © 1995 Ian Murdock
 # Copyright © 1999 Ben Collins <bcollins@debian.org>
 # Copyright © 2000 Wichert Akkerman <wakkerma@debian.org>
 # Copyright © 2007-2011, 2013-2015 Guillem Jover <guillem@debian.org>
@@ -100,22 +102,15 @@ software that it installs.
 Some common sections are B<utils>, B<net>, B<mail>, B<text>,
 B<x11>, etc.
 
+The accepted values are based on the specific distribution policy.
+
 =item B<Priority:> I<priority>
 
 Sets the importance of this package in relation to the system as a whole.
-Common priorities are B<required>, B<standard>, B<optional>,
-B<extra>, etc.
+The known priorities are B<required>, B<important>, B<standard>, B<optional>,
+B<extra>, and B<unknown>, but other values can be used as well.
 
-=back
-
-The
-B<Section>
-and
-B<Priority>
-fields usually have a defined set of accepted values based on the specific
-distribution policy.
-
-=over
+How to apply these values depends on the specific distribution policy.
 
 =item B<Installed-Size:> I<size>
 

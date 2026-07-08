@@ -48,6 +48,7 @@ EXTRA_libdpkg_la_DEPENDENCIES += \
 endif
 
 libdpkg_la_LIBADD = \
+	$(PS_LIBS) \
 	$(Z_LIBS) \
 	$(LZMA_LIBS) \
 	$(ZSTD_LIBS) \
@@ -76,6 +77,7 @@ libdpkg_la_SOURCES = \
 	db-fsys-digest.c \
 	db-fsys-divert.c \
 	db-fsys-files.c \
+	db-fsys-load.c \
 	db-fsys-override.c \
 	deb-version.c \
 	debug.c \
@@ -84,10 +86,11 @@ libdpkg_la_SOURCES = \
 	dump.c \
 	ehandle.c \
 	error.c \
+	execname.c \
 	fdio.c \
 	file.c \
 	fields.c \
-	fsys-dir.c\
+	fsys-dir.c \
 	fsys-iter.c \
 	fsys-hash.c \
 	glob.c \
@@ -122,8 +125,10 @@ libdpkg_la_SOURCES = \
 	report.c \
 	string.c \
 	strhash.c \
+	strvec.c \
 	strwide.c \
 	subproc.c \
+	sysuser.c \
 	tarfn.c \
 	test.h \
 	treewalk.c \
@@ -154,6 +159,7 @@ pkginclude_HEADERS = \
 	dpkg-db.h \
 	ehandle.h \
 	error.h \
+	execname.h \
 	fdio.h \
 	file.h \
 	fsys.h \
@@ -178,7 +184,9 @@ pkginclude_HEADERS = \
 	progress.h \
 	report.h \
 	string.h \
+	strvec.h \
 	subproc.h \
+	sysuser.h \
 	tarfn.h \
 	treewalk.h \
 	trigdeferred.h \
@@ -209,17 +217,24 @@ t_t_headers_cpp_SOURCES = \
 	t/t-headers-cpp.cc \
 	# EOL
 
+t_t_varbuf_cpp_SOURCES = \
+	t/t-varbuf-cpp.cc \
+	# EOL
+
 # The tests are sorted in order of increasing complexity.
 test_programs = \
 	t/t-test \
 	t/t-test-skip \
 	t/t-macros \
+	t/t-compat-getent \
 	t/t-headers-cpp \
 	t/t-c-ctype \
 	t/t-namevalue \
 	t/t-ehandle \
 	t/t-error \
 	t/t-string \
+	t/t-strvec \
+	t/t-sysuser \
 	t/t-file \
 	t/t-buffer \
 	t/t-meminfo \
@@ -229,6 +244,7 @@ test_programs = \
 	t/t-command \
 	t/t-pager \
 	t/t-varbuf \
+	t/t-varbuf-cpp \
 	t/t-ar \
 	t/t-tar \
 	t/t-deb-version \
@@ -263,6 +279,10 @@ test_data = \
 	t/data/meminfo-no-info \
 	t/data/meminfo-no-unit \
 	t/data/meminfo-ok \
+	t/data/sysuser/group.base \
+	t/data/sysuser/group.nis \
+	t/data/sysuser/passwd.base \
+	t/data/sysuser/passwd.nis \
 	# EOL
 
 EXTRA_DIST += \
@@ -275,8 +295,14 @@ BENCHMARK_LDADD_FLAGS = \
 	$(LDADD) \
 	# EOL
 
+LIBCOMPAT_TEST_LDADD_FLAGS = \
+	$(LDADD) \
+	../compat/libcompat-test.la \
+	# EOL
+
 t_b_fsys_hash_LDADD = $(BENCHMARK_LDADD_FLAGS)
 t_b_pkg_hash_LDADD = $(BENCHMARK_LDADD_FLAGS)
+t_t_compat_getent_LDADD = $(LIBCOMPAT_TEST_LDADD_FLAGS)
 
 check_PROGRAMS = \
 	$(test_programs) \

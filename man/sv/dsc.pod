@@ -26,7 +26,7 @@ Alla Debian-källkodspaket består av en .dsc-styrfil, vilken består av ett ant
 
 Varje fält börjar med en etikett, såsom B<Source> eller B<Binary> (skiftlägesoberoende), följt av ett kolontecken och fältets kropp (skiftlägesberoende såvida inte annat anges). Fält avdelas endast av fältetiketter. Med andra ord kan texten i fälten spänna över flera rader, men installationsverktygen kommer oftast att slå samman rader när kroppen tolkas (förutom när det gäller flerradsfälten B<Package-List>, B<Files>, B<Checksums-Sha1> and B<Checksums-Sha256>, se nedan).
 
-Styrinformationen kan omges av en OpenPGP-signatur i ASCII-skal, såsom beskrivs i RFC4880.
+Styrinformationen kan omges av en OpenPGP-signatur i ASCII-skal, såsom beskrivs i RFC9580.
 
 =head1 FÄLT
 
@@ -142,7 +142,7 @@ I<paket> är namnet på binärpaketet.
 
 I<pakettyp> är typen på det binära paketet, vanligtvis B<deb>, ett annat vanligt värde är B<udeb>.
 
-I<sektion> och I<prioritet> motsvarar fälten med samma namn i binärpaketet.
+I<sektion> och I<prioritet> motsvarar fälten med samma namn i binärpaketet, eller sätts till förvaren B<unknown> respektive B<optional> om de utelämnas (sedan dpkg 1.22.13).
 
 I<nyckel-värde-lista> är en blankstegsavdelad lista på formen I<nyckel>B<=>I<värde>, och de för närvarande kända valfria nycklarna är:
 
@@ -168,11 +168,11 @@ Om binärpaketet är systemkritiskt kommer den här nyckeln innehålla värdet p
 
 =back
 
-=item B<Files:> (krävs)
+=item B<Files:> (krävs, svagt)
 
-=item B<Checksums-Sha1:> (krävs)
+=item B<Checksums-Sha1:> (krävs, svag)
 
-=item B<Checksums-Sha256:> (krävs)
+=item B<Checksums-Sha256:> (krävs, stark)
 
 =item S< >I<kontrollsumma> I<storlek> I<filnamn>
 
@@ -181,6 +181,8 @@ De här flerradsfälteten innehåller en lista med filer med en kontrollsumma oc
 Första raden i fältvärdet (delen av på samma rad som fältnamnet följt av kolon) är alltid tom. Innehållet i fältet anges som fortsättningsrader, en rad per fil. Varje rad består av kontrollsumman, ett blanksteg, filstorleken, ett blanksteg och filnamnet.
 
 De här fälten visar alla filer källkodspaketet består av. Listan över filer i dessa fält måste motsvara listan över filer i de andra relaterade fälten.
+
+B<Observera>: MD5- och SHA1-kontrollsummorna anses vara svaga och bör aldrig anses vara tillräckliga för en säker bekräftelse.
 
 =back
 

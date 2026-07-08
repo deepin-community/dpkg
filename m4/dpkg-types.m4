@@ -23,7 +23,7 @@ AC_DEFUN([DPKG_TYPE_STRUCT_PSINFO], [
 #undef _FILE_OFFSET_BITS
 #endif
 #define _STRUCTURED_PROC 1
-#if HAVE_SYS_PROCFS_H
+#ifdef HAVE_SYS_PROCFS_H
 #include <sys/procfs.h>
 #endif
   ]])
@@ -37,7 +37,7 @@ AC_DEFUN([DPKG_DECL_SYS_SIGLIST], [
   AC_CHECK_DECLS([sys_siglist], [], [], [[
 #include <signal.h>
 /* NetBSD declares sys_siglist in unistd.h.  */
-#if HAVE_UNISTD_H
+#ifdef HAVE_UNISTD_H
 #  include <unistd.h>
 #endif
   ]])
@@ -54,8 +54,8 @@ AC_DEFUN([DPKG_DECL_SYS_ERRLIST], [
 #include <stdio.h>
   ]])
   AM_CONDITIONAL([HAVE_SYS_ERRLIST],
-    [test "x$ac_cv_have_decl_sys_errlist" = "xyes" && \
-     test "x$ac_cv_have_decl_sys_nerr" = "xyes"])
+    [test "$ac_cv_have_decl_sys_errlist" = "yes" && \
+     test "$ac_cv_have_decl_sys_nerr" = "yes"])
 ])# DPKG_DECL_SYS_SIGLIST
 
 # DPKG_CHECK_DECL([DECL], [HEADER])

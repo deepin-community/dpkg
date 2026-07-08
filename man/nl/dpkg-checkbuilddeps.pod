@@ -74,6 +74,10 @@ De versie tonen en afsluiten.
 
 =over 
 
+=item B<DEB_HOST_ARCH>
+
+Stelt de computerarchitectuur in. Dit heeft invloed op de logica bij het oplossen van vereisten, wat dan mogelijk niet overeenkomt met wat het systeem dpkg als bevredigend beschouwt.
+
 =item B<DEB_BUILD_PROFILES>
 
 Indien dit ingesteld is, zal dit gebruikt worden als het/de actieve bouwprofiel(en) voor het pakket dat gebouwd wordt. Het is een lijst van profielnamen die onderling door spaties gescheiden worden. De optie B<-P> heeft voorrang hierop.

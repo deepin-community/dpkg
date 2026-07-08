@@ -166,7 +166,7 @@ protected:
   int deselect_one_of(pkginfo *er, pkginfo *ed, dependency *dep);
 
   // Define these virtuals
-  bool checksearch(char *str) override;
+  bool checksearch(varbuf &str) override;
   bool matchsearch(int index) override;
   void redraw1itemsel(int index, int selected) override;
   void redrawcolheads() override;
@@ -183,7 +183,7 @@ protected:
   int compareentries(const struct perpackagestate *a, const struct perpackagestate *b);
   friend int qsort_compareentries(const void *a, const void *b);
   pkgwant reallywant(pkgwant, struct perpackagestate *);
-  int describemany(char buf[], const char *prioritystring, const char *section,
+  int describemany(varbuf &vb, const char *prioritystring, const char *section,
                    const struct perpackagestate *pps);
   bool deppossatisfied(deppossi *possi, perpackagestate **fixbyupgrade);
 
@@ -241,7 +241,7 @@ protected:
   int resolvesuggest();
   int deletelessimp_anyleft(showpriority than);
   pkginfo **display();
-  ~packagelist();
+  ~packagelist() override;
 };
 
 void repeatedlydisplay(packagelist *sub, showpriority,

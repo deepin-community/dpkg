@@ -17,6 +17,14 @@
 #
 # shellcheck shell=sh
 
+# This shell library (since dpkg 1.20.1) provides reporting support.
+#
+# Symbols starting with «_dpkg_» are considered private and should not
+# be used outside this shell library.
+
+# Set a default program name (since 1.22.12).
+: "${PROGNAME:=$(basename "$0")}"
+
 # Standard ANSI colors and attributes.
 COLOR_NORMAL=''
 COLOR_RESET='[0m'
@@ -38,55 +46,81 @@ COLOR_BOLD_MAGENTA='[1;35m'
 COLOR_BOLD_CYAN='[1;36m'
 COLOR_BOLD_WHITE='[1;37m'
 
+: "${DPKG_COLORS=auto}"
+
+case "$DPKG_COLORS" in
+auto)
+  if [ -t 1 ]; then
+    _dpkg_use_colors=yes
+  else
+    _dpkg_use_colors=no
+  fi
+  ;;
+always)
+  _dpkg_use_colors=yes
+  ;;
+*)
+  _dpkg_use_colors=no
+  ;;
+esac
+
+if [ $_dpkg_use_colors = yes ]; then
+  _dpkg_color_clear="$COLOR_RESET"
+  _dpkg_color_prog="$COLOR_BOLD"
+  _dpkg_color_hint="$COLOR_BOLD_BLUE"
+  _dpkg_color_info="$COLOR_GREEN"
+  _dpkg_color_notice="$COLOR_YELLOW"
+  _dpkg_color_warn="$COLOR_BOLD_YELLOW"
+  _dpkg_color_error="$COLOR_BOLD_RED"
+else
+  _dpkg_color_clear=""
+fi
+_dpkg_fmt_prog="$_dpkg_color_prog$PROGNAME$_dpkg_color_clear"
+
+# This function is deprecated and kept only for backwards compatibility.
+# Supported since dpkg 1.20.1.
+# Deprecated since dpkg 1.22.12.
 setup_colors()
 {
-  : "${DPKG_COLORS=auto}"
-
-  case "$DPKG_COLORS" in
-  auto)
-    if [ -t 1 ]; then
-      USE_COLORS=yes
-    else
-      USE_COLORS=no
-    fi
-    ;;
-  always)
-    USE_COLORS=yes
-    ;;
-  *)
-    USE_COLORS=no
-    ;;
-  esac
-
-  if [ $USE_COLORS = yes ]; then
-    COLOR_PROG="$COLOR_BOLD"
-    COLOR_INFO="$COLOR_GREEN"
-    COLOR_NOTICE="$COLOR_YELLOW"
-    COLOR_WARN="$COLOR_BOLD_YELLOW"
-    COLOR_ERROR="$COLOR_BOLD_RED"
-  else
-    COLOR_RESET=""
-  fi
-  FMT_PROG="$COLOR_PROG$PROGNAME$COLOR_RESET"
+  :
 }
 
+# Supported since dpkg 1.20.1.
 debug() {
   if [ -n "$DPKG_DEBUG" ]; then
-    echo "DEBUG: $FMT_PROG: $*" >&2
+    echo "$_dpkg_fmt_prog: debug: $*" >&2
   fi
 }
 
+# Supported since dpkg 1.20.1.
 error() {
-  echo "$FMT_PROG: ${COLOR_ERROR}error${COLOR_RESET}: $*" >&2
+  echo "$_dpkg_fmt_prog: ${_dpkg_color_error}error${_dpkg_color_clear}: $*" >&2
   exit 1
 }
 
+# Supported since dpkg 1.20.1.
 warning() {
-  echo "$FMT_PROG: ${COLOR_WARN}warning${COLOR_RESET}: $*" >&2
+  echo "$_dpkg_fmt_prog: ${_dpkg_color_warn}warning${_dpkg_color_clear}: $*" >&2
 }
 
+# Supported since dpkg 1.22.14.
+notice() {
+  echo "$_dpkg_fmt_prog: ${_dpkg_color_notice}notice${_dpkg_color_clear}: $*"
+}
+
+# Supported since dpkg 1.22.14.
+info() {
+  echo "$_dpkg_fmt_prog: ${_dpkg_color_info}info${_dpkg_color_clear}: $*"
+}
+
+# Supported since dpkg 1.22.14.
+hint() {
+  echo "$_dpkg_fmt_prog: ${_dpkg_color_hint}hint${_dpkg_color_clear}: $*"
+}
+
+# Supported since dpkg 1.20.1.
 badusage() {
-  echo "$FMT_PROG: ${COLOR_ERROR}error${COLOR_RESET}: $1" >&2
+  echo "$_dpkg_fmt_prog: ${_dpkg_color_error}error${_dpkg_color_clear}: $1" >&2
   echo >&2
   echo "Use '$PROGNAME --help' for program usage information." >&2
   exit 1

@@ -30,7 +30,7 @@ Een variabelesubstitutie heeft als vorm B<${>I<variabelenaam>B<}>. Variabelename
 
 =head2 Bestandssyntaxis
 
-Substitutievariabelen kunnen in een bestand worden opgegeven. Deze bestanden bestaan uit regels van de vorm I<naam>B<=>I<waarde> of I<naam>B<?=>I<waarde>. De operator B<=> wijst een normale substitutievariabele toe, terwijl de operator B<?=> (sinds dpkg 1.21.8) een optionele substitutievariabele toewijst die geen waarschuwingen geeft, zelfs als deze niet wordt gebruikt. Resterende witruimte op elke regel, lege regels en regels die beginnen met het symbool B<#> (commentaar) worden genegeerd.
+Substitutievariabelen kunnen in een bestand worden opgegeven. Deze bestanden bestaan uit regels van de vorm I<naam>B<=>I<waarde>, I<naam>B<?=>I<waarde> of I<naam>B<!=>I<waarde>. De operator B<=> wijst een normale substitutievariabele toe, de operator B<?=> (sinds dpkg 1.21.8) een optionele substitutievariabele toewijst die geen waarschuwingen geeft, zelfs als deze niet wordt gebruikt, en de operator B<!=> (sinds dpkg 1.22.7) wijst een vereiste substitutievariabele toe die een foutmelding geeft als deze niet wordt gebruikt. Resterende witruimte op elke regel, lege regels en regels die beginnen met het symbool B<#> (commentaar) worden genegeerd.
 
 =head2 Substitutie
 

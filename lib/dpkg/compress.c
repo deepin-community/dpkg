@@ -1075,7 +1075,7 @@ filter_unzstd_code(struct io_zstd *io, struct io_zstd_stream *s)
 		s->status = DPKG_STREAM_END;
 		return;
 	}
-	
+
 	ret = ZSTD_decompressStream(s->ctx.d, &buf_out, &buf_in);
 	if (ZSTD_isError(ret))
 		filter_zstd_error(io, ret);
@@ -1428,7 +1428,7 @@ decompress_filter(struct compress_params *params, int fd_in, int fd_out,
 	struct varbuf desc = VARBUF_INIT;
 
 	va_start(args, desc_fmt);
-	varbuf_vprintf(&desc, desc_fmt, args);
+	varbuf_add_vfmt(&desc, desc_fmt, args);
 	va_end(args);
 
 	compressor(params->type)->decompress(params, fd_in, fd_out, desc.buf);
@@ -1444,7 +1444,7 @@ compress_filter(struct compress_params *params, int fd_in, int fd_out,
 	struct varbuf desc = VARBUF_INIT;
 
 	va_start(args, desc_fmt);
-	varbuf_vprintf(&desc, desc_fmt, args);
+	varbuf_add_vfmt(&desc, desc_fmt, args);
 	va_end(args);
 
 	compressor(params->type)->compress(params, fd_in, fd_out, desc.buf);

@@ -24,6 +24,12 @@ B<dpkg-vendor> [I<Option> …] I<Befehl>
 
 B<dpkg-vendor> ist ein Werkzeug, um Informationen über in B<%PKGCONFDIR%/origins> aufgeführte Lieferanten (engl. „vendor“) abzufragen. B<%PKGCONFDIR%/origins/default> enthält Informationen über den aktuellen Lieferanten.
 
+Die Ursprungsdateien stellen Metadaten über bestimmte Lieferanten bereit, wie ihre URL oder wo Fehler gemeldet werden sollen. Sie werden normalerweise zur Ermittlung des Verhaltens von Werkzeugen und daraus entstehenden Inhalten während des Paketbaus für einen bestimmten Lieferanten verwandt, sowie zur Beschreibung des Ursprungs von Paketen.
+
+Pakete können ihren Lieferanten explizit durch Aufnahme des Feldes B<Origin> erklären, andernfalls wird der Lieferant für Pakete ohne ein solches Feld als derjenige angenommen, auf den der symbolische Lieferantenlink F<default> zeigt.
+
+Der symbolische Link F<default> bezeichnet auch den Ursprung der durch B<dpkg> verwalteten aktuellen Installation. Dies kann eine vollständige Distribution oder eine Überlagerung auf einem bestehenden Basissystem sein, das entweder kein Paketierungsystem oder ein eigenes enthält.
+
 Dieses Programm wurde in Dpkg 1.15.1 hinzugefügt.
 
 =head1 BEFEHLE
@@ -80,6 +86,18 @@ Falls dies gesetzt ist, wird es zur Entscheidung, ob Native Language Support, au
 
 =back
 
+=head1 DATEIEN
+
+=head2 Paketierungsunterstützung
+
+=over 
+
+=item B<%PKGDATADIR%/vendor.mk>
+
+Make-Steuerdateischnipsel, das den aktuelle Lieferanten und seine Eltern in Variablen setzt und Make-Makros bereitstellt, um auf Abgeleitete zu prüfen (seit Dpkg 1.16.1).
+
+=back
+
 =head1 SIEHE AUCH
 
 L<deb-origin(5)>.
@@ -87,7 +105,7 @@ L<deb-origin(5)>.
 
 =head1 ÜBERSETZUNG
 
-Die deutsche Übersetzung wurde 2004, 2006-2023 von Helge Kreutzmann
+Die deutsche Übersetzung wurde 2004, 2006-2025 von Helge Kreutzmann
 <debian@helgefjell.de>, 2007 von Florian Rehnisch <eixman@gmx.de> und
 2008 von Sven Joachim <svenjoac@gmx.de>
 angefertigt. Diese Übersetzung ist Freie Dokumentation; lesen Sie die

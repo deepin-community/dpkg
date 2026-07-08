@@ -162,6 +162,22 @@ Se definido e nenhuma da opções B<--force->I<...> forem especificadas, será u
 
 Define o modo de cor (desde dpkg 1.18.5). Os valores actualmente aceites são: B<auto> (predefinido), B<always> e B<never>.
 
+=item B<DPKG_NLS>
+
+Se definida, será usada para decidir se deve activar o Suporte a Linguagem Nativa. Também como conhecido como suporte de internacionalização (ou i18n) (desde dpkg 1.22.7). Os valores aceites são B<0> e B<1> (predefinição).
+
+=item B<DPKG_PATH_PASSWD>
+
+Define o nome-de-caminho para o ficheiro F<passwd> do sistema.  Este caminho é relativo ao directório B<--root>.  A predefinição é F</etc/passwd>.
+
+Desde dpkg 1.22.16.
+
+=item B<DPKG_PATH_GROUP>
+
+Define o nome-de-caminho para o ficheiro F<group> do sistema.  Este caminho é relativo ao directório B<--root>.  A predefinição é F</etc/group>.
+
+Desde dpkg 1.22.16.
+
 =back
 
 =head1 FICHEIROS

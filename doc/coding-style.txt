@@ -62,13 +62,13 @@ second argument quoted tightly surrounding the code, like this:
     [], [enable_feature="yes"])
 
   AM_CONDITIONAL([HAVE_SOME_FEATURE],
-    [test "x$ac_cv_have_some_feature" = "xyes" && \
-     test "x$ac_cv_have_some_feature" = "xyes"])
+    [test "$ac_cv_have_some_feature" = "yes" && \
+     test "$ac_cv_have_some_feature" = "yes"])
 
 or the output will get messed up.
 
 
-Dpkg C/C++ coding style 2016-01-29
+Dpkg C/C++ coding style 2024-07-24
 =======================
 
 Standards
@@ -79,9 +79,7 @@ The C code base assumes C99, except for the following features:
  - Variable length arrays.
  - Mixed declaration and code.
 
-The C++ code base assumes C++03, plus the following C++11 extension:
-
- + Null pointer keyword (nullptr).
+The C++ code base assumes C++14.
 
 The code base assumes a POSIX.1-2008 compatible environment.
 
@@ -98,7 +96,7 @@ If in doubt or missing from this file please ask, although files using the
 tab based indentation can be considered canon.
 
   [K] <https://www.freebsd.org/cgi/man.cgi?query=style>
-  [L] <https://www.kernel.org/doc/Documentation/CodingStyle>
+  [L] <https://kernel.org/doc/Documentation/process/coding-style.rst>
 
 The code has a mix of an old coding style being phased out and the new
 style. New files should use the new style, changes to files with the old

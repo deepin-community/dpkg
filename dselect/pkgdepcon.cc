@@ -228,15 +228,15 @@ int packagelist::resolvedepcon(dependency *depends) {
     varbuf pkg_names;
 
     for (possi = depends->list; possi; possi = possi->next) {
-      pkg_names(' ');
-      pkg_names(possi->ed->name);
+      pkg_names += ' ';
+      pkg_names += possi->ed->name;
     }
 
     debug(dbg_depcon,
           "packagelist[%p]::resolvedepcon([%p] %s --%s-->%s); (ing)->want=%s",
           this, depends, pkg_name(depends->up, pnaw_always),
           relatestrings[depends->type],
-          pkg_names.string(), depends->up->clientdata ?
+          pkg_names.str(), depends->up->clientdata ?
           wantstrings[depends->up->clientdata->suggested] : "(no clientdata)");
   }
 

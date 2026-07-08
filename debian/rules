@@ -26,17 +26,15 @@ ifeq ($(DEB_HOST_ARCH_OS),linux)
 	confflags += --with-libselinux
 endif
 ifeq (,$(filter terse,$(DEB_BUILD_OPTIONS)))
-	TESTSUITEFLAGS += --verbose
+  testflags += TEST_VERBOSE=1
 endif
 
 # Enable parallel test suite
 NUMJOBS = 1
 ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
   NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
-  TESTSUITEFLAGS += -j$(NUMJOBS)
+  testflags += TEST_PARALLEL=$(NUMJOBS)
 endif
-
-testflags = TESTSUITEFLAGS=$(TESTSUITEFLAGS) TEST_PARALLEL=$(NUMJOBS)
 
 dpkg_vendor = \
 	$(CURDIR)/build-aux/run-script scripts/dpkg-vendor.pl
@@ -88,23 +86,3 @@ override_dh_bugfiles:
 
 override_dh_compress:
 	dh_compress -Xspec/
-
-ifeq (,$(filter $(DEB_VENDOR),Debian Ubuntu))
-execute_after_dh_install:
-	dh_install -pdpkg usr/sbin/dpkg-fsys-usrunmess
-
-# XXX: We cannot use -X, see debhelper #756366.
-execute_after_dh_installman:
-	dh_installman -pdpkg $(wildcard \
-	  $(D)/usr/share/man/*/dpkg-fsys-usrunmess.8  \
-	  $(D)/usr/share/man/*/*/dpkg-fsys-usrunmess.8 \
-	)
-
-# XXX: We cannot pass pathnames to dh_installman w/o $(D), and then dh_missing
-# complains that the pathnames do not match, so ignore them.
-override_dh_missing:
-	dh_missing -Xdpkg-fsys-usrunmess.8
-else
-override_dh_missing:
-	dh_missing -Xdpkg-fsys-usrunmess
-endif

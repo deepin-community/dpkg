@@ -74,6 +74,10 @@ Mostra a versão e termina.
 
 =over 
 
+=item B<DEB_HOST_ARCH>
+
+Define a arquitectura da máquina anfitriã.  Isto afecta a lógica de resolução de dependências, que podem não corresponder àquilo que o dpkg do sistema considere satisfatório.
+
 =item B<DEB_BUILD_PROFILES>
 
 Se definido, será usado como perfil(es) de compilação activos para o pacote a ser compilado. É uma lista separada por espaços de nomes de perfis. Sobreposto pela opção B<-P>.

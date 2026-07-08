@@ -66,6 +66,10 @@ De versie tonen en afsluiten.
 
 =over 
 
+=item B<DEB_HOST_ARCH>
+
+Stelt de computerarchitectuur in. Dit heeft invloed op de architectuurnaam die wordt gebruikt in de bestandsnaam van het pakket.
+
 =item B<DPKG_COLORS>
 
 Stelt de kleurmodus in (sinds dpkg 1.18.5). Waarden die momenteel gebruikt mogen worden zijn: B<auto> (standaard), B<always> en B<never>.

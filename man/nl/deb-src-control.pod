@@ -60,6 +60,12 @@ De URL van de homepage van het toeleverend project (upstream).
 
 De I<URL> van het bugopvolgingssysteem voor dit pakket. De momenteel gebruikte indeling is I<bts-type>B<://>I<bts-adres>, zoals B<debbugs://bugs.debian.org>. Meestal is dit veld niet nodig.
 
+=item B<Build-Driver:> I<stuurprogrammanaam>
+
+Dit experimentele veld specificeert de naam van het bouwstuurprogramma dat gebruikt moet worden om dit pakket te bouwen. Wanneer I<stuurprogrammanaam> wordt weggelaten, wordt dit standaard B<debian-rules>.
+
+Dit veld wordt ondersteund sinds dpkg 1.22.7.
+
 =item B<Rules-Requires-Root:> B<no>|B<binary-targets>|I<impl-trefwoorden>
 
 Dit veld wordt gebruikt om aan te geven of het bestand B<debian/rules> voorrechten van (fake)root nodig heeft om sommige van zijn targets uit te voeren, en zo ja wanneer.
@@ -68,11 +74,11 @@ Dit veld wordt gebruikt om aan te geven of het bestand B<debian/rules> voorrecht
 
 =item B<no>
 
-De binaire targets zullen (fake)root helemaal niet nodig hebben. Dit is de standaard in B<dpkg-build-api> level >= 1.
+De binaire targets zullen (fake)root helemaal niet nodig hebben. Dit is de standaard in B<dpkg-build-api> level >= 1, of sinds dpkg 1.22.13.
 
 =item B<binary-targets>
 
-De binaire targets moeten altijd onder (fake)root uitgevoerd worden. Dit is de standaardwaarde in B<dpkg-build-api> level 0 als dit veld ontbreekt. Als dit veld toegevoegd wordt met een expliciete B<binary-targets>, terwijl dit strikt genomen niet nodig is, geeft dit aan dat de noodzaak ervan onderzocht werd.
+De binaire targets moeten altijd onder (fake)root uitgevoerd worden. Dit is tot dpkg 1.22.13 de standaardwaarde in B<dpkg-build-api> level 0, wanneer dit veld ontbreekt. Als dit veld toegevoegd wordt met een expliciete B<binary-targets>, terwijl dit strikt genomen niet nodig is, geeft dit aan dat de noodzaak ervan onderzocht werd.
 
 =item I<impl-trefwoorden>
 
@@ -122,11 +128,17 @@ De naam van de distributie waaruit dit pakket afkomstig is. Meestal is dit veld 
 
 Dit is een veld van algemene aard dat het pakket in een categorie onderbrengt op basis van de software die het installeert. Enkele gebruikelijke secties zijn B<utils>, B<net>, B<mail>, B<text>, B<x11>, enz.
 
+Als de I<sectie> wordt weggelaten krijgt die de standaardwaarde B<unknown> (sinds dpkg 1.22.13).
+
+De geaccepteerde waarden zijn gebaseerd op het specifieke distributiebeleid.
+
 =item B<Priority:> I<prioriteit>
 
-Duidt het belang van dit pakket aan in verhouding tot het gehele systeem. Gebruikelijke prioriteiten zijn B<required>, B<standard>, B<optional>, B<extra>, enz.
+Duidt het belang van dit pakket aan in verhouding tot het gehele systeem. De bekende prioriteiten zijn B<required>, B<important>, B<standard>, B<optional>, B<extra> en B<unknown>, maar ook andere waarden kunnen gebruikt worden.
 
-De velden B<Section> en B<Priority> hebben gewoonlijk een welbepaalde set mogelijke waarden, afhankelijk van de richtlijnen van de distributie.
+Als de I<prioriteit> wordt weggelaten krijgt die de standaardwaarde B<optional> (sinds dpkg 1.22.13).
+
+Hoe deze waarden worden toegepast, hangt af van het specifieke distributiebeleid.
 
 =item B<Build-Depends:> I<pakketlijst>
 
@@ -273,27 +285,47 @@ Houd er rekening mee dat deze door de gebruiker gedefinieerde velden gebruik mak
  Section: admin
  Priority: required
  Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
- # dit veld wordt gekopieerd naar het binaire en het broncodepakket
+ # Dit veld wordt gekopieerd naar het binaire en het broncodepakket
  XBS-Upstream-Release-Status: stable
  Homepage: https://wiki.debian.org/Teams/Dpkg
  Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
  Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git
- Standards-Version: 3.7.3
- Build-Depends: pkgconf, debhelper (>= 4.1.81),
-  libselinux1-dev (>= 1.28-4) [!linux-any]
+ Standards-Version: 4.7.0
+ Build-Depends:
+  debhelper-compat (= 13),
+  debhelper (>= 13.10~),
+  pkgconf,
+  libselinux1-dev (>= 1.28-4) [!linux-any],
 
  Package: dpkg-dev
  Section: utils
  Priority: optional
  Architecture: all
- # dit is een aangepast veld in het binaire pakket
+ # Dit is een aangepast veld in het binaire pakket
  XB-Mentoring-Contact: Raphael Hertzog <hertzog@debian.org>
- Depends: dpkg (>= 1.14.6), perl5, perl-modules, cpio (>= 2.4.2-2),
-  bzip2, lzma, patch (>= 2.2-1), make, binutils, libtimedate-perl
- Recommends: gcc | c-compiler, build-essential
- Suggests: gnupg, debian-keyring
- Conflicts: dpkg-cross (<< 2.0.0), devscripts (<< 2.10.26)
- Replaces: manpages-pl (<= 20051117-1)
+ Depends:
+  binutils,
+  bzip2,
+  cpio (>= 2.4.2-2),
+ # Dit is commentaar middenin een veldwaarde.
+  dpkg (>= 1.14.6),
+  libtimedate-perl,
+  lzma,
+  make,
+  patch (>= 2.2-1),
+  perl-modules,
+  perl5,
+ Recommends:
+  gcc | c-compiler,
+  build-essential,
+ Suggests:
+  gnupg,
+  debian-keyring,
+ Conflicts:
+  dpkg-cross (<< 2.0.0),
+  devscripts (<< 2.10.26),
+ Replaces:
+  manpages-pl (<= 20051117-1),
  Description: Debian package development tools
   This package provides the development tools (including dpkg-source)
   required to unpack, build and upload Debian source packages.

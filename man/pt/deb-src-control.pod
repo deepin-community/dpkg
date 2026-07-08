@@ -24,7 +24,7 @@ B<debian/control>
 
 Cada pacote fonte Debian contem o ficheiro modelo de controle de fonte «B<debian/control>», e o seu formato L<deb822(5)> é um superconjunto do ficheiro B<control> enviado em pacotes binários Debian, veja L<deb-control(5)>.
 
-Este ficheiro contem pelo menos 2 estrofes, separadas por uma linha vazia. A primeira estrofe é chamada a estrofe do pacote fonte e lista toda a informação acerca do pacote fonte em geral, enquanto cada uma das estrofe seguintes são chamadas estrofes de pacote binário e descrevem exactamente um pacote binário por cada estrofe. Cada estrofe consiste de pelo menos um campo. Um campo começa com um nome de campo, tal como B<Package> ou B<Section> (insensível a maiúsculas/minúsculas), seguido de dois pontos, o corpo do campo (sensível a maiúsculas/minúsculas a menos que declarado o contrário) e uma mudança de linha. São também permitirmos campos multi-linha, mas cada linha suplementar, sem um nome de campo, deve começar com pelo menos um espaço em branco. O conteúdo dos campos multi-linha é geralmente juntado numa única pelas ferramentas (excepto no caso do campo B<Description>, ver abaixo). Para inserir linhas vazias num campo de multi-linha, insira um ponto após o espaço. As linhas começadas com ‘B<#>’ são tratadas como comentários.
+Este ficheiro contem pelo menos 2 estrofes, separadas por uma linha vazia. A primeira estrofe é chamada a estrofe do pacote fonte e lista toda a informação acerca do pacote fonte em geral, enquanto cada uma das estrofe seguintes são chamadas estrofes de pacote binário e descrevem exactamente um pacote binário por cada estrofe. Cada estrofe consiste de pelo menos um campo. Um campo começa com um nome de campo, tal como B<Package> ou B<Section> (insensível a maiúsculas/minúsculas), seguido de dois pontos, o corpo do campo (sensível a maiúsculas/minúsculas a menos que declarado o contrário) e uma mudança de linha. São também permitirmos campos multi-linha, mas cada linha suplementar, sem um nome de campo, tem de começar com pelo menos um espaço em branco. O conteúdo dos campos multi-linha é geralmente juntado numa única pelas ferramentas (excepto no caso do campo B<Description>, ver abaixo). Para inserir linhas vazias num campo de multi-linha, insira um ponto após o espaço. As linhas começadas com ‘B<#>’ são tratadas como comentários.
 
 =head1 CAMPOS DE FONTE
 
@@ -32,7 +32,7 @@ Este ficheiro contem pelo menos 2 estrofes, separadas por uma linha vazia. A pri
 
 =item B<Source:> I<source-package-name> (necessário)
 
-O valor deste campo é o nome do pacote fonte, e deve corresponder ao nome do pacote fonte no ficheiro debian/changelog. O nome de um pacote deve consistir apenas de letras minúsculas (a-z), dígitos (0-9), e dos sinais mais (+) e menos (-) e de pontos (.). Os nomes dos pacotes devem ter pelo menos dois caracteres de comprimento e têm de começar com um caractere alfanumérico minúsculo (a-z0-9).
+O valor deste campo é o nome do pacote fonte, e tem de corresponder ao nome do pacote fonte no ficheiro debian/changelog. O nome de um pacote tem de consistir apenas de letras minúsculas (a-z), dígitos (0-9), e dos sinais mais (+) e menos (-) e de pontos (.). Os nomes dos pacotes devem ter pelo menos dois caracteres de comprimento e têm de começar com um caractere alfanumérico minúsculo (a-z0-9).
 
 =item B<Maintainer:> I<fullname-email> (recomendado)
 
@@ -60,6 +60,12 @@ O URL da página inicial do projecto do autor original
 
 O I<url> do sistema de acompanhamento de bugs deste pacote. O formato usado actualmente é I<bts-type>B<://>I<bts-address>, como B<debbugs://bugs.debian.org>. Este campo geralmente não é necessário.
 
+=item B<Build-Driver:> I<driver-name>
+
+Este campo experimental especifica o nome da driver de compilação a usar para compilar este pacote. Quando omitido o I<driver-name> é predefinido para B<debian-rules>.
+
+Este campo é suportado desde dpkg 1.22.7.
+
 =item B<Rules-Requires-Root:> B<no>|B<binary-targets>|I<impl-keywords>
 
 Este campo é usado para indicar se o campo B<debian/rules> requer privilégios de (fake)root para correr alguns dos seus alvos, e se sim quando.
@@ -68,11 +74,11 @@ Este campo é usado para indicar se o campo B<debian/rules> requer privilégios 
 
 =item B<no>
 
-Os alvos binários não irão requerer (fake)root de todo. Esta é a predefinição em B<dpkg-build-api> nível >= 1.
+Os alvos binários não irão requerer (fake)root de todo. Esta é a predefinição em B<dpkg-build-api> nível >= 1, ou desde dpkg 1.22.13.
 
 =item B<binary-targets>
 
-Os alvos binários devem ser sempre corridos sob (fake)root. Este é a predefinição em B<dpkg-build-api> nível 0, quando o campo é omitido, adicionar o campo com um B<binary-targets> explícito quando não estritamente necessário, marca-o como tendo sido analisada para este requerimento.
+Os alvos binários devem ser sempre corridos sob (fake)root. Este é a predefinição em B<dpkg-build-api> nível 0 até ao dpkg 1.22.13, quando o campo é omitido, adicionar o campo com um B<binary-targets> explícito quando não estritamente necessário, marca-o como tendo sido analisada para este requerimento.
 
 =item I<impl-keywords>
 
@@ -122,11 +128,17 @@ O nome da distribuição de onde este pacote é originário. Normalmente este ca
 
 Este é um campo geral que dá ao pacote uma categoria baseada no software que ele instala. Algumas secções comuns são B<utils>, B<net>, B<mail>, B<text>, B<x11>, etc.
 
+Quando omitido, a I<section> predefine para B<unknown> (desde dpkg 1.22.13).
+
+Os valores aceites são baseados na política específica da distribuição.
+
 =item B<Priority:> I<priority>
 
-Define a importância deste pacote relativamente ao sistema como um todo. Prioridades comuns são B<required>, B<standard>, B<optional>, B<extra>, etc.
+Define a importância deste pacote relativamente ao sistema como um todo. As prioridades conhecidas são B<required>, B<important>, B<standard>, B<optional>, B<extra>, e B<unknown>, mas pode-se também usar outros valores.
 
-Os campos B<Section> e B<Priority> têm geralmente um conjunto definido de valores aceites baseados na política específica da distribuição.
+Quando omitido, a I<priority> predefine para B<optional> (desde dpkg 1.22.13).
+
+Como aplicar estes valores depende da política específica da distribuição.
 
 =item B<Build-Depends:> I<package-list>
 
@@ -273,27 +285,47 @@ Tenha em conta que estes campos definidos pelo utilizador irão usar o espaço d
  Section: admin
  Priority: required
  Maintainer: Dpkg Developers <debian-dpkg@lists.debian.org>
- # this field is copied to the binary and source packages
+ # This field is copied to the binary and source packages.
  XBS-Upstream-Release-Status: stable
  Homepage: https://wiki.debian.org/Teams/Dpkg
  Vcs-Browser: https://git.dpkg.org/cgit/dpkg/dpkg.git
  Vcs-Git: https://git.dpkg.org/git/dpkg/dpkg.git
- Standards-Version: 3.7.3
- Build-Depends: pkgconf, debhelper (>= 4.1.81),
-  libselinux1-dev (>= 1.28-4) [!linux-any]
+ Standards-Version: 4.7.0
+ Build-Depends:
+  debhelper-compat (= 13),
+  debhelper (>= 13.10~),
+  pkgconf,
+  libselinux1-dev (>= 1.28-4) [!linux-any],
 
  Package: dpkg-dev
  Section: utils
  Priority: optional
  Architecture: all
- # this is a custom field in the binary package
+ # This is a custom field in the binary package.
  XB-Mentoring-Contact: Raphael Hertzog <hertzog@debian.org>
- Depends: dpkg (>= 1.14.6), perl5, perl-modules, cpio (>= 2.4.2-2),
-  bzip2, lzma, patch (>= 2.2-1), make, binutils, libtimedate-perl
- Recommends: gcc | c-compiler, build-essential
- Suggests: gnupg, debian-keyring
- Conflicts: dpkg-cross (<< 2.0.0), devscripts (<< 2.10.26)
- Replaces: manpages-pl (<= 20051117-1)
+ Depends:
+  binutils,
+  bzip2,
+  cpio (>= 2.4.2-2),
+ # This is a comment in the middle of a field value.
+  dpkg (>= 1.14.6),
+  libtimedate-perl,
+  lzma,
+  make,
+  patch (>= 2.2-1),
+  perl-modules,
+  perl5,
+ Recommends:
+  gcc | c-compiler,
+  build-essential,
+ Suggests:
+  gnupg,
+  debian-keyring,
+ Conflicts:
+  dpkg-cross (<< 2.0.0),
+  devscripts (<< 2.10.26),
+ Replaces:
+  manpages-pl (<= 20051117-1),
  Description: Debian package development tools
   This package provides the development tools (including dpkg-source)
   required to unpack, build and upload Debian source packages.

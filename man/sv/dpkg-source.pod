@@ -498,7 +498,7 @@ Om satt, används för att bestämma om lokalt språkstöd ska aktiveras, även 
 
 Om satt kommer det användas som tidsstämpel (som sekunder sedan epoken) för att tvinga mtime i L<tar(5)>-filposterna.
 
-Since dpkg 1.18.11.
+Sedan dpkg 1.18.11.
 
 =item B<VISUAL>
 
