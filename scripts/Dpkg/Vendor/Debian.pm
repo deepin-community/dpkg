@@ -96,8 +96,53 @@ sub run_hook {
     }
 }
 
+# Source packages excluded from LTO. The list is optional: it is shipped by
+# the lto-disabled-list companion package, and when that package is not
+# installed LTO stays enabled for all packages.
+# List format: <source> any | <arch> [<arch> ...]  (comments with '#').
+my $LTO_DISABLED_LIST = '/usr/share/lto-disabled-list/lto-disabled-list';
+
+sub _lto_disabled {
+    my $arch = shift;
+
+    my $source;
+    open(my $control_fh, '<', 'debian/control')
+        or return 0;
+    while (<$control_fh>) {
+        $source = $1 if m/^Source:\s*(\S+)/;
+    }
+    close($control_fh);
+    return 0 unless defined $source;
+
+    open(my $list_fh, '<', $LTO_DISABLED_LIST)
+        or return 0;
+    while (<$list_fh>) {
+        chomp;
+        s/#.*//;
+        next unless m/^\s*(\S+)\s+(.+?)\s*$/;
+        next unless $1 eq $source;
+        return 1 if any { $_ eq 'any' or $_ eq $arch } split(/\s+/, $2);
+    }
+    close($list_fh);
+    return 0;
+}
+
 sub init_build_features {
     my ($self, $use_feature, $builtin_feature) = @_;
+
+    # Enable LTO by default on the supported architectures, unless the source
+    # package is listed in the LTO disabled list (same model as Ubuntu).
+    # XXX: Extend the whitelist with mips64el after toolchain evaluation.
+    require Dpkg::Arch;
+
+    my $arch = Dpkg::Arch::get_host_arch();
+
+    if (any { $_ eq $arch } qw(amd64 arm64 sw64 loong64)) {
+        $use_feature->{optimize}{lto} = 1;
+        if (_lto_disabled($arch)) {
+            $use_feature->{optimize}{lto} = 0;
+        }
+    }
 }
 
 sub set_build_features {

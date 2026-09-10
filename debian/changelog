@@ -1,3 +1,16 @@
+dpkg (1.22.6deepin11) unstable; urgency=medium
+
+  * Enable LTO by default via the vendor build features
+
+    Turn on the optimize/lto build feature by default on amd64, arm64,
+    sw64 and loong64, unless the source package is listed in the LTO
+    disabled list shipped by the lto-disabled-list package, which
+    dpkg-dev now depends on. When the list file is missing, LTO stays
+    enabled for all packages. Per-build opt-out remains available via
+    DEB_BUILD_MAINT_OPTIONS=optimize=-lto.
+
+ -- tunaichao <tunaichao@uniontech.com>  Wed, 09 Sep 2026 17:36:09 +0800
+
 dpkg (1.22.6deepin10) unstable; urgency=medium
 
   * Do not use DPKG_AR_EXTRACT and DPKG_AR_GEN as they're introduced in
