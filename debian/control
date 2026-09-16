@@ -118,9 +118,9 @@ Depends:
  patch (>= 2.7),
  make,
  binutils,
-# Read by Dpkg::Vendor::Debian to exclude source packages from the
-# default LTO build.
- lto-disabled-list (>= 81deepin1),
+# Read by Dpkg::Vendor::Debian to pick the source packages that
+# are built with LTO by default.
+ lto-enabled-list (>= 1.0deepin1),
 Recommends:
  build-essential,
  gcc | c-compiler,

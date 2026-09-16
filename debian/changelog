@@ -1,3 +1,20 @@
+dpkg (1.22.6deepin12) unstable; urgency=medium
+
+  * Switch the vendor LTO default to an opt-in whitelist
+
+    Only the source packages listed by the lto-enabled-list
+    companion package are now built with LTO by default; every
+    other source package stays unchanged unless its packaging opts
+    in explicitly. This inverts the previous model, where LTO was
+    on by default except for the lto-disabled-list blacklist.
+    dpkg-dev now depends on lto-enabled-list (>= 1.0deepin1)
+    instead of lto-disabled-list (>= 81deepin1). When the enabled
+    list file is missing, no package gets LTO by default (fail
+    closed). The DEB_BUILD_MAINT_OPTIONS escape hatches
+    (optimize=±lto) are unchanged.
+
+ -- tunaichao <tunaichao@uniontech.com>  Wed, 16 Sep 2026 16:20:00 +0800
+
 dpkg (1.22.6deepin11) unstable; urgency=medium
 
   * Enable LTO by default via the vendor build features
