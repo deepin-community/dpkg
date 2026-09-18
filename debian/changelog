@@ -1,3 +1,11 @@
+dpkg (1.22.6deepin13) unstable; urgency=medium
+
+  * Apply two patches from upstream to improve reproducibility:
+    - [02ad053] test: Create tar archive in a reproducible way
+    - [d8a7655] test: Update reference output to match tar sorted output
+
+ -- Tianyu Chen <sweetyfish@deepin.org>  Fri, 18 Sep 2026 14:22:58 +0800
+
 dpkg (1.22.6deepin12) unstable; urgency=medium
 
   * Switch the vendor LTO default to an opt-in whitelist
