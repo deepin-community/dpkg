@@ -22,6 +22,7 @@
 #define LIBDPKG_STRING_H
 
 #include <stddef.h>
+#include <stdarg.h>
 #include <stdbool.h>
 
 #include <dpkg/macros.h>
@@ -40,6 +41,7 @@ DPKG_BEGIN_DECLS
 static inline bool
 str_is_unset(const char *str)
 {
+	/* cppcheck-suppress[nullPointer]: False positive. */
 	return str == DPKG_NULL || str[0] == '\0';
 }
 
@@ -49,27 +51,43 @@ str_is_unset(const char *str)
 static inline bool
 str_is_set(const char *str)
 {
+	/* cppcheck-suppress[nullPointer]: False positive. */
 	return str != DPKG_NULL && str[0] != '\0';
 }
 
-bool str_match_end(const char *str, const char *end);
+bool
+str_match_end(const char *str, const char *end);
 
-unsigned int str_fnv_hash(const char *str);
+unsigned int
+str_fnv_hash(const char *str);
 
-char *str_concat(char *dst, ...) DPKG_ATTR_SENTINEL;
-char *str_fmt(const char *fmt, ...) DPKG_ATTR_PRINTF(1);
-char *str_escape_fmt(char *dest, const char *src, size_t n);
-char *str_quote_meta(const char *src);
-char *str_strip_quotes(char *str);
-char *str_rtrim_spaces(const char *str, char *str_end);
+char *
+str_concat(char *dst, ...)
+	DPKG_ATTR_SENTINEL;
+char *
+str_vfmt(const char *fmt, va_list args)
+	DPKG_ATTR_VPRINTF(1);
+char *
+str_fmt(const char *fmt, ...)
+	DPKG_ATTR_PRINTF(1);
+char *
+str_escape_fmt(char *dest, const char *src, size_t n);
+char *
+str_quote_meta(const char *src);
+char *
+str_strip_quotes(char *str);
+char *
+str_rtrim_spaces(const char *str, char *str_end);
 
 struct str_crop_info {
 	int str_bytes;
 	int max_bytes;
 };
 
-int str_width(const char *str);
-void str_gen_crop(const char *str, int max_width, struct str_crop_info *crop);
+int
+str_width(const char *str);
+void
+str_gen_crop(const char *str, int max_width, struct str_crop_info *crop);
 
 /** @} */
 
