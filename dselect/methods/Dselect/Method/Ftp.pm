@@ -41,6 +41,8 @@ use Carp;
 eval q{
     use Net::FTP;
     use Data::Dumper;
+	use Dselect::Method;
+    use Dpkg::ErrorHandling;
 };
 if ($@) {
     warn "Missing Net::FTP modules required by the FTP access method.\n\n";
