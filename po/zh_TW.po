@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dpkg 1.13\n"
 "Report-Msgid-Bugs-To: debian-dpkg@lists.debian.org\n"
-"POT-Creation-Date: 2024-03-10 20:20+0100\n"
+"POT-Creation-Date: 2026-03-07 00:40+0100\n"
 "PO-Revision-Date: 2018-04-15 07:06+0800\n"
 "Last-Translator: 林博仁 <Buo.Ren.Lin@gmail.com>\n"
 "Language-Team: Chinese (traditional) <debian-l10n-chinese@lists.debian.org>\n"
@@ -26,13 +26,18 @@ msgstr "無法以 fstat 取得壓縮檔的檔案資訊"
 
 #: lib/dpkg/ar.c
 #, c-format
-msgid "failed to read archive '%.255s'"
-msgstr "無法讀取「%.255s」封存檔"
+msgid "failed to read archive '%s'"
+msgstr "無法讀取「%s」封存檔"
 
 #: lib/dpkg/ar.c lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to create '%.255s'"
-msgstr "無法建立「%.255s」"
+msgid "unable to create '%s'"
+msgstr "無法建立「%s」"
+
+#: lib/dpkg/ar.c
+#, c-format
+msgid "archive %s is truncated or corrupt, it has a non-even byte size"
+msgstr ""
 
 #: lib/dpkg/ar.c lib/dpkg/dir.c src/split/join.c src/split/queue.c
 #: src/divert/main.c utils/update-alternatives.c
@@ -42,7 +47,7 @@ msgstr "無法關閉「%s」檔案"
 
 #: lib/dpkg/ar.c
 #, c-format
-msgid "invalid character '%c' in archive '%.250s' member '%.16s' size"
+msgid "invalid character '%c' in archive '%s' member '%.16s' size"
 msgstr "壓縮檔 '%2$.250s' 中，大小 '%3$.16s' 的檔案，檔名有不合法的字元 '%1$c'"
 
 #: lib/dpkg/ar.c utils/update-alternatives.c
@@ -112,32 +117,32 @@ msgstr "寫入硬體平台清單時，寫入錯誤"
 #, fuzzy, c-format
 #| msgid "cannot open directory '%s'"
 msgid "cannot create base directory for %s"
-msgstr "無法開啟「%.255s」目錄"
+msgstr "無法開啟「%s」目錄"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
-msgid "unable to create new file '%.250s'"
-msgstr "無法開新檔案 '%.250s'"
+msgid "unable to create new file '%s'"
+msgstr "無法開新檔案 '%s'"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
-msgid "unable to write new file '%.250s'"
-msgstr "無法寫入新檔 '%.250s'"
+msgid "unable to write new file '%s'"
+msgstr "無法寫入新檔 '%s'"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
-msgid "unable to flush new file '%.250s'"
-msgstr "無法清除新檔的寫入緩衝 '%.250s'"
+msgid "unable to flush new file '%s'"
+msgstr "無法清除新檔的寫入緩衝 '%s'"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
-msgid "unable to sync new file '%.250s'"
-msgstr "無法同步新檔 '%.250s' 的寫入緩衝"
+msgid "unable to sync new file '%s'"
+msgstr "無法同步新檔 '%s' 的寫入緩衝"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
-msgid "unable to close new file '%.250s'"
-msgstr "無法關閉新檔 `%.250s'"
+msgid "unable to close new file '%s'"
+msgstr "無法關閉新檔 `%s'"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
@@ -152,8 +157,8 @@ msgstr "建立新備份檔發生錯誤 '%s'"
 #: lib/dpkg/atomic-file.c lib/dpkg/db-ctrl-upgrade.c lib/dpkg/triglib.c
 #: src/main/remove.c
 #, c-format
-msgid "cannot remove '%.250s'"
-msgstr "無法刪除 `%.250s'"
+msgid "cannot remove '%s'"
+msgstr "無法刪除 `%s'"
 
 #: lib/dpkg/atomic-file.c
 #, c-format
@@ -364,12 +369,193 @@ msgstr "-%c 的壓縮等級無效：%ld'"
 msgid "unknown compression strategy"
 msgstr "壓縮方式不明"
 
+#: lib/dpkg/db-ctrl-access.c
+#, c-format
+msgid "unable to check existence of '%s'"
+msgstr "無法判斷 `%s' 是否存在"
+
+#: lib/dpkg/db-ctrl-access.c lib/dpkg/db-ctrl-upgrade.c
+msgid "cannot read info directory"
+msgstr "無法讀取 info 目錄"
+
+#: lib/dpkg/db-ctrl-format.c src/main/unpack.c
+#, c-format
+msgid "error trying to open %s"
+msgstr "在試圖開啟 %s 時發生錯誤"
+
+#: lib/dpkg/db-ctrl-format.c
+#, c-format
+msgid "corrupt info database format file '%s'"
+msgstr "資訊資料庫格式檔 '%s' 損毀"
+
+#: lib/dpkg/db-ctrl-format.c
+#, c-format
+msgid "info database format (%d) is bogus or too new; try getting a newer dpkg"
+msgstr ""
+
+#: lib/dpkg/db-ctrl-upgrade.c
+#, fuzzy, c-format
+#| msgid "Info file %s/%s not associated to any package"
+msgid "metadata file %s/%s not associated to any package"
+msgstr "資訊檔 %s/%s 不屬於任何套件"
+
+#: lib/dpkg/db-ctrl-upgrade.c src/main/archives.c
+#, c-format
+msgid "error creating hard link '%s'"
+msgstr "在建立實體連結 `%s' 時發生錯誤"
+
+#: lib/dpkg/db-ctrl-upgrade.c
+#, c-format
+msgid "error while writing '%s'"
+msgstr "'%s' 寫入錯誤"
+
+#: lib/dpkg/db-fsys-digest.c
+#, fuzzy, c-format
+#| msgid "files list file for package '%s' is missing final newline"
+msgid "control file '%s' for package '%s' is missing final newline"
+msgstr "套件 '%s' 的檔案清單，檔尾沒有換行"
+
+#: lib/dpkg/db-fsys-digest.c
+#, fuzzy, c-format
+#| msgid "files list file for package '%s' is missing final newline"
+msgid "control file '%s' for package '%s' is missing value"
+msgstr "套件 '%s' 的檔案清單，檔尾沒有換行"
+
+#: lib/dpkg/db-fsys-digest.c
+#, fuzzy, c-format
+#| msgid "files list file for package '%s' is missing final newline"
+msgid "control file '%s' for package '%s' is missing value separator"
+msgstr "套件 '%s' 的檔案清單，檔尾沒有換行"
+
+#: lib/dpkg/db-fsys-digest.c
+#, fuzzy, c-format
+#| msgid "files list file for package `%s' contains empty filename"
+msgid "control file '%s' for package '%s' contains empty filename"
+msgstr "套件 `%s' 的檔案清單，內有空檔名"
+
+#: lib/dpkg/db-fsys-digest.c
+#, fuzzy, c-format
+#| msgid "cannot extract control file '%s' from '%s': %s"
+msgid "loading control file '%s' for package '%s'"
+msgstr "無法由 '%2$s' 讀取設定檔 '%1$s'：%3$s"
+
+#: lib/dpkg/db-fsys-divert.c
+#, c-format
+msgid "conflicting diversions involving '%s' or '%s'"
+msgstr "移轉衝突，涉入其中的有 `%s' 及 `%s'"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "files list file for package '%s' is missing final newline"
+msgstr "套件 '%s' 的檔案清單，檔尾沒有換行"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "files list file for package '%s' contains empty filename"
+msgstr "套件 `%s' 的檔案清單，內有空檔名"
+
+#: lib/dpkg/db-fsys-files.c
+#, fuzzy, c-format
+#| msgid "error closing files list file for package '%s'"
+msgid "loading files list file for package '%s'"
+msgstr "關閉套件 `%s' 的檔案清單時，發生錯誤"
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid ""
+"files list file for package '%s' missing; assuming package has no files "
+"currently installed"
+msgstr "找不到套件 '%s' 的檔案清單，假設該套件目前安裝任何檔案"
+
+#: lib/dpkg/db-fsys-files.c
+msgid "(Reading database ... "
+msgstr "（讀取資料庫 ... "
+
+#: lib/dpkg/db-fsys-files.c
+#, c-format
+msgid "%d file or directory currently installed.)\n"
+msgid_plural "%d files and directories currently installed.)\n"
+msgstr[0] "目前共安裝了 %d 個檔案和目錄。）\n"
+
+#: lib/dpkg/db-fsys-load.c
+#, fuzzy, c-format
+#| msgid "cannot append to '%s'"
+msgid "cannot open %s file"
+msgstr "無法加到 '%s'"
+
+#: lib/dpkg/db-fsys-load.c
+#, fuzzy, c-format
+#| msgid "unable to create file '%s'"
+msgid "cannot get %s file metadata"
+msgstr "無法建立檔案 '%s'"
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy, c-format
+#| msgid "invalid status"
+msgid "invalid statoverride uid %s"
+msgstr "狀態無效"
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy, c-format
+#| msgid "reading statoverride file '%s'"
+msgid "invalid statoverride gid %s"
+msgstr "讀取 statoverride 檔 '%s'"
+
+#: lib/dpkg/db-fsys-override.c
+#, fuzzy, c-format
+#| msgid "reading statoverride file '%s'"
+msgid "invalid statoverride mode %s"
+msgstr "讀取 statoverride 檔 '%s'"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "reading statoverride file '%s'"
+msgstr "讀取 statoverride 檔 '%s'"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "statoverride file is missing final newline"
+msgstr "statoverride 檔檔尾沒有換行"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "statoverride file contains empty line"
+msgstr "statoverride 檔有空行"
+
+#: lib/dpkg/db-fsys-override.c
+msgid "syntax error in statoverride file"
+msgstr "statoverride 檔語法錯誤"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid ""
+"unknown system user '%s' in statoverride file; the system user got removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
+
+#: lib/dpkg/db-fsys-override.c
+msgid "unexpected end of line in statoverride file"
+msgstr "statoverride 檔行尾意外中斷"
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid ""
+"unknown system group '%s' in statoverride file; the system group got "
+"removed\n"
+"before the override, which is most probably a packaging bug, to recover you\n"
+"can remove the override manually with %s"
+msgstr ""
+
+#: lib/dpkg/db-fsys-override.c
+#, c-format
+msgid "multiple statoverrides present for file '%s'"
+msgstr "檔案 '%s' 有好幾個 statoverride 檔"
+
 #: lib/dpkg/dbmodify.c
 #, c-format
 msgid ""
-"updates directory contains file '%.250s' whose name is too long (length=%d, "
+"updates directory contains file '%s' whose name is too long (length=%d, "
 "max=%d)"
-msgstr "updates 目錄中的「%.250s」檔案名稱太長了（長度為 %d，最長能允許 %d）"
+msgstr "updates 目錄中的「%s」檔案名稱太長了（長度為 %d，最長能允許 %d）"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
@@ -379,34 +565,34 @@ msgstr "更新目錄中含有不同長度名稱的檔案（分別為 %d 和 %d�
 
 #: lib/dpkg/dbmodify.c
 #, fuzzy, c-format
-#| msgid "cannot scan updates directory '%.255s'"
+#| msgid "cannot scan updates directory '%s'"
 msgid "cannot create the dpkg updates directory %s"
-msgstr "無法掃描更新目錄 `%.255s'"
+msgstr "無法掃描更新目錄 `%s'"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "cannot scan updates directory '%.255s'"
-msgstr "無法掃描更新目錄 `%.255s'"
+msgid "cannot scan updates directory '%s'"
+msgstr "無法掃描更新目錄 `%s'"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "failed to remove incorporated update file %.255s"
-msgstr "無法刪除合併後的更新檔 %.255s"
+msgid "failed to remove incorporated update file %s"
+msgstr "無法刪除合併後的更新檔 %s"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to fill %.250s with padding"
-msgstr "無法用填料填滿 %.250s"
+msgid "unable to fill %s with padding"
+msgstr "無法用填料填滿 %s"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to flush %.250s after padding"
-msgstr "在填充後無法刷新 %.250s"
+msgid "unable to flush %s after padding"
+msgstr "在填充後無法刷新 %s"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to seek to start of %.250s after padding"
-msgstr "在填充後無法搜尋到 %.250s 的起始位置"
+msgid "unable to seek to start of %s after padding"
+msgstr "在填充後無法搜尋到 %s 的起始位置"
 
 #: lib/dpkg/dbmodify.c
 #, fuzzy, c-format
@@ -466,223 +652,38 @@ msgstr "該操作需要在 dpkg 狀態庫有著讀寫權限"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "failed to remove my own update file %.255s"
-msgstr "無法刪除自己的更新檔 %.255s"
+msgid "failed to remove my own update file %s"
+msgstr "無法刪除自己的更新檔 %s"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to write updated status of '%.250s'"
-msgstr "無法寫入 `%.250s' 的更新狀態"
+msgid "unable to write updated status of '%s'"
+msgstr "無法寫入 `%s' 的更新狀態"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to flush updated status of '%.250s'"
-msgstr "無法刷新 `%.250s' 的更新狀態"
+msgid "unable to flush updated status of '%s'"
+msgstr "無法刷新 `%s' 的更新狀態"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to truncate for updated status of '%.250s'"
-msgstr "無法縮減 `%.250s' 的更新狀態"
+msgid "unable to truncate for updated status of '%s'"
+msgstr "無法縮減 `%s' 的更新狀態"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to fsync updated status of '%.250s'"
-msgstr "無法 fsync 同步 `%.250s' 更新狀態的寫入緩衝"
+msgid "unable to fsync updated status of '%s'"
+msgstr "無法 fsync 同步 `%s' 更新狀態的寫入緩衝"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to close updated status of '%.250s'"
-msgstr "無法關閉 `%.250s' 的更新狀態"
+msgid "unable to close updated status of '%s'"
+msgstr "無法關閉 `%s' 的更新狀態"
 
 #: lib/dpkg/dbmodify.c
 #, c-format
-msgid "unable to install updated status of '%.250s'"
-msgstr "無法安裝 `%.250s' 的更新狀態"
-
-#: lib/dpkg/db-ctrl-access.c
-#, c-format
-msgid "unable to check existence of '%.250s'"
-msgstr "無法判斷 `%.250s' 是否存在"
-
-#: lib/dpkg/db-ctrl-access.c lib/dpkg/db-ctrl-upgrade.c
-msgid "cannot read info directory"
-msgstr "無法讀取 info 目錄"
-
-#: lib/dpkg/db-ctrl-format.c src/main/unpack.c
-#, c-format
-msgid "error trying to open %.250s"
-msgstr "在試圖開啟 %.250s 時發生錯誤"
-
-#: lib/dpkg/db-ctrl-format.c
-#, c-format
-msgid "corrupt info database format file '%s'"
-msgstr "資訊資料庫格式檔 '%s' 損毀"
-
-#: lib/dpkg/db-ctrl-format.c
-#, c-format
-msgid "info database format (%d) is bogus or too new; try getting a newer dpkg"
-msgstr ""
-
-#: lib/dpkg/db-ctrl-upgrade.c
-#, fuzzy, c-format
-#| msgid "Info file %s/%s not associated to any package"
-msgid "info file %s/%s not associated to any package"
-msgstr "資訊檔 %s/%s 不屬於任何套件"
-
-#: lib/dpkg/db-ctrl-upgrade.c src/main/archives.c
-#, c-format
-msgid "error creating hard link '%.255s'"
-msgstr "在建立實體連結 `%.255s' 時發生錯誤"
-
-#: lib/dpkg/db-ctrl-upgrade.c
-#, c-format
-msgid "error while writing '%s'"
-msgstr "'%s' 寫入錯誤"
-
-#: lib/dpkg/db-fsys-digest.c
-#, fuzzy, c-format
-#| msgid "files list file for package '%.250s' is missing final newline"
-msgid "control file '%s' for package '%s' is missing final newline"
-msgstr "套件 '%.250s' 的檔案清單，檔尾沒有換行"
-
-#: lib/dpkg/db-fsys-digest.c
-#, fuzzy, c-format
-#| msgid "files list file for package '%.250s' is missing final newline"
-msgid "control file '%s' for package '%s' is missing value"
-msgstr "套件 '%.250s' 的檔案清單，檔尾沒有換行"
-
-#: lib/dpkg/db-fsys-digest.c
-#, fuzzy, c-format
-#| msgid "files list file for package '%.250s' is missing final newline"
-msgid "control file '%s' for package '%s' is missing value separator"
-msgstr "套件 '%.250s' 的檔案清單，檔尾沒有換行"
-
-#: lib/dpkg/db-fsys-digest.c
-#, fuzzy, c-format
-#| msgid "files list file for package `%.250s' contains empty filename"
-msgid "control file '%s' for package '%s' contains empty filename"
-msgstr "套件 `%.250s' 的檔案清單，內有空檔名"
-
-#: lib/dpkg/db-fsys-digest.c
-#, fuzzy, c-format
-#| msgid "cannot extract control file '%s' from '%s': %s"
-msgid "loading control file '%s' for package '%s'"
-msgstr "無法由 '%2$s' 讀取設定檔 '%1$s'：%3$s"
-
-#: lib/dpkg/db-fsys-divert.c
-msgid "failed to open diversions file"
-msgstr "無法開啟移轉檔"
-
-#: lib/dpkg/db-fsys-divert.c
-msgid "failed to fstat diversions file"
-msgstr "無法 fstat 取得移轉檔的檔案資訊"
-
-#: lib/dpkg/db-fsys-divert.c
-#, c-format
-msgid "conflicting diversions involving '%.250s' or '%.250s'"
-msgstr "移轉衝突，涉入其中的有 `%.250s' 及 `%.250s'"
-
-#: lib/dpkg/db-fsys-files.c
-#, fuzzy, c-format
-#| msgid "error closing files list file for package '%.250s'"
-msgid "loading files list file for package '%s'"
-msgstr "關閉套件 `%.250s' 的檔案清單時，發生錯誤"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid ""
-"files list file for package '%.250s' missing; assuming package has no files "
-"currently installed"
-msgstr "找不到套件 '%.250s' 的檔案清單，假設該套件目前安裝任何檔案"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "files list file for package '%.250s' is missing final newline"
-msgstr "套件 '%.250s' 的檔案清單，檔尾沒有換行"
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "files list file for package '%.250s' contains empty filename"
-msgstr "套件 `%.250s' 的檔案清單，內有空檔名"
-
-#: lib/dpkg/db-fsys-files.c
-msgid "(Reading database ... "
-msgstr "（讀取資料庫 ... "
-
-#: lib/dpkg/db-fsys-files.c
-#, c-format
-msgid "%d file or directory currently installed.)\n"
-msgid_plural "%d files and directories currently installed.)\n"
-msgstr[0] "目前共安裝了 %d 個檔案和目錄。）\n"
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy, c-format
-#| msgid "invalid status"
-msgid "invalid statoverride uid %s"
-msgstr "狀態無效"
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy, c-format
-#| msgid "reading statoverride file '%.250s'"
-msgid "invalid statoverride gid %s"
-msgstr "讀取 statoverride 檔 '%.250s'"
-
-#: lib/dpkg/db-fsys-override.c
-#, fuzzy, c-format
-#| msgid "reading statoverride file '%.250s'"
-msgid "invalid statoverride mode %s"
-msgstr "讀取 statoverride 檔 '%.250s'"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "failed to open statoverride file"
-msgstr "無法開啟 statoverride 檔"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "failed to fstat statoverride file"
-msgstr "無法 fstat statoverride 檔"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "reading statoverride file '%.250s'"
-msgstr "讀取 statoverride 檔 '%.250s'"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "statoverride file is missing final newline"
-msgstr "statoverride 檔檔尾沒有換行"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "statoverride file contains empty line"
-msgstr "statoverride 檔有空行"
-
-#: lib/dpkg/db-fsys-override.c
-msgid "syntax error in statoverride file"
-msgstr "statoverride 檔語法錯誤"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid ""
-"unknown system user '%s' in statoverride file; the system user got removed\n"
-"before the override, which is most probably a packaging bug, to recover you\n"
-"can remove the override manually with %s"
-msgstr ""
-
-#: lib/dpkg/db-fsys-override.c
-msgid "unexpected end of line in statoverride file"
-msgstr "statoverride 檔行尾意外中斷"
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid ""
-"unknown system group '%s' in statoverride file; the system group got "
-"removed\n"
-"before the override, which is most probably a packaging bug, to recover you\n"
-"can remove the override manually with %s"
-msgstr ""
-
-#: lib/dpkg/db-fsys-override.c
-#, c-format
-msgid "multiple statoverrides present for file '%.250s'"
-msgstr "檔案 '%.250s' 有好幾個 statoverride 檔"
+msgid "unable to install updated status of '%s'"
+msgstr "無法安裝 `%s' 的更新狀態"
 
 #: lib/dpkg/deb-version.c
 msgid "format version with too big major component"
@@ -734,15 +735,15 @@ msgid "unable to open file '%s'"
 msgstr "無法開啟檔案 '%s'"
 
 #: lib/dpkg/dir.c src/deb/build.c src/split/join.c src/split/queue.c
-#: src/divert/main.c utils/update-alternatives.c
+#: src/divert/main.c src/main/archives.c utils/update-alternatives.c
 #, c-format
 msgid "unable to sync file '%s'"
 msgstr "無法同步檔案 '%s' 的寫入緩衝"
 
 #: lib/dpkg/dump.c
 #, c-format
-msgid "failed to write details of '%.50s' to '%.250s'"
-msgstr "無法將 `%.50s' 的詳盡資訊寫入 `%.250s'"
+msgid "failed to write details of '%s' to '%s'"
+msgstr "無法將 `%s' 的詳盡資訊寫入 `%s'"
 
 #: lib/dpkg/dump.c
 #, c-format
@@ -751,7 +752,7 @@ msgstr "無法在%s資料庫檔案上設緩衝區"
 
 #: lib/dpkg/dump.c
 #, fuzzy, c-format
-#| msgid "failed to write %s database record about '%.50s' to '%.250s'"
+#| msgid "failed to write %s database record about '%s' to '%s'"
 msgid "failed to write %s database stanza about '%s' to '%s'"
 msgstr "無法寫入關於 '%2$.50s' 到 '%3$.250s' 的%1$s資料庫記錄"
 
@@ -811,7 +812,7 @@ msgstr "查無控制檔 '%s'"
 #: lib/dpkg/fields.c
 #, fuzzy, c-format
 #| msgid "Skip invalid line: %s"
-msgid "has invalid value '%.50s'"
+msgid "has invalid value '%s'"
 msgstr "忽略無效的行：%s"
 
 #: lib/dpkg/fields.c
@@ -903,9 +904,9 @@ msgstr "在「status」欄位中的第三個字 (status)"
 
 #: lib/dpkg/fields.c
 #, fuzzy, c-format
-#| msgid "error in '%s' field string '%.250s'"
-msgid "'%s' field value '%.250s'"
-msgstr "「%s」欄位的「%.250s」字串有誤"
+#| msgid "error in '%s' field string '%s'"
+msgid "'%s' field value '%s'"
+msgstr "「%s」欄位的「%s」字串有誤"
 
 #: lib/dpkg/fields.c
 #, c-format
@@ -932,8 +933,8 @@ msgstr "`%s' 欄位，找不到套件名稱，或是應當為套件名稱的地�
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "'%s' field, invalid package name '%.255s': %s"
-msgstr "`%s' 欄位，無效的套件名稱 `%.255s'：%s"
+msgid "'%s' field, invalid package name '%s': %s"
+msgstr "`%s' 欄位，無效的套件名稱 `%s'：%s"
 
 #: lib/dpkg/fields.c
 #, c-format
@@ -944,35 +945,34 @@ msgstr "'%s' 欄位，找不到硬體平台名稱，或硬體平台名稱是亂�
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid ""
-"'%s' field, reference to '%.255s': invalid architecture name '%.255s': %s"
-msgstr "'%s' 欄位，參照 '%.255s'：硬體平台名稱 '%.255s' 有誤：%s"
+msgid "'%s' field, reference to '%s': invalid architecture name '%s': %s"
+msgstr "'%s' 欄位，參照 '%s'：硬體平台名稱 '%s' 有誤：%s"
 
 #: lib/dpkg/fields.c
 #, c-format
 msgid ""
-"'%s' field, reference to '%.255s':\n"
+"'%s' field, reference to '%s':\n"
 " bad version relationship %c%c"
 msgstr ""
-"`%s' 欄位，參照至 `%.255s'：\n"
+"`%s' 欄位，參照至 `%s'：\n"
 " 不正確的版本相依關係 %c%c"
 
 #: lib/dpkg/fields.c
 #, c-format
 msgid ""
-"'%s' field, reference to '%.255s':\n"
+"'%s' field, reference to '%s':\n"
 " '%c' is obsolete, use '%c=' or '%c%c' instead"
 msgstr ""
-"`%s' 欄位，參照至 `%.255s'：\n"
+"`%s' 欄位，參照至 `%s'：\n"
 " `%c' 已廢棄，請替而使用 `%c=' 或 `%c%c'"
 
 #: lib/dpkg/fields.c
 #, c-format
 msgid ""
-"'%s' field, reference to '%.255s':\n"
+"'%s' field, reference to '%s':\n"
 " implicit exact match on version number, suggest using '=' instead"
 msgstr ""
-"`%s' 欄位，參照至 `%.255s'：\n"
+"`%s' 欄位，參照至 `%s'：\n"
 " 未明確要求版本號完全一致，建議替而使用 `='"
 
 #: lib/dpkg/fields.c
@@ -983,34 +983,33 @@ msgstr "在「%s」欄位中只能使用明確的版本號"
 #: lib/dpkg/fields.c
 #, c-format
 msgid ""
-"'%s' field, reference to '%.255s':\n"
+"'%s' field, reference to '%s':\n"
 " version value starts with non-alphanumeric, suggest adding a space"
 msgstr ""
-"`%s' 欄位，參照至 `%.255s'：\n"
+"`%s' 欄位，參照至 `%s'：\n"
 " 版本號不是以英數字開頭，建議加一個空格"
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "'%s' field, reference to '%.255s': version unterminated"
-msgstr "`%s' 欄位，參照至 `%.255s'：版本號未終止"
+msgid "'%s' field, reference to '%s': version unterminated"
+msgstr "`%s' 欄位，參照至 `%s'：版本號未終止"
 
 #: lib/dpkg/fields.c
 #, fuzzy, c-format
-#| msgid "'%s' field, reference to '%.255s': version contains '%c'"
-msgid ""
-"'%s' field, reference to '%.255s': version contains '%c' instead of '%c'"
-msgstr "`%s' 欄位，參照至 `%.255s'：版本號含有 `%c'"
+#| msgid "'%s' field, reference to '%s': version contains '%c'"
+msgid "'%s' field, reference to '%s': version contains '%c' instead of '%c'"
+msgstr "`%s' 欄位，參照至 `%s'：版本號含有 `%c'"
 
 #: lib/dpkg/fields.c
 #, fuzzy, c-format
-#| msgid "'%s' field, reference to '%.255s': version contains '%c'"
-msgid "'%s' field, reference to '%.255s': version '%s'"
-msgstr "`%s' 欄位，參照至 `%.255s'：版本號含有 `%c'"
+#| msgid "'%s' field, reference to '%s': version contains '%c'"
+msgid "'%s' field, reference to '%s': version '%s'"
+msgstr "`%s' 欄位，參照至 `%s'：版本號含有 `%c'"
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "'%s' field, syntax error after reference to package '%.255s'"
-msgstr "`%s' 欄位，在參照至套件 `%.255s' 後的語法有誤"
+msgid "'%s' field, syntax error after reference to package '%s'"
+msgstr "`%s' 欄位，在參照至套件 `%s' 後的語法有誤"
 
 #: lib/dpkg/fields.c
 #, fuzzy, c-format
@@ -1019,39 +1018,48 @@ msgid "alternatives ('|') not allowed in '%s' field"
 msgstr "在 %s 欄位不可有可替換符號 (`|')"
 
 #: lib/dpkg/fields.c
-#, c-format
-msgid "illegal pending trigger name '%.255s': %s"
-msgstr "不合法的待執行觸發程式名稱 `%.255s': %s"
+#, fuzzy, c-format
+#| msgid "illegal pending trigger name '%s': %s"
+msgid "invalid pending trigger name '%s': %s"
+msgstr "不合法的待執行觸發程式名稱 `%s': %s"
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "duplicate pending trigger '%.255s'"
-msgstr "重複的待執行觸發程式 `%.255s'"
+msgid "duplicate pending trigger '%s'"
+msgstr "重複的待執行觸發程式 `%s'"
+
+#: lib/dpkg/fields.c
+#, fuzzy, c-format
+#| msgid "illegal package name in awaited trigger '%s': %s"
+msgid "invalid package name in awaited trigger '%s': %s"
+msgstr "在正要執行的觸發程式 `%s' 裡有不合法的套件名稱：%s"
 
 #: lib/dpkg/fields.c
 #, c-format
-msgid "illegal package name in awaited trigger '%.255s': %s"
-msgstr "在正要執行的觸發程式 `%.255s' 裡有不合法的套件名稱：%s"
+msgid "duplicate awaited trigger package '%s'"
+msgstr "重複的正要執行的觸發程式套件 `%s'"
 
-#: lib/dpkg/fields.c
-#, c-format
-msgid "duplicate awaited trigger package '%.255s'"
-msgstr "重複的正要執行的觸發程式套件 `%.255s'"
+# 參閱 stat(2)、lstat(2) 的使用手冊頁面(manpage)
+#: lib/dpkg/file.c
+#, fuzzy, c-format
+#| msgid "cannot stat pathname '%s'"
+msgid "cannot canonicalize pathname %s"
+msgstr "無法取得「%s」路徑的資訊"
 
 #: lib/dpkg/file.c
 #, c-format
-msgid "unable to stat source file '%.250s'"
-msgstr "無法取得來源檔 '%.250s' 的檔案資訊"
+msgid "unable to stat source file '%s'"
+msgstr "無法取得來源檔 '%s' 的檔案資訊"
 
 #: lib/dpkg/file.c
 #, c-format
-msgid "unable to change ownership of target file '%.250s'"
-msgstr "無法改變目標檔案 '%.250s' 的所有者"
+msgid "unable to change ownership of target file '%s'"
+msgstr "無法改變目標檔案 '%s' 的所有者"
 
 #: lib/dpkg/file.c
 #, c-format
-msgid "unable to set mode of target file '%.250s'"
-msgstr "無法設定目標檔案 '%.250s' 的權限"
+msgid "unable to set mode of target file '%s'"
+msgstr "無法設定目標檔案 '%s' 的權限"
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
@@ -1110,9 +1118,17 @@ msgstr "%s 已被另外一個程序鎖定了"
 #, fuzzy, c-format
 #| msgid "%s is locked by another process"
 msgid ""
-"%s was locked by another process with pid %d\n"
+"%s was locked by %s process with pid %d\n"
 "%s"
 msgstr "%s 已被另外一個程序鎖定了"
+
+#: lib/dpkg/file.c
+#, fuzzy
+#| msgctxt "architecture"
+#| msgid "<unknown>"
+msgctxt "process"
+msgid "<unknown>"
+msgstr "<未知>"
 
 #: lib/dpkg/file.c
 #, fuzzy, c-format
@@ -1183,18 +1199,18 @@ msgstr "'%s' 寫入錯誤"
 
 #: lib/dpkg/mustlib.c
 #, c-format
-msgid "unable to read filedescriptor flags for %.250s"
-msgstr "無法讀取 %.250s 的檔案重導的設定"
+msgid "unable to read filedescriptor flags for %s"
+msgstr "無法讀取 %s 的檔案重導的設定"
 
 #: lib/dpkg/mustlib.c
 #, c-format
-msgid "unable to set close-on-exec flag for %.250s"
-msgstr "無法在 %.250s 上設定 close-on-exec"
+msgid "unable to set close-on-exec flag for %s"
+msgstr "無法在 %s 上設定 close-on-exec"
 
 #: lib/dpkg/options-parsers.c
 #, c-format
-msgid "--%s needs a valid package name but '%.250s' is not: %s"
-msgstr "--%s 需要有效的套件名稱，不是 '%.250s'：%s"
+msgid "--%s needs a valid package name but '%s' is not: %s"
+msgstr "--%s 需要有效的套件名稱，不是 '%s'：%s"
 
 #: lib/dpkg/options.c
 #, c-format
@@ -1203,8 +1219,8 @@ msgstr "設定錯誤：%s:%d: %s"
 
 #: lib/dpkg/options.c
 #, c-format
-msgid "failed to open configuration file '%.255s' for reading: %s"
-msgstr "無法開啟設定檔 '%.255s' 來讀：%s"
+msgid "failed to open configuration file '%s' for reading: %s"
+msgstr "無法開啟設定檔 '%s' 來讀：%s"
 
 #: lib/dpkg/options.c
 #, c-format
@@ -1228,13 +1244,13 @@ msgstr "'%s' 不需參數值"
 
 #: lib/dpkg/options.c
 #, c-format
-msgid "read error in configuration file '%.255s'"
-msgstr "設定檔 `%.255s' 讀取錯誤"
+msgid "read error in configuration file '%s'"
+msgstr "設定檔 `%s' 讀取錯誤"
 
 #: lib/dpkg/options.c
 #, c-format
-msgid "error closing configuration file '%.255s'"
-msgstr "關閉設定檔 `%.255s' 時發生錯誤"
+msgid "error closing configuration file '%s'"
+msgstr "關閉設定檔 `%s' 時發生錯誤"
 
 #: lib/dpkg/options.c
 #, c-format
@@ -1277,13 +1293,13 @@ msgstr "-%c 選項並不需要參數"
 
 #: lib/dpkg/options.c src/split/main.c
 #, c-format
-msgid "invalid integer for --%s: '%.250s'"
-msgstr "--%s 所指定的數字無效：`%.250s'"
+msgid "invalid integer for --%s: '%s'"
+msgstr "--%s 所指定的數字無效：`%s'"
 
 #: lib/dpkg/options.c
 #, c-format
-msgid "invalid integer for -%c: '%.250s'"
-msgstr "-%c 的整數無效：'%.250s'"
+msgid "invalid integer for -%c: '%s'"
+msgstr "-%c 的整數無效：'%s'"
 
 #: lib/dpkg/options.c
 #, c-format
@@ -1393,29 +1409,34 @@ msgid ""
 msgstr "已安裝多份的 %4$s ，無法同時安裝 %1$s %2$s（多硬體平台：%3$s）"
 
 #: lib/dpkg/parse.c
-#, c-format
-msgid "failed to open package info file '%.255s' for reading"
-msgstr "無法開啟套件 info 檔 `%.255s' 以讀取"
+#, fuzzy, c-format
+#| msgid "failed to open package info file '%s' for reading"
+msgid "failed to open package control file '%s' for reading"
+msgstr "無法開啟套件 info 檔 `%s' 以讀取"
 
 #: lib/dpkg/parse.c
-#, c-format
-msgid "can't stat package info file '%.255s'"
-msgstr "無法取得套件的 info 檔 `%.255s' 的檔案資訊"
+#, fuzzy, c-format
+#| msgid "cannot stat package info file '%s'"
+msgid "cannot stat package control file '%s'"
+msgstr "無法取得套件的 info 檔 `%s' 的檔案資訊"
 
 #: lib/dpkg/parse.c
-#, c-format
-msgid "reading package info file '%s': %s"
+#, fuzzy, c-format
+#| msgid "reading package info file '%s': %s"
+msgid "reading package control file '%s': %s"
 msgstr "正在讀取套件的 info 檔「%s」：%s"
 
 #: lib/dpkg/parse.c
-#, c-format
-msgid "can't mmap package info file '%.255s'"
-msgstr "無法 mmap 套件的 info 檔 `%.255s'"
+#, fuzzy, c-format
+#| msgid "cannot mmap package info file '%s'"
+msgid "cannot mmap package control file '%s'"
+msgstr "無法 mmap 套件的 info 檔 `%s'"
 
 #: lib/dpkg/parse.c
-#, c-format
-msgid "reading package info file '%.255s'"
-msgstr "讀取套件 info 檔 '%.255s'"
+#, fuzzy, c-format
+#| msgid "reading package info file '%s'"
+msgid "reading package control file '%s'"
+msgstr "讀取套件 info 檔 '%s'"
 
 #: lib/dpkg/parse.c
 msgid "empty field name"
@@ -1437,8 +1458,9 @@ msgid "newline in field name '%.*s'"
 msgstr "欄位名稱 `%.*s' 中有換行"
 
 #: lib/dpkg/parse.c
-#, c-format
-msgid "MSDOS end of file (^Z) in field name '%.*s'"
+#, fuzzy, c-format
+#| msgid "MSDOS end of file (^Z) in field name '%.*s'"
+msgid "MSDOS end of file (Ctrl+Z) in field name '%.*s'"
 msgstr "「%.*s」欄位名稱中有 MSDOS 檔案結尾標記(^Z)"
 
 #: lib/dpkg/parse.c
@@ -1452,8 +1474,9 @@ msgid "end of file before value of field '%.*s' (missing final newline)"
 msgstr "「%.*s」欄位的值前面有檔案結尾標記(end of file)（缺少最末的換行）"
 
 #: lib/dpkg/parse.c
-#, c-format
-msgid "MSDOS end of file (^Z) in value of field '%.*s' (missing newline?)"
+#, fuzzy, c-format
+#| msgid "MSDOS end of file (^Z) in value of field '%.*s' (missing newline?)"
+msgid "MSDOS end of file (Ctrl+Z) in value of field '%.*s' (missing newline?)"
 msgstr "「%.*s」欄位的值之中有 MSDOS 檔案結尾標記(^Z)（沒有換行？）"
 
 #: lib/dpkg/parse.c
@@ -1468,8 +1491,8 @@ msgstr "讀取「%.*s」欄位的值時遇到檔案結尾標記（缺少最末�
 
 #: lib/dpkg/parse.c
 #, c-format
-msgid "failed to close after read: '%.255s'"
-msgstr "讀取後無法關閉：`%.255s'"
+msgid "failed to close after read: '%s'"
+msgstr "讀取後無法關閉：`%s'"
 
 #: lib/dpkg/parse.c
 msgid "several package info entries found, only one allowed"
@@ -1477,32 +1500,32 @@ msgstr "找到了多個套件的 info 項目，但只能有一個"
 
 #: lib/dpkg/parse.c
 #, c-format
-msgid "no package information in '%.255s'"
-msgstr "在 `%.255s' 中沒有套件的相關資訊"
+msgid "no package information in '%s'"
+msgstr "在 `%s' 中沒有套件的相關資訊"
 
 #: lib/dpkg/parsehelp.c
 #, fuzzy, c-format
 #| msgid ""
-#| "parsing file '%.255s' near line %d package '%.255s':\n"
-#| " %.255s"
+#| "parsing file '%s' near line %d package '%s':\n"
+#| " %s"
 msgid ""
 "parsing file '%s' near line %d package '%s':\n"
 " "
 msgstr ""
-"分析檔案 '%.255s' 的第 %d 行附近，套件為 '%.255s'：\n"
-" %.255s"
+"分析檔案 '%s' 的第 %d 行附近，套件為 '%s'：\n"
+" %s"
 
 #: lib/dpkg/parsehelp.c
 #, fuzzy, c-format
 #| msgid ""
-#| "parsing file '%.255s' near line %d:\n"
-#| " %.255s"
+#| "parsing file '%s' near line %d:\n"
+#| " %s"
 msgid ""
-"parsing file '%.255s' near line %d:\n"
+"parsing file '%s' near line %d:\n"
 " "
 msgstr ""
-"分析檔案 '%.255s' 的第 %d 行附近：\n"
-" %.255s"
+"分析檔案 '%s' 的第 %d 行附近：\n"
+" %s"
 
 #: lib/dpkg/parsehelp.c
 msgid "must start with an alphanumeric character"
@@ -1561,10 +1584,10 @@ msgstr "版本號含不合法的字元"
 msgid "invalid character in revision number"
 msgstr "修訂版號含不合法的字元"
 
-#: lib/dpkg/path-remove.c
+#: lib/dpkg/path-remove.c src/main/remove.c
 #, c-format
-msgid "unable to securely remove '%.255s'"
-msgstr "無法安全刪除 '%.255s'"
+msgid "unable to securely remove '%s'"
+msgstr "無法安全刪除 '%s'"
 
 #: lib/dpkg/path-remove.c
 msgid "rm command for cleanup"
@@ -1603,17 +1626,20 @@ msgid "version '%s' has bad syntax: %s"
 msgstr "「%s」版本號的語法不正確：%s"
 
 #: lib/dpkg/pkg-spec.c
-#, c-format
-msgid "illegal package name in specifier '%s%s%s': %s"
+#, fuzzy, c-format
+#| msgid "illegal package name in specifier '%s%s%s': %s"
+msgid "invalid package name in specifier '%s%s%s': %s"
 msgstr "在描述資料 '%s%s%s' 裡有不合法的套件名稱：%s"
 
 #: lib/dpkg/pkg-spec.c
-#, c-format
-msgid "illegal architecture name in specifier '%s:%s': %s"
+#, fuzzy, c-format
+#| msgid "illegal architecture name in specifier '%s:%s': %s"
+msgid "invalid architecture name in specifier '%s:%s': %s"
 msgstr "在描述資料 '%s:%s' 裡有不合法的硬體平台名稱：%s"
 
 #. TRANSLATORS: This is part of the progress output, it is a decimal
-#. * percentage.
+#. percentage.
+#.
 #: lib/dpkg/progress.c
 #, c-format
 msgid "%d%%"
@@ -1622,6 +1648,15 @@ msgstr ""
 #: lib/dpkg/report.c utils/update-alternatives.c
 msgid "warning"
 msgstr "警告"
+
+#: lib/dpkg/report.c
+msgid "hint"
+msgstr ""
+
+#: lib/dpkg/strvec.c
+#, c-format
+msgid "cannot grow strvec to size %zu; it would overflow"
+msgstr ""
 
 #: lib/dpkg/strwide.c
 #, c-format
@@ -1640,7 +1675,7 @@ msgstr "錯誤，無法捕捉到的訊號 %s：%s\n"
 
 #: lib/dpkg/subproc.c
 #, c-format
-msgid "unable to ignore signal %s before running %.250s"
+msgid "unable to ignore signal %s before running %s"
 msgstr "無法在執行 %2$.250s 前，忽略信號 %1$s"
 
 #: lib/dpkg/subproc.c
@@ -1653,9 +1688,10 @@ msgid "fork failed"
 msgstr "fork 失敗"
 
 #: lib/dpkg/subproc.c
-#, c-format
-msgid "%s subprocess returned error exit status %d"
-msgstr "%s 子進程傳回了 %d 錯誤退出狀態碼"
+#, fuzzy, c-format
+#| msgid "%s subprocess failed with wait status code %d"
+msgid "%s subprocess failed with exit status %d"
+msgstr "「%s」子進程失敗，並傳回了 %d 等待狀態碼(wait status code)"
 
 #: lib/dpkg/subproc.c
 #, c-format
@@ -1701,9 +1737,9 @@ msgstr "狀態無效"
 
 #: lib/dpkg/tarfn.c
 #, fuzzy
-#| msgid "reading statoverride file '%.250s'"
+#| msgid "reading statoverride file '%s'"
 msgid "invalid tar header gid field"
-msgstr "讀取 statoverride 檔 '%.250s'"
+msgstr "讀取 statoverride 檔 '%s'"
 
 #: lib/dpkg/tarfn.c
 #, fuzzy
@@ -1754,7 +1790,7 @@ msgstr "無法取得「%s」路徑的資訊"
 #: lib/dpkg/treewalk.c
 #, c-format
 msgid "cannot open directory '%s'"
-msgstr "無法開啟「%.255s」目錄"
+msgstr "無法開啟「%s」目錄"
 
 #: lib/dpkg/treewalk.c
 #, c-format
@@ -1763,9 +1799,9 @@ msgstr "目錄樹遊走(treewalk)的根節點「%s」不是個目錄"
 
 #: lib/dpkg/trigdeferred.c
 #, fuzzy, c-format
-#| msgid "unable to open/create triggers lockfile '%.250s'"
-msgid "unable to open/create triggers lock file '%.250s'"
-msgstr "無法開啟或建立觸發程式鎖定檔「%.250s」"
+#| msgid "unable to open/create triggers lockfile '%s'"
+msgid "unable to open/create triggers lock file '%s'"
+msgstr "無法開啟或建立觸發程式鎖定檔「%s」"
 
 # file_lock(&lock_fd, FILE_LOCK_WAIT, fn.buf, _("triggers area"));
 # void
@@ -1779,125 +1815,132 @@ msgstr "觸發程式區域"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "unable to open triggers deferred file '%.250s'"
-msgstr "無法開啟「%.250s」觸發程式延遲檔"
+msgid "unable to open triggers deferred file '%s'"
+msgstr "無法開啟「%s」觸發程式延遲檔"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "unable to stat triggers deferred file '%.250s'"
-msgstr "無法取得「%.250s」觸發程式延遲檔的資訊"
+msgid "unable to stat triggers deferred file '%s'"
+msgstr "無法取得「%s」觸發程式延遲檔的資訊"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "unable to open/create new triggers deferred file '%.250s'"
-msgstr "無法開啟或建立新的觸發程式延遲檔「%.250s」"
+msgid "unable to open/create new triggers deferred file '%s'"
+msgstr "無法開啟或建立新的觸發程式延遲檔「%s」"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
 msgid ""
-"syntax error in triggers deferred file '%.250s' at line %d character %zd '%s'"
-msgstr "「%.250s」觸發程式延遲檔中的第 %d 行第 %zd 字元「%s」有語法錯誤"
+"syntax error in triggers deferred file '%s' at line %d character %zd '%s'"
+msgstr "「%s」觸發程式延遲檔中的第 %d 行第 %zd 字元「%s」有語法錯誤"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "invalid package name '%.250s' in triggers deferred file '%.250s'"
-msgstr "無效的「%.250s」套件名稱位於「%.250s」觸發程式延遲檔"
+msgid "invalid package name '%s' in triggers deferred file '%s'"
+msgstr "無效的「%s」套件名稱位於「%s」觸發程式延遲檔"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "error reading triggers deferred file '%.250s'"
-msgstr "在讀取「%.250s」觸發程式延遲檔時發生錯誤"
+msgid "error reading triggers deferred file '%s'"
+msgstr "在讀取「%s」觸發程式延遲檔時發生錯誤"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "unable to write new triggers deferred file '%.250s'"
-msgstr "無法寫入新的觸發程式延遲檔「%.250s」"
+msgid "unable to write new triggers deferred file '%s'"
+msgstr "無法寫入新的觸發程式延遲檔「%s」"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "unable to close new triggers deferred file '%.250s'"
-msgstr "無法關閉新的觸發程式延遲檔「%.250s」"
+msgid "unable to close new triggers deferred file '%s'"
+msgstr "無法關閉新的觸發程式延遲檔「%s」"
 
 #: lib/dpkg/trigdeferred.c
 #, c-format
-msgid "unable to install new triggers deferred file '%.250s'"
-msgstr "無法安裝新的觸發程式延遲檔「%.250s」"
+msgid "unable to install new triggers deferred file '%s'"
+msgstr "無法安裝新的觸發程式延遲檔「%s」"
 
 #: lib/dpkg/triglib.c
 #, c-format
 msgid ""
-"invalid or unknown syntax in trigger name '%.250s' (in trigger interests for "
-"package '%.250s')"
-msgstr "觸發名稱 `%.250s' 語法不正確或未知（在套件 `%.250s' 的觸發條件中）"
+"invalid or unknown syntax in trigger name '%s' (in trigger interests for "
+"package '%s')"
+msgstr "觸發名稱 `%s' 語法不正確或未知（在套件 `%s' 的觸發條件中）"
 
 #: lib/dpkg/triglib.c
 #, c-format
-msgid "failed to open trigger interest list file '%.250s'"
-msgstr "無法開啟觸發條件檔 `%.250s'"
+msgid "failed to open trigger interest list file '%s'"
+msgstr "無法開啟觸發條件檔 `%s'"
 
 #: lib/dpkg/triglib.c
 #, c-format
-msgid "failed to rewind trigger interest file '%.250s'"
-msgstr "無法回到觸發條件檔 `%.250s' 的開頭"
+msgid "failed to rewind trigger interest file '%s'"
+msgstr "無法回到觸發條件檔 `%s' 的開頭"
+
+#: lib/dpkg/triglib.c
+#, fuzzy, c-format
+#| msgid ""
+#| "trigger interest file '%s' syntax error; illegal package name '%s': %s"
+msgid "trigger interest file '%s' syntax error; invalid package name '%s': %s"
+msgstr "觸發條件檔 `%s' 的語法有誤；不合法的套件名稱 `%s'：%s"
 
 #: lib/dpkg/triglib.c
 #, c-format
+msgid "duplicate file trigger interest for filename '%s' and package '%s'"
+msgstr "檔名 `%s' 和套件 `%s' 的檔案觸發條件重複"
+
+#: lib/dpkg/triglib.c
+#, c-format
+msgid "unable to read file triggers file '%s'"
+msgstr "無法讀取 file trigger 檔 `%s'"
+
+#: lib/dpkg/triglib.c
+#, c-format
+msgid "syntax error in file triggers file '%s'"
+msgstr "在 file trigger 檔 `%s' 裡的語法有誤"
+
+#: lib/dpkg/triglib.c
+#, fuzzy, c-format
+#| msgid ""
+#| "file triggers record mentions illegal package name '%s' (for interest in "
+#| "file '%s'): %s"
 msgid ""
-"trigger interest file '%.250s' syntax error; illegal package name '%.250s': "
-"%.250s"
-msgstr "觸發條件檔 `%.250s' 的語法有誤；不合法的套件名稱 `%.250s'：%.250s"
-
-#: lib/dpkg/triglib.c
-#, c-format
-msgid ""
-"duplicate file trigger interest for filename '%.250s' and package '%.250s'"
-msgstr "檔名 `%.250s' 和套件 `%.250s' 的檔案觸發條件重複"
-
-#: lib/dpkg/triglib.c
-#, c-format
-msgid "unable to read file triggers file '%.250s'"
-msgstr "無法讀取 file trigger 檔 `%.250s'"
-
-#: lib/dpkg/triglib.c
-#, c-format
-msgid "syntax error in file triggers file '%.250s'"
-msgstr "在 file trigger 檔 `%.255s' 裡的語法有誤"
-
-#: lib/dpkg/triglib.c
-#, c-format
-msgid ""
-"file triggers record mentions illegal package name '%.250s' (for interest in "
-"file '%.250s'): %.250s"
+"file triggers record mentions invalid package name '%s' (for interest in "
+"file '%s'): %s"
 msgstr ""
-"檔案觸發記錄中，包含不合法的套件名稱 `%.250s'（在檔案 `%.250s' 的觸發條件"
-"裡）：%.250s"
+"檔案觸發記錄中，包含不合法的套件名稱 `%s'（在檔案 `%s' 的觸發條件裡）：%s"
 
 #: lib/dpkg/triglib.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "triggers ci file '%s' contains illegal trigger syntax in trigger name "
+#| "'%s': %s"
 msgid ""
-"triggers ci file '%.250s' contains illegal trigger syntax in trigger name "
-"'%.250s': %.250s"
-msgstr ""
-"觸發程式 ci 檔 `%.250s' 的觸發程式名稱 `%.250s' 不合於觸發程式的語法：%.250s"
+"triggers package metadata file '%s' contains invalid trigger syntax in "
+"trigger name '%s': %s"
+msgstr "觸發程式 ci 檔 `%s' 的觸發程式名稱 `%s' 不合於觸發程式的語法：%s"
 
 #: lib/dpkg/triglib.c
-#, c-format
-msgid "unable to open triggers ci file '%.250s'"
-msgstr "無法開啟觸發程式 ci 檔 `%.250s'"
+#, fuzzy, c-format
+#| msgid "unable to open triggers ci file '%s'"
+msgid "unable to open triggers package metadata file '%s'"
+msgstr "無法開啟觸發程式 ci 檔 `%s'"
 
 #: lib/dpkg/triglib.c
-msgid "triggers ci file contains unknown directive syntax"
+#, fuzzy, c-format
+#| msgid "triggers ci file contains unknown directive syntax"
+msgid "triggers package metadata file '%s' contains unknown directive syntax"
 msgstr "觸發程式 ci 檔包含了未知的指令語法"
 
 #: lib/dpkg/triglib.c
-#, c-format
-msgid "triggers ci file contains unknown directive '%.250s'"
-msgstr "觸發程式 ci 檔包含了未知的指令 `%.250s'"
+#, fuzzy, c-format
+#| msgid "triggers ci file contains unknown directive '%s'"
+msgid "triggers package metadata file '%s' contains unknown directive '%s'"
+msgstr "觸發程式 ci 檔包含了未知的指令 `%s'"
 
 #: lib/dpkg/triglib.c
 #, c-format
-msgid "unable to create triggers state directory '%.250s'"
-msgstr "無法建立觸發程式狀態目錄 `%.250s'"
+msgid "unable to create triggers state directory '%s'"
+msgstr "無法建立觸發程式狀態目錄 `%s'"
 
 #: lib/dpkg/trigname.c
 msgid "empty trigger names are not permitted"
@@ -1909,24 +1952,24 @@ msgstr "觸發程式的名稱包含了不合法的字元"
 
 #: lib/dpkg/utils.c
 #, c-format
-msgid "read error in '%.250s'"
-msgstr "在 `%.250s' 中讀取錯誤"
+msgid "read error in '%s'"
+msgstr "在 `%s' 中讀取錯誤"
 
 #: lib/dpkg/utils.c
 #, c-format
-msgid "fgets gave an empty string from '%.250s'"
-msgstr "fgets 從 `%.250s' 取得了一個空字串"
+msgid "fgets gave an empty string from '%s'"
+msgstr "fgets 從 `%s' 取得了一個空字串"
 
 #: lib/dpkg/utils.c
 #, c-format
-msgid "too-long line or missing newline in '%.250s'"
-msgstr "在 `%.250s' 裡的文字太長，或少了換行符號"
+msgid "too-long line or missing newline in '%s'"
+msgstr "在 `%s' 裡的文字太長，或少了換行符號"
 
 #: lib/dpkg/utils.c
 #, fuzzy, c-format
-#| msgid "unexpected end of file in %.250s"
-msgid "unexpected end of file reading '%.250s'"
-msgstr "在 %.250s 中有預期之外的檔案結束符號"
+#| msgid "unexpected end of file in %s"
+msgid "unexpected end of file reading '%s'"
+msgstr "在 %s 中有預期之外的檔案結束符號"
 
 #: lib/dpkg/varbuf.c
 #, c-format
@@ -2004,17 +2047,17 @@ msgid "Do not chroot into maintainer script environment"
 msgstr ""
 
 #: src/common/force.c
-msgid "Always use the new config files, don't prompt"
+msgid "Always use the new config files, do not prompt"
 msgstr "永遠採用新的設定檔，不另行詢問"
 
 #: src/common/force.c
-msgid "Always use the old config files, don't prompt"
+msgid "Always use the old config files, do not prompt"
 msgstr "永遠採用舊的設定檔，不另行詢問"
 
 #: src/common/force.c
 msgid ""
 "Use the default option for new config files if one\n"
-"is available, don't prompt. If no default can be found,\n"
+"is available, do not prompt. If no default can be found,\n"
 "you will be prompted unless one of the confold or\n"
 "confnew options is also given"
 msgstr ""
@@ -2093,11 +2136,11 @@ msgstr ""
 "警告 - 使用標記 [!] 的選項，會嚴重破壞系統。\n"
 "預設啟用標記 [*] 的強制選項。\n"
 
-#: src/common/force.c src/deb/build.c src/deb/extract.c src/deb/info.c
-#: src/deb/main.c src/split/info.c src/split/main.c src/split/queue.c
-#: src/divert/main.c src/statoverride/main.c src/trigger/main.c
-#: src/query/main.c src/main/archives.c src/main/enquiry.c src/main/main.c
-#: src/main/packages.c src/main/select.c src/main/verify.c
+#: src/common/force.c src/realpath/main.c src/deb/build.c src/deb/extract.c
+#: src/deb/info.c src/deb/main.c src/split/info.c src/split/main.c
+#: src/split/queue.c src/divert/main.c src/statoverride/main.c
+#: src/trigger/main.c src/query/main.c src/main/archives.c src/main/enquiry.c
+#: src/main/main.c src/main/packages.c src/main/select.c src/main/verify.c
 msgid "<standard output>"
 msgstr "<標準輸出>"
 
@@ -2138,6 +2181,79 @@ msgstr ""
 msgid "cannot set security context for file object '%s'"
 msgstr "無法由 '%2$s' 讀取設定檔 '%1$s'：%3$s"
 
+#: src/realpath/main.c
+#, fuzzy
+#| msgid "Type dpkg-trigger --help for help about this utility."
+msgid "Use --help for help about this utility."
+msgstr "輸入 dpkg-trigger --help 以取得這個工具的說明。"
+
+#: src/realpath/main.c src/divert/main.c src/statoverride/main.c
+#, c-format
+msgid "Debian %s version %s.\n"
+msgstr "Debian %s 版本 %s。\n"
+
+#: src/realpath/main.c src/deb/main.c src/split/main.c src/divert/main.c
+#: src/statoverride/main.c src/trigger/main.c src/query/main.c src/main/main.c
+#: utils/update-alternatives.c
+#, c-format
+msgid ""
+"This is free software; see the GNU General Public License version 2 or\n"
+"later for copying conditions. There is NO warranty.\n"
+msgstr ""
+"這是自由軟體﹔軟體複製的授權條款，請參閱 GNU 通用公用許可證\n"
+"第二版或更新的版本。本軟體【不】提供任何保証。\n"
+
+#: src/realpath/main.c
+#, fuzzy, c-format
+#| msgid ""
+#| "Usage: %s [<option> ...] <command>\n"
+#| "\n"
+msgid ""
+"Usage: %s [<option>...] <pathname>\n"
+"\n"
+msgstr ""
+"用法：%s [<選項> ...] <命令>\n"
+"\n"
+
+#: src/realpath/main.c
+#, c-format
+msgid ""
+"Options:\n"
+"  -z, --zero                   end output line with NUL, not newline.\n"
+"      --instdir <directory>    set the root directory.\n"
+"      --root <directory>       set the root directory.\n"
+"      --version                show the version.\n"
+"      --help                   show this help message.\n"
+"\n"
+msgstr ""
+
+#: src/realpath/main.c
+msgid "too many levels of symbolic links"
+msgstr ""
+
+#: src/realpath/main.c
+#, fuzzy, c-format
+#| msgid "cannot append to '%s'"
+msgid "cannot read link '%s'"
+msgstr "無法加到 '%s'"
+
+#: src/realpath/main.c src/main/archives.c src/main/configure.c
+#, fuzzy, c-format
+#| msgid "symbolic link '%s' size has changed from %jd to %zd"
+msgid "symbolic link '%s' size has changed from %jd to %zd"
+msgstr "符號連結 '%s' 的大小由 %jd 變為 %zd"
+
+#: src/realpath/main.c
+#, fuzzy
+#| msgid "--%s needs a single argument"
+msgid "need a pathname argument"
+msgstr "--%s 需要一個參數"
+
+#: src/realpath/main.c
+#, c-format
+msgid "link '%s' includes root prefix '%s'"
+msgstr ""
+
 #: src/deb/build.c
 #, c-format
 msgid "failed to write filename to tar pipe (%s)"
@@ -2172,20 +2288,19 @@ msgstr "控制目錄的權限為 %03lo 並不正確（必須 >=0755 且 <=0755�
 
 #: src/deb/build.c
 #, c-format
-msgid "maintainer script '%.50s' is not a plain file or symlink"
-msgstr "維護者程式 `%.50s' 不是普通檔案或符號連結"
+msgid "maintainer script '%s' is not a plain file or symlink"
+msgstr "維護者程式 `%s' 不是普通檔案或符號連結"
 
 #: src/deb/build.c
 #, c-format
 msgid ""
-"maintainer script '%.50s' has bad permissions %03lo (must be >=0555 and "
-"<=0775)"
-msgstr "維護者程式 `%.50s' 的權限 %03lo 有問題（必須 >=0555 且 <=0775）"
+"maintainer script '%s' has bad permissions %03lo (must be >=0555 and <=0775)"
+msgstr "維護者程式 `%s' 的權限 %03lo 有問題（必須 >=0555 且 <=0775）"
 
 #: src/deb/build.c
 #, c-format
-msgid "maintainer script '%.50s' is not stattable"
-msgstr "無法取得維護者程式 `%.50s' 的狀態"
+msgid "maintainer script '%s' is not stattable"
+msgstr "無法取得維護者程式 `%s' 的狀態"
 
 #: src/deb/build.c
 msgid "error opening conffiles file"
@@ -2197,9 +2312,9 @@ msgstr "在以 fgets 讀取 conffile 時，傳回了空字串"
 
 #: src/deb/build.c src/main/unpack.c
 #, fuzzy, c-format
-#| msgid "conffile name '%.50s...' is too long, or missing final newline"
+#| msgid "conffile name '%s...' is too long, or missing final newline"
 msgid "conffile name '%s' is too long, or missing final newline"
-msgstr "conffile 名稱 '%.50s' 太長，或檔尾沒有換行"
+msgstr "conffile 名稱 '%s' 太長，或檔尾沒有換行"
 
 #: src/deb/build.c
 msgid "empty and whitespace-only lines are not allowed in conffiles"
@@ -2234,13 +2349,13 @@ msgstr "conffile 檔名 '%s' 的結尾有空白字元"
 
 #: src/deb/build.c
 #, c-format
-msgid "conffile '%.250s' does not appear in package"
-msgstr "在套件裡沒有找到 conffile `%.250s'"
+msgid "conffile '%s' does not appear in package"
+msgstr "在套件裡沒有找到 conffile `%s'"
 
 #: src/deb/build.c
 #, c-format
-msgid "conffile '%.250s' is not stattable"
-msgstr "無法取得 conffile `%.50s' 的狀態"
+msgid "conffile '%s' is not stattable"
+msgstr "無法取得 conffile `%s' 的狀態"
 
 #: src/deb/build.c
 #, c-format
@@ -2262,7 +2377,7 @@ msgid "error reading conffiles file"
 msgstr "在讀取 conffile 檔時發生錯誤"
 
 #: src/deb/build.c
-msgid "package name has characters that aren't lowercase alphanums or '-+.'"
+msgid "package name has characters that are not lowercase alphanums or '-+.'"
 msgstr "套件的名字含有不是英數字或 `-+.' 的字元"
 
 #: src/deb/build.c
@@ -2277,6 +2392,28 @@ msgid "'%s' contains user-defined Priority value '%s'"
 msgstr "'%s' 包含使用者自訂的優先等級 '%s'"
 
 #: src/deb/build.c
+#, fuzzy, c-format
+#| msgid "unable to create file '%s'"
+msgid "cannot get root directory %s metadata"
+msgstr "無法建立檔案 '%s'"
+
+#: src/deb/build.c
+#, fuzzy, c-format
+#| msgid "treewalk root %s is not a directory"
+msgid "root pathname %s is not a directory"
+msgstr "目錄樹遊走(treewalk)的根節點「%s」不是個目錄"
+
+#: src/deb/build.c
+#, c-format
+msgid "root directory %s has unusual owner or group %u:%u"
+msgstr ""
+
+#: src/deb/build.c
+#, c-format
+msgid "you might need to pass --root-owner-group, see <%s> for further details"
+msgstr ""
+
+#: src/deb/build.c
 #, c-format
 msgid "ignoring %d warning about the control file(s)"
 msgid_plural "ignoring %d warnings about the control file(s)"
@@ -2284,13 +2421,13 @@ msgstr[0] "忽略 %d 個有關控制檔的警告"
 
 #: src/deb/build.c
 #, c-format
-msgid "unable to check for existence of archive '%.250s'"
-msgstr "無法判斷壓縮檔 `%.250s' 是否存在"
+msgid "unable to check for existence of archive '%s'"
+msgstr "無法判斷壓縮檔 `%s' 是否存在"
 
 #: src/deb/build.c src/main/script.c
 #, c-format
-msgid "failed to chdir to '%.255s'"
-msgstr "無法 chdir 到 `%.255s'"
+msgid "failed to chdir to '%s'"
+msgstr "無法 chdir 到 `%s'"
 
 #: src/deb/build.c
 #, fuzzy
@@ -2304,9 +2441,9 @@ msgstr "以 tar -cf <壓縮>"
 
 #: src/deb/build.c src/split/split.c
 #, fuzzy, c-format
-#| msgid "unable to create '%.255s'"
-msgid "unable to parse timestamp '%.255s'"
-msgstr "無法建立 `%.255s'"
+#| msgid "unable to create '%s'"
+msgid "unable to parse timestamp '%s'"
+msgstr "無法建立 `%s'"
 
 #: src/deb/build.c utils/update-alternatives.c
 #, c-format
@@ -2368,18 +2505,14 @@ msgstr "`%s' 寫入錯誤"
 msgid "cannot copy '%s' into archive '%s': %s"
 msgstr "無法將 '%s' 複製到壓縮檔 '%s' 中：%s"
 
-#: src/deb/extract.c
-msgid "shell command to move files"
-msgstr "搬移檔案的 shell 指令"
-
 #: src/deb/extract.c src/split/main.c
 #, c-format
-msgid "unexpected end of file in %s in %.255s"
+msgid "unexpected end of file in %s in %s"
 msgstr "在 %2$.255s 中的 %1$s 有預期之外的檔案結束符號"
 
 #: src/deb/extract.c src/split/main.c
 #, c-format
-msgid "error reading %s from file %.255s"
+msgid "error reading %s from file %s"
 msgstr "無法從檔案 %2$.255s 讀取 %1$s"
 
 #: src/deb/extract.c
@@ -2392,14 +2525,14 @@ msgstr "壓縮檔成員標頭"
 
 #: src/deb/extract.c
 #, c-format
-msgid "file '%.250s' is corrupt - bad archive header magic"
-msgstr "檔案 '%.250s' 損毀 - 壓縮標頭識別碼錯誤"
+msgid "file '%s' is corrupt - bad archive header magic"
+msgstr "檔案 '%s' 損毀 - 壓縮標頭識別碼錯誤"
 
 #: src/deb/extract.c
 #, fuzzy, c-format
-#| msgid "file '%.250s' is not a debian binary archive (try dpkg-split?)"
-msgid "file '%.250s' is not a Debian binary archive (try dpkg-split?)"
-msgstr "檔案 `%.250s' 不是 debian 的二進制壓縮檔（試試 dpkg-split？）"
+#| msgid "file '%s' is not a debian binary archive (try dpkg-split?)"
+msgid "file '%s' is not a Debian binary archive (try dpkg-split?)"
+msgstr "檔案 `%s' 不是 debian 的二進制壓縮檔（試試 dpkg-split？）"
 
 #: src/deb/extract.c
 msgid "archive information header member"
@@ -2426,20 +2559,39 @@ msgstr "無法在 '%s' 中，跳過壓縮檔成員：%s"
 
 #: src/deb/extract.c
 #, fuzzy, c-format
-#| msgid "archive '%.250s' contains not understood data member %.*s, giving up"
+#| msgid "archive '%s' contains not understood data member %.*s, giving up"
 msgid "archive '%s' uses unknown compression for member '%.*s', giving up"
-msgstr "壓縮檔 '%.250s' 有不明的資料成員 %.*s，放棄執行"
+msgstr "壓縮檔 '%s' 有不明的資料成員 %.*s，放棄執行"
 
 #: src/deb/extract.c
 #, c-format
-msgid "archive '%.250s' contains two control members, giving up"
-msgstr "壓縮檔 '%.250s' 有兩個控制成員，放棄執行"
+msgid "archive '%s' contains two control members, giving up"
+msgstr "壓縮檔 '%s' 有兩個控制成員，放棄執行"
 
 #: src/deb/extract.c
 #, fuzzy, c-format
-#| msgid "archive '%.250s' contains not understood data member %.*s, giving up"
+#| msgid "archive has malformed control member size '%s'"
+msgid "archive '%s' has zero sized tar member %.*s"
+msgstr "壓縮檔的控制成員大小 '%s' 格式混亂"
+
+#: src/deb/extract.c
+#, fuzzy, c-format
+#| msgid "archive '%s' contains not understood data member %.*s, giving up"
 msgid "archive '%s' has premature member '%.*s' before '%s', giving up"
-msgstr "壓縮檔 '%.250s' 有不明的資料成員 %.*s，放棄執行"
+msgstr "壓縮檔 '%s' 有不明的資料成員 %.*s，放棄執行"
+
+#: src/deb/extract.c
+#, fuzzy, c-format
+#| msgid "archive '%s' contains two control members, giving up"
+msgid "archive '%s' contains an overflowing member '%.*s' size"
+msgstr "壓縮檔 '%s' 有兩個控制成員，放棄執行"
+
+#: src/deb/extract.c
+#, c-format
+msgid ""
+"archive '%s' is truncated or corrupt, expected more data than available (%jd "
+"> %jd)"
+msgstr ""
 
 #: src/deb/extract.c
 #, c-format
@@ -2449,6 +2601,12 @@ msgid ""
 msgstr ""
 " 新式 Debian 套件，版本 %d.%d。\n"
 " 大小為 %jd 位元組：控制資訊封存檔=%jd 位元組。\n"
+
+#: src/deb/extract.c
+#, fuzzy, c-format
+#| msgid "archive has invalid format version: %s"
+msgid "archive '%s' has unsupported format version: %d.%d"
+msgstr "壓縮檔格式版號無效：%s"
 
 #: src/deb/extract.c
 msgid "archive control member size"
@@ -2483,8 +2641,8 @@ msgstr ""
 
 #: src/deb/extract.c
 #, c-format
-msgid "'%.255s' is not a Debian format archive"
-msgstr "「%.255s」不是一個 Debian 格式的封存檔"
+msgid "'%s' is not a Debian format archive"
+msgstr "「%s」不是一個 Debian 格式的封存檔"
 
 #: src/deb/extract.c
 #, c-format
@@ -2557,6 +2715,11 @@ msgstr ""
 msgid "--%s does not support (yet) reading the .deb from standard input"
 msgstr ""
 
+#: src/deb/info.c src/statoverride/main.c src/main/archives.c
+#, c-format
+msgid "error setting permissions of '%s'"
+msgstr "在替 `%s' 設定權限時發生錯誤"
+
 #: src/deb/info.c src/main/unpack.c
 msgid "unable to create temporary directory"
 msgstr "無法建立暫時工作目錄"
@@ -2568,13 +2731,14 @@ msgstr "無法由 '%2$s' 讀取設定檔 '%1$s'：%3$s"
 
 #: src/deb/info.c
 #, c-format
-msgid "'%.255s' contains no control component '%.255s'"
-msgstr "'%.255s' 中沒有控制元件 '%.255s'"
+msgid "'%s' contains no control component '%s'"
+msgstr "'%s' 中沒有控制元件 '%s'"
 
 #: src/deb/info.c
-#, c-format
-msgid "open component '%.255s' (in %.255s) failed in an unexpected way"
-msgstr "在開啟元件 `%.255s'（位於 %.255s）時以意想不到的方式失敗了"
+#, fuzzy, c-format
+#| msgid "cannot append to '%s'"
+msgid "cannot open file '%s'"
+msgstr "無法加到 '%s'"
 
 #: src/deb/info.c
 #, c-format
@@ -2584,23 +2748,20 @@ msgstr[0] "找不到 %d 個要求的控制元件"
 
 #: src/deb/info.c utils/update-alternatives.c
 #, c-format
-msgid "cannot scan directory '%.255s'"
-msgstr "無法掃瞄目錄 `%.255s'"
+msgid "cannot scan directory '%s'"
+msgstr "無法掃瞄目錄 `%s'"
 
 #: src/deb/info.c
-#, c-format
-msgid "cannot stat '%.255s' (in '%.255s')"
-msgstr "無法取得 `%.255s' 的檔案資訊（於 `%.255s'）"
+#, fuzzy, c-format
+#| msgid "unable to create file '%s'"
+msgid "cannot get file '%s' metadata"
+msgstr "無法建立檔案 '%s'"
 
 #: src/deb/info.c
-#, c-format
-msgid "cannot open '%.255s' (in '%.255s')"
-msgstr "無法開啟 `%.255s'（位於 `%.255s'）"
-
-#: src/deb/info.c
-#, c-format
-msgid "failed to read '%.255s' (in '%.255s')"
-msgstr "無法讀取 `%.255s'（位於 `%.255s'）"
+#, fuzzy, c-format
+#| msgid "cannot append to '%s'"
+msgid "cannot read file '%s'"
+msgstr "無法加到 '%s'"
 
 #: src/deb/info.c
 #, c-format
@@ -2615,8 +2776,8 @@ msgstr " %7jd 位元組，%5d 行    %c  %-20.127s %.127s\n"
 
 #: src/deb/info.c
 #, c-format
-msgid "     not a plain file          %.255s\n"
-msgstr "     不是普通檔案              %.255s\n"
+msgid "     not a plain file          %s\n"
+msgstr "     不是普通檔案              %s\n"
 
 #: src/deb/info.c
 msgid "no 'control' file in control archive!"
@@ -2636,17 +2797,6 @@ msgstr "--%s 需要剛好一個參數"
 #, c-format
 msgid "Debian '%s' package archive backend version %s.\n"
 msgstr "Debian「%s」套件封存檔後端版本 %s。\n"
-
-#: src/deb/main.c src/split/main.c src/divert/main.c src/statoverride/main.c
-#: src/trigger/main.c src/query/main.c src/main/main.c
-#: utils/update-alternatives.c
-#, c-format
-msgid ""
-"This is free software; see the GNU General Public License version 2 or\n"
-"later for copying conditions. There is NO warranty.\n"
-msgstr ""
-"這是自由軟體﹔軟體複製的授權條款，請參閱 GNU 通用公用許可證\n"
-"第二版或更新的版本。本軟體【不】提供任何保証。\n"
 
 #: src/deb/main.c src/divert/main.c src/query/main.c src/main/main.c
 #, fuzzy, c-format
@@ -2684,11 +2834,11 @@ msgid ""
 "  -I|--info <deb> [<cfile>...]     Show info to stdout.\n"
 "  -W|--show <deb>                  Show information on package(s)\n"
 "  -f|--field <deb> [<cfield>...]   Show field(s) to stdout.\n"
-"  -e|--control <deb> [<directory>] Extract control info.\n"
-"  -x|--extract <deb> <directory>   Extract files.\n"
-"  -X|--vextract <deb> <directory>  Extract & list files.\n"
+"  -e|--control <deb> [<directory>] Extract metadata files.\n"
+"  -x|--extract <deb> <directory>   Extract filesystem files.\n"
+"  -X|--vextract <deb> <directory>  Extract and list filesystem files.\n"
 "  -R|--raw-extract <deb> <directory>\n"
-"                                   Extract control info and files.\n"
+"                                   Extract metadata and filesystem files.\n"
 "  --ctrl-tarfile <deb>             Output control tarfile.\n"
 "  --fsys-tarfile <deb>             Output filesystem tarfile.\n"
 "\n"
@@ -2768,18 +2918,18 @@ msgid ""
 "      --deb-format=<format>        Select archive format.\n"
 "                                     Allowed values: 0.939000, 2.0 "
 "(default).\n"
-"      --nocheck                    Suppress control file check (build bad\n"
-"                                     packages).\n"
+"      --no-check                   Suppress all checks (build bad "
+"packages).\n"
+"      --nocheck                    Alias for --no-check.\n"
 "      --root-owner-group           Forces the owner and groups to root.\n"
 "      --threads-max=<threads>      Use at most <threads> with compressor.\n"
 "      --[no-]uniform-compression   Use the compression params on all "
 "members.\n"
-"  -z#                              Set the compression level when building.\n"
-"  -Z<type>                         Set the compression type used when "
-"building.\n"
+"  -Z, --compression=<compressor>   Set build compression type.\n"
 "                                     Allowed types: gzip, xz, zstd, none.\n"
-"  -S<strategy>                     Set the compression strategy when "
-"building.\n"
+"  -z, --compression-level=<level>  Set build compression level.\n"
+"  -S, --compression-strategy=<name>\n"
+"                                   Set build compression strategy.\n"
 "                                     Allowed values: none; extreme (xz);\n"
 "                                     filtered, huffman, rle, fixed (gzip).\n"
 "\n"
@@ -2809,8 +2959,8 @@ msgid ""
 "  A format is a string that will be output for each package. The format\n"
 "  can include the standard escape sequences \\n (newline), \\r (carriage\n"
 "  return) or \\\\ (plain backslash). Package information can be included\n"
-"  by inserting variable references to package fields using the ${var[;"
-"width]}\n"
+"  by inserting variable references to package fields using the $"
+"{var[;width]}\n"
 "  syntax. Fields will be right-aligned unless the width is negative in "
 "which\n"
 "  case left alignment will be used.\n"
@@ -2894,7 +3044,7 @@ msgstr "「%s」壓縮類型不適用於 uniform compression"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - bad digit (code %d) in %s"
+msgid "file '%s' is corrupt - bad digit (code %d) in %s"
 msgstr "檔案 `%1$.250s' 已損毀 - 在 %3$s 中有無效數字（代碼為 %2$d）"
 
 #: src/split/info.c
@@ -2904,33 +3054,45 @@ msgstr "檔案 '%s' 已損毀 - %s 的整數超過範圍"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - %.250s missing"
-msgstr "檔案 `%.250s' 已損毀 - 沒有 %.250s"
+msgid "file '%s' is corrupt - %s missing"
+msgstr "檔案 `%s' 已損毀 - 沒有 %s"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - missing newline after %.250s"
-msgstr "檔案 `%.250s' 已損毀 - 在 %.250s 後沒有換行符號"
+msgid "file '%s' is corrupt - missing newline after %s"
+msgstr "檔案 `%s' 已損毀 - 在 %s 後沒有換行符號"
 
 #: src/split/info.c
 #, c-format
-msgid "error reading %.250s"
-msgstr "在讀取 %.250s 時發生錯誤"
+msgid "error reading %s"
+msgstr "在讀取 %s 時發生錯誤"
+
+#: src/split/info.c
+#, fuzzy
+#| msgid "archive member header"
+msgid "ar header"
+msgstr "壓縮檔成員標頭"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - bad magic at end of first header"
-msgstr "檔案 `%.250s' 已損毀 - 在第一個檔案標頭的末尾有不正確的識別碼"
+msgid "file '%s' is corrupt - bad magic at end of first header"
+msgstr "檔案 `%s' 已損毀 - 在第一個檔案標頭的末尾有不正確的識別碼"
+
+#: src/split/info.c
+#, fuzzy
+#| msgid "archive information header member"
+msgid "reading header member"
+msgstr "壓縮檔資訊標頭成員"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - bad padding character (code %d)"
-msgstr "檔案 `%.250s' 已損毀 - 不合宜的填充字元（代碼 %d）"
+msgid "file '%s' is corrupt - bad padding character (code %d)"
+msgstr "檔案 `%s' 已損毀 - 不合宜的填充字元（代碼 %d）"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - nulls in info section"
-msgstr "檔案 `%.250s' 已損毀 - 資訊區段中有 null"
+msgid "file '%s' is corrupt - nulls in info section"
+msgstr "檔案 `%s' 已損毀 - 資訊區段中有 null"
 
 #: src/split/info.c
 msgid "format version number"
@@ -2938,13 +3100,13 @@ msgstr "版本版號"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' has invalid format version: %s"
-msgstr "檔案 '%.250s' 的格式版本無效：%s"
+msgid "file '%s' has invalid format version: %s"
+msgstr "檔案 '%s' 的格式版本無效：%s"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is format version %d.%d; get a newer dpkg-split"
-msgstr "檔案 '%.250s' 的格式版本為 %d.%d：請升級 dpkg-split"
+msgid "file '%s' is format version %d.%d; get a newer dpkg-split"
+msgstr "檔案 '%s' 的格式版本為 %d.%d：請升級 dpkg-split"
 
 #: src/split/info.c
 msgid "package name"
@@ -2960,8 +3122,8 @@ msgstr "套件檔 MD5 檢碼"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - bad MD5 checksum '%.250s'"
-msgstr "檔案 `%.250s' 損毀 - MD5 檢碼 `%.250s' 錯誤"
+msgid "file '%s' is corrupt - bad MD5 checksum '%s'"
+msgstr "檔案 `%s' 損毀 - MD5 檢碼 `%s' 錯誤"
 
 #: src/split/info.c
 msgid "archive total size"
@@ -2977,8 +3139,8 @@ msgstr "壓縮分割號"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - no slash between archive part numbers"
-msgstr "檔案 '%.250s' 損毀 - 壓縮分割號間沒有斜線"
+msgid "file '%s' is corrupt - no slash between archive part numbers"
+msgstr "檔案 '%s' 損毀 - 壓縮分割號間沒有斜線"
 
 #: src/split/info.c
 msgid "number of archive parts"
@@ -2986,8 +3148,8 @@ msgstr "壓縮分割數"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - bad number of archive parts"
-msgstr "檔案 '%.250s' 已損毀 - 壓縮分割數錯誤"
+msgid "file '%s' is corrupt - bad number of archive parts"
+msgstr "檔案 '%s' 已損毀 - 壓縮分割數錯誤"
 
 #: src/split/info.c
 msgid "archive parts number"
@@ -2995,47 +3157,51 @@ msgstr "壓縮分割號"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - bad archive part number"
-msgstr "檔案 '%.250s' 已損毀 - 壓縮分割號錯誤"
+msgid "file '%s' is corrupt - bad archive part number"
+msgstr "檔案 '%s' 已損毀 - 壓縮分割號錯誤"
 
 #: src/split/info.c
 msgid "package architecture"
 msgstr "套件硬體平台"
 
 #: src/split/info.c
-#, c-format
-msgid "file '%.250s' is corrupt - bad magic at end of second header"
-msgstr "檔案 `%.250s' 損毀 - 第二個標頭檔尾的識別碼錯誤"
+msgid "reading data part member ar header"
+msgstr ""
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - second member is not data member"
-msgstr "檔案 `%.250s' 損毀 - 第二個成員不是資料成員"
+msgid "file '%s' is corrupt - bad magic at end of second header"
+msgstr "檔案 `%s' 損毀 - 第二個標頭檔尾的識別碼錯誤"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - wrong number of parts for quoted sizes"
-msgstr "檔案 `%.250s' 損毀 - 該單位大小產生的分割數不符"
+msgid "file '%s' is corrupt - second member is not data member"
+msgstr "檔案 `%s' 損毀 - 第二個成員不是資料成員"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - size is wrong for quoted part number"
-msgstr "檔案 `%.250s' 損毀 - 該分割號的大小錯誤"
+msgid "file '%s' is corrupt - wrong number of parts for quoted sizes"
+msgstr "檔案 `%s' 損毀 - 該單位大小產生的分割數不符"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is corrupt - too short"
-msgstr "檔案 `%.250s' 損毀 - 檔案太小"
+msgid "file '%s' is corrupt - size is wrong for quoted part number"
+msgstr "檔案 `%s' 損毀 - 該分割號的大小錯誤"
 
 #: src/split/info.c
 #, c-format
-msgid "cannot open archive part file '%.250s'"
-msgstr "無法開啟套件檔的分割檔 `%.250s'"
+msgid "file '%s' is corrupt - too short"
+msgstr "檔案 `%s' 損毀 - 檔案太小"
 
 #: src/split/info.c
 #, c-format
-msgid "file '%.250s' is not an archive part"
-msgstr "檔案 `%.250s' 不是壓縮分割檔"
+msgid "cannot open archive part file '%s'"
+msgstr "無法開啟套件檔的分割檔 `%s'"
+
+#: src/split/info.c
+#, c-format
+msgid "file '%s' is not an archive part"
+msgstr "檔案 `%s' 不是壓縮分割檔"
 
 #: src/split/info.c
 #, c-format
@@ -3091,13 +3257,13 @@ msgstr[0] "由 %2$d 個分割檔合成套件 %1$s："
 
 #: src/split/join.c
 #, c-format
-msgid "unable to open output file '%.250s'"
-msgstr "無法開啟輸出檔 `%.250s'"
+msgid "unable to open output file '%s'"
+msgstr "無法開啟輸出檔 `%s'"
 
 #: src/split/join.c
 #, c-format
-msgid "unable to (re)open input part file '%.250s'"
-msgstr "無法（重新）開啟做為輸入之用的分割檔 `%.250s'"
+msgid "unable to (re)open input part file '%s'"
+msgstr "無法（重新）開啟做為輸入之用的分割檔 `%s'"
 
 #: src/split/join.c
 #, c-format
@@ -3116,13 +3282,13 @@ msgstr "完成\n"
 
 #: src/split/join.c
 #, c-format
-msgid "files '%.250s' and '%.250s' are not parts of the same file"
-msgstr "檔案 `%.250s' 和 `%.250s' 並不同屬一個檔案的分割檔"
+msgid "files '%s' and '%s' are not parts of the same file"
+msgstr "檔案 `%s' 和 `%s' 並不同屬一個檔案的分割檔"
 
 #: src/split/join.c
 #, c-format
-msgid "there are several versions of part %d - at least '%.250s' and '%.250s'"
-msgstr "第 %d 個分割檔有好幾個版本 - 至少有 `%.250s' 和 `%.250s'"
+msgid "there are several versions of part %d - at least '%s' and '%s'"
+msgstr "第 %d 個分割檔有好幾個版本 - 至少有 `%s' 和 `%s'"
 
 #: src/split/join.c
 #, c-format
@@ -3184,15 +3350,14 @@ msgid ""
 "  -o, --output <file>              Filename, for -j (default is\n"
 "                                     <package>_<version>_<arch>.deb).\n"
 "  -Q, --npquiet                    Be quiet when -a is not a part.\n"
-"      --msdos                      Generate 8.3 filenames.\n"
 "\n"
 msgstr ""
 "選項：\n"
 "  --depotdir <目錄>                使用 <目錄> 代替 %s/%s。\n"
 "  -S|--partsize <大小>             單位為 KiB，用於 -s。（預設為 450）\n"
 "  -o|--output <檔案>               檔名，用於 -j。\n"
-"                                   （預設為 <套件名>_<版本>_<硬體平台>."
-"deb）\n"
+"                                   （預設為 <套件名>_<版本>_<硬體平台"
+">.deb）\n"
 "  -Q|--npquiet                     當 -a 不是分割檔時，不顯示訊息。\n"
 "  --msdos                          產生 8.3 的檔名。\n"
 "\n"
@@ -3230,8 +3395,8 @@ msgstr "<標準錯誤>"
 
 #: src/split/queue.c
 #, c-format
-msgid "unable to read depot directory '%.250s'"
-msgstr "無法讀取暫存目錄 `%.250s'"
+msgid "unable to read depot directory '%s'"
+msgstr "無法讀取暫存目錄 `%s'"
 
 #: src/split/queue.c
 msgid "--auto requires the use of the --output option"
@@ -3243,29 +3408,29 @@ msgstr "--auto 只需一個分割檔的名稱作為參數"
 
 #: src/split/queue.c
 #, c-format
-msgid "unable to read part file '%.250s'"
-msgstr "無法讀取分割檔 `%.250s'"
+msgid "unable to read part file '%s'"
+msgstr "無法讀取分割檔 `%s'"
 
 #: src/split/queue.c
 #, c-format
-msgid "File '%.250s' is not part of a multipart archive.\n"
-msgstr "檔案 `%.250s' 並非套件檔中的一個分割檔。\n"
+msgid "File '%s' is not part of a multipart archive.\n"
+msgstr "檔案 `%s' 並非套件檔中的一個分割檔。\n"
 
 #: src/split/queue.c
 #, fuzzy, c-format
 #| msgid "cannot open directory '%s'"
 msgid "cannot create directory %s"
-msgstr "無法開啟「%.255s」目錄"
+msgstr "無法開啟「%s」目錄"
 
 #: src/split/queue.c
 #, c-format
-msgid "unable to reopen part file '%.250s'"
-msgstr "無法重新開啟分割檔 `%.250s'"
+msgid "unable to reopen part file '%s'"
+msgstr "無法重新開啟分割檔 `%s'"
 
 #: src/split/queue.c
 #, c-format
-msgid "unable to open new depot file '%.250s'"
-msgstr "無法開啟新的暫存檔 `%.250s'"
+msgid "unable to open new depot file '%s'"
+msgstr "無法開啟新的暫存檔 `%s'"
 
 #: src/split/queue.c
 #, c-format
@@ -3274,8 +3439,8 @@ msgstr "無法解壓縮套件分割 '%s'：%s"
 
 #: src/split/queue.c
 #, c-format
-msgid "unable to rename new depot file '%.250s' to '%.250s'"
-msgstr "無法將新的暫存檔 `%.250s' 重新命名為 `%.250s'"
+msgid "unable to rename new depot file '%s' to '%s'"
+msgstr "無法將新的暫存檔 `%s' 重新命名為 `%s'"
 
 #: src/split/queue.c
 #, c-format
@@ -3288,8 +3453,8 @@ msgstr " 和 "
 
 #: src/split/queue.c
 #, c-format
-msgid "unable to delete used-up depot file '%.250s'"
-msgstr "無法刪除用畢的暫存檔 `%.250s'"
+msgid "unable to delete used-up depot file '%s'"
+msgstr "無法刪除用畢的暫存檔 `%s'"
 
 #: src/split/queue.c src/trigger/main.c src/main/enquiry.c src/main/select.c
 #: src/main/update.c
@@ -3304,8 +3469,8 @@ msgstr "在暫存目錄中留下了一些多餘檔案：\n"
 
 #: src/split/queue.c
 #, c-format
-msgid "unable to stat '%.250s'"
-msgstr "無法取得 `%.250s' 的檔案資訊"
+msgid "unable to stat '%s'"
+msgstr "無法取得 `%s' 的檔案資訊"
 
 #: src/split/queue.c
 #, c-format
@@ -3329,8 +3494,8 @@ msgstr "套件 %s：分割"
 
 #: src/split/queue.c
 #, c-format
-msgid "part file '%.250s' is not a plain file"
-msgstr "分割檔 `%.250s' 並非一般檔案"
+msgid "part file '%s' is not a plain file"
+msgstr "分割檔 `%s' 並非一般檔案"
 
 #: src/split/queue.c
 #, c-format
@@ -3339,8 +3504,8 @@ msgstr "（合計 %jd 位元組）\n"
 
 #: src/split/queue.c
 #, c-format
-msgid "unable to discard '%.250s'"
-msgstr "無法忽略 `%.250s'"
+msgid "unable to discard '%s'"
+msgstr "無法忽略 `%s'"
 
 #: src/split/queue.c
 #, c-format
@@ -3357,8 +3522,8 @@ msgstr ""
 
 #: src/split/split.c
 #, c-format
-msgid "unable to open source file '%.250s'"
-msgstr "無法開啟來源檔 `%.250s'"
+msgid "unable to open source file '%s'"
+msgstr "無法開啟來源檔 `%s'"
 
 #: src/split/split.c
 msgid "unable to fstat source file"
@@ -3366,8 +3531,8 @@ msgstr "無法 fstat 取得來源檔的檔案資訊"
 
 #: src/split/split.c
 #, c-format
-msgid "source file '%.250s' not a plain file"
-msgstr "來源檔 `%.250s' 並非一般檔案"
+msgid "source file '%s' not a plain file"
+msgstr "來源檔 `%s' 並非一般檔案"
 
 #: src/split/split.c src/main/configure.c src/main/verify.c
 #, fuzzy, c-format
@@ -3401,11 +3566,6 @@ msgstr "--split 最多需要一個來源檔和目的路徑前綴做為參數"
 msgid "Use --help for help about diverting files."
 msgstr "請用 --help，參閱檔案移轉的說明。"
 
-#: src/divert/main.c src/statoverride/main.c
-#, c-format
-msgid "Debian %s version %s.\n"
-msgstr "Debian %s 版本 %s。\n"
-
 #: src/divert/main.c
 #, c-format
 msgid ""
@@ -3436,7 +3596,7 @@ msgstr ""
 #| "  --divert <divert-to>     the name used by other packages' versions.\n"
 #| "  --rename                 actually move the file aside (or back).\n"
 #| "  --admindir <directory>   set the directory with the diversions file.\n"
-#| "  --test                   don't do anything, just demonstrate.\n"
+#| "  --test                   do not do anything, just demonstrate.\n"
 #| "  --quiet                  quiet operation, minimal output.\n"
 #| "  --help                   show this help message.\n"
 #| "  --version                show the version.\n"
@@ -3453,7 +3613,7 @@ msgid ""
 "  --admindir <directory>   set the directory with the diversions file.\n"
 "  --instdir <directory>    set the root directory, but not the admin dir.\n"
 "  --root <directory>       set the directory of the root filesystem.\n"
-"  --test                   don't do anything, just demonstrate.\n"
+"  --test                   do not do anything, just demonstrate.\n"
 "  --quiet                  quiet operation, minimal output.\n"
 "  --help                   show this help message.\n"
 "  --version                show the version.\n"
@@ -3486,7 +3646,7 @@ msgstr ""
 #: src/divert/main.c
 msgid ""
 "please specify --no-rename explicitly, the default will change to --rename "
-"in 1.20.x"
+"not before 1.23.x"
 msgstr ""
 
 #: src/divert/main.c utils/update-alternatives.c
@@ -3531,7 +3691,7 @@ msgstr "重新命名：刪除重複的舊連結 '%s'"
 #: src/divert/main.c
 #, c-format
 msgid "unable to remove copied source file '%s'"
-msgstr "無法刪除來源檔 '%.250s' 的複本"
+msgstr "無法刪除來源檔 '%s' 的複本"
 
 #: src/divert/main.c
 #, c-format
@@ -3733,13 +3893,8 @@ msgstr "查無控制檔 '%s'"
 
 #: src/statoverride/main.c src/main/archives.c
 #, c-format
-msgid "error setting ownership of '%.255s'"
-msgstr "在替 `%.255s' 設定所有權時發生錯誤"
-
-#: src/statoverride/main.c src/main/archives.c
-#, c-format
-msgid "error setting permissions of '%.255s'"
-msgstr "在替 `%.255s' 設定權限時發生錯誤"
+msgid "error setting ownership of '%s'"
+msgstr "在替 `%s' 設定所有權時發生錯誤"
 
 #: src/statoverride/main.c
 #, c-format
@@ -3830,7 +3985,7 @@ msgstr ""
 #| "processing.\n"
 #| "  --no-await                       No package needs to await the "
 #| "processing.\n"
-#| "  --no-act                         Just test - don't actually change "
+#| "  --no-act                         Just test - do not actually change "
 #| "anything.\n"
 #| "\n"
 msgid ""
@@ -3842,7 +3997,7 @@ msgid ""
 "  --await                          Package needs to await the processing.\n"
 "  --no-await                       No package needs to await the "
 "processing.\n"
-"  --no-act                         Just test - don't actually change "
+"  --no-act                         Just test - do not actually change "
 "anything.\n"
 "\n"
 msgstr ""
@@ -3864,14 +4019,15 @@ msgid "takes one argument, the trigger name"
 msgstr "需要一個參數：觸發程式名稱"
 
 #: src/trigger/main.c
-#, c-format
-msgid "illegal awaited package name '%.250s': %.250s"
-msgstr "不合法的等待套件名稱 '%.250s'：%.250s"
+#, fuzzy, c-format
+#| msgid "illegal awaited package name '%s': %s"
+msgid "invalid awaited package name '%s': %s"
+msgstr "不合法的等待套件名稱 '%s'：%s"
 
 #: src/trigger/main.c
 #, c-format
-msgid "invalid trigger name '%.250s': %.250s"
-msgstr "不正確的觸發程式名稱 `%.250s'：%.250s"
+msgid "invalid trigger name '%s': %s"
+msgstr "不正確的觸發程式名稱 `%s'：%s"
 
 #: src/trigger/main.c
 msgid "triggers data directory not yet created"
@@ -3887,22 +4043,35 @@ msgid "no packages found matching %s"
 msgstr "找不到符合 %s 的套件"
 
 #. TRANSLATORS: This is the header that appears on 'dpkg-query -l'. The
-#. * string should remain under 80 characters. The uppercase letters in
-#. * the state values denote the abbreviated letter that will appear on
-#. * the first three columns, which should ideally match the English one
-#. * (e.g. Remove → supRimeix), see dpkg-query(1) for further details. The
-#. * translated message can use additional lines if needed.
+#. string should remain under 80 characters. The uppercase letters in
+#. the state values denote the abbreviated letter that will appear on
+#. the first three columns, which should ideally match the English one
+#. (e.g. Remove → supRimeix), see dpkg-query(1) for further details. The
+#. translated message can use additional lines if needed. The ASCII art
+#. can use Unicode box characters.
+#.
 #: src/query/main.c
+#, fuzzy
+#| msgid ""
+#| "Desired=Unknown/Install/Remove/Purge/Hold\n"
+#| "| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-"
+#| "pend\n"
+#| "|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)\n"
 msgid ""
-"Desired=Unknown/Install/Remove/Purge/Hold\n"
-"| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-"
+"+-- Desired=Unknown/Install/Remove/Purge/Hold\n"
+"|+- Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-"
 "pend\n"
-"|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)\n"
+"||+ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)\n"
 msgstr ""
 "要求=U:未知/I:安裝/R:刪除/P:清除/H:保留\n"
 "| 狀態=N:未安裝/I:已安裝/C:設定檔/U:已解開/F:半設定/H:半安裝/W:待觸發/T:未觸"
 "發\n"
 "|/ 錯誤?=(無)/R:須重新安裝（狀態，錯誤：大寫=有問題）\n"
+
+#: src/query/main.c
+msgctxt "query-list-header"
+msgid "|"
+msgstr ""
 
 #: src/query/main.c
 msgid "Name"
@@ -3919,6 +4088,21 @@ msgstr "硬體平台"
 #: src/query/main.c
 msgid "Description"
 msgstr "簡介"
+
+#: src/query/main.c
+msgctxt "query-list-header"
+msgid "+++-"
+msgstr ""
+
+#: src/query/main.c
+msgctxt "query-list-header"
+msgid "="
+msgstr ""
+
+#: src/query/main.c
+msgctxt "query-list-header"
+msgid "-"
+msgstr ""
 
 #: src/query/main.c
 #, fuzzy
@@ -4120,141 +4304,133 @@ msgstr "由 dpkg-deb 的輸入轉向讀取資料時，發生錯誤"
 
 #: src/main/archives.c
 #, c-format
-msgid "cannot skip padding for file '%.255s': %s"
-msgstr "無法跳過 '%.255s' 檔尾的空白：%s"
+msgid "cannot skip padding for file '%s': %s"
+msgstr "無法跳過 '%s' 檔尾的空白：%s"
 
 #: src/main/archives.c
 #, c-format
-msgid "cannot skip file '%.255s' (replaced or excluded?) from pipe: %s"
-msgstr "無法由輸入轉向中，跳過檔案 '%.255s'（取代或排除掉了？）：%s"
+msgid "cannot skip file '%s' (replaced or excluded?) from pipe: %s"
+msgstr "無法由輸入轉向中，跳過檔案 '%s'（取代或排除掉了？）：%s"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to create '%.255s' (while processing '%.255s')"
+msgid "unable to create '%s' (while processing '%s')"
 msgstr "處理 `%2$.255s' 時，無法產生 `%1$.255s'"
 
 #: src/main/archives.c
 #, c-format
-msgid "cannot copy extracted data for '%.255s' to '%.255s': %s"
-msgstr "無法將 '%.255s' 的解壓縮資料複製到 '%.250s'：%s"
+msgid "cannot copy extracted data for '%s' to '%s': %s"
+msgstr "無法將 '%s' 的解壓縮資料複製到 '%s'：%s"
 
 #: src/main/archives.c
 #, c-format
-msgid "error closing/writing '%.255s'"
-msgstr "在關閉/寫入 `%.255s' 時發生錯誤"
+msgid "error closing/writing '%s'"
+msgstr "在關閉/寫入 `%s' 時發生錯誤"
 
 #: src/main/archives.c
 #, c-format
-msgid "error creating pipe '%.255s'"
-msgstr "在建立輸出入轉向 `%.255s' 時發生錯誤"
+msgid "error creating pipe '%s'"
+msgstr "在建立輸出入轉向 `%s' 時發生錯誤"
 
 #: src/main/archives.c
 #, c-format
-msgid "error creating device '%.255s'"
-msgstr "在建立裝置檔 `%.255s' 時發生錯誤"
+msgid "error creating device '%s'"
+msgstr "在建立裝置檔 `%s' 時發生錯誤"
 
 #: src/main/archives.c utils/update-alternatives.c
 #, c-format
-msgid "error creating symbolic link '%.255s'"
-msgstr "在建立符號連結 `%.255s' 時發生錯誤"
+msgid "error creating symbolic link '%s'"
+msgstr "在建立符號連結 `%s' 時發生錯誤"
 
 #: src/main/archives.c
 #, c-format
-msgid "error creating directory '%.255s'"
-msgstr "在建立目錄 `%.255s' 時發生錯誤"
+msgid "error creating directory '%s'"
+msgstr "在建立目錄 `%s' 時發生錯誤"
 
 #: src/main/archives.c
 #, fuzzy, c-format
-#| msgid "cannot compute MD5 hash for tar file '%.255s': %s"
-msgid "cannot compute MD5 digest for file '%.255s' in tar archive: %s"
-msgstr "無法計算 tar 檔 '%.255s' 的 MD5 雜湊值：%s"
+#| msgid "cannot compute MD5 hash for tar file '%s': %s"
+msgid "cannot compute MD5 digest for file '%s' in tar archive: %s"
+msgstr "無法計算 tar 檔 '%s' 的 MD5 雜湊值：%s"
 
 #: src/main/archives.c
 #, c-format
-msgid "error setting timestamps of '%.255s'"
-msgstr "在替 `%.255s' 設定時間戳記時發生錯誤"
+msgid "error setting timestamps of '%s'"
+msgstr "在替 `%s' 設定時間戳記時發生錯誤"
 
 #: src/main/archives.c
 #, c-format
-msgid "error setting ownership of symlink '%.255s'"
-msgstr "在替符號連結 `%.255s' 設定所有權時發生錯誤"
+msgid "error setting ownership of symlink '%s'"
+msgstr "在替符號連結 `%s' 設定所有權時發生錯誤"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to read link '%.255s'"
-msgstr "無法讀取符號連結 `%.255s'"
-
-#: src/main/archives.c src/main/configure.c
-#, c-format
-msgid "symbolic link '%.250s' size has changed from %jd to %zd"
-msgstr "符號連結 '%.250s' 的大小由 %jd 變為 %zd"
+msgid "unable to read link '%s'"
+msgstr "無法讀取符號連結 `%s'"
 
 #: src/main/archives.c
 #, c-format
 msgid ""
-"trying to overwrite shared '%.250s', which is different from other instances "
-"of package %.250s"
-msgstr "正要覆蓋共用檔 '%.250s'，它是套件 %.250s 的另一個不同檔案"
+"trying to overwrite shared '%s', which is different from other instances of "
+"package %s"
+msgstr "正要覆蓋共用檔 '%s'，它是套件 %s 的另一個不同檔案"
 
 #: src/main/archives.c
 #, c-format
-msgid "failed to stat (dereference) existing symlink '%.250s'"
-msgstr "無法取得（反引用）已存在的符號連結 `%.250s' 的檔案資訊"
+msgid "failed to stat (dereference) existing symlink '%s'"
+msgstr "無法取得（反引用）已存在的符號連結 `%s' 的檔案資訊"
 
 #: src/main/archives.c
 #, c-format
 msgid ""
-"failed to stat (dereference) proposed new symlink target '%.250s' for "
-"symlink '%.250s'"
-msgstr ""
-"無法取得（反引用）將要指向新符號連結 `%.250s' 的符號連結 `%.250s' 的檔案資訊"
+"failed to stat (dereference) proposed new symlink target '%s' for symlink "
+"'%s'"
+msgstr "無法取得（反引用）將要指向新符號連結 `%s' 的符號連結 `%s' 的檔案資訊"
 
 #: src/main/archives.c
 #, fuzzy, c-format
-#| msgid "cannot open archive part file '%.250s'"
-msgid "newline not allowed in archive object name '%.255s'"
-msgstr "無法開啟套件檔的分割檔 `%.250s'"
+#| msgid "cannot open archive part file '%s'"
+msgid "newline not allowed in archive object name '%s'"
+msgstr "無法開啟套件檔的分割檔 `%s'"
 
 #: src/main/archives.c
 #, fuzzy, c-format
-#| msgid "conffile '%.250s' does not appear in package"
+#| msgid "conffile '%s' does not appear in package"
 msgid "conffile '%s' marked for removal on upgrade, shipped in package"
-msgstr "在套件裡沒有找到 conffile `%.250s'"
+msgstr "在套件裡沒有找到 conffile `%s'"
 
 #: src/main/archives.c
 #, c-format
 msgid ""
-"trying to overwrite '%.250s', which is the diverted version of "
-"'%.250s' (package: %.100s)"
-msgstr "試圖覆蓋 `%.250s'，它是 `%.250s'（套件：%.100s）移轉後的版本"
+"trying to overwrite '%s', which is the diverted version of '%s' (package: %s)"
+msgstr "試圖覆蓋 `%s'，它是 `%s'（套件：%s）移轉後的版本"
 
 #: src/main/archives.c
 #, c-format
-msgid "trying to overwrite '%.250s', which is the diverted version of '%.250s'"
-msgstr "試圖覆蓋 `%.250s'，它是 `%.250s' 移轉後的版本"
+msgid "trying to overwrite '%s', which is the diverted version of '%s'"
+msgstr "試圖覆蓋 `%s'，它是 `%s' 移轉後的版本"
 
 #: src/main/archives.c
 #, fuzzy, c-format
-#| msgid "unable to stat '%.255s' (which I was about to install)"
-msgid "unable to stat '%.255s' (which was about to be installed)"
-msgstr "無法取得 `%.255s' 的檔案資訊（正要安裝這個檔案）"
+#| msgid "unable to stat '%s' (which I was about to install)"
+msgid "unable to stat '%s' (which was about to be installed)"
+msgstr "無法取得 `%s' 的檔案資訊（正要安裝這個檔案）"
 
 #: src/main/archives.c
 #, c-format
 msgid ""
-"unable to clean up mess surrounding '%.255s' before installing another "
-"version"
-msgstr "在安裝另一版本前，無法清理 `%.255s' 的混亂狀態"
+"unable to clean up mess surrounding '%s' before installing another version"
+msgstr "在安裝另一版本前，無法清理 `%s' 的混亂狀態"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to stat restored '%.255s' before installing another version"
-msgstr "在安裝另一版本前，無法取得回復後的 `%.255s' 的檔案資訊"
+msgid "unable to stat restored '%s' before installing another version"
+msgstr "在安裝另一版本前，無法取得回復後的 `%s' 的檔案資訊"
 
 #: src/main/archives.c
 #, c-format
-msgid "archive contained object '%.255s' of unknown type 0x%x"
-msgstr "壓縮檔包含物件 `%.255s'，型別 0x%x 不名"
+msgid "archive contained object '%s' of unknown type 0x%x"
+msgstr "壓縮檔包含物件 `%s'，型別 0x%x 不名"
 
 #: src/main/archives.c
 #, c-format
@@ -4268,51 +4444,47 @@ msgid "Replaced by files in installed package %s (%s) ...\n"
 msgstr "被替換成已安裝套件 %s 裡的檔案...\n"
 
 #: src/main/archives.c
-#, c-format
-msgid ""
-"trying to overwrite directory '%.250s' in package %.250s %.250s with "
-"nondirectory"
+#, fuzzy, c-format
+#| msgid ""
+#| "trying to overwrite directory '%s' in package %s %s with nondirectory"
+msgid "trying to overwrite directory '%s' in package %s (%s) with nondirectory"
 msgstr "正要用套件 %2$.250s %3$.250s 裡一個普通檔案，取代目錄 '%1$.250s'"
 
 #: src/main/archives.c
-#, c-format
-msgid "trying to overwrite '%.250s', which is also in package %.250s %.250s"
-msgstr "正要取代 '%.250s'，它也是套件 %.250s %.250s 的檔案"
+#, fuzzy, c-format
+#| msgid "trying to overwrite '%s', which is also in package %s %s"
+msgid "trying to overwrite '%s', which is also in package %s (%s)"
+msgstr "正要取代 '%s'，它也是套件 %s %s 的檔案"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to move aside '%.255s' to install new version"
-msgstr "無法將 `%.255s' 移開以安裝新的版本"
+msgid "unable to move aside '%s' to install new version"
+msgstr "無法將 `%s' 移開以安裝新的版本"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to make backup symlink for '%.255s'"
-msgstr "無法替 `%.255s' 做一個符號連結備份"
+msgid "unable to make backup symlink for '%s'"
+msgstr "無法替 `%s' 做一個符號連結備份"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to chown backup symlink for '%.255s'"
-msgstr "無法 chown `%.255s' 的符號連結備份"
+msgid "unable to chown backup symlink for '%s'"
+msgstr "無法 chown `%s' 的符號連結備份"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to make backup link of '%.255s' before installing new version"
-msgstr "無法在安裝新的版本前，為 `%.255s' 做一個符號連結備份"
+msgid "unable to make backup link of '%s' before installing new version"
+msgstr "無法在安裝新的版本前，為 `%s' 做一個符號連結備份"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to install new version of '%.255s'"
-msgstr "無法安裝 `%.255s' 的新版本"
+msgid "unable to install new version of '%s'"
+msgstr "無法安裝 `%s' 的新版本"
 
 #: src/main/archives.c
 #, c-format
-msgid "unable to open '%.255s'"
-msgstr "無法建立 '%.255s'"
-
-#: src/main/archives.c
-#, c-format
-msgid "unable to sync file '%.255s'"
-msgstr "無法同步檔案 '%.255s' 的寫入緩衝"
+msgid "unable to open '%s'"
+msgstr "無法建立 '%s'"
 
 #: src/main/archives.c
 #, fuzzy, c-format
@@ -4439,16 +4611,16 @@ msgstr "忽略損壞，將強制繼續安裝！"
 #: src/main/archives.c
 #, c-format
 msgid ""
-"installing %.250s would break %.250s, and\n"
+"installing %s would break %s, and\n"
 " deconfiguration is not permitted (--auto-deconfigure might help)"
 msgstr ""
-"安裝 %.250s 將會毀損 %.250s，\n"
+"安裝 %s 將會毀損 %s，\n"
 " 且不打算要清除設定（--auto-deconfigure 也許有用）"
 
 #: src/main/archives.c
 #, c-format
-msgid "installing %.250s would break existing software"
-msgstr "安裝 %.250s 將會毀損現有的軟體"
+msgid "installing %s would break existing software"
+msgstr "安裝 %s 將會毀損現有的軟體"
 
 #: src/main/archives.c
 #, c-format
@@ -4483,8 +4655,8 @@ msgstr "好，會為了 %2$s 移除 %1$s"
 
 #: src/main/archives.c
 #, c-format
-msgid "conflicting packages - not installing %.250s"
-msgstr "套件衝突 - 不會安裝 %.250s"
+msgid "conflicting packages - not installing %s"
+msgstr "套件衝突 - 不會安裝 %s"
 
 #: src/main/archives.c
 msgid "ignoring conflict, may proceed anyway!"
@@ -4527,46 +4699,49 @@ msgid "Skipping unselected package %s.\n"
 msgstr "略過未選的套件 %s。\n"
 
 #: src/main/archives.c
-#, c-format
-msgid "version %.250s of %.250s already installed, skipping"
-msgstr "已安裝 %.250s 版的 %.250s，略過"
+#, fuzzy, c-format
+#| msgid "version %s of %s already installed, skipping"
+msgid "package %s (%s) with same version already installed, skipping"
+msgstr "已安裝 %s 版的 %s，略過"
 
 #: src/main/archives.c
-#, c-format
-msgid "downgrading %.250s from %.250s to %.250s"
-msgstr "將 %.250s 從 %.250s 降級到 %.250s"
+#, fuzzy, c-format
+#| msgid "downgrading %s from %s to %s"
+msgid "downgrading %s (%s) to (%s)"
+msgstr "將 %s 從 %s 降級到 %s"
 
 #: src/main/archives.c
-#, c-format
-msgid "will not downgrade %.250s from %.250s to %.250s, skipping"
-msgstr "不會將 %.250s 從 %.250s 降級到 %.250s，略過"
+#, fuzzy, c-format
+#| msgid "will not downgrade %s from %s to %s, skipping"
+msgid "will not downgrade %s (%s) to (%s), skipping"
+msgstr "不會將 %s 從 %s 降級到 %s，略過"
 
 #: src/main/cleanup.c
 #, c-format
 msgid ""
-"unable to remove newly-installed version of '%.250s' to allow reinstallation "
-"of backup copy"
-msgstr "無法移除 `%.250s' 的新安裝版本以便能重新以備份副本安裝"
+"unable to remove newly-installed version of '%s' to allow reinstallation of "
+"backup copy"
+msgstr "無法移除 `%s' 的新安裝版本以便能重新以備份副本安裝"
 
 #: src/main/cleanup.c
 #, c-format
-msgid "unable to restore backup version of '%.250s'"
-msgstr "無法回復為 `%.250s' 的備份版本"
+msgid "unable to restore backup version of '%s'"
+msgstr "無法回復為 `%s' 的備份版本"
 
 #: src/main/cleanup.c
 #, c-format
-msgid "unable to remove backup copy of '%.250s'"
-msgstr "無法刪除 '%.250s' 的備份檔"
+msgid "unable to remove backup copy of '%s'"
+msgstr "無法刪除 '%s' 的備份檔"
 
 #: src/main/cleanup.c
 #, c-format
-msgid "unable to remove newly-installed version of '%.250s'"
-msgstr "無法移除 `%.250s' 的新安裝版本"
+msgid "unable to remove newly-installed version of '%s'"
+msgstr "無法移除 `%s' 的新安裝版本"
 
 #: src/main/cleanup.c
 #, c-format
-msgid "unable to remove newly-extracted version of '%.250s'"
-msgstr "無法移除 `%.250s' 的新解壓版本"
+msgid "unable to remove newly-extracted version of '%s'"
+msgstr "無法移除 `%s' 的新解壓版本"
 
 #: src/main/configure.c
 #, c-format
@@ -4692,7 +4867,7 @@ msgid "Useful environment variables:\n"
 msgstr ""
 
 #: src/main/configure.c
-msgid "Type 'exit' when you're done.\n"
+msgid "Type 'exit' when you are done.\n"
 msgstr "完成後，請輸入 `exit'。\n"
 
 #: src/main/configure.c
@@ -4701,13 +4876,13 @@ msgstr "conffile 命令列"
 
 #: src/main/configure.c
 #, c-format
-msgid "unable to stat new distributed conffile '%.250s'"
-msgstr "無法取得新發佈的 conffile '%.250s' 的檔案資訊"
+msgid "unable to stat new distributed conffile '%s'"
+msgstr "無法取得新發佈的 conffile '%s' 的檔案資訊"
 
 #: src/main/configure.c
 #, c-format
-msgid "unable to stat current installed conffile '%.250s'"
-msgstr "無法取得現已安裝的 conffile `%.250s' 的檔案資訊"
+msgid "unable to stat current installed conffile '%s'"
+msgstr "無法取得現已安裝的 conffile `%s' 的檔案資訊"
 
 #: src/main/configure.c
 #, c-format
@@ -4722,33 +4897,33 @@ msgstr ""
 
 #: src/main/configure.c
 #, c-format
-msgid "%s: failed to remove old backup '%.250s': %s"
-msgstr "%s：無法刪除舊備份檔 '%.250s'：%s"
+msgid "%s: failed to remove old backup '%s': %s"
+msgstr "%s：無法刪除舊備份檔 '%s'：%s"
 
 #: src/main/configure.c
 #, c-format
-msgid "%s: failed to rename '%.250s' to '%.250s': %s"
-msgstr "%s：無法將 '%.250s' 重新命名為 '%.250s'：%s"
+msgid "%s: failed to rename '%s' to '%s': %s"
+msgstr "%s：無法將 '%s' 重新命名為 '%s'：%s"
 
 #: src/main/configure.c src/main/unpack.c
 #, c-format
-msgid "%s: failed to remove '%.250s': %s"
+msgid "%s: failed to remove '%s': %s"
 msgstr "%s：無法刪除 '%s'：%s"
 
 #: src/main/configure.c
 #, c-format
-msgid "%s: failed to remove old distributed version '%.250s': %s"
-msgstr "%s：無法移除舊發佈版 '%.250s'：%s"
+msgid "%s: failed to remove old distributed version '%s': %s"
+msgstr "%s：無法移除舊發佈版 '%s'：%s"
 
 #: src/main/configure.c
 #, c-format
-msgid "%s: failed to remove '%.250s' (before overwrite): %s"
-msgstr "%s：無法在取代檔案前，刪除 '%.250s'：%s"
+msgid "%s: failed to remove '%s' (before overwrite): %s"
+msgstr "%s：無法在取代檔案前，刪除 '%s'：%s"
 
 #: src/main/configure.c
 #, c-format
-msgid "%s: failed to link '%.250s' to '%.250s': %s"
-msgstr "%s：無法建立 '%.250s' 指向 '%.250s' 的連結：%s"
+msgid "%s: failed to link '%s' to '%s': %s"
+msgstr "%s：無法建立 '%s' 指向 '%s' 的連結：%s"
 
 #: src/main/configure.c
 #, c-format
@@ -4757,8 +4932,8 @@ msgstr "安裝新版的設定檔 %s ...\n"
 
 #: src/main/configure.c utils/update-alternatives.c
 #, c-format
-msgid "unable to install '%.250s' as '%.250s'"
-msgstr "無法將 `%.250s' 安裝為 `%.250s'"
+msgid "unable to install '%s' as '%s'"
+msgstr "無法將 `%s' 安裝為 `%s'"
 
 #: src/main/configure.c
 #, c-format
@@ -4767,17 +4942,17 @@ msgstr "未曾安裝名為 `%s' 的套件，無法設定"
 
 #: src/main/configure.c
 #, c-format
-msgid "package %.250s is already installed and configured"
-msgstr "套件 %.250s 已安裝並設定完成"
+msgid "package %s is already installed and configured"
+msgstr "套件 %s 已安裝並設定完成"
 
 #: src/main/configure.c
 #, c-format
 msgid ""
-"package %.250s is not ready for configuration\n"
-" cannot configure (current status '%.250s')"
+"package %s is not ready for configuration\n"
+" cannot configure (current status '%s')"
 msgstr ""
-"套件 %.250s 還無法設定\n"
-" 不能設定（目前狀態 `%.250s'）"
+"套件 %s 還無法設定\n"
+" 不能設定（目前狀態 `%s'）"
 
 #: src/main/configure.c
 #, c-format
@@ -4786,9 +4961,13 @@ msgid ""
 msgstr "%2$s 尚未準備好（目前的狀態為 '%3$s'），套件 %1$s 無法設定"
 
 #: src/main/configure.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "package %s %s cannot be configured because %s is at a different version "
+#| "(%s)"
 msgid ""
-"package %s %s cannot be configured because %s is at a different version (%s)"
+"package %s (%s) cannot be configured because %s is at a different version "
+"(%s)"
 msgstr "%3$s 版本 (%4$s) 不同，套件 %1$s %2$s 無法設定"
 
 #: src/main/configure.c
@@ -4860,16 +5039,16 @@ msgstr ""
 #: src/main/configure.c
 #, c-format
 msgid ""
-"%s: conffile '%.250s' resolves to degenerate filename\n"
+"%s: conffile '%s' resolves to degenerate filename\n"
 " ('%s' is a symlink to '%s')"
 msgstr ""
-"%s：conffile '%.250s' 指向了有問題的檔名\n"
+"%s：conffile '%s' 指向了有問題的檔名\n"
 "（'%s' 是指向 '%s' 的符號連結）"
 
 #: src/main/configure.c
 #, c-format
-msgid "%s: conffile '%.250s' is not a plain file or symlink (= '%s')"
-msgstr "%s：conffile '%.250s' 並非普通檔案或符號連結 (= '%s')"
+msgid "%s: conffile '%s' is not a plain file or symlink (= '%s')"
+msgstr "%s：conffile '%s' 並非普通檔案或符號連結 (= '%s')"
 
 #: src/main/configure.c
 #, fuzzy, c-format
@@ -4914,83 +5093,83 @@ msgstr "%s 加強了 %s"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s is to be removed.\n"
-msgstr "  即將移除 %.250s。\n"
+msgid "  %s is to be removed.\n"
+msgstr "  即將移除 %s。\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s is to be deconfigured.\n"
-msgstr "  即將清除 %.250s 的設定。\n"
+msgid "  %s is to be deconfigured.\n"
+msgstr "  即將清除 %s 的設定。\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s is to be installed, but is version %.250s.\n"
-msgstr "  即將安裝 %.250s，不過卻是版本 %.250s。\n"
+msgid "  %s is to be installed, but is version %s.\n"
+msgstr "  即將安裝 %s，不過卻是版本 %s。\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s is installed, but is version %.250s.\n"
-msgstr "  已安裝了 %.250s，不過卻是版本 %.250s。\n"
+msgid "  %s is installed, but is version %s.\n"
+msgstr "  已安裝了 %s，不過卻是版本 %s。\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s is unpacked, but has never been configured.\n"
-msgstr "  已解開了 %.250s，但是它還沒有被設定過。\n"
+msgid "  %s is unpacked, but has never been configured.\n"
+msgstr "  已解開了 %s，但是它還沒有被設定過。\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s is unpacked, but is version %.250s.\n"
-msgstr "  已經解開了 %.250s，不過卻是版本 %.250s。\n"
+msgid "  %s is unpacked, but is version %s.\n"
+msgstr "  已經解開了 %s，不過卻是版本 %s。\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s latest configured version is %.250s.\n"
-msgstr "  上次設定 %.250s 時，版本為 %.250s。\n"
+msgid "  %s latest configured version is %s.\n"
+msgstr "  上次設定 %s 時，版本為 %s。\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s is %s.\n"
-msgstr "  %.250s 現為 %s。\n"
+msgid "  %s is %s.\n"
+msgstr "  %s 現為 %s。\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s provides %.250s but is to be removed.\n"
-msgstr "  %.250s 提供了 %.250s，但會被移除。\n"
+msgid "  %s provides %s but is to be removed.\n"
+msgstr "  %s 提供了 %s，但會被移除。\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s provides %.250s but is to be deconfigured.\n"
-msgstr "  %.250s 提供了 %.250s，但要清除它的設定。\n"
+msgid "  %s provides %s but is to be deconfigured.\n"
+msgstr "  %s 提供了 %s，但要清除它的設定。\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s provides %.250s but is %s.\n"
-msgstr "  %.250s 提供了 %.250s 但現在是 %s。\n"
+msgid "  %s provides %s but is %s.\n"
+msgstr "  %s 提供了 %s 但現在是 %s。\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s is not installed.\n"
-msgstr "  %.250s 沒有被安裝。\n"
+msgid "  %s is not installed.\n"
+msgstr "  %s 沒有被安裝。\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s (version %.250s) is to be installed.\n"
-msgstr "  即將安裝 %.250s（版本 %.250s）。\n"
+msgid "  %s (version %s) is to be installed.\n"
+msgstr "  即將安裝 %s（版本 %s）。\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s (version %.250s) is present and %s.\n"
-msgstr "  %.250s（版本 %.250s）已存在且 %s。\n"
+msgid "  %s (version %s) is present and %s.\n"
+msgstr "  %s（版本 %s）已存在且 %s。\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s provides %.250s and is to be installed.\n"
-msgstr "  %.250s 提供了 %.250s，且將會被安裝。\n"
+msgid "  %s provides %s and is to be installed.\n"
+msgstr "  %s 提供了 %s，且將會被安裝。\n"
 
 #: src/main/depcon.c
 #, c-format
-msgid "  %.250s provides %.250s and is present and %s.\n"
-msgstr "  %.250s 提供了 %.250s，它已存在且 %s。\n"
+msgid "  %s provides %s and is present and %s.\n"
+msgstr "  %s 提供了 %s，它已存在且 %s。\n"
 
 #: src/main/enquiry.c
 msgid ""
@@ -5070,7 +5249,9 @@ msgid "The following packages do not have an architecture:\n"
 msgstr "以下套件沒有硬體平台：\n"
 
 #: src/main/enquiry.c
-msgid "The following packages have an illegal architecture:\n"
+#, fuzzy
+#| msgid "The following packages have an illegal architecture:\n"
+msgid "The following packages have an invalid architecture:\n"
 msgstr "以下套件有不合法的異質硬體平台：\n"
 
 #: src/main/enquiry.c
@@ -5181,8 +5362,8 @@ msgstr ""
 
 #: src/main/enquiry.c
 #, c-format
-msgid "cannot satisfy pre-dependencies for %.250s (wanted due to %.250s)"
-msgstr "無法滿足 %.250s 的預先相依關係（應 %.250s 之要求）"
+msgid "cannot satisfy pre-dependencies for %s (wanted due to %s)"
+msgstr "無法滿足 %s 的預先相依關係（應 %s 之要求）"
 
 #: src/main/enquiry.c
 #, c-format
@@ -5412,7 +5593,6 @@ msgid ""
 "  --update-avail [<Packages-file>] Replace available packages info.\n"
 "  --merge-avail [<Packages-file>]  Merge with info from file.\n"
 "  --clear-avail                    Erase existing available info.\n"
-"  --forget-old-unavail             Forget uninstalled unavailable pkgs.\n"
 "  -s|--status [<package>...]       Display package status details.\n"
 "  -p|--print-avail [<package>...]  Display available version details.\n"
 "  -L|--listfiles <package>...      List files 'owned' by package(s).\n"
@@ -5521,7 +5701,7 @@ msgstr ""
 #| "  --verify-format=<format>   Verify output format (supported: 'rpm').\n"
 #| "  --no-debsig                Do not try to verify package signatures.\n"
 #| "  --no-act|--dry-run|--simulate\n"
-#| "                             Just say what we would do - don't do it.\n"
+#| "                             Just say what we would do - do not do it.\n"
 #| "  -D|--debug=<octal>         Enable debugging (see -Dhelp or --"
 #| "debug=help).\n"
 #| "  --status-fd <n>            Send status change updates to file "
@@ -5563,7 +5743,7 @@ msgid ""
 "  --no-pager                 Disables the use of any pager.\n"
 "  --no-debsig                Do not try to verify package signatures.\n"
 "  --no-act|--dry-run|--simulate\n"
-"                             Just say what we would do - don't do it.\n"
+"                             Just say what we would do - do not do it.\n"
 "  -D|--debug=<octal>         Enable debugging (see -Dhelp or --debug=help).\n"
 "  --status-fd <n>            Send status change updates to file descriptor "
 "<n>.\n"
@@ -5734,8 +5914,8 @@ msgstr "選項不明 '%s'"
 
 #: src/main/main.c
 #, c-format
-msgid "null package name in --%s comma-separated list '%.250s'"
-msgstr "在 --%s 的逗號分隔清單 '%.250s' 中，有空的套件名稱"
+msgid "null package name in --%s comma-separated list '%s'"
+msgstr "在 --%s 的逗號分隔清單 '%s' 中，有空的套件名稱"
 
 #: src/main/main.c
 #, c-format
@@ -5747,8 +5927,9 @@ msgid "status logger"
 msgstr "狀態記錄器"
 
 #: src/main/main.c
-#, c-format
-msgid "architecture '%s' is illegal: %s"
+#, fuzzy, c-format
+#| msgid "architecture '%s' is illegal: %s"
+msgid "architecture '%s' is invalid: %s"
 msgstr "不合法的硬體平台 '%s'：%s"
 
 #: src/main/main.c
@@ -5772,8 +5953,9 @@ msgid "cannot remove architecture '%s' currently in use by the database"
 msgstr "無法移除資料庫正在使用的 '%s' 硬體平台"
 
 #: src/main/main.c
-#, c-format
-msgid "couldn't open '%i' for stream"
+#, fuzzy, c-format
+#| msgid "couldn't open '%i' for stream"
+msgid "cannot open '%i' for stream"
 msgstr "無法開啟 `%i' 讀取資料串流"
 
 #: src/main/main.c
@@ -5824,11 +6006,11 @@ msgstr ""
 #: src/main/packages.c
 #, c-format
 msgid ""
-"package %.250s is not ready for trigger processing\n"
-" (current status '%.250s' with no pending triggers)"
+"package %s is not ready for trigger processing\n"
+" (current status '%s' with no pending triggers)"
 msgstr ""
-"套件 %.250s 還無法處理觸發程式\n"
-"（目前的狀態為 `%.250s'，沒有待處理的觸發程式）"
+"套件 %s 還無法處理觸發程式\n"
+"（目前的狀態為 `%s'，沒有待處理的觸發程式）"
 
 #: src/main/packages.c
 #, c-format
@@ -5910,16 +6092,16 @@ msgstr "﹔然而：\n"
 
 #: src/main/remove.c
 #, c-format
-msgid "ignoring request to remove %.250s which isn't installed"
-msgstr "忽略移除 %.250s 的要求，它並未安裝"
+msgid "ignoring request to remove %s which is not installed"
+msgstr "忽略移除 %s 的要求，它並未安裝"
 
 #: src/main/remove.c
 #, c-format
 msgid ""
-"ignoring request to remove %.250s, only the config\n"
+"ignoring request to remove %s, only the config\n"
 " files of which are on the system; use --purge to remove them too"
 msgstr ""
-"忽略移除 %.250s 的要求，它在系統中只剩設定檔。\n"
+"忽略移除 %s 的要求，它在系統中只剩設定檔。\n"
 " 請用 --purge 一併刪除設定檔"
 
 #: src/main/remove.c
@@ -5978,26 +6160,22 @@ msgid "Removing %s (%s) ...\n"
 msgstr "正在移除 %s (%s)……\n"
 
 #: src/main/remove.c src/main/unpack.c
-#, c-format
-msgid "unable to delete control info file '%.250s'"
-msgstr "無法刪除控制資訊檔 `%.250s'"
+#, fuzzy, c-format
+#| msgid "unable to delete used-up depot file '%s'"
+msgid "unable to delete package metadata file '%s'"
+msgstr "無法刪除用畢的暫存檔 `%s'"
 
 #: src/main/remove.c
 #, c-format
 msgid ""
-"while removing %.250s, unable to remove directory '%.250s': %s - directory "
-"may be a mount point?"
-msgstr "移除 %.250s 時，無法刪除目錄 '%.250s'：%s - 它是掛載點嗎？"
+"while removing %s, unable to remove directory '%s': %s - directory may be a "
+"mount point?"
+msgstr "移除 %s 時，無法刪除目錄 '%s'：%s - 它是掛載點嗎？"
 
 #: src/main/remove.c
 #, c-format
-msgid "unable to securely remove '%.250s'"
-msgstr "無法安全刪除 '%.255s'"
-
-#: src/main/remove.c
-#, c-format
-msgid "while removing %.250s, directory '%.250s' not empty so not removed"
-msgstr "移除 %.250s 時，目錄 '%.250s' 不是空的，不會刪除"
+msgid "while removing %s, directory '%s' not empty so not removed"
+msgstr "移除 %s 時，目錄 '%s' 不是空的，不會刪除"
 
 #: src/main/remove.c
 #, c-format
@@ -6006,32 +6184,32 @@ msgstr "正在清除 %s (%s) 的設定檔……\n"
 
 #: src/main/remove.c
 #, c-format
-msgid "cannot remove old config file '%.250s' (= '%.250s')"
-msgstr "無法刪除原有的設定檔 `%.250s' (= `%.250s' )"
+msgid "cannot remove old config file '%s' (= '%s')"
+msgstr "無法刪除原有的設定檔 `%s' (= `%s' )"
 
 #: src/main/remove.c
 #, fuzzy, c-format
-#| msgid "cannot read config file dir `%.250s' (from `%.250s')"
-msgid "cannot read config file directory '%.250s' (from '%.250s')"
-msgstr "無法讀取設定檔目錄 `%.250s'（從 `%.250s'）"
+#| msgid "cannot read config file dir `%s' (from `%s')"
+msgid "cannot read config file directory '%s' (from '%s')"
+msgstr "無法讀取設定檔目錄 `%s'（從 `%s'）"
 
 #: src/main/remove.c
 #, c-format
-msgid "cannot remove old backup config file '%.250s' (of '%.250s')"
-msgstr "無法刪除原有的設定檔備份 `%.250s'（`%.250s' 的）"
+msgid "cannot remove old backup config file '%s' (of '%s')"
+msgstr "無法刪除原有的設定檔備份 `%s'（`%s' 的）"
 
 #: src/main/remove.c
 msgid "cannot remove old files list"
 msgstr "無法刪除原有的檔案列表"
 
 #: src/main/remove.c
-msgid "can't remove old postrm script"
+msgid "cannot remove old postrm script"
 msgstr "無法刪除原有的 postrm script"
 
 #: src/main/script.c
 #, c-format
-msgid "unable to set execute permissions on '%.250s'"
-msgstr "無法設定 `%.250s' 的執行權限"
+msgid "unable to set execute permissions on '%s'"
+msgstr "無法設定 `%s' 的執行權限"
 
 #: src/main/script.c
 msgid "admindir must be inside instdir for dpkg to work properly"
@@ -6045,8 +6223,8 @@ msgstr ""
 
 #: src/main/script.c
 #, c-format
-msgid "failed to chroot to '%.250s'"
-msgstr "無法 chroot 至 `%.250s'"
+msgid "failed to chroot to '%s'"
+msgstr "無法 chroot 至 `%s'"
 
 #: src/main/script.c
 msgid "unable to setenv for maintainer script"
@@ -6060,38 +6238,36 @@ msgstr "無法為維護者程式設定環境變數"
 
 #: src/main/script.c
 #, fuzzy, c-format
-#| msgid "installed %s script"
-msgid "installed %s package %s script"
-msgstr "已安裝的 %s script"
-
-#: src/main/script.c
-#, c-format
-msgid "unable to stat %s '%.250s'"
-msgstr "無法取得 %s `%.250s' 的檔案資訊"
-
-#: src/main/script.c
-#, fuzzy, c-format
-#| msgid "new %s script"
-msgid "new %s package %s script"
-msgstr "新的 %s script"
-
-#: src/main/script.c
-#, fuzzy, c-format
 #| msgid "old %s script"
-msgid "old %s package %s script"
+msgid "old %s package %s maintainer script"
 msgstr "原先的 %s script"
 
 #: src/main/script.c
 #, c-format
-msgid "unable to stat %s '%.250s': %s"
-msgstr "無法取得 %s '%.250s' 的檔案資訊：%s"
+msgid "unable to stat %s '%s'"
+msgstr "無法取得 %s `%s' 的檔案資訊"
 
 #: src/main/script.c
-msgid "trying script from the new package instead ..."
+#, fuzzy, c-format
+#| msgid "new %s script"
+msgid "new %s package %s maintainer script"
+msgstr "新的 %s script"
+
+#: src/main/script.c
+#, c-format
+msgid "unable to stat %s '%s': %s"
+msgstr "無法取得 %s '%s' 的檔案資訊：%s"
+
+#: src/main/script.c
+#, fuzzy, c-format
+#| msgid "trying script from the new package instead ..."
+msgid "trying %s maintainer script from the new %s package instead ..."
 msgstr "試著改用新套件的 script ..."
 
 #: src/main/script.c
-msgid "there is no script in the new version of the package - giving up"
+#, fuzzy, c-format
+#| msgid "there is no script in the new version of the package - giving up"
+msgid "missing %s maintainer script in new %s package, giving up"
 msgstr "新版本的套件裡沒有 script - 放棄執行"
 
 #: src/main/script.c
@@ -6126,20 +6302,21 @@ msgid "unexpected data after package and selection at line %d"
 msgstr "在第 %d 行的套件及選擇項目之後有預期之外的資料"
 
 #: src/main/select.c
-#, c-format
-msgid "illegal package name at line %d: %.250s"
-msgstr "在第 %d 行有非法的套件名稱：%.250s"
+#, fuzzy, c-format
+#| msgid "illegal package name at line %d: %s"
+msgid "invalid package name at line %d: %s"
+msgstr "在第 %d 行有非法的套件名稱：%s"
 
 #: src/main/select.c
 #, fuzzy, c-format
-#| msgid "package not in database at line %d: %.250s"
-msgid "package not in status nor available database at line %d: %.250s"
-msgstr "在第 %d 行的套件不在資料庫中：%.250s"
+#| msgid "package not in database at line %d: %s"
+msgid "package not in status nor available database at line %d: %s"
+msgstr "在第 %d 行的套件不在資料庫中：%s"
 
 #: src/main/select.c
 #, c-format
-msgid "unknown wanted status at line %d: %.250s"
-msgstr "在第 %d 行所得到的狀態不明：%.250s"
+msgid "unknown wanted status at line %d: %s"
+msgstr "在第 %d 行所得到的狀態不明：%s"
 
 #: src/main/select.c
 msgid "read error on standard input"
@@ -6205,6 +6382,11 @@ msgstr ""
 msgid "Processing triggers for %s (%s) ...\n"
 msgstr "執行 %s (%s) 的觸發程式……\n"
 
+#. TRANSLATORS: This string represents a summarized pathname,
+#. were prefix directories get abbreviated with ".../", if the
+#. total length exceeds a limit. The three dots would usually
+#. be represented by «…/».
+#.
 #: src/main/unpack.c
 #, c-format
 msgid ".../%s"
@@ -6212,8 +6394,8 @@ msgstr ".../%s"
 
 #: src/main/unpack.c
 #, c-format
-msgid "error ensuring '%.250s' doesn't exist"
-msgstr "在確保檔案 `%.250s' 是否存在時發生錯誤"
+msgid "error ensuring '%s' does not exist"
+msgstr "在確保檔案 `%s' 是否存在時發生錯誤"
 
 #: src/main/unpack.c
 msgid "split package reassembly"
@@ -6264,8 +6446,8 @@ msgstr ""
 
 #: src/main/unpack.c
 #, c-format
-msgid "pre-dependency problem - not installing %.250s"
-msgstr "預先相依問題 - 不會安裝 %.250s"
+msgid "pre-dependency problem - not installing %s"
+msgstr "預先相依問題 - 不會安裝 %s"
 
 #: src/main/unpack.c
 msgid "ignoring pre-dependency problem!"
@@ -6296,57 +6478,68 @@ msgstr "statoverride 檔有空行"
 
 #: src/main/unpack.c utils/update-alternatives.c
 #, c-format
-msgid "read error in %.250s"
-msgstr "在 %.250s 中發生讀取錯誤"
+msgid "read error in %s"
+msgstr "在 %s 中發生讀取錯誤"
 
 #: src/main/unpack.c
 #, c-format
-msgid "error closing %.250s"
-msgstr "在關閉 %.250s 時發生錯誤"
+msgid "error closing %s"
+msgstr "在關閉 %s 時發生錯誤"
 
 #: src/main/unpack.c
-#, c-format
-msgid "old version of package has overly-long info file name starting '%.250s'"
-msgstr "舊版套件中包含檔名太長的資訊檔，開頭為 `%.250s'"
+#, fuzzy, c-format
+#| msgid "old version of package has overly-long info file name starting '%s'"
+msgid ""
+"old version of package has overly-long metadata file name (starting with "
+"'%.*s')"
+msgstr "舊版套件中包含檔名太長的資訊檔，開頭為 `%s'"
 
 #: src/main/unpack.c
-#, c-format
-msgid "unable to remove obsolete info file '%.250s'"
-msgstr "無法移除作廢的資訊檔 `%.250s'"
+#, fuzzy, c-format
+#| msgid "unable to remove obsolete info file '%s'"
+msgid "unable to remove obsolete package metadata file '%s'"
+msgstr "無法移除作廢的資訊檔 `%s'"
 
 #: src/main/unpack.c
-#, c-format
-msgid "unable to install (supposed) new info file '%.250s'"
-msgstr "無法安裝（應該是）新的資訊檔 `%.250s'"
+#, fuzzy, c-format
+#| msgid "unable to install (supposed) new info file '%s'"
+msgid "unable to install (supposed) new package metadata file '%s'"
+msgstr "無法安裝（應該是）新的資訊檔 `%s'"
 
 #: src/main/unpack.c
 msgid "unable to open temp control directory"
 msgstr "無法開啟暫時的控制目錄"
 
 #: src/main/unpack.c
-#, c-format
-msgid "package contains overly-long control info file name (starting '%.50s')"
-msgstr "套件包含了檔名太長的控制資訊檔（其開頭為 `%.250s'）"
+#, fuzzy, c-format
+#| msgid ""
+#| "package contains overly-long control info file name (starting '%.50s')"
+msgid "package has overly-long metadata file name (starting with '%.*s')"
+msgstr "套件包含了檔名太長的控制資訊檔（其開頭為 `%s'）"
 
 #: src/main/unpack.c
-#, c-format
-msgid "package control info contained directory '%.250s'"
-msgstr "套件的控制資訊中包含了目錄 `%.250s'"
+#, fuzzy, c-format
+#| msgid "package control info contained directory '%s'"
+msgid "package metadata contained directory '%s'"
+msgstr "套件的控制資訊中包含了目錄 `%s'"
 
 #: src/main/unpack.c
-#, c-format
-msgid "package control info rmdir of '%.250s' didn't say not a dir"
-msgstr "套件控制資訊中刪除目錄 '%.250s'，但沒有說這不是目錄"
+#, fuzzy, c-format
+#| msgid "package control info rmdir of '%s' did not say not a dir"
+msgid "package metadata rmdir of '%s' did not say not a dir"
+msgstr "套件控制資訊中刪除目錄 '%s'，但沒有說這不是目錄"
 
 #: src/main/unpack.c
-#, c-format
-msgid "package %s contained list as info file"
+#, fuzzy, c-format
+#| msgid "package %s contained list as info file"
+msgid "package %s contained '%s' as a metadata file"
 msgstr "套件 %s 包含作為資訊檔的清單"
 
 #: src/main/unpack.c
-#, c-format
-msgid "unable to install new info file '%.250s' as '%.250s'"
-msgstr "無法把新的資訊檔 `%.250s' 安裝為 `%.250s'"
+#, fuzzy, c-format
+#| msgid "unable to install new info file '%s' as '%s'"
+msgid "unable to install new metadata file '%s' as '%s'"
+msgstr "無法把新的資訊檔 `%s' 安裝為 `%s'"
 
 #: src/main/unpack.c
 #, fuzzy, c-format
@@ -6373,35 +6566,33 @@ msgstr "無法在壓縮檔 '%2$s' 中加上檔案 (%1$s)：%3$s"
 
 #: src/main/unpack.c
 #, c-format
-msgid "could not stat old file '%.250s' so not deleting it: %s"
-msgstr "無法取得舊檔 '%.250s' 的檔案資訊，所以不會刪除：%s"
+msgid "could not stat old file '%s' so not deleting it: %s"
+msgstr "無法取得舊檔 '%s' 的檔案資訊，所以不會刪除：%s"
 
 #: src/main/unpack.c
 #, c-format
-msgid "unable to delete old directory '%.250s': %s"
-msgstr "無法刪除舊目錄 '%.250s'：%s"
+msgid "unable to delete old directory '%s': %s"
+msgstr "無法刪除舊目錄 '%s'：%s"
 
 #: src/main/unpack.c
 #, c-format
-msgid "old conffile '%.250s' was an empty directory (and has now been deleted)"
-msgstr "舊的 conffile '%.250s' 是空目錄（現已刪除）"
+msgid "old conffile '%s' was an empty directory (and has now been deleted)"
+msgstr "舊的 conffile '%s' 是空目錄（現已刪除）"
 
 #: src/main/unpack.c
 #, c-format
-msgid "unable to stat other new file '%.250s'"
-msgstr "無法取得其它新檔 `%.250s' 的檔案資訊"
+msgid "unable to stat other new file '%s'"
+msgstr "無法取得其它新檔 `%s' 的檔案資訊"
 
 #: src/main/unpack.c
 #, c-format
-msgid ""
-"old file '%.250s' is the same as several new files! (both '%.250s' and "
-"'%.250s')"
-msgstr "舊檔 '%.250s' 與幾個新檔案相同！（'%.250s' 和 '%.250s'）"
+msgid "old file '%s' is the same as several new files! (both '%s' and '%s')"
+msgstr "舊檔 '%s' 與幾個新檔案相同！（'%s' 和 '%s'）"
 
 #: src/main/unpack.c
 #, c-format
-msgid "unable to securely remove old file '%.250s': %s"
-msgstr "無法安全刪除舊檔 '%.250s'：%s"
+msgid "unable to securely remove old file '%s': %s"
+msgstr "無法安全刪除舊檔 '%s'：%s"
 
 #: src/main/unpack.c
 #, c-format
@@ -6409,8 +6600,10 @@ msgid "(Noting disappearance of %s, which has been completely replaced.)\n"
 msgstr "（注意到 %s 已經不復存在，它已被完全取代了。）\n"
 
 #: src/main/unpack.c
-msgid "package control information extraction"
-msgstr "解開套件控制資訊"
+#, fuzzy
+#| msgid "package field value extraction"
+msgid "package metadata files extraction"
+msgstr "取得套件欄位值"
 
 #: src/main/unpack.c
 #, c-format
@@ -6465,6 +6658,10 @@ msgstr "正在解除設定 %s (%s)，以便移除 %s (%s)……\n"
 msgid "--%s takes at most one Packages-file argument"
 msgstr "--%s 需要至多一個 Packages-file 作為引數"
 
+#: src/main/update.c utils/update-alternatives.c
+msgid "<standard input>"
+msgstr "<標準輸入>"
+
 #: src/main/update.c
 #, fuzzy, c-format
 #| msgid "unable to access dpkg status area for bulk available update"
@@ -6480,13 +6677,15 @@ msgid ""
 msgstr "無法存取 dpkg 的狀態庫，以進行批次可用套件更新"
 
 #: src/main/update.c
-#, c-format
-msgid "Replacing available packages info, using %s.\n"
+#, fuzzy, c-format
+#| msgid "Replacing available packages info, using %s.\n"
+msgid "Replacing available packages information from %s.\n"
 msgstr "用 %s 取代可用套件資訊。\n"
 
 #: src/main/update.c
-#, c-format
-msgid "Updating available packages info, using %s.\n"
+#, fuzzy, c-format
+#| msgid "Updating available packages info, using %s.\n"
+msgid "Updating available packages information from %s.\n"
 msgstr "用 %s 更新可用套件的資訊。\n"
 
 #: src/main/update.c
@@ -6508,11 +6707,35 @@ msgid "%s version %s.\n"
 msgstr "Debian %s 版本 %s。\n"
 
 #: utils/update-alternatives.c
-#, c-format
+#, fuzzy, c-format
+#| msgid ""
+#| "Commands:\n"
+#| "  --install <link> <name> <path> <priority>\n"
+#| "    [--slave <link> <name> <path>] ...\n"
+#| "                           add a group of alternatives to the system.\n"
+#| "  --remove <name> <path>   remove <path> from the <name> group "
+#| "alternative.\n"
+#| "  --remove-all <name>      remove <name> group from the alternatives "
+#| "system.\n"
+#| "  --auto <name>            switch the master link <name> to automatic "
+#| "mode.\n"
+#| "  --display <name>         display information about the <name> group.\n"
+#| "  --query <name>           machine parseable version of --display "
+#| "<name>.\n"
+#| "  --list <name>            display all targets of the <name> group.\n"
+#| "  --get-selections         list master alternative names and their "
+#| "status.\n"
+#| "  --set-selections         read alternative status from standard input.\n"
+#| "  --config <name>          show alternatives for the <name> group and ask "
+#| "the\n"
+#| "                           user to select which one to use.\n"
+#| "  --set <name> <path>      set <path> as alternative for <name>.\n"
+#| "  --all                    call --config on all alternatives.\n"
+#| "\n"
 msgid ""
 "Commands:\n"
 "  --install <link> <name> <path> <priority>\n"
-"    [--slave <link> <name> <path>] ...\n"
+"    [--slave <link> <name> <path>]...\n"
 "                           add a group of alternatives to the system.\n"
 "  --remove <name> <path>   remove <path> from the <name> group alternative.\n"
 "  --remove-all <name>      remove <name> group from the alternatives "
@@ -6642,7 +6865,7 @@ msgstr "無法刪除 '%s'"
 #, fuzzy, c-format
 #| msgid "cannot open directory '%s'"
 msgid "cannot create log directory '%s'"
-msgstr "無法開啟「%.255s」目錄"
+msgstr "無法開啟「%s」目錄"
 
 #: utils/update-alternatives.c
 #, c-format
@@ -6653,13 +6876,13 @@ msgstr "無法加到 '%s'"
 #, fuzzy, c-format
 #| msgid "cannot open directory '%s'"
 msgid "cannot get local time to log into '%s'"
-msgstr "無法開啟「%.255s」目錄"
+msgstr "無法開啟「%s」目錄"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-#| msgid "unable to read link '%.255s'"
-msgid "unable to read link '%s%.255s'"
-msgstr "無法讀取符號連結 `%.255s'"
+#| msgid "unable to read link '%s'"
+msgid "unable to read link '%s%s'"
+msgstr "無法讀取符號連結 `%s'"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
@@ -6741,7 +6964,7 @@ msgstr "重複的路徑 %s"
 #: utils/update-alternatives.c
 #, c-format
 msgid ""
-"alternative %s (part of link group %s) doesn't exist; removing from list of "
+"alternative %s (part of link group %s) does not exist; removing from list of "
 "alternatives"
 msgstr "找不到 %2$s 連結群組的替換項目 %1$s 的替換項目；由替換清單中移除"
 
@@ -6782,9 +7005,9 @@ msgstr "捨棄作廢的次要項目連結 %s (%s)"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-#| msgid "cannot scan updates directory '%.255s'"
+#| msgid "cannot scan updates directory '%s'"
 msgid "cannot create administrative directory '%s'"
-msgstr "無法掃描更新目錄 `%.255s'"
+msgstr "無法掃描更新目錄 `%s'"
 
 #: utils/update-alternatives.c
 #, c-format
@@ -6878,25 +7101,25 @@ msgstr "不會把 %s 換成連結"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-#| msgid "cannot scan updates directory '%.255s'"
+#| msgid "cannot scan updates directory '%s'"
 msgid "cannot create alternatives directory '%s'"
-msgstr "無法掃描更新目錄 `%.255s'"
+msgstr "無法掃描更新目錄 `%s'"
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "can't install unknown choice %s"
+msgid "cannot install unknown choice %s"
 msgstr "無法安裝未知的選項 %s"
 
 #: utils/update-alternatives.c
 #, c-format
 msgid ""
-"skip creation of %s because associated file %s (of link group %s) doesn't "
+"skip creation of %s because associated file %s (of link group %s) does not "
 "exist"
 msgstr "找不到連結群組 %3$s 中相對的檔案 %2$s ，略過 %1$s"
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "not removing %s since it's not a symlink"
+msgid "not removing %s since it is not a symlink"
 msgstr "%s 不是符號連結，不會刪除"
 
 #: utils/update-alternatives.c
@@ -7040,7 +7263,7 @@ msgstr "替換項目路徑不是絕對路徑，應為絕對路徑：%s"
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "alternative %s can't be master: it is a slave of %s"
+msgid "alternative %s cannot be master: it is a slave of %s"
 msgstr "替換項目 %s 是 %s 的次要項目，無法設為主項目"
 
 #: utils/update-alternatives.c
@@ -7050,18 +7273,18 @@ msgstr "替換項目 %s 已由 %s 管理"
 
 #: utils/update-alternatives.c
 #, fuzzy, c-format
-#| msgid "alternative path %s doesn't exist"
-msgid "alternative path %s%s doesn't exist"
+#| msgid "alternative path %s does not exist"
+msgid "alternative path %s%s does not exist"
 msgstr "找不到替代路徑 %s"
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "alternative %s can't be slave of %s: it is a master alternative"
+msgid "alternative %s cannot be slave of %s: it is a master alternative"
 msgstr "替換項目 %s 不可以是 %s 的子項目：它是主要替換項目"
 
 #: utils/update-alternatives.c
 #, c-format
-msgid "alternative %s can't be slave of %s: it is a slave of %s"
+msgid "alternative %s cannot be slave of %s: it is a slave of %s"
 msgstr "替換項目 %1$s 是 %3$s 的次要項目，無法設為 %2$s 的次要項目"
 
 #: utils/update-alternatives.c
@@ -7164,10 +7387,6 @@ msgstr ""
 msgid "no alternatives for %s"
 msgstr "沒有 %s 的替換檔"
 
-#: utils/update-alternatives.c
-msgid "<standard input>"
-msgstr "<標準輸入>"
-
 #: utils/update-alternatives.polkit.in
 msgid "Run update-alternatives to modify system alternative selections"
 msgstr ""
@@ -7176,20 +7395,71 @@ msgstr ""
 msgid "Authentication is required to run update-alternatives"
 msgstr ""
 
+#~ msgid "shell command to move files"
+#~ msgstr "搬移檔案的 shell 指令"
+
+#, c-format
+#~ msgid "%s subprocess returned error exit status %d"
+#~ msgstr "%s 子進程傳回了 %d 錯誤退出狀態碼"
+
+#, c-format
+#~ msgid "architecture '%s' is illegal: %s"
+#~ msgstr "不合法的硬體平台 '%s'：%s"
+
+#, c-format
+#~ msgid "unable to delete control info file '%s'"
+#~ msgstr "無法刪除控制資訊檔 `%s'"
+
+#, fuzzy, c-format
+#~| msgid "installed %s script"
+#~ msgid "installed %s package %s script"
+#~ msgstr "已安裝的 %s script"
+
+#~ msgid "package control information extraction"
+#~ msgstr "解開套件控制資訊"
+
+#, c-format
+#~ msgid "open component '%s' (in %s) failed in an unexpected way"
+#~ msgstr "在開啟元件 `%s'（位於 %s）時以意想不到的方式失敗了"
+
+#, c-format
+#~ msgid "cannot stat '%s' (in '%s')"
+#~ msgstr "無法取得 `%s' 的檔案資訊（於 `%s'）"
+
+#, c-format
+#~ msgid "cannot open '%s' (in '%s')"
+#~ msgstr "無法開啟 `%s'（位於 `%s'）"
+
+#, c-format
+#~ msgid "failed to read '%s' (in '%s')"
+#~ msgstr "無法讀取 `%s'（位於 `%s'）"
+
+#~ msgid "failed to open diversions file"
+#~ msgstr "無法開啟移轉檔"
+
+#~ msgid "failed to fstat diversions file"
+#~ msgstr "無法 fstat 取得移轉檔的檔案資訊"
+
+#~ msgid "failed to open statoverride file"
+#~ msgstr "無法開啟 statoverride 檔"
+
+#~ msgid "failed to fstat statoverride file"
+#~ msgstr "無法 fstat statoverride 檔"
+
 #, c-format
 #~ msgid "There is only one alternative in link group %s (providing %s): %s"
 #~ msgstr "替換群組 %s（提供 %s）只有一個替換項目：%s"
 
-#~ msgid "<link> and <path> can't be the same"
+#~ msgid "<link> and <path> cannot be the same"
 #~ msgstr "<連結> 和 <路徑> 不可相同"
 
 #, c-format
-#~ msgid "removal of %.250s"
-#~ msgstr "%.250s 的移除作業"
+#~ msgid "removal of %s"
+#~ msgstr "%s 的移除作業"
 
 #, c-format
-#~ msgid "installation of %.250s"
-#~ msgstr "%.250s 的安裝作業"
+#~ msgid "installation of %s"
+#~ msgstr "%s 的安裝作業"
 
 #, c-format
 #~ msgid "dpkg not recorded as installed, cannot check for %s support!\n"
@@ -7226,8 +7496,8 @@ msgstr ""
 #~ "要加上 --display、--query、--list、--get-selections、--config、--set、--"
 #~ "set-selections、--install、--remove、--all、--remove-all 或 --auto"
 
-#~ msgid "unable to set ownership of triggers state directory '%.250s'"
-#~ msgstr "無法設定觸發程式狀態目錄 `%.250s' 的所有權"
+#~ msgid "unable to set ownership of triggers state directory '%s'"
+#~ msgstr "無法設定觸發程式狀態目錄 `%s' 的所有權"
 
 #~ msgid "unable to open lock file %s for testing"
 #~ msgstr "無法開啟鎖定檔 %s 測試"
@@ -7245,20 +7515,20 @@ msgstr ""
 #~ msgid "%s is missing"
 #~ msgstr "未找到 %s"
 
-#~ msgid "'%.50s' is not allowed for %s"
-#~ msgstr "'%.50s' 不可用於 %s"
+#~ msgid "'%s' is not allowed for %s"
+#~ msgstr "'%s' 不可用於 %s"
 
 #~ msgid "junk after %s"
 #~ msgstr "在 %s 之後有多餘的資料"
 
-#~ msgid "invalid package name (%.250s)"
-#~ msgstr "無效的套件名稱 (%.250s)"
+#~ msgid "invalid package name (%s)"
+#~ msgstr "無效的套件名稱 (%s)"
 
 #~ msgid "yes/no in boolean field"
 #~ msgstr "boolean 欄位的 yes/no"
 
-#~ msgid "'%s' field, reference to '%.255s': error in version"
-#~ msgstr "'%s' 欄位，參照 '%.255s'：版本號有誤"
+#~ msgid "'%s' field, reference to '%s': error in version"
+#~ msgstr "'%s' 欄位，參照 '%s'：版本號有誤"
 
 #~ msgid "empty value for %s"
 #~ msgstr "%s 的值是空的"
@@ -7276,36 +7546,36 @@ msgstr ""
 #~ msgstr "在讀取 dpkg-deb 輸出的 tar 檔時發生錯誤"
 
 #, fuzzy
-#~| msgid "unable to open files list file for package `%.250s'"
+#~| msgid "unable to open files list file for package `%s'"
 #~ msgid "cannot open control file '%s' for package '%s'"
-#~ msgstr "無法開啟套件 `%.250s' 的檔案清單"
+#~ msgstr "無法開啟套件 `%s' 的檔案清單"
 
 #, fuzzy
-#~| msgid "unable to stat files list file for package '%.250s'"
+#~| msgid "unable to stat files list file for package '%s'"
 #~ msgid "cannot stat control file '%s' for package '%s'"
-#~ msgstr "無法取得套件 '%.250s' 檔案清單的檔案資訊"
+#~ msgstr "無法取得套件 '%s' 檔案清單的檔案資訊"
 
 #, fuzzy
-#~| msgid "files list for package '%.250s' is not a regular file"
+#~| msgid "files list for package '%s' is not a regular file"
 #~ msgid "control file '%s' for package '%s' is not a regular file"
-#~ msgstr "套件 '%.250s' 的檔案清單，不是普通檔案"
+#~ msgstr "套件 '%s' 的檔案清單，不是普通檔案"
 
 #, fuzzy
-#~| msgid "error closing files list file for package `%.250s'"
+#~| msgid "error closing files list file for package `%s'"
 #~ msgid "cannot close control file '%s' for package '%s'"
-#~ msgstr "關閉套件 `%.250s' 的檔案清單時，發生錯誤"
+#~ msgstr "關閉套件 `%s' 的檔案清單時，發生錯誤"
 
-#~ msgid "unable to open files list file for package '%.250s'"
-#~ msgstr "無法開啟套件 `%.250s' 的檔案清單"
+#~ msgid "unable to open files list file for package '%s'"
+#~ msgstr "無法開啟套件 `%s' 的檔案清單"
 
-#~ msgid "unable to stat files list file for package '%.250s'"
-#~ msgstr "無法取得套件 '%.250s' 檔案清單的檔案資訊"
+#~ msgid "unable to stat files list file for package '%s'"
+#~ msgstr "無法取得套件 '%s' 檔案清單的檔案資訊"
 
-#~ msgid "files list for package '%.250s' is not a regular file"
-#~ msgstr "套件 '%.250s' 的檔案清單，不是普通檔案"
+#~ msgid "files list for package '%s' is not a regular file"
+#~ msgstr "套件 '%s' 的檔案清單，不是普通檔案"
 
-#~ msgid "reading files list for package '%.250s'"
-#~ msgstr "讀取套件 '%.250s' 的檔案清單"
+#~ msgid "reading files list for package '%s'"
+#~ msgstr "讀取套件 '%s' 的檔案清單"
 
 #~ msgid "failed to chdir to directory after creating it"
 #~ msgstr "建立目錄後，無法切換到該目錄"
@@ -7315,11 +7585,11 @@ msgstr ""
 #~ msgid "control file '%s' missing value separator"
 #~ msgstr "查無控制檔 '%s'"
 
-#~ msgid "unable to fstat part file '%.250s'"
-#~ msgstr "無法 fstat 取得分割檔 `%.250s' 的檔案資訊"
+#~ msgid "unable to fstat part file '%s'"
+#~ msgstr "無法 fstat 取得分割檔 `%s' 的檔案資訊"
 
-#~ msgid "unexpected end of file in %.250s"
-#~ msgstr "在 %.250s 中有預期之外的檔案結束符號"
+#~ msgid "unexpected end of file in %s"
+#~ msgstr "在 %s 中有預期之外的檔案結束符號"
 
 #~ msgid "%s: error: %s\n"
 #~ msgstr "%s：錯誤：%s\n"
@@ -7330,8 +7600,8 @@ msgstr ""
 #~ msgid "%s: warning: %s\n"
 #~ msgstr "%s: 警告：%s\n"
 
-#~ msgid "truncated triggers deferred file '%.250s'"
-#~ msgstr "被截短的觸發程式延遲檔 `%.250s'"
+#~ msgid "truncated triggers deferred file '%s'"
+#~ msgstr "被截短的觸發程式延遲檔 `%s'"
 
 #~ msgid "find for dpkg --recursive"
 #~ msgstr "為 dpkg --recursive 搜尋"
@@ -7348,8 +7618,8 @@ msgstr ""
 #~ msgid "find for --recursive returned unhandled error %i"
 #~ msgstr "--recursive 選項所呼叫的 find 返回了未被處理的錯誤 %i"
 
-#~ msgid "unable to stat file name '%.250s'"
-#~ msgstr "無法取得 '%.250s' 的檔案資訊"
+#~ msgid "unable to stat file name '%s'"
+#~ msgstr "無法取得 '%s' 的檔案資訊"
 
 #~ msgid "compressing control member"
 #~ msgstr "壓縮控制成員"
@@ -7369,8 +7639,8 @@ msgstr ""
 #~ msgid "unknown option `%s'"
 #~ msgstr "未知選項 `%s'"
 
-#~ msgid "unexpected eof reading `%.250s'"
-#~ msgstr "由 `%.250s' 意外讀到 eof"
+#~ msgid "unexpected eof reading `%s'"
+#~ msgstr "由 `%s' 意外讀到 eof"
 
 #~ msgid "EOF on stdin at conffile prompt"
 #~ msgstr "在 conffile 提示輸入時，由 stdin 中讀到了 EOF"
@@ -7381,8 +7651,8 @@ msgstr ""
 #~ msgid "failed to chdir to `/' for cleanup"
 #~ msgstr "無法 chdir 到 `/' 以清理"
 
-#~ msgid "file name '%.50s...' is too long"
-#~ msgstr "檔名 '%.50s...' 太長了"
+#~ msgid "file name '%s...' is too long"
+#~ msgstr "檔名 '%s...' 太長了"
 
 #~ msgid "'%s' contains user-defined field '%s'"
 #~ msgstr "'%s' 包含使用者自訂欄位 '%s'"
@@ -7396,8 +7666,8 @@ msgstr ""
 #~ msgid "error closing the '%s' component"
 #~ msgstr "關閉 '%s' 元件時發生錯誤"
 
-#~ msgid "name of conffile (starting `%.250s') is too long (>%d characters)"
-#~ msgstr "conffile 的檔案名（開頭是 `%.250s'）過長（> %d 個字元）"
+#~ msgid "name of conffile (starting `%s') is too long (>%d characters)"
+#~ msgstr "conffile 的檔案名（開頭是 `%s'）過長（> %d 個字元）"
 
 #~ msgid " (actually `%s')"
 #~ msgstr "（實際上是 `%s'）"
@@ -7405,8 +7675,8 @@ msgstr ""
 #~ msgid "value for `config-version' field not allowed in this context"
 #~ msgstr "在此不能使用這個 `config-version' 欄位的值"
 
-#~ msgid "error in Config-Version string '%.250s'"
-#~ msgstr "Config-Version 字串 '%.250s' 有誤"
+#~ msgid "error in Config-Version string '%s'"
+#~ msgstr "Config-Version 字串 '%s' 有誤"
 
 #~ msgid "value for `triggers-pending' field not allowed in this context"
 #~ msgstr "`triggers-pending' 欄位所設定的值不能用在這個地方"
@@ -7423,8 +7693,8 @@ msgstr ""
 #~ msgid "package %s has too many Conflicts/Replaces pairs"
 #~ msgstr "套件 %s 有太多的 衝突／替換 組合"
 
-#~ msgid "Unpacking replacement %.250s ...\n"
-#~ msgstr "解開替代套件 %.250s ...\n"
+#~ msgid "Unpacking replacement %s ...\n"
+#~ msgstr "解開替代套件 %s ...\n"
 
 #~ msgid "priority is out of range: %s clamped to %ld"
 #~ msgstr "優先權超出範圍：由 %s 調整為 %ld"
