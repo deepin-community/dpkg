@@ -1,12 +1,14 @@
 dpkg (1.22.6deepin14) unstable; urgency=medium
 
-  * fix(cve): CVE-2026-91094 (unknown) - Dpkg::Source::Package::V2: Pass
-    the same tar exclusion options for debian.tar   Upstream:
-    https://git.dpkg.org/cgit/dpkg/dpkg.git/commit/?id=314abb9f28c247c61
-    f6cde753b9c2491fabfc02f,https://git.dpkg.org/cgit/dpkg/dpkg.git/comm
-    it/?id=2a31760bc2a968878700476c1de5b8ea7809e460,https://git.dpkg.org
-    /cgit/dpkg/dpkg.git/commit/?id=50fb8e7fe20cee0d5b14000c32ca8c31f3bf0
-    574
+  * Fix CVE-2026-91094: Dpkg::Source::Package::V2: Pass the same tar
+    exclusion options for debian.tar, so that a malicious debian tarball
+    cannot ship a .pc directory with symlinks that would be blindly
+    followed when applying patches.
+  * Dpkg::Source::Package::V3::Quilt: Drop any quilt database found on
+    unpack, as it might come from an untrusted origin.
+    Upstream: https://git.dpkg.org/cgit/dpkg/dpkg.git/commit/?id=314abb9f28c247c61f6cde753b9c2491fabfc02f
+    https://git.dpkg.org/cgit/dpkg/dpkg.git/commit/?id=2a31760bc2a968878700476c1de5b8ea7809e460
+    https://git.dpkg.org/cgit/dpkg/dpkg.git/commit/?id=50fb8e7fe20cee0d5b14000c32ca8c31f3bf0574
 
  -- deepin-ci-robot <packages@deepin.org>  Tue, 17 Nov 2026 15:09:24 +0800
 
